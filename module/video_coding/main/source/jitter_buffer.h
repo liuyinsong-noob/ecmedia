@@ -310,7 +310,6 @@ class VCMJitterBuffer {
   unsigned int incoming_frame_rate_;
   unsigned int incoming_frame_count_;
   int64_t time_last_incoming_frame_count_;
-  int64_t time_last_incoming_bit_count_;
   unsigned int incoming_bit_count_;
   unsigned int incoming_bit_rate_;
   // Number of frames in a row that have been too old.

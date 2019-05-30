@@ -630,7 +630,6 @@ int32_t RTPSender::ReSendPacket(uint16_t packet_id, int64_t min_resend_time) {
       packet_history_.GetPacketAndSetSendTime(packet_id, min_resend_time, true);
   if (!packet) {
     // Packet not found.
-	LOG(LS_ERROR) << "--------------[bwe][NACK][OnReceivedNack] Packet not found. seq_no = " << packet_id;
 	return 0;
   }
 

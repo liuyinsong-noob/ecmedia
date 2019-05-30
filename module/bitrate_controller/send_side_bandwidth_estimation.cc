@@ -136,9 +136,6 @@ void SendSideBandwidthEstimation::UpdateDelayBasedEstimate(
     uint32_t bitrate_bps) {
   delay_based_bitrate_bps_ = bitrate_bps;
   bitrate_ = CapBitrateToThresholds(now_ms, bitrate_);
-   LOG(LS_INFO) << "--------------[bwe] bitrate_controller = "
-	  << bitrate_bps
-	  << " (delay_based_bitrate_bps_)";
 }
 
 void SendSideBandwidthEstimation::UpdateReceiverBlock(uint8_t fraction_loss,

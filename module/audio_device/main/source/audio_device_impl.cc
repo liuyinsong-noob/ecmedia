@@ -1352,9 +1352,6 @@ int32_t AudioDeviceModuleImpl::MaxMicrophoneVolume(uint32_t* maxVolume) const
     }
 
     *maxVolume = maxVol;
-
-    //WEBRTC_TRACE(kTraceStream, kTraceAudioDevice, _id, "output: maxVolume=%d", *maxVolume);
-	LOG_COUNT_F(LS_STREAM, 50) << "output: maxVolume = " << maxVol;
     return (0);
 }
 

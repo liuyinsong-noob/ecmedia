@@ -993,8 +993,6 @@ void RTCPReceiver::TriggerCallbacksFromRtcpPacket(
   }
   if (!receiver_only_ && (packet_information.packet_type_flags & kRtcpNack)) {
     if (!packet_information.nack_sequence_numbers.empty()) {
-      LOG(LS_VERBOSE) << "Incoming NACK length: "
-                      << packet_information.nack_sequence_numbers.size();
       rtp_rtcp_->OnReceivedNack(packet_information.nack_sequence_numbers);
     }
   }

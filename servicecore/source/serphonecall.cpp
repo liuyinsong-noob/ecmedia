@@ -64,12 +64,12 @@ static void serphone_call_set_terminated(SerPhoneCall *call)
 #endif
 
 	if (call == lc->current_call){
-		PrintConsole("Resetting the current call\n");
+		WriteLogToFile("Resetting the current call\n");
 		lc->current_call=NULL;
 	}
 
 	if (lc->serphone_core_del_call(call) != 0){
-		PrintConsole("Could not remove the call from the list !!!\n");
+		WriteLogToFile("Could not remove the call from the list !!!\n");
 	}
 
 	if (ms_list_size(lc->calls)==0)
@@ -166,12 +166,12 @@ void serphone_call_set_state(SerPhoneCall *call,SerphoneCallState cstate, const 
 	if (call->state!=cstate){
 		if (call->state==LinphoneCallEnd || call->state==LinphoneCallError){
 			if (cstate!=LinphoneCallReleased){
-				PrintConsole("Spurious call state change from %s to %s, ignored.\n",serphone_call_state_to_string(call->state),
+				WriteLogToFile("Spurious call state change from %s to %s, ignored.\n",serphone_call_state_to_string(call->state),
 				   serphone_call_state_to_string(cstate));
 				return;
 			}
 		}
-		PrintConsole("[Call] [%04d]: %s ----> %s\n",call->op->cid <0 ?0 : call->op->cid,
+		WriteLogToFile("[Call] [%04d]: %s ----> %s\n",call->op->cid <0 ?0 : call->op->cid,
 				serphone_call_state_to_string(call->state),
 		           serphone_call_state_to_string(cstate));
 		if (cstate!=LinphoneCallRefered && cstate!=LinphoneCallUpdatedRemoteVideoratio){
@@ -517,7 +517,7 @@ RtpProfile *make_profile(SerPhoneCall *call, const SalMediaDescription *md, cons
 		}
 		number=payload_type_get_number(pt);
 		if (rtp_profile_get_payload(prof,number)!=NULL){
-			PrintConsole("A payload type with number %i already exists in profile !\n",number);
+			WriteLogToFile("A payload type with number %i already exists in profile !\n",number);
 		}else
 			rtp_profile_set_payload(prof,number,pt);
 	}
@@ -527,7 +527,7 @@ RtpProfile *make_profile(SerPhoneCall *call, const SalMediaDescription *md, cons
 void serphone_core_update_allocated_audio_bandwidth_in_call(SerPhoneCall *call, const PayloadType *pt)
 {
 	call->audio_bw=(int)(call->core->get_audio_payload_bandwidth(pt)/1000.0);
-	PrintConsole("Audio bandwidth for this call is %i\n",call->audio_bw);
+	WriteLogToFile("Audio bandwidth for this call is %i\n",call->audio_bw);
 }
 
 void serphone_call_log_completed(SerPhoneCall *call)

@@ -22,7 +22,7 @@ const char *__policy_enum_to_str(SerphoneSubscribePolicy pol){
 			return "wait";
 			break;
 	}
-	PrintConsole("Invalid policy enum value.\n");
+	WriteLogToFile("Invalid policy enum value.\n");
 	return "wait";
 }
 
@@ -37,7 +37,7 @@ SerphoneSubscribePolicy __policy_str_to_enum(const char* pol)
 	if (key_compare("wait",pol)==0){
 		return LinphoneSPWait;
 	}
-	PrintConsole("Unrecognized subscribe policy: %s\n",pol);
+	WriteLogToFile("Unrecognized subscribe policy: %s\n",pol);
 	return LinphoneSPWait;
 }
 
@@ -120,7 +120,7 @@ SerphoneFriend *serphone_friend_new_with_addr(const char *addr)
 {
 	SerphoneAddress* serphone_address = serphone_address_new(addr);
 	if (serphone_address == NULL) {
-		PrintConsole("Cannot create friend for address [%s]\n",addr?addr:"null");
+		WriteLogToFile("Cannot create friend for address [%s]\n",addr?addr:"null");
 		return NULL;
 	}
 	SerphoneFriend *fr=serphone_friend_new();
@@ -262,7 +262,7 @@ SerphoneFriend::~SerphoneFriend()
 void SerphoneFriend::serphone_friend_notify(SerphoneOnlineStatus os)
 {
 	char *addr=serphone_address_as_string(serphone_friend_get_address());
-	PrintConsole("Want to notify %s, insub=%p\n",addr,insub);
+	WriteLogToFile("Want to notify %s, insub=%p\n",addr,insub);
 	ms_free((void **)&addr);
     addr = NULL;
 	if (insub!=NULL){
@@ -363,7 +363,7 @@ bool_t SerphoneFriend::serphone_friend_in_list()
 void SerphoneFriend::serphone_friend_apply(ServiceCore *lc)
 {
 	if (uri==NULL) {
-		PrintConsole("No sip url defined.\n");
+		WriteLogToFile("No sip url defined.\n");
 		return;
 	}
 	this->lc=lc;
@@ -410,7 +410,7 @@ void SerphoneFriend::__serphone_friend_do_subscribe()
 		if (cfg->op){
 			fixed_contact=sal_op_get_contact(cfg->op);
 			if (fixed_contact) {
-				PrintConsole("Contact for subscribe has been fixed using proxy to %s\n",fixed_contact);
+				WriteLogToFile("Contact for subscribe has been fixed using proxy to %s\n",fixed_contact);
 			}
 		}
 	}else from=lc->serphone_core_get_primary_contact();
@@ -447,7 +447,7 @@ int SerphoneFriend::serphone_friend_set_name(const char *name)
 {
 	SerphoneAddress *fr=uri;
 	if (fr==NULL){
-		PrintConsole("serphone_friend_set_sip_addr() must be called before serphone_friend_set_name().\n");
+		WriteLogToFile("serphone_friend_set_sip_addr() must be called before serphone_friend_set_name().\n");
 		return -1;
 	}
 	serphone_address_set_display_name(fr,name);

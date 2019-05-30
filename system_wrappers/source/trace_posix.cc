@@ -64,11 +64,17 @@ int32_t TracePosix::AddTime(char* trace_message, const TraceLevel level) const {
     dw_delta_time = 99999;
   }
 
-  sprintf(trace_message, "(%2u:%2u:%2u:%3u |%5lu) ", system_time->tm_hour,
-          system_time->tm_min, system_time->tm_sec, ms_time,
+  sprintf(trace_message, "[%4u-%02u-%02u %02u:%02u:%02u:%03u %03lu] ",
+          system_time->tm_year + 1900,
+          system_time->tm_mon + 1,
+          system_time->tm_mday,
+          system_time->tm_hour,
+          system_time->tm_min,
+          system_time->tm_sec,
+          ms_time,
           static_cast<unsigned long>(dw_delta_time));
-  // Messages are 22 characters.
-  return 22;
+  // Messages are 30 characters.
+  return 30;
 }
 
 int32_t TracePosix::AddDateTimeInfo(char* trace_message) const {

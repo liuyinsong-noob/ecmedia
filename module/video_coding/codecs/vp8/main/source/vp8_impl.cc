@@ -264,7 +264,6 @@ int VP8EncoderImpl::SetRates(uint32_t new_bitrate_kbit, uint32_t new_framerate,
       framerate = -1;
     }
     configurations_[i].rc_target_bitrate = target_bitrate;
-      printf("[ppp] vp8 encoder_%lu %u \n", i, target_bitrate);
     temporal_layers_[stream_idx]->ConfigureBitrates(target_bitrate,
                                                     max_bitrate,
                                                     framerate,
@@ -950,11 +949,6 @@ int VP8EncoderImpl::UpdateCodecFrameSize(
   if (vpx_codec_enc_config_set(&encoders_[0], &configurations_[0])) {
     return WEBRTC_VIDEO_CODEC_ERROR;
   }
-
-  WEBRTC_TRACE(yuntongxunwebrtc::kTraceError,
-			   yuntongxunwebrtc::kTraceVideoCoding,
-				0,
-			   "quality scaler: down sampler, codec_.width =%d, codec_.height = %d", codec_.width,  codec_.height);
   return WEBRTC_VIDEO_CODEC_OK;
 }
 

@@ -94,7 +94,7 @@ namespace yuntongxunwebrtc {
         int count = 0;
         
         if((ret = hls_task_->Initialize(str_url_.c_str(), vod, start, delay, error, count, this)) != ERROR_SUCCESS) {
-            PrintConsole("initialize task failed, url=%s, ret=%d", str_url_.c_str(), ret);
+            WriteLogToFile("initialize task failed, url=%s, ret=%d", str_url_.c_str(), ret);
             if(callback_) {
                  callback_(EC_LIVE_PLAY_FAILED);
             }
@@ -110,14 +110,14 @@ namespace yuntongxunwebrtc {
             if(callback_) {
                 callback_(EC_LIVE_PLAY_FAILED);
             }
-            PrintConsole("st task terminate with ret=%d", ret);
+            WriteLogToFile("st task terminate with ret=%d", ret);
         }
         else {
             if(callback_) {
                 callback_(EC_LIVE_DISCONNECTED);
             }
             
-            PrintConsole("st task terminate with ret=%d", ret);
+            WriteLogToFile("st task terminate with ret=%d", ret);
         }
         delete hls_task_;
         hls_task_ = nullptr;

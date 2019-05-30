@@ -381,13 +381,6 @@ int ViECapturer::IncomingFrame(unsigned char* video_frame,
   capability.height = height;
   capability.rawType = video_type;
 
-   static time_t last = 0;
-   int logInterval = 5;
-	if( time(NULL) > last + logInterval ) {
-        LOG(LS_WARNING) << "Period log per " << logInterval << " seconds: Video IncomingFrame(width=" << width << ", height=" << height << ", raytype=" << video_type << ")";
-        last = time(NULL);
-	}
-  
   return external_capture_module_->IncomingFrame(video_frame,
                                                  video_frame_length,
                                                  capability, capture_time);
@@ -777,8 +770,6 @@ void ViECapturer::OnCaptureFrameRate(const int32_t id,
 
 void ViECapturer::OnNoPictureAlarm(const int32_t id,
                                    const VideoCaptureAlarm alarm) {
-  LOG(LS_WARNING) << "OnNoPictureAlarm " << id;
-
   CriticalSectionScoped cs(observer_cs_.get());
   CaptureAlarm vie_alarm = (alarm == Raised) ? AlarmRaised : AlarmCleared;
   if (observer_)

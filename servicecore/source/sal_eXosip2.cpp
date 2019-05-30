@@ -55,7 +55,7 @@ void sal_get_default_local_ip(Sal *sal, int address_family,char *ip, size_t iple
 	if (eXosip_guess_localip(address_family,ip,iplen)<0){
 		/*default to something */
 		strncpy(ip,address_family==AF_INET6 ? "::1" : "127.0.0.1",iplen);
-		PrintConsole("sal_eXosip2 Could not find default routable ip address !\n");
+		WriteLogToFile("sal_eXosip2 Could not find default routable ip address !\n");
 	}
 }
 
@@ -109,7 +109,7 @@ static SalOp * sal_find_other(Sal *sal, osip_message_t *message){
 	SalOp *op;
 	osip_call_id_t *callid=osip_message_get_call_id(message);
 	if (callid==NULL) {
-		PrintConsole("sal_eXosip2 There is no call-id in this message !\n");
+		WriteLogToFile("sal_eXosip2 There is no call-id in this message !\n");
 		return NULL;
 	}
 	for(elem=sal->other_transactions;elem!=NULL;elem=elem->next){
@@ -122,7 +122,7 @@ static SalOp * sal_find_other(Sal *sal, osip_message_t *message){
 void sal_add_other(Sal *sal, SalOp *op, osip_message_t *request){
 	osip_call_id_t *callid=osip_message_get_call_id(request);
 	if (callid==NULL) {
-		PrintConsole("sal_eXosip2 There is no call id in the request !\n");
+		WriteLogToFile("sal_eXosip2 There is no call id in the request !\n");
 		return;
 	}
 	osip_call_id_clone(callid,&op->call_id);
@@ -150,7 +150,7 @@ void sal_exosip_fix_route(SalOp *op){
 		
 		osip_route_init(&rt);
 		if (osip_route_parse(rt,sal_op_get_route(op))<0){
-			PrintConsole("sal_eXosip2 Bad route  %s!\n",sal_op_get_route(op));
+			WriteLogToFile("sal_eXosip2 Bad route  %s!\n",sal_op_get_route(op));
 			sal_op_set_route(op,NULL);
 		}else{
 			/* check if the lr parameter is set , if not add it */
@@ -216,7 +216,7 @@ void sal_op_release(SalOp *op){
 		eXosip_register_remove(op->rid);
 	}
 	if (op->cid!=-1){
-		PrintConsole("sal_eXosip2 Cleaning cid %i\n",op->cid);
+		WriteLogToFile("sal_eXosip2 Cleaning cid %i\n",op->cid);
 		sal_remove_call(op->base.root,op);
 	}
 	if (op->sid!=-1){
@@ -318,7 +318,7 @@ static void _osip_trace_func(char *fi, int li, osip_trace_level_t level, char *c
 #else
     _vsnprintf(log_buffer, 2047, chfr, ap);
 #endif
-    PrintConsole("sal_eXosip2 %s\n",log_buffer);
+    WriteLogToFile("sal_eXosip2 %s\n",log_buffer);
 }
 
 static void osip_message_hook_func( int received,const char *host, int port, const char *buf)
@@ -326,7 +326,7 @@ static void osip_message_hook_func( int received,const char *host, int port, con
 	const char *p = strstr(buf,"\r\n");
 	char firstLine[256] = {0};
 	strncpy(firstLine,buf,p-buf > 255 ? 255 : p-buf);
-	PrintConsole("sal_eXosip2 [SIP] %s %s %s %s %d\n",received ? "Recv" : "Send", firstLine,received ? "From:" : "To:", host,port);
+	WriteLogToFile("sal_eXosip2 [SIP] %s %s %s %s %d\n",received ? "Recv" : "Send", firstLine,received ? "From:" : "To:", host,port);
 }
 
 Sal * sal_init(){
@@ -377,7 +377,7 @@ void *sal_get_user_pointer(const Sal *sal){
 }
 
 static void unimplemented_stub(){
-	PrintConsole("sal_eXosip2 Unimplemented SAL callback\n");
+	WriteLogToFile("sal_eXosip2 Unimplemented SAL callback\n");
 }
 
 void sal_set_callbacks(Sal *ctx, const SalCallbacks *cbs){
@@ -444,7 +444,7 @@ int sal_reset_transports(Sal *ctx){
 	}
 	return 0;
 #else
-	PrintConsole("sal_eXosip2 sal_reset_transports() not implemented in this version.\n");
+	WriteLogToFile("sal_eXosip2 sal_reset_transports() not implemented in this version.\n");
 	return -1;
 #endif
 }
@@ -502,7 +502,7 @@ int sal_listen_port(Sal *ctx, const char *addr, int port, SalTransport tr, int i
 		set_tls_options(ctx);
 		break;
 	default:
-		PrintConsole("sal_eXosip2 unexpected proto, using datagram\n");
+		WriteLogToFile("sal_eXosip2 unexpected proto, using datagram\n");
 	}
 	/*see if it looks like an IPv6 address*/
 	int use_rports = ctx->use_rports; // Copy char to int to avoid bad alignment
@@ -516,7 +516,7 @@ int sal_listen_port(Sal *ctx, const char *addr, int port, SalTransport tr, int i
 	eXosip_enable_ipv6(ipv6);
 
 	if (is_secure && tr == SalTransportUDP){
-		PrintConsole("sal_eXosip2 SIP over DTLS is not supported yet.\n");
+		WriteLogToFile("sal_eXosip2 SIP over DTLS is not supported yet.\n");
 		return -1;
 	}
 	err=eXosip_listen_addr(proto, addr, port, ipv6 ?  PF_INET6 : PF_INET, is_secure);
@@ -528,7 +528,7 @@ ortp_socket_t sal_get_socket(Sal *ctx){
 #ifdef HAVE_EXOSIP_GET_SOCKET
 	return eXosip_get_socket(IPPROTO_UDP);
 #else
-	PrintConsole("sal_eXosip2 Sorry, eXosip does not have eXosip_get_socket() method\n");
+	WriteLogToFile("sal_eXosip2 Sorry, eXosip does not have eXosip_get_socket() method\n");
 	return -1;
 #endif
 }
@@ -565,7 +565,7 @@ void sal_use_dates(Sal *ctx, bool_t enabled){
 		eXosip_set_option(EXOSIP_OPT_REGISTER_WITH_DATE,&tmp);
 	}
 #else
-	if (enabled) PrintConsole("sal_eXosip2 Exosip does not support EXOSIP_OPT_REGISTER_WITH_DATE option.\n");
+	if (enabled) WriteLogToFile("sal_eXosip2 Exosip does not support EXOSIP_OPT_REGISTER_WITH_DATE option.\n");
 #endif
 }
 
@@ -612,7 +612,7 @@ static int extract_received_rport(osip_message_t *msg, const char **received, in
 	*received=NULL;
 	osip_message_get_via(msg,0,&via);
 	if (!via) {
-		PrintConsole("sal_eXosip2 extract_received_rport(): no via.\n");
+		WriteLogToFile("sal_eXosip2 extract_received_rport(): no via.\n");
 		return -1;
 	}
 
@@ -632,7 +632,7 @@ static int extract_received_rport(osip_message_t *msg, const char **received, in
 	if (param) *received=param->gvalue;
 
 	if (rport==NULL && *received==NULL){
-		PrintConsole("sal_eXosip2 extract_received_rport(): no rport and no received parameters.\n");
+		WriteLogToFile("sal_eXosip2 extract_received_rport(): no rport and no received parameters.\n");
 		return -1;
 	}
 	return 0;
@@ -655,7 +655,7 @@ static void set_sdp_from_desc(osip_message_t *sip, const SalMediaDescription *de
 //    printf("%s called\n",__FUNCTION__);
 	sdp_message_t *msg=media_description_to_sdp(desc);
 	if (msg==NULL) {
-		PrintConsole("sal_eXosip2 Fail to print sdp message !\n");
+		WriteLogToFile("sal_eXosip2 Fail to print sdp message !\n");
 		return;
 	}
 	set_sdp(sip,msg);
@@ -663,7 +663,7 @@ static void set_sdp_from_desc(osip_message_t *sip, const SalMediaDescription *de
 }
 
 static void sdp_process(SalOp *h){
-	PrintConsole("sal_eXosip2 Doing SDP offer/answer process of type %s\n",h->sdp_offering ? "outgoing" : "incoming\n");
+	WriteLogToFile("sal_eXosip2 Doing SDP offer/answer process of type %s\n",h->sdp_offering ? "outgoing" : "incoming\n");
 	if (h->result){
 		sal_media_description_unref(&h->result);
 	}
@@ -761,7 +761,7 @@ int sal_call(SalOp *h, const char *from, const char *to){
 	route = sal_op_get_route(h);
 	err=eXosip_call_build_initial_invite(&invite,to,from,route,"Phone call");
 	if (err!=0){
-		PrintConsole("sal_eXosip2 Could not create call. Error %d (from=%s to=%s route=%s)\n",
+		WriteLogToFile("sal_eXosip2 Could not create call. Error %d (from=%s to=%s route=%s)\n",
 				err, from, to, route);
 		return -1;
 	}
@@ -801,7 +801,7 @@ int sal_call(SalOp *h, const char *from, const char *to){
 	eXosip_unlock();
 	h->cid=err;
 	if (err<0){
-		PrintConsole("sal_eXosip2 Fail to send invite ! Error code %d\n", err);
+		WriteLogToFile("sal_eXosip2 Fail to send invite ! Error code %d\n", err);
 		return -1;
 	}else{
 		callid=osip_message_get_call_id(invite);
@@ -855,7 +855,7 @@ int sal_call_accept(SalOp * h){
 	/* sends a 200 OK */
 	int err=eXosip_call_build_answer(h->tid,200,&msg);
 	if (err<0 || msg==NULL){
-		PrintConsole("sal_eXosip2 Fail to build answer for call: err=%i\n",err);
+		WriteLogToFile("sal_eXosip2 Fail to build answer for call: err=%i\n",err);
 		return -1;
 	}
 	if (h->base.root->session_expires!=0){
@@ -883,7 +883,7 @@ int sal_call_accept(SalOp * h){
 			}
 		}
 	}else{
-		PrintConsole("sal_eXosip2 You are accepting a call but not defined any media capabilities !\n");
+		WriteLogToFile("sal_eXosip2 You are accepting a call but not defined any media capabilities !\n");
 	}
 	eXosip_call_send_answer(h->tid,200,msg, NULL, 0);
 	return 0;
@@ -905,9 +905,9 @@ int sal_call_decline(SalOp *h, SalReason reason, const char *redirect){
 		eXosip_unlock();
 	}else if (reason==SalReasonMedia){
 		eXosip_lock();
-        PrintConsole("sal_eXosip2 [DEBUG HAIYUNTONG] decline media wrong");
+        WriteLogToFile("sal_eXosip2 [DEBUG HAIYUNTONG] decline media wrong");
 		int ret = eXosip_call_send_answer(h->tid,415,NULL, NULL, 0);
-        PrintConsole("sal_eXosip2 [DEBUG HAIYUNTONG] 415 return value ret:%d",ret);
+        WriteLogToFile("sal_eXosip2 [DEBUG HAIYUNTONG] 415 return value ret:%d",ret);
 		eXosip_unlock();
 	}else if (redirect!=NULL && reason==SalReasonRedirect){
 		osip_message_t *msg;
@@ -964,7 +964,7 @@ static int send_notify_for_refer(int did, const char *sipfrag){
 	eXosip_call_build_notify(did,EXOSIP_SUBCRSTATE_ACTIVE,&msg);
 	if (msg==NULL){
 		eXosip_unlock();
-		PrintConsole("sal_eXosip2 Could not build NOTIFY for refer.\n");
+		WriteLogToFile("sal_eXosip2 Could not build NOTIFY for refer.\n");
 		return -1;
 	}
 	osip_message_set_content_type(msg,"message/sipfrag");
@@ -1066,7 +1066,7 @@ int sal_call_refer_with_replaces(SalOp *h, SalOp *other_call_h){
 	int err=0;
 	eXosip_lock();
 	if (eXosip_call_get_referto(other_call_h->did,referto,sizeof(referto)-1)!=0){
-		PrintConsole("sal_eXosip2 eXosip_call_get_referto() failed for did=%i\n",other_call_h->did);
+		WriteLogToFile("sal_eXosip2 eXosip_call_get_referto() failed for did=%i\n",other_call_h->did);
 		eXosip_unlock();
 		return -1;
 	}
@@ -1115,7 +1115,7 @@ static void push_auth_to_exosip(const SalAuthInfo *info){
 	const char *userid;
 	if (info->userid==NULL || info->userid[0]=='\0') userid=info->username;
 	else userid=info->userid;
-	PrintConsole("sal_eXosip2 Authentication info for username [%s], id[%s], realm [%s] added to eXosip", info->username,userid, info->realm);
+	WriteLogToFile("sal_eXosip2 Authentication info for username [%s], id[%s], realm [%s] added to eXosip", info->username,userid, info->realm);
 	eXosip_add_authentication_info (info->username,userid,
                                   info->password, NULL,info->realm);
 }
@@ -1135,7 +1135,7 @@ int sal_call_terminate(SalOp *h){
 	eXosip_unlock();
 	if (!h->base.root->reuse_authorization) pop_auth_from_exosip();
 	if (err!=0){
-		PrintConsole("sal_eXosip2 Exosip could not terminate the call: cid=%i did=%i\n", h->cid,h->did);
+		WriteLogToFile("sal_eXosip2 Exosip could not terminate the call: cid=%i did=%i\n", h->cid,h->did);
 	}
 	h->terminated=TRUE;
 	return 0;
@@ -1161,7 +1161,7 @@ void sal_op_authenticate(SalOp *h, const SalAuthInfo *info){
 		eXosip_lock();
 		eXosip_default_action(h->pending_auth);
 		eXosip_unlock();
-		PrintConsole("sal_eXosip2 eXosip_default_action() done");
+		WriteLogToFile("sal_eXosip2 eXosip_default_action() done");
 		if (!h->base.root->reuse_authorization) pop_auth_from_exosip();
 		
 		if (h->auth_info) sal_auth_info_delete(h->auth_info); /*if already exist*/
@@ -1174,7 +1174,7 @@ void sal_op_cancel_authentication(SalOp *h) {
 	} else if (h->cid >0) {
 		sal_op_get_sal(h)->callbacks.call_failure(h,SalErrorFailure, SalReasonForbidden,"Authentication failure",0);
 	} else {
-		PrintConsole("sal_eXosip2 Auth failure not handled");
+		WriteLogToFile("sal_eXosip2 Auth failure not handled");
 	}
 
 }
@@ -1298,7 +1298,7 @@ static void inc_new_call(Sal *sal, eXosip_event_t *ev){
 	osip_header_t *h=NULL;
 	osip_message_header_get_byname(ev->request,"P-Call-UserData",0,&h);
 	if( h) {
-		PrintConsole("sal_eXosip2 P-Call-UserData is %s\n",h->hvalue );
+		WriteLogToFile("sal_eXosip2 P-Call-UserData is %s\n",h->hvalue );
 		op->invite_userdata = ms_strdup(h->hvalue);
 	}
 //haiyuntong
@@ -1316,7 +1316,7 @@ static void inc_new_call(Sal *sal, eXosip_event_t *ev){
 		if( strstr(tmp,"answer-after=") != NULL)
 		{
 			op->auto_answer_asked=TRUE;
-			PrintConsole("sal_eXosip2 The caller asked to automatically answer the call(Emergency?)\n");
+			WriteLogToFile("sal_eXosip2 The caller asked to automatically answer the call(Emergency?)\n");
 		}
 		osip_free(tmp);
 	}
@@ -1333,7 +1333,7 @@ static void handle_reinvite(Sal *sal,  eXosip_event_t *ev){
 	sdp_message_t *sdp;
 
 	if (op==NULL) {
-		PrintConsole("sal_eXosip2 Reinvite for non-existing operation !\n");
+		WriteLogToFile("sal_eXosip2 Reinvite for non-existing operation !\n");
 		return;
 	}
 	op->reinvite=TRUE;
@@ -1364,11 +1364,11 @@ static void handle_ack(Sal *sal,  eXosip_event_t *ev){
 	sdp_message_t *sdp;
 
 	if (op==NULL) {
-		PrintConsole("sal_eXosip2 ack for non-existing call !\n");
+		WriteLogToFile("sal_eXosip2 ack for non-existing call !\n");
 		return;
 	}
 	if (op->terminated) {
-		PrintConsole("sal_eXosip2 ack for terminated call, ignoring\n");
+		WriteLogToFile("sal_eXosip2 ack for terminated call, ignoring\n");
 		return;
 	}
 	
@@ -1407,7 +1407,7 @@ static void update_contact_from_response(SalOp *op, osip_message_t *response){
 			if (transport!=SalTransportUDP)
 				sal_address_set_transport(addr,transport);
 			tmp=sal_address_as_string(addr);
-			PrintConsole("sal_eXosip2 Contact address updated to %s\n",tmp);
+			WriteLogToFile("sal_eXosip2 Contact address updated to %s\n",tmp);
 			sal_op_set_contact(op,tmp);
 			sal_address_destroy(addr);
 			ms_free((void **)&tmp);
@@ -1419,7 +1419,7 @@ static int call_proceeding(Sal *sal, eXosip_event_t *ev){
 	SalOp *op=find_op(sal,ev);
 
 	if (op==NULL || op->terminated==TRUE) {
-		PrintConsole("sal_eXosip2 This call has been canceled.\n");
+		WriteLogToFile("sal_eXosip2 This call has been canceled.\n");
 		eXosip_lock();
 		eXosip_call_terminate(ev->cid,ev->did);
 		eXosip_unlock();
@@ -1467,7 +1467,7 @@ static void call_accepted(Sal *sal, eXosip_event_t *ev){
 	const char *contact;
 	
 	if (op==NULL || op->terminated==TRUE) {
-		PrintConsole("sal_eXosip2 This call has been already terminated.\n");
+		WriteLogToFile("sal_eXosip2 This call has been already terminated.\n");
 		eXosip_lock();
 		eXosip_call_terminate(ev->cid,ev->did);
 		eXosip_unlock();
@@ -1505,7 +1505,7 @@ static void call_accepted(Sal *sal, eXosip_event_t *ev){
 	osip_header_t *h=NULL;
 	osip_message_header_get_byname(ev->response,"x-ccp-time",0,&h);
 	if( h) {
-		PrintConsole("sal_eXosip2 x-ccp-time is %s\n",h->hvalue );
+		WriteLogToFile("sal_eXosip2 x-ccp-time is %s\n",h->hvalue );
 		op->remainTime = atoi(h->hvalue);
 	}
 	if (sdp){
@@ -1520,7 +1520,7 @@ static void call_accepted(Sal *sal, eXosip_event_t *ev){
 	}
 	eXosip_call_build_ack(ev->did,&msg);
 	if (msg==NULL) {
-		PrintConsole("sal_eXosip2 This call has been already terminated.\n");
+		WriteLogToFile("sal_eXosip2 This call has been already terminated.\n");
 		eXosip_lock();
 		eXosip_call_terminate(ev->cid,ev->did);
 		eXosip_unlock();
@@ -1545,7 +1545,7 @@ static void call_terminated(Sal *sal, eXosip_event_t *ev){
 	char *from=NULL;
 	SalOp *op=find_op(sal,ev);
 	if (op==NULL){
-		PrintConsole("sal_eXosip2 Call terminated for already closed call ?\n");
+		WriteLogToFile("sal_eXosip2 Call terminated for already closed call ?\n");
 		return;
 	}
 	if (ev->request){
@@ -1559,7 +1559,7 @@ static void call_terminated(Sal *sal, eXosip_event_t *ev){
 static void call_released(Sal *sal, eXosip_event_t *ev){
 	SalOp *op=find_op(sal,ev);
 	if (op==NULL){
-		PrintConsole("sal_eXosip2 No op associated to this call_released()\n");
+		WriteLogToFile("sal_eXosip2 No op associated to this call_released()\n");
 		return;
 	}
 	if (!op->terminated){
@@ -1628,7 +1628,7 @@ static bool_t process_authentication(Sal *sal, eXosip_event_t *ev){
 	const char *username,*realm;
 	op=find_op(sal,ev);
 	if (op==NULL){
-		PrintConsole("sal_eXosip2 No operation associated with this authentication !\n");
+		WriteLogToFile("sal_eXosip2 No operation associated with this authentication !\n");
 		return TRUE;
 	}
 	if (get_auth_data(ev,&realm,&username)==0){
@@ -1651,7 +1651,7 @@ static void authentication_ok(Sal *sal, eXosip_event_t *ev){
 	const char *username,*realm;
 	op=find_op(sal,ev);
 	if (op==NULL){
-		PrintConsole("sal_eXosip2 No operation associated with this authentication_ok!\n");
+		WriteLogToFile("sal_eXosip2 No operation associated with this authentication_ok!\n");
 		return ;
 	}
 	if (op->pending_auth){
@@ -1676,7 +1676,7 @@ static bool_t call_failure(Sal *sal, eXosip_event_t *ev){
 	op=(SalOp*)find_op(sal,ev);
 
 	if (op==NULL) {
-		PrintConsole("sal_eXosip2 Call failure reported for a closed call, ignored.\n");
+		WriteLogToFile("sal_eXosip2 Call failure reported for a closed call, ignored.\n");
 		return TRUE;
 	}
 
@@ -1773,7 +1773,7 @@ void sal_call_send_vfu_request(SalOp *h){
 		snprintf(clen,sizeof(clen),"%lu",(unsigned long)strlen(info_body));
 		osip_message_set_content_length(msg,clen);
 		eXosip_call_send_request(h->did,msg);
-		PrintConsole("sal_eXosip2 Sending VFU request !\n");
+		WriteLogToFile("sal_eXosip2 Sending VFU request !\n");
 	}
 	eXosip_unlock();
 }
@@ -1783,7 +1783,7 @@ static void process_media_control_xml(Sal *sal, eXosip_event_t *ev){
 	osip_body_t *body=NULL;
 
 	if (op==NULL){
-		PrintConsole("sal_eXosip2 media control xml received without operation context!\n");
+		WriteLogToFile("sal_eXosip2 media control xml received without operation context!\n");
 		return ;
 	}
 	
@@ -1791,7 +1791,7 @@ static void process_media_control_xml(Sal *sal, eXosip_event_t *ev){
 	if (body && body->body!=NULL &&
 		strstr(body->body,"picture_fast_update")){
 		osip_message_t *ans=NULL;
-		PrintConsole("sal_eXosip2 Receiving VFU request !\n");
+		WriteLogToFile("sal_eXosip2 Receiving VFU request !\n");
 		if (sal->callbacks.vfu_request){
 			sal->callbacks.vfu_request(op);
 			eXosip_call_build_answer(ev->tid,200,&ans);
@@ -1816,7 +1816,7 @@ static void process_dtmf_relay(Sal *sal, eXosip_event_t *ev){
 	osip_body_t *body=NULL;
 
 	if (op==NULL){
-		PrintConsole("sal_eXosip2 media dtmf relay received without operation context!\n");
+		WriteLogToFile("sal_eXosip2 media dtmf relay received without operation context!\n");
 		return ;
 	}
 	
@@ -1826,12 +1826,12 @@ static void process_dtmf_relay(Sal *sal, eXosip_event_t *ev){
 		const char *name=strstr(body->body,"Signal");
 		if (name==NULL) name=strstr(body->body,"signal");
 		if (name==NULL) {
-			PrintConsole("sal_eXosip2 Could not extract the dtmf name from the SIP INFO.\n");
+			WriteLogToFile("sal_eXosip2 Could not extract the dtmf name from the SIP INFO.\n");
 		}else{
 			char tmp[2];
 			name+=strlen("signal");
 			if (sscanf(name," = %1s",tmp)==1){
-				PrintConsole("sal_eXosip2 Receiving dtmf %s via SIP INFO.\n",tmp);
+				WriteLogToFile("sal_eXosip2 Receiving dtmf %s via SIP INFO.\n",tmp);
 				if (sal->callbacks.dtmf_received != NULL)
 					sal->callbacks.dtmf_received(op, tmp[0]);
 			}
@@ -1852,7 +1852,7 @@ static void fill_options_answer(osip_message_t *options){
 static void process_refer(Sal *sal, SalOp *op, eXosip_event_t *ev){
 	osip_header_t *h=NULL;
 	osip_message_t *ans=NULL;
-	PrintConsole("sal_eXosip2 Receiving REFER request !\n");
+	WriteLogToFile("sal_eXosip2 Receiving REFER request !\n");
 	osip_message_header_get_byname(ev->request,"Refer-To",0,&h);
 
 	if (h){
@@ -1866,7 +1866,7 @@ static void process_refer(Sal *sal, SalOp *op, eXosip_event_t *ev){
 				osip_header_t *referred_by=NULL;
 				osip_uri_header_get_byname(&from->url->url_headers,(char*)"Replaces",&uh);
 				if (uh!=NULL && uh->gvalue && uh->gvalue[0]!='\0'){
-					PrintConsole("sal_eXosip2 Found replaces in Refer-To");
+					WriteLogToFile("sal_eXosip2 Found replaces in Refer-To");
 					if (op->replaces){
 						ms_free((void **)&op->replaces);
 					}
@@ -1895,7 +1895,7 @@ static void process_refer(Sal *sal, SalOp *op, eXosip_event_t *ev){
 	}
 	else
 	{
-		PrintConsole("sal_eXosip2 cannot do anything with the refer without destination\n");
+		WriteLogToFile("sal_eXosip2 cannot do anything with the refer without destination\n");
 	}
 }
 
@@ -1905,7 +1905,7 @@ static void process_notify(Sal *sal, eXosip_event_t *ev){
 	SalOp *op=find_op(sal,ev);
 	osip_message_t *ans=NULL;
 
-	PrintConsole("sal_eXosip2 Receiving NOTIFY request !\n");
+	WriteLogToFile("sal_eXosip2 Receiving NOTIFY request !\n");
 	osip_from_to_str(ev->request->from,&from);
 	osip_message_header_get_byname(ev->request,"Event",0,&h);
 	if(h){
@@ -1967,7 +1967,7 @@ static void call_message_new(Sal *sal, eXosip_event_t *ev){
 				else if (strcmp(ct->subtype,"dtmf-relay")==0)
 					process_dtmf_relay(sal,ev);
 				else {
-					PrintConsole("sal_eXosip2 Unhandled SIP INFO.\n");
+					WriteLogToFile("sal_eXosip2 Unhandled SIP INFO.\n");
 					/*send an "Not implemented" answer*/
 					eXosip_lock();
 					eXosip_call_build_answer(ev->tid,501,&ans);
@@ -1995,7 +1995,7 @@ static void call_message_new(Sal *sal, eXosip_event_t *ev){
 		}else if(MSG_IS_REFER(ev->request)){
 			SalOp *op=find_op(sal,ev);
 			
-			PrintConsole("sal_eXosip2 Receiving REFER request !\n");
+			WriteLogToFile("sal_eXosip2 Receiving REFER request !\n");
 			process_refer(sal,op,ev);
 		}else if(MSG_IS_NOTIFY(ev->request)){
 			process_notify(sal,ev);
@@ -2008,12 +2008,12 @@ static void call_message_new(Sal *sal, eXosip_event_t *ev){
 			}
 			eXosip_unlock();
 		}
-	}else PrintConsole("sal_eXosip2 call_message_new: No request ?\n");
+	}else WriteLogToFile("sal_eXosip2 call_message_new: No request ?\n");
 }
 
 static void inc_update(Sal *sal, eXosip_event_t *ev){
 	osip_message_t *msg=NULL;
-	PrintConsole("sal_eXosip2 Processing incoming UPDATE");
+	WriteLogToFile("sal_eXosip2 Processing incoming UPDATE");
 	eXosip_lock();
 	eXosip_message_build_answer(ev->tid,200,&msg);
 	if (msg!=NULL)
@@ -2097,7 +2097,7 @@ static void text_received(Sal *sal, eXosip_event_t *ev){
     osip_message_get_date(ev->request,0, &date);
 	osip_message_get_body(ev->request,0,&body);
 	if (body==NULL){
-		PrintConsole("sal_eXosip2 Could not get text message from SIP body\n");
+		WriteLogToFile("sal_eXosip2 Could not get text message from SIP body\n");
 		return;
 	}
 	msg=body->body;
@@ -2117,7 +2117,7 @@ static void text_received(Sal *sal, eXosip_event_t *ev){
 
 
 static void other_request(Sal *sal, eXosip_event_t *ev){
-	PrintConsole("sal_eXosip2 in other_request");
+	WriteLogToFile("sal_eXosip2 in other_request");
 	if (ev->request==NULL) return;
 	if (strcmp(ev->request->sip_method,"MESSAGE")==0){
 		text_received(sal,ev);
@@ -2128,10 +2128,10 @@ static void other_request(Sal *sal, eXosip_event_t *ev){
 		fill_options_answer(options);
 		eXosip_options_send_answer(ev->tid,200,options);
 	}else if (strncmp(ev->request->sip_method, "REFER", 5) == 0){
-		PrintConsole("sal_eXosip2 Receiving REFER request !\n");
+		WriteLogToFile("sal_eXosip2 Receiving REFER request !\n");
 		if (comes_from_local_if(ev->request)) {
 			process_refer(sal,NULL,ev);
-		}else PrintConsole("sal_eXosip2 Ignored REFER not coming from this local loopback interface.\n");
+		}else WriteLogToFile("sal_eXosip2 Ignored REFER not coming from this local loopback interface.\n");
 	}else if (strncmp(ev->request->sip_method, "UPDATE", 6) == 0){
 		inc_update(sal,ev);
 	}else {
@@ -2139,7 +2139,7 @@ static void other_request(Sal *sal, eXosip_event_t *ev){
 		size_t msglen=0;
 		osip_message_to_str(ev->request,&tmp,&msglen);
 		if (tmp){
-			PrintConsole("sal_eXosip2 Unsupported request received:\n%s\n",tmp);
+			WriteLogToFile("sal_eXosip2 Unsupported request received:\n%s\n",tmp);
 			osip_free(tmp);
 		}
 		/*answer with a 501 Not implemented*/
@@ -2169,7 +2169,7 @@ static bool_t fix_message_contact(SalOp *op, osip_message_t *request,osip_messag
 	if (extract_received_rport(last_answer,&received,&rport,&transport)==-1) return FALSE;
 	osip_message_get_contact(request,0,&ctt);
 	if (ctt == NULL) {
-		PrintConsole("sal_eXosip2 fix_message_contact(): no contact to update");
+		WriteLogToFile("sal_eXosip2 fix_message_contact(): no contact to update");
 		return FALSE;
 	}
 	if (expire_last_contact){
@@ -2238,9 +2238,9 @@ static bool_t register_again_with_updated_contact(SalOp *op, osip_message_t *ori
 				&& sal_address_get_port_int(ori_contact_address) == rport
 			&& sal_address_get_transport(ori_contact_address) == transport) {
 				if (!from_request){
-					PrintConsole("sal_eXosip2 Register response has up to date contact, doing nothing.\n");
+					WriteLogToFile("sal_eXosip2 Register response has up to date contact, doing nothing.\n");
 				}else {
-					PrintConsole("sal_eXosip2 Register response does not have up to date contact, but last request had.\n"
+					WriteLogToFile("sal_eXosip2 Register response does not have up to date contact, but last request had.\n"
 						"Stupid registrar detected, giving up.\n");
 				}
 				found_valid_contact=TRUE;
@@ -2251,24 +2251,24 @@ static bool_t register_again_with_updated_contact(SalOp *op, osip_message_t *ori
 		i++;
 	}while(!found_valid_contact);
 	if (!found_valid_contact)
-		PrintConsole("sal_eXosip2 Contact do not match, resending register.\n");
+		WriteLogToFile("sal_eXosip2 Contact do not match, resending register.\n");
 	else return FALSE;
 
 	eXosip_lock();
 	eXosip_register_build_register(op->rid,op->expires,&msg);
 	if (msg==NULL){
 	    eXosip_unlock();
-	    PrintConsole("sal_eXosip2 Fail to create a contact updated register.\n");
+	    WriteLogToFile("sal_eXosip2 Fail to create a contact updated register.\n");
 	    return FALSE;
 	}
 	if (fix_message_contact(op,msg,last_answer,op->base.root->expire_old_contact)) {
 		eXosip_register_send_register(op->rid,msg);
 		eXosip_unlock();  
-		PrintConsole("sal_eXosip2 Resending new register with updated contact\n");
+		WriteLogToFile("sal_eXosip2 Resending new register with updated contact\n");
 		update_contact_from_response(op,last_answer);
 		return TRUE;
 	} else {
-	    PrintConsole("sal_eXosip2 Fail to send updated register.\n");
+	    WriteLogToFile("sal_eXosip2 Fail to send updated register.\n");
 	    eXosip_unlock();
 	    return FALSE;
 	}
@@ -2281,7 +2281,7 @@ static void registration_success(Sal *sal, eXosip_event_t *ev){
 	osip_header_t *h=NULL;
 	bool_t registered;
 	if (op==NULL){
-		PrintConsole("sal_eXosip2 Receiving register response for unknown operation\n");
+		WriteLogToFile("sal_eXosip2 Receiving register response for unknown operation\n");
 		return;
 	}
 	osip_message_get_expires(ev->request,0,&h);
@@ -2303,7 +2303,7 @@ static bool_t registration_failure(Sal *sal, eXosip_event_t *ev){
 	SalError se=SalErrorUnknown;
 	
 	if (op==NULL){
-		PrintConsole("sal_eXosip2 Receiving register failure for unknown operation\n");
+		WriteLogToFile("sal_eXosip2 Receiving register failure for unknown operation\n");
 		return TRUE;
 	}
 	if (ev->response){
@@ -2379,7 +2379,7 @@ static void other_request_reply(Sal *sal,eXosip_event_t *ev){
     SalOp *op=find_op(sal,ev);
     
 	if (op==NULL){
-		PrintConsole("sal_eXosip2 other_request_reply(): Receiving response to unknown request.\n");
+		WriteLogToFile("sal_eXosip2 other_request_reply(): Receiving response to unknown request.\n");
 		return;
 	}
 	if (ev->response){
@@ -2391,7 +2391,7 @@ static void other_request_reply(Sal *sal,eXosip_event_t *ev){
 				sal->callbacks.ping_reply(op);
 		}
 		if (ev->request && strcmp(osip_message_get_method(ev->request),"MESSAGE")==0) {
-			PrintConsole("sal_eXosip2 Receive MESSAGE response %d\n",ev->response->status_code);
+			WriteLogToFile("sal_eXosip2 Receive MESSAGE response %d\n",ev->response->status_code);
 
 			osip_header_t *date = NULL;
 			osip_message_get_date(ev->response,0, &date);
@@ -2402,7 +2402,7 @@ static void other_request_reply(Sal *sal,eXosip_event_t *ev){
 		}
 	} else {
         if (ev->request && strcmp(osip_message_get_method(ev->request),"MESSAGE")==0) {
-			PrintConsole("sal_eXosip2 MESSAGE request time out!\n");
+			WriteLogToFile("sal_eXosip2 MESSAGE request time out!\n");
 			sal->callbacks.text_send_report(sal,op->msgid,"",-1);
 		}
     }
@@ -2421,59 +2421,59 @@ static void process_in_call_reply(Sal *sal, eXosip_event_t *ev){
 }
 
 static bool_t process_event(Sal *sal, eXosip_event_t *ev){
-	PrintConsole("sal_eXosip2 serphone process event get a message %d\n",ev->type);
+	WriteLogToFile("sal_eXosip2 serphone process event get a message %d\n",ev->type);
 	switch(ev->type){
 		case EXOSIP_CALL_ANSWERED:
-			PrintConsole("sal_eXosip2 CALL_ANSWERED\n");
+			WriteLogToFile("sal_eXosip2 CALL_ANSWERED\n");
 			call_accepted(sal,ev);
 			authentication_ok(sal,ev);
 			break;
 		case EXOSIP_CALL_CLOSED:
 		case EXOSIP_CALL_CANCELLED:
-			PrintConsole("sal_eXosip2 CALL_CLOSED or CANCELLED\n");
+			WriteLogToFile("sal_eXosip2 CALL_CLOSED or CANCELLED\n");
 			call_terminated(sal,ev);
 			break;
 		case EXOSIP_CALL_TIMEOUT:
 		case EXOSIP_CALL_NOANSWER:
-			PrintConsole("sal_eXosip2 CALL_TIMEOUT or NOANSWER\n");
+			WriteLogToFile("sal_eXosip2 CALL_TIMEOUT or NOANSWER\n");
 			return call_failure(sal,ev);
 			break;
 		case EXOSIP_CALL_REQUESTFAILURE:
 		case EXOSIP_CALL_GLOBALFAILURE:
 		case EXOSIP_CALL_SERVERFAILURE:
-			PrintConsole("sal_eXosip2 CALL_REQUESTFAILURE or GLOBALFAILURE or SERVERFAILURE\n");
+			WriteLogToFile("sal_eXosip2 CALL_REQUESTFAILURE or GLOBALFAILURE or SERVERFAILURE\n");
 			return call_failure(sal,ev);
 			break;
 		case EXOSIP_CALL_RELEASED:
-			PrintConsole("sal_eXosip2 CALL_RELEASED\n");
+			WriteLogToFile("sal_eXosip2 CALL_RELEASED\n");
 			call_released(sal, ev);
 			break;
 		case EXOSIP_CALL_INVITE:
-			PrintConsole("sal_eXosip2 CALL_NEW\n");
+			WriteLogToFile("sal_eXosip2 CALL_NEW\n");
 			inc_new_call(sal,ev);
 			break;
 		case EXOSIP_CALL_REINVITE:
 			handle_reinvite(sal,ev);
 			break;
 		case EXOSIP_CALL_ACK:
-			PrintConsole("sal_eXosip2 CALL_ACK\n");
+			WriteLogToFile("sal_eXosip2 CALL_ACK\n");
 			handle_ack(sal,ev);
 			break;
 		case EXOSIP_CALL_REDIRECTED:
-			PrintConsole("sal_eXosip2 CALL_REDIRECTED\n");
+			WriteLogToFile("sal_eXosip2 CALL_REDIRECTED\n");
 			eXosip_default_action(ev);
 			break;
 		case EXOSIP_CALL_PROCEEDING:
-			PrintConsole("sal_eXosip2 CALL_PROCEEDING\n");
+			WriteLogToFile("sal_eXosip2 CALL_PROCEEDING\n");
 			call_proceeding(sal,ev);
 			break;
 		case EXOSIP_CALL_RINGING:
-			PrintConsole("sal_eXosip2 CALL_RINGING\n");
+			WriteLogToFile("sal_eXosip2 CALL_RINGING\n");
 			call_ringing(sal,ev);
 			authentication_ok(sal,ev);
 			break;
 		case EXOSIP_CALL_MESSAGE_NEW:
-			PrintConsole("sal_eXosip2 EXOSIP_CALL_MESSAGE_NEW\n");
+			WriteLogToFile("sal_eXosip2 EXOSIP_CALL_MESSAGE_NEW\n");
 			call_message_new(sal,ev);
 			break;
 		case EXOSIP_CALL_MESSAGE_REQUESTFAILURE:
@@ -2483,30 +2483,30 @@ static bool_t process_event(Sal *sal, eXosip_event_t *ev){
 			}
 			break;
 		case EXOSIP_CALL_MESSAGE_ANSWERED:
-			PrintConsole("sal_eXosip2 EXOSIP_CALL_MESSAGE_ANSWERED\n");
+			WriteLogToFile("sal_eXosip2 EXOSIP_CALL_MESSAGE_ANSWERED\n");
 			process_in_call_reply(sal,ev);
 		break;
 		case EXOSIP_IN_SUBSCRIPTION_NEW:
-			PrintConsole("sal_eXosip2 CALL_IN_SUBSCRIPTION_NEW\n");
+			WriteLogToFile("sal_eXosip2 CALL_IN_SUBSCRIPTION_NEW\n");
 			sal_exosip_subscription_recv(sal,ev);
 			break;
 		case EXOSIP_IN_SUBSCRIPTION_RELEASED:
-			PrintConsole("sal_eXosip2 CALL_SUBSCRIPTION_NEW\n");
+			WriteLogToFile("sal_eXosip2 CALL_SUBSCRIPTION_NEW\n");
 			sal_exosip_in_subscription_closed(sal,ev);
 			break;
 		case EXOSIP_SUBSCRIPTION_UPDATE:
-			PrintConsole("sal_eXosip2 CALL_SUBSCRIPTION_UPDATE\n");
+			WriteLogToFile("sal_eXosip2 CALL_SUBSCRIPTION_UPDATE\n");
 			break;
 		case EXOSIP_SUBSCRIPTION_NOTIFY:
-			PrintConsole("sal_eXosip2 CALL_SUBSCRIPTION_NOTIFY\n");
+			WriteLogToFile("sal_eXosip2 CALL_SUBSCRIPTION_NOTIFY\n");
 			sal_exosip_notify_recv(sal,ev);
 			break;
 		case EXOSIP_SUBSCRIPTION_ANSWERED:
-			PrintConsole("sal_eXosip2 EXOSIP_SUBSCRIPTION_ANSWERED, ev->sid=%i, ev->did=%i\n",ev->sid,ev->did);
+			WriteLogToFile("sal_eXosip2 EXOSIP_SUBSCRIPTION_ANSWERED, ev->sid=%i, ev->did=%i\n",ev->sid,ev->did);
 			sal_exosip_subscription_answered(sal,ev);
 			break;
 		case EXOSIP_SUBSCRIPTION_CLOSED:
-			PrintConsole("sal_eXosip2 EXOSIP_SUBSCRIPTION_CLOSED\n");
+			WriteLogToFile("sal_eXosip2 EXOSIP_SUBSCRIPTION_CLOSED\n");
 			sal_exosip_subscription_closed(sal,ev);
 			break;
 		case EXOSIP_SUBSCRIPTION_REQUESTFAILURE:   /**< announce a request failure      */
@@ -2518,7 +2518,7 @@ static bool_t process_event(Sal *sal, eXosip_event_t *ev){
 			sal_exosip_subscription_closed(sal,ev);
 			break;
 		case EXOSIP_REGISTRATION_FAILURE:
-			PrintConsole("sal_eXosip2 REGISTRATION_FAILURE\n");
+			WriteLogToFile("sal_eXosip2 REGISTRATION_FAILURE\n");
 			return registration_failure(sal,ev);
 			break;
 		case EXOSIP_REGISTRATION_SUCCESS:
@@ -2554,7 +2554,7 @@ static bool_t process_event(Sal *sal, eXosip_event_t *ev){
             sal->callbacks.stun_packet(sal, ev->call_id, ev->stun_event, ev->is_video);
             break;
 		default:
-			PrintConsole("sal_eXosip2 Unhandled exosip event ! %i\n",ev->type);
+			WriteLogToFile("sal_eXosip2 Unhandled exosip event ! %i\n",ev->type);
 			break;
 	}
 	return TRUE;
@@ -2635,7 +2635,7 @@ int sal_register(SalOp *h, const char *proxy, const char *from, int expires){
 		char domain[256];
 		char *uri, *domain_ptr = NULL;
 		if (from_parsed==NULL) {
-			PrintConsole("sal_eXosip2 sal_register() bad from %s\n",from);
+			WriteLogToFile("sal_eXosip2 sal_register() bad from %s\n",from);
 			return -1;
 		}
 		/* Get domain using sal_address_as_string_uri_only() and stripping the username part instead of
@@ -2656,7 +2656,7 @@ int sal_register(SalOp *h, const char *proxy, const char *from, int expires){
 			sal_register_add_route(msg,proxy);
 			sal_add_register(h->base.root,h);
 		}else{
-			PrintConsole("sal_eXosip2 Could not build initial register.\n");
+			WriteLogToFile("sal_eXosip2 Could not build initial register.\n");
 			eXosip_unlock();
 			return -1;
 		}
@@ -2685,7 +2685,7 @@ int sal_register_refresh(SalOp *op, int expires){
 	const char *contact=sal_op_get_contact(op);
 	
 	if (op->rid==-1){
-		PrintConsole("sal_eXosip2 Unexistant registration context, not possible to refresh.\n");
+		WriteLogToFile("sal_eXosip2 Unexistant registration context, not possible to refresh.\n");
 		return -1;
 	}
 #ifdef HAVE_EXOSIP_TRYLOCK
@@ -2710,7 +2710,7 @@ int sal_register_refresh(SalOp *op, int expires){
 		if (contact) register_set_contact(msg,contact);
 		sal_register_add_route(msg,sal_op_get_route(op));
 		eXosip_register_send_register(op->rid,msg);
-	}else PrintConsole("sal_eXosip2 Could not build REGISTER refresh message.\n");
+	}else WriteLogToFile("sal_eXosip2 Could not build REGISTER refresh message.\n");
 	eXosip_unlock();
 	return (msg != NULL) ? 0 : -1;
 }
@@ -2730,7 +2730,7 @@ int sal_unregister(SalOp *h){
     }
     
 	if (msg) eXosip_register_send_register(h->rid,msg);
-	else PrintConsole("sal_eXosip2 Could not build unREGISTER !\n");
+	else WriteLogToFile("sal_eXosip2 Could not build unREGISTER !\n");
 	eXosip_unlock();
 	return 0;
 }
@@ -2983,9 +2983,9 @@ void sal_reuse_authorization(Sal *ctx, bool_t value) {
 
 void print_sdp(sdp_message_t *sdp)
 {
-    PrintConsole("sal_eXosip2 check sdp:\n");
+    WriteLogToFile("sal_eXosip2 check sdp:\n");
     char *msg=NULL;
     sdp_message_to_str(sdp, &msg);
-    PrintConsole("sal_eXosip2 %s",msg);
-    PrintConsole("sal_eXosip2 \ncheck sdp end\n");
+    WriteLogToFile("sal_eXosip2 %s",msg);
+    WriteLogToFile("sal_eXosip2 \ncheck sdp end\n");
 }

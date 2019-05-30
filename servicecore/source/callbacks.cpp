@@ -80,7 +80,7 @@ static void call_received(SalOp *h){
 #endif
     ServiceCore *lc=(ServiceCore *)sal_get_user_pointer(sal_op_get_sal(h));
     
-    PrintConsole("display name:%s",((SalOpBase *)h)->from);
+    WriteLogToFile("display name:%s",((SalOpBase *)h)->from);
     const char *fromBegin = strstr(((SalOpBase *)h)->from,":");
     const char *fromEnd = strstr(fromBegin, "@");
     char caller[512] = {0};
@@ -156,7 +156,7 @@ static void call_received(SalOp *h){
     if (((SalOpBase*)h)->remote_media &&
 		(!lc->srtp_enable && ((SalOpBase*)h)->remote_media->streams[0].proto == SalProtoRtpSavp)
         || (lc->srtp_enable && ((SalOpBase*)h)->remote_media->streams[0].proto == SalProtoRtpAvp)) {
-        PrintConsole("Local media proto[%d] is different from that from remote[%d]\n", lc->srtp_enable?SalProtoRtpSavp:SalProtoRtpAvp, ((SalOpBase*)h)->remote_media->streams[0].proto);
+        WriteLogToFile("Local media proto[%d] is different from that from remote[%d]\n", lc->srtp_enable?SalProtoRtpSavp:SalProtoRtpAvp, ((SalOpBase*)h)->remote_media->streams[0].proto);
         sal_call_decline(h, SalReasonMedia, NULL);
         sal_op_release(h);
         return;
@@ -168,7 +168,7 @@ static void call_received(SalOp *h){
 	to_addr=serphone_address_new(to);
     
 	if ((lc->already_a_call_with_remote_address(from_addr) && prevent_colliding_calls) || lc->already_a_call_pending()){
-		PrintConsole("Receiving another call while one is ringing or initiated, refusing this one with busy message.\n");
+		WriteLogToFile("Receiving another call while one is ringing or initiated, refusing this one with busy message.\n");
 		sal_call_decline(h,SalReasonBusy,NULL);
 		sal_op_release(h);
 		serphone_address_destroy(from_addr);
@@ -185,7 +185,7 @@ static void call_received(SalOp *h){
     /*add begin------------------Sean20130622----------for video ice------------*/
 	if ((lc->serphone_core_get_firewall_policy() == LinphonePolicyUseIce) && (call->ice_session != NULL)) {
 		/* Defer ringing until the end of the ICE candidates gathering process. */
-		PrintConsole("Defer ringing to gather ICE candidates");
+		WriteLogToFile("Defer ringing to gather ICE candidates");
 		return;
 	}
 #ifdef BUILD_UPNP
@@ -250,7 +250,7 @@ static void call_ringing(SalOp *h){
 		if ( call->m_audiostream_flag )
 		{
 			//streams already started 
-			PrintConsole("Early media already started.\n");
+			WriteLogToFile("Early media already started.\n");
 			return;
 		}
 		if (lc->vtable.show) lc->vtable.show(lc);
@@ -262,7 +262,7 @@ static void call_ringing(SalOp *h){
 			lc->m_ringplay_flag=FALSE;
 			lc->dmfs_playing_start_time=0;
 		}
-		PrintConsole("Doing early media...\n");
+		WriteLogToFile("Doing early media...\n");
 		lc->serphone_core_update_streams(call,md);
 	}
 }
@@ -283,7 +283,7 @@ static void call_accepted(SalOp *op){
 	SalMediaDescription *md;
 	
 	if (call==NULL){
-		PrintConsole("No call to accept.\n");
+		WriteLogToFile("No call to accept.\n");
 		return ;
 	}
 	
@@ -313,7 +313,7 @@ static void call_accepted(SalOp *op){
     }
     call->params.has_video &= hasvideo;
 	
-    PrintConsole("call_accepted call->state=%d\n", call->state);
+    WriteLogToFile("call_accepted call->state=%d\n", call->state);
     
 	if (call->state==LinphoneCallOutgoingProgress ||
 		call->state==LinphoneCallOutgoingProceeding ||
@@ -390,7 +390,7 @@ static void call_accepted(SalOp *op){
 		}
 	}else{
 		/*send a bye*/
-		PrintConsole("Incompatible SDP offer received in 200Ok, need to abort the call\n");
+		WriteLogToFile("Incompatible SDP offer received in 200Ok, need to abort the call\n");
 		lc->serphone_core_abort_call(call,_("Incompatible, check codecs..."));
 	}
 }
@@ -408,7 +408,7 @@ static void call_ack(SalOp *op){
 	ServiceCore *lc=(ServiceCore *)sal_get_user_pointer(sal_op_get_sal(op));
 	SerPhoneCall *call=(SerPhoneCall*)sal_op_get_user_pointer(op);
 	if (call==NULL){
-		PrintConsole("No call to be ACK'd\n");
+		WriteLogToFile("No call to be ACK'd\n");
 		return ;
 	}
 	if (call->media_pending){
@@ -424,7 +424,7 @@ static void call_ack(SalOp *op){
 			serphone_call_set_state (call,LinphoneCallStreamsRunning,"Connected (streams running)");
 		}else{
 			/*send a bye*/
-			PrintConsole("Incompatible SDP response received in ACK, need to abort the call\n");
+			WriteLogToFile("Incompatible SDP response received in ACK, need to abort the call\n");
 			lc->serphone_core_abort_call(call,"No codec intersection");
 			return;
 		}
@@ -523,10 +523,10 @@ static void call_terminated(SalOp *op, const char *from){
 	if (call==NULL) return;
 	
 	if (serphone_call_get_state(call)==LinphoneCallEnd || serphone_call_get_state(call)==LinphoneCallError){
-		PrintConsole("call_terminated: ignoring.\n");
+		WriteLogToFile("call_terminated: ignoring.\n");
 		return;
 	}
-	PrintConsole("Current call terminated...\n");
+	WriteLogToFile("Current call terminated...\n");
 	//we stop the call only if we have this current call or if we are in call
 	if ( lc->m_ringplay_flag && ( (ms_list_size(lc->calls)  == 1) || lc->serphone_core_in_call() )) {
 		lc->ring_stop();
@@ -560,7 +560,7 @@ static void call_failure(SalOp *op, SalError error, SalReason sr, const char *de
 	SerPhoneCall *call=(SerPhoneCall*)sal_op_get_user_pointer(op);
 
 	if (call==NULL){
-		PrintConsole("Call faillure reported on already cleaned call ?\n");
+		WriteLogToFile("Call faillure reported on already cleaned call ?\n");
 		return ;
 	}
     
@@ -733,7 +733,7 @@ static void call_released(SalOp *op){
 	SerPhoneCall *call=(SerPhoneCall*)sal_op_get_user_pointer(op);
 	if (call!=NULL){
 		serphone_call_set_state(call,LinphoneCallReleased,"Call released");
-	}else PrintConsole("call_released() for already destroyed call ?\n");
+	}else WriteLogToFile("call_released() for already destroyed call ?\n");
 }
 
 
@@ -747,7 +747,7 @@ static void auth_requested(SalOp *h, const char *realm, const char *username){
 		/*don't request authentication for ping requests. Their purpose is just to get any
 		 * answer to get the Via's received and rport parameters.
 		 */
-		PrintConsole("auth_requested(): ignored for ping request.\n");
+		WriteLogToFile("auth_requested(): ignored for ping request.\n");
 		return;
 	}
 	
@@ -803,7 +803,7 @@ static void register_success(SalOp *op, bool_t registered){
         
         if( ! elem)
         {
-            PrintConsole("This Proxy config:%d is already destroyed.\n", cfg);
+            WriteLogToFile("This Proxy config:%d is already destroyed.\n", cfg);
             return;
         }
     }
@@ -832,11 +832,11 @@ static void register_failure(SalOp *op, SalError error, SalReason reason, const 
 	SerphoneProxyConfig *cfg=(SerphoneProxyConfig*)sal_op_get_user_pointer(op);
 
 	if (cfg==NULL){
-		PrintConsole("Registration failed for unknown proxy config.\n");
+		WriteLogToFile("Registration failed for unknown proxy config.\n");
 		return ;
 	}
 	if (cfg->deletion_date!=0){
-		PrintConsole("Registration failed for removed proxy config, ignored\n");
+		WriteLogToFile("Registration failed for removed proxy config, ignored\n");
 		return;
 	}
 	if (details==NULL)
@@ -866,7 +866,7 @@ static void register_failure(SalOp *op, SalError error, SalReason reason, const 
         lc->sip_conf.proxies=NULL;
         lc->serphone_core_set_default_proxy(NULL);
 	}
-    PrintConsole("Registration failed\n");
+    WriteLogToFile("Registration failed\n");
 //    ms_list_for_each(lc->sip_conf.proxies,(void (*)(void*)) serphone_proxy_config_destroy);
 //    ms_list_free(lc->sip_conf.proxies);
 //	lc->sip_conf.proxies=NULL;
@@ -877,7 +877,7 @@ static void vfu_request(SalOp *op){
 #ifdef VIDEO_ENABLED
 	SerPhoneCall *call=(SerPhoneCall*)sal_op_get_user_pointer (op);
 	if (call==NULL){
-		PrintConsole("VFU request but no call !\n");
+		WriteLogToFile("VFU request but no call !\n");
 		return ;
 	}
 //Sean add begin 20131022 for video fast update in video conference
@@ -915,7 +915,7 @@ static void refer_received(Sal *sal, SalOp *op, const char *referto){
             msg = NULL;
 		}
 		if (call->state!=LinphoneCallPaused){
-			PrintConsole("Automatically pausing current call to accept transfer.\n");
+			WriteLogToFile("Automatically pausing current call to accept transfer.\n");
 			lc->serphone_core_pause_call(call);
 			call->was_automatically_paused=TRUE;
 			/*then we will start the refered when the pause is accepted, in order to serialize transactions within the dialog.
@@ -941,7 +941,7 @@ static void text_send_report(Sal *sal, const char *msgid, const char *date, int 
 static void notify(SalOp *op, const char *from, const char *msg){
 	ServiceCore *lc=(ServiceCore *)sal_get_user_pointer(sal_op_get_sal(op));
 	SerPhoneCall *call=(SerPhoneCall*)sal_op_get_user_pointer (op);
-	PrintConsole("get a %s notify from %s\n",msg,from);
+	WriteLogToFile("get a %s notify from %s\n",msg,from);
 	if(lc->vtable.notify_recv)
 		lc->vtable.notify_recv(lc,call,from,msg);
 }
@@ -963,7 +963,7 @@ static void subscribe_closed(SalOp *op, const char *from){
 
 static void ping_reply(SalOp *op){
 	SerPhoneCall *call=(SerPhoneCall*) sal_op_get_user_pointer(op);
-	PrintConsole("ping reply !\n");
+	WriteLogToFile("ping reply !\n");
 	if (call){
 		if (call->state==LinphoneCallOutgoingInit){
 			call->core->serphone_core_start_invite(call,NULL);
@@ -971,13 +971,13 @@ static void ping_reply(SalOp *op){
 	}
 	else
 	{
-		PrintConsole("ping reply without call attached...\n");
+		WriteLogToFile("ping reply without call attached...\n");
 	}
 }
 
 static void option_reply(SalOp *op, int status){
 	int *account_status=(int*) sal_op_get_user_pointer(op);
-	PrintConsole("option reply status=%d !\n", status);
+	WriteLogToFile("option reply status=%d !\n", status);
 	switch(status) {
 		case 200:
 			*account_status = account_Status_Online;
@@ -1001,7 +1001,7 @@ static void notify_refer(SalOp *op, SalReferStatus status){
 	SerPhoneCall *call=(SerPhoneCall*) sal_op_get_user_pointer(op);
 	SerphoneCallState cstate;
 	if (call==NULL) {
-		PrintConsole("Receiving notify_refer for unknown call.\n");
+		WriteLogToFile("Receiving notify_refer for unknown call.\n");
 		return ;
 	}
 	switch(status){
@@ -1026,7 +1026,7 @@ static void notify_refer(SalOp *op, SalReferStatus status){
 
 static void stun_packet(Sal *sal, const char *call_id, OrtpEvent *stun_packet, bool_t is_video)
 {
-    PrintConsole("ICE:stun_packet\n");
+    WriteLogToFile("ICE:stun_packet\n");
                  
     ServiceCore *lc=(ServiceCore *)sal_get_user_pointer(sal);
     
@@ -1039,7 +1039,7 @@ static void stun_packet(Sal *sal, const char *call_id, OrtpEvent *stun_packet, b
         call = lc->serphone_core_find_call_by_user_cid(call_id);
     }
     if( !call ) {
-        PrintConsole("ICE: stun_packet can't find call by channelID=%s\n", call_id);
+        WriteLogToFile("ICE: stun_packet can't find call by channelID=%s\n", call_id);
         return;
     }
     

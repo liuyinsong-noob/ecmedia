@@ -118,7 +118,7 @@ namespace yuntongxunwebrtc {
                             callback_(EC_LIVE_CONNECTING);
                         }
                         if (srs_rtmp_handshake(rtmp_) == 0) {
-                            PrintConsole("SRS: simple handshake ok.");
+                            WriteLogToFile("SRS: simple handshake ok.");
                             rtmp_status_ = RS_PLY_Handshaked;
                         }
                         else {
@@ -133,7 +133,7 @@ namespace yuntongxunwebrtc {
                     case RS_PLY_Handshaked:
                     {
                         if (srs_rtmp_connect_app(rtmp_) == 0) {
-                            PrintConsole("SRS: connect vhost/app ok.");
+                            WriteLogToFile("SRS: connect vhost/app ok.");
                             rtmp_status_ = RS_PLY_Connected;
                         }
                         else {
@@ -148,7 +148,7 @@ namespace yuntongxunwebrtc {
                     case RS_PLY_Connected:
                     {
                         if (srs_rtmp_play_stream(rtmp_) == 0) {
-                            PrintConsole("SRS: play stream ok.");
+                            WriteLogToFile("SRS: play stream ok.");
                             rtmp_status_ = RS_PLY_Played;
                             if(callback_) {
                                 callback_(EC_LIVE_CONNECT_SUCCESS);
@@ -284,7 +284,7 @@ namespace yuntongxunwebrtc {
             handleAuidoPacket(data, size, timestamp);
         } else if (type == SRS_RTMP_TYPE_SCRIPT) {
             if (!srs_rtmp_is_onMetaData(type, data, size)) {
-                PrintConsole("drop message type=%#x, size=%dB", type, size);
+                WriteLogToFile("drop message type=%#x, size=%dB", type, size);
             }
         }
         free(data);
@@ -319,7 +319,7 @@ namespace yuntongxunwebrtc {
                     break;
                 case 1:
                     if (!unPackNAL(data + 5, len - 5, nal)) {
-                        PrintConsole("[RTMP ERROR] %s unpack nalu error\n", __FUNCTION__);
+                        WriteLogToFile("[RTMP ERROR] %s unpack nalu error\n", __FUNCTION__);
                         return;
                     }
                     payloadData = &nal[0];
@@ -329,7 +329,7 @@ namespace yuntongxunwebrtc {
                     }
                     break;
                 default:
-                    PrintConsole("[RTMP ERROR] %s codec %d not supported\n", __FUNCTION__, data[1]);
+                    WriteLogToFile("[RTMP ERROR] %s codec %d not supported\n", __FUNCTION__, data[1]);
                     return;
             }
             

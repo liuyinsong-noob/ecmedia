@@ -25,7 +25,7 @@ SalOp * sal_find_out_subscribe(Sal *sal, int sid){
 		op=(SalOp*)elem->data;
 		if (op->sid==sid) return op;
 	}
-	PrintConsole("No op for sid %i\n",sid);
+	WriteLogToFile("No op for sid %i\n",sid);
 	return NULL;
 }
 
@@ -92,7 +92,7 @@ char *sal_text_send(SalOp *op, const char *from, const char *to, const char *msg
 			eXosip_message_send_request(sip);
             osip_call_id_to_str(sip->call_id, &callid);
 		}else{
-			PrintConsole("Could not build MESSAGE request !\n");
+			WriteLogToFile("Could not build MESSAGE request !\n");
 		}
 		eXosip_unlock();
 	}
@@ -104,7 +104,7 @@ char *sal_text_send(SalOp *op, const char *from, const char *to, const char *msg
 		eXosip_call_build_request(op->did,"MESSAGE",&sip);
 		if(sip == NULL)
 		{
-			PrintConsole("could not get a build info to send MESSAGE, maybe no previous call established ?\n");
+			WriteLogToFile("could not get a build info to send MESSAGE, maybe no previous call established ?\n");
 			eXosip_unlock();
 			return NULL;
 		}
@@ -151,7 +151,7 @@ int sal_subscribe_presence(SalOp *op, const char *from, const char *to){
 	eXosip_subscribe_build_initial_request(&msg,sal_op_get_to(op),sal_op_get_from(op),
 	    	sal_op_get_route(op),"presence",600);
 	if (msg==NULL){
-		PrintConsole("Could not build subscribe request to %s\n",to);
+		WriteLogToFile("Could not build subscribe request to %s\n",to);
 		eXosip_unlock();
 		return -1;
 	}
@@ -172,7 +172,7 @@ int sal_subscribe_presence(SalOp *op, const char *from, const char *to){
 int sal_unsubscribe(SalOp *op){
 	osip_message_t *msg=NULL;
 	if (op->did==-1){
-		PrintConsole("cannot unsubscribe, no dialog !\n");
+		WriteLogToFile("cannot unsubscribe, no dialog !\n");
 		return -1;
 	}
 	eXosip_lock();
@@ -180,7 +180,7 @@ int sal_unsubscribe(SalOp *op){
 	if (msg){
 		osip_message_set_expires(msg,"0");
 		eXosip_subscribe_send_refresh_request(op->did,msg);
-	}else PrintConsole("Could not build subscribe refresh request ! op->sid=%i, op->did=%i\n",
+	}else WriteLogToFile("Could not build subscribe refresh request ! op->sid=%i, op->did=%i\n",
 	    	op->sid,op->did);
 	eXosip_unlock();
 	return 0;
@@ -191,7 +191,7 @@ int sal_subscribe_accept(SalOp *op){
 	eXosip_lock();
 	eXosip_insubscription_build_answer(op->tid,202,&msg);
 	if (msg==NULL){
-		PrintConsole("Fail to build answer to subscribe.\n");
+		WriteLogToFile("Fail to build answer to subscribe.\n");
 		eXosip_unlock();
 		return -1;
 	}
@@ -585,7 +585,7 @@ int sal_notify_presence(SalOp *op, SalPresenceStatus status, const char *status_
 	osip_message_t *msg=NULL;
 	eXosip_ss_t ss=EXOSIP_SUBCRSTATE_ACTIVE;
 	if (op->nid==-1){
-		PrintConsole("Cannot notify, subscription was closed.\n");
+		WriteLogToFile("Cannot notify, subscription was closed.\n");
 		return -1;
 	}
 	
@@ -598,7 +598,7 @@ int sal_notify_presence(SalOp *op, SalPresenceStatus status, const char *status_
 		osip_message_set_contact(msg,identity);
 		add_presence_body(msg,status);
 		eXosip_insubscription_send_request(op->did,msg);
-	}else PrintConsole("could not create notify for incoming subscription.\n");
+	}else WriteLogToFile("could not create notify for incoming subscription.\n");
 	eXosip_unlock();
 	return 0;
 }
@@ -613,7 +613,7 @@ int sal_notify_close(SalOp *op){
 		osip_message_set_contact(msg,identity);
 		add_presence_body(msg,SalPresenceOffline);
 		eXosip_insubscription_send_request(op->did,msg);
-	}else PrintConsole("sal_notify_close(): could not create notify for incoming subscription\n"
+	}else WriteLogToFile("sal_notify_close(): could not create notify for incoming subscription\n"
 	    " did=%i, nid=%i",op->did,op->nid);
 	eXosip_unlock();
 	return 0;
@@ -629,7 +629,7 @@ int sal_publish(SalOp *op, const char *from, const char *to, SalPresenceStatus p
 	i = eXosip_build_publish(&pub,from, to, NULL, "presence", "300", 
 		presence_style ? "application/xpidf+xml" : "application/pidf+xml", buf);
 	if (i<0){
-		PrintConsole("Failed to build publish request.\n");
+		WriteLogToFile("Failed to build publish request.\n");
 		return -1;
 	}
 
@@ -638,7 +638,7 @@ int sal_publish(SalOp *op, const char *from, const char *to, SalPresenceStatus p
 				    from sip-etag  from last 200ok of PUBLISH */
 	eXosip_unlock();
 	if (i<0){
-	  PrintConsole("Failed to send publish request.\n");
+	  WriteLogToFile("Failed to send publish request.\n");
 	  return -1;
 	}
 	sal_add_other(sal_op_get_sal(op),op,pub);
@@ -669,13 +669,13 @@ void sal_exosip_subscription_recv(Sal *sal, eXosip_event_t *ev){
 		osip_header_t *h;
 		osip_message_header_get_byname(ev->request,"expires",0,&h);
 		if (h && h->hvalue && atoi(h->hvalue)==0){
-			PrintConsole("This susbscribe is not a new one but terminates an old one.\n");
+			WriteLogToFile("This susbscribe is not a new one but terminates an old one.\n");
 			ev->did=op->did;
 			ev->nid=op->nid;
 			sal_exosip_subscription_closed(sal,ev);
 		}else {
 			osip_message_t *msg=NULL;
-			PrintConsole("Probably a refresh subscribe\n");
+			WriteLogToFile("Probably a refresh subscribe\n");
 			eXosip_lock();
 			eXosip_insubscription_build_answer(ev->tid,202,&msg);
 			eXosip_insubscription_send_answer(ev->tid,202,msg);
@@ -691,10 +691,10 @@ void sal_exosip_notify_recv(Sal *sal, eXosip_event_t *ev){
 	osip_body_t *body=NULL;
 	SalPresenceStatus estatus=SalPresenceOffline;
 	
-	PrintConsole("Receiving notify with sid=%i,nid=%i\n",ev->sid,ev->nid);
+	WriteLogToFile("Receiving notify with sid=%i,nid=%i\n",ev->sid,ev->nid);
 
 	if (op==NULL){
-		PrintConsole("No operation related to this notify !\n");
+		WriteLogToFile("No operation related to this notify !\n");
 		return;
 	}
 	if (ev->request==NULL) return;
@@ -702,7 +702,7 @@ void sal_exosip_notify_recv(Sal *sal, eXosip_event_t *ev){
 	from=ev->request->from;
 	osip_message_get_body(ev->request,0,&body);
 	if (body==NULL){
-		PrintConsole("No body in NOTIFY\n");
+		WriteLogToFile("No body in NOTIFY\n");
 		return;
 	}
 	osip_from_to_str(from,&tmp);
@@ -729,12 +729,12 @@ void sal_exosip_notify_recv(Sal *sal, eXosip_event_t *ev){
 	}else{
 		estatus=SalPresenceOffline;
 	}
-	PrintConsole("We are notified that %s has online status %i\n",tmp,estatus);
+	WriteLogToFile("We are notified that %s has online status %i\n",tmp,estatus);
 	if (ev->ss_status==EXOSIP_SUBCRSTATE_TERMINATED) {
 		sal_remove_out_subscribe(sal,op);
 		op->sid=-1;
 		op->did=-1;
-		PrintConsole("And outgoing subscription terminated by remote.\n");
+		WriteLogToFile("And outgoing subscription terminated by remote.\n");
 	}
 	sal->callbacks.notify_presence(op,op->sid!=-1 ? SalSubscribeActive : SalSubscribeTerminated, estatus,NULL);
 
@@ -752,7 +752,7 @@ void sal_exosip_notify_recv(Sal *sal, eXosip_event_t *ev){
 void sal_exosip_subscription_answered(Sal *sal,eXosip_event_t *ev){
 	SalOp *op=sal_find_out_subscribe(sal,ev->sid);
 	if (op==NULL){
-		PrintConsole("Subscription answered but no associated op !\n");
+		WriteLogToFile("Subscription answered but no associated op !\n");
 		return;
 	}
 	op->did=ev->did;
@@ -762,7 +762,7 @@ void sal_exosip_in_subscription_closed(Sal *sal, eXosip_event_t *ev){
 	SalOp *op=sal_find_in_subscribe(sal,ev->nid);
 	char *tmp;
 	if (op==NULL){
-		PrintConsole("Incoming subscription closed but no associated op !\n");
+		WriteLogToFile("Incoming subscription closed but no associated op !\n");
 		return;
 	}
 	
@@ -780,7 +780,7 @@ void sal_exosip_in_subscription_closed(Sal *sal, eXosip_event_t *ev){
 void sal_exosip_subscription_closed(Sal *sal,eXosip_event_t *ev){
 	SalOp *op=sal_find_out_subscribe(sal,ev->sid);
 	if (op==NULL){
-		PrintConsole("Subscription closed but no associated op !\n");
+		WriteLogToFile("Subscription closed but no associated op !\n");
 		return;
 	}
 	sal_remove_out_subscribe(sal,op);

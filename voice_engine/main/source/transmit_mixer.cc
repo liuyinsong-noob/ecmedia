@@ -1241,7 +1241,7 @@ int TransmitMixer::StopRecordingCall()
 
     if (!_fileCallRecording)
     {
-        WEBRTC_TRACE(kTraceError, kTraceVoice, VoEId(_instanceId, -1),
+        WEBRTC_TRACE(kTraceWarning, kTraceVoice, VoEId(_instanceId, -1),
                      "StopRecordingCall() file isnot recording");
         return -1;
     }

@@ -234,7 +234,7 @@ int _SerphoneProxyConfig::serphone_proxy_config_set_identity(const char *identit
 	if (identity!=NULL && strlen(identity)>0){
 		addr=serphone_address_new(identity);
 		if (!addr || serphone_address_get_username(addr)==NULL){
-			PrintConsole("Invalid sip identity: %s\n",identity);
+			WriteLogToFile("Invalid sip identity: %s\n",identity);
 			if (addr)
 				serphone_address_destroy(addr);
 			return -1;
@@ -293,7 +293,7 @@ SerphoneRegistrationState _SerphoneProxyConfig::serhone_proxy_config_get_state()
 
 void _SerphoneProxyConfig::serphone_proxy_config_set_state(SerphoneRegistrationState rstate, const char *message)
 {
-	PrintConsole("[Register] %s ---> %s\n",sphone_registration_state_to_string(this->state),
+	WriteLogToFile("[Register] %s ---> %s\n",sphone_registration_state_to_string(this->state),
 				sphone_registration_state_to_string(rstate));
 	ServiceCore *core=lc;
 	this->state=rstate;
@@ -497,7 +497,7 @@ int _SerphoneProxyConfig::serphone_proxy_config_set_server_addr(const char *serv
 			reg_proxy=serphone_address_as_string_uri_only(addr);
 			serphone_address_destroy(addr);
 		}else{
-			PrintConsole("Could not parse %s\n",server_addr);
+			WriteLogToFile("Could not parse %s\n",server_addr);
 			return -1;
 		}
 	}
@@ -510,10 +510,10 @@ int _SerphoneProxyConfig::serphone_proxy_config_normalize_number(const char *use
 	int numlen;
 	if (is_a_phone_number(username)){
 		flatten=flatten_number(username);
-		PrintConsole("Flattened number is '%s'\n",flatten);
+		WriteLogToFile("Flattened number is '%s'\n",flatten);
 		numlen=strlen(flatten);
 		if (numlen>10 || flatten[0]=='+' || dial_prefix==NULL || dial_prefix[0]=='\0'){
-			PrintConsole("No need to add a prefix\n");
+			WriteLogToFile("No need to add a prefix\n");
 			/* prefix is already there */
 			copy_result(flatten,result,result_len,dial_escape_plus);
 			ms_free((void **)&flatten);
@@ -522,7 +522,7 @@ int _SerphoneProxyConfig::serphone_proxy_config_normalize_number(const char *use
 		}else if (dial_prefix && dial_prefix[0]!='\0'){
 			char *prefixed;
 			int skipped=0;
-			PrintConsole("Need to prefix with %s\n",dial_prefix);
+			WriteLogToFile("Need to prefix with %s\n",dial_prefix);
 			if (numlen==10){
 				/*remove initial number before prepending prefix*/
 				skipped=1;
@@ -616,7 +616,7 @@ void _SerphoneProxyConfig::serphone_proxy_config_activate_sip_setup()
 	ssc=sip_setup_context_new(ss,this);
 	this->ssctx=ssc;
 	if (this->reg_identity==NULL){
-		PrintConsole("Invalid identity for this proxy configuration.\n");
+		WriteLogToFile("Invalid identity for this proxy configuration.\n");
 		return;
 	}
 	caps=sip_setup_context_get_capabilities(ssc);
@@ -636,7 +636,7 @@ void _SerphoneProxyConfig::serphone_proxy_config_activate_sip_setup()
 		if (sip_setup_context_get_proxy(ssc,NULL,proxy,sizeof(proxy))==0){
 			serphone_proxy_config_set_server_addr(proxy);
 		}else{
-			PrintConsole("Could not retrieve proxy uri !\n");
+			WriteLogToFile("Could not retrieve proxy uri !\n");
 		}
 	}
 	

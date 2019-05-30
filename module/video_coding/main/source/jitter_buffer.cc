@@ -304,14 +304,11 @@ void VCMJitterBuffer::IncomingRateStatistics(unsigned int* framerate,
   assert(bitrate);
   CriticalSectionScoped cs(crit_sect_);
   const int64_t now = clock_->TimeInMilliseconds();
-  int64_t diff = now - time_last_incoming_bit_count_;
-    
-    *framerate = incoming_frame_rate_;
-    
+  int64_t diff = now - time_last_incoming_frame_count_;
   if (diff < 1000 && incoming_frame_rate_ > 0 && incoming_bit_rate_ > 0) {
     // Make sure we report something even though less than
     // 1 second has passed since last update.
-//    *framerate = incoming_frame_rate_;
+    *framerate = incoming_frame_rate_;
     *bitrate = incoming_bit_rate_;
   } else if (incoming_frame_count_ != 0) {
     // We have received frame(s) since last call to this function
@@ -320,21 +317,21 @@ void VCMJitterBuffer::IncomingRateStatistics(unsigned int* framerate,
     if (diff <= 0) {
       diff = 1;
     }
-//    // we add 0.5f for rounding
-//    float rate = 0.5f + ((incoming_frame_count_ * 1000.0f) / diff);
-//    if (rate < 1.0f) {
-//      rate = 1.0f;
-//    }
-//
-//    // Calculate frame rate
-//    // Let r be rate.
-//    // r(0) = 1000*framecount/delta_time.
-//    // (I.e. frames per second since last calculation.)
-//    // frame_rate = r(0)/2 + r(-1)/2
-//    // (I.e. fr/s average this and the previous calculation.)
-//    *framerate = (incoming_frame_rate_ + static_cast<unsigned int>(rate)) / 2;
-//    incoming_frame_rate_ = static_cast<unsigned int>(rate);
-      
+    // we add 0.5f for rounding
+    float rate = 0.5f + ((incoming_frame_count_ * 1000.0f) / diff);
+    if (rate < 1.0f) {
+      rate = 1.0f;
+    }
+
+    // Calculate frame rate
+    // Let r be rate.
+    // r(0) = 1000*framecount/delta_time.
+    // (I.e. frames per second since last calculation.)
+    // frame_rate = r(0)/2 + r(-1)/2
+    // (I.e. fr/s average this and the previous calculation.)
+    *framerate = (incoming_frame_rate_ + static_cast<unsigned int>(rate)) / 2;
+    incoming_frame_rate_ = static_cast<unsigned int>(rate);
+
     // Calculate bit rate
     if (incoming_bit_count_ == 0) {
       *bitrate = 0;
@@ -345,16 +342,16 @@ void VCMJitterBuffer::IncomingRateStatistics(unsigned int* framerate,
     incoming_bit_rate_ = *bitrate;
 
     // Reset count
-//    incoming_frame_count_ = 0;
+    incoming_frame_count_ = 0;
     incoming_bit_count_ = 0;
-    time_last_incoming_bit_count_ = now;
+    time_last_incoming_frame_count_ = now;
 
   } else {
     // No frames since last call
-    time_last_incoming_bit_count_ = clock_->TimeInMilliseconds();
-//    *framerate = 0;
+    time_last_incoming_frame_count_ = clock_->TimeInMilliseconds();
+    *framerate = 0;
     *bitrate = 0;
-//    incoming_frame_rate_ = 0;
+    incoming_frame_rate_ = 0;
     incoming_bit_rate_ = 0;
   }
 }
@@ -616,8 +613,7 @@ VCMFrameBufferEnum VCMJitterBuffer::InsertPacket(const VCMPacket& packet,
       Flush();
       return kFlushIndicator;
     }
-	LOG(LS_WARNING) << " Drop OldPacket " << packet.seqNum << " decoded time:" << last_decoded_state_.time_stamp() << " packet time:" << packet.timestamp;
-
+//    LOG(LS_WARNING) << " Drop OldPacket " << packet.seqNum << " decoded time:" << last_decoded_state_.time_stamp() << " packet time:" << packet.timestamp;
     return kOldPacket;
   }
 
@@ -669,9 +665,10 @@ VCMFrameBufferEnum VCMJitterBuffer::InsertPacket(const VCMPacket& packet,
                              "timestamp", frame->TimeStamp());
   }
 
-  //LOG(LS_WARNING) << " Insert Packet w:" << packet.width << " h:" << packet.height << " seq:" << packet.seqNum << " masSeq:" 
-  LOG_COUNT_CONTINUIOUS_F(LS_WARNING, 10, packet.seqNum) << " Insert Packet w:" << packet.width << " h:" << packet.height << " seq:" << packet.seqNum
-	  << " isFirstPacket:" << packet.isFirstPacket << " missing packet len:" << missing_sequence_numbers_.size();
+  //LOG(LS_WARNING) << " Insert Packet w:" << packet.width << " h:" << packet.height << " seq:" << packet.seqNum << " masSeq:"
+    // todo add debug log
+//  LOG_COUNT_CONTINUIOUS_F(LS_WARNING, 10, packet.seqNum) << " Insert Packet w:" << packet.width << " h:" << packet.height << " seq:" << packet.seqNum
+//      << " isFirstPacket:" << packet.isFirstPacket << " missing packet len:" << missing_sequence_numbers_.size();
 
   if (buffer_state > 0) {
     incoming_bit_count_ += packet.sizeBytes << 3;
@@ -695,9 +692,6 @@ VCMFrameBufferEnum VCMJitterBuffer::InsertPacket(const VCMPacket& packet,
   // Is the frame already in the decodable list?
   bool continuous = IsContinuous(*frame);
 
-  LOG(LS_WARNING) << " insertPacket seq:" << packet.seqNum << " mark:" << packet.markerBit << " time:" << packet.timestamp << " incomplete:" << incomplete_frames_.size() << 
-  	"  decodeable:" << decodable_frames_.size() << " state:" << buffer_state << " continuous:"<< continuous << " t10Id:" << frame->Tl0PicId() << " tid:" << frame->TemporalId() << " picID:" << frame->PictureId();
-   
   switch (buffer_state) {
     case kGeneralError:
     case kTimeStampError:
@@ -1153,22 +1147,7 @@ bool VCMJitterBuffer::RecycleFramesUntilKeyFrame() {
 
 // Must be called under the critical section |crit_sect_|.
 void VCMJitterBuffer::CountFrame(const VCMFrameBuffer& frame) {
-
-    CriticalSectionScoped cs(crit_sect_);
-    const int64_t begin = clock_->TimeInMilliseconds();
-    int64_t diff = begin - time_last_incoming_frame_count_;
-    
-    if( diff < 1000){
-        incoming_frame_count_++;
-    }else{
-        time_last_incoming_frame_count_ = begin;
-        incoming_frame_rate_ = incoming_frame_count_;
-        incoming_frame_count_ = 1;
-    }
-
-    
-  //incoming_frame_count_++;
-    
+  incoming_frame_count_++;
   if (frame.FrameType() == kVideoFrameKey) {
     TRACE_EVENT_ASYNC_STEP0("yuntongxunwebrtc", "Video",
                             frame.TimeStamp(), "KeyComplete");

@@ -108,9 +108,10 @@ int VoECodecImpl::SetSendCodec(int channel, const CodecInst& codec)
             "SetSendCodec() invalid L16 packet size");
         return -1;
     }
-    if (!STR_CASE_CMP(copyCodec.plname, "CN")
-            || !STR_CASE_CMP(copyCodec.plname, "TELEPHONE-EVENT")
-            || !STR_CASE_CMP(copyCodec.plname, "RED"))
+
+    if (STR_CASE_CMP(copyCodec.plname, "CN")
+            && STR_CASE_CMP(copyCodec.plname, "TELEPHONE-EVENT")
+            && STR_CASE_CMP(copyCodec.plname, "RED"))
     {
         _shared->SetLastError(VE_INVALID_ARGUMENT, kTraceError,
             "SetSendCodec() invalid codec name");

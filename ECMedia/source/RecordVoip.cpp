@@ -17,6 +17,7 @@
 #include "utility.h"
 //#include "sometools.h"
 #include "../system_wrappers/include/tick_util.h"
+#include "../system_wrappers/include/trace.h"
 
 
 #include <stdlib.h>
@@ -80,7 +81,7 @@ RecordVoip::RecordVoip()
 
 RecordVoip::~RecordVoip()
 {
-	PrintConsole("%s in.\n", __FUNCTION__);
+	WriteLogToFile("%s in.\n", __FUNCTION__);
     _videoThread->SetNotAlive();
     _videoEvent->Set();
 
@@ -113,7 +114,7 @@ RecordVoip::~RecordVoip()
 		_videoThread = NULL;
 	}
 	else {
-		PrintConsole("RecordVoip failed to stop thread, leaking");
+		WriteLogToFile("RecordVoip failed to stop thread, leaking");
 	}
 
 	if(_audioThread->Stop()) {
@@ -123,7 +124,7 @@ RecordVoip::~RecordVoip()
 		_audioThread = NULL;
 	}
 	else {
-		PrintConsole("RecordVoip failed to stop thread, leaking");
+		WriteLogToFile("RecordVoip failed to stop thread, leaking");
 	}
 
 	delete _videoCrit;
@@ -132,7 +133,7 @@ RecordVoip::~RecordVoip()
 	delete _audioCrit;
 	_audioCrit = NULL;
 
-	PrintConsole("%s out.", __FUNCTION__);
+	WriteLogToFile("%s out.", __FUNCTION__);
 }
 
 bool RecordVoip::RecordVideoThreadRun(void* obj)
@@ -153,7 +154,7 @@ bool RecordVoip::ProcessVideoData()
 	
     if( _videoEvent->Wait(100) == kEventSignaled ) {
 		
-		//PrintConsole("record video RL=%d SL=%d.\n", _frameRecvList.GetSize(), _frameScreenList.GetSize());
+		//WEBRTC_TRACE(kTraceInfo, kTraceUndefined, 0, "record video RL=%d SL=%d.\n", _frameRecvList.GetSize(), _frameScreenList.GetSize());
 
 		CriticalSectionScoped lock(_videoCrit);
 
@@ -175,7 +176,7 @@ bool RecordVoip::ProcessVideoData()
 		}
 		//while (_frameRecvList.GetSize() > 100)
 		//{
-		//	PrintConsole("drop remote pakcet..\n");
+		//	WEBRTC_TRACE(kTraceInfo, kTraceUndefined, 0, "drop remote pakcet..\n");
 		//	_frameRecvList.PopFront();
 		//}
 
@@ -191,7 +192,7 @@ bool RecordVoip::ProcessVideoData()
 		}
 		//while (_frameSendList.GetSize() > 100)
 		//{
-		//		PrintConsole("drop local pakcet..\n");
+		//		WEBRTC_TRACE(kTraceInfo, kTraceUndefined, 0, "drop local pakcet..\n");
 		//		_frameSendList.PopFront();
 		//}
 
@@ -207,14 +208,14 @@ bool RecordVoip::ProcessVideoData()
 		}
 		//while (_frameScreenList.GetSize() > 100)
 		//{
-		//		PrintConsole("drop screen pakcet..\n");
+		//		WEBRTC_TRACE(kTraceInfo, kTraceUndefined, 0, "drop screen pakcet..\n");
 		//		_frameScreenList.PopFront();
 		//}
 #endif
 #endif //_WIN32
 	}
 
-	//PrintConsole("%s out.\n", __FUNCTION__);   
+	//WEBRTC_TRACE(kTraceInfo, kTraceUndefined, 0, "%s out.\n", __FUNCTION__);   
     return true;
 }
 
@@ -228,7 +229,7 @@ bool RecordVoip::ProcessAudioData()
 	
 	if( _audioEvent->Wait(200) == kEventSignaled ) {
 
-		//PrintConsole("record audio RL=%d LL=%d.\n", _playbackList.GetSize(),_recordingList.GetSize());
+		//WEBRTC_TRACE(kTraceInfo, kTraceUndefined, 0, "record audio RL=%d LL=%d.\n", _playbackList.GetSize(),_recordingList.GetSize());
 
 		CriticalSectionScoped lock(_audioCrit);
 
@@ -311,21 +312,21 @@ bool RecordVoip::ProcessAudioData()
 			free(recordingData);
 
 			if(!saveWavFlag) {
-				PrintConsole("AudioRecord::ProcessAudioData Write data failed");
+				WEBRTC_TRACE(kTraceInfo, kTraceUndefined, 0, "AudioRecord::ProcessAudioData Write data failed");
 				StopRecordAudio(-2);
 			}
 		}
 		while(_playbackList.GetSize() > 10) {
-			PrintConsole("%s _playbackList delete.\n", __FUNCTION__);
+			WEBRTC_TRACE(kTraceInfo, kTraceUndefined, 0, "%s _playbackList delete.\n", __FUNCTION__);
 			_playbackList.PopFront();
 
 		}
 		while(_recordingList.GetSize() > 10) {
-			PrintConsole("%s _recordingList delete.\n", __FUNCTION__);
+			WEBRTC_TRACE(kTraceInfo, kTraceUndefined, 0, "%s _recordingList delete.\n", __FUNCTION__);
 			_recordingList.PopFront();
 		}
 	}
-	//PrintConsole("%s out.\n", __FUNCTION__);
+	//WEBRTC_TRACE(kTraceInfo, kTraceUndefined, 0, "%s out.\n", __FUNCTION__);
 #endif
 #endif //_WIN32
 	return true;
@@ -473,12 +474,12 @@ int RecordVoip::StartRecordAudio(const char *filename)
 		sprintf(_wavFileName, "%s", filename);
 		_wavRecordFile = fopen(filename, "wb");
 		if( !_wavRecordFile ) {
-			PrintConsole("AudioRecord can't open file");
+			WriteLogToFile("AudioRecord can't open file");
 			return -1;
 		}
 
 		if( WriteWavFileHeader(_wavRecordFile) != 0 ) {
-			PrintConsole("AudioRecord Write WAV header failed");
+			WriteLogToFile("AudioRecord Write WAV header failed");
 			return -1;
 		}
 		_startRecordWav = true;
@@ -492,7 +493,7 @@ int RecordVoip::StartRecordAudioEx(const char *rFileName, const char *lFileName)
 {
 	if(!rFileName && !lFileName)
 	{
-		PrintConsole("StartRecordAudioEx File name is NULL.\n");
+		WriteLogToFile("StartRecordAudioEx File name is NULL.\n");
 		return -1;
 	}
 
@@ -504,12 +505,12 @@ int RecordVoip::StartRecordAudioEx(const char *rFileName, const char *lFileName)
 		sprintf(_wavRemoteFileName, "%s", rFileName);
 		_wavRemoteRecordFile = fopen(rFileName, "wb");
 		if( !_wavRemoteRecordFile ) {
-			PrintConsole("AudioRecord can't open file.\n");
+			WriteLogToFile("AudioRecord can't open file.\n");
 			return -1;
 		}
 
 		if( WriteWavFileHeader(_wavRemoteRecordFile) != 0 ) {
-			PrintConsole("AudioRecord Write WAV header failed.\n");
+			WriteLogToFile("AudioRecord Write WAV header failed.\n");
 			return -1;
 		}
 	}
@@ -517,12 +518,12 @@ int RecordVoip::StartRecordAudioEx(const char *rFileName, const char *lFileName)
 		sprintf(_wavLocalFileName, "%s", lFileName);
 		_wavLocalRecordFile = fopen(lFileName, "wb");
 		if( !_wavLocalRecordFile ) {
-			PrintConsole("AudioRecord can't open file.\n");
+			WriteLogToFile("AudioRecord can't open file.\n");
 			return -1;
 		}
 
 		if( WriteWavFileHeader(_wavLocalRecordFile) != 0 ) {
-			PrintConsole("AudioRecord Write WAV header failed.\n");
+			WriteLogToFile("AudioRecord Write WAV header failed.\n");
 			return -1;
 		}
 	}
@@ -568,7 +569,7 @@ int RecordVoip::StopAudioFile(FILE *audioFile, const char *filename,   int statu
 	fflush(audioFile);
 
 	if( CompleteWavFile(audioFile) < 0 ) {
-		PrintConsole("AudioRecord CompleteWavFile Failed\n");
+		WriteLogToFile("AudioRecord CompleteWavFile Failed\n");
 		fclose(audioFile);
 		//_call->core->record_audio_status(_call, filename, -1);
 	}  else {
@@ -612,10 +613,10 @@ int RecordVoip::StartRecordScreen(const char *filename, int bitrates, int fps, i
 #ifdef _WIN32
 #ifdef VIDEO_ENABLED
 
-	PrintConsole("%s in.\n", __FUNCTION__);
+	WEBRTC_TRACE(kTraceInfo, kTraceUndefined, 0, "%s in.\n", __FUNCTION__);
 
 	if (!filename) {
-		PrintConsole("%s failed, filename is NULL.\n", __FUNCTION__);
+		WEBRTC_TRACE(kTraceInfo, kTraceUndefined, 0, "%s failed, filename is NULL.\n", __FUNCTION__);
 		return -1;
 	}
 
@@ -626,14 +627,14 @@ int RecordVoip::StartRecordScreen(const char *filename, int bitrates, int fps, i
 	sprintf(_recordScreenFileName, "%s", filename);
 	_h264RecordScreen = new h264_record();
 	if(!_h264RecordScreen) {
-		PrintConsole("%s create _h264RecordScreen failed.\n", __FUNCTION__);
+		WEBRTC_TRACE(kTraceInfo, kTraceUndefined, 0, "%s create _h264RecordScreen failed.\n", __FUNCTION__);
 		return -1;
 	}
 	_h264RecordScreen->init(_recordScreenFileName);
 
 	_captureScreen = new CaptureScreen();
 	if(!_captureScreen) {
-		PrintConsole("%s create _captureScreen failed.\n", __FUNCTION__);
+		WEBRTC_TRACE(kTraceInfo, kTraceUndefined, 0, "%s create _captureScreen failed.\n", __FUNCTION__);
 		delete _h264RecordScreen;
 		_h264RecordScreen = NULL;
 		return -1;
@@ -643,7 +644,7 @@ int RecordVoip::StartRecordScreen(const char *filename, int bitrates, int fps, i
 	screen * screenInfo;
 	screenCount = _captureScreen->getScreenInfo(&screenInfo);
 	if(screenIndex < 0 || screenIndex >= screenCount) {
-		PrintConsole("%s screenIndex:%d is out of range:%d.\n", __FUNCTION__, screenIndex, screenCount);
+		WEBRTC_TRACE(kTraceInfo, kTraceUndefined, 0, "%s screenIndex:%d is out of range:%d.\n", __FUNCTION__, screenIndex, screenCount);
 		delete _captureScreen;
 		_captureScreen = NULL;
 		delete _h264RecordScreen;
@@ -669,7 +670,7 @@ int RecordVoip::StartRecordScreen(const char *filename, int bitrates, int fps, i
 	unsigned int tid = 0;
 	_captureScreethread->Start(tid);
 
-	PrintConsole("%s out.\n", __FUNCTION__);
+	WEBRTC_TRACE(kTraceInfo, kTraceUndefined, 0, "%s out.\n", __FUNCTION__);
 	return 0;
 #endif
 #endif //_WIN32
@@ -680,9 +681,9 @@ int RecordVoip::StartRecordScreenEx(const char *filename, int bitrates, int fps,
 {
 #ifdef _WIN32
 #ifdef VIDEO_ENABLED
-	PrintConsole("%s in.\n", __FUNCTION__);
+	WEBRTC_TRACE(kTraceInfo, kTraceUndefined, 0, "%s in.\n", __FUNCTION__);
 	if (!filename) {
-		PrintConsole("%s failed, filename is NULL.\n", __FUNCTION__);
+		WEBRTC_TRACE(kTraceInfo, kTraceUndefined, 0, "%s failed, filename is NULL.\n", __FUNCTION__);
 		return -1;
 	}
 
@@ -693,14 +694,14 @@ int RecordVoip::StartRecordScreenEx(const char *filename, int bitrates, int fps,
 	sprintf(_recordScreenFileName, "%s", filename);
 	_h264RecordScreen = new h264_record();
 	if(!_h264RecordScreen) {
-		PrintConsole("%s create _h264RecordScreen failed.\n", __FUNCTION__);
+		WEBRTC_TRACE(kTraceInfo, kTraceUndefined, 0, "%s create _h264RecordScreen failed.\n", __FUNCTION__);
 		return -1;
 	}
 	_h264RecordScreen->init(_recordScreenFileName);
 
 	_captureScreen = new CaptureScreen();
 	if(!_captureScreen) {
-		PrintConsole("%s create _captureScreen failed.\n", __FUNCTION__);
+		WEBRTC_TRACE(kTraceInfo, kTraceUndefined, 0, "%s create _captureScreen failed.\n", __FUNCTION__);
 		delete _h264RecordScreen;
 		_h264RecordScreen = NULL;
 		return -1;
@@ -710,7 +711,7 @@ int RecordVoip::StartRecordScreenEx(const char *filename, int bitrates, int fps,
 	screen * screenInfo;
 	screenCount = _captureScreen->getScreenInfo(&screenInfo);
 	if(screenIndex < 0 || screenIndex >= screenCount) {
-		PrintConsole("%s screenIndex:%d is out of range:%d.\n", __FUNCTION__, screenIndex, screenCount);
+		WEBRTC_TRACE(kTraceInfo, kTraceUndefined, 0, "%s screenIndex:%d is out of range:%d.\n", __FUNCTION__, screenIndex, screenCount);
 		delete _captureScreen;
 		_captureScreen = NULL;
 		delete _h264RecordScreen;
@@ -734,7 +735,7 @@ int RecordVoip::StartRecordScreenEx(const char *filename, int bitrates, int fps,
 	int dstButtom = (reqButtom > screenButtom) ? screenButtom : reqButtom;
 
 	if(dstLeft >= dstRight  || dstTop >= dstButtom) {
-		PrintConsole("%s failed, invalid range. dstLeft:%d dstRight:%d dstTop:%d dstButtom:%d .\n", __FUNCTION__, dstLeft, dstRight, dstTop, dstButtom);
+		WEBRTC_TRACE(kTraceInfo, kTraceUndefined, 0, "%s failed, invalid range. dstLeft:%d dstRight:%d dstTop:%d dstButtom:%d .\n", __FUNCTION__, dstLeft, dstRight, dstTop, dstButtom);
 		return -1;
 	}
 
@@ -756,7 +757,7 @@ int RecordVoip::StartRecordScreenEx(const char *filename, int bitrates, int fps,
 	unsigned int tid = 0;
 	_captureScreethread->Start(tid);
 
-	PrintConsole("%s out.\n", __FUNCTION__);
+	WEBRTC_TRACE(kTraceInfo, kTraceUndefined, 0, "%s out.\n", __FUNCTION__);
 	return 0;
 #endif
 #endif //_WIN32
@@ -767,7 +768,7 @@ int RecordVoip::StopRecordScreen(int status)
 {
 #ifdef _WIN32
 #ifdef VIDEO_ENABLED
-	PrintConsole("%s in.\n", __FUNCTION__);
+	WEBRTC_TRACE(kTraceInfo, kTraceUndefined, 0, "%s in.\n", __FUNCTION__);
 
 	if(!_startRecordScreen)
 		return 0;
@@ -784,11 +785,11 @@ int RecordVoip::StopRecordScreen(int status)
 	CriticalSectionScoped lock_video(_videoCrit);
 	CriticalSectionScoped lock_audio(_audioCrit);
 
-	PrintConsole("%s 000.\n", __FUNCTION__);
+	WEBRTC_TRACE(kTraceInfo, kTraceUndefined, 0, "%s 000.\n", __FUNCTION__);
 	_h264RecordScreen->uninit();
 	delete _h264RecordScreen;
 	_h264RecordScreen = NULL;
-	PrintConsole("%s 111.\n", __FUNCTION__);
+	WEBRTC_TRACE(kTraceInfo, kTraceUndefined, 0, "%s 111.\n", __FUNCTION__);
 
 	delete _h264Encoder;
 	_h264Encoder = NULL;
@@ -800,7 +801,7 @@ int RecordVoip::StopRecordScreen(int status)
 		_captureScreen = NULL;
 	}
 
-	PrintConsole("%s out.\n", __FUNCTION__);
+	WEBRTC_TRACE(kTraceInfo, kTraceUndefined, 0, "%s out.\n", __FUNCTION__);
 	return 0;
 #endif
 #endif //_WIN32
@@ -830,7 +831,7 @@ void RecordVoip::Process(int channel, ProcessingTypes type,
 		if(_recordingList.GetSize() > 5) {
 			_audioEvent->Set();
 		}
-		PrintConsole("audio in %s RL=%d LL=%d\n", (type==kPlaybackPerChannel)?"R":"L", _playbackList.GetSize(), _recordingList.GetSize());
+		WriteLogToFile("audio in %s RL=%d LL=%d\n", (type==kPlaybackPerChannel)?"R":"L", _playbackList.GetSize(), _recordingList.GetSize());
 	}
 }
 
@@ -864,7 +865,7 @@ WebRtc_Word32 RecordVoip::CapturedScreeImage(unsigned char *imageData, int size,
 		stride_y,
 		stride_uv, stride_uv);
 	if(ret < 0) {
-		PrintConsole("%s Failed to create empty frame, this should only happen due to bad parameters.", __FUNCTION__);
+		WEBRTC_TRACE(kTraceInfo, kTraceUndefined, 0, "%s Failed to create empty frame, this should only happen due to bad parameters.", __FUNCTION__);
 		return -1;
 	}
 
@@ -874,7 +875,7 @@ WebRtc_Word32 RecordVoip::CapturedScreeImage(unsigned char *imageData, int size,
 		stride_y,
 		stride_uv, stride_uv);
 	if(ret < 0) {
-		PrintConsole("%s Failed to create empty frame, this should only happen due to bad parameters.", __FUNCTION__);
+		WEBRTC_TRACE(kTraceInfo, kTraceUndefined, 0, "%s Failed to create empty frame, this should only happen due to bad parameters.", __FUNCTION__);
 		return -1;
 	}
 
@@ -887,14 +888,14 @@ WebRtc_Word32 RecordVoip::CapturedScreeImage(unsigned char *imageData, int size,
 		&capture_frame);
 	if (conversionResult < 0)
 	{
-		PrintConsole("%s Failed to convert capture frame from type KRGB24 to I420.", __FUNCTION__);
+		WEBRTC_TRACE(kTraceInfo, kTraceUndefined, 0, "%s Failed to convert capture frame from type KRGB24 to I420.", __FUNCTION__);
 		return -1;
 	}
 
 	const int mirrorResult = MirrorI420UpDown(&capture_frame, &mirror_frame);
 	if(mirrorResult < 0) 
 	{
-		PrintConsole("%s Failed to mirror capture frame.", __FUNCTION__);
+		WEBRTC_TRACE(kTraceInfo, kTraceUndefined, 0, "%s Failed to mirror capture frame.", __FUNCTION__);
 		return -1;
 	}
 	

@@ -17,7 +17,6 @@
 #include "../system_wrappers/include/logging.h"
 #include "../system_wrappers/include/tick_util.h"
 #include "vie_defines.h"
-#include "../base/timeutils.h"
 #include  "vie_watermark.h"
 #include "../common_video/source/libyuv/include/webrtc_libyuv.h"
 
@@ -105,12 +104,6 @@ void ViEFrameProviderBase::DeliverFrame(I420VideoFrame* video_frame,
     }
   }
 
-  static time_t last = 0;
-  int logInterval = 5;
-  if( time(NULL) > last + logInterval ) {
-	   LOG(LS_WARNING) << "Period log per " << logInterval << " seconds: Video DeliverFrame";
-       last = time(NULL);
-  }
 #ifdef DEBUG_
   const int process_time =
       static_cast<int>((TickTime::Now() - start_process_time).Milliseconds());

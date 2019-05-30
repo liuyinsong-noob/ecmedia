@@ -117,18 +117,18 @@ int enum_lookup(const char *enum_domain, enum_lookup_res_t **res){
     command = NULL;
 	if (forkok){
 		if (err!=0){
-			PrintConsole("Host exited with %i error status.\n",err);
+			WriteLogToFile("Host exited with %i error status.\n",err);
 			return -1;
 		}
 	}else{
-		PrintConsole("Could not spawn the \'host\' command.\n");
+		WriteLogToFile("Could not spawn the \'host\' command.\n");
 		return -1;
 	}		
-	PrintConsole("Answer received from dns (err=%i): %s\n",err,host_result);
+	WriteLogToFile("Answer received from dns (err=%i): %s\n",err,host_result);
 	
 	begin=strstr(host_result,"sip:");
 	if (begin==0) {
-		PrintConsole("No sip address found in dns naptr answer.\n");
+		WriteLogToFile("No sip address found in dns naptr answer.\n");
 		return -1;
 	}
 	*res=(enum_lookup_res_t *)malloc(sizeof(enum_lookup_res_t));  //ms_malloc0
@@ -155,7 +155,7 @@ int enum_lookup(const char *enum_domain, enum_lookup_res_t **res){
 		ms_free((void **)&host_result);
         host_result = NULL;
 		*res=NULL;
-		PrintConsole("Parse error in enum_lookup().\n");
+		WriteLogToFile("Parse error in enum_lookup().\n");
 		return -1;
 }
 

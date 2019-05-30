@@ -1,4 +1,4 @@
-﻿#include "CCPClient.h"
+#include "CCPClient.h"
 #include "CCPClient_Internal.h"
 #include "serphoneinterface.h"
 #include "serphonecall.h"
@@ -144,7 +144,7 @@ std::string timetodate(time_t const timer)
 //global state change
 void mainStateChanged(class ServiceCore *lc, SerphoneGlobalState gstate, const char *message)
 {
-	//PrintConsole("global state change %s,state=%s\n",message,serphone_global_state_to_string(gstate));
+	//WriteLogToFile("global state change %s,state=%s\n",message,serphone_global_state_to_string(gstate));
 	return;
 }
 
@@ -175,14 +175,14 @@ void callStateChanged(class ServiceCore *lc, SerPhoneCall *call, SerphoneCallSta
 	static char called[64] = {'\0'};
 
 	if (!call->op) {
-        PrintConsole("unknow cal salop \n");
+        WriteLogToFile("unknow cal salop \n");
         return ;
     }
 	/*update begin------------------Sean20130729----------for video ice------------*/
 //    snprintf(callid,63,"%d",call->op->cid);
     memcpy(callid, call->_user_call_id, 9);
     if (!call->core) {
-        PrintConsole("unknown cal core");
+        WriteLogToFile("unknown cal core");
         return;
     }
     /*update end--------------------Sean20130729----------for video ice------------*/
@@ -208,7 +208,7 @@ void callStateChanged(class ServiceCore *lc, SerPhoneCall *call, SerphoneCallSta
 		{
 			if(!g_cbInterface.onCallProceeding )
 				return;
-			PrintConsole("[APICall] onCallProceeding (callid=%s)\n",callid);
+			WriteLogToFile("[APICall] onCallProceeding (callid=%s)\n",callid);
 			g_cbInterface.onCallProceeding(callid);
 		}
 		break;
@@ -220,7 +220,7 @@ void callStateChanged(class ServiceCore *lc, SerPhoneCall *call, SerphoneCallSta
 			if(!g_cbInterface.onCallAnswered )
 				return;
 
-			PrintConsole("[APICall] onCallAnswered (callid=%s)\n",callid);
+			WriteLogToFile("[APICall] onCallAnswered (callid=%s)\n",callid);
 			g_cbInterface.onCallAnswered(callid);
 		}
 		break;
@@ -247,7 +247,7 @@ void callStateChanged(class ServiceCore *lc, SerPhoneCall *call, SerphoneCallSta
 //#endif
 			if( !g_cbInterface.onCallAlerting )
 				return;
-			PrintConsole("[APICall] onCallAlerting (callid=%s)\n",callid);
+			WriteLogToFile("[APICall] onCallAlerting (callid=%s)\n",callid);
 			g_cbInterface.onCallAlerting(callid);
 		}
 		break;
@@ -272,7 +272,7 @@ void callStateChanged(class ServiceCore *lc, SerPhoneCall *call, SerphoneCallSta
 					ms_free((void**)&gRecvUserData);
 				gRecvUserData = ms_strdup("");
 			}
-			PrintConsole("[APICall] onIncomingCallReceived (type=%s,callid=%s,called=%s)\n",
+			WriteLogToFile("[APICall] onIncomingCallReceived (type=%s,callid=%s,called=%s)\n",
 				call->params.has_video ? "Video" : "Voice",callid,called);
 			g_cbInterface.onIncomingCallReceived(call->params.has_video, callid,called);
 #ifndef WIN32
@@ -298,7 +298,7 @@ void callStateChanged(class ServiceCore *lc, SerPhoneCall *call, SerphoneCallSta
             lc->serphone_delete_transmit_key();
 #endif
 #ifdef WIN32
-			PrintConsole("[APICall] LinphoneCallEnd (callid=%s,call->dir=%d)\n",callid,call->dir);
+			WriteLogToFile("[APICall] LinphoneCallEnd (callid=%s,call->dir=%d)\n",callid,call->dir);
             g_pSerCore->serphone_pre_after_ring_stop(false);
             if (call->dir == LinphoneCallOutgoing) {
                 g_pSerCore->serphone_afterring_start();
@@ -312,15 +312,15 @@ void callStateChanged(class ServiceCore *lc, SerPhoneCall *call, SerphoneCallSta
 			if( call->dir == LinphoneCallOutgoing &&  !call->callConnected  )
 			{
 
-				PrintConsole("[APICall] onMakeCallFailed (callid=%s,reason=%d)\n",
+				WriteLogToFile("[APICall] onMakeCallFailed (callid=%s,reason=%d)\n",
 					callid,call->reason );
 				g_cbInterface.onMakeCallFailed(callid,call->reason);
 
 				return;
 			}
-			PrintConsole("[APICall] onCallReleased (callid=%s)\n",callid);
+			WriteLogToFile("[APICall] onCallReleased (callid=%s)\n",callid);
 			g_cbInterface.onCallReleased(callid);
-			PrintConsole("[APICall] onCallReleased (callid=%s) out\n",callid);
+			WriteLogToFile("[APICall] onCallReleased (callid=%s) out\n",callid);
 		}
 		break;
 	case LinphoneCallPausing:
@@ -330,7 +330,7 @@ void callStateChanged(class ServiceCore *lc, SerPhoneCall *call, SerphoneCallSta
 			if( !g_cbInterface.onCallPaused )
 				return;
 
-			PrintConsole("[APICall] onCallPaused (callid=%s)\n",callid);
+			WriteLogToFile("[APICall] onCallPaused (callid=%s)\n",callid);
 			g_cbInterface.onCallPaused(callid);
 		}
 		break;
@@ -338,11 +338,11 @@ void callStateChanged(class ServiceCore *lc, SerPhoneCall *call, SerphoneCallSta
             break;
         case LinphoneCallResumed:
         {
-			PrintConsole("[APICall] onResumed (callid=%s)\n",callid);
+			WriteLogToFile("[APICall] onResumed (callid=%s)\n",callid);
             if( !g_cbInterface.onResumed )
 				return;
 
-			PrintConsole("[APICall] onResumed (callid=%s)\n",callid);
+			WriteLogToFile("[APICall] onResumed (callid=%s)\n",callid);
 			g_cbInterface.onResumed(callid);
         }
 		break;
@@ -357,7 +357,7 @@ void callStateChanged(class ServiceCore *lc, SerPhoneCall *call, SerphoneCallSta
             sal_set_keepalive_period(g_pSerCore->sal,g_keepAliveTime);
 			if(!g_cbInterface.onMakeCallFailed )
 				return;
-				PrintConsole("[APICall] onMakeCallFailed (callid=%s,reason=%d)\n",
+				WriteLogToFile("[APICall] onMakeCallFailed (callid=%s,reason=%d)\n",
 					callid,call->reason );
 			g_cbInterface.onMakeCallFailed(callid,call->reason);
 
@@ -367,7 +367,7 @@ void callStateChanged(class ServiceCore *lc, SerPhoneCall *call, SerphoneCallSta
 		{
 			if(!g_cbInterface.onCallPaused )
 				return;
-			PrintConsole("[APICall] onCallPausedByRemote (callid=%s)\n",callid);
+			WriteLogToFile("[APICall] onCallPausedByRemote (callid=%s)\n",callid);
 			g_cbInterface.onCallPausedByRemote(callid);
 		}
 		break;
@@ -378,7 +378,7 @@ void callStateChanged(class ServiceCore *lc, SerPhoneCall *call, SerphoneCallSta
             bool automatically_accept = false;
             bool video_requested=  ( call->remote_params.has_video!=0);
             bool video_used= (call->current_params.has_video!=0);
-            PrintConsole("[APICall] LinphoneCallUpdatedByRemote Video used=%i, video requested=%i, automatically_accept=%i\n",
+            WriteLogToFile("[APICall] LinphoneCallUpdatedByRemote Video used=%i, video requested=%i, automatically_accept=%i\n",
                          video_used,video_requested,automatically_accept);
 
             if(g_cbInterface.onCallMediaUpdateRequest)
@@ -402,7 +402,7 @@ void callStateChanged(class ServiceCore *lc, SerPhoneCall *call, SerphoneCallSta
         {
             bool video_result= (call->params.has_video!=0);
             bool video_used= (call->current_params.has_video!=0);
-            PrintConsole("[APICall] LinphoneCallUpdated Video used=%i, video requested=%i\r\n",
+            WriteLogToFile("[APICall] LinphoneCallUpdated Video used=%i, video requested=%i\r\n",
                          video_used,video_result);
 
             if(g_cbInterface.onCallMediaUpdateResponse)
@@ -420,7 +420,7 @@ void callStateChanged(class ServiceCore *lc, SerPhoneCall *call, SerphoneCallSta
         break;
     case LinphoneCallUpdatedRemoteVideoratio:
         {
-            PrintConsole("LinphoneCallUpdatedRemoteVideoratio %s\n", message);
+            WriteLogToFile("LinphoneCallUpdatedRemoteVideoratio %s\n", message);
             if(g_cbInterface.onNotifyGeneralEvent)
             {
 #ifdef OLDERRORCODE
@@ -441,7 +441,7 @@ void callStateChanged(class ServiceCore *lc, SerPhoneCall *call, SerphoneCallSta
 		break;
     case LinphoneCallUpdatedAudioDestinationChanged:
     {
-        PrintConsole("SerphoneCallUpdatedAudioDestinationChanged new destination is %s\n",message);
+        WriteLogToFile("SerphoneCallUpdatedAudioDestinationChanged new destination is %s\n",message);
         if(g_cbInterface.onNotifyGeneralEvent)
         {
 #ifdef OLDERRORCODE
@@ -454,7 +454,7 @@ void callStateChanged(class ServiceCore *lc, SerPhoneCall *call, SerphoneCallSta
         break;
     case LinphoneCallUpdatedVideoDestinationChanged:
     {
-        PrintConsole("SerphoneCallUpdatedVideoDestinationChanged new destination is %s\n",message);
+        WriteLogToFile("SerphoneCallUpdatedVideoDestinationChanged new destination is %s\n",message);
         if(g_cbInterface.onNotifyGeneralEvent)
         {
 #ifdef OLDERRORCODE
@@ -480,19 +480,19 @@ static void* CheckProxyVaildFun(void *p)
 
     //	TRESTClient *client = new TRESTClient("10.0.19.11", 8881, "", "", "");//("app.yuntongxun.net", 8881, "", "", "");  //xinwei
     TRESTClient *client = new TRESTClient("app.yuntongxun.com", 8881, "", "", "");//("app.yuntongxun.net", 8881, "", "", "");
-    client->SetTraceFunc(PrintConsole);
+    client->SetTraceFunc(WriteLogToFile);
     if( client->CheckProxyValid((char*)p, "", CHECK_PROXY_VALID_KEY, status) )
     // if( client->CheckProxyValid("42.121.118.111", "", CHECK_PROXY_VALID_KEY, status) )
     {
         if(status == 0)
             proxyValid = true;
     }
-    PrintConsole("DEBUG: CheckProxyVaildFun: errormsg: %s\n",client->GetErrorMessge().c_str());
+    WriteLogToFile("DEBUG: CheckProxyVaildFun: errormsg: %s\n",client->GetErrorMessge().c_str());
     delete client;
 
     if(!proxyValid)
     {
-        PrintConsole("[APICall] CheckProxyVaildFun, onConnectError(%d) status=%d\n", ReasonInvalidProxy, status);
+        WriteLogToFile("[APICall] CheckProxyVaildFun, onConnectError(%d) status=%d\n", ReasonInvalidProxy, status);
 
         if(g_pSerCore)
         {
@@ -513,7 +513,7 @@ static void* CheckProxyVaildFun(void *p)
     }
     else
     {
-        PrintConsole("[APICall] onConnected()\n");
+        WriteLogToFile("[APICall] onConnected()\n");
         g_cbInterface.onConnected();
 
     }
@@ -539,7 +539,7 @@ static void* CheckPrivateCloud(void *lc)
     }
     else
     {
-        PrintConsole("ERROR: CheckPrivateCloud: lc is NULL!\n");
+        WriteLogToFile("ERROR: CheckPrivateCloud: lc is NULL!\n");
         return NULL;
     }
 //#ifdef NOLISCENSECHECK
@@ -569,14 +569,14 @@ static void* CheckPrivateCloud(void *lc)
         {
             client = new TRESTClient("app.yuntongxun.com", 8881, "", "", "");
         }
-        client->SetTraceFunc(PrintConsole);
+        client->SetTraceFunc(WriteLogToFile);
         if( cfg && companyID && client->CheckPrivateProxyValid(companyID, cfg->realm, cfg->port, status) )
         {
             if(status == 0)
                 proxyValid = true;
         }
 
-        PrintConsole("DEBUG: CheckPrivateCloud: errormsg: %s\n",client->GetErrorMessge().c_str());
+        WriteLogToFile("DEBUG: CheckPrivateCloud: errormsg: %s\n",client->GetErrorMessge().c_str());
         delete client;
 //    }
 //#endif
@@ -584,7 +584,7 @@ static void* CheckPrivateCloud(void *lc)
 
     if(!proxyValid)
     {
-        PrintConsole("[APICall] CheckPrivateCloud,onConnectError(%d) status=%d\n", ReasonInvalidProxy, status);
+        WriteLogToFile("[APICall] CheckPrivateCloud,onConnectError(%d) status=%d\n", ReasonInvalidProxy, status);
 
         if(g_pSerCore)
         {
@@ -605,7 +605,7 @@ static void* CheckPrivateCloud(void *lc)
     }
     else
     {
-        PrintConsole("[APICall] onConnected()\n");
+        WriteLogToFile("[APICall] onConnected()\n");
         g_bConnected = true;
         if (g_pSerCore)
             sal_set_keepalive_period(g_pSerCore->sal,g_keepAliveTime);
@@ -627,7 +627,7 @@ void registrationStateChanged(class ServiceCore *lc, SerphoneProxyConfig *cfg,
             //sean todo
             //
             if (!g_cbInterface.onLogOut) {
-                PrintConsole("[APICALL] onLogOut not implemented\n");
+                WriteLogToFile("[APICALL] onLogOut not implemented\n");
                 return;
             }
             g_bConnected = false;
@@ -677,7 +677,7 @@ void registrationStateChanged(class ServiceCore *lc, SerphoneProxyConfig *cfg,
 			if( !g_bConnected )
 			{
 
-                PrintConsole("[APICall reconenct %s]",lc->serphone_get_reconnect()?"true":"false");
+                WriteLogToFile("[APICall reconenct %s]",lc->serphone_get_reconnect()?"true":"false");
                 if (traceFile) {
                     time_t temp = time(NULL);
                     std::string strTime = timetodate(temp);
@@ -688,7 +688,7 @@ void registrationStateChanged(class ServiceCore *lc, SerphoneProxyConfig *cfg,
                     fflush(traceFile);
                 }
 //#ifdef HAIYUNTONG
-                PrintConsole("[APICall] onConnected()\n");
+                WriteLogToFile("[APICall] onConnected()\n");
                 g_bConnected = true;
                 if (g_pSerCore)
                     sal_set_keepalive_period(g_pSerCore->sal,g_keepAliveTime);
@@ -696,7 +696,7 @@ void registrationStateChanged(class ServiceCore *lc, SerphoneProxyConfig *cfg,
 
 //#else
 //                if (lc->serphone_get_reconnect()) {
-//                    PrintConsole("[APICall] onConnected()\n");
+//                    WriteLogToFile("[APICall] onConnected()\n");
 //                    g_bConnected = true;
 //                    if (g_pSerCore)
 //                        sal_set_keepalive_period(g_pSerCore->sal,g_keepAliveTime);
@@ -705,7 +705,7 @@ void registrationStateChanged(class ServiceCore *lc, SerphoneProxyConfig *cfg,
 //                else
 //                {
 //#ifdef XINWEI
-//                    PrintConsole("[APICall] onConnected()\n");
+//                    WriteLogToFile("[APICall] onConnected()\n");
 //                    g_cbInterface.onConnected();
 //#endif
 //#ifdef XINWEI
@@ -748,7 +748,7 @@ void registrationStateChanged(class ServiceCore *lc, SerphoneProxyConfig *cfg,
                 tempAddr = NULL;
                 return;
             }
-            PrintConsole("[APICall] registrationStateChanged,onConnectError(%d)\n",cfg->error);
+            WriteLogToFile("[APICall] registrationStateChanged,onConnectError(%d)\n",cfg->error);
             g_bConnected = false;
             g_RegisterTimerFlag = 1;
             l_kickoff = false;
@@ -785,12 +785,12 @@ void registrationStateChanged(class ServiceCore *lc, SerphoneProxyConfig *cfg,
 void recvTextMessage(ServiceCore *lc, SerphoneChatRoom *room,
 			const SerphoneAddress *from, const SerphoneAddress *to, const char *msgid, const char *message, const char *date)
 {
-    PrintConsole("[APICall] on RecvTextMessage %s \n",message);
+    WriteLogToFile("[APICall] on RecvTextMessage %s \n",message);
 
     size_t msglen = strlen(message);
     int i = 0;
     for( ; i < msglen; i++) {
-		PrintConsole(" i= %d \n",i);
+		WriteLogToFile(" i= %d \n",i);
 		if( message[i] == '\r' ||  message[i] == '\n' || message[i]==' ')
             continue;
         else
@@ -798,7 +798,7 @@ void recvTextMessage(ServiceCore *lc, SerphoneChatRoom *room,
     }
     if( strncmp(message+i, "type=", 5) != 0 ) {
         if( !g_cbInterface.onTextMessageReceived ) {
-            PrintConsole("[APICall] not set onTextMessageReceived callback\n");
+            WriteLogToFile("[APICall] not set onTextMessageReceived callback\n");
             return;
         }
 
@@ -818,7 +818,7 @@ void recvTextMessage(ServiceCore *lc, SerphoneChatRoom *room,
     }
     else if( strncmp(message+i, "type=0\r\n", 8) == 0 ) {
         if( !g_cbInterface.onTextMessageReceived ) {
-            PrintConsole("[APICall] not set onTextMessageReceived callback\n");
+            WriteLogToFile("[APICall] not set onTextMessageReceived callback\n");
             return;
         }
 
@@ -884,7 +884,7 @@ void recvTextMessage(ServiceCore *lc, SerphoneChatRoom *room,
         }
         if (lc->serphone_haiyuntong_enabled() && needDecrypt) {
             char messageDecrypt[4096] = {0};
-            PrintConsole("[DEBUG HAIYUNTONG] decrypt input message:%s",message);
+            WriteLogToFile("[DEBUG HAIYUNTONG] decrypt input message:%s",message);
             long messageDecryptLen = 0;
             int ret;
             if (receiver[0] == 'g') {
@@ -911,11 +911,11 @@ void recvTextMessage(ServiceCore *lc, SerphoneChatRoom *room,
     else if( strncmp(message+i, "type=1\r\n", 8) == 0 )
     {
         if(!g_cbInterface.onNotifyGeneralEvent) {
-			PrintConsole("[APICall] not set onNotifyGeneralEvent callback\n");
+			WriteLogToFile("[APICall] not set onNotifyGeneralEvent callback\n");
 			return;
 		}
         i += 8;
-		PrintConsole("[APICall] call onNotifyGeneralEvent(NULL,G_EVENT_MessageCommand...) \n");
+		WriteLogToFile("[APICall] call onNotifyGeneralEvent(NULL,G_EVENT_MessageCommand...) \n");
 #ifdef OLDERRORCODE
 		g_cbInterface.onNotifyGeneralEvent(NULL,G_EVENT_MessageCommand,message+i,0);
 #else
@@ -925,12 +925,12 @@ void recvTextMessage(ServiceCore *lc, SerphoneChatRoom *room,
     }
     else if( strncmp(message+i, "type=2", 6) == 0 )
     {
-        PrintConsole("[APICall] Other client use the same account, pushed off!!\n");
+        WriteLogToFile("[APICall] Other client use the same account, pushed off!!\n");
         if( !g_cbInterface.onConnectError )
             return;
         g_bConnected = false;
         g_hasRegistered = false;
-		PrintConsole("[APICall] recvTextMessage,onConnectError(%d)\n",ReasonKickedOff);
+		WriteLogToFile("[APICall] recvTextMessage,onConnectError(%d)\n",ReasonKickedOff);
         if (traceFile) {
             time_t temp = time(NULL);
             std::string strTime = timetodate(temp);
@@ -953,7 +953,7 @@ void recvTextMessage(ServiceCore *lc, SerphoneChatRoom *room,
             return;
         }
         i += 8;
-		PrintConsole("[APICall] call onMessageSendReport send to the receiver\n");
+		WriteLogToFile("[APICall] call onMessageSendReport send to the receiver\n");
 #ifdef OLDERRORCODE
 		g_cbInterface.onMessageSendReport(message+i, date, 200);
 #else
@@ -967,13 +967,13 @@ void recvTextMessage(ServiceCore *lc, SerphoneChatRoom *room,
             return;
         }
         i += 8;
-		PrintConsole("[APICall] call onMessageRemoteVideoRotate send to the receiver\n");
+		WriteLogToFile("[APICall] call onMessageRemoteVideoRotate send to the receiver\n");
 		g_cbInterface.onMessageRemoteVideoRotate(message+i);
 		return ;
     }
     else
     {
-        PrintConsole("[APICall] invalid message, discard!\n");
+        WriteLogToFile("[APICall] invalid message, discard!\n");
     }
 
 	return;
@@ -984,7 +984,7 @@ void textSendReport(ServiceCore *lc, const char *msgid, const char *date, int st
 #ifndef OLDERRORCODE
         status = ReasonNone+status;
 #endif
-		PrintConsole("[APICall] onMessageSendReport(%s,%d)\n",msgid,status);
+		WriteLogToFile("[APICall] onMessageSendReport(%s,%d)\n",msgid,status);
 		g_cbInterface.onMessageSendReport(msgid,date,status);
 	}
 }
@@ -1010,7 +1010,7 @@ void mediaInitFailed(class ServiceCore* lc, SerPhoneCall *call, int type, int er
     if (call) {
         char callid[64] = {'\0'};
         if (!call->op) {
-            PrintConsole("mediaInitFailed unknow cal salop \n");
+            WriteLogToFile("mediaInitFailed unknow cal salop \n");
             return ;
         }
         snprintf(callid,63,"%d",call->op->cid);
@@ -1022,7 +1022,7 @@ void mediaInitFailed(class ServiceCore* lc, SerPhoneCall *call, int type, int er
         if(g_cbInterface.onNotifyGeneralEvent)
             g_cbInterface.onNotifyGeneralEvent(NULL,G_EVENT_MediaInitFailed,mediaType,error);
     }
-    PrintConsole("[APICall] MediaInitFailed(%s %d)\n",(type==0)?"audio":"video", error);
+    WriteLogToFile("[APICall] MediaInitFailed(%s %d)\n",(type==0)?"audio":"video", error);
 }
 
 void deliverVideoFrame(class ServiceCore* lc, SerPhoneCall *call, uint8_t* buf, int size, int width, int height)
@@ -1143,7 +1143,7 @@ void remoteVideoRatioChanged(SerPhoneCall *call, int width, int height, bool isV
 
 extern "C" void eXosipThreadStop()
 {
-    PrintConsole("[DEBUG] sean current servicecore:%p",g_pSerCore);
+    WriteLogToFile("[DEBUG] sean current servicecore:%p",g_pSerCore);
     g_cbInterface.oneXosipThreadStop();
 }
 
@@ -1159,7 +1159,7 @@ static void* iterate_fun(void *p)
             static int local_count = 0;
             local_count++;
             if (local_count % 100 == 0) {
-//                PrintConsole("[DEBUG] sean g_hasRegistered:%s, g_RegisterTimerFlag:%s",g_hasRegistered?"true":"false",g_RegisterTimerFlag==1?"true":"false");
+//                WriteLogToFile("[DEBUG] sean g_hasRegistered:%s, g_RegisterTimerFlag:%s",g_hasRegistered?"true":"false",g_RegisterTimerFlag==1?"true":"false");
             }
 
             if (local_count % 1000 == 0) { //To validate thread is active
@@ -1184,7 +1184,7 @@ static void* iterate_fun(void *p)
                     fwrite(strTime.c_str(), strTime.length(), 1, traceFile);
                     char tempp[200] = {0};
                     sprintf(tempp, " g_RegisterTimerFlag = 1 in func iterate_fun, g_NetworkType = %d\n",g_NetworkType);
-                    PrintConsole(" g_RegisterTimerFlag = 1 in func iterate_fun, g_NetworkType = %d\n",g_NetworkType);
+                    WriteLogToFile(" g_RegisterTimerFlag = 1 in func iterate_fun, g_NetworkType = %d\n",g_NetworkType);
                     fwrite(tempp, strlen(tempp), 1, traceFile);
                     fflush(traceFile);
                 }
@@ -1205,7 +1205,7 @@ static void* iterate_fun(void *p)
                         std::string strTime = timetodate(temp);
                         fwrite(strTime.c_str(), strTime.length(), 1, traceFile);
                         char tempp[200] = {0};
-                        PrintConsole(" g_RegisterErrorCount = %d\n",g_RegisterErrorCount);
+                        WriteLogToFile(" g_RegisterErrorCount = %d\n",g_RegisterErrorCount);
                         sprintf(tempp, " g_RegisterErrorCount = %d\n",g_RegisterErrorCount);
 
                         fwrite(tempp, strlen(tempp), 1, traceFile);
@@ -1230,7 +1230,7 @@ static void* iterate_fun(void *p)
         }
 	}
 	g_IterateRuning = false;
-	PrintConsole("iterate_fun end");
+	WriteLogToFile("iterate_fun end");
 	return (void*)0;
 }
 
@@ -1242,9 +1242,9 @@ int findCall( const char* callid, SerPhoneCall** ppCall)
 	}
     /*update begin------------------Sean20130729----------for video ice------------*/
 //	int cid = atoi(callid);
-//    PrintConsole("[APICall] findCall cid=%d\n", cid);
+//    WriteLogToFile("[APICall] findCall cid=%d\n", cid);
 //	*ppCall = g_pSerCore->serphone_core_find_call_by_cid(cid);
-    PrintConsole("[APICall] findCall cid=%s\n", callid);
+    WriteLogToFile("[APICall] findCall cid=%s\n", callid);
     *ppCall = g_pSerCore->serphone_core_find_call_by_user_cid(callid);
 
     /*update end--------------------Sean20130729----------for video ice------------*/
@@ -1367,7 +1367,7 @@ int synHttpRequest(char *host, int port, char *message, char *response , int buf
 		}
 		recvlen += len;
 	}
-	PrintConsole("%s\n", response);
+	WriteLogToFile("%s\n", response);
 #ifdef WIN32
 	closesocket(sock);
 #else
@@ -1430,7 +1430,7 @@ extern "C" int initialize( CCallbackInterface *cbInterface)
 #endif
 #endif
 
-	PrintConsole("[APICall] initialize\n");
+	WriteLogToFile("[APICall] initialize\n");
 
     if (traceFile) {
         time_t temp = time(NULL);
@@ -1440,7 +1440,7 @@ extern "C" int initialize( CCallbackInterface *cbInterface)
         fflush(traceFile);
     }
 
-	PrintConsole("[APICall] CCPClient version %s for %s(%s) %s Build#%s %s\n",
+	WriteLogToFile("[APICall] CCPClient version %s for %s(%s) %s Build#%s %s\n",
 			CCP_SDK_VERSION,platform,arch,video,__DATE__,__TIME__);
 	sprintf(gVersionString,"%s#%s#%s#%s#%s#%s %s",CCP_SDK_VERSION,platform,arch,voice,video,__DATE__,__TIME__);
 	if(!cbInterface )
@@ -1501,7 +1501,7 @@ extern "C" int initialize( CCallbackInterface *cbInterface)
 		return ERR_NO_MEMORY;
 	}
 
-    PrintConsole("[DEBUG] sean new serviecore:%p",g_pSerCore);
+    WriteLogToFile("[DEBUG] sean new serviecore:%p",g_pSerCore);
 
     if (traceFile) {
         time_t temp = time(NULL);
@@ -1515,7 +1515,7 @@ extern "C" int initialize( CCallbackInterface *cbInterface)
     }
 
 	/*if( cbInterface->onGetCapabilityToken) {
-		PrintConsole("[APICall] onGetCapabilityToken\n");
+		WriteLogToFile("[APICall] onGetCapabilityToken\n");
 		cbInterface->onGetCapabilityToken();
 	}*/
 
@@ -1579,7 +1579,7 @@ extern "C"  int connectToCCP(const char *proxy_addr, int proxy_port,
 		return ERR_INVALID_PARAM;
     }
 
-	PrintConsole("[APICall] Connect to CCP host(%s),port(%d),account(%s),password(****),capability(%s) \n",
+	WriteLogToFile("[APICall] Connect to CCP host(%s),port(%d),account(%s),password(****),capability(%s) \n",
 		proxy_addr,proxy_port,account,capability);
 	g_bConnected =false;
 
@@ -1603,7 +1603,7 @@ extern "C" int connectToCCPWithXML(const char *addressXML, const char *account, 
     //解析xml，生成proxyList
     yuntongxunwebrtc::tinyxml2::XMLDocument doc;
     if( doc.Parse(addressXML)!= 0) {
-        PrintConsole("WARNING: connectToCCPWithMultiAddress ERROR: INVALID XML\n");
+        WriteLogToFile("WARNING: connectToCCPWithMultiAddress ERROR: INVALID XML\n");
         if (traceFile) {
             time_t temp = time(NULL);
             std::string strTime = timetodate(temp);
@@ -1616,7 +1616,7 @@ extern "C" int connectToCCPWithXML(const char *addressXML, const char *account, 
     yuntongxunwebrtc::tinyxml2::XMLElement* rootElement = doc.RootElement();
     int statusCode = atoi(rootElement->FirstChildElement("statusCode")->GetText());
     if (statusCode) {
-        PrintConsole("WARNING: connectToCCPWithMultiAddress ERROR: WRONG STATUS CODE\n");
+        WriteLogToFile("WARNING: connectToCCPWithMultiAddress ERROR: WRONG STATUS CODE\n");
         if (traceFile) {
             time_t temp = time(NULL);
             std::string strTime = timetodate(temp);
@@ -1646,7 +1646,7 @@ extern "C" int connectToCCPWithXML(const char *addressXML, const char *account, 
         lastAddr = gProxyAddrLst;
         yuntongxunwebrtc::tinyxml2::XMLElement *clpssElement = switchElement->FirstChildElement("clpss");
         if (!clpssElement) {
-            PrintConsole("WARNING: connectToCCPWithMultiAddress ERROR: NO IP\n");
+            WriteLogToFile("WARNING: connectToCCPWithMultiAddress ERROR: NO IP\n");
             if (traceFile) {
                 time_t temp = time(NULL);
                 std::string strTime = timetodate(temp);
@@ -1681,7 +1681,7 @@ extern "C" int connectToCCPWithXML(const char *addressXML, const char *account, 
     }
     else
     {
-        PrintConsole("WARNING: connectToCCPWithMultiAddress ERROR: NO IP111\n");
+        WriteLogToFile("WARNING: connectToCCPWithMultiAddress ERROR: NO IP111\n");
         if (traceFile) {
             time_t temp = time(NULL);
             std::string strTime = timetodate(temp);
@@ -1711,7 +1711,7 @@ extern "C"  int disConnectToCCP()
 {
 //	SDK_UN_INITIAL_ERROR(ERR_SDK_UN_INIT);
 //#ifndef HAIYUNTONG
-//	PrintConsole("[APICall] Disconnect to CCP\n");
+//	WriteLogToFile("[APICall] Disconnect to CCP\n");
 //
 //    if (traceFile) {
 //        time_t temp = time(NULL);
@@ -1740,7 +1740,7 @@ extern "C"  int setUserName(const char*username)
 {
 	if(!username)
 		return ERR_INVALID_PARAM;
-	PrintConsole("[APICall] setUserName (%s) \n",username);
+	WriteLogToFile("[APICall] setUserName (%s) \n",username);
 	memcpy(gDisplayName,username,sizeof(gDisplayName));
 	return 0;
 }
@@ -1767,7 +1767,7 @@ extern "C"  const char* makeCall(int callType, const char *called )
 
     if(!g_bConnected)
     {
-        PrintConsole("[APICall] makeCall (type=%s, called=%s ) Failed! unConnected\n",
+        WriteLogToFile("[APICall] makeCall (type=%s, called=%s ) Failed! unConnected\n",
                      callType == VOICE_CALL ? "voice": "video",called);
         return NULL;
     }//设置一个回调，通知上层若是加密电话，则设置响应参数
@@ -1780,7 +1780,7 @@ extern "C"  const char* makeCall(int callType, const char *called )
 	{
 		return NULL;
 	}
-	PrintConsole("[APICall] makeCall (type=%s, called=%s ) \n",
+	WriteLogToFile("[APICall] makeCall (type=%s, called=%s ) \n",
 		callType == VOICE_CALL ? "voice": "video",called);
 
 
@@ -1829,7 +1829,7 @@ extern "C" int setVideoView(void* view,void *localView)
 }
 extern "C" int resetVideoViews(const char *callid, void* rWnd, void* lWnd)
 {
-	PrintConsole("[APICall] changeVideoWindows (callid=%s ) rWnd=%0x lWnd=%0x\n",callid ? callid  :"null", rWnd, lWnd);
+	WriteLogToFile("[APICall] changeVideoWindows (callid=%s ) rWnd=%0x lWnd=%0x\n",callid ? callid  :"null", rWnd, lWnd);
 	SDK_UN_INITIAL_ERROR(ERR_SDK_UN_INIT);
 	if(!rWnd && !lWnd)
 		return ERR_INVALID_PARAM;
@@ -1841,7 +1841,7 @@ extern "C" int resetVideoViews(const char *callid, void* rWnd, void* lWnd)
 
 extern "C"  int acceptCall(const char *callid)
 {
-	PrintConsole("[APICall] acceptCall (callid=%s ) \n",callid ? callid  :"null");
+	WriteLogToFile("[APICall] acceptCall (callid=%s ) \n",callid ? callid  :"null");
 	SDK_UN_INITIAL_ERROR(ERR_SDK_UN_INIT);
 	if(!callid)
 		return ERR_INVALID_PARAM;
@@ -1853,7 +1853,7 @@ extern "C"  int acceptCall(const char *callid)
 }
 extern "C"  int releaseCall(const char *callid , int reason)
 {
-	PrintConsole("[APICall] releaseCall (callid=%s ) \n",callid ? callid  :"null");
+	WriteLogToFile("[APICall] releaseCall (callid=%s ) \n",callid ? callid  :"null");
 #ifdef WIN32
     g_pSerCore->serphone_pre_after_ring_stop(true);
     g_pSerCore->serphone_pre_after_ring_stop(false);
@@ -1878,7 +1878,7 @@ extern "C"  int releaseCall(const char *callid , int reason)
 
 extern "C"  int rejectCall(const char *callid , int reason)
 {
-	PrintConsole("[APICall] rejectCall (callid=%s , reason=%d) \n",callid ? callid  :"null",reason);
+	WriteLogToFile("[APICall] rejectCall (callid=%s , reason=%d) \n",callid ? callid  :"null",reason);
 	SDK_UN_INITIAL_ERROR(ERR_SDK_UN_INIT);
 	if( callid == NULL )
 		return g_pSerCore->serphone_core_terminate_all_calls();
@@ -1896,13 +1896,13 @@ extern "C"  int rejectCall(const char *callid , int reason)
 
 extern "C"  int pauseCall(const char *callid)
 {
-	PrintConsole("[APICall] pauseCall (callid=%s ) \n",callid ? callid  :"null");
+	WriteLogToFile("[APICall] pauseCall (callid=%s ) \n",callid ? callid  :"null");
 	SDK_UN_INITIAL_ERROR(ERR_SDK_UN_INIT);
 	SerPhoneCall *pCall = NULL;
 	int ret = findCall(callid,&pCall);
 	if(ret != 0)
     {
-        PrintConsole("[APICall] pauseCall cannot find call\n");
+        WriteLogToFile("[APICall] pauseCall cannot find call\n");
 		return  ret;
     }
     /*add begin------------------Sean20130729----------for video ice------------*/
@@ -1913,7 +1913,7 @@ extern "C"  int pauseCall(const char *callid)
 
 extern "C"  int resumeCall(const char *callid)
 {
-	PrintConsole("[APICall] resumeCall (callid=%s ) \n",callid ? callid  :"null");
+	WriteLogToFile("[APICall] resumeCall (callid=%s ) \n",callid ? callid  :"null");
 	SDK_UN_INITIAL_ERROR(ERR_SDK_UN_INIT);
 	SerPhoneCall *pCall = NULL;
 	int ret = findCall(callid,&pCall);
@@ -1923,24 +1923,24 @@ extern "C"  int resumeCall(const char *callid)
 
 extern "C"  int transferCall(const char *callid , const char *destination, int type)
 {
-	PrintConsole("[APICall] transferCall (callid=%s ) \n",callid ? callid  :"null");
+	WriteLogToFile("[APICall] transferCall (callid=%s ) \n",callid ? callid  :"null");
 	SDK_UN_INITIAL_ERROR(ERR_SDK_UN_INIT);
 	SerPhoneCall *pCall = NULL;
 	int ret = findCall(callid,&pCall);
 	if(ret != 0)
 	{
-		PrintConsole("WARNNING: cannot find call specified by callid(%s), return = %d\n",callid,ret);
+		WriteLogToFile("WARNNING: cannot find call specified by callid(%s), return = %d\n",callid,ret);
 		return  ret;
 	}
 	if (LinphoneCallConnected != pCall->state && LinphoneCallStreamsRunning != pCall->state)
 	{
-		PrintConsole("WARNNING: call cannot be transfered before answered!\n");
+		WriteLogToFile("WARNNING: call cannot be transfered before answered!\n");
 		return -1;
 	}
 
     if(-1 == g_pSerCore->serphone_set_referTo(destination))
     {
-        PrintConsole("[ERROR] destination is NULL");
+        WriteLogToFile("[ERROR] destination is NULL");
         return -1;
     }
     g_pSerCore->serphone_set_isRefering(true);
@@ -1950,14 +1950,14 @@ extern "C"  int transferCall(const char *callid , const char *destination, int t
 
 extern "C" int acceptCallByMediaType(const char *callid, int type)
 {
-    PrintConsole("[APICall] acceptCallByMediaType (callid=%s ) type:%d\n",callid ? callid  :"null", type);
+    WriteLogToFile("[APICall] acceptCallByMediaType (callid=%s ) type:%d\n",callid ? callid  :"null", type);
     SDK_UN_INITIAL_ERROR(ERR_SDK_UN_INIT);
     SerPhoneCall *pCall = NULL;
     int ret = findCall(callid, &pCall);
     if(ret != 0)
         return ret;
 
-    PrintConsole("[APICall] acceptCallByMediaType");
+    WriteLogToFile("[APICall] acceptCallByMediaType");
 
     SerphoneCallParams *params = serphone_call_params_copy(&pCall->params);
     params->has_video = type==1?true:false;
@@ -1966,14 +1966,14 @@ extern "C" int acceptCallByMediaType(const char *callid, int type)
     else ret = -1;
     serphone_call_params_destroy(params);
 
-    PrintConsole("[APICall] acceptCallByMediaType ret=%d\n", ret);
+    WriteLogToFile("[APICall] acceptCallByMediaType ret=%d\n", ret);
 
     return ret;
 }
 
 extern "C" int  updateCallMedia(const char *callid, int request)
 {
-    PrintConsole("[APICall] updateCallMedia (callid=%s ) request:%d\n",callid ? callid  :"null", request);
+    WriteLogToFile("[APICall] updateCallMedia (callid=%s ) request:%d\n",callid ? callid  :"null", request);
     SDK_UN_INITIAL_ERROR(ERR_SDK_UN_INIT);
     SerPhoneCall *pCall = NULL;
     int ret = findCall(callid, &pCall);
@@ -1994,7 +1994,7 @@ extern "C" int  updateCallMedia(const char *callid, int request)
 
 extern "C" int answerCallMediaUpdate(const char *callid, int action)
 {
-    PrintConsole("[APICall] answerCallMediaUpdate (callid=%s ) action:%d\n",callid ? callid  :"null", action);
+    WriteLogToFile("[APICall] answerCallMediaUpdate (callid=%s ) action:%d\n",callid ? callid  :"null", action);
     SDK_UN_INITIAL_ERROR(ERR_SDK_UN_INIT);
     SerPhoneCall *pCall = NULL;
     int ret = findCall(callid, &pCall);
@@ -2015,7 +2015,7 @@ extern "C" int answerCallMediaUpdate(const char *callid, int action)
 
 extern "C" const char *getCurrentCall()
 {
-//	PrintConsole("[APICall] getCurrentCall \n");
+//	WriteLogToFile("[APICall] getCurrentCall \n");
 	SDK_UN_INITIAL_ERROR(NULL);
 	static char callid[64]={0};
 	if( ! g_pSerCore->current_call)
@@ -2026,7 +2026,7 @@ extern "C" const char *getCurrentCall()
 
 extern "C" int getCallMediaType(const char *callid)
 {
-    PrintConsole("[APICall] getCallMediaType callid=%s\n", callid);
+    WriteLogToFile("[APICall] getCallMediaType callid=%s\n", callid);
 	SDK_UN_INITIAL_ERROR(ERR_SDK_UN_INIT);
     SerPhoneCall *pCall = NULL;
     int ret = findCall(callid, &pCall);
@@ -2043,7 +2043,7 @@ extern "C" int getCallMediaType(const char *callid)
 //?y????callidδ???. ???????????call????DTMF.
 extern "C"  int sendDTMF(const char *callid, const char dtmf)
 {
-	PrintConsole("[APICall] sendDTMF (callid=%s,dtmf=%c ) \n",callid ? callid  :"null",dtmf);
+	WriteLogToFile("[APICall] sendDTMF (callid=%s,dtmf=%c ) \n",callid ? callid  :"null",dtmf);
 	SDK_UN_INITIAL_ERROR(ERR_SDK_UN_INIT);
 	if(!callid)
 		return ERR_INVALID_PARAM;
@@ -2054,7 +2054,7 @@ extern "C"  int sendDTMF(const char *callid, const char dtmf)
 
 extern "C"  const char *sendTextMessage(const char *receiver, const char *message, const char *userdata)
 {
-	PrintConsole("[APICall] sendTextMessage (receiver=%s,message length=%d, userdata length=%d) \n",
+	WriteLogToFile("[APICall] sendTextMessage (receiver=%s,message length=%d, userdata length=%d) \n",
 		receiver ? receiver  : "null",
 		message ? strlen(message) : 0,
         userdata ? strlen(userdata):0 );
@@ -2083,7 +2083,7 @@ extern "C"  const char *sendTextMessage(const char *receiver, const char *messag
             return  errorCode;
         }
         messageEncrypt[messageEncryptLen] = '\0';
-        PrintConsole("[DEBUG HAIYUNTONG] encrypted message:%s",messageEncrypt);
+        WriteLogToFile("[DEBUG HAIYUNTONG] encrypted message:%s",messageEncrypt);
         int bufLen = 64+messageEncryptLen;
         if(userdata)
             bufLen += strlen(userdata);
@@ -2130,7 +2130,7 @@ extern "C"  const char *sendTextMessage(const char *receiver, const char *messag
 
 
 
-    PrintConsole("[APICall] sendTextMessage");
+    WriteLogToFile("[APICall] sendTextMessage");
 
     const char *callid = g_pSerCore->serphone_core_send_text(receiver,bufPtr);
 
@@ -2142,19 +2142,19 @@ extern "C"  const char *sendTextMessage(const char *receiver, const char *messag
 extern "C"	int	enableLoudsSpeaker(bool enable)
 {
 	SDK_UN_INITIAL_ERROR(ERR_SDK_UN_INIT);
-	PrintConsole("[APICall] enableLoudsSpeaker (enable=%s) \n",enable ? "YES":"NO");
+	WriteLogToFile("[APICall] enableLoudsSpeaker (enable=%s) \n",enable ? "YES":"NO");
 	return g_pSerCore->serphone_set_louds_speaker_status(enable);
 }
 
 extern "C"	int	enableGlobalAudioInDevice(bool enable)
 {
 	SDK_UN_INITIAL_ERROR(ERR_SDK_UN_INIT);
-	PrintConsole("[APICall] enableGlobalAudioInDevice (enable=%s) \n",enable ? "YES":"NO");
+	WriteLogToFile("[APICall] enableGlobalAudioInDevice (enable=%s) \n",enable ? "YES":"NO");
 	return g_pSerCore->serphone_set_global_audio_in_device(enable);
 }
 extern "C" bool getLoudsSpeakerStatus()
 {
-	PrintConsole("[APICall] getLoudsSpeakerStatus \n");
+	WriteLogToFile("[APICall] getLoudsSpeakerStatus \n");
 	SDK_UN_INITIAL_ERROR(ERR_SDK_UN_INIT);
 	 if( g_pSerCore->serphone_get_louds_speaker_status() )
 		 return true;
@@ -2163,7 +2163,7 @@ extern "C" bool getLoudsSpeakerStatus()
 }
 extern "C" int setMute(bool on)
 {
-	PrintConsole("[APICall] setMute (on=%s) \n",on ? "YES":"NO");
+	WriteLogToFile("[APICall] setMute (on=%s) \n",on ? "YES":"NO");
 	SDK_UN_INITIAL_ERROR(ERR_SDK_UN_INIT);
 	return g_pSerCore->serphone_set_mute_status(on);
 }
@@ -2179,7 +2179,7 @@ extern "C" bool getMuteStatus()
 
 extern "C" int setSpeakerMute(bool on)
 {
-	PrintConsole("[APICall] setSpeakerMute (on=%s) \n",on ? "YES":"NO");
+	WriteLogToFile("[APICall] setSpeakerMute (on=%s) \n",on ? "YES":"NO");
 	SDK_UN_INITIAL_ERROR(ERR_SDK_UN_INIT);
 	return g_pSerCore->serphone_set_speaker_mute_status(on);
 }
@@ -2195,7 +2195,7 @@ extern "C" bool getSpeakerMuteStatus()
 
 extern "C" bool getMuteStatusSoft(const char* callid)
 {
-    PrintConsole("[APICall] getMuteStatusSoft callid=%s\n", callid);
+    WriteLogToFile("[APICall] getMuteStatusSoft callid=%s\n", callid);
 	SDK_UN_INITIAL_ERROR(ERR_SDK_UN_INIT);
     SerPhoneCall *pCall = NULL;
     int ret = findCall(callid, &pCall);
@@ -2206,7 +2206,7 @@ extern "C" bool getMuteStatusSoft(const char* callid)
 
 extern "C" int setMuteSoft(const char*callid, bool on)
 {
-    PrintConsole("[APICall] setMuteSoft callid=%s,on=%d\n", callid,on);
+    WriteLogToFile("[APICall] setMuteSoft callid=%s,on=%d\n", callid,on);
 	SDK_UN_INITIAL_ERROR(ERR_SDK_UN_INIT);
     SerPhoneCall *pCall = NULL;
     int ret = findCall(callid, &pCall);
@@ -2246,7 +2246,7 @@ extern "C" int setAfterRing(const char* filename)
 extern "C" int openTraceFile(const char *filePath)
 {
     if (NULL == filePath) {
-        PrintConsole("[APICall WARNNING] %s filePath is NULL");
+        WriteLogToFile("[APICall WARNNING] %s filePath is NULL");
         return -1;
     }
     globalFilePath = (char *)malloc(strlen(filePath)+1);
@@ -2258,7 +2258,7 @@ extern "C" int openTraceFile(const char *filePath)
 extern "C" int openTraceFile2(const char *filePath)
 {
     if (NULL == filePath) {
-        PrintConsole("[APICall WARNNING] %s filePath is NULL");
+        WriteLogToFile("[APICall WARNNING] %s filePath is NULL");
         return -1;
     }
     globalFilePath2 = (char *)malloc(strlen(filePath)+1);
@@ -2279,7 +2279,7 @@ extern "C" int setLogLevel(int level)
 
 extern "C" void setTraceFlag(bool enable)
 {
-	ECMedia_set_trace(NULL, NULL, 23, 100);
+	ECMedia_set_trace(NULL, NULL, 26, 100);
 	ServiceCore::serphone_set_traceFlag();
 }
 
@@ -2290,18 +2290,18 @@ extern "C" void setAudioRecordStatus(const char *path, bool enable)
 
 extern "C" void setCapabilityToken(const char *token)
 {
-	PrintConsole("[APICall] setCapabilityToken (token=%s) \n",token ? token:"NULL");
+	WriteLogToFile("[APICall] setCapabilityToken (token=%s) \n",token ? token:"NULL");
 	/*if( token && token[0] ) {
 		char capability[32] = {0};
 		DecodeAuthToken(token,KEY_TOKEN[0],capability);
-		PrintConsole("decode token is  %s\n",capability);
+		WriteLogToFile("decode token is  %s\n",capability);
 	}*/
 }
 
 extern "C" int setUserData(int type, const char *data)
 {
 	SDK_UN_INITIAL_ERROR(ERR_SDK_UN_INIT);
-	PrintConsole("[APICall] setUserData (type=%d ,data=%s) \n",type, data ? data:"NULL");
+	WriteLogToFile("[APICall] setUserData (type=%d ,data=%s) \n",type, data ? data:"NULL");
 	switch( type)
 	{
 	case USERDATA_FOR_TOKEN:
@@ -2332,7 +2332,7 @@ extern "C" int setUserData(int type, const char *data)
 }
 extern "C" int getUserData(int type, char* buffer,int  buflen)
 {
-	PrintConsole("[APICall] getUserData (type=%d)\n",type);
+	WriteLogToFile("[APICall] getUserData (type=%d)\n",type);
 	SDK_UN_INITIAL_ERROR(ERR_SDK_UN_INIT);
 	switch( type)
 	{
@@ -2348,7 +2348,7 @@ extern "C" int getUserData(int type, char* buffer,int  buflen)
 	default:
 		return ERR_NOT_SUPPORT;
 	}
-	PrintConsole("[APICall] getUserData (type=%d) return(%s)\n",type,buffer);
+	WriteLogToFile("[APICall] getUserData (type=%d) return(%s)\n",type,buffer);
 	return 0;
 }
 
@@ -2359,8 +2359,8 @@ extern "C" int getCallState(const char *callid)
 
 extern "C" int unInitialize()
 {
-    PrintConsole("[DEBUG] sean %s called, serviecore:%p",__FUNCTION__,g_pSerCore);
-	PrintConsole("[APICall] unInitialize\n");
+    WriteLogToFile("[DEBUG] sean %s called, serviecore:%p",__FUNCTION__,g_pSerCore);
+	WriteLogToFile("[APICall] unInitialize\n");
 	g_Iterate =false;
 #if 0
     if (globalFilePath) {
@@ -2375,7 +2375,7 @@ extern "C" int unInitialize()
 	int waitTimes = 30;   //total 3s
 	while (g_IterateRuning && waitTimes > 0)
 	{
-		PrintConsole("[APICall] unInitialize waiting iterate stop\n");
+		WriteLogToFile("[APICall] unInitialize waiting iterate stop\n");
 		Sleep(100);
 		waitTimes--;
 	}
@@ -2387,7 +2387,7 @@ extern "C" int unInitialize()
 		g_pSerCore = NULL;
 	}
 	g_bConnected = false;
-	PrintConsole("[APICall] unInitialize finished\n");
+	WriteLogToFile("[APICall] unInitialize finished\n");
     if (gProxyAddrLst) {
         proxyAddrList *temp = gProxyAddrLst->next;
         while (temp) {
@@ -2414,7 +2414,7 @@ extern "C" int unInitialize()
 }
 extern "C" int setAndroidObjects(void* javaVM, void* env, void* context)
 {
-    PrintConsole("[APICall] setAndroidObjects javaVM=%0x, env=%0x, context=%0x", javaVM, env,
+    WriteLogToFile("[APICall] setAndroidObjects javaVM=%0x, env=%0x, context=%0x", javaVM, env,
     context);
     serphone_core_set_android_objects(javaVM,env,context);
 	return 0;
@@ -2432,7 +2432,7 @@ extern "C" void setNetworkType(int networktype,bool connected,bool reconnect)
 		p = type[networktype];
 
     g_NetworkType = networktype;
-	PrintConsole("[APICall] setNetworkType (networktype=%s, connected=%s, reconnect=%s)\n",
+	WriteLogToFile("[APICall] setNetworkType (networktype=%s, connected=%s, reconnect=%s)\n",
 		p,connected ? "true":"false", reconnect?"true" : "false");
 
     if( g_pSerCore) {
@@ -2471,22 +2471,22 @@ extern "C" void setNetworkType(int networktype,bool connected,bool reconnect)
 		g_keepAliveTime = gAliveTimeForWifi;
     }
 
-	PrintConsole("Adjust KeepAlive interval to %d ms\n",g_keepAliveTime);
+	WriteLogToFile("Adjust KeepAlive interval to %d ms\n",g_keepAliveTime);
 
 	if (g_pSerCore)
 		sal_set_keepalive_period(g_pSerCore->sal,g_keepAliveTime);
 
 	if( !connected) {
-		PrintConsole("[APICall] onConnectError(NoNetwork)\n");
+		WriteLogToFile("[APICall] onConnectError(NoNetwork)\n");
 		g_bConnected = false;
-		PrintConsole("[APICall] setNetworkType,onConnectError(%d)\n",ReasonNoNetwork);
+		WriteLogToFile("[APICall] setNetworkType,onConnectError(%d)\n",ReasonNoNetwork);
         if(g_cbInterface.onConnectError)
             g_cbInterface.onConnectError(ReasonNoNetwork);
 		return;
 	}
 	if( reconnect && networktype != NETWORK_NONE )
 	{
-		PrintConsole("[APICall] reconnect int network\n");
+		WriteLogToFile("[APICall] reconnect int network\n");
             g_pSerCore->sip_check_thread_active();
 
         if (traceFile) {
@@ -2521,7 +2521,7 @@ extern "C" void setNetworkType(int networktype,bool connected,bool reconnect)
 }
 extern "C" int selectCamera(int cameraIndex, int capabilityIndex,int fps,int rotate,bool force)
 {
-	PrintConsole("[APICall] selectCamera (cameraIndex=%d,capabilityIndex=%d,fps=%d,ratate=%d force=%d )\n",
+	WriteLogToFile("[APICall] selectCamera (cameraIndex=%d,capabilityIndex=%d,fps=%d,ratate=%d force=%d )\n",
 		cameraIndex,capabilityIndex,fps,rotate,force);
 	SDK_UN_INITIAL_ERROR(ERR_SDK_UN_INIT);
 	return g_pSerCore->selectCamera(cameraIndex,capabilityIndex,fps,rotate,force);
@@ -2589,7 +2589,7 @@ extern "C" const char* getVersion()
 }
 extern "C" void setKeepAliveTimeout(int forWifi, int for3G)
 {
-	PrintConsole("[APICall] setKeepAliveTime forWifi(%d), for3G(%d)\n",forWifi,for3G);
+	WriteLogToFile("[APICall] setKeepAliveTime forWifi(%d), for3G(%d)\n",forWifi,for3G);
 	gAliveTimeFor3G = for3G*1000;
 	gAliveTimeForWifi = forWifi*1000;
 
@@ -2598,7 +2598,7 @@ extern "C" void setKeepAliveTimeout(int forWifi, int for3G)
 	else
 		g_keepAliveTime = gAliveTimeForWifi;
 
-	PrintConsole("Adjust KeepAlive interval to %ds\n",g_keepAliveTime);
+	WriteLogToFile("Adjust KeepAlive interval to %ds\n",g_keepAliveTime);
 	if (g_pSerCore)
 		sal_set_keepalive_period(g_pSerCore->sal,g_keepAliveTime);
 }
@@ -2722,30 +2722,30 @@ bool getCodecEnabled(int type)
     bool enabled = false;
     if(g_pSerCore)
         enabled =  g_pSerCore->serphone_core_is_payload_type_enable(mime, freq);
-    PrintConsole("getCodecEnabled mimi=%s enabled=%s\r\n", mime, enabled?"yes":"no");
+    WriteLogToFile("getCodecEnabled mimi=%s enabled=%s\r\n", mime, enabled?"yes":"no");
     return enabled;
 }
 
 extern "C" int setAudioConfigEnabled(int type, bool enabled, int mode)
 {
-    PrintConsole("[APICall setAudioConfigEnabled type=%d enabled=%d mode=%d\n",type,  enabled, mode);
+    WriteLogToFile("[APICall setAudioConfigEnabled type=%d enabled=%d mode=%d\n",type,  enabled, mode);
     SDK_UN_INITIAL_ERROR(ERR_SDK_UN_INIT);
     return g_pSerCore->serphone_core_set_audio_config_enabled(type, enabled, mode);
 }
 
 extern "C" int getAudioConfigEnabled(int type, bool *enabled, int *mode)
 {
-    PrintConsole("[APICall getAgcEnabled\n");
+    WriteLogToFile("[APICall getAgcEnabled\n");
     SDK_UN_INITIAL_ERROR(ERR_SDK_UN_INIT);
     int ret =g_pSerCore->serphone_core_get_audio_config_enabled(type, (bool_t*)enabled, mode);
 
-    PrintConsole("[APICall getAgcEnabled type=%d enabled=%d, mode=%d\n", type, enabled, mode);
+    WriteLogToFile("[APICall getAgcEnabled type=%d enabled=%d, mode=%d\n", type, enabled, mode);
     return ret;
 }
 
 extern "C" int resetAudioDevice()
 {
-    PrintConsole("[APICall getAgcEnabled\n");
+    WriteLogToFile("[APICall getAgcEnabled\n");
     SDK_UN_INITIAL_ERROR(ERR_SDK_UN_INIT);
     int ret = g_pSerCore->serphone_core_reset_audio_device();
     return ret;
@@ -2753,7 +2753,7 @@ extern "C" int resetAudioDevice()
 
 extern "C" void setDtxEnabled(bool enabled)
 {
-    PrintConsole("[APICall getAgcEnabled\n");
+    WriteLogToFile("[APICall getAgcEnabled\n");
     if (g_pSerCore)
         g_pSerCore->serphone_core_set_dtx_enabled(enabled);
     return;
@@ -2761,14 +2761,14 @@ extern "C" void setDtxEnabled(bool enabled)
 
 extern "C" void setVideoBitRates(int bitrates)
 {
-    PrintConsole("[APICall setVideoBitRates %d\n", bitrates);
+    WriteLogToFile("[APICall setVideoBitRates %d\n", bitrates);
     if (g_pSerCore)
         g_pSerCore->serphone_core_set_video_bitrates(bitrates);
 }
 
 extern "C" int setSrtpEnabled(bool tls, bool srtp, bool userMode, int cryptType, const char *key)
 {
-    PrintConsole("[APICall setSrtpEnabled\n");
+    WriteLogToFile("[APICall setSrtpEnabled\n");
     SDK_UN_INITIAL_ERROR(ERR_SDK_UN_INIT);
     if (g_pSerCore) {
         //        g_pSerCore->serphone_core_enable_srtp(tls, srtp, userMode, cryptType, key);
@@ -2779,7 +2779,7 @@ extern "C" int setSrtpEnabled(bool tls, bool srtp, bool userMode, int cryptType,
 
 extern "C" int setTlsSrtpEnabled(bool tls, bool srtp, int cryptType, const char *key)
 {
-    PrintConsole("[APICall setSrtpEnabled\n");
+    WriteLogToFile("[APICall setSrtpEnabled\n");
     SDK_UN_INITIAL_ERROR(ERR_SDK_UN_INIT);
     if (g_pSerCore) {
         //        g_pSerCore->serphone_core_enable_srtp(tls, srtp, userMode, cryptType, key);
@@ -2790,7 +2790,7 @@ extern "C" int setTlsSrtpEnabled(bool tls, bool srtp, int cryptType, const char 
 
 CCPAPI int setProcessDataEnabled(const char *callid, bool flag)
 {
-    PrintConsole("[APICall setProcessDataEnabled\n");
+    WriteLogToFile("[APICall setProcessDataEnabled\n");
     SDK_UN_INITIAL_ERROR(ERR_SDK_UN_INIT);
     if (g_pSerCore) {
         SerPhoneCall *pCall = NULL;
@@ -2805,7 +2805,7 @@ CCPAPI int setProcessDataEnabled(const char *callid, bool flag)
 
 extern "C" int startRtpDump(const char *callid, int mediaType, const char *fileName, int direction)
 {
-    PrintConsole("[APICall startRtpDump callid=%s mediaType=%d fileName=%s direction=%d\n", callid, mediaType, fileName, direction);
+    WriteLogToFile("[APICall startRtpDump callid=%s mediaType=%d fileName=%s direction=%d\n", callid, mediaType, fileName, direction);
     SDK_UN_INITIAL_ERROR(ERR_SDK_UN_INIT);
 
     SerPhoneCall *pCall = NULL;
@@ -2817,7 +2817,7 @@ extern "C" int startRtpDump(const char *callid, int mediaType, const char *fileN
 
 extern "C" int stopRtpDump(const char *callid, int mediaType, int direction)
 {
-    PrintConsole("[APICall stopRtpDump callid=%s mediaType=%d direction=%d\n", callid, mediaType, direction);
+    WriteLogToFile("[APICall stopRtpDump callid=%s mediaType=%d direction=%d\n", callid, mediaType, direction);
     SDK_UN_INITIAL_ERROR(ERR_SDK_UN_INIT);
 
     SerPhoneCall *pCall = NULL;
@@ -2835,7 +2835,7 @@ int getSpeakerInfo(SpeakerInfo **speakerinfo)
 
 int selectSpeaker(int speakerIndex)
 {
-	PrintConsole("[APICall selectSpeaker speakerIndex=%d\n", speakerIndex);
+	WriteLogToFile("[APICall selectSpeaker speakerIndex=%d\n", speakerIndex);
 	SDK_UN_INITIAL_ERROR(ERR_SDK_UN_INIT);
 	return g_pSerCore->selectPlayoutDevice(speakerIndex);
 }
@@ -2848,7 +2848,7 @@ int getMicroPhoneInfo(MicroPhoneInfo** microphoneinfo)
 
 int selectMicroPhone(int microphoneIndex)
 {
-	PrintConsole("[APICall selectMicroPhone microphoneIndex=%d\n", microphoneIndex);
+	WriteLogToFile("[APICall selectMicroPhone microphoneIndex=%d\n", microphoneIndex);
 	SDK_UN_INITIAL_ERROR(ERR_SDK_UN_INIT);
 	return g_pSerCore->selectRecordDevice(microphoneIndex);
 }
@@ -2864,11 +2864,11 @@ int setStunServer(const char *server, int port)
     SDK_UN_INITIAL_ERROR(ERR_SDK_UN_INIT);
     char ip_with_port[64+12] = {'\0'};
     if (NULL == server) {
-        PrintConsole("[APICall setStunServer server is NULL\n");
+        WriteLogToFile("[APICall setStunServer server is NULL\n");
         return -1;
     }
     if (port <= 0 || port >=0xffff) {
-        PrintConsole("[APICall setStunServer port = %d, which is invalid\n",port);
+        WriteLogToFile("[APICall setStunServer port = %d, which is invalid\n",port);
     }
     sprintf(ip_with_port, "%s:%d",server,port);
     g_pSerCore->serphone_core_set_stun_server(ip_with_port);
@@ -2889,7 +2889,7 @@ int setFirewallPolicy(CCPClientFirewallPolicy policy)
 int setShieldMosaic(bool flag)
 {
     SDK_UN_INITIAL_ERROR(ERR_SDK_UN_INIT);
-    PrintConsole("[APICall setShieldMosaic called, flag = %d\n",flag);
+    WriteLogToFile("[APICall setShieldMosaic called, flag = %d\n",flag);
     g_pSerCore->serphone_set_mosaic(flag);
     return 0;
 }
@@ -2897,9 +2897,9 @@ int setShieldMosaic(bool flag)
 CCPAPI int seRateAfterP2PSucceed(int rate)
 {
     SDK_UN_INITIAL_ERROR(ERR_SDK_UN_INIT);
-    PrintConsole("[APICall] seRateAfterP2PSucceed called, rate = %d\n",rate);
+    WriteLogToFile("[APICall] seRateAfterP2PSucceed called, rate = %d\n",rate);
     if (rate <= 0 || rate > 2000) {
-        PrintConsole("[APICall] seRateAfterP2PSucceed called, illegal rate[%d]. Rate should bewteen 1~2000\n",rate);
+        WriteLogToFile("[APICall] seRateAfterP2PSucceed called, illegal rate[%d]. Rate should bewteen 1~2000\n",rate);
         return -1;
     }
     g_pSerCore->serphone_set_rate_p2p(rate);
@@ -2908,7 +2908,7 @@ CCPAPI int seRateAfterP2PSucceed(int rate)
 
 CCPAPI int startDeliverVideoFrame(const char *callid)
 {
-    PrintConsole("[APICall startDeliverVideoFrame callid = %s\n",callid);
+    WriteLogToFile("[APICall startDeliverVideoFrame callid = %s\n",callid);
 
     SDK_UN_INITIAL_ERROR(ERR_SDK_UN_INIT);
 
@@ -2921,7 +2921,7 @@ CCPAPI int startDeliverVideoFrame(const char *callid)
 
 CCPAPI int stopDeliverVideoFrame(const char *callid)
 {
-    PrintConsole("[APICall stopDeliverVideoFrame callid = %s\n",callid);
+    WriteLogToFile("[APICall stopDeliverVideoFrame callid = %s\n",callid);
 
     SDK_UN_INITIAL_ERROR(ERR_SDK_UN_INIT);
 
@@ -2934,7 +2934,7 @@ CCPAPI int stopDeliverVideoFrame(const char *callid)
 
 CCPAPI int startRecordVoice(const char *callid, const char *filename)
 {
-	PrintConsole("[APICall startRecordVoice callid = %s\n",callid);
+	WriteLogToFile("[APICall startRecordVoice callid = %s\n",callid);
 	SDK_UN_INITIAL_ERROR(ERR_SDK_UN_INIT);
 
 	SerPhoneCall *pCall = NULL;
@@ -2946,7 +2946,7 @@ CCPAPI int startRecordVoice(const char *callid, const char *filename)
 
 CCPAPI int stopRecordVoice(const char *callid)
 {
-	PrintConsole("[APICall stopRecordVoice callid = %s\n",callid);
+	WriteLogToFile("[APICall stopRecordVoice callid = %s\n",callid);
 
 	SDK_UN_INITIAL_ERROR(ERR_SDK_UN_INIT);
 	SerPhoneCall *pCall = NULL;
@@ -2958,7 +2958,7 @@ CCPAPI int stopRecordVoice(const char *callid)
 
 CCPAPI int startRecordVoiceEx(const char *callid, const char *rFileName, const char *lFileName)
 {
-	PrintConsole("[APICall startRecordVoiceEx callid = %s\n",callid);
+	WriteLogToFile("[APICall startRecordVoiceEx callid = %s\n",callid);
 	SDK_UN_INITIAL_ERROR(ERR_SDK_UN_INIT);
 
 	SerPhoneCall *pCall = NULL;
@@ -2970,7 +2970,7 @@ CCPAPI int startRecordVoiceEx(const char *callid, const char *rFileName, const c
 
 CCPAPI int getLocalVideoSnapshot(const char *callid, unsigned char **buf, unsigned int *size, unsigned int *width, unsigned int *height)
 {
-    PrintConsole("[APICall getLocalVideoSnapshot callid = %s\n",callid);
+    WriteLogToFile("[APICall getLocalVideoSnapshot callid = %s\n",callid);
 
 	SDK_UN_INITIAL_ERROR(ERR_SDK_UN_INIT);
 	SerPhoneCall *pCall = NULL;
@@ -2982,7 +2982,7 @@ CCPAPI int getLocalVideoSnapshot(const char *callid, unsigned char **buf, unsign
 
 CCPAPI int getRemoteVideoSnapshot(const char *callid, unsigned char **buf, unsigned int *size, unsigned int *width, unsigned int *height)
 {
-    PrintConsole("[APICall getRemoteVideoSnapshot callid = %s\n",callid);
+    WriteLogToFile("[APICall getRemoteVideoSnapshot callid = %s\n",callid);
 
 	SDK_UN_INITIAL_ERROR(ERR_SDK_UN_INIT);
 	SerPhoneCall *pCall = NULL;
@@ -2994,7 +2994,7 @@ CCPAPI int getRemoteVideoSnapshot(const char *callid, unsigned char **buf, unsig
 
 CCPAPI int getLocalVideoSnapshotExt(const char *callid, const char *fielName)
 {
-	PrintConsole("[APICall getLocalVideoSnapshotExt callid = %s fileName=%s\n",callid, fielName);
+	WriteLogToFile("[APICall getLocalVideoSnapshotExt callid = %s fileName=%s\n",callid, fielName);
 
 	SDK_UN_INITIAL_ERROR(ERR_SDK_UN_INIT);
 	SerPhoneCall *pCall = NULL;
@@ -3005,7 +3005,7 @@ CCPAPI int getLocalVideoSnapshotExt(const char *callid, const char *fielName)
 }
 CCPAPI int getRemoteVideoSnapshotExt(const char *callid, const char *fielName)
 {
-	PrintConsole("[APICall getRemoteVideoSnapshotExt callid = %s fielName=%s\n",callid, fielName);
+	WriteLogToFile("[APICall getRemoteVideoSnapshotExt callid = %s fielName=%s\n",callid, fielName);
 
 	SDK_UN_INITIAL_ERROR(ERR_SDK_UN_INIT);
 	SerPhoneCall *pCall = NULL;
@@ -3018,11 +3018,11 @@ CCPAPI int getRemoteVideoSnapshotExt(const char *callid, const char *fielName)
 CCPAPI int startRecordRemoteVideo(const char *callid, const char *filename)
 {
 	if (!callid || !filename) {
-		PrintConsole("[APICall startRecordRemoteVideo Failed\n");
+		WriteLogToFile("[APICall startRecordRemoteVideo Failed\n");
 		return -1;
 	}
 
-	PrintConsole("[APICall startRecordRemoteVideo callid = %s filename=%s\n", callid, filename);
+	WriteLogToFile("[APICall startRecordRemoteVideo callid = %s filename=%s\n", callid, filename);
 
 	SDK_UN_INITIAL_ERROR(ERR_SDK_UN_INIT);
 	SerPhoneCall *pCall = NULL;
@@ -3034,7 +3034,7 @@ CCPAPI int startRecordRemoteVideo(const char *callid, const char *filename)
 
 CCPAPI int stopRecordRemoteVideo(const char *callid)
 {
-	PrintConsole("[APICall stopRecordRemoteVideo callid = %s\n", callid);
+	WriteLogToFile("[APICall stopRecordRemoteVideo callid = %s\n", callid);
 
 	SDK_UN_INITIAL_ERROR(ERR_SDK_UN_INIT);
 	SerPhoneCall *pCall = NULL;
@@ -3047,11 +3047,11 @@ CCPAPI int stopRecordRemoteVideo(const char *callid)
 CCPAPI int startRecordLocalVideo(const char *callid, const char *filename)
 {
 	if (!callid || !filename) {
-		PrintConsole("[APICall startRecordLocalVideo Failed\n");
+		WriteLogToFile("[APICall startRecordLocalVideo Failed\n");
 		return -1;
 	}
 
-	PrintConsole("[APICall startRecordLocalVideo callid = %s filename=%s\n", callid, filename);
+	WriteLogToFile("[APICall startRecordLocalVideo callid = %s filename=%s\n", callid, filename);
 
 	SDK_UN_INITIAL_ERROR(ERR_SDK_UN_INIT);
 	SerPhoneCall *pCall = NULL;
@@ -3063,7 +3063,7 @@ CCPAPI int startRecordLocalVideo(const char *callid, const char *filename)
 
 CCPAPI int stopRecordLocalVideo(const char *callid)
 {
-	PrintConsole("[APICall stopRecordLocalVideo callid = %s\n", callid);
+	WriteLogToFile("[APICall stopRecordLocalVideo callid = %s\n", callid);
 
 	SDK_UN_INITIAL_ERROR(ERR_SDK_UN_INIT);
 	SerPhoneCall *pCall = NULL;
@@ -3076,21 +3076,21 @@ CCPAPI int stopRecordLocalVideo(const char *callid)
 CCPAPI int noiseSuppression(const void* audioSamples,short *out)
 {
     SDK_UN_INITIAL_ERROR(ERR_SDK_UN_INIT);
-    PrintConsole("[APICall noiseSuppression called\n");
+    WriteLogToFile("[APICall noiseSuppression called\n");
     return g_pSerCore->serphone_noise_suppression(audioSamples, out);
 }
 
 CCPAPI  int checkUserOnline(const char *user)
 {
 	SDK_UN_INITIAL_ERROR(ERR_SDK_UN_INIT);
-	PrintConsole("[APICall checkUserOnline called\n");
+	WriteLogToFile("[APICall checkUserOnline called\n");
 	return g_pSerCore->serphone_core_check_account_online((char*)user);
 }
 
 CCPAPI int getNetworkStatistic(const char *callid, long long *duration, long long *send_total_sim, long long *recv_total_sim, long long *send_total_wifi, long long *recv_total_wifi)
 {
 	SDK_UN_INITIAL_ERROR(ERR_SDK_UN_INIT);
-	//PrintConsole("[APICall getNetworkStatistic called\n");
+	//WriteLogToFile("[APICall getNetworkStatistic called\n");
 	SerPhoneCall *pCall = NULL;
 	int ret = findCall(callid, &pCall);
 	if(ret != 0)
@@ -3100,7 +3100,7 @@ CCPAPI int getNetworkStatistic(const char *callid, long long *duration, long lon
 
 extern "C"  const char *notifyVideoRotate(const char *receiver, const char *degree)
 {
-	PrintConsole("[APICall] notifyVideoRotate (receiver=%s, local video rotate left %s degree) \n",
+	WriteLogToFile("[APICall] notifyVideoRotate (receiver=%s, local video rotate left %s degree) \n",
                  receiver ? receiver  : "null",
                  degree
                   );
@@ -3117,7 +3117,7 @@ extern "C"  const char *notifyVideoRotate(const char *receiver, const char *degr
 
     sprintf(bufPtr, "type=4\r\n%s",degree);
 
-    PrintConsole("[APICall] notifyVideoRotate");
+    WriteLogToFile("[APICall] notifyVideoRotate");
 
     const char *callid = g_pSerCore->serphone_core_send_text(receiver,bufPtr);
     ms_free((void **)&bufPtr);
@@ -3129,7 +3129,7 @@ extern "C"  const char *notifyVideoRotate(const char *receiver, const char *degr
 extern "C" int android_media_init_audio()
 {
     SDK_UN_INITIAL_ERROR(ERR_SDK_UN_INIT);
-	PrintConsole("[APICall android_media_init_audio called\n");
+	WriteLogToFile("[APICall android_media_init_audio called\n");
     ECMedia_init_audio();
     return 0;
 }
@@ -3137,7 +3137,7 @@ extern "C" int android_media_init_audio()
 extern "C" int android_media_uninit_audio()
 {
     SDK_UN_INITIAL_ERROR(ERR_SDK_UN_INIT);
-	PrintConsole("[APICall android_media_uninit_audio called\n");
+	WriteLogToFile("[APICall android_media_uninit_audio called\n");
     ECMedia_uninit_audio();
     return 0;
 }
@@ -3145,7 +3145,7 @@ extern "C" int android_media_uninit_audio()
 extern "C" int setAudioGain(float inaudio_gain, float outaudio_gain)
 {
     SDK_UN_INITIAL_ERROR(ERR_SDK_UN_INIT);
-	PrintConsole("[APICall setAudioGain called\n");
+	WriteLogToFile("[APICall setAudioGain called\n");
     g_pSerCore->serphone_set_audio_gain(inaudio_gain,outaudio_gain);
     return 0;
 }
@@ -3153,14 +3153,14 @@ extern "C" int setAudioGain(float inaudio_gain, float outaudio_gain)
 extern "C" int setPrivateCloud(const char *companyID, const char *restAddr, bool nativeCheck)
 {
     SDK_UN_INITIAL_ERROR(ERR_SDK_UN_INIT);
-	PrintConsole("[APICall setPrivateCloud called\n");
+	WriteLogToFile("[APICall setPrivateCloud called\n");
     return g_pSerCore->serphone_set_privateCloud(companyID,restAddr,nativeCheck);
 }
 
 extern "C" int setRootCAPath(const char * caPath)
 {
     SDK_UN_INITIAL_ERROR(ERR_SDK_UN_INIT);
-	PrintConsole("[APICall setRootCAPath called, root ca path:%s\n",caPath);
+	WriteLogToFile("[APICall setRootCAPath called, root ca path:%s\n",caPath);
     return g_pSerCore->serphone_set_root_ca_path(caPath);
 }
 
@@ -3168,7 +3168,7 @@ extern "C" int setRootCAPath(const char * caPath)
 extern "C" int registerAudioDevice()
 {
     SDK_UN_INITIAL_ERROR(ERR_SDK_UN_INIT);
-	PrintConsole("[APICall registerAudioDevice called\n");
+	WriteLogToFile("[APICall registerAudioDevice called\n");
     g_pSerCore->serphone_register_audio_device();
     return 0;
 }
@@ -3176,7 +3176,7 @@ extern "C" int registerAudioDevice()
 extern "C" int deregisterAudioDevice()
 {
     SDK_UN_INITIAL_ERROR(ERR_SDK_UN_INIT);
-	PrintConsole("[APICall deregisterAudioDevice called\n");
+	WriteLogToFile("[APICall deregisterAudioDevice called\n");
     g_pSerCore->serphone_deregister_audio_device();
     return 0;
 }
@@ -3184,7 +3184,7 @@ extern "C" int deregisterAudioDevice()
 extern "C" int SetNetworkGroupId(const char *groupID)
 {
     SDK_UN_INITIAL_ERROR(ERR_SDK_UN_INIT);
-	PrintConsole("[APICall SetNetworkGroupId called\n");
+	WriteLogToFile("[APICall SetNetworkGroupId called\n");
     g_pSerCore->serphone_set_groupID(groupID);
     return 0;
 }
@@ -3193,7 +3193,7 @@ extern "C" int SetNetworkGroupId(const char *groupID)
 extern "C" int setProcessOriginalDataEnabled(const char *callid, bool flag)
 {
     SDK_UN_INITIAL_ERROR(ERR_SDK_UN_INIT);
-	PrintConsole("[APICall setProcessOriginalDataEnabled called\n");
+	WriteLogToFile("[APICall setProcessOriginalDataEnabled called\n");
     if (g_pSerCore) {
         SerPhoneCall *pCall = NULL;
         int ret = findCall(callid, &pCall);
@@ -3209,11 +3209,11 @@ extern "C" int setProcessOriginalDataEnabled(const char *callid, bool flag)
 extern "C"  int startRecordScreen(const char *callid, const char *filename, int bitrates, int fps, int type)
 {
 	if(!callid || !filename) {
-		PrintConsole("[APICall startRecordScreen Failed\n");
+		WriteLogToFile("[APICall startRecordScreen Failed\n");
 		return -1;
 	}
 
-	PrintConsole("[APICall startRecordScreen callid = %s filename=%s\n",callid, filename);
+	WriteLogToFile("[APICall startRecordScreen callid = %s filename=%s\n",callid, filename);
 
 	SDK_UN_INITIAL_ERROR(ERR_SDK_UN_INIT);
 	SerPhoneCall *pCall = NULL;
@@ -3225,7 +3225,7 @@ extern "C"  int startRecordScreen(const char *callid, const char *filename, int 
 
 extern "C"  int stopRecordScreen(const char *callid)
 {
-	PrintConsole("[APICall stopRecordScreen callid = %s\n",callid);
+	WriteLogToFile("[APICall stopRecordScreen callid = %s\n",callid);
 
 	SDK_UN_INITIAL_ERROR(ERR_SDK_UN_INIT);
 	SerPhoneCall *pCall = NULL;
@@ -3247,37 +3247,37 @@ extern "C"  int getUsedCameraInfo(int *cameraIndex, int *capabilityIndex, int *m
 extern "C"  void setBindLocalIP(const char* localip)
 {
 	if(!localip) {
-		PrintConsole("[API Call setBindLocalIP failed. localip=%0x g_pSerCore=%0x\n", localip, g_pSerCore);
+		WriteLogToFile("[API Call setBindLocalIP failed. localip=%0x g_pSerCore=%0x\n", localip, g_pSerCore);
 		return ;
 	}
-	PrintConsole("[API Call setBindLocalIP :%s\n", localip);
+	WriteLogToFile("[API Call setBindLocalIP :%s\n", localip);
 	serphone_core_set_bind_local_addr(localip);
 }
 extern "C" int setVideoConferenceAddr(const char *ip)
 {
     SDK_UN_INITIAL_ERROR(ERR_SDK_UN_INIT);
-	PrintConsole("[APICall setVideoConferenceAddr called\n");
+	WriteLogToFile("[APICall setVideoConferenceAddr called\n");
     return g_pSerCore->serphone_set_video_conference_addr(ip);
 }
 
 extern "C" int requestMemberVideo(const char *conferenceNo, const char *conferencePasswd, const char *remoteSipNo, void *videoWindow, int port)
 {
     SDK_UN_INITIAL_ERROR(ERR_SDK_UN_INIT);
-	PrintConsole("[APICall requestMemberVideo called\n");
+	WriteLogToFile("[APICall requestMemberVideo called\n");
     return g_pSerCore->serphone_set_video_window_and_request_video_accord_sip(remoteSipNo, videoWindow, conferenceNo, conferencePasswd, port);
 }
 
 extern "C" int stopMemberVideo(const char *conferenceNo, const char *conferencePasswd, const char *remoteSipNo)
 {
 	SDK_UN_INITIAL_ERROR(ERR_SDK_UN_INIT);
-	PrintConsole("[APICall stopMemberVideo called\n");
+	WriteLogToFile("[APICall stopMemberVideo called\n");
 	return g_pSerCore->serphone_stop_conference_video_accord_sip(remoteSipNo, conferenceNo, conferencePasswd);
 }
 
 int resetVideoConfWindow(const char *sip, void *newWindow)
 {
     SDK_UN_INITIAL_ERROR(ERR_SDK_UN_INIT);
-    PrintConsole("[APICall resetVideoConfWindow called\n");
+    WriteLogToFile("[APICall resetVideoConfWindow called\n");
     if (NULL == sip) {
         return -2;
     }
@@ -3304,9 +3304,9 @@ extern "C" int startVideoCapture(const char* callid)
 extern "C" int setSilkRate(int rate)
 {
 //    SDK_UN_INITIAL_ERROR(ERR_SDK_UN_INIT);
-//    PrintConsole("[APICall setSilkRate called, rate:%d\n",rate);
+//    WriteLogToFile("[APICall setSilkRate called, rate:%d\n",rate);
 //    if (!getCodecEnabled(codec_SILK8K)) {
-//        PrintConsole("[WARNING] currnt audio codec is not silk, set audio codec to silk first\n");
+//        WriteLogToFile("[WARNING] currnt audio codec is not silk, set audio codec to silk first\n");
 //        return -1;
 //    }
 //    return g_pSerCore->serphone_set_silk_rate(rate);
@@ -3343,7 +3343,7 @@ extern "C" int setAudioMode(int mode)
 //            break;
 //        default:
 //        {
-//            PrintConsole("[WARNING] do not support this mode currently\n");
+//            WriteLogToFile("[WARNING] do not support this mode currently\n");
 //            ret = -1;
 //        }
 //            break;
@@ -3458,7 +3458,7 @@ extern "C" int setDeviceID(const char *deviceid, const char *appId, bool testFla
 {
 #ifdef HAIYUNTONG
     SDK_UN_INITIAL_ERROR(ERR_SDK_UN_INIT);
-    PrintConsole("[APICall %s called, deviceid:%s, appid:%s, testFlag\n",__FUNCTION__,deviceid,appId,testFlag);
+    WriteLogToFile("[APICall %s called, deviceid:%s, appid:%s, testFlag\n",__FUNCTION__,deviceid,appId,testFlag);
     int ret = g_pSerCore->serphone_set_deviceid_pincode(deviceid, appId, testFlag);
     return (-9999==ret)?-1001:ret;
 #endif
@@ -3469,7 +3469,7 @@ extern "C" int setHaiyuntongEnabled(bool flag)
 {
 #ifdef HAIYUNTONG
     SDK_UN_INITIAL_ERROR(ERR_SDK_UN_INIT);
-    PrintConsole("[APICall %s called, enable haiyuntong:%s\n",__FUNCTION__,flag?"TRUE":"FALSE");
+    WriteLogToFile("[APICall %s called, enable haiyuntong:%s\n",__FUNCTION__,flag?"TRUE":"FALSE");
     return g_pSerCore->serphone_enable_haiyuntong(flag);
 #endif
     return -1001;
@@ -3479,7 +3479,7 @@ extern "C" int haiyuntongFileEncrypt(const unsigned char *file, long fileLen, ch
 {
 #ifdef HAIYUNTONG
     SDK_UN_INITIAL_ERROR(ERR_SDK_UN_INIT);
-    PrintConsole("[APICall %s called, remoteSip:%s\n",__FUNCTION__,remoteSip);
+    WriteLogToFile("[APICall %s called, remoteSip:%s\n",__FUNCTION__,remoteSip);
     int ret = g_pSerCore->serphone_file_encrypt(file, fileLen, remoteSip, remoteSipLen, fileCrpEnvelopp, fileCrpEnvelopLen);
     return (-9999==ret)?-1001:ret;
 #endif
@@ -3491,7 +3491,7 @@ extern "C" int haiyuntongFileDecrypt(const unsigned char *file, long fileLen, ch
 {
 #ifdef HAIYUNTONG
     SDK_UN_INITIAL_ERROR(ERR_SDK_UN_INIT);
-    PrintConsole("[APICall %s called, remoteSip:%s\n",__FUNCTION__,remoteSip);
+    WriteLogToFile("[APICall %s called, remoteSip:%s\n",__FUNCTION__,remoteSip);
     int ret = g_pSerCore->serphone_file_decrypt(file, fileLen, remoteSip, remoteSipLen, fileDeCrpt,  fileDeCrptLen);
     return (-9999==ret)?-1001:ret;
 #endif
@@ -3503,7 +3503,7 @@ extern "C" int haiyuntongGroupFileEncrypt(const unsigned  char *file, long fileL
 {
 #ifdef HAIYUNTONG
     SDK_UN_INITIAL_ERROR(ERR_SDK_UN_INIT);
-    PrintConsole("[APICall %s called, member no:%d\n",__FUNCTION__,numOfUsers);
+    WriteLogToFile("[APICall %s called, member no:%d\n",__FUNCTION__,numOfUsers);
     int ret = g_pSerCore->serphone_group_file_encrypt(file, fileLen, userList, eachLen, numOfUsers, groupFileCrpEnvelopp, groupFileCrpEnvelopLen);
 
     return (-9999==ret)?-1001:ret;
@@ -3516,7 +3516,7 @@ extern "C" int haiyuntongGroupFileDecrypt(const unsigned  char *file, long fileL
 {
 #ifdef HAIYUNTONG
     SDK_UN_INITIAL_ERROR(ERR_SDK_UN_INIT);
-    PrintConsole("[APICall %s called, server id:%s\n",__FUNCTION__,selfSip);
+    WriteLogToFile("[APICall %s called, server id:%s\n",__FUNCTION__,selfSip);
     int ret = g_pSerCore->serphone_group_file_decrypt(file, fileLen, selfSip, selfSipLen, groupFileDecrpt, groupFileDecrptLen);
     return (-9999==ret)?-1001:ret;
 #endif
@@ -3529,7 +3529,7 @@ extern "C" int haiyuntongAddContact(char **userlist, long* userlistLen, int num)
 {
 #ifdef HAIYUNTONG
     SDK_UN_INITIAL_ERROR(ERR_SDK_UN_INIT);
-    PrintConsole("[APICall %s called, num:%d\n",__FUNCTION__,num);
+    WriteLogToFile("[APICall %s called, num:%d\n",__FUNCTION__,num);
     int ret = g_pSerCore->serphone_add_contact(userlist, userlistLen, num);
     return (-9999==ret)?-1001:ret;
 #endif
@@ -3541,7 +3541,7 @@ extern "C" int haiyuntongDelContact(char *remoteSip, long remoteSipLen)
 {
 #ifdef HAIYUNTONG
     SDK_UN_INITIAL_ERROR(ERR_SDK_UN_INIT);
-    PrintConsole("[APICall %s called, remoteSip:%s\n",__FUNCTION__,remoteSip);
+    WriteLogToFile("[APICall %s called, remoteSip:%s\n",__FUNCTION__,remoteSip);
     int ret = g_pSerCore->serphone_del_contact(remoteSip, remoteSipLen);
     return (-9999==ret)?-1001:ret;
 #endif
@@ -3551,7 +3551,7 @@ extern "C" int haiyuntongDelContact(char *remoteSip, long remoteSipLen)
 extern "C" void initHaiyuntongFailed()
 {
 #ifdef HAIYUNTONG
-    PrintConsole("[APICAll %s called, reason:%d\n",__FUNCTION__, ReasonHaiyuntongInitFailed);
+    WriteLogToFile("[APICAll %s called, reason:%d\n",__FUNCTION__, ReasonHaiyuntongInitFailed);
     g_cbInterface.onConnectError(ReasonHaiyuntongInitFailed);
 #endif
 }
@@ -3561,7 +3561,7 @@ CCPAPI int haiyuntongIsExistCert(const char *sip, long sipLen)
 {
 #ifdef HAIYUNTONG
     SDK_UN_INITIAL_ERROR(ERR_SDK_UN_INIT);
-    PrintConsole("[APICall %s called, sip:%s\n",__FUNCTION__,sip);
+    WriteLogToFile("[APICall %s called, sip:%s\n",__FUNCTION__,sip);
     int ret = g_pSerCore->serphone_certExisted(sip, sipLen);
     return (-9999==ret)?-1001:ret;
 #endif
@@ -3572,7 +3572,7 @@ CCPAPI int haiyuntongIsExistCert(const char *sip, long sipLen)
 extern "C" int openTraceFile(const char *filePath)
 {
     if (NULL == filePath) {
-        PrintConsole("[APICall WARNNING] %s filePath is NULL");
+        WriteLogToFile("[APICall WARNNING] %s filePath is NULL");
         return -1;
     }
     globalFilePath = (char *)malloc(strlen(filePath)+1);
@@ -3600,7 +3600,7 @@ extern "C" int setReconnectFlag(bool flag)
 #if 0
 extern "C" int setRingbackFlag(const char * callid, bool flag)
 {
-    PrintConsole("[APICall setRingbackFlag callid=%s, flag=%d\n", callid, flag);
+    WriteLogToFile("[APICall setRingbackFlag callid=%s, flag=%d\n", callid, flag);
     SDK_UN_INITIAL_ERROR(ERR_SDK_UN_INIT);
 
     SerPhoneCall *pCall = NULL;
@@ -3797,12 +3797,12 @@ extern "C" int pushLiveStream(void *handle, const char * url, void *renderView, 
 }
 extern "C" void stopLiveStream(void *handle)
 {
-	PrintConsole("try to stop live stream\n");
+	WriteLogToFile("try to stop live stream\n");
 	if (!g_pSerCore)
 		return;
 
 	g_pSerCore->stopLiveStream(handle);
-	PrintConsole("live stream stopped\n");
+	WriteLogToFile("live stream stopped\n");
 
 }
 extern "C" void releaseLiveStream(void *handle)
@@ -3888,19 +3888,19 @@ extern "C" int startRecordLocalMedia(const char *fileName, void *localview)
 extern "C" void stopRecordLocalMedia()
 {
 #ifdef VIDEO_ENABLED
-    PrintConsole("try to stop record local media\n");
+    WriteLogToFile("try to stop record local media\n");
     if (!g_pSerCore)
         return;
     
     g_pSerCore->stopRecordLocalMedia();
-    PrintConsole("record local media stopped\n");
+    WriteLogToFile("record local media stopped\n");
 #endif
     
 }
 extern "C" int setScreeShareActivity(char *callid, void *activity)
 {
     SDK_UN_INITIAL_ERROR(ERR_SDK_UN_INIT);
-	PrintConsole("[APICall setScreeShareActivity called\n");
+	WriteLogToFile("[APICall setScreeShareActivity called\n");
     if (g_pSerCore) {
         SerPhoneCall *pCall = NULL;
         int ret = findCall(callid, &pCall);
@@ -3915,7 +3915,7 @@ extern "C" int setScreeShareActivity(char *callid, void *activity)
 extern "C"  int sendTmmbr(char *callid, int ssrc)
 {
 	SDK_UN_INITIAL_ERROR(ERR_SDK_UN_INIT);
-	PrintConsole("[APICall sendTmmbr called\n");
+	WriteLogToFile("[APICall sendTmmbr called\n");
 	if (g_pSerCore) {
 		SerPhoneCall *pCall = NULL;
 		int ret = findCall(callid, &pCall);
@@ -3930,7 +3930,7 @@ extern "C"  int sendTmmbr(char *callid, int ssrc)
 extern "C"  int requestVideo(char *callid, int width, int height)
 {
 	SDK_UN_INITIAL_ERROR(ERR_SDK_UN_INIT);
-	PrintConsole("[APICall sendTmmbr called\n");
+	WriteLogToFile("[APICall sendTmmbr called\n");
 	if (g_pSerCore) {
 		SerPhoneCall *pCall = NULL;
 		int ret = findCall(callid, &pCall);
@@ -3952,7 +3952,7 @@ extern "C"  int requestVideo(char *callid, int width, int height)
 extern "C"  int cancelTmmbr(char *callid)
 {
 	SDK_UN_INITIAL_ERROR(ERR_SDK_UN_INIT);
-	PrintConsole("[APICall sendTmmbr called\n");
+	WriteLogToFile("[APICall sendTmmbr called\n");
 	if (g_pSerCore) {
 		SerPhoneCall *pCall = NULL;
 		int ret = findCall(callid, &pCall);
@@ -3967,7 +3967,7 @@ extern "C"  int cancelTmmbr(char *callid)
 extern "C"  int VideoStartReceive(char *callid)
 {
 	SDK_UN_INITIAL_ERROR(ERR_SDK_UN_INIT);
-	PrintConsole("[APICall sendTmmbr called\n");
+	WriteLogToFile("[APICall sendTmmbr called\n");
 	if (g_pSerCore) {
 		SerPhoneCall *pCall = NULL;
 		int ret = findCall(callid, &pCall);
@@ -3982,7 +3982,7 @@ extern "C"  int VideoStartReceive(char *callid)
 extern "C"  int VideoStopReceive(char *callid)
 {
 	SDK_UN_INITIAL_ERROR(ERR_SDK_UN_INIT);
-	PrintConsole("[APICall sendTmmbr called\n");
+	WriteLogToFile("[APICall sendTmmbr called\n");
 	if (g_pSerCore) {
 		SerPhoneCall *pCall = NULL;
 		int ret = findCall(callid, &pCall);
@@ -3998,7 +3998,7 @@ extern "C"  int VideoStopReceive(char *callid)
 extern "C" int SetRotateCapturedFrames(char *callid, ECMediaRotateCapturedFrame tr)//int ECMedia_set_rotate_captured_frames(int deviceid, ECMediaRotateCapturedFrame tr)
 {
     SDK_UN_INITIAL_ERROR(ERR_SDK_UN_INIT)
-    PrintConsole("[APICall %s called, callid %s, rotate %d]", __FUNCTION__, callid, tr);
+    WriteLogToFile("[APICall %s called, callid %s, rotate %d]", __FUNCTION__, callid, tr);
     if (g_pSerCore)
     {
         SerPhoneCall *pCall = NULL;
@@ -4014,7 +4014,7 @@ extern "C" int SetRotateCapturedFrames(char *callid, ECMediaRotateCapturedFrame 
 extern "C" int audioEnableMagicSound(bool enabled, int pitch, int tempo, int rate)
 {
     SDK_UN_INITIAL_ERROR(ERR_SDK_UN_INIT)
-    PrintConsole("[APICall called enabled %s, pitch %d, tempo %d, rate %d\n", enabled?"TRUE":"FALSE", pitch, tempo, rate);
+    WriteLogToFile("[APICall called enabled %s, pitch %d, tempo %d, rate %d\n", enabled?"TRUE":"FALSE", pitch, tempo, rate);
     if (g_pSerCore) {
         g_pSerCore->audio_enable_magic_sound(enabled, pitch, tempo, rate);
     }
@@ -4043,7 +4043,7 @@ extern "C" int getStatsReports(const char ** reportsJsonOut)
             MediaStatisticsDataInner* pML=new MediaStatisticsDataInner();
             if(PROTOBUF_CODER_OK!=decoder.DecodeMessage(pML,(char*)report,size))
             {
-                PrintConsole("ERROR: encode or decode error");
+                WriteLogToFile("ERROR: encode or decode error");
                 ret = 171132;
             }
             else
@@ -4137,10 +4137,10 @@ extern "C" int getStatsReports(const char ** reportsJsonOut)
         report=NULL;
         size=0;
         *reportsJsonOut=sJson.c_str();
-        PrintConsole((char*)__FILE__, __LINE__,(char*)__FUNCTION__,LOG_LEVEL_INFO,"ret=%d,sJson=%s",ret,sJson.c_str());
+        WriteLogToFile((char*)__FILE__, __LINE__,(char*)__FUNCTION__,LOG_LEVEL_INFO,"ret=%d,sJson=%s",ret,sJson.c_str());
         return ret;
     }
-    PrintConsole((char*)__FILE__, __LINE__, (char*)__FUNCTION__, (0 == ret || 200 == ret) ? LOG_LEVEL_INFO : LOG_LEVEL_ERR, "ret=%d,reportsJsonOut=%p\n", ret, reportsJsonOut);
+    WriteLogToFile((char*)__FILE__, __LINE__, (char*)__FUNCTION__, (0 == ret || 200 == ret) ? LOG_LEVEL_INFO : LOG_LEVEL_ERR, "ret=%d,reportsJsonOut=%p\n", ret, reportsJsonOut);
     return ret;
 #endif
 }

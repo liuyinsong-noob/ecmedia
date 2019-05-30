@@ -146,10 +146,10 @@ typedef struct _MSList MSList;
 typedef int (*MSCompareFunc)(const void *a, const void *b);
 
 #define ms_return_val_if_fail(_expr_,_ret_)\
-	if (!(_expr_)) { PrintConsole("assert "#_expr_ "failed"); return (_ret_);}
+	if (!(_expr_)) { WriteLogToFile("assert "#_expr_ "failed"); return (_ret_);}
 
 #define ms_return_if_fail(_expr_) \
-	if (!(_expr_)){ PrintConsole("assert "#_expr_ "failed"); return ;}
+	if (!(_expr_)){ WriteLogToFile("assert "#_expr_ "failed"); return ;}
 
 #define ms_list_next(elem) ((elem)->next)
 MSList * ms_list_append(MSList *elem, void * data);

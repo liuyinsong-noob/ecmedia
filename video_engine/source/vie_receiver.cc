@@ -343,7 +343,6 @@ int ViEReceiver::InsertRTPPacket(const uint8_t* rtp_packet,
     arrival_time_ms = (packet_time.timestamp + 500) / 1000;
   else
     arrival_time_ms = now_ms;
-
   {
     // Periodically log the RTP header of incoming packets.
     if (now_ms - last_packet_log_ms_ > kPacketLogIntervalMs) {

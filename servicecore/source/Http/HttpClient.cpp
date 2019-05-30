@@ -99,8 +99,8 @@ bool THttpClient::SynHttpRequest(THttpRequest& request,THttpResponse &response )
 		m_socket = -1;
 		return false;
 	}
-	PrintConsole("address:%s\n",inet_ntoa(((sockaddr_in*)(result->ai_addr))->sin_addr));
-	PrintConsole("port:%d\n",ntohs(((sockaddr_in*)(result->ai_addr))->sin_port));
+	WriteLogToFile("address:%s\n",inet_ntoa(((sockaddr_in*)(result->ai_addr))->sin_addr));
+	WriteLogToFile("port:%d\n",ntohs(((sockaddr_in*)(result->ai_addr))->sin_port));
 	//set no block
 	int flags;
 	/* If they have O_NONBLOCK, use the Posix way to do it */
@@ -115,7 +115,7 @@ bool THttpClient::SynHttpRequest(THttpRequest& request,THttpResponse &response )
 	int nobolock = ioctlsocket(m_socket, FIONBIO, (u_long *)&flags);
 	if (nobolock == SOCKET_ERROR)
 	{
-		PrintConsole("set error happens non-block %d,:%s\n",nobolock,strerror(WSAGetLastError()));
+		WriteLogToFile("set error happens non-block %d,:%s\n",nobolock,strerror(WSAGetLastError()));
 	}
 #endif
 	int rett = connect(m_socket, result->ai_addr, result->ai_addrlen);
@@ -125,10 +125,10 @@ bool THttpClient::SynHttpRequest(THttpRequest& request,THttpResponse &response )
 	//int optLen = sizeof(optVal);
 	//getsockopt(m_socket,SOL_SOCKET,SO_ERROR,(char*)&optVal,&optLen);
 	if (rett < 0 && errWin != WSAEINPROGRESS && errWin != WSAEINTR && errWin != ERROR_SUCCESS && errWin != WSAEWOULDBLOCK) {
-		PrintConsole("ERROR: connect error %s\n",strerror(errWin));
+		WriteLogToFile("ERROR: connect error %s\n",strerror(errWin));
 #else
 	if(rett < 0 && (errno != EINPROGRESS && errno != EINTR)){
-		PrintConsole("ERROR: connect error %s\n",strerror(errno));
+		WriteLogToFile("ERROR: connect error %s\n",strerror(errno));
 #endif
 		m_errorMsg = "connect to " +m_server+":"+cport+" error";
 		closesocket(m_socket);
@@ -149,13 +149,13 @@ bool THttpClient::SynHttpRequest(THttpRequest& request,THttpResponse &response )
 	res = select(m_socket+1,&rset,&set,NULL,&timeout);
 	if(res < 0)
 	{
-		PrintConsole("ERROR: network error in connect\n");
+		WriteLogToFile("ERROR: network error in connect\n");
 		closesocket(m_socket);
 		return false;
 	}
 	else if(res == 0)
 	{
-		PrintConsole("ERROR: connect time out\n");
+		WriteLogToFile("ERROR: connect time out\n");
 		closesocket(m_socket);
 		return false;
 	}
@@ -170,13 +170,13 @@ bool THttpClient::SynHttpRequest(THttpRequest& request,THttpResponse &response )
 	int block = ioctlsocket(m_socket, FIONBIO, (u_long *)&flags);
 	if (block == SOCKET_ERROR)
 	{
-		PrintConsole("set error happens block %d,:%s\n",block,strerror(WSAGetLastError()));
+		WriteLogToFile("set error happens block %d,:%s\n",block,strerror(WSAGetLastError()));
 	}
 #endif
 #ifdef _WIN32
 	int timeoutt = 5010;
 	if (SOCKET_ERROR == setsockopt(m_socket,SOL_SOCKET,SO_RCVTIMEO,(char *)&timeoutt,sizeof(timeoutt))) {
-		PrintConsole("set error happens receive timeout:%s\n",strerror(WSAGetLastError()));
+		WriteLogToFile("set error happens receive timeout:%s\n",strerror(WSAGetLastError()));
 	}
 #else
 	int resulttimeout = setsockopt(m_socket,SOL_SOCKET,SO_RCVTIMEO,(char *)&timeout.tv_sec,sizeof(struct timeval));

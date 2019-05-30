@@ -132,7 +132,7 @@ namespace yuntongxunwebrtc {
         voe_ = VoiceEngine::Create();
         if (NULL == voe_)
         {
-            PrintConsole("media_init Create audio engine fail\n");
+            WriteLogToFile("media_init Create audio engine fail\n");
             return -1;
         }
         VoEBase* base = VoEBase::GetInterface(voe_);
@@ -141,7 +141,7 @@ namespace yuntongxunwebrtc {
                 VoiceEngine::Delete(voe_);
                 voe_ = NULL;
                 
-                PrintConsole("Init Voice Engine Error, error code is %d\n",base->LastError());
+                WriteLogToFile("Init Voice Engine Error, error code is %d\n",base->LastError());
                 return base->LastError(); //base init failed
             }
         } else {
@@ -149,7 +149,7 @@ namespace yuntongxunwebrtc {
                 VoiceEngine::Delete(voe_);
                 voe_ = NULL;
                 
-                PrintConsole("Init Voice Engine Error, error code is %d\n",base->LastError());
+                WriteLogToFile("Init Voice Engine Error, error code is %d\n",base->LastError());
                 return base->LastError(); //base init failed
             }
         }
@@ -174,7 +174,7 @@ namespace yuntongxunwebrtc {
     int ECMediaMachine::uninitAudioEngine(){
         if(!voe_)
         {
-            PrintConsole("[ECMEDIA WARNNING] %s failed with error code: %d.", __FUNCTION__ , -99);
+            WriteLogToFile("[ECMEDIA WARNNING] %s failed with error code: %d.", __FUNCTION__ , -99);
             return -1;
         }
         
@@ -186,7 +186,7 @@ namespace yuntongxunwebrtc {
     int ECMediaMachine::uninitVideoEngine(){
         if(!vie_)
         {
-            PrintConsole("[ECMEDIA WARNNING] %s failed with error code: %d.", __FUNCTION__ , -99);
+            WriteLogToFile("[ECMEDIA WARNNING] %s failed with error code: %d.", __FUNCTION__ , -99);
             return -1;
         }
  
@@ -199,14 +199,14 @@ namespace yuntongxunwebrtc {
             vie_ = VideoEngine::Create();
             if ( NULL == vie_)
             {
-                PrintConsole("media_init Create Video engine fail\n");
+                WriteLogToFile("media_init Create Video engine fail\n");
                 return -1;;
             }
         
             ViEBase* videobase = ViEBase::GetInterface(vie_);
             if(videobase->Init()!= 0) {
                 int lastError = videobase->LastError(); // base init failed
-                PrintConsole("Init Video Engine error, error code is %d\n", lastError);
+                WriteLogToFile("Init Video Engine error, error code is %d\n", lastError);
                 videobase->Release();
                 VideoEngine::Delete(vie_);
                 vie_ = NULL;
@@ -345,38 +345,38 @@ namespace yuntongxunwebrtc {
     
     int ECMediaMachine::startCapture()
     {
-        PrintConsole("[ECMEDIA CORE INFO] %s begin.\n", __FUNCTION__);
+        WriteLogToFile("[ECMEDIA CORE INFO] %s begin.\n", __FUNCTION__);
         int ret = -1;
         ret = doAudioDataSend();
         if(ret < 0) {
-            PrintConsole("[ECMEDIA CORE ERROR] %s do audio data send error.\n", __FUNCTION__);
+            WriteLogToFile("[ECMEDIA CORE ERROR] %s do audio data send error.\n", __FUNCTION__);
             return ret;
         }
         ret = doVideoDataSend();
         if(ret < 0) {
-            PrintConsole("[ECMEDIA CORE ERROR] %s do video data send error.\n", __FUNCTION__);
+            WriteLogToFile("[ECMEDIA CORE ERROR] %s do video data send error.\n", __FUNCTION__);
             return ret;
         }
 
         if(video_source_ == VIDEO_SOURCE_CAMERA) {
             ret = doCameraCapture();
             if(ret < 0) {
-                PrintConsole("[ECMEDIA CORE ERROR] %s do camera capture error.\n", __FUNCTION__);
+                WriteLogToFile("[ECMEDIA CORE ERROR] %s do camera capture error.\n", __FUNCTION__);
                 return ret;
             }
             ret = doCameraPreviewRender(capture_id_);
             if(ret < 0) {
-                PrintConsole("[ECMEDIA CORE ERROR] %s do preview render error.\n", __FUNCTION__);
+                WriteLogToFile("[ECMEDIA CORE ERROR] %s do preview render error.\n", __FUNCTION__);
                 return ret;
             }
         } else {
             ret = doDesktopCapture();
             if(ret < 0) {
-                PrintConsole("[ECMEDIA CORE ERROR] %s do desktop capturer error.\n", __FUNCTION__);
+                WriteLogToFile("[ECMEDIA CORE ERROR] %s do desktop capturer error.\n", __FUNCTION__);
                 return ret;
             }
         }
-        PrintConsole("[ECMEDIA CORE INFO] %s end with code:%d.\n", __FUNCTION__, ret);
+        WriteLogToFile("[ECMEDIA CORE INFO] %s end with code:%d.\n", __FUNCTION__, ret);
         return ret;
     }
     
@@ -398,12 +398,12 @@ namespace yuntongxunwebrtc {
     }
 
     int ECMediaMachine::startPlayout() {
-        PrintConsole("[ECMEDIA CORE INFO] %s start\n", __FUNCTION__);
+        WriteLogToFile("[ECMEDIA CORE INFO] %s start\n", __FUNCTION__);
         int ret = -1;
         // start Playout
         ret = doAudioPlayout();
         if(ret != 0) {
-            PrintConsole("[ECMEDIA CORE INFO] %s doAudioPlayout error: %d\n", __FUNCTION__, ret);
+            WriteLogToFile("[ECMEDIA CORE INFO] %s doAudioPlayout error: %d\n", __FUNCTION__, ret);
         }
         ret = doAudioDataReceive();
         if(ret != 0) {
@@ -417,12 +417,12 @@ namespace yuntongxunwebrtc {
         if(ret != 0) {
             return ret;
         }
-        PrintConsole("[ECMEDIA CORE INFO] %s end with code: %d\n", __FUNCTION__, ret);
+        WriteLogToFile("[ECMEDIA CORE INFO] %s end with code: %d\n", __FUNCTION__, ret);
         return ret;
     }
 
     int ECMediaMachine::stopPlayout() {
-        PrintConsole("[RTMP ERROR] %s start\n", __FUNCTION__);
+        WriteLogToFile("[RTMP ERROR] %s start\n", __FUNCTION__);
         int ret = -1;
         ret = shutdownVideoDataReceive();
         if(ret != 0) {
@@ -440,13 +440,13 @@ namespace yuntongxunwebrtc {
         if(ret != 0) {
             return ret;
         }
-        PrintConsole("[RTMP ERROR] %s end with code:%d\n", __FUNCTION__, ret);
+        WriteLogToFile("[RTMP ERROR] %s end with code:%d\n", __FUNCTION__, ret);
         return ret;
     }
     
     int ECMediaMachine::setVideoPreview(void *view) {
         if(view == NULL) {
-            PrintConsole("[RTMP ERROR] %s video view in null\n", __FUNCTION__);
+            WriteLogToFile("[RTMP ERROR] %s video view in null\n", __FUNCTION__);
             return -1;
         }
 #ifdef __ANDROID__
@@ -462,7 +462,7 @@ namespace yuntongxunwebrtc {
     }
 
     int ECMediaMachine::shutdownCameraCapture() {
-        PrintConsole("[RTMP INFO] %s begin.\n", __FUNCTION__);
+        WriteLogToFile("[RTMP INFO] %s begin.\n", __FUNCTION__);
         uninitCameraDevice();
         // stop camera capture
         ViECapture *capture = ViECapture::GetInterface(vie_);
@@ -479,7 +479,7 @@ namespace yuntongxunwebrtc {
         initCameraDevice();
         CameraInfo *camera = cameras_[info_camera_index_];
         if(!camera) {
-            PrintConsole("[RTMP ERROR] %s find camera device failed\n", __FUNCTION__);
+            WriteLogToFile("[RTMP ERROR] %s find camera device failed\n", __FUNCTION__);
             return -1;
         }
         ViECapture *capture = ViECapture::GetInterface(vie_);
@@ -500,33 +500,33 @@ namespace yuntongxunwebrtc {
         }
         ret = capture->StartCapture(capture_id_, cap);
         ret = capture->ConnectCaptureDevice(capture_id_, video_channel_);
-        PrintConsole("[RTMP INFO] %s end with ret:%d\n", __FUNCTION__, ret);
+        WriteLogToFile("[RTMP INFO] %s end with ret:%d\n", __FUNCTION__, ret);
         capture->Release();
         return ret;
     }
 
     int ECMediaMachine::doCameraPreviewRender(int render_id) {
-        PrintConsole("[RTMP INFO] %s : start video preview.\n", __FUNCTION__);
+        WriteLogToFile("[RTMP INFO] %s : start video preview.\n", __FUNCTION__);
         if(!local_view_) {
-            PrintConsole("[RTMP INFO] %s : not set video preview viewer.\n", __FUNCTION__);
+            WriteLogToFile("[RTMP INFO] %s : not set video preview viewer.\n", __FUNCTION__);
             return 0;
         }
         int ret = -1;
 #ifdef WIN32
         ViERender* render = ViERender::GetInterface(vie_);
         if(!render) {
-            PrintConsole("[RTMP ERROR] %s get vierender failed\n", __FUNCTION__);
+            WriteLogToFile("[RTMP ERROR] %s get vierender failed\n", __FUNCTION__);
         }
         
         ret = render->AddRenderer(render_id, local_view_, 2, 0, 0, 1, 1, NULL);
         if (ret != 0) {
-            PrintConsole("[RTMP INFO] %s add renderer error, end with ret:%d\n", __FUNCTION__, ret);
+            WriteLogToFile("[RTMP INFO] %s add renderer error, end with ret:%d\n", __FUNCTION__, ret);
             render->Release();
             return ret;
         }
         ret = render->StartRender(render_id);
         render->Release();
-        PrintConsole("[RTMP INFO] %s end with ret:%d\n", __FUNCTION__, ret);
+        WriteLogToFile("[RTMP INFO] %s end with ret:%d\n", __FUNCTION__, ret);
 #else
         ViECapture *capture = ViECapture::GetInterface(vie_);
         if (capture) {
@@ -555,18 +555,18 @@ namespace yuntongxunwebrtc {
         int ret = -1;
         ViERender* render = ViERender::GetInterface(vie_);
         if(!render) {
-            PrintConsole("[RTMP ERROR] %s get vierender failed\n", __FUNCTION__);
+            WriteLogToFile("[RTMP ERROR] %s get vierender failed\n", __FUNCTION__);
         }
         
         ret = render->AddRenderer(render_id, local_view_, 2, 0, 0, 1, 1, NULL);
         if (ret != 0) {
-            PrintConsole("[RTMP INFO] %s add renderer error, end with ret:%d\n", __FUNCTION__, ret);
+            WriteLogToFile("[RTMP INFO] %s add renderer error, end with ret:%d\n", __FUNCTION__, ret);
             render->Release();
             return ret;
         }
         ret = render->StartRender(render_id);
         render->Release();
-        PrintConsole("[RTMP INFO] %s end with ret:%d\n", __FUNCTION__, ret);
+        WriteLogToFile("[RTMP INFO] %s end with ret:%d\n", __FUNCTION__, ret);
         return ret;
     }
     
@@ -688,7 +688,7 @@ namespace yuntongxunwebrtc {
         ret = hardware->SetLoudspeakerStatus(true);
         hardware->Release();
         if(ret != 0) {
-            PrintConsole("[ECMEDIA CORE ERROR] %s  set loudspeaker status failed\n", __FUNCTION__);
+            WriteLogToFile("[ECMEDIA CORE ERROR] %s  set loudspeaker status failed\n", __FUNCTION__);
         }
         return ret;
     }
@@ -713,7 +713,7 @@ namespace yuntongxunwebrtc {
 
     int ECMediaMachine::setCaptureFrameDegree(RotateCapturedFrame degree) {
         capture_frame_degree_ = degree;
-        PrintConsole("[ECMEDIA CORE INFO] %s start\n", __FUNCTION__);
+        WriteLogToFile("[ECMEDIA CORE INFO] %s start\n", __FUNCTION__);
 
         int ret = -1;
         // stop render and capture video.
@@ -723,13 +723,13 @@ namespace yuntongxunwebrtc {
         // restart capturer and render.
         ret = doCameraCapture();
         ret = doCameraPreviewRender(capture_id_);
-        PrintConsole("[ECMEDIA CORE INFO] %s end\n", __FUNCTION__);
+        WriteLogToFile("[ECMEDIA CORE INFO] %s end\n", __FUNCTION__);
         return ret;
     }
     
     int ECMediaMachine::setVideoCaptureInfo(int camera_index, RotateCapturedFrame degree, int fps, int bitrate, int width, int height)
     {
-        PrintConsole("[ECMEDIA CORE INFO] %s start, camera_index:%d, fps:%d, bitrate:%d, width:%d, height:%d\n", __FUNCTION__, camera_index, fps, bitrate, width, height);
+        WriteLogToFile("[ECMEDIA CORE INFO] %s start, camera_index:%d, fps:%d, bitrate:%d, width:%d, height:%d\n", __FUNCTION__, camera_index, fps, bitrate, width, height);
       
         info_camera_index_      = camera_index;
         info_video_fps_         = fps;
@@ -739,12 +739,12 @@ namespace yuntongxunwebrtc {
         info_video_height_      = height;
         capture_frame_degree_   = degree;
         
-        PrintConsole("[ECMEDIA CORE INFO] %s end with code:%d\n", __FUNCTION__, 0);
+        WriteLogToFile("[ECMEDIA CORE INFO] %s end with code:%d\n", __FUNCTION__, 0);
         return 0; //initVideoTransportCodec("H264", 90000);;
     }
 
     int ECMediaMachine::setVideoFrameProperty(int bitrate, int width, int height) {
-        PrintConsole("[ECMEDIA CORE INFO] %s start, bitrate:%d, width:%d, height:%d\n", __FUNCTION__, bitrate, width, height);
+        WriteLogToFile("[ECMEDIA CORE INFO] %s start, bitrate:%d, width:%d, height:%d\n", __FUNCTION__, bitrate, width, height);
         // no change
         if(info_video_bitrates_ == bitrate && info_video_width_ == width && info_video_height_ == height) {
             return 0;
@@ -769,7 +769,7 @@ namespace yuntongxunwebrtc {
             // restart capturer and render.
             ret = doCameraCapture();
             ret = doCameraPreviewRender(capture_id_);
-            PrintConsole("[ECMEDIA CORE INFO] %s end with code:%d\n", __FUNCTION__, ret);
+            WriteLogToFile("[ECMEDIA CORE INFO] %s end with code:%d\n", __FUNCTION__, ret);
             return ret;
         }
     }
@@ -783,7 +783,7 @@ namespace yuntongxunwebrtc {
     }
 
     int ECMediaMachine::switchCamera(int index) {
-        PrintConsole("[ECMEDIA CORE INFO] %s start\n", __FUNCTION__);
+        WriteLogToFile("[ECMEDIA CORE INFO] %s start\n", __FUNCTION__);
         if(cameras_.size() <= index) {
             // log:无效的 index
             return -1;
@@ -803,7 +803,7 @@ namespace yuntongxunwebrtc {
         // restart capturer and render.
         ret = doCameraCapture();
         ret = doCameraPreviewRender(capture_id_);
-        PrintConsole("[ECMEDIA CORE INFO] %s end\n", __FUNCTION__);
+        WriteLogToFile("[ECMEDIA CORE INFO] %s end\n", __FUNCTION__);
         return ret;
     }
     
@@ -813,7 +813,7 @@ namespace yuntongxunwebrtc {
     
     int ECMediaMachine::initCameraDevice()
     {
-        PrintConsole("[ECMEDIA CORE INFO] %s start\n", __FUNCTION__);
+        WriteLogToFile("[ECMEDIA CORE INFO] %s start\n", __FUNCTION__);
         if(cameras_.size() != 0) {
             return 0;
         }
@@ -829,10 +829,10 @@ namespace yuntongxunwebrtc {
         capture->Release();
         
         if(cameras_.size() == 0) {
-            PrintConsole("[RTMP INFO] %s get device camera failed.\n", __FUNCTION__);
+            WriteLogToFile("[RTMP INFO] %s get device camera failed.\n", __FUNCTION__);
             return -1;
         }
-        PrintConsole("[ECMEDIA CORE INFO] %s end\n", __FUNCTION__);
+        WriteLogToFile("[ECMEDIA CORE INFO] %s end\n", __FUNCTION__);
         return 0;
     }
     
@@ -915,7 +915,7 @@ namespace yuntongxunwebrtc {
                                       const RTPFragmentationHeader& fragmentationHeader,
                                       const RTPVideoHeader* rtpVideoHdr)
     {
-        PrintConsole("[ECMediaMachine INFO] %s: start\n", __FUNCTION__);
+        WriteLogToFile("[ECMediaMachine INFO] %s: start\n", __FUNCTION__);
         uint8_t *data = encoded_image._buffer;
         std::vector<uint8_t> nalus;
         for (int i = 0; i < fragmentationHeader.fragmentationVectorSize; i++) {
@@ -932,7 +932,7 @@ namespace yuntongxunwebrtc {
         if(capturer_data_callback_) {
             capturer_data_callback_->OnCapturerAvcDataReady(&nalus[0], nalus.size(), EC_Live_Utility::getTimestamp());
         }
-        PrintConsole("[ECMediaMachine INFO] %s: end\n", __FUNCTION__);
+        WriteLogToFile("[ECMediaMachine INFO] %s: end\n", __FUNCTION__);
         return 0;
     }
 
@@ -996,7 +996,7 @@ namespace yuntongxunwebrtc {
     /***************************   receive  data ******************************/
     void ECMediaMachine::SetRtpData(int channel,void *rtpdata,int type)
     {
-        PrintConsole("[ECMEDIA CORE INFO] %s start\n", __FUNCTION__);
+        WriteLogToFile("[ECMEDIA CORE INFO] %s start\n", __FUNCTION__);
         if( 0 == type ) {
             audio_data_cb_ = (RtpData*)rtpdata;
         }
@@ -1010,7 +1010,7 @@ namespace yuntongxunwebrtc {
         if(!nalu_data) {
             return;
         }
-        PrintConsole("[ECMEDIA CORE INFO] %s start\n", __FUNCTION__);
+        WriteLogToFile("[ECMEDIA CORE INFO] %s start\n", __FUNCTION__);
         if( video_data_cb_) {
             RTPHeader rtpHeader;
             rtpHeader.sequenceNumber = video_rtp_seq_++;
@@ -1036,7 +1036,7 @@ namespace yuntongxunwebrtc {
             }
             video_data_cb_->ReceivePacket((const uint8_t*) nalu_data, len, rtpHeader, true);
         }
-        PrintConsole("[ECMEDIA CORE INFO] %s end\n", __FUNCTION__);
+        WriteLogToFile("[ECMEDIA CORE INFO] %s end\n", __FUNCTION__);
     }
 
     void ECMediaMachine::on10MsecPcmDataComing(uint8_t* pData, int nLen, uint32_t ts, uint32_t sample_rate, int audio_channels) {
@@ -1048,7 +1048,7 @@ namespace yuntongxunwebrtc {
                 rtpHeader.header.timestamp = 320 * rtpHeader.header.sequenceNumber;
                 audio_data_cb_->OnReceivedPayloadData((const uint8_t*)pData, 32000/100*audio_channels*2, &rtpHeader);
             }
-            PrintConsole("[ECMEDIA CORE INFO] %s end\n", __FUNCTION__);
+            WriteLogToFile("[ECMEDIA CORE INFO] %s end\n", __FUNCTION__);
     }
 
     void ECMediaMachine::setAudioTransport(AudioTransport* transport) {
@@ -1103,7 +1103,7 @@ namespace yuntongxunwebrtc {
         //info_video_width_ = 640;// info_video_width_ / 4 * 4;
         //info_video_height_ = 480;//;info_video_height_ / 4 * 4;
         info_video_bitrates_ = info_video_width_ * info_video_height_ * 0.07 *15 /1000;
-        PrintConsole("desktop share width is %d heigth is %d \n", info_video_width_, info_video_height_);
+        WriteLogToFile("desktop share width is %d heigth is %d \n", info_video_width_, info_video_height_);
         initVideoTransportCodec("H264", 90000);
         
         ret = desktopShare->StartDesktopShareCapture(desktop_capture_id_, 15);

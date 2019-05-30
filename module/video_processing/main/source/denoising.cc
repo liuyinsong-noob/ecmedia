@@ -76,7 +76,7 @@ VPMDenoising::ProcessFrame(WebRtc_UWord8* frame,
                            const WebRtc_UWord32 width,
                            const WebRtc_UWord32 height)
 {
-    WebRtc_Word32     thevar;
+    WebRtc_Word32     thevar;   
     WebRtc_UWord32    k;
     WebRtc_UWord32    jsub, ksub;
     WebRtc_Word32     diff0;
@@ -87,13 +87,13 @@ VPMDenoising::ProcessFrame(WebRtc_UWord8* frame,
 
     if (frame == NULL)
     {
-        WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceVideoPreocessing, _id, "Null frame pointer");
+        WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceVideoProcessing, _id, "Null frame pointer");
         return VPM_GENERAL_ERROR;
     }
 
     if (width == 0 || height == 0)
     {
-        WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceVideoPreocessing, _id, "Invalid frame size");
+        WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceVideoProcessing, _id, "Invalid frame size");
         return VPM_GENERAL_ERROR;
     }
 

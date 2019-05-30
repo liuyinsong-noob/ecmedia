@@ -93,7 +93,7 @@ static MSList *match_payloads(const MSList *local, const MSList *remote, bool_t 
 			/* we should use the remote numbering even when parsing a response */
 			payload_type_set_number(newp,remote_number);
 			if (reading_response && remote_number!=local_number){
-				PrintConsole("For payload type %s, proposed number was %i but the remote phone answered %i\n",
+				WriteLogToFile("For payload type %s, proposed number was %i but the remote phone answered %i\n",
 				          newp->mime_type, local_number, remote_number);
 				/*
 				 We must add this payload type with our local numbering in order to be able to receive it.
@@ -105,7 +105,7 @@ static MSList *match_payloads(const MSList *local, const MSList *remote, bool_t 
 				res=ms_list_append(res,newp);
 			}
 		}else{
-			PrintConsole("No match for %s/%i\n",p2->mime_type,p2->clock_rate);
+			WriteLogToFile("No match for %s/%i\n",p2->mime_type,p2->clock_rate);
 		}
 	}
 	if (reading_response){
@@ -121,7 +121,7 @@ static MSList *match_payloads(const MSList *local, const MSList *remote, bool_t 
 				}
 			}
 			if (!found){
-				PrintConsole("Adding %s/%i for compatibility, just in case.\n",p1->mime_type,p1->clock_rate);
+				WriteLogToFile("Adding %s/%i for compatibility, just in case.\n",p1->mime_type,p1->clock_rate);
 				p1=payload_type_clone(p1);
 				p1->flags|=PAYLOAD_TYPE_FLAG_CAN_RECV;
 				res=ms_list_append(res,p1);
@@ -302,7 +302,7 @@ int offer_answer_initiate_outgoing(const SalMediaDescription *local_offer,
                 ++j;
             }
 		}
-		else PrintConsole("No matching stream for %i\n",i);
+		else WriteLogToFile("No matching stream for %i\n",i);
 	}
     result->n_active_streams = j;
     result->n_total_streams = local_offer->n_total_streams;
@@ -333,7 +333,7 @@ int offer_answer_initiate_incoming(const SalMediaDescription *local_capabilities
 			if (!ls && rs->proto == SalProtoRtpAvp) {
 				ls=sal_media_description_find_stream((SalMediaDescription*)local_capabilities,SalProtoRtpSavp,rs->type);
 			}
-		}else PrintConsole("Unknown protocol for mline %i, declining\n",i);
+		}else WriteLogToFile("Unknown protocol for mline %i, declining\n",i);
 		if (ls){
 			initiate_incoming(ls,rs,&result->streams[i],one_matching_codec);
             if (ls->dir != SalStreamInactive) {

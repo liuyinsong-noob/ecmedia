@@ -22,7 +22,7 @@ const char* sal_transport_to_string(SalTransport transport) {
 		case SalTransportTLS:return "tls";
 		case SalTransportDTLS:return "dtls";
 		default: {
-			PrintConsole("Unexpected transport [%i]\n",transport);
+			WriteLogToFile("Unexpected transport [%i]\n",transport);
 			return NULL;
 		}    
 	}
@@ -33,7 +33,7 @@ SalTransport sal_transport_parse(const char* param) {
 	if (strcasecmp("tcp",param)==0) return SalTransportTCP;
 	if (strcasecmp("tls",param)==0) return SalTransportTLS;
 	if (strcasecmp("dtls",param)==0) return SalTransportDTLS;
-	PrintConsole("Unknown transport type[%s], returning UDP\n", param);
+	WriteLogToFile("Unknown transport type[%s], returning UDP\n", param);
 	return SalTransportUDP;
 }
 
@@ -41,7 +41,7 @@ SalMediaDescription *sal_media_description_new(){
 //	SalMediaDescription *md=ms_new0(SalMediaDescription,1);  //ms_new0
 	SalMediaDescription *md=(SalMediaDescription *)malloc(sizeof(SalMediaDescription)*1);  //ms_new0
     if (md == NULL) {
-        PrintConsole("ERROR: Memory alloc error, maybe not enough memory!\n");
+        WriteLogToFile("ERROR: Memory alloc error, maybe not enough memory!\n");
         return NULL;
     }
 	memset((void *)md,0,sizeof(SalMediaDescription)*1);

@@ -41,7 +41,6 @@
 #include "module_common_types.h"
 #include "../system_wrappers/include/critical_section_wrapper.h"
 #include "../system_wrappers/include/logging.h"
-#include "../base/timeutils.h"
 
 #ifndef WIN32
 #include <time.h>
@@ -173,16 +172,11 @@ int NetEqImpl::InsertPacket(const WebRtcRTPHeader& rtp_header,
                             size_t length_bytes,
                             uint32_t receive_timestamp) {
   CriticalSectionScoped lock(crit_sect_.get());
-  //LOG(LS_VERBOSE) << "InsertPacket: ts=" << rtp_header.header.timestamp <<
-  //    ", sn=" << rtp_header.header.sequenceNumber <<
-  //    ", pt=" << static_cast<int>(rtp_header.header.payloadType) <<
-  //    ", ssrc=" << rtp_header.header.ssrc <<
-  //    ", len=" << length_bytes;
-  LOG_COUNT_CONTINUIOUS_F(LS_VERBOSE, 10, rtp_header.header.sequenceNumber) << "InsertPacket: ts=" << rtp_header.header.timestamp <<
-	  ", sn=" << rtp_header.header.sequenceNumber <<
-	  ", pt=" << static_cast<int>(rtp_header.header.payloadType) <<
-	  ", ssrc=" << rtp_header.header.ssrc <<
-	  ", len=" << length_bytes;
+//  LOG(LS_VERBOSE) << "InsertPacket: ts=" << rtp_header.header.timestamp <<
+//      ", sn=" << rtp_header.header.sequenceNumber <<
+//      ", pt=" << static_cast<int>(rtp_header.header.payloadType) <<
+//      ", ssrc=" << rtp_header.header.ssrc <<
+//      ", len=" << length_bytes;
 
   int error = InsertPacketInternal(rtp_header, payload, length_bytes,
                                    receive_timestamp, false);
@@ -195,18 +189,13 @@ int NetEqImpl::InsertPacket(const WebRtcRTPHeader& rtp_header,
 }
 
 int NetEqImpl::InsertSyncPacket(const WebRtcRTPHeader& rtp_header,
-                                uint32_t receive_timestamp) {/*不会走到*/
+                                uint32_t receive_timestamp) {
   CriticalSectionScoped lock(crit_sect_.get());
-  //LOG(LS_VERBOSE) << "InsertPacket-Sync: ts="
-  //    << rtp_header.header.timestamp <<
-  //    ", sn=" << rtp_header.header.sequenceNumber <<
-  //    ", pt=" << static_cast<int>(rtp_header.header.payloadType) <<
-  //    ", ssrc=" << rtp_header.header.ssrc;
-  LOG_COUNT_CONTINUIOUS_F(LS_VERBOSE, 10, rtp_header.header.sequenceNumber) << "InsertPacket-Sync: ts="
-	  << rtp_header.header.timestamp <<
-	  ", sn=" << rtp_header.header.sequenceNumber <<
-	  ", pt=" << static_cast<int>(rtp_header.header.payloadType) <<
-	  ", ssrc=" << rtp_header.header.ssrc;
+//  LOG(LS_VERBOSE) << "InsertPacket-Sync: ts="
+//      << rtp_header.header.timestamp <<
+//      ", sn=" << rtp_header.header.sequenceNumber <<
+//      ", pt=" << static_cast<int>(rtp_header.header.payloadType) <<
+//      ", ssrc=" << rtp_header.header.ssrc;
 
   const uint8_t kSyncPayload[] = { 's', 'y', 'n', 'c' };
   int error = InsertPacketInternal(
@@ -224,16 +213,10 @@ int NetEqImpl::GetAudio(size_t max_length, int16_t* output_audio,
                         int* samples_per_channel, int* num_channels,
                         NetEqOutputType* type) {
   CriticalSectionScoped lock(crit_sect_.get());
-  //LOG(LS_VERBOSE) << "GetAudio";
+//  LOG(LS_VERBOSE) << "NetEqImpl::GetAudio";
   int error = GetAudioInternal(max_length, output_audio, samples_per_channel,
                                num_channels);
-  //LOG(LS_VERBOSE) << "Produced " << *samples_per_channel <<
-  //    " samples/channel for " << *num_channels << " channel(s)";
-  LOG_COUNT_F(LS_VERBOSE, 50) << "Produced " << *samples_per_channel <<
-	  " samples/channel for " << *num_channels << " channel(s)";
-
   if (error != 0) {
-    //LOG_FERR1(LS_WARNING, GetAudioInternal, error);
     error_code_ = error;
     return kFail;
   }
@@ -246,10 +229,8 @@ int NetEqImpl::GetAudio(size_t max_length, int16_t* output_audio,
 int NetEqImpl::RegisterPayloadType(enum NetEqDecoder codec,
                                    uint8_t rtp_payload_type) {
   CriticalSectionScoped lock(crit_sect_.get());
-  //LOG_API2(static_cast<int>(rtp_payload_type), codec);
   int ret = decoder_database_->RegisterPayload(rtp_payload_type, codec);
   if (ret != DecoderDatabase::kOK) {
-    //LOG_FERR2(LS_WARNING, RegisterPayload, rtp_payload_type, codec);
     switch (ret) {
       case DecoderDatabase::kInvalidRtpPayloadType:
         error_code_ = kInvalidRtpPayloadType;
@@ -765,9 +746,6 @@ int NetEqImpl::GetAudioInternal(size_t max_length, int16_t* output,
     last_mode_ = kModeError;
     return return_value;
   }
-  //LOG(LS_VERBOSE) << "GetDecision returned operation=" << operation <<
-  //    " and " << packet_list.size() << " packet(s)";
-  LOG_COUNT_F(LS_VERBOSE, 10) << " GetDecision returned operation = " << operation << " and " << packet_list.size() << " packet(s)";
 
   AudioDecoder::SpeechType speech_type;
   int length = 0;
@@ -789,38 +767,29 @@ int NetEqImpl::GetAudioInternal(size_t max_length, int16_t* output,
       break;
     }
     case kMerge: {
-//        printf("sean haha kMerge\n");
       DoMerge(decoded_buffer_.get(), length, speech_type, play_dtmf);
       break;
     }
     case kExpand: {
-//        printTime();
-//        printf("kExpand\n");
       return_value = DoExpand(play_dtmf);
       break;
     }
     case kAccelerate: {
-//        printTime();
-//    printf("kAccelerate\n");
       return_value = DoAccelerate(decoded_buffer_.get(), length, speech_type,
                                   play_dtmf);
       break;
     }
     case kPreemptiveExpand: {
-//        printTime();
-//        printf("kPreemptiveExpand\n");
       return_value = DoPreemptiveExpand(decoded_buffer_.get(), length,
                                         speech_type, play_dtmf);
       break;
     }
     case kRfc3389Cng:
     case kRfc3389CngNoPacket: {
-//        printf("sean haha kRfc3389Cng or kRfc3389CngNoPacket\n");
       return_value = DoRfc3389Cng(&packet_list, play_dtmf);
       break;
     }
     case kCodecInternalCng: {
-//        printf("sean haha kCodecInternalCng\n");
       // This handles the case when there is no transmission and the decoder
       // should produce internal comfort noise.
       // TODO(hlundin): Write test for codec-internal CNG.
@@ -828,32 +797,27 @@ int NetEqImpl::GetAudioInternal(size_t max_length, int16_t* output,
       break;
     }
     case kDtmf: {
-//        printf("sean haha kDtmf\n");
       // TODO(hlundin): Write test for this.
       return_value = DoDtmf(dtmf_event, &play_dtmf);
       break;
     }
     case kAlternativePlc: {
-        //?????‰è??//        printf("sean haha kAlternativePlc\n");
       // TODO(hlundin): Write test for this.
       DoAlternativePlc(false);
       break;
     }
     case kAlternativePlcIncreaseTimestamp: {
-        //?????‰è??//        printf("sean haha kAlternativePlcIncreaseTimestamp\n");
       // TODO(hlundin): Write test for this.
       DoAlternativePlc(true);
       break;
     }
     case kAudioRepetitionIncreaseTimestamp: {
-        //?????‰è??//        printf("sean haha kAudioRepetitionIncreaseTimestamp\n");
       // TODO(hlundin): Write test for this.
       sync_buffer_->IncreaseEndTimestamp(output_size_samples_);
       // Skipping break on purpose. Execution should move on into the
       // next case.
     }
     case kAudioRepetition: {
-        //?????‰è??//        printf("sean haha kAudioRepetition\n");
       // TODO(hlundin): Write test for this.
       // Copy last |output_size_samples_| from |sync_buffer_| to
       // |algorithm_buffer|.
@@ -863,7 +827,6 @@ int NetEqImpl::GetAudioInternal(size_t max_length, int16_t* output,
       break;
     }
     case kUndefined: {
-//        printf("sean haha kUndefined\n");
       LOG_F(LS_ERROR) << "Invalid operation kUndefined.";
       assert(false);  // This should not happen.
       last_mode_ = kModeError;
@@ -895,12 +858,6 @@ int NetEqImpl::GetAudioInternal(size_t max_length, int16_t* output,
       sync_buffer_->GetNextAudioInterleaved(num_output_samples_per_channel,
                                             output));
   *num_channels = static_cast<int>(sync_buffer_->Channels());
-  //LOG(LS_VERBOSE) << "Sync buffer (" << *num_channels << " channel(s)):" <<
-  //    " insert " << algorithm_buffer_->Size() << " samples, extract " <<
-      //samples_from_sync << " samples";
-  LOG_COUNT_F(LS_VERBOSE, 10) << "Sync buffer (" << *num_channels << " channel(s)):" <<
-	  " insert " << algorithm_buffer_->Size() << " samples, extract " <<
-	  samples_from_sync << " samples";
 
   if (samples_from_sync != output_size_samples_) {
     LOG_F(LS_ERROR) << "samples_from_sync != output_size_samples_";
@@ -1288,13 +1245,6 @@ int NetEqImpl::Decode(PacketList* packet_list, Operations* operation,
   }
 #endif
 
-  static time_t last = 0;
-  int logInterval = 5;
-  if( time(NULL) > last + logInterval ) {
-	   LOG(LS_WARNING) << "Period log per " << logInterval << " seconds: Audio Decode";
-       last = time(NULL);
-  }
-
   *decoded_length = 0;
   // Update codec-internal PLC state.
   if ((*operation == kMerge) && decoder && decoder->HasDecodePlc()) {
@@ -1356,59 +1306,16 @@ int NetEqImpl::DecodeLoop(PacketList* packet_list, Operations* operation,
     int16_t decode_length;
     if (packet->sync_packet) {
       // Decode to silence with the same frame size as the last decode.
-      LOG(LS_VERBOSE) << "Decoding sync-packet: " <<
-          " ts=" << packet->header.timestamp <<
-          ", sn=" << packet->header.sequenceNumber <<
-          ", pt=" << static_cast<int>(packet->header.payloadType) <<
-          ", ssrc=" << packet->header.ssrc <<
-          ", len=" << packet->payload_length;
       memset(&decoded_buffer_[*decoded_length], 0, decoder_frame_length_ *
              decoder->channels() * sizeof(decoded_buffer_[0]));
       decode_length = decoder_frame_length_;
     } else if (!packet->primary) {
       // This is a redundant payload; call the special decoder method.
-      LOG(LS_VERBOSE) << "Decoding packet (redundant):" <<
-          " ts=" << packet->header.timestamp <<
-          ", sn=" << packet->header.sequenceNumber <<
-          ", pt=" << static_cast<int>(packet->header.payloadType) <<
-          ", ssrc=" << packet->header.ssrc <<
-          ", len=" << packet->payload_length;
-//        printf("            sean haha decode fec sn %d\n",packet->header.sequenceNumber);
-//        for (int ii = 0; ii <= 10; ii++) {
-//            printf("%02x ",*(packet->payload + ii));
-//        }
-//        printf("\n");
-        
-#if 0
-        fwrite(packet->payload, 1, packet->payload_length, debug_file_);
-        fflush(debug_file_);
-#endif
       decode_length = decoder->DecodeRedundant(
           packet->payload, packet->payload_length,
           &decoded_buffer_[*decoded_length], speech_type);
-        
     } else {
-      //LOG(LS_VERBOSE) << "Decoding packet: ts=" << packet->header.timestamp <<
-      //    ", sn=" << packet->header.sequenceNumber <<
-      //    ", pt=" << static_cast<int>(packet->header.payloadType) <<
-      //    ", ssrc=" << packet->header.ssrc <<
-      //    ", len=" << packet->payload_length;
-		LOG_COUNT_CONTINUIOUS_F(LS_VERBOSE, 10, packet->header.sequenceNumber) << "Decoding packet: ts=" << packet->header.timestamp <<
-			", sn=" << packet->header.sequenceNumber <<
-			", pt=" << static_cast<int>(packet->header.payloadType) <<
-			", ssrc=" << packet->header.ssrc <<
-			", len=" << packet->payload_length;
-
         last_decode_seq_ = packet->header.sequenceNumber;
-//        printf("        seansean haha decode normal sn %d\n",packet->header.sequenceNumber);
-//        for (int ii = 0; ii <= 10; ii++) {
-//            printf("%02x ",*(packet->payload + ii));
-//        }
-//        printf("\n");
-#if 0
-        fwrite(packet->payload, 1, packet->payload_length, debug_file_);
-        fflush(debug_file_);
-#endif
       decode_length = decoder->Decode(packet->payload,
                                       packet->payload_length,
                                       &decoded_buffer_[*decoded_length],
@@ -1423,20 +1330,8 @@ int NetEqImpl::DecodeLoop(PacketList* packet_list, Operations* operation,
       // Update |decoder_frame_length_| with number of samples per channel.
       decoder_frame_length_ = decode_length /
           static_cast<int>(decoder->channels());
-      //LOG(LS_VERBOSE) << "Decoded " << decode_length << " samples (" <<
-      //    decoder->channels() << " channel(s) -> " << decoder_frame_length_ <<
-          //" samples per channel)";
-	  LOG_COUNT_F(LS_VERBOSE, 10) << "Decoded " << decode_length << " samples (" <<
-		  decoder->channels() << " channel(s) -> " << decoder_frame_length_ <<
-		  " samples per channel)";
     } else if (decode_length < 0) {
-      // Error.
-      //LOG_FERR2(LS_WARNING, Decode, decode_length, payload_length);
       *decoded_length = -1;
-//#ifndef WIN32
-//	  printTime();
-//#endif
-//        printf("sean haha 114 Del All Packets\n");
       PacketBuffer::DeleteAllPackets(packet_list);
       break;
     }
@@ -1709,7 +1604,6 @@ int NetEqImpl::DoRfc3389Cng(PacketList* packet_list, bool play_dtmf) {
       }
       assert(decoder_database_->IsComfortNoise(packet->header.payloadType));
 #else
-      LOG(LS_ERROR) << "Trying to decode non-CNG payload as CNG.";
       return kOtherError;
 #endif
     }

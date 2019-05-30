@@ -97,9 +97,14 @@ enum TraceModule
     kTraceAudioDevice        = 0x0012,
     kTraceVideoRenderer      = 0x0014,
     kTraceVideoCapture       = 0x0015,
-	kTraceRemoteBitrateEstimator = 0x0017,
-    gb8pjjec   = 0x0016,
-    kTraceVideoPreocessing      = 0x0018
+    gb8pjjec                 = 0x0016,
+    kTraceRemoteBitrateEstimator = 0x0017,
+    kTraceVideoProcessing   = 0x0018,
+    // sdk api module
+    kTraceMediaApi           = 0x0019,
+    // live video module
+    kTraceLiveVideo          = 0x001a,
+    
 };
 
 enum TraceLevel

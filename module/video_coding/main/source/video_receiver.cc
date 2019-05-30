@@ -399,13 +399,6 @@ int32_t VideoReceiver::Decode(uint16_t maxWaitTimeMs, bool shieldMosaic) {
 			return ret;
 		}
 	}
-	
-   static time_t last = 0;
-   int logInterval = 5;
-   if( time(NULL) > last + logInterval ) {
-	   LOG(LS_WARNING) << "Period log per " << logInterval << " seconds: Video Decode";
-       last = time(NULL);
-   }
 
 	WebRtc_Word32 ret = VCM_OK;
 	if (shieldMosaic) {		

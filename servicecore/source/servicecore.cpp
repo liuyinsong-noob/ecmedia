@@ -57,7 +57,7 @@ extern void CCPClientPrintLog(int loglevel, const char *loginfo);
 //                       const char *traceString,
 //                       const int length)
 //		{
-//            PrintConsole("%s\n",traceString);
+//            WriteLogToFile("%s\n",traceString);
 //		}
 //};
 //}
@@ -575,7 +575,7 @@ ServiceCore::ServiceCore()
     }
     else
     {
-        PrintConsole("ERROR: mem alloc error, groupID");
+        WriteLogToFile("ERROR: mem alloc error, groupID");
     }
 
 	networkType = new char[strlen("wifi")+1];
@@ -585,7 +585,7 @@ ServiceCore::ServiceCore()
 	}
 	else
 	{
-		PrintConsole("ERROR: mem alloc error, networkType");
+		WriteLogToFile("ERROR: mem alloc error, networkType");
 	}
     groupIDAndNetworkType = NULL;
     videoConferenceIp = NULL;
@@ -800,7 +800,7 @@ void ServiceCore::sip_config_read()
  //   if (lp_config_get_int(config,"sip","sip_tcp_random_port",1))
     {
 		tr.tcp_port=(0xDFF&+random())+1024;
-        PrintConsole("Using TCP port %d for SIP\n",tr.tcp_port);
+        WriteLogToFile("Using TCP port %d for SIP\n",tr.tcp_port);
 	} else {
 		tr.tcp_port=lp_config_get_int(config,"sip","sip_tcp_port",0);
 	}
@@ -1057,7 +1057,7 @@ bool_t ServiceCore::serphone_core_can_we_add_call()
 {
 	if(serphone_core_get_calls_nb() < max_calls)
 		return TRUE;
-	PrintConsole("Maximum amount of simultaneous calls reached !\n");
+	WriteLogToFile("Maximum amount of simultaneous calls reached !\n");
 	return FALSE;
 }
 
@@ -1083,7 +1083,7 @@ int ServiceCore::serphone_core_del_call(SerPhoneCall *call)
 	}
 	else
 	{
-		PrintConsole("could not find the call into the list\n");
+		WriteLogToFile("could not find the call into the list\n");
 		return -1;
 	}
 	calls = the_calls;
@@ -1276,13 +1276,13 @@ int ServiceCore::apply_transports()
 			int i=1;
 			for(int i=1; i<=20; i++) {
 				if (!sal_listen_port (l_sal,anyaddr,tr->udp_port+i,SalTransportUDP,FALSE)){
-					PrintConsole("UDP port %d maybe already used, change to %d", tr->udp_port, tr->udp_port+i);
+					WriteLogToFile("UDP port %d maybe already used, change to %d", tr->udp_port, tr->udp_port+i);
 					tr->udp_port += i;
 					break;
 				}
 			}
 			if(i>20) {
-				PrintConsole("UDP port %d~%d maybe already used", tr->udp_port, tr->udp_port+i);
+				WriteLogToFile("UDP port %d~%d maybe already used", tr->udp_port, tr->udp_port+i);
 				transport_error("udp",tr->udp_port);
 				return -1;
 			}
@@ -1293,13 +1293,13 @@ int ServiceCore::apply_transports()
 			int i=1;
 			for(int i=1; i<=20; i++) {
 				if (!sal_listen_port (l_sal,anyaddr,tr->tcp_port+i,SalTransportTCP,FALSE)){
-					PrintConsole("TCP port %d maybe already used, change to %d", tr->tcp_port, tr->tcp_port+i);
+					WriteLogToFile("TCP port %d maybe already used, change to %d", tr->tcp_port, tr->tcp_port+i);
 					tr->tcp_port += i;
 					break;
 				}
 			}
 			if(i>20) {
-				PrintConsole("TCP port %d~%d maybe already used", tr->tcp_port, tr->tcp_port+i);
+				WriteLogToFile("TCP port %d~%d maybe already used", tr->tcp_port, tr->tcp_port+i);
 				transport_error("tcp",tr->tcp_port);
 				return -1;
 			}
@@ -1311,13 +1311,13 @@ int ServiceCore::apply_transports()
 			int i=1;
 			for(int i=1; i<=20; i++) {
 				if (!sal_listen_port (l_sal,anyaddr,tr->tls_port+i,SalTransportTLS,TRUE)){
-					PrintConsole("TLS port %d maybe already used, change to %d", tr->tls_port, tr->tls_port+i);
+					WriteLogToFile("TLS port %d maybe already used, change to %d", tr->tls_port, tr->tls_port+i);
 					tr->tls_port += i;
 					break;
 				}
 			}
 			if(i>20) {
-				PrintConsole("TLS port %d~%d maybe already used", tr->tls_port, tr->tls_port+i);
+				WriteLogToFile("TLS port %d~%d maybe already used", tr->tls_port, tr->tls_port+i);
 				transport_error("tls",tr->tls_port);
 				return -1;
 			}
@@ -1345,7 +1345,7 @@ void ServiceCore::apply_user_agent(const char *agent)
 void ServiceCore::transport_error(const char* transport, int port)
 {
 	char *msg=ser_strdup_printf("Could not start %s transport on port %i, maybe this port is already used.",transport,port);
-	PrintConsole("%s\n",msg);
+	WriteLogToFile("%s\n",msg);
 	if (vtable.display_warning)
 		vtable.display_warning(this,msg);
 	ms_free((void **)&msg);
@@ -1397,7 +1397,7 @@ int ServiceCore::serphone_core_set_primary_contact(const char *contact)
 	SerphoneAddress *ctt;
 
 	if ((ctt=serphone_address_new(contact))==0) {
-		PrintConsole("Bad contact url: %s\n",contact);
+		WriteLogToFile("Bad contact url: %s\n",contact);
 		return -1;
 	}
 	if (sip_conf.contact!=NULL) {ms_free((void **)&sip_conf.contact);sip_conf.contact = NULL;}
@@ -1452,12 +1452,12 @@ void ServiceCore::update_primary_contact()
 	}
 	url=serphone_address_new(sip_conf.contact);
 	if (!url){
-		PrintConsole("Could not parse identity contact !\n");
+		WriteLogToFile("Could not parse identity contact !\n");
 		url=serphone_address_new("sip:unknown@unkwownhost");
 	}
 	serphone_core_get_local_ip(NULL, tmp);
 	if (strcmp(tmp,"127.0.0.1")==0 || strcmp(tmp,"::1")==0 ){
-		PrintConsole("Local loopback network only !\n");
+		WriteLogToFile("Local loopback network only !\n");
 		sip_conf.loopback_only=TRUE;
 	}else sip_conf.loopback_only=FALSE;
 	serphone_address_set_domain(url,tmp);
@@ -1518,12 +1518,12 @@ int ServiceCore::sendStunRequest(int sock, const struct sockaddr *server, sockle
 	stunBuildReqSimple( &req, &username, changeAddr , changeAddr , id);
 	len = stunEncodeMessage( &req, buf, len, &password);
 	if (len<=0){
-		PrintConsole("Fail to encode stun message.\n");
+		WriteLogToFile("Fail to encode stun message.\n");
 		return -1;
 	}
 	err=sendto(sock,buf,len,0,server,addrlen);
 	if (err<0){
-		PrintConsole("sendto failed: %s\n",strerror(errno));
+		WriteLogToFile("sendto failed: %s\n",strerror(errno));
 		return -1;
 	}
 	return 0;
@@ -1586,12 +1586,12 @@ void ServiceCore::serphone_core_update_local_media_description_from_ice(SalMedia
 		if (result == TRUE) {
 			strncpy(desc->addr, rtp_addr, sizeof(desc->addr));
 		} else {
-			PrintConsole("If ICE has completed successfully, rtp_addr should be set!\n");
+			WriteLogToFile("If ICE has completed successfully, rtp_addr should be set!\n");
 //            printf("If ICE has completed successfully, rtp_addr should be set!\n");
 		}
 	}
 	else {
-        PrintConsole("If ICE has not completed yet, wait...!\n");
+        WriteLogToFile("If ICE has not completed yet, wait...!\n");
 		desc->ice_completed = FALSE;
 	}
 
@@ -1679,7 +1679,7 @@ void ServiceCore::serphone_core_update_local_media_description_from_ice(SalMedia
 				strncpy(stream->ice_remote_candidates[1].addr, rtcp_addr, sizeof(stream->ice_remote_candidates[1].addr));
 				stream->ice_remote_candidates[1].port = rtcp_port;
 			} else {
-				PrintConsole("ice: Selected valid remote candidates should be present if the check list is in the Completed state");
+				WriteLogToFile("ice: Selected valid remote candidates should be present if the check list is in the Completed state");
 			}
 		} else {
 			for (j = 0; j < SAL_MEDIA_DESCRIPTION_MAX_ICE_REMOTE_CANDIDATES; j++) {
@@ -1713,7 +1713,7 @@ int ServiceCore::serphone_core_run_stun_tests(SerPhoneCall *call)
 //	StunCandidate *ac=&call->ac;
 //	StunCandidate *vc=&call->vc;
 //	if (this->sip_conf.ipv6_enabled){
-//		PrintConsole("stun support is not implemented for ipv6");
+//		WriteLogToFile("stun support is not implemented for ipv6");
 //		return -1;
 //	}
 //	if (server!=NULL){
@@ -1729,7 +1729,7 @@ int ServiceCore::serphone_core_run_stun_tests(SerPhoneCall *call)
 //		int ret=0;
 //
 //		if (parse_hostname_to_addr(server,&ss,&ss_len)<0){
-//			PrintConsole("Fail to parser stun server address: %s\n",server);
+//			WriteLogToFile("Fail to parser stun server address: %s\n",server);
 //			return -1;
 //		}
 //		if (this->vtable.display_status!=NULL)
@@ -1749,7 +1749,7 @@ int ServiceCore::serphone_core_run_stun_tests(SerPhoneCall *call)
 //
 //			int id;
 //			if (loops%20==0){
-//				PrintConsole("Sending stun requests...\n");
+//				WriteLogToFile("Sending stun requests...\n");
 //				sendStunRequest(sock1,(struct sockaddr*)&ss,ss_len,11,TRUE);
 //				sendStunRequest(sock1,(struct sockaddr*)&ss,ss_len,1,FALSE);
 //				if (sock2!=-1){
@@ -1765,7 +1765,7 @@ int ServiceCore::serphone_core_run_stun_tests(SerPhoneCall *call)
 //
 //			if (recvStunResponse(sock1,ac->addr,
 //                                 &ac->port,&id)>0){
-//				PrintConsole("STUN test result: local audio port maps to %s:%i\n",
+//				WriteLogToFile("STUN test result: local audio port maps to %s:%i\n",
 //                           ac->addr,
 //                           ac->port);
 //				if (id==11)
@@ -1774,7 +1774,7 @@ int ServiceCore::serphone_core_run_stun_tests(SerPhoneCall *call)
 //			}
 //			if (recvStunResponse(sock2,vc->addr,
 //                                 &vc->port,&id)>0){
-//				PrintConsole("STUN test result: local video port maps to %s:%i\n",
+//				WriteLogToFile("STUN test result: local video port maps to %s:%i\n",
 //                           vc->addr,
 //                           vc->port);
 //				if (id==22)
@@ -1784,7 +1784,7 @@ int ServiceCore::serphone_core_run_stun_tests(SerPhoneCall *call)
 //			gettimeofday(&cur,NULL);
 //			elapsed=((cur.tv_sec-init.tv_sec)*1000.0) +  ((cur.tv_usec-init.tv_usec)/1000.0);
 //			if (elapsed>2000)  {
-//				PrintConsole("Stun responses timeout, going ahead.\n");
+//				WriteLogToFile("Stun responses timeout, going ahead.\n");
 //				ret=-1;
 //				break;
 //			}
@@ -1792,18 +1792,18 @@ int ServiceCore::serphone_core_run_stun_tests(SerPhoneCall *call)
 //		}while(!(got_audio && (got_video||sock2==-1)  ) );
 //		if (ret==0) ret=(int)elapsed;
 //		if (!got_audio){
-//			PrintConsole("No stun server response for audio port.\n");
+//			WriteLogToFile("No stun server response for audio port.\n");
 //		}else{
 //			if (!cone_audio) {
-//				PrintConsole("NAT is symmetric for audio port\n");
+//				WriteLogToFile("NAT is symmetric for audio port\n");
 //			}
 //		}
 //		if (sock2!=-1){
 //			if (!got_video){
-//				PrintConsole("No stun server response for video port.\n");
+//				WriteLogToFile("No stun server response for video port.\n");
 //			}else{
 //				if (!cone_video) {
-//					PrintConsole("NAT is symmetric for video port.\n");
+//					WriteLogToFile("NAT is symmetric for video port.\n");
 //				}
 //			}
 //		}
@@ -1833,7 +1833,7 @@ int ServiceCore::serphone_core_check_account_online(char *account)
 	serphone_core_get_default_proxy(&proxy);
 	dest_proxy=serphone_core_lookup_known_proxy(addr);
 	if (proxy!=dest_proxy && dest_proxy!=NULL) {
-		PrintConsole("The used identity will be %s\n",dest_proxy->serphone_proxy_config_get_identity());
+		WriteLogToFile("The used identity will be %s\n",dest_proxy->serphone_proxy_config_get_identity());
 	}
 	if (dest_proxy!=NULL)
 		from=dest_proxy->serphone_proxy_config_get_identity();
@@ -1995,7 +1995,7 @@ int ServiceCore::serphone_core_add_proxy_config(SerphoneProxyConfig *cfg)
 		return -1;
 	}
 	if (ms_list_find(sip_conf.proxies,cfg)!=NULL){
-		PrintConsole("ProxyConfig already entered, ignored.\n");
+		WriteLogToFile("ProxyConfig already entered, ignored.\n");
 		return 0;
 	}
 	sip_conf.proxies=ms_list_append(sip_conf.proxies,(void *)cfg);
@@ -2148,7 +2148,7 @@ void ServiceCore::serphone_set_reg_info(const char *proxy_addr, int proxy_port,
                 fwrite(strTime.c_str(), strTime.length(), 1, traceFile);
                 char tempp[200] = {0};
                 sprintf(tempp, " chuangyuan crypto lib init failed ret=%d\n",rethai);
-                PrintConsole("[WARNNING HAIYUNTONG] lib crypto init failed %d\n",rethai);
+                WriteLogToFile("[WARNNING HAIYUNTONG] lib crypto init failed %d\n",rethai);
                 fwrite(tempp, strlen(tempp), 1, traceFile);
                 fflush(traceFile);
             }
@@ -2174,7 +2174,7 @@ void ServiceCore::serphone_set_reg_info(const char *proxy_addr, int proxy_port,
         }
         else
         {
-            PrintConsole("ERROR: TLS enabled without root ca!!!\n");
+            WriteLogToFile("ERROR: TLS enabled without root ca!!!\n");
         }
         serphone_core_set_sip_transports(&tr);
     }
@@ -2269,16 +2269,16 @@ void ServiceCore::serphone_set_reg_info(const char *proxy_addr, int proxy_port,
 int ServiceCore::serphone_certExisted(const char *sip, long sipLen)
 {
     if (!enableHaiyuntong) {
-        PrintConsole("[WARNNING HAIYUNTONG] haiyuntong is not enalbed currently! To use this feature, call serphone_enable_haiyuntong first. Func:%s",__FUNCTION__);
+        WriteLogToFile("[WARNNING HAIYUNTONG] haiyuntong is not enalbed currently! To use this feature, call serphone_enable_haiyuntong first. Func:%s",__FUNCTION__);
         return -9999;
     }
     int ret = isExistOfCert((char *)sip, sipLen);
     if (1 == ret) {
-        PrintConsole("[DEBUG HAIYUNTONG] isExistOfCert exist");
+        WriteLogToFile("[DEBUG HAIYUNTONG] isExistOfCert exist");
     }
     else
     {
-        PrintConsole("[DEBUG HAIYUNTONG] isExistOfCert not exist\n");
+        WriteLogToFile("[DEBUG HAIYUNTONG] isExistOfCert not exist\n");
     }
     return ret;
 }
@@ -2286,7 +2286,7 @@ int ServiceCore::serphone_certExisted(const char *sip, long sipLen)
 int ServiceCore::serphone_set_deviceid_pincode(const char *devId, const char *appId, bool testFlag)
 {
     if (!enableHaiyuntong) {
-        PrintConsole("[WARNNING HAIYUNTONG] haiyuntong is not enalbed currently! To use this feature, call serphone_enable_haiyuntong first. Func:%s",__FUNCTION__);
+        WriteLogToFile("[WARNNING HAIYUNTONG] haiyuntong is not enalbed currently! To use this feature, call serphone_enable_haiyuntong first. Func:%s",__FUNCTION__);
         return -9999;
     }
     internal_str_check_copy(&deviceID,devId);
@@ -2309,32 +2309,32 @@ bool ServiceCore::serphone_haiyuntong_enabled()
 int ServiceCore::serphone_caller_init_haiyuntong(char *appid, long appidLen,  char *selfSipNo, long selfSipNoLen, char *devId)
 {
     if (!enableHaiyuntong) {
-        PrintConsole("[WARNNING HAIYUNTONG] haiyuntong is not enalbed currently! To use this feature, call serphone_enable_haiyuntong first. Func:%s",__FUNCTION__);
+        WriteLogToFile("[WARNNING HAIYUNTONG] haiyuntong is not enalbed currently! To use this feature, call serphone_enable_haiyuntong first. Func:%s",__FUNCTION__);
         return -9999;
     }
     if (NULL == pinCode) {
-        PrintConsole("[WARNNING HAIYUNTONG] set pin code first");
+        WriteLogToFile("[WARNNING HAIYUNTONG] set pin code first");
         return -8888;
     }
-    PrintConsole("[DEBUG HAIYUNTONG] appid:%s, appidLen:%d, selfSipNo:%s, selfSipNo len:%d\n",appid, appidLen, selfSipNo, selfSipNoLen);
+    WriteLogToFile("[DEBUG HAIYUNTONG] appid:%s, appidLen:%d, selfSipNo:%s, selfSipNo len:%d\n",appid, appidLen, selfSipNo, selfSipNoLen);
 
     int ret = setPIN(pinCode, strlen(pinCode), haiyuntongTestFlag);
     if (0 == ret) {
-        PrintConsole("[DEBUG HAIYUNTONG] setPin code succeed");
+        WriteLogToFile("[DEBUG HAIYUNTONG] setPin code succeed");
     }
     else
     {
-        PrintConsole("[DEBUG HAIYUNTONG] setPin code failed, ret:%d\n");
+        WriteLogToFile("[DEBUG HAIYUNTONG] setPin code failed, ret:%d\n");
         return ret;
     }
 
     ret = init(appid, appidLen, selfSipNo, selfSipNoLen, devId);
     if (0 == ret) {
-        PrintConsole("[DEBUG HAIYUNTONG] init succeed\n");
+        WriteLogToFile("[DEBUG HAIYUNTONG] init succeed\n");
     }
     else
     {
-        PrintConsole("[DEBUG HAIYUNTONG] init failed, ret:%d\n",ret);
+        WriteLogToFile("[DEBUG HAIYUNTONG] init failed, ret:%d\n",ret);
     }
 
     return ret;
@@ -2343,21 +2343,21 @@ int ServiceCore::serphone_caller_init_haiyuntong(char *appid, long appidLen,  ch
 int ServiceCore::serphone_caller_180_183_transmitKeySet(SalOp *op,char *callee, long calleeLen)
 {
     if (!enableHaiyuntong) {
-        PrintConsole("[WARNNING HAIYUNTONG] haiyuntong is not enalbed currently! To use this feature, call serphone_enable_haiyuntong first. Func:%s",__FUNCTION__);
+        WriteLogToFile("[WARNNING HAIYUNTONG] haiyuntong is not enalbed currently! To use this feature, call serphone_enable_haiyuntong first. Func:%s",__FUNCTION__);
         return -9999;
     }
     if (!op) {
-        PrintConsole("[DEBUG HAIYUNTONG] error happens, op is NULL\n");
+        WriteLogToFile("[DEBUG HAIYUNTONG] error happens, op is NULL\n");
         return -3;
     }
     if (!op->bkey) {
-        PrintConsole("[DEBUG HAIYUNTONG] error happens, bkey is NULL, probably bei jiao failed to create bkey, see bei jiao log.");
+        WriteLogToFile("[DEBUG HAIYUNTONG] error happens, bkey is NULL, probably bei jiao failed to create bkey, see bei jiao log.");
         return -4;
     }
-    PrintConsole("[DEBUG HAIYUNTONG] inviteKey:%s, inviteLen:%d, callee:%s, callee len:%d\n",op->bkey,strlen(op->bkey), callee, calleeLen);
+    WriteLogToFile("[DEBUG HAIYUNTONG] inviteKey:%s, inviteLen:%d, callee:%s, callee len:%d\n",op->bkey,strlen(op->bkey), callee, calleeLen);
     int ret = -1;
     if (isLandingCall) {
-        PrintConsole("[DEBUG HAIYUNTONG] landing call, id:%s",remoteSipNo);
+        WriteLogToFile("[DEBUG HAIYUNTONG] landing call, id:%s",remoteSipNo);
         ret = VOIPtransmitKeyRequest(op->bkey, strlen(op->bkey), remoteSipNo, strlen(remoteSipNo));
     }
     else
@@ -2365,11 +2365,11 @@ int ServiceCore::serphone_caller_180_183_transmitKeySet(SalOp *op,char *callee, 
         ret = transmitKeyRequest(op->bkey, strlen(op->bkey), callee, calleeLen);
     }
     if (0 == ret) {
-        PrintConsole("[DEBUG HAIYUNTONG] %s succeed\n",isLandingCall?"VOIPtransmitKeyRequest":"transmitKeyRequest");
+        WriteLogToFile("[DEBUG HAIYUNTONG] %s succeed\n",isLandingCall?"VOIPtransmitKeyRequest":"transmitKeyRequest");
     }
     else
     {
-        PrintConsole("[DEBUG HAIYUNTONG] %s failed, ret:%d\n",isLandingCall?"VOIPtransmitKeyRequest":"transmitKeyRequest",ret);
+        WriteLogToFile("[DEBUG HAIYUNTONG] %s failed, ret:%d\n",isLandingCall?"VOIPtransmitKeyRequest":"transmitKeyRequest",ret);
     }
     return ret;
 }
@@ -2377,14 +2377,14 @@ int ServiceCore::serphone_caller_180_183_transmitKeySet(SalOp *op,char *callee, 
 int ServiceCore::serphone_callee_create_bKey(SalOp *op,char *caller, long callerLen)
 {
     if (!enableHaiyuntong) {
-        PrintConsole("[WARNNING HAIYUNTONG] haiyuntong is not enalbed currently! To use this feature, call serphone_enable_haiyuntong first. Func:%s",__FUNCTION__);
+        WriteLogToFile("[WARNNING HAIYUNTONG] haiyuntong is not enalbed currently! To use this feature, call serphone_enable_haiyuntong first. Func:%s",__FUNCTION__);
         return -9999;
     }
     if (!op || !op->akey) {
-        PrintConsole("[DEBUG HAIYUNTONG] akey is null, check it");
+        WriteLogToFile("[DEBUG HAIYUNTONG] akey is null, check it");
         return -5;
     }
-    PrintConsole("[DEBUG HAIYUNTONG] inviteKey:%s, inviteLen:%d, callee:%s, callee len:%d\n",op->akey,strlen(op->akey), caller, callerLen);
+    WriteLogToFile("[DEBUG HAIYUNTONG] inviteKey:%s, inviteLen:%d, callee:%s, callee len:%d\n",op->akey,strlen(op->akey), caller, callerLen);
     int ret = -1;
     char bkey[1024] = {0};
     long bkeyLen = 0;
@@ -2396,12 +2396,12 @@ int ServiceCore::serphone_callee_create_bKey(SalOp *op,char *caller, long caller
         op->bkey = (char *)malloc(bkeyLen + 1);
         memcpy(op->bkey, bkey, bkeyLen);
         op->bkey[bkeyLen] = '\0';
-        PrintConsole("[DEBUG HAIYUNTONG] serphone_callee_create_bKey succeed\n");
-        PrintConsole("[DEBUG HAIYUNTONG] dump bkey:%s\n",op->bkey);
+        WriteLogToFile("[DEBUG HAIYUNTONG] serphone_callee_create_bKey succeed\n");
+        WriteLogToFile("[DEBUG HAIYUNTONG] dump bkey:%s\n",op->bkey);
     }
     else
     {
-        PrintConsole("[DEBUG HAIYUNTONG] serphone_callee_create_bKey failed, ret:%d\n",ret);
+        WriteLogToFile("[DEBUG HAIYUNTONG] serphone_callee_create_bKey failed, ret:%d\n",ret);
     }
     return ret;
 }
@@ -2409,18 +2409,18 @@ int ServiceCore::serphone_callee_create_bKey(SalOp *op,char *caller, long caller
 int ServiceCore::serphone_encrypt(char *mediaStream, long mediaStreamLen, char *selfSipNo, long selfSipNoLen, char *mediaStreamCrpp , long* mediaStreamCrpLen)
 {
     if (!enableHaiyuntong) {
-        PrintConsole("[WARNNING HAIYUNTONG] haiyuntong is not enalbed currently! To use this feature, call serphone_enable_haiyuntong first. Func:%s",__FUNCTION__);
+        WriteLogToFile("[WARNNING HAIYUNTONG] haiyuntong is not enalbed currently! To use this feature, call serphone_enable_haiyuntong first. Func:%s",__FUNCTION__);
         return -9999;
     }
-    PrintConsole("[DEBUG HAIYUNTONG] serphone_encrypt: original stream len:%lu, selfSipNo: %s, selfSipNo length :%d\n",mediaStreamLen,selfSipNo,strlen(selfSipNo));
+    WriteLogToFile("[DEBUG HAIYUNTONG] serphone_encrypt: original stream len:%lu, selfSipNo: %s, selfSipNo length :%d\n",mediaStreamLen,selfSipNo,strlen(selfSipNo));
     int ret = -1;
     ret = mediaStreamCrp(mediaStream, mediaStreamLen, selfSipNo, selfSipNoLen, mediaStreamCrpp , mediaStreamCrpLen );
     if (0 == ret) {
-        PrintConsole("[DEBUG HAIYUNTONG] serphone_encrypt succeed\n");
+        WriteLogToFile("[DEBUG HAIYUNTONG] serphone_encrypt succeed\n");
     }
     else
     {
-        PrintConsole("[DEBUG HAIYUNTONG] serphone_encrypt failed, ret:%d\n",ret);
+        WriteLogToFile("[DEBUG HAIYUNTONG] serphone_encrypt failed, ret:%d\n",ret);
     }
     return  ret;
 }
@@ -2428,18 +2428,18 @@ int ServiceCore::serphone_encrypt(char *mediaStream, long mediaStreamLen, char *
 int ServiceCore::serphone_decrypt(char *mediaStream, long mediaStreamLen, char *remoteSipNo, long remoteSipNoLen, char *mediaStreamDecrpp , long* mediaStreamDecrpLen)
 {
     if (!enableHaiyuntong) {
-        PrintConsole("[WARNNING HAIYUNTONG] haiyuntong is not enalbed currently! To use this feature, call serphone_enable_haiyuntong first. Func:%s",__FUNCTION__);
+        WriteLogToFile("[WARNNING HAIYUNTONG] haiyuntong is not enalbed currently! To use this feature, call serphone_enable_haiyuntong first. Func:%s",__FUNCTION__);
         return -9999;
     }
-    PrintConsole("[DEBUG HAIYUNTONG] serphone_decrypt: original stream len:%lu, selfSipNo: %s, selfSipNo length :%d\n",mediaStreamLen,remoteSipNo,strlen(remoteSipNo));
+    WriteLogToFile("[DEBUG HAIYUNTONG] serphone_decrypt: original stream len:%lu, selfSipNo: %s, selfSipNo length :%d\n",mediaStreamLen,remoteSipNo,strlen(remoteSipNo));
     int ret = -1;
     ret = mediaStreamDecrp(mediaStream, mediaStreamLen, remoteSipNo, remoteSipNoLen, mediaStreamDecrpp, mediaStreamDecrpLen);
     if (0 == ret) {
-        PrintConsole("[DEBUG HAIYUNTONG] serphone_decrypt succeed\n");
+        WriteLogToFile("[DEBUG HAIYUNTONG] serphone_decrypt succeed\n");
     }
     else
     {
-        PrintConsole("[DEBUG HAIYUNTONG] serphone_decrypt failed, ret:%d\n",ret);
+        WriteLogToFile("[DEBUG HAIYUNTONG] serphone_decrypt failed, ret:%d\n",ret);
     }
     return  ret;
 }
@@ -2447,10 +2447,10 @@ int ServiceCore::serphone_decrypt(char *mediaStream, long mediaStreamLen, char *
 int ServiceCore::serphone_delete_transmit_key()
 {
     if (!enableHaiyuntong) {
-        PrintConsole("[WARNNING HAIYUNTONG] haiyuntong is not enalbed currently! To use this feature, call serphone_enable_haiyuntong first. Func:%s",__FUNCTION__);
+        WriteLogToFile("[WARNNING HAIYUNTONG] haiyuntong is not enalbed currently! To use this feature, call serphone_enable_haiyuntong first. Func:%s",__FUNCTION__);
         return -9999;
     }
-    PrintConsole("[DEBUG HAIYUNTONG] serphone_delete_transmit_key: sip no:%s\n",selfSipNo);
+    WriteLogToFile("[DEBUG HAIYUNTONG] serphone_delete_transmit_key: sip no:%s\n",selfSipNo);
     int ret = -1;
     if (isLandingCall) {
 //        ret = deleteVOIPTransmitKey(proxyAddr, strlen(proxyAddr));
@@ -2460,11 +2460,11 @@ int ServiceCore::serphone_delete_transmit_key()
         ret = deleteTransmitKey(selfSipNo, strlen(selfSipNo));
     }
     if (0 == ret) {
-        PrintConsole("[DEBUG HAIYUNTONG] serphone_delete_transmit_key succeed\n");
+        WriteLogToFile("[DEBUG HAIYUNTONG] serphone_delete_transmit_key succeed\n");
     }
     else
     {
-        PrintConsole("[DEBUG HAIYUNTONG] serphone_delete_transmit_key failed, ret:%d\n",ret);
+        WriteLogToFile("[DEBUG HAIYUNTONG] serphone_delete_transmit_key failed, ret:%d\n",ret);
     }
     return  ret;
 }
@@ -2472,22 +2472,22 @@ int ServiceCore::serphone_delete_transmit_key()
 int ServiceCore::serphone_audio_conf_key_set(SalOp *op)
 {
     if (!enableHaiyuntong) {
-        PrintConsole("[WARNNING HAIYUNTONG] haiyuntong is not enalbed currently! To use this feature, call serphone_enable_haiyuntong first. Func:%s",__FUNCTION__);
+        WriteLogToFile("[WARNNING HAIYUNTONG] haiyuntong is not enalbed currently! To use this feature, call serphone_enable_haiyuntong first. Func:%s",__FUNCTION__);
         return -9999;
     }
     //check audio conf?
     if (!isAudioConf) {
-        PrintConsole("[WARNNING HAIYUNTONG] not in conf mode, you are not supposed to go into func %s\n",__FUNCTION__);
+        WriteLogToFile("[WARNNING HAIYUNTONG] not in conf mode, you are not supposed to go into func %s\n",__FUNCTION__);
         return 0;
     }
     int ret = -1;
     ret = groupTransmitKeyDecrp(op->confKey, (long)strlen(op->confKey)/*, confID, (long)strlen(confID)*/);
     if (0 == ret) {
-        PrintConsole("[DEBUG HAIYUNTONG] serphone_audio_conf_key_set succeed\n");
+        WriteLogToFile("[DEBUG HAIYUNTONG] serphone_audio_conf_key_set succeed\n");
     }
     else
     {
-        PrintConsole("[DEBUG HAIYUNTONG] serphone_audio_conf_key_set failed, ret:%d\n",ret);
+        WriteLogToFile("[DEBUG HAIYUNTONG] serphone_audio_conf_key_set failed, ret:%d\n",ret);
     }
     return ret;
 }
@@ -2497,14 +2497,14 @@ int ServiceCore::serphone_audio_conf_key_set(SalOp *op)
 int ServiceCore::serphone_sms_encrypt(char *sms, long smsLen, char *remoteSip, long remoteSipLen, char *smsCrpt, long* smsCrptLen)
 {
     if (!enableHaiyuntong) {
-        PrintConsole("[WARNNING HAIYUNTONG] haiyuntong is not enalbed currently! To use this feature, call serphone_enable_haiyuntong first. Func:%s",__FUNCTION__);
+        WriteLogToFile("[WARNNING HAIYUNTONG] haiyuntong is not enalbed currently! To use this feature, call serphone_enable_haiyuntong first. Func:%s",__FUNCTION__);
         return -9999;
     }
-    PrintConsole("[DEBUG HAIYUNTONG] %s: sip remote sip:%s\n",__FUNCTION__,remoteSip);
+    WriteLogToFile("[DEBUG HAIYUNTONG] %s: sip remote sip:%s\n",__FUNCTION__,remoteSip);
     int ret = -1;
     ret = smsCrpRequest(sms, smsLen, remoteSip, remoteSipLen, smsCrpt, smsCrptLen );
     if (0 == ret) {
-        PrintConsole("[DEBUG HAIYUNTONG] %s succeed, inLen:%d, outLen:%d\n",__FUNCTION__,smsLen,*smsCrptLen);
+        WriteLogToFile("[DEBUG HAIYUNTONG] %s succeed, inLen:%d, outLen:%d\n",__FUNCTION__,smsLen,*smsCrptLen);
 
 //        unsigned char *dumpData = (unsigned char *)sms;
 //        char dumpbufin[1024] = {0};
@@ -2517,12 +2517,12 @@ int ServiceCore::serphone_sms_encrypt(char *sms, long smsLen, char *remoteSip, l
 //        for (int i = 0; i < *smsCrptLen; i++) {
 //            sprintf(dumpbufout+3*i, "%02X ",*(dumpData+i));//("%02X ",*(dumpData+i));
 //        }
-//        PrintConsole("[DEBUG HAIYUNTONG] serphone_sms_encrypt called, data before processed:%s",dumpbufin);
-//        PrintConsole("[DEBUG HAIYUNTONG] serphone_sms_encrypt called, data after processed:%s",dumpbufout);
+//        WriteLogToFile("[DEBUG HAIYUNTONG] serphone_sms_encrypt called, data before processed:%s",dumpbufin);
+//        WriteLogToFile("[DEBUG HAIYUNTONG] serphone_sms_encrypt called, data after processed:%s",dumpbufout);
     }
     else
     {
-        PrintConsole("[DEBUG HAIYUNTONG] %s failed, ret:%d\n",__FUNCTION__,ret);
+        WriteLogToFile("[DEBUG HAIYUNTONG] %s failed, ret:%d\n",__FUNCTION__,ret);
     }
     return  ret;
 }
@@ -2530,21 +2530,21 @@ int ServiceCore::serphone_sms_encrypt(char *sms, long smsLen, char *remoteSip, l
 int ServiceCore::serphone_sms_decrypt(char *sms, long smsLen, char *remoteSip, long remoteSipLen, char *smsDeCrpt, long* smsDeCrptLen)
 {
     if (!enableHaiyuntong) {
-        PrintConsole("[WARNNING HAIYUNTONG] haiyuntong is not enalbed currently! To use this feature, call serphone_enable_haiyuntong first. Func:%s",__FUNCTION__);
+        WriteLogToFile("[WARNNING HAIYUNTONG] haiyuntong is not enalbed currently! To use this feature, call serphone_enable_haiyuntong first. Func:%s",__FUNCTION__);
         return -9999;
     }
-    PrintConsole("[DEBUG HAIYUNTONG] %s: remote sip:%s, input message:%s\n",__FUNCTION__,remoteSip, sms);
+    WriteLogToFile("[DEBUG HAIYUNTONG] %s: remote sip:%s, input message:%s\n",__FUNCTION__,remoteSip, sms);
 
     int ret = -1;
     ret = smsDecrpRequest(sms, smsLen, remoteSip, remoteSipLen, smsDeCrpt, smsDeCrptLen );
     if (0 == ret) {
-        PrintConsole("[DEBUG HAIYUNTONG] %s succeed, inLen:%d, outLen:%ld\n",__FUNCTION__,smsLen, *smsDeCrptLen);
+        WriteLogToFile("[DEBUG HAIYUNTONG] %s succeed, inLen:%d, outLen:%ld\n",__FUNCTION__,smsLen, *smsDeCrptLen);
     }
     else
     {
-        PrintConsole("[DEBUG HAIYUNTONG] %s failed, ret:%d\n",__FUNCTION__,ret);
+        WriteLogToFile("[DEBUG HAIYUNTONG] %s failed, ret:%d\n",__FUNCTION__,ret);
     }
-    PrintConsole("[DEBUG HAIYUNTONG] original message:%s",smsDeCrpt);
+    WriteLogToFile("[DEBUG HAIYUNTONG] original message:%s",smsDeCrpt);
     return  ret;
 }
 
@@ -2553,19 +2553,19 @@ int ServiceCore::serphone_sms_decrypt(char *sms, long smsLen, char *remoteSip, l
 int ServiceCore::serphone_group_sms_encrypt(char *sms, long smsLen, char *proxyAddr, long proxyAddrLen, char *smsCrpt, long* smsCrptLen)
 {
     if (!enableHaiyuntong) {
-        PrintConsole("[WARNNING HAIYUNTONG] haiyuntong is not enalbed currently! To use this feature, call serphone_enable_haiyuntong first. Func:%s",__FUNCTION__);
+        WriteLogToFile("[WARNNING HAIYUNTONG] haiyuntong is not enalbed currently! To use this feature, call serphone_enable_haiyuntong first. Func:%s",__FUNCTION__);
         return -9999;
     }
-    PrintConsole("[DEBUG HAIYUNTONG] %s: sip server addr:%s\n",__FUNCTION__,proxyAddr);
+    WriteLogToFile("[DEBUG HAIYUNTONG] %s: sip server addr:%s\n",__FUNCTION__,proxyAddr);
 
     int ret = -1;
     ret = groupSmsCrpEnvelop(sms, smsLen, proxyAddr, proxyAddrLen, smsCrpt, smsCrptLen );
     if (0 == ret) {
-        PrintConsole("[DEBUG HAIYUNTONG] %s succeed\n",__FUNCTION__);
+        WriteLogToFile("[DEBUG HAIYUNTONG] %s succeed\n",__FUNCTION__);
     }
     else
     {
-        PrintConsole("[DEBUG HAIYUNTONG] %s failed, ret:%d\n",__FUNCTION__,ret);
+        WriteLogToFile("[DEBUG HAIYUNTONG] %s failed, ret:%d\n",__FUNCTION__,ret);
     }
     return  ret;
 }
@@ -2574,19 +2574,19 @@ int ServiceCore::serphone_group_sms_encrypt(char *sms, long smsLen, char *proxyA
 int ServiceCore::serphone_group_sms_decrypt(char *sms, long smsLen, char *proxyAddr, long proxyAddrLen, char *smsDeCrpt, long* smsDeCrptLen)
 {
     if (!enableHaiyuntong) {
-        PrintConsole("[WARNNING HAIYUNTONG] haiyuntong is not enalbed currently! To use this feature, call serphone_enable_haiyuntong first. Func:%s",__FUNCTION__);
+        WriteLogToFile("[WARNNING HAIYUNTONG] haiyuntong is not enalbed currently! To use this feature, call serphone_enable_haiyuntong first. Func:%s",__FUNCTION__);
         return -9999;
     }
-    PrintConsole("[DEBUG HAIYUNTONG] %s: sip server addr:%s\n",__FUNCTION__,proxyAddr);
+    WriteLogToFile("[DEBUG HAIYUNTONG] %s: sip server addr:%s\n",__FUNCTION__,proxyAddr);
 
     int ret = -1;
     ret = groupSmsDecrpEnvelop(sms, smsLen, proxyAddr, proxyAddrLen, smsDeCrpt, smsDeCrptLen );
     if (0 == ret) {
-        PrintConsole("[DEBUG HAIYUNTONG] %s succeed\n",__FUNCTION__);
+        WriteLogToFile("[DEBUG HAIYUNTONG] %s succeed\n",__FUNCTION__);
     }
     else
     {
-        PrintConsole("[DEBUG HAIYUNTONG] %s failed, ret:%d\n",__FUNCTION__,ret);
+        WriteLogToFile("[DEBUG HAIYUNTONG] %s failed, ret:%d\n",__FUNCTION__,ret);
     }
     return  ret;
 }
@@ -2596,19 +2596,19 @@ int ServiceCore::serphone_group_sms_decrypt(char *sms, long smsLen, char *proxyA
 int ServiceCore::serphone_file_encrypt(const unsigned char *file, long fileLen, char *remoteSip, long remoteSipLen, unsigned char *fileCrpEnvelopp, long* fileCrpEnvelopLen)
 {
     if (!enableHaiyuntong) {
-        PrintConsole("[WARNNING HAIYUNTONG] haiyuntong is not enalbed currently! To use this feature, call serphone_enable_haiyuntong first. Func:%s",__FUNCTION__);
+        WriteLogToFile("[WARNNING HAIYUNTONG] haiyuntong is not enalbed currently! To use this feature, call serphone_enable_haiyuntong first. Func:%s",__FUNCTION__);
         return -9999;
     }
-    PrintConsole("[DEBUG HAIYUNTONG] %s: sip remote sip:%s\n",__FUNCTION__,remoteSip);
+    WriteLogToFile("[DEBUG HAIYUNTONG] %s: sip remote sip:%s\n",__FUNCTION__,remoteSip);
 
     int ret = -1;
     ret = fileCrpEnvelop((unsigned char *)file, fileLen, remoteSip, remoteSipLen, fileCrpEnvelopp, fileCrpEnvelopLen);
     if (0 == ret) {
-        PrintConsole("[DEBUG HAIYUNTONG] %s succeed\n",__FUNCTION__);
+        WriteLogToFile("[DEBUG HAIYUNTONG] %s succeed\n",__FUNCTION__);
     }
     else
     {
-        PrintConsole("[DEBUG HAIYUNTONG] %s failed, ret:%d\n",__FUNCTION__,ret);
+        WriteLogToFile("[DEBUG HAIYUNTONG] %s failed, ret:%d\n",__FUNCTION__,ret);
     }
     return  ret;
 }
@@ -2617,19 +2617,19 @@ int ServiceCore::serphone_file_encrypt(const unsigned char *file, long fileLen, 
 int ServiceCore::serphone_file_decrypt(const unsigned char *file, long fileLen, char *remoteSip, long remoteSipLen, unsigned char *fileDeCrpt, long* fileDeCrptLen)
 {
     if (!enableHaiyuntong) {
-        PrintConsole("[WARNNING HAIYUNTONG] haiyuntong is not enalbed currently! To use this feature, call serphone_enable_haiyuntong first. Func:%s",__FUNCTION__);
+        WriteLogToFile("[WARNNING HAIYUNTONG] haiyuntong is not enalbed currently! To use this feature, call serphone_enable_haiyuntong first. Func:%s",__FUNCTION__);
         return -9999;
     }
-    PrintConsole("[DEBUG HAIYUNTONG] %s: sip remote sip:%s\n",__FUNCTION__,remoteSip);
+    WriteLogToFile("[DEBUG HAIYUNTONG] %s: sip remote sip:%s\n",__FUNCTION__,remoteSip);
 
     int ret = -1;
     ret = fileDecrpEnvelop((unsigned char *)file, fileLen, remoteSip, remoteSipLen, fileDeCrpt, fileDeCrptLen );
     if (0 == ret) {
-        PrintConsole("[DEBUG HAIYUNTONG] %s succeed\n",__FUNCTION__);
+        WriteLogToFile("[DEBUG HAIYUNTONG] %s succeed\n",__FUNCTION__);
     }
     else
     {
-        PrintConsole("[DEBUG HAIYUNTONG] %s failed, ret:%d\n",__FUNCTION__,ret);
+        WriteLogToFile("[DEBUG HAIYUNTONG] %s failed, ret:%d\n",__FUNCTION__,ret);
     }
     return  ret;
 }
@@ -2639,19 +2639,19 @@ int ServiceCore::serphone_file_decrypt(const unsigned char *file, long fileLen, 
 int ServiceCore::serphone_group_file_encrypt(const unsigned char *file, long fileLen, char **userList, long *eachLen, int numOfUsers, unsigned char *groupFileCrpEnvelopp, long* groupFileCrpEnvelopLen)
 {
     if (!enableHaiyuntong) {
-        PrintConsole("[WARNNING HAIYUNTONG] haiyuntong is not enalbed currently! To use this feature, call serphone_enable_haiyuntong first. Func:%s",__FUNCTION__);
+        WriteLogToFile("[WARNNING HAIYUNTONG] haiyuntong is not enalbed currently! To use this feature, call serphone_enable_haiyuntong first. Func:%s",__FUNCTION__);
         return -9999;
     }
-    PrintConsole("[DEBUG HAIYUNTONG] %s called\n",__FUNCTION__,proxyAddr);
+    WriteLogToFile("[DEBUG HAIYUNTONG] %s called\n",__FUNCTION__,proxyAddr);
 
     int ret = -1;
     ret = groupFileCrpEnvelop((unsigned char *)file, fileLen, userList, eachLen, numOfUsers, groupFileCrpEnvelopp, groupFileCrpEnvelopLen);
     if (0 == ret) {
-        PrintConsole("[DEBUG HAIYUNTONG] %s succeed\n",__FUNCTION__);
+        WriteLogToFile("[DEBUG HAIYUNTONG] %s succeed\n",__FUNCTION__);
     }
     else
     {
-        PrintConsole("[DEBUG HAIYUNTONG] %s failed, ret:%d\n",__FUNCTION__,ret);
+        WriteLogToFile("[DEBUG HAIYUNTONG] %s failed, ret:%d\n",__FUNCTION__,ret);
     }
     return  ret;
 }
@@ -2660,19 +2660,19 @@ int ServiceCore::serphone_group_file_encrypt(const unsigned char *file, long fil
 int ServiceCore::serphone_group_file_decrypt(const unsigned char *file, long fileLen, char *proxyAddr, long proxyAddrLen, unsigned char *groupFileDecrpt, long*groupFileDecrptLen)
 {
     if (!enableHaiyuntong) {
-        PrintConsole("[WARNNING HAIYUNTONG] haiyuntong is not enalbed currently! To use this feature, call serphone_enable_haiyuntong first. Func:%s",__FUNCTION__);
+        WriteLogToFile("[WARNNING HAIYUNTONG] haiyuntong is not enalbed currently! To use this feature, call serphone_enable_haiyuntong first. Func:%s",__FUNCTION__);
         return -9999;
     }
-    PrintConsole("[DEBUG HAIYUNTONG] %s: sip server addr:%s\n",__FUNCTION__,proxyAddr);
+    WriteLogToFile("[DEBUG HAIYUNTONG] %s: sip server addr:%s\n",__FUNCTION__,proxyAddr);
 
     int ret = -1;
     ret = groupFileDecrpEnvelop((unsigned char *)file, fileLen, proxyAddr, proxyAddrLen, groupFileDecrpt, groupFileDecrptLen );
     if (0 == ret) {
-        PrintConsole("[DEBUG HAIYUNTONG] %s succeed\n",__FUNCTION__);
+        WriteLogToFile("[DEBUG HAIYUNTONG] %s succeed\n",__FUNCTION__);
     }
     else
     {
-        PrintConsole("[DEBUG HAIYUNTONG] %s failed, ret:%d\n",__FUNCTION__,ret);
+        WriteLogToFile("[DEBUG HAIYUNTONG] %s failed, ret:%d\n",__FUNCTION__,ret);
     }
     return  ret;
 }
@@ -2682,19 +2682,19 @@ int ServiceCore::serphone_group_file_decrypt(const unsigned char *file, long fil
 int ServiceCore::serphone_add_contact(char **desid, long *desidLen, int num)
 {
     if (!enableHaiyuntong) {
-        PrintConsole("[WARNNING HAIYUNTONG] haiyuntong is not enalbed currently! To use this feature, call serphone_enable_haiyuntong first. Func:%s",__FUNCTION__);
+        WriteLogToFile("[WARNNING HAIYUNTONG] haiyuntong is not enalbed currently! To use this feature, call serphone_enable_haiyuntong first. Func:%s",__FUNCTION__);
         return -9999;
     }
-    PrintConsole("[DEBUG HAIYUNTONG] %s: sip remote sip:%s\n",__FUNCTION__);
+    WriteLogToFile("[DEBUG HAIYUNTONG] %s: sip remote sip:%s\n",__FUNCTION__);
 
     int ret = -1;
     ret = contactListAdd (desid, desidLen, num);
     if (0 == ret) {
-        PrintConsole("[DEBUG HAIYUNTONG] %s succeed\n",__FUNCTION__);
+        WriteLogToFile("[DEBUG HAIYUNTONG] %s succeed\n",__FUNCTION__);
     }
     else
     {
-        PrintConsole("[DEBUG HAIYUNTONG] %s failed, ret:%d\n",__FUNCTION__,ret);
+        WriteLogToFile("[DEBUG HAIYUNTONG] %s failed, ret:%d\n",__FUNCTION__,ret);
     }
     return  ret;
 }
@@ -2703,19 +2703,19 @@ int ServiceCore::serphone_add_contact(char **desid, long *desidLen, int num)
 int ServiceCore::serphone_del_contact(char *remoteSip, long remoteSipLen)
 {
     if (!enableHaiyuntong) {
-        PrintConsole("[WARNNING HAIYUNTONG] haiyuntong is not enalbed currently! To use this feature, call serphone_enable_haiyuntong first. Func:%s",__FUNCTION__);
+        WriteLogToFile("[WARNNING HAIYUNTONG] haiyuntong is not enalbed currently! To use this feature, call serphone_enable_haiyuntong first. Func:%s",__FUNCTION__);
         return -9999;
     }
-    PrintConsole("[DEBUG HAIYUNTONG] %s: sip remote sip:%s\n",__FUNCTION__,remoteSip);
+    WriteLogToFile("[DEBUG HAIYUNTONG] %s: sip remote sip:%s\n",__FUNCTION__,remoteSip);
 
     int ret = -1;
     ret = contactListDel(remoteSip, remoteSipLen);
     if (0 == ret) {
-        PrintConsole("[DEBUG HAIYUNTONG] %s succeed\n",__FUNCTION__);
+        WriteLogToFile("[DEBUG HAIYUNTONG] %s succeed\n",__FUNCTION__);
     }
     else
     {
-        PrintConsole("[DEBUG HAIYUNTONG] %s failed, ret:%d\n",__FUNCTION__,ret);
+        WriteLogToFile("[DEBUG HAIYUNTONG] %s failed, ret:%d\n",__FUNCTION__,ret);
     }
     return  ret;
 }
@@ -3193,21 +3193,21 @@ SerPhoneCall * ServiceCore::serphone_call_new_incoming(SerphoneAddress *from, Se
 
     switch (serphone_core_get_firewall_policy()) {
 		case LinphonePolicyUseIce:
-            PrintConsole("Incoming call using LinphonePolicyUseIce, stunserver = %s\n",serphone_core_get_stun_server());
+            WriteLogToFile("Incoming call using LinphonePolicyUseIce, stunserver = %s\n",serphone_core_get_stun_server());
 			call->ice_session = ice_session_new();
 			ice_session_set_role(call->ice_session, IR_Controlled);
 			serphone_core_update_ice_from_remote_media_description(call, sal_call_get_remote_media_description(op));
 			if(!call->ice_session) {
-				PrintConsole("LinphonePolicyUseIce call->ice_sessoin == NULL\n");
+				WriteLogToFile("LinphonePolicyUseIce call->ice_sessoin == NULL\n");
 			}
 			break;
 		case LinphonePolicyUseStun:
-            PrintConsole("Using LinphonePoicyUseStun\n");
+            WriteLogToFile("Using LinphonePoicyUseStun\n");
 			call->ping_time=serphone_core_run_stun_tests(call);
 			/* No break to also destroy ice session in this case. */
 			break;
 		default:
-            PrintConsole("Incoming call not using LinphonePolicyUseIce");
+            WriteLogToFile("Incoming call not using LinphonePolicyUseIce");
 			break;
 	}
 
@@ -3287,7 +3287,7 @@ int ServiceCore::find_port_offset()
 		if (!already_used) break;
 	}
 	if (offset==100){
-		PrintConsole("Could not find any free port !\n");
+		WriteLogToFile("Could not find any free port !\n");
 		return -1;
 	}
 	return offset;
@@ -3351,7 +3351,7 @@ void ServiceCore::discover_mtu(const char *remote)
 		mtu=ms_discover_mtu(remote);
 		if (mtu>0){
 			ms_set_mtu(mtu);
-			PrintConsole("Discovered mtu is %i, RTP payload max size is %i\n",
+			WriteLogToFile("Discovered mtu is %i, RTP payload max size is %i\n",
 				mtu, ms_get_payload_max_size());
 		}
 	}
@@ -3423,7 +3423,7 @@ int ServiceCore::serphone_core_accept_call_with_params(SerPhoneCall *call, const
 	if (replaced){
 		SerPhoneCall *rc=(SerPhoneCall*)sal_op_get_user_pointer (replaced);
 		if (rc){
-			PrintConsole("Call %p replaces call %p. This last one is going to be terminated automatically.\n",
+			WriteLogToFile("Call %p replaces call %p. This last one is going to be terminated automatically.\n",
 			           call,rc);
 			serphone_core_terminate_call(rc);
 		}
@@ -3450,7 +3450,7 @@ int ServiceCore::serphone_core_accept_call_with_params(SerPhoneCall *call, const
 	dest_proxy=serphone_core_lookup_known_proxy(call->log->to);
 
 	if (cfg!=dest_proxy && dest_proxy!=NULL) {
-		PrintConsole("The used identity will be %s\n",dest_proxy->serphone_proxy_config_get_identity());
+		WriteLogToFile("The used identity will be %s\n",dest_proxy->serphone_proxy_config_get_identity());
 	}
 	/*try to be best-effort in giving real local or routable contact address*/
 	contact=get_fixed_contact(call,dest_proxy);
@@ -3490,7 +3490,7 @@ int ServiceCore::serphone_core_accept_call_with_params(SerPhoneCall *call, const
 	{
         ms_free((void **)&contact);
     }
-	PrintConsole("call answered.\n");
+	WriteLogToFile("call answered.\n");
 //#ifdef MAC_IPHONE
 //    selectCamera(pre_used_camera_index, m_usedCapabilityIndex, m_maxFPS, m_camerRotate,false);
 //#endif
@@ -3554,7 +3554,7 @@ int ServiceCore::serphone_core_terminate_call(SerPhoneCall *the_call)
 		if (ms_list_size(calls)==1){
 			call=(SerPhoneCall*)calls->data;
 		}else{
-			PrintConsole("No unique call to terminate !\n");
+			WriteLogToFile("No unique call to terminate !\n");
 			return -1;
 		}
 	}
@@ -3564,7 +3564,7 @@ int ServiceCore::serphone_core_terminate_call(SerPhoneCall *the_call)
 	}
     processOriginalAudioData = false;
     if( !call->op || call->state == LinphoneCallReleased) {
-        PrintConsole("Call already release , -2 \n");
+        WriteLogToFile("Call already release , -2 \n");
         return -2;
     }
 	if(call->reason == SerphoneReasonBusy) {
@@ -3723,7 +3723,7 @@ SerPhoneCall * ServiceCore::serphone_core_invite( const char *url ,char* userdat
             int ret = -1;
             if (isLandingCall)
             {
-                PrintConsole("[DEBUG HAIYUNTONG] landing call when invite:%s",remoteSipNo);
+                WriteLogToFile("[DEBUG HAIYUNTONG] landing call when invite:%s",remoteSipNo);
                 ret = inviteVOIPKeyRequest(remoteSipNo, strlen(remoteSipNo), akey, &akeyLen);
                 //            ret = inviteVOIPKeyRequest("119119", strlen("119119"), akey, &akeyLen);
             }
@@ -3732,12 +3732,12 @@ SerPhoneCall * ServiceCore::serphone_core_invite( const char *url ,char* userdat
                 ret = inviteKeyRequest(remoteSipNo, strlen(remoteSipNo), akey, &akeyLen);
             }
             if (0 == ret) {
-                PrintConsole("[DEBUG HAIYUNTONG] %s OK\n",isLandingCall?"inviteVOIPKeyRequest":"inviteKeyRequest");
+                WriteLogToFile("[DEBUG HAIYUNTONG] %s OK\n",isLandingCall?"inviteVOIPKeyRequest":"inviteKeyRequest");
                 p->akey = ms_strdup(akey);
             }
             else
             {
-                PrintConsole("[DEBUG HAIYUNTONG] %s failed, ret:%d\n",isLandingCall?"inviteVOIPKeyRequest":"inviteKeyRequest",ret);
+                WriteLogToFile("[DEBUG HAIYUNTONG] %s failed, ret:%d\n",isLandingCall?"inviteVOIPKeyRequest":"inviteKeyRequest",ret);
                 return NULL;
             }
         }
@@ -3850,7 +3850,7 @@ SerPhoneCall * ServiceCore::serphone_core_invite_address_with_params(const Serph
 	dest_proxy=serphone_core_lookup_known_proxy(addr);
 
 	if (proxy!=dest_proxy && dest_proxy!=NULL) {
-		PrintConsole("The used identity will be %s\n",dest_proxy->serphone_proxy_config_get_identity());
+		WriteLogToFile("The used identity will be %s\n",dest_proxy->serphone_proxy_config_get_identity());
 	}
 
 	if (dest_proxy!=NULL)
@@ -3868,7 +3868,7 @@ SerPhoneCall * ServiceCore::serphone_core_invite_address_with_params(const Serph
 
 	if(serphone_core_add_call(call)!= 0)
 	{
-		PrintConsole("we had a problem in adding the call into the invite ... weird\n");
+		WriteLogToFile("we had a problem in adding the call into the invite ... weird\n");
 		serphone_call_unref(call);
 		//added  by zdm for avoiding memory leak
 	    if (real_url!=NULL) {ms_free((void **)&real_url);}
@@ -3928,13 +3928,13 @@ int ServiceCore::serphone_core_transfer_call( SerPhoneCall *call, const char *ur
 		return -1;
 	}
 	if (call==NULL){
-		PrintConsole("No established call to refer.\n");
+		WriteLogToFile("No established call to refer.\n");
 		return -1;
 	}
 
     if (LinphonePolicyUseIce == serphone_core_get_firewall_policy() && isRefering && call->localdesc->ice_completed) {
         if (call->ice_session != NULL) {
-            PrintConsole("ICE candidates gathering from [%s] has not finished yet, proceed with the call without ICE anyway.\n"
+            WriteLogToFile("ICE candidates gathering from [%s] has not finished yet, proceed with the call without ICE anyway.\n"
                          ,serphone_core_get_stun_server());
             serphone_call_delete_ice_session(call);
             serphone_call_stop_media_streams_for_ice_gathering(call);
@@ -4095,7 +4095,7 @@ char *ServiceCore::get_fixed_contact(SerPhoneCall *call , SerphoneProxyConfig *d
 	if (call->ping_op){
 		const char *guessed=sal_op_get_contact(call->ping_op);
 		if (guessed){
-			PrintConsole("Contact has been fixed using OPTIONS to %s\n",guessed);
+			WriteLogToFile("Contact has been fixed using OPTIONS to %s\n",guessed);
 			return ms_strdup(guessed);
 		}
 	}
@@ -4121,7 +4121,7 @@ char *ServiceCore::get_fixed_contact(SerPhoneCall *call , SerphoneProxyConfig *d
 		serphone_address_set_port_int(ctt,serphone_core_get_sip_port( ));
 		ret=serphone_address_as_string_uri_only(ctt);
 		serphone_address_destroy(ctt);
-		PrintConsole("Contact has been fixed using local ip to %s\n",ret);
+		WriteLogToFile("Contact has been fixed using local ip to %s\n",ret);
 		return ret;
 	}*/
 	return NULL;
@@ -4179,7 +4179,7 @@ SerPhoneCall * ServiceCore::serphone_call_new_outgoing(SerphoneAddress *from, Se
 #endif
 
 	serphone_core_get_local_ip(serphone_address_get_domain(to),call->localip);
-	PrintConsole("get media stream address is %s\n",call->localip);
+	WriteLogToFile("get media stream address is %s\n",call->localip);
 	serphone_call_init_common(call,from,to);
 	call->params=*params;
 
@@ -4189,20 +4189,20 @@ SerPhoneCall * ServiceCore::serphone_call_new_outgoing(SerphoneAddress *from, Se
 
     //sean ice
     if (serphone_core_get_firewall_policy() == LinphonePolicyUseIce) {
-        PrintConsole("Outgoing call using LinphonePolicyUseIce, stunserver = %s\n",serphone_core_get_stun_server());
+        WriteLogToFile("Outgoing call using LinphonePolicyUseIce, stunserver = %s\n",serphone_core_get_stun_server());
 		call->ice_session = ice_session_new();
 		ice_session_set_role(call->ice_session, IR_Controlling);
 	}
     else
     {
-        PrintConsole("Outgoing call not using LinphonePolicyUseIce");
+        WriteLogToFile("Outgoing call not using LinphonePolicyUseIce");
     }
 
 	if (serphone_core_get_firewall_policy()==LinphonePolicyUseStun)
 		serphone_core_run_stun_tests(call);
-	PrintConsole("discover mtu\n");
+	WriteLogToFile("discover mtu\n");
 	discover_mtu(serphone_address_get_domain (to));
-	PrintConsole("discover mtu end\n");
+	WriteLogToFile("discover mtu end\n");
 	if (params->referer){
 		sal_call_set_referer(call->op,params->referer->op);
 		call->referer=serphone_call_ref(params->referer);
@@ -4255,7 +4255,7 @@ int ServiceCore::serphone_core_accept_call_update(SerPhoneCall *call, const Serp
 	bool_t old_has_video = call->params.has_video;
 #endif
 	if (call->state!=LinphoneCallUpdatedByRemote){
-		PrintConsole("Serphone_core_accept_update(): invalid state %s to call this function.\n",
+		WriteLogToFile("Serphone_core_accept_update(): invalid state %s to call this function.\n",
 		         serphone_call_state_to_string(call->state));
 		return -1;
 	}
@@ -4263,7 +4263,7 @@ int ServiceCore::serphone_core_accept_call_update(SerPhoneCall *call, const Serp
 	keep_sdp_version = lp_config_get_int(this->config, "sip", "keep_sdp_version", 0);
 	if (keep_sdp_version &&(remote_desc->session_id == call->remote_session_id) && (remote_desc->session_ver == call->remote_session_ver)) {
 		/* Remote has sent an INVITE with the same SDP as before, so send a 200 OK with the same SDP as before. */
-		PrintConsole("SDP version has not changed, send same SDP as before.\n");
+		WriteLogToFile("SDP version has not changed, send same SDP as before.\n");
 		sal_call_accept(call->op);
 		serphone_call_set_state(call,LinphoneCallStreamsRunning,"Connected (streams running)");
 		return 0;
@@ -4274,11 +4274,11 @@ int ServiceCore::serphone_core_accept_call_update(SerPhoneCall *call, const Serp
 		call->params=*params;
 
 //	if (call->params.has_video && !serphone_core_video_enabled()){
-//		PrintConsole("linphone_core_accept_call_update(): requested video but video support is globally disabled. Refusing video.\n");
+//		WriteLogToFile("linphone_core_accept_call_update(): requested video but video support is globally disabled. Refusing video.\n");
 //		call->params.has_video=FALSE;
 //	}
 	if (call->current_params.in_conference) {
-		PrintConsole("Video isn't supported in conference");
+		WriteLogToFile("Video isn't supported in conference");
 		call->params.has_video = FALSE;
 	}
 //    sean ice video
@@ -4359,7 +4359,7 @@ int ServiceCore::serphone_core_pause_call(SerPhoneCall *call)
 	const char *subject=NULL;
 
 	if (call->state!=LinphoneCallStreamsRunning && call->state!=LinphoneCallPausedByRemote){
-		PrintConsole("Cannot pause this call, it is not active.\n");
+		WriteLogToFile("Cannot pause this call, it is not active.\n");
 		return -1;
 	}
 	update_local_media_description(call);
@@ -4375,7 +4375,7 @@ int ServiceCore::serphone_core_pause_call(SerPhoneCall *call)
 		sal_media_description_set_dir(call->localdesc,SalStreamSendOnly);
 		subject="Call on hold for me too";
 	}else{
-		PrintConsole("No reason to pause this call, it is already paused or inactive.\n");
+		WriteLogToFile("No reason to pause this call, it is already paused or inactive.\n");
 		return -1;
 	}
 	sal_call_set_local_media_description(call->op,call->localdesc);
@@ -4421,12 +4421,12 @@ int ServiceCore::serphone_core_resume_call(SerPhoneCall *the_call)
 	const char *subject="Call resuming";
 
 	if(call->state!=LinphoneCallPaused ){
-		PrintConsole("we cannot resume a call that has not been established and paused before\n");
+		WriteLogToFile("we cannot resume a call that has not been established and paused before\n");
 		return -1;
 	}
 	if (call->params.in_conference==FALSE){
 		serphone_core_preempt_sound_resources();
-		PrintConsole("Resuming call %p\n",call);
+		WriteLogToFile("Resuming call %p\n",call);
 	}
 
 	/* Stop playing music immediately. If remote side is a conference it
@@ -4520,7 +4520,7 @@ int ServiceCore::serphone_core_defer_call_update(SerPhoneCall *call)
 		call->defer_update=TRUE;
 		return 0;
 	}
-	PrintConsole("serphone_core_defer_call_update() not done in state LinphoneCallUpdatedByRemote\n");
+	WriteLogToFile("serphone_core_defer_call_update() not done in state LinphoneCallUpdatedByRemote\n");
 	return -1;
 }
 
@@ -4600,7 +4600,7 @@ const SerphoneAuthInfo *ServiceCore::serphone_core_find_auth_info(const char *re
 			/*return the authinfo for any realm provided that there is only one for that username*/
 			if (key_match(pinfo->username,username)){
 				if (ret!=NULL){
-					PrintConsole("There are several auth info for username '%s'\n",username);
+					WriteLogToFile("There are several auth info for username '%s'\n",username);
 					return NULL;
 				}
 				ret=pinfo;
@@ -4744,10 +4744,10 @@ void ServiceCore::serphone_core_assign_payload_type( PayloadType *const_pt, int 
 			}
 		}
 		if (number==-1){
-			PrintConsole("FIXME: too many codecs, no more free numbers.\n");
+			WriteLogToFile("FIXME: too many codecs, no more free numbers.\n");
 		}
 	}
-	PrintConsole("assigning %s/%i payload type number %i\n",pt->mime_type,pt->clock_rate,number);
+	WriteLogToFile("assigning %s/%i payload type number %i\n",pt->mime_type,pt->clock_rate,number);
 	payload_type_set_number(pt,number);
 	if (recv_fmtp!=NULL) payload_type_set_recv_fmtp(pt,recv_fmtp);
 	rtp_profile_set_payload(&av_profile,number,pt);
@@ -4869,6 +4869,7 @@ void ServiceCore::serphone_core_init (const SerphoneCoreVTable *vtable, const ch
 	misc_config_read();
 	ui_config_read();
 #ifdef VIDEO_ENABLED
+    ECMedia_set_trace(nullptr, nullptr, 26, 100);
 	ECMedia_init_video();
 #endif
 
@@ -4928,7 +4929,7 @@ void ServiceCore::serphone_core_uninit()
 	this->config = NULL; /* Mark the config as NULL to block further calls */
 
 	serphone_core_free_payload_types();
-	PrintConsole("Release Media \n");
+	WriteLogToFile("Release Media \n");
 #ifdef VIDEO_ENABLED
 	ECMedia_uninit_video();
 #endif
@@ -4940,9 +4941,9 @@ void ServiceCore::serphone_core_uninit()
 	if (this->tunnel) serphone_tunnel_destroy(this->tunnel);
 #endif
 
-	//PrintConsole("Release Trace... \n");
+	//WriteLogToFile("Release Trace... \n");
  //   yuntongxunwebrtc::Trace::ReturnTrace();
-	//PrintConsole("Release Finish \n");
+	//WriteLogToFile("Release Finish \n");
 }
 
 void ServiceCore::serphone_core_set_default_proxy_index(int index)
@@ -4963,7 +4964,7 @@ void ServiceCore::serphone_core_set_default_proxy(SerphoneProxyConfig *l_config)
 	/* check if this proxy is in our list */
 	if (l_config!=NULL){
 		if (ms_list_find(sip_conf.proxies,l_config)==NULL){
-			PrintConsole("Bad proxy address: it is not in the list !\n");
+			WriteLogToFile("Bad proxy address: it is not in the list !\n");
 			default_proxy=NULL;
 			return ;
 		}
@@ -5101,7 +5102,7 @@ void ServiceCore::serphone_core_preempt_sound_resources()
 */
 	lp_current_call=serphone_core_get_current_call();
 	if(lp_current_call != NULL){
-		PrintConsole("Pausing automatically the current call.\n");
+		WriteLogToFile("Pausing automatically the current call.\n");
 		serphone_core_pause_call(lp_current_call);
 	}
 }
@@ -5165,7 +5166,7 @@ void ServiceCore::serphone_core_iterate()
         serphone_call_background_tasks(call,one_second_elapsed);
 		if (call->state==LinphoneCallOutgoingInit && (curtime-call->start_time>=300)){
             if (call->ice_session != NULL) {
-				PrintConsole("ICE candidates gathering from [%s] has not finished yet, proceed with the call without ICE anyway.\n"
+				WriteLogToFile("ICE candidates gathering from [%s] has not finished yet, proceed with the call without ICE anyway.\n"
                            ,serphone_core_get_stun_server());
 				serphone_call_delete_ice_session(call);
 				serphone_call_stop_media_streams_for_ice_gathering(call);
@@ -5175,7 +5176,7 @@ void ServiceCore::serphone_core_iterate()
 		}
 		if (call->state==LinphoneCallIncomingReceived){
 			elapsed= int(time(NULL)-call->start_time);
-//			PrintConsole("incoming call ringing for %i seconds\n",elapsed);
+//			WriteLogToFile("incoming call ringing for %i seconds\n",elapsed);
 			if (elapsed>sip_conf.inc_timeout){
 				call->log->status=LinphoneCallMissed;
 				serphone_core_terminate_call(call);
@@ -5223,7 +5224,7 @@ void ServiceCore::proxy_update()
 		next=elem->next;
 		if (ms_time(NULL) - cfg->deletion_date > 5) {
 			sip_conf.deleted_proxies =ms_list_remove_link(sip_conf.deleted_proxies,elem);
-			PrintConsole("clearing proxy config for [%s]\n",cfg->serphone_proxy_config_get_addr());
+			WriteLogToFile("clearing proxy config for [%s]\n",cfg->serphone_proxy_config_get_addr());
 			serphone_proxy_config_destroy(&cfg);
 		}
 	}
@@ -5245,7 +5246,7 @@ void ServiceCore::monitor_network_state(time_t curtime)
 		last_check=curtime;
 		if (new_status!=last_status) {
 			if (new_status){
-				PrintConsole("New local ip address is %s\n",result);
+				WriteLogToFile("New local ip address is %s\n",result);
 			}
 			set_network_reachable(new_status, curtime);
 			last_status=new_status;
@@ -5255,7 +5256,7 @@ void ServiceCore::monitor_network_state(time_t curtime)
 
 void ServiceCore::set_network_reachable(bool_t isReachable, time_t curtime)
 {
-	PrintConsole("Network state is now [%s]\n",isReachable?"UP":"DOWN");
+	WriteLogToFile("Network state is now [%s]\n",isReachable?"UP":"DOWN");
 	// second get the list of available proxies
 	const MSList *elem=serphone_core_get_proxy_config_list();
 	for(;elem!=NULL;elem=elem->next){
@@ -5286,7 +5287,7 @@ MSList *ServiceCore::make_codec_list(const MSList *codecs, int bandwidth_limit,i
 		PayloadType *pt=(PayloadType*)it->data;
 		if (pt->flags & PAYLOAD_TYPE_ENABLED){
 			if (bandwidth_limit>0 && !serphone_core_is_payload_type_usable_for_bandwidth(pt,bandwidth_limit)){
-				PrintConsole("Codec %s/%i eliminated because of audio bandwidth constraint.\n",pt->mime_type,pt->clock_rate);
+				WriteLogToFile("Codec %s/%i eliminated because of audio bandwidth constraint.\n",pt->mime_type,pt->clock_rate);
 				continue;
 			}
 			if (serphone_core_check_payload_type_usability(pt)){
@@ -5489,7 +5490,7 @@ static MSList *add_missing_codecs(SalStreamType mtype, MSList *l){
 					if (find_codec_rank(pt->mime_type)!=RANK_END){
 						payload_type_set_flag(pt,PAYLOAD_TYPE_ENABLED);
 					}
-					PrintConsole("Adding new codec %s/%i with fmtp %s\n",
+					WriteLogToFile("Adding new codec %s/%i with fmtp %s\n",
 					    pt->mime_type,pt->clock_rate,pt->recv_fmtp ? pt->recv_fmtp : "");
 					l=ms_list_insert_sorted(l,pt,(int (*)(const void *, const void *))codec_compare);
 				}
@@ -5518,7 +5519,7 @@ void ServiceCore::serphone_core_enable_payload_type(const char *mimeType, int fr
         PayloadType *pt=(PayloadType*)(it->data);
         if ((strcmp(pt->mime_type,mimeType)==0) && (pt->clock_rate == freq))
         {
-            PrintConsole("serphone_core_enable_payload_type mime_type=%s pt->flags=%d bEnable=%d\r\n",mimeType, pt->flags,bEnable);
+            WriteLogToFile("serphone_core_enable_payload_type mime_type=%s pt->flags=%d bEnable=%d\r\n",mimeType, pt->flags,bEnable);
             if(bEnable)
                 pt->flags |= PAYLOAD_TYPE_ENABLED;
             else
@@ -5531,7 +5532,7 @@ void ServiceCore::serphone_core_enable_payload_type(const char *mimeType, int fr
         PayloadType *pt=(PayloadType*)(it->data);
         if (strcmp(pt->mime_type,mimeType)==0)
         {
-            PrintConsole("serphone_core_enable_payload_type mime_type=%s pt->flags=%d bEnable=%d\r\n",mimeType, pt->flags, bEnable);
+            WriteLogToFile("serphone_core_enable_payload_type mime_type=%s pt->flags=%d bEnable=%d\r\n",mimeType, pt->flags, bEnable);
             if(bEnable)
                 pt->flags |= PAYLOAD_TYPE_ENABLED;
             else
@@ -5549,7 +5550,7 @@ bool ServiceCore::serphone_core_is_payload_type_enable(const char *mimeType, int
         PayloadType *pt=(PayloadType*)(it->data);
         if ((strcmp(pt->mime_type,mimeType)==0) && (pt->clock_rate == freq))
         {
-            PrintConsole("serphone_core_is_payload_type_enable mime_type=%s flags=%d\r\n", mimeType,pt->flags);
+            WriteLogToFile("serphone_core_is_payload_type_enable mime_type=%s flags=%d\r\n", mimeType,pt->flags);
             return payload_type_enabled(pt);
         }
     }
@@ -5558,7 +5559,7 @@ bool ServiceCore::serphone_core_is_payload_type_enable(const char *mimeType, int
         PayloadType *pt=(PayloadType*)(it->data);
         if (strcmp(pt->mime_type,mimeType)==0)
         {
-            PrintConsole("serphone_core_is_payload_type_enable mime_type=%s flags=%d\r\n", mimeType,pt->flags);
+            WriteLogToFile("serphone_core_is_payload_type_enable mime_type=%s flags=%d\r\n", mimeType,pt->flags);
             return payload_type_enabled(pt);
         }
     }
@@ -5567,7 +5568,7 @@ bool ServiceCore::serphone_core_is_payload_type_enable(const char *mimeType, int
 
 void ServiceCore::serphone_core_enable_srtp(bool tls, bool srtp, bool userMode, int cryptType, const char *pkey)
 {
-    PrintConsole("[DEBUG] serphone_core_enable_srtp userMode = %d, pkey = %s\n",userMode,pkey?pkey:"NULL");
+    WriteLogToFile("[DEBUG] serphone_core_enable_srtp userMode = %d, pkey = %s\n",userMode,pkey?pkey:"NULL");
    // tls_enable = tls;
    // srtp_enable = srtp;
    // if (srtp_enable) {
@@ -5591,7 +5592,7 @@ void ServiceCore::serphone_core_enable_srtp(bool tls, bool srtp, bool userMode, 
 
 void ServiceCore::serphone_core_enable_srtp(bool tls, bool srtp, int cryptType, const char *pkey)
 {
-    PrintConsole("[DEBUG] serphone_core_enable_srtp pkey = %s, kenLen = %d\n",pkey,strlen(pkey));
+    WriteLogToFile("[DEBUG] serphone_core_enable_srtp pkey = %s, kenLen = %d\n",pkey,strlen(pkey));
     tls_enable = tls;
     srtp_enable = srtp;
     if (srtp_enable) {
@@ -5613,7 +5614,7 @@ void ServiceCore::codecs_config_read()
 	for (i=0;get_codec(this->config,"audio_codec",i,&pt);i++){
 		if (pt){
 /*			if (!ms_filter_codec_supported(pt->mime_type)){   注释掉，先不改，deleted by zdm
-				PrintConsole("Codec %s is not supported by mediastreamer2, removed.\n",pt->mime_type);
+				WriteLogToFile("Codec %s is not supported by mediastreamer2, removed.\n",pt->mime_type);
 			}else */
 				audio_codecs=codec_append_if_new(audio_codecs,pt);
 		}
@@ -5622,7 +5623,7 @@ void ServiceCore::codecs_config_read()
 	for (i=0;get_codec(this->config,"video_codec",i,&pt);i++){
 		if (pt){
 /*			if (!ms_filter_codec_supported(pt->mime_type)){
-				PrintConsole("Codec %s is not supported by mediastreamer2, removed.\n",pt->mime_type);
+				WriteLogToFile("Codec %s is not supported by mediastreamer2, removed.\n",pt->mime_type);
 			}else */
 				video_codecs=codec_append_if_new(video_codecs,pt);
 		}
@@ -5659,7 +5660,7 @@ void ServiceCore::video_config_read(){
 	vpol.automatically_accept=lp_config_get_int(config,"video","automatically_accept",1);
 	video_conf.displaytype=lp_config_get_string(config,"video","displaytype",NULL);
 	if(video_conf.displaytype)
-		PrintConsole("we are using a specific display:%s\n",video_conf.displaytype);
+		WriteLogToFile("we are using a specific display:%s\n",video_conf.displaytype);
 
 //	serphone_core_enable_video(lc,capture,display);
 //	serphone_core_enable_video_preview(lc,lp_config_get_int(lc->config,"video","show_local",0));
@@ -5728,7 +5729,7 @@ bool_t ServiceCore::get_codec(LpConfig *config, const char* type, int index, Pay
 	pt=find_payload(&av_profile,mime,rate,fmtp);
 	if (pt && enabled ) pt->flags|=PAYLOAD_TYPE_ENABLED;
 	//ms_message("Found codec %s/%i",pt->mime_type,pt->clock_rate);
-	if (pt==NULL) PrintConsole("Ignoring codec config %s/%i with fmtp=%s because unsupported\n",
+	if (pt==NULL) WriteLogToFile("Ignoring codec config %s/%i with fmtp=%s because unsupported\n",
 	    		mime,rate,fmtp ? fmtp : "");
 	*ret=pt;
 	return TRUE;
@@ -5790,7 +5791,7 @@ bool_t ServiceCore::serphone_core_payload_type_enabled(const PayloadType *pt)
 	if (ms_list_find(codecs_conf.audio_codecs, (PayloadType*) pt) || ms_list_find(codecs_conf.video_codecs, (PayloadType*)pt)){
 		return payload_type_enabled(pt);
 	}
-	PrintConsole("Getting enablement status of codec not in audio or video list of PayloadType !\n");
+	WriteLogToFile("Getting enablement status of codec not in audio or video list of PayloadType !\n");
 	return FALSE;
 }
 
@@ -5808,7 +5809,7 @@ void ServiceCore::sound_config_read()
 	tmpbuf= LOCAL_RING;
 	tmpbuf=lp_config_get_string(this->config,"sound","local_ring",tmpbuf);
 	if (ccp_ortp_file_exist(tmpbuf)==-1) {
-		PrintConsole("%s does not exist\n",tmpbuf);
+		WriteLogToFile("%s does not exist\n",tmpbuf);
 		tmpbuf= LOCAL_RING;
 	}
 	if (strstr(tmpbuf,".wav")==NULL){
@@ -5910,7 +5911,7 @@ void ServiceCore::serphone_core_set_afterring( const char *path)
 int ServiceCore::serphone_prering_start()
 {
 #ifdef WIN32
-	PrintConsole("ServiceCore::serphone_prering_start()\n");
+	WriteLogToFile("ServiceCore::serphone_prering_start()\n");
     if (sound_conf.pre_ring) {
         ring_start(sound_conf.pre_ring, 2000, 1);
         sound_conf.pre_ring_starttime = time(NULL);
@@ -5922,7 +5923,7 @@ int ServiceCore::serphone_prering_start()
 int ServiceCore::serphone_afterring_start()
 {
 #ifdef WIN32
-	PrintConsole("ServiceCore::serphone_afterring_start()\n");
+	WriteLogToFile("ServiceCore::serphone_afterring_start()\n");
     if (sound_conf.after_ring) {
         ring_start(sound_conf.after_ring, 2000, 2);
         sound_conf.after_ring_starttime = time(NULL);
@@ -5934,7 +5935,7 @@ int ServiceCore::serphone_afterring_start()
 void ServiceCore::serphone_pre_after_ring_stop(bool ispreRing)
 {
 #ifdef WIN32
-//PrintConsole("ServiceCore::serphone_pre_after_ring_stop(),isPreRing=%d\n",ispreRing);
+//WriteLogToFile("ServiceCore::serphone_pre_after_ring_stop(),isPreRing=%d\n",ispreRing);
     if (ispreRing) {
         if (sound_conf.pre_ring_starttime <= 0) {
             return;
@@ -5958,7 +5959,7 @@ void ServiceCore::serphone_check_pre_after_ring_timeout()
 {
 #ifdef WIN32
     if ((this->sound_conf.pre_ring_starttime > 0 && (time(NULL) - this->sound_conf.pre_ring_starttime >= 10)) || (this->sound_conf.after_ring_starttime > 0 && (time(NULL) - this->sound_conf.after_ring_starttime >= 4))) {
-		 PrintConsole("serphone_check_pre_after_ring_timeout(), haha\n");
+		 WriteLogToFile("serphone_check_pre_after_ring_timeout(), haha\n");
 		serphone_pre_after_ring_stop(true);
         serphone_pre_after_ring_stop(false);
 
@@ -5970,7 +5971,7 @@ void ServiceCore::onStopPlayPreRing()
 {
 #ifdef WIN32
     serphone_pre_after_ring_stop(true);
-	//PrintConsole("ServiceCore::onStopPlayPreRing()\n");
+	//WriteLogToFile("ServiceCore::onStopPlayPreRing()\n");
 #endif
 }
 
@@ -6101,7 +6102,7 @@ void ServiceCore::serphone_core_parse_capability_token(const char *token)
     cJSON_Delete(root);
     free(decode_token);
 
-	PrintConsole("serphone_core_parse_capability_token. localrec=%d localrecvoip=%d hdvieo=%d\n",
+	WriteLogToFile("serphone_core_parse_capability_token. localrec=%d localrecvoip=%d hdvieo=%d\n",
 		capability_conf.localrec,capability_conf.localrecvoip,capability_conf.hdvideo);
 #endif
     return;
@@ -6150,7 +6151,7 @@ const char *ServiceCore::serphone_get_privateCloudCompanyID()
 int ServiceCore::serphone_set_privateCloud(const char *companyID, const char *restAddr, bool isNativeCheck)
 {
     if (!companyID || (companyID && strlen(companyID) > 200)) {
-        PrintConsole("ERROR: ServiceCore::serphone_set_privateCloud companyID is NULL or is too long, max length 200!\n");
+        WriteLogToFile("ERROR: ServiceCore::serphone_set_privateCloud companyID is NULL or is too long, max length 200!\n");
         return -1;
     }
     else {
@@ -6159,7 +6160,7 @@ int ServiceCore::serphone_set_privateCloud(const char *companyID, const char *re
     }
     if (isNativeCheck) {
         if (!restAddr || (restAddr && strlen(restAddr) > 100)) {
-            PrintConsole("ERROR: ServiceCore::serphone_set_privateCloud restAddr is NULL or is too long, max length 100!\n");
+            WriteLogToFile("ERROR: ServiceCore::serphone_set_privateCloud restAddr is NULL or is too long, max length 100!\n");
             return -2;
         }
         else
@@ -6189,7 +6190,7 @@ int ServiceCore::serphone_set_root_ca_path(const char *caPath)
         if (rootCaPath) {
             memcpy(rootCaPath, caPath, strlen(caPath));
             rootCaPath[strlen(caPath)] = '\0';
-            PrintConsole("DEBUG: serphone_set_root_ca_path:%s\n",rootCaPath);
+            WriteLogToFile("DEBUG: serphone_set_root_ca_path:%s\n",rootCaPath);
             return 0;
         }
         return -1;
@@ -6370,7 +6371,7 @@ void serphone_core_get_ssrc(SerPhoneCall *call)
 
 int ServiceCore::serphone_set_traceFlag(/*bool flag*/) //Don't use flag for the time being
 {
-	ECMedia_set_trace(NULL, (void*)CCPClientPrintLog, 23, 100);
+	ECMedia_set_trace(NULL, (void*)CCPClientPrintLog, 26, 100);
 	return 0;
 }
 
@@ -6378,7 +6379,7 @@ int ServiceCore::serphone_set_traceFlag(/*bool flag*/) //Don't use flag for the 
 int ServiceCore::serphone_dump_conf_key(SalOp *op)
 {
     if (op->confKey) {
-        PrintConsole("[DEBUG HAIYUNTONG] confKey:%s\n",op->confKey);
+        WriteLogToFile("[DEBUG HAIYUNTONG] confKey:%s\n",op->confKey);
     }
 }
 #endif

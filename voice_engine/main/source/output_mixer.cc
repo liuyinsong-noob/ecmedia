@@ -683,8 +683,8 @@ int OutputMixer::StopRecordingPlayout()
 
     if (!_outputFileRecording)
     {
-        WEBRTC_TRACE(kTraceError, kTraceVoice, VoEId(_instanceId,-1),
-                     "StopRecordingPlayout() file isnot recording");
+        WEBRTC_TRACE(kTraceWarning, kTraceVoice, VoEId(_instanceId,-1),
+                     "StopRecordingPlayout() file is not recording");
         return -1;
     }
 

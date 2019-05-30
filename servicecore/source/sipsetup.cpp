@@ -58,13 +58,13 @@ SipSetup *sip_setup_lookup(const char *type_name){
 				if (ss->init!=NULL) ss->init();
 				ss->initialized=TRUE;
 				if (ss->capabilities==0){
-					PrintConsole("%s SipSetup isn't capable of anything ?\n",ss->name);
+					WriteLogToFile("%s SipSetup isn't capable of anything ?\n",ss->name);
 				}
 			}
 			return ss;
 		}
 	}
-	PrintConsole("no %s setup manager declared.\n",type_name);
+	WriteLogToFile("no %s setup manager declared.\n",type_name);
 	return NULL;
 }
 
@@ -152,7 +152,7 @@ int sip_setup_context_account_validated(SipSetupContext *ctx, const char *uri){
 int sip_setup_context_login_account(SipSetupContext * ctx, const char *uri, const char *passwd){
 	SerphoneAddress *from=serphone_address_new(uri);
 	if (from==NULL) {
-		PrintConsole("Fail to parse %s\n",uri);
+		WriteLogToFile("Fail to parse %s\n",uri);
 		return -1;
 	}
 	strncpy(ctx->domain,serphone_address_get_domain(from),sizeof(ctx->domain));

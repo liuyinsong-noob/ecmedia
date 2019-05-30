@@ -239,7 +239,7 @@ int ms_discover_mtu(const char *host)
 	err=getaddrinfo(host,port,&hints,&ai);
 	if (err!=0){
     pIcmpCloseHandle( hIcmp );
-		PrintConsole("getaddrinfo(): error\n");
+		WriteLogToFile("getaddrinfo(): error\n");
 		return -1;
 	}
   getnameinfo (ai->ai_addr, ai->ai_addrlen, ipaddr, sizeof (ipaddr), port,
@@ -318,32 +318,32 @@ int ms_discover_mtu(const char *host){
 	snprintf(port,sizeof(port),"%i",rand_port);
 	err=getaddrinfo(host,port,&hints,&ai);
 	if (err!=0){
-		PrintConsole("getaddrinfo(): %s\n",gai_strerror(err));
+		WriteLogToFile("getaddrinfo(): %s\n",gai_strerror(err));
 		return -1;
 	}
 	sock=socket(PF_INET,SOCK_DGRAM,0);
 	if(sock < 0)
 	{
-		PrintConsole("socket(): %s\n",strerror(errno));
+		WriteLogToFile("socket(): %s\n",strerror(errno));
 		return sock;
 	}
 	mtu=IP_PMTUDISC_DO;
 	optlen=sizeof(mtu);
 	err=setsockopt(sock,IPPROTO_IP,IP_MTU_DISCOVER,&mtu,optlen);
 	if (err!=0){
-		PrintConsole("setsockopt(): %s\n",strerror(errno));
+		WriteLogToFile("setsockopt(): %s\n",strerror(errno));
 		err = close(sock);
 		if (err!=0)
-			PrintConsole("close(): %s\n", strerror(errno));
+			WriteLogToFile("close(): %s\n", strerror(errno));
 		return -1;
 	}
 	err=connect(sock,ai->ai_addr,ai->ai_addrlen);
 	freeaddrinfo(ai);
 	if (err!=0){
-		PrintConsole("connect(): %s\n",strerror(errno));
+		WriteLogToFile("connect(): %s\n",strerror(errno));
 		err = close(sock);
 		if (err !=0)
-			PrintConsole("close(): %s\n", strerror(errno));
+			WriteLogToFile("close(): %s\n", strerror(errno));
 		return -1;
 	}
 	mtu=1500;
@@ -361,31 +361,31 @@ int ms_discover_mtu(const char *host){
 		usleep(500000);/*wait for an icmp message come back */
 		err=getsockopt(sock,IPPROTO_IP,IP_MTU,&new_mtu,&optlen);
 		if (err!=0){
-			PrintConsole("getsockopt(): %s\n",strerror(errno));
+			WriteLogToFile("getsockopt(): %s\n",strerror(errno));
 			err = close(sock);
 			if (err!=0)
-				PrintConsole("close(): %s\n", strerror(errno));
+				WriteLogToFile("close(): %s\n", strerror(errno));
 			return -1;
 		}else{
-			PrintConsole("Partial MTU discovered : %i\n",new_mtu);
+			WriteLogToFile("Partial MTU discovered : %i\n",new_mtu);
 			if (new_mtu==mtu) break;
 			else mtu=new_mtu;
 		}
 		retry++;
 	}while(retry<10);
 
-	PrintConsole("mtu to %s is %i\n",host,mtu);
+	WriteLogToFile("mtu to %s is %i\n",host,mtu);
 
 	err = close(sock);
 	if (err!=0)
-		PrintConsole("close() %s\n", strerror(errno));
+		WriteLogToFile("close() %s\n", strerror(errno));
 	return mtu;
 }
 
 #else
 
 int ms_discover_mtu(const char*host){
-	PrintConsole("mtu discovery not implemented.\n");
+	WriteLogToFile("mtu discovery not implemented.\n");
 	return -1;
 }
 
@@ -451,7 +451,7 @@ MSList * ms_list_remove(MSList *first, void *data){
 	it=ms_list_find(first,data);
 	if (it) return ms_list_remove_link(first,it);
 	else {
-		PrintConsole("ms_list_remove: no element with %p data was in the list\n", data);
+		WriteLogToFile("ms_list_remove: no element with %p data was in the list\n", data);
 		return first;
 	}
 }
@@ -911,7 +911,7 @@ PayloadType	payload_type_red8k={
 //
 //static bool_t canWrite(PayloadType *pt){
 //	if (!(pt->flags & PAYLOAD_TYPE_ALLOCATED)) {
-//		PrintConsole("Cannot change parameters of statically defined payload types: make your"
+//		WriteLogToFile("Cannot change parameters of statically defined payload types: make your"
 //			" own copy using payload_type_clone() first.");
 //		return FALSE;
 //	}
@@ -1149,7 +1149,7 @@ bool payload_type_enabled(const PayloadType *pt)
 //**/
 //void rtp_profile_set_payload(RtpProfile *prof, int idx, PayloadType *pt){
 //	if (idx<0 || idx>=RTP_PROFILE_MAX_PAYLOADS) {
-//		PrintConsole("Bad index %i\n",idx);
+//		WriteLogToFile("Bad index %i\n",idx);
 //		return;
 //	}
 //	prof->payload[idx]=pt;
@@ -1242,7 +1242,7 @@ bool_t lp_spawn_command_line_sync(const char *command, char **result,int *comman
 		*result=(char *)malloc(4096);
 		err=fread(*result,1,4096-1,f);
 		if (err<0){
-			PrintConsole("Error reading command output:%s\n",strerror(errno));
+			WriteLogToFile("Error reading command output:%s\n",strerror(errno));
 			ms_free((void **)result);
 			return FALSE;
 		}
@@ -1275,7 +1275,7 @@ int parse_hostname_to_addr(const char *server, struct sockaddr_storage *ss, sock
 	hints.ai_protocol=IPPROTO_UDP;
 	ret=getaddrinfo(host,port,&hints,&res);
 	if (ret!=0){
-		PrintConsole("getaddrinfo() failed for %s:%s : %s\n",host,port,gai_strerror(ret));
+		WriteLogToFile("getaddrinfo() failed for %s:%s : %s\n",host,port,gai_strerror(ret));
 		return -1;
 	}
 	if (!res) return -1;
@@ -1491,7 +1491,7 @@ ortp_socket_t create_socket(int local_port)
 	int optval;
 	sock=socket(PF_INET,SOCK_DGRAM,IPPROTO_UDP);
 	if (sock<0) {
-		PrintConsole("Fail to create socket\n");
+		WriteLogToFile("Fail to create socket\n");
 		return -1;
 	}
 	memset (&laddr,0,sizeof(laddr));
@@ -1499,14 +1499,14 @@ ortp_socket_t create_socket(int local_port)
 	laddr.sin_addr.s_addr=INADDR_ANY;
 	laddr.sin_port=htons(local_port);
 	if (bind(sock,(struct sockaddr*)&laddr,sizeof(laddr))<0){
-		PrintConsole("Bind socket to 0.0.0.0:%i failed: %s\n",local_port,getSocketError());
+		WriteLogToFile("Bind socket to 0.0.0.0:%i failed: %s\n",local_port,getSocketError());
 		ccp_close_socket(sock);
 		return -1;
 	}
 	optval=1;
 	if (setsockopt (sock, SOL_SOCKET, SO_REUSEADDR,
 				(SOCKET_OPTION_VALUE)&optval, sizeof (optval))<0){
-		PrintConsole("Fail to set SO_REUSEADDR\n");
+		WriteLogToFile("Fail to set SO_REUSEADDR\n");
 	}
 	ccp_set_non_blocking_socket(sock);
 	return sock;
@@ -1544,22 +1544,22 @@ static int get_local_ip_for_with_connect(int type, const char *dest, char *resul
 	/*hints.ai_flags=AI_NUMERICHOST|AI_CANONNAME;*/
 	err=getaddrinfo(dest,"5060",&hints,&res);
 	if (err!=0){
-		PrintConsole("getaddrinfo() error: %s\n",gai_strerror(err));
+		WriteLogToFile("getaddrinfo() error: %s\n",gai_strerror(err));
 		return -1;
 	}
 	if (res==NULL){
-		PrintConsole("bug: getaddrinfo returned nothing.\n");
+		WriteLogToFile("bug: getaddrinfo returned nothing.\n");
 		return -1;
 	}
 	sock=socket(res->ai_family,SOCK_DGRAM,0);
 	tmp=1;
 	err=setsockopt(sock,SOL_SOCKET,SO_REUSEADDR,(SOCKET_OPTION_VALUE)&tmp,sizeof(int));
 	if (err<0){
-		PrintConsole("Error in setsockopt: %s\n",strerror(errno));
+		WriteLogToFile("Error in setsockopt: %s\n",strerror(errno));
 	}
 	err=connect(sock,res->ai_addr,res->ai_addrlen);
 	if (err<0) {
-		PrintConsole("Error in connect: %s\n",strerror(errno));
+		WriteLogToFile("Error in connect: %s\n",strerror(errno));
  		freeaddrinfo(res);
  		ccp_close_socket(sock);
 		return -1;
@@ -1569,7 +1569,7 @@ static int get_local_ip_for_with_connect(int type, const char *dest, char *resul
 	s=sizeof(addr);
 	err=getsockname(sock,(struct sockaddr*)&addr,&s);
 	if (err!=0) {
-		PrintConsole("Error in getsockname: %s\n",strerror(errno));
+		WriteLogToFile("Error in getsockname: %s\n",strerror(errno));
 		ccp_close_socket(sock);
 		return -1;
 	}
@@ -1582,10 +1582,10 @@ static int get_local_ip_for_with_connect(int type, const char *dest, char *resul
 	}
 	err=getnameinfo((struct sockaddr *)&addr,s,result,SERPHONE_IPADDR_SIZE,NULL,0,NI_NUMERICHOST);
 	if (err!=0){
-		PrintConsole("getnameinfo error: %s\n",strerror(errno));
+		WriteLogToFile("getnameinfo error: %s\n",strerror(errno));
 	}
 	ccp_close_socket(sock);
-	PrintConsole("Local interface to reach %s is %s.\n",dest,result);
+	WriteLogToFile("Local interface to reach %s is %s.\n",dest,result);
 	return 0;
 }
 

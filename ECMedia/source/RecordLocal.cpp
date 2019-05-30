@@ -109,13 +109,13 @@ namespace yuntongxunwebrtc {
 
 	bool RecordLocal::InitCapture()
 	{
-		PrintConsole("[RECORD_LOCAL INFO] %s begins...\n", __FUNCTION__);
+		WriteLogToFile("[RECORD_LOCAL INFO] %s begins...\n", __FUNCTION__);
 		if (voe_ == NULL || vie_ == NULL) {
-			PrintConsole("[RECORD_LOCAL ERROR] %s voe or vie is NULL\n", __FUNCTION__);
+			WriteLogToFile("[RECORD_LOCAL ERROR] %s voe or vie is NULL\n", __FUNCTION__);
 			return false;
 		}
 		if (audio_channel_ != -1) {
-			PrintConsole("[RECORD_LOCAL ERROR] %s already init\n", __FUNCTION__);
+			WriteLogToFile("[RECORD_LOCAL ERROR] %s already init\n", __FUNCTION__);
 			return false;
 		}
 		VoEBase *base = VoEBase::GetInterface(voe_);
@@ -392,7 +392,7 @@ namespace yuntongxunwebrtc {
 		videoThread_ = ThreadWrapper::CreateThread(RecordLocal::RecordVideoThreadRun, this, kHighestPriority, "RecordVideo_Thread");
 		audioThread_ = ThreadWrapper::CreateThread(RecordLocal::RecordAudioThreadRun, this, kHighestPriority, "RecordAudio_Thread");
 		if (!videoThread_ || !audioThread_){
-			PrintConsole("[RECORD_LOCAL ERROR] %s create video thread or audio thread failed", __FUNCTION__);
+			WriteLogToFile("[RECORD_LOCAL ERROR] %s create video thread or audio thread failed", __FUNCTION__);
 			return false;
 		}
 
@@ -419,7 +419,7 @@ namespace yuntongxunwebrtc {
 			videoThread_ = NULL;
 		}
 		else {
-			PrintConsole("[RECORD_LOCAL ERROR] %s RecordLocal failed to stop video thread, leaking\n", __FUNCTION__);
+			WriteLogToFile("[RECORD_LOCAL ERROR] %s RecordLocal failed to stop video thread, leaking\n", __FUNCTION__);
 		}
 
 		if (audioThread_->Stop()) {
@@ -429,7 +429,7 @@ namespace yuntongxunwebrtc {
 			audioThread_ = NULL;
 		}
 		else {
-			PrintConsole("[RECORD_LOCAL ERROR] %s RecordLocal failed to stop audio thread, leaking\n", __FUNCTION__);
+			WriteLogToFile("[RECORD_LOCAL ERROR] %s RecordLocal failed to stop audio thread, leaking\n", __FUNCTION__);
 		}
 	}
     bool isRecording = true;
@@ -438,7 +438,7 @@ namespace yuntongxunwebrtc {
 		CriticalSectionScoped lock(recordCrit_);
 		h264RecordLocal_ = new h264_record();
 		if (!h264RecordLocal_) {
-			PrintConsole("[RECORD_LOCAL ERROR] %s new h264_record failed", __FUNCTION__);
+			WriteLogToFile("[RECORD_LOCAL ERROR] %s new h264_record failed", __FUNCTION__);
 			return false;
 		}
 		h264RecordLocal_->init(localFileName_);

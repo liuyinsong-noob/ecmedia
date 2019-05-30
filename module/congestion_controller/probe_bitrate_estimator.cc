@@ -66,20 +66,6 @@ int ProbeBitrateEstimator::HandleProbeAndEstimateBitrate(
   }
   cluster->size_total += payload_size_bits;
   cluster->num_probes += 1;
-
-    
-//    if (cluster->num_probes < kMinNumProbesValidCluster) {
-//        if (packet_feedback.payload_size == 96) {
-//            int i;
-//            i=0;
-//        }
-//        printf("[twcc] [Probe-OnFeedback] [ cluster_id : transSeq_id : pkt_size_bytes ] [ %d : %hu : %lu ]\n",
-//               cluster_id ,
-//               packet_feedback.sequence_number,
-//               packet_feedback.payload_size);
-//    }
-    
-
     
   if (cluster->num_probes < kMinNumProbesValidCluster)
   {
@@ -93,11 +79,6 @@ int ProbeBitrateEstimator::HandleProbeAndEstimateBitrate(
 
   if (send_interval_ms <= 0 || send_interval_ms > kMaxProbeIntervalMs ||
       receive_interval_ms <= 0 || receive_interval_ms > kMaxProbeIntervalMs) {
-    LOG(LS_INFO) << "Probing unsuccessful, invalid send/receive interval"
-                 << " [cluster id: " << cluster_id
-                 << "] [send interval: " << send_interval_ms << " ms]"
-                 << " [receive interval: " << receive_interval_ms << " ms]";
-      
     return -1;
   }
   // Since the |send_interval_ms| does not include the time it takes to actually
@@ -116,39 +97,10 @@ int ProbeBitrateEstimator::HandleProbeAndEstimateBitrate(
 
   float ratio = receive_bps / send_bps;
   if (ratio > kValidRatio) {
-    LOG(LS_INFO) << "Probing unsuccessful, receive/send ratio too high"
-                 << " [cluster id: " << cluster_id << "] [send: " << send_size
-                 << " bytes / " << send_interval_ms
-                 << " ms = " << send_bps / 1000 << " kb/s]"
-                 << " [receive: " << receive_size << " bytes / "
-                 << receive_interval_ms << " ms = " << receive_bps / 1000
-                 << " kb/s]"
-                 << " [ratio: " << receive_bps / 1000 << " / "
-                 << send_bps / 1000 << " = " << ratio << " > kValidRatio ("
-                 << kValidRatio << ")]";
     return -1;
-      
   }
-  LOG(LS_INFO) << "Probing successful"
-               << " [cluster id: " << cluster_id << "] [send: " << send_size
-               << " bytes / " << send_interval_ms << " ms = " << send_bps / 1000
-               << " kb/s]"
-               << " [receive: " << receive_size << " bytes / "
-               << receive_interval_ms << " ms = " << receive_bps / 1000
-               << " kb/s]";
-    
-//    printf("[twcc] [Probe-OnFeedback] [success] [sendbr : rcvbr] [cluster_id : transSeq_id : pkt_size_bytes] [send_interval_ms : rcv_interval_ms] \
-//[ %.0f : %.0f ] [ %.0f kb/s : %.0f kb/s] [ %d : %hu : %lu ]\n",
-//           send_interval_ms,
-//           receive_interval_ms,
-//           send_bps/1000,
-//           receive_bps/1000,
-//           cluster_id ,
-//           packet_feedback.sequence_number,
-//           packet_feedback.payload_size);
-    
-    
-    estimated_bitrate_bps_ = (std::min)(send_bps, receive_bps);
+ 
+  estimated_bitrate_bps_ = (std::min)(send_bps, receive_bps);
   return estimated_bitrate_bps_;
 }
 

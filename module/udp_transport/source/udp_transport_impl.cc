@@ -153,7 +153,6 @@ int UdpTransport::Release(int rtp_port)
     }
     r_it->second->SubRefNum();
     int refNum = r_it->second->GetRefNum();
-    WEBRTC_TRACE(kTraceWarning, kTraceTransport, 0, "can not find socket of %s, rtp_port %d, refNum = %d", __FUNCTION__, rtp_port, refNum);
     UdpTransport *tmp = r_it->second;
     if ( refNum == 0) {
         _rtp_udptransport_map.erase(r_it);

@@ -8,7 +8,7 @@
 
 SerphoneAddress * serphone_address_new(const char *addr){
 	SalAddress *saddr=sal_address_new(addr);
-	if (saddr==NULL) PrintConsole("Cannot create LinphoneAddress, bad uri [%s]\n",addr);
+	if (saddr==NULL) WriteLogToFile("Cannot create LinphoneAddress, bad uri [%s]\n",addr);
 	return saddr;
 }
 

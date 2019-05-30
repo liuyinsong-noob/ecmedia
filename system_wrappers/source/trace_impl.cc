@@ -77,12 +77,12 @@ TraceImpl::~TraceImpl() {
 
 int32_t TraceImpl::AddThreadId(char* trace_message) const {
   uint32_t thread_id = yuntongxunwebrtc::CurrentThreadId();
-  // Messages is 12 characters.
-  return sprintf(trace_message, "%10u; ", thread_id);
+  // Messages is 13 characters.
+    return sprintf(trace_message, "[%10u] ", thread_id);
 }
 
 int32_t TraceImpl::AddLevel(char* sz_message, const TraceLevel level) const {
-  const int kMessageLength = 12;
+  const int kMessageLength = 14;
   switch (level) {
     case kTraceTerseInfo:
       // Add the appropriate amount of whitespace.
@@ -90,43 +90,43 @@ int32_t TraceImpl::AddLevel(char* sz_message, const TraceLevel level) const {
       sz_message[kMessageLength] = '\0';
       break;
     case kTraceStateInfo:
-      sprintf(sz_message, "STATEINFO ; ");
+      sprintf(sz_message, "[STATEINFO ]: ");
       break;
     case kTraceWarning:
-      sprintf(sz_message, "WARNING   ; ");
+      sprintf(sz_message, "[WARNING   ]: ");
       break;
     case kTraceError:
-      sprintf(sz_message, "ERROR     ; ");
+      sprintf(sz_message, "[ERROR     ]: ");
       break;
     case kTraceCritical:
-      sprintf(sz_message, "CRITICAL  ; ");
+      sprintf(sz_message, "[CRITICAL  ]: ");
       break;
     case kTraceInfo:
-      sprintf(sz_message, "DEBUGINFO ; ");
+      sprintf(sz_message, "[DEBUGINFO ]: ");
       break;
     case kTraceModuleCall:
-      sprintf(sz_message, "MODULECALL; ");
+      sprintf(sz_message, "[MODULECALL]: ");
       break;
     case kTraceMemory:
-      sprintf(sz_message, "MEMORY    ; ");
+      sprintf(sz_message, "[MEMORY    ]: ");
       break;
     case kTraceTimer:
-      sprintf(sz_message, "TIMER     ; ");
+      sprintf(sz_message, "[TIMER     ]: ");
       break;
     case kTraceStream:
-      sprintf(sz_message, "STREAM    ; ");
+      sprintf(sz_message, "[STREAM    ]: ");
       break;
     case kTraceApiCall:
-      sprintf(sz_message, "APICALL   ; ");
+      sprintf(sz_message, "[APICALL   ]: ");
       break;
     case kTraceDebug:
-      sprintf(sz_message, "DEBUG     ; ");
+      sprintf(sz_message, "[DEBUG     ]: ");
       break;
     default:
       assert(false);
       return 0;
   }
-  // All messages are 12 characters.
+  // All messages are 14 characters.
   return kMessageLength;
 }
 
@@ -138,7 +138,7 @@ int32_t TraceImpl::AddModuleAndId(char* trace_message,
   // TODO(hellner): is this actually a problem? If so, it should be better to
   //                clean up int32_t
   const long int idl = id;
-  const int kMessageLength = 25;
+  const int kMessageLength = 28;
   if (idl != -1) {
     const unsigned long int id_engine = id >> 16;
     const unsigned long int id_channel = id & 0xffff;
@@ -150,72 +150,84 @@ int32_t TraceImpl::AddModuleAndId(char* trace_message,
         trace_message[kMessageLength] = '\0';
         break;
       case kTraceVoice:
-        sprintf(trace_message, "       VOICE:%5ld %5ld;", id_engine,
+        sprintf(trace_message, "[VOICE ENGINE: %5ld %5ld] ", id_engine,
                 id_channel);
         break;
       case kTraceVideo:
-        sprintf(trace_message, "       VIDEO:%5ld %5ld;", id_engine,
+        sprintf(trace_message, "[VIDEO ENGINE: %5ld %5ld] ", id_engine,
                 id_channel);
         break;
       case kTraceUtility:
-        sprintf(trace_message, "     UTILITY:%5ld %5ld;", id_engine,
+        sprintf(trace_message, "[     UTILITY: %5ld %5ld] ", id_engine,
                 id_channel);
         break;
       case kTraceRtpRtcp:
-        sprintf(trace_message, "    RTP/RTCP:%5ld %5ld;", id_engine,
+        sprintf(trace_message, "[    RTP/RTCP: %5ld %5ld] ", id_engine,
                 id_channel);
         break;
       case kTraceTransport:
-        sprintf(trace_message, "   TRANSPORT:%5ld %5ld;", id_engine,
+        sprintf(trace_message, "[   TRANSPORT: %5ld %5ld] ", id_engine,
                 id_channel);
         break;
       case kTraceAudioCoding:
-        sprintf(trace_message, "AUDIO CODING:%5ld %5ld;", id_engine,
+        sprintf(trace_message, "[AUDIO CODING: %5ld %5ld] ", id_engine,
                 id_channel);
         break;
       case kTraceSrtp:
-        sprintf(trace_message, "        SRTP:%5ld %5ld;", id_engine,
+        sprintf(trace_message, "[        SRTP: %5ld %5ld] ", id_engine,
                 id_channel);
         break;
       case kTraceAudioMixerServer:
-        sprintf(trace_message, " AUDIO MIX/S:%5ld %5ld;", id_engine,
+        sprintf(trace_message, "[ AUDIO MIX/S: %5ld %5ld] ", id_engine,
                 id_channel);
         break;
       case kTraceAudioMixerClient:
-        sprintf(trace_message, " AUDIO MIX/C:%5ld %5ld;", id_engine,
+        sprintf(trace_message, "[ AUDIO MIX/C: %5ld %5ld] ", id_engine,
                 id_channel);
         break;
       case kTraceVideoCoding:
-        sprintf(trace_message, "VIDEO CODING:%5ld %5ld;", id_engine,
+        sprintf(trace_message, "[VIDEO CODING: %5ld %5ld] ", id_engine,
                 id_channel);
         break;
       case kTraceVideoMixer:
         // Print sleep time and API call
-        sprintf(trace_message, "   VIDEO MIX:%5ld %5ld;", id_engine,
+        sprintf(trace_message, "[   VIDEO MIX: %5ld %5ld] ", id_engine,
                 id_channel);
         break;
-      case kTraceFile:
-        sprintf(trace_message, "        FILE:%5ld %5ld;", id_engine,
+     case kTraceFile:
+        sprintf(trace_message, "[        FILE: %5ld %5ld] ", id_engine,
                 id_channel);
         break;
-      case kTraceAudioProcessing:
-        sprintf(trace_message, "  AUDIO PROC:%5ld %5ld;", id_engine,
+     case kTraceAudioProcessing:
+        sprintf(trace_message, "[  AUDIO PROC: %5ld %5ld] ", id_engine,
                 id_channel);
         break;
-      case kTraceAudioDevice:
-        sprintf(trace_message, "AUDIO DEVICE:%5ld %5ld;", id_engine,
+     case kTraceAudioDevice:
+        sprintf(trace_message, "[AUDIO DEVICE: %5ld %5ld] ", id_engine,
                 id_channel);
         break;
-      case kTraceVideoRenderer:
-        sprintf(trace_message, "VIDEO RENDER:%5ld %5ld;", id_engine,
+     case kTraceVideoRenderer:
+        sprintf(trace_message, "[VIDEO RENDER: %5ld %5ld] ", id_engine,
                 id_channel);
         break;
-      case kTraceVideoCapture:
-        sprintf(trace_message, "VIDEO CAPTUR:%5ld %5ld;", id_engine,
+     case kTraceVideoCapture:
+        sprintf(trace_message, "[VIDEO CAPTUR: %5ld %5ld] ", id_engine,
                 id_channel);
         break;
       case kTraceRemoteBitrateEstimator:
-        sprintf(trace_message, "     BWE RBE:%5ld %5ld;", id_engine,
+        sprintf(trace_message, "[     BWE RBE: %5ld %5ld] ", id_engine,
+                id_channel);
+        break;
+      case kTraceVideoProcessing:
+        sprintf(trace_message, "[VIDEOPROCESS: %5ld %5ld] ", id_engine,
+                id_channel);
+        break;
+      case kTraceMediaApi:
+        sprintf(trace_message, "[   MEDIA API: %5ld %5ld] ", id_engine,
+                id_channel);
+        break;
+      case kTraceLiveVideo:
+        sprintf(trace_message, "[  LIVE VIDEO: %5ld %5ld] ", id_engine,
                 id_channel);
         break;
     }
@@ -227,55 +239,64 @@ int32_t TraceImpl::AddModuleAndId(char* trace_message,
         trace_message[kMessageLength] = '\0';
         break;
       case kTraceVoice:
-        sprintf(trace_message, "       VOICE:%11ld;", idl);
+        sprintf(trace_message, "[ VOICE ENGINE:%12ld] ", idl);
         break;
       case kTraceVideo:
-        sprintf(trace_message, "       VIDEO:%11ld;", idl);
+        sprintf(trace_message, "[ VIDEO ENGINE:%12ld] ", idl);
         break;
       case kTraceUtility:
-        sprintf(trace_message, "     UTILITY:%11ld;", idl);
+        sprintf(trace_message, "[     UTILITY:%12ld] ", idl);
         break;
       case kTraceRtpRtcp:
-        sprintf(trace_message, "    RTP/RTCP:%11ld;", idl);
+        sprintf(trace_message, "[    RTP/RTCP:%12ld] ", idl);
         break;
       case kTraceTransport:
-        sprintf(trace_message, "   TRANSPORT:%11ld;", idl);
+        sprintf(trace_message, "[   TRANSPORT:%12ld] ", idl);
         break;
       case kTraceAudioCoding:
-        sprintf(trace_message, "AUDIO CODING:%11ld;", idl);
+        sprintf(trace_message, "[AUDIO CODING:%12ld] ", idl);
         break;
       case kTraceSrtp:
-        sprintf(trace_message, "        SRTP:%11ld;", idl);
+        sprintf(trace_message, "[        SRTP:%12ld] ", idl);
         break;
       case kTraceAudioMixerServer:
-        sprintf(trace_message, " AUDIO MIX/S:%11ld;", idl);
+        sprintf(trace_message, "[ AUDIO MIX/S:%12ld] ", idl);
         break;
       case kTraceAudioMixerClient:
-        sprintf(trace_message, " AUDIO MIX/C:%11ld;", idl);
+        sprintf(trace_message, "[ AUDIO MIX/C:%12ld] ", idl);
         break;
       case kTraceVideoCoding:
-        sprintf(trace_message, "VIDEO CODING:%11ld;", idl);
+        sprintf(trace_message, "[VIDEO CODING:%12ld] ", idl);
         break;
       case kTraceVideoMixer:
-        sprintf(trace_message, "   VIDEO MIX:%11ld;", idl);
+        sprintf(trace_message, "[   VIDEO MIX:%12ld] ", idl);
         break;
       case kTraceFile:
-        sprintf(trace_message, "        FILE:%11ld;", idl);
+        sprintf(trace_message, "[        FILE:%12ld] ", idl);
         break;
       case kTraceAudioProcessing:
-        sprintf(trace_message, "  AUDIO PROC:%11ld;", idl);
+        sprintf(trace_message, "[  AUDIO PROC:%12ld] ", idl);
         break;
       case kTraceAudioDevice:
-        sprintf(trace_message, "AUDIO DEVICE:%11ld;", idl);
+        sprintf(trace_message, "[AUDIO DEVICE:%12ld] ", idl);
         break;
       case kTraceVideoRenderer:
-        sprintf(trace_message, "VIDEO RENDER:%11ld;", idl);
+        sprintf(trace_message, "[VIDEO RENDER:%12ld] ", idl);
         break;
       case kTraceVideoCapture:
-        sprintf(trace_message, "VIDEO CAPTUR:%11ld;", idl);
+        sprintf(trace_message, "[VIDEO CAPTUR:%12ld] ", idl);
         break;
       case kTraceRemoteBitrateEstimator:
-        sprintf(trace_message, "     BWE RBE:%11ld;", idl);
+        sprintf(trace_message, "[     BWE RBE:%12ld] ", idl);
+        break;
+     case kTraceVideoProcessing:
+        sprintf(trace_message, "[VIDEOPROCESS:%12ld] ", idl);
+        break;
+      case kTraceMediaApi:
+        sprintf(trace_message, "[   MEDIA API:%12ld] ", idl);
+        break;
+      case kTraceLiveVideo:
+        sprintf(trace_message, "[  LIVE VIDEO:%12ld] ", idl);
         break;
     }
   }
@@ -414,29 +435,30 @@ void TraceImpl::AddImpl(const TraceLevel level,
 
   char trace_message[WEBRTC_TRACE_MAX_MESSAGE_SIZE];
   char* message_ptr = &trace_message[0];
-  int32_t len = AddLevel(message_ptr, level);
+   
+  int32_t len = AddTime(message_ptr, level);
   if (len == -1)
     return;
 
   message_ptr += len;
   int32_t ack_len = len;
 
-  len = AddTime(message_ptr, level);
-  if (len == -1)
-    return;
-
-  message_ptr += len;
-  ack_len += len;
-
-  len = AddModuleAndId(message_ptr, module, id);
-  if (len == -1)
-    return;
-
-  message_ptr += len;
-  ack_len += len;
-
   len = AddThreadId(message_ptr);
   if (len < 0)
+      return;
+
+  message_ptr += len;
+  ack_len += len;
+    
+  len = AddModuleAndId(message_ptr, module, id);
+  if (len == -1)
+      return;
+    
+  message_ptr += len;
+  ack_len += len;
+    
+  len = AddLevel(message_ptr, level);
+  if (len == -1)
     return;
 
   message_ptr += len;

@@ -602,10 +602,6 @@ bool MediaOptimization::QMUpdate(
     codec_height_ = qm->codec_height;
   }
 
-  LOG(LS_ERROR/*LS_INFO*/) << "Media optimizer requests the video resolution to be changed "
-                  "to " << qm->codec_width << "x" << qm->codec_height << "@"
-               << qm->frame_rate;
-
   // Update VPM with new target frame rate and frame size.
   // Note: use |qm->frame_rate| instead of |_incoming_frame_rate| for updating
   // target frame rate in VPM frame dropper. The quantity |_incoming_frame_rate|

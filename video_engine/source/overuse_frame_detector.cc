@@ -542,14 +542,6 @@ int32_t OveruseFrameDetector::Process() {
 	  GetCpuOveruseMetrics(&metrics);
 	  observer_->CpuOveruseMetricsMeasurements(metrics);
   }
-
-  int rampup_delay =
-      in_quick_rampup_ ? kQuickRampUpDelayMs : current_rampup_delay_ms_;
-  LOG(LS_VERBOSE) << " Frame stats: capture avg: " << capture_deltas_.Mean()
-                  << " capture stddev " << capture_deltas_.StdDev()
-                  << " encode usage " << usage_->Value()
-                  << " overuse detections " << num_overuse_detections_
-                  << " rampup delay " << rampup_delay;
   return 0;
 }
 

@@ -459,7 +459,7 @@ ViEFrameProviderBase* ViEInputManager::ViEFrameProvider(int provider_id) const {
 ViECapturer* ViEInputManager::ViECapturePtr(int capture_id) const {
   if (!(capture_id >= kViECaptureIdBase &&
         capture_id <= kViECaptureIdBase + kViEMaxCaptureDevices)) {
-    LOG(LS_ERROR) << "Capture device doesn't exist " << capture_id << ".";
+      LOG(LS_ERROR) << "Capture device doesn't exist, captured_id: " << capture_id << ".";
     return NULL;
   }
 

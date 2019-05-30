@@ -46,12 +46,12 @@ namespace yuntongxunwebrtc {
 
     // singleton
     ECLiveEngine *ECLiveEngine::getInstance() {
-        PrintConsole("[ECLiveEngine INFO] %s: start", __FUNCTION__);
+        WriteLogToFile("[ECLiveEngine INFO] %s: start", __FUNCTION__);
         if(!ec_live_engine_) {
-            PrintConsole("[ECLiveEngine INFO] %s: create new live engine instance.", __FUNCTION__);
+            WriteLogToFile("[ECLiveEngine INFO] %s: create new live engine instance.", __FUNCTION__);
             ec_live_engine_ = new ECLiveEngine();
         }
-        PrintConsole("[ECLiveEngine INFO] %s: end", __FUNCTION__);
+        WriteLogToFile("[ECLiveEngine INFO] %s: end", __FUNCTION__);
         return ec_live_engine_;
     }
     
@@ -67,7 +67,7 @@ namespace yuntongxunwebrtc {
     // publish rtmp stream
     int ECLiveEngine::startPublish(const char *url, ECLiveStreamNetworkStatusCallBack callback)
     {
-        PrintConsole("[ECLiveEngine INFO] %s: start", __FUNCTION__);
+        WriteLogToFile("[ECLiveEngine INFO] %s: start", __FUNCTION__);
         if(!publiser_running_ && !puller_runnig_) {
             publiser_running_ = true;
             if(ec_media_core_ == nullptr) {
@@ -88,12 +88,12 @@ namespace yuntongxunwebrtc {
             int ret = ec_media_core_->startCapture();
             return ret;
         }
-        PrintConsole("[ECLiveEngine INFO] %s: end", __FUNCTION__);
+        WriteLogToFile("[ECLiveEngine INFO] %s: end", __FUNCTION__);
         return 0;
     }
 
     int ECLiveEngine::stopPublish() {
-        PrintConsole("[ECLiveEngine INFO] %s: start", __FUNCTION__);
+        WriteLogToFile("[ECLiveEngine INFO] %s: start", __FUNCTION__);
         if(publiser_running_ && !puller_runnig_) {
             int ret = -1;
             ret = ec_media_core_->stopCapture();
@@ -105,16 +105,16 @@ namespace yuntongxunwebrtc {
 			delete rtmp_publisher_;
 			rtmp_publisher_ = nullptr;
             publiser_running_ = false;
-            PrintConsole("[ECLiveEngine INFO] %s: stop with code: %d", __FUNCTION__, ret);
+            WriteLogToFile("[ECLiveEngine INFO] %s: stop with code: %d", __FUNCTION__, ret);
             return ret;
         }
-        PrintConsole("[ECLiveEngine INFO] %s: stop", __FUNCTION__);
+        WriteLogToFile("[ECLiveEngine INFO] %s: stop", __FUNCTION__);
         return 0;
     }
 
     // play live(rtmp/hls/http-flv) stream
     int ECLiveEngine::startPlay(const char* url, ECLiveStreamNetworkStatusCallBack callback) {
-        PrintConsole("[ECLiveEngine INFO] %s: start", __FUNCTION__);
+        WriteLogToFile("[ECLiveEngine INFO] %s: start", __FUNCTION__);
         int ret = -1;
         if(!puller_runnig_ && !publiser_running_) {
             puller_runnig_ = true;
@@ -124,7 +124,7 @@ namespace yuntongxunwebrtc {
             if(!media_puller_) {
                 media_puller_ = createMediaPuller(url, callback);
                 if(!media_puller_) {
-                    PrintConsole("[ECLiveEngine INFO] %s: create media puller faild.", __FUNCTION__);
+                    WriteLogToFile("[ECLiveEngine INFO] %s: create media puller faild.", __FUNCTION__);
                     return -1;
                 }
                 media_puller_->setReceiverCallback(ec_media_core_);
@@ -134,12 +134,12 @@ namespace yuntongxunwebrtc {
             media_puller_->start(url);
             ret = ec_media_core_->startPlayout();
         }
-        PrintConsole("[ECLiveEngine INFO] %s: end with code: %d", __FUNCTION__, ret);
+        WriteLogToFile("[ECLiveEngine INFO] %s: end with code: %d", __FUNCTION__, ret);
         return 0;
     }
 
     int ECLiveEngine::stopPlay() {
-        PrintConsole("[ECLiveEngine INFO] %s: start", __FUNCTION__);
+        WriteLogToFile("[ECLiveEngine INFO] %s: start", __FUNCTION__);
         int ret = -1;
         if(puller_runnig_ && !publiser_running_) {
             if(media_puller_) {
@@ -158,7 +158,7 @@ namespace yuntongxunwebrtc {
             
         }
 		puller_runnig_ = false;
-        PrintConsole("[ECLiveEngine INFO] %s: end with code: %d", __FUNCTION__, ret);
+        WriteLogToFile("[ECLiveEngine INFO] %s: end with code: %d", __FUNCTION__, ret);
         return ret;
     }
 

@@ -377,7 +377,7 @@ void	 free(void *);
 				   char *chfr, ...);
 
 #ifdef ENABLE_TRACE
-#define OSIP_TRACE(P) P
+#define OSIP_TRACE(P) (void)0
 #define OSIP_MESSAGE_HOOK(P) do{} while(0)
 #else
 #define OSIP_TRACE(P) do {} while (0)

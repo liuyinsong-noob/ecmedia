@@ -147,7 +147,7 @@ void lp_config_parse(LpConfig *lpconfig, FILE *file){
 						}
 					}
 				}else{
-					PrintConsole("parse error!\n");
+					WriteLogToFile("parse error!\n");
 				}
 			}
 		}else {
@@ -187,7 +187,7 @@ void lp_config_parse(LpConfig *lpconfig, FILE *file){
 							}
 							/*printf("Found %s %s=%s\n",cur->name,key,pos1);*/
 						}else{
-							PrintConsole("found key,item but no sections\n");
+							WriteLogToFile("found key,item but no sections\n");
 						}
 					}
 				}
@@ -216,7 +216,7 @@ LpConfig * lp_config_new(const char *filename){
 			/* make existing configuration files non-group/world-accessible */
 			if (chmod(filename, S_IRUSR | S_IWUSR) == -1)
 #endif
-				PrintConsole("unable to correct permissions on "
+				WriteLogToFile("unable to correct permissions on "
 				  	  "configuration file: %s\n",
 					   strerror(errno));
 #endif /*_WIN32_WCE*/
@@ -234,7 +234,7 @@ int lp_config_read_file(LpConfig *lpconfig, const char *filename){
 		fclose(f);
 		return 0;
 	}
-	PrintConsole("Fail to open file %s\n",filename);
+	WriteLogToFile("Fail to open file %s\n",filename);
 	return -1;
 }
 
@@ -334,7 +334,7 @@ int lp_config_sync(LpConfig *lpconfig){
 #endif
 	file=fopen(lpconfig->filename,"w");
 	if (file==NULL){
-		PrintConsole("Could not write %s ! Maybe it is read-only. Configuration will not be saved.\n",lpconfig->filename);
+		WriteLogToFile("Could not write %s ! Maybe it is read-only. Configuration will not be saved.\n",lpconfig->filename);
 		lpconfig->readonly=1;
 		return -1;
 	}

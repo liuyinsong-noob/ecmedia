@@ -150,7 +150,7 @@ ServiceCore *serphone_core_new(const SerphoneCoreVTable *vtable,
 
 //	ServiceCore *core=ms_new(ServiceCore,1); commented by zdm,类不能用这个函数，否则无法进入类构造函数
 	ServiceCore *core=new ServiceCore;
-    PrintConsole("serphone_core_new\n");
+    WriteLogToFile("serphone_core_new\n");
 	core->serphone_core_init(vtable,config_path, factory_config_path, userdata);
 	return core;
 }

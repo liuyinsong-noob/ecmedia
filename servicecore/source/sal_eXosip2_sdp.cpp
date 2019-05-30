@@ -75,7 +75,7 @@ static const char *sdp_message_a_attr_value_get_with_pt(sdp_message_t *sdp,int p
 					if (strlen(tmp)>0)
 						return tmp;
 				}
-			}else PrintConsole("sdp has a strange a= line (%s) nb=%i\n",attr->a_att_value,nb);
+			}else WriteLogToFile("sdp has a strange a= line (%s) nb=%i\n",attr->a_att_value,nb);
 		}
 	}
 	return NULL;
@@ -105,7 +105,7 @@ static int _sdp_message_get_a_ptime(sdp_message_t *sdp, int mline){
 			/* the return value may depend on how %n is interpreted by the libc: see manpage*/
 			if (nb == 1){
 				return ret;
-			}else PrintConsole("sdp has a strange a=ptime line (%s)\n",attr->a_att_value);
+			}else WriteLogToFile("sdp has a strange a=ptime line (%s)\n",attr->a_att_value);
 		}
 	}
 	return 0;
@@ -244,13 +244,13 @@ static void add_ice_candidates(sdp_message_t *msg, int lineno, const SalStreamDe
 		nb = snprintf(buffer, sizeof(buffer), "%s %u UDP %u %s %d typ %s",
 			candidate->foundation, candidate->componentID, candidate->priority, candidate->addr, candidate->port, candidate->type);
 		if (nb < 0) {
-			PrintConsole("Cannot add ICE candidate attribute!\n");
+			WriteLogToFile("Cannot add ICE candidate attribute!\n");
 			return;
 		}
 		if (candidate->raddr[0] != '\0') {
 			nb = snprintf(buffer + nb, sizeof(buffer) - nb, " raddr %s rport %d", candidate->raddr, candidate->rport);
 			if (nb < 0) {
-				PrintConsole("Cannot add ICE candidate attribute!\n");
+				WriteLogToFile("Cannot add ICE candidate attribute!\n");
 				return;
 			}
 		}
@@ -272,7 +272,7 @@ static void add_ice_remote_candidates(sdp_message_t *msg, int lineno, const SalS
 		if ((candidate->addr[0] != '\0') && (candidate->port != 0)) {
 			offset = snprintf(ptr, buffer + sizeof(buffer) - ptr, "%s%d %s %d", (i > 0) ? " " : "", i + 1, candidate->addr, candidate->port);
 			if (offset < 0) {
-				PrintConsole("Cannot add ICE remote-candidates attribute!\n");
+				WriteLogToFile("Cannot add ICE remote-candidates attribute!\n");
 				return;
 			}
 			ptr += offset;
@@ -344,10 +344,10 @@ static void add_line(sdp_message_t *msg, int lineno, const SalStreamDescription 
                                                 osip_strdup(buffer));
 					break;
 				case yuntongxunwebrtc::CCPAES_128_NO_AUTH:
-					PrintConsole("Unsupported crypto suite: AES_128_NO_AUTH\n");
+					WriteLogToFile("Unsupported crypto suite: AES_128_NO_AUTH\n");
 					break;
 				case yuntongxunwebrtc::CCPNO_CIPHER_SHA1_80:
-					PrintConsole("Unsupported crypto suite: NO_CIPHER_SHA1_80\n");
+					WriteLogToFile("Unsupported crypto suite: NO_CIPHER_SHA1_80\n");
 					break; 
 				default:
 					i = SAL_CRYPTO_ALGO_MAX;
@@ -447,7 +447,7 @@ static int payload_type_fill_from_rtpmap(PayloadType *pt, const char *rtpmap){
 			pt->mime_type=ms_strdup(refpt->mime_type);
 			pt->clock_rate=refpt->clock_rate;
 		}else{
-			PrintConsole("payload number %i has no rtpmap and is unknown in AV Profile, ignored.\n",
+			WriteLogToFile("payload number %i has no rtpmap and is unknown in AV Profile, ignored.\n",
 			    payload_type_get_number(pt));
 			return -1;
 		}
@@ -570,7 +570,7 @@ int sdp_to_media_description(sdp_message_t *msg, SalMediaDescription *desc, bool
 				fmtp=sdp_message_a_attr_value_get_with_pt(msg, i, ptn,"fmtp");
 				payload_type_set_send_fmtp(pt,fmtp);
 				stream->payloads=ms_list_append(stream->payloads,pt);
-				PrintConsole("Found payload %s/%i fmtp=%s\n",pt->mime_type,pt->clock_rate,
+				WriteLogToFile("Found payload %s/%i fmtp=%s\n",pt->mime_type,pt->clock_rate,
 					pt->send_fmtp ? pt->send_fmtp : "");
 			}
 
@@ -594,7 +594,7 @@ int sdp_to_media_description(sdp_message_t *msg, SalMediaDescription *desc, bool
 				} else if (nb == 2) {
 					strncpy(stream->rtcp_addr, tmp, sizeof(stream->rtcp_addr));
 				} else {
-					PrintConsole("sdp has a strange a= line (%s) nb=%i\n", attr->a_att_value, nb);
+					WriteLogToFile("sdp has a strange a= line (%s) nb=%i\n", attr->a_att_value, nb);
 				}
 			}
 		}
@@ -620,7 +620,7 @@ int sdp_to_media_description(sdp_message_t *msg, SalMediaDescription *desc, bool
 						&stream->crypto[valid_count].tag,
 						tmp,
 						tmp2);
-						PrintConsole("Found valid crypto line (tag:%d algo:'%s' key:'%s'\n", 
+						WriteLogToFile("Found valid crypto line (tag:%d algo:'%s' key:'%s'\n", 
 								stream->crypto[valid_count].tag, 
 								tmp, 
 								tmp2);
@@ -634,7 +634,7 @@ int sdp_to_media_description(sdp_message_t *msg, SalMediaDescription *desc, bool
                         else if (strcmp(tmp, "AES_CM_256_HMAC_SHA1_32") ==  0)
                             stream->crypto[valid_count].algo = yuntongxunwebrtc::CCPAES_256_SHA1_32;
 						else {
-							PrintConsole("Failed to parse crypto-algo: '%s'\n", tmp);
+							WriteLogToFile("Failed to parse crypto-algo: '%s'\n", tmp);
 							stream->crypto[valid_count].algo = (yuntongxunwebrtc::ccp_srtp_crypto_suite_t)0;
 						}
 						if (stream->crypto[valid_count].algo) {
@@ -642,18 +642,18 @@ int sdp_to_media_description(sdp_message_t *msg, SalMediaDescription *desc, bool
                             strncpy(stream->crypto[valid_count].master_key, tmp2, 65);
 //							stream->crypto[valid_count].master_key[40] = '\0';
                           stream->crypto[valid_count].master_key[64] = '\0';
-							PrintConsole("Found valid crypto line (tag:%d algo:'%s' key:'%s'\n", 
+							WriteLogToFile("Found valid crypto line (tag:%d algo:'%s' key:'%s'\n", 
 								stream->crypto[valid_count].tag, 
 								tmp, 
 								stream->crypto[valid_count].master_key);
 							valid_count++;
 						}
 					} else {
-						PrintConsole("sdp has a strange a= line (%s) nb=%i\n",attr->a_att_value,nb);
+						WriteLogToFile("sdp has a strange a= line (%s) nb=%i\n",attr->a_att_value,nb);
 					}
 				}
 			}
-			PrintConsole("Found: %d valid crypto lines\n", valid_count);
+			WriteLogToFile("Found: %d valid crypto lines\n", valid_count);
 		}
 
 		bool iceCompleted = false;

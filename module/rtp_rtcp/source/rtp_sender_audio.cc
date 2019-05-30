@@ -16,7 +16,6 @@
 #include <utility>
 
 #include "../system_wrappers/include/logging.h"
-#include "../base/timeutils.h"
 #include "../base/trace_event.h"
 #include "../module/rtp_rtcp/include/rtp_rtcp_defines.h"
 #include "../module/rtp_rtcp/source/byte_io.h"
@@ -371,14 +370,6 @@ bool RTPSenderAudio::SendAudio(FrameType frame_type,
   TRACE_EVENT_ASYNC_END2("webrtc", "Audio", rtp_timestamp, "timestamp",
                          packet->Timestamp(), "seqnum",
                          packet->SequenceNumber());
-
-    static time_t last = 0;
-    int logInterval = 5;
-	if( time(NULL) > last + logInterval ) {
-		 LOG(LS_WARNING) << "Period log per " << logInterval << " seconds: Audio SendAudio(payloadSize=" 
-			 << payload_size << ")";
-        last = time(NULL);
-	}
 
   bool send_result = rtp_sender_->SendToNetwork(
       std::move(packet), kAllowRetransmission, RtpPacketSender::kHighPriority);

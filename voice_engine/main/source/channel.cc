@@ -221,10 +221,6 @@ Channel::SendRtp(int channel, const uint8_t *data, size_t len, const PacketOptio
 {
     channel = VoEChannelId(channel);
   //  assert(channel == _channelId);
-
-    //WEBRTC_TRACE(kTraceStream, kTraceVoice, VoEId(_instanceId,_channelId),
-    //             "Channel::SendPacket(channel=%d, len=%" PRIuS ")", channel,
-    //             len);
 	LOG_COUNT_F(LS_STREAM, 10) << " channel = " << channel << ", len = " << (long)len;
 
     CriticalSectionScoped cs(&_callbackCritSect);
@@ -424,7 +420,7 @@ Channel::SendRtcp(int channel, const uint8_t *data, size_t len)
     if (!_transportPtr) {
         std::string transport_name =
         _externalTransport ? "external transport" : "WebRtc sockets";
-        WEBRTC_TRACE(kTraceInfo, kTraceVoice,
+        WEBRTC_TRACE(kTraceError, kTraceVoice,
                      VoEId(_instanceId,_channelId),
                      "Channel::SendRTCPPacket() transmission using %s failed since no transport(NULL)",
                      transport_name.c_str());
@@ -437,7 +433,7 @@ Channel::SendRtcp(int channel, const uint8_t *data, size_t len)
     if (n < 0) {
       std::string transport_name =
           _externalTransport ? "external transport" : "WebRtc sockets";
-      WEBRTC_TRACE(kTraceInfo, kTraceVoice,
+      WEBRTC_TRACE(kTraceError, kTraceVoice,
                    VoEId(_instanceId,_channelId),
                    "Channel::SendRTCPPacket() transmission using %s failed",
                    transport_name.c_str());
@@ -555,13 +551,12 @@ Channel::OnReceivedPayloadData(const uint8_t* payloadData,
                                size_t payloadSize,
                                const WebRtcRTPHeader* rtpHeader)
 {
-    //WEBRTC_TRACE(kTraceStream, kTraceVoice, VoEId(_instanceId,_channelId),
-    //             "Channel::OnReceivedPayloadData(payloadSize=%" PRIuS ","
-    //             " payloadType=%u, audioChannel=%u)",
-    //             payloadSize,
-    //             rtpHeader->header.payloadType,
-    //             rtpHeader->type.Audio.channel);
-	LOG_COUNT_F(LS_STREAM, 10) << " payloadSize = " << (long)payloadSize << ", payloadType = " << (long)rtpHeader->header.payloadType << ", audioChannel = " << (long)rtpHeader->type.Audio.channel;
+    WEBRTC_TRACE(kTraceStream, kTraceVoice, VoEId(_instanceId,_channelId),
+                 "Channel::OnReceivedPayloadData(payloadSize=%" PRIuS ","
+                 " payloadType=%u, audioChannel=%u)",
+                 payloadSize,
+                 rtpHeader->header.payloadType,
+                 rtpHeader->type.Audio.channel);
 
     if (!channel_state_.Get().playing)
     {
@@ -1171,8 +1166,7 @@ Channel::~Channel()
         GetRemoteSSRC(ssrc);
         _socketTransportModule->SubRecieveChannel(ssrc);
     }
-#ifndef WEBRTC_EXTERNAL_TRANSPORT
-    LOG(LS_ERROR) << "xt log UdpTransport release  rtp_port %d" << _rtp_port;
+#ifndef WEBRTC_EXTERNAL_TRANSECMedia_stop_renderPORT
     UdpTransport::Release(_rtp_port);
 #else
 	TcpTransport::Release(_rtp_port);
@@ -2699,7 +2693,7 @@ int Channel::StopRecordingPlayout()
 
     if (!_outputFileRecording)
     {
-        WEBRTC_TRACE(kTraceError, kTraceVoice, VoEId(_instanceId,-1),
+        WEBRTC_TRACE(kTraceWarning, kTraceVoice, VoEId(_instanceId,-1),
                      "StopRecordingPlayout() isnot recording");
         return -1;
     }
@@ -5246,16 +5240,6 @@ void
 			"Channel::SendPacket() RTCP dump to input file failed");
 	}
 
-    static time_t last = 0;
-    int logInterval = 5;
-	if( time(NULL) > last + logInterval ) {
-		WEBRTC_TRACE(kTraceApiCall, kTraceVoice, VoEId(_instanceId,_channelId),
-			"Period log per %d seconds: Audio IncomingRTCPPacket(rtcpPacketLength=%d,"
-			" fromIP=%s, fromPort=%u)",
-			logInterval, rtcpPacketLength, fromIP, fromPort);
-        last = time(NULL);
-	}
-
 	// Deliver RTCP packet to RTP/RTCP module for parsing
 	if (_rtpRtcpModule->IncomingRtcpPacket((const WebRtc_UWord8*)rtcpBufferPtr,
 		(WebRtc_UWord16)rtcpBufferLength) == -1)
@@ -5316,22 +5300,6 @@ void
             period_packets_length_ = 0;
         }
     }
-    
-	//WEBRTC_TRACE(kTraceStream, kTraceVoice, VoEId(_instanceId,_channelId),
-	//	"Channel::IncomingRTPPacket(rtpPacketLength=%d,"
-	//	" fromIP=%s, fromPort=%u)",
-	//	rtpPacketLength, fromIP, fromPort);
-	LOG_COUNT_F(LS_STREAM, 10) << " rtpPacketLength = " << (unsigned long)rtpPacketLength << " fromIP = " << fromIP << " fromPort = " << (unsigned long)fromPort;
-
-	static time_t last = 0;
-    int logInterval = 5;
-	if( time(NULL) > last + logInterval ) {
-		WEBRTC_TRACE(kTraceApiCall, kTraceVoice, VoEId(_instanceId,_channelId),
-			"Period log per %d seconds: Audio IncomingRTPPacket(rtpPacketLength=%d,"
-			" fromIP=%s, fromPort=%u)",
-			logInterval, rtpPacketLength, fromIP, fromPort);
-        last = time(NULL);
-	}
 
 	// Store playout timestamp for the received RTP packet
 	// to be used for upcoming delay estimations
@@ -5441,9 +5409,7 @@ void
     
     // audio loss rate, added by sean
     if (header.extension.hasLossRate) {
-        WEBRTC_TRACE(kTraceStateInfo, kTraceVoice,
-                     VoEId(_instanceId,_channelId),
-                     "loss rate from rtp header extension %d\n", header.extension.lossRate);
+        // todo add debug log
         audio_coding_->SetPacketLossRateFromRtpHeaderExt(header.extension.lossRate);
     }
     rtp_payload_registry_->SetRtxSsrc(header.ssrc); //Sean: No need to enable audio rtx
@@ -6328,14 +6294,14 @@ int32_t Channel::SetKeepAliveStatus(
 
 	if (enable && _rtpRtcpModule->RTPKeepalive())
 	{
-		WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceVideo,
+		WEBRTC_TRACE(yuntongxunwebrtc::kTraceWarning, yuntongxunwebrtc::kTraceVideo,
 			VoEId(_instanceId, _channelId),
 			"%s: RTP keepalive already enabled", __FUNCTION__);
 		return -1;
 	}
 	else if (!enable && !_rtpRtcpModule->RTPKeepalive())
 	{
-		WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceVideo,
+		WEBRTC_TRACE(yuntongxunwebrtc::kTraceWarning, yuntongxunwebrtc::kTraceVideo,
 			VoEId(_instanceId, _channelId),
 			"%s: RTP keepalive already disabled", __FUNCTION__);
 		return -1;

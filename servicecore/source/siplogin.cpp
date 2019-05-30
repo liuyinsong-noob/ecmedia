@@ -56,7 +56,7 @@ static int sip_login_do_login(SipSetupContext * ctx, const char *uri, const char
 	cfg->serphone_proxy_config_done();
 	ms_free((void **)&tmp);
 	serphone_address_destroy(parsed_uri);
-	PrintConsole("SipLogin: done");
+	WriteLogToFile("SipLogin: done");
 	return 0;
 }
 

@@ -48,7 +48,7 @@ namespace yuntongxunwebrtc {
     }
     
     void ECRtmpPublisher::start(const char *url) {
-        PrintConsole("[ECRtmpPublisher INFO] %s: begin", __FUNCTION__);
+        WriteLogToFile("[ECRtmpPublisher INFO] %s: begin", __FUNCTION__);
         if(!running_) {
             running_ = true;
             // save rtmp url;
@@ -61,11 +61,11 @@ namespace yuntongxunwebrtc {
             unsigned int pthread_id;
             rtmpPublishThread_->Start(pthread_id);
         }
-        PrintConsole("[ECRtmpPublisher INFO] %s: end.", __FUNCTION__);
+        WriteLogToFile("[ECRtmpPublisher INFO] %s: end.", __FUNCTION__);
     }
     
     void ECRtmpPublisher::stop() {
-        PrintConsole("[ECRtmpPublisher INFO] %s: begin", __FUNCTION__);
+        WriteLogToFile("[ECRtmpPublisher INFO] %s: begin", __FUNCTION__);
         if(running_) {
             running_ = false;
             srs_rtmp_disconnect_server(rtmp_);
@@ -80,7 +80,7 @@ namespace yuntongxunwebrtc {
 			hasStreaming_ = false;
 			//callbackStateIfNeed();
         }
-        PrintConsole("[ECRtmpPublisher INFO] %s: end.", __FUNCTION__);
+        WriteLogToFile("[ECRtmpPublisher INFO] %s: end.", __FUNCTION__);
     }
     
     void ECRtmpPublisher::needClearCacher() {
@@ -312,7 +312,7 @@ namespace yuntongxunwebrtc {
             ret = srs_h264_write_raw_frames(rtmp_, ptr, len, dataPtr->_dts, dataPtr->_dts);
             if (ret != 0) {
                 if (srs_h264_is_dvbsp_error(ret)) {
-                    PrintConsole("ignore drop video error, code=%d", ret);
+                    WriteLogToFile("ignore drop video error, code=%d", ret);
                 }
                 else if (srs_h264_is_duplicated_sps_error(ret)) {
                     //srs_human_trace("ignore duplicated sps, code=%d", ret);
@@ -321,7 +321,7 @@ namespace yuntongxunwebrtc {
                     //srs_human_trace("ignore duplicated pps, code=%d", ret);
                 }
                 else {
-                    PrintConsole("send h264 raw data failed. ret=%d", ret);
+                    WriteLogToFile("send h264 raw data failed. ret=%d", ret);
                     return -1;
                 }
             }
@@ -331,13 +331,13 @@ namespace yuntongxunwebrtc {
             if ((ret = srs_audio_write_raw_frame(rtmp_,
                     10, 3, 1, 0,
                     (char*)dataPtr->_data, dataPtr->_dataLen, dataPtr->_dts)) != 0) {
-                PrintConsole("send audio raw data failed. ret=%d", ret);
+                WriteLogToFile("send audio raw data failed. ret=%d", ret);
                 return -1;
             }
         } else if(dataPtr->_type == META_DATA) {
             int ret = srs_rtmp_write_packet(rtmp_, SRS_RTMP_TYPE_SCRIPT, dataPtr->_dts, (char*)dataPtr->_data, dataPtr->_dataLen);
             if (ret != 0) {
-                PrintConsole("send metadata failed. ret=%d", ret);
+                WriteLogToFile("send metadata failed. ret=%d", ret);
                 return -1;
             }
             

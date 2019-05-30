@@ -339,8 +339,9 @@ int VoEVolumeControlImpl::GetSpeechOutputLevel(int channel,
 
 int VoEVolumeControlImpl::GetSpeechInputLevelFullRange(unsigned int& level)
 {
-    WEBRTC_TRACE(kTraceApiCall, kTraceVoice, VoEId(_shared->instance_id(), -1),
-               "GetSpeechInputLevelFullRange(level=?)");
+    // todo zhayou log
+//    WEBRTC_TRACE(kTraceApiCall, kTraceVoice, VoEId(_shared->instance_id(), -1),
+//               "GetSpeechInputLevelFullRange(level=?)");
 
     if (!_shared->statistics().Initialized())
     {

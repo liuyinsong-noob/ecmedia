@@ -2426,8 +2426,9 @@ void  ViEChannel::IncomingRTPPacket(const int8_t* rtp_packet,
         //WEBRTC_TRACE(kTraceWarning, kTraceVideo, ViEId(engine_id_, channel_id_),
         //             "%s: myself channelid is %d, local_ssrc_main_=%u, remote_ssrc_=%u,  recieve rmote ssrc=%u, seq_num=%u",
         //             __FUNCTION__, channel_id_, local_ssrc_main_, remote_ssrc_, r_rtpSsrc, seq_num);
-		LOG_COUNT_CONTINUIOUS_F(LS_WARNING, 20, seq_num) << " myself channelid is: " << channel_id_ << " local_ssrc_main_= "
-			<< local_ssrc_main_ << " remote_ssrc_ = " << remote_ssrc_ << " recieve rmote ssrc = " << r_rtpSsrc << " seq_num = " << seq_num;
+        // todo  zhaoyou log
+//        LOG_COUNT_CONTINUIOUS_F(LS_WARNING, 20, seq_num) << " myself channelid is: " << channel_id_ << " local_ssrc_main_= "
+//            << local_ssrc_main_ << " remote_ssrc_ = " << remote_ssrc_ << " recieve rmote ssrc = " << r_rtpSsrc << " seq_num = " << seq_num;
 	}
     
 	{
@@ -2494,16 +2495,6 @@ void  ViEChannel::IncomingRTPPacket(const int8_t* rtp_packet,
 		}
 	}
 	//sean add end 20140705 video conference
-
-   	static time_t last = 0;
-        int logInterval = 5;
-	if( time(NULL) > last + logInterval ) {
-		WEBRTC_TRACE(kTraceApiCall, kTraceVideo, ViEId(engine_id_, channel_id_),
-			"Period log per %d seconds: Video IncomingRTPPacket(rtpPacketLength=%d,"
-			" fromIP=%s, fromPort=%u)",
-			logInterval, rtp_packet_length, from_ip, from_port);
-        last = time(NULL);
-	}
 
 	if (event_log_)
 		event_log_->LogRtpHeader(kIncomingPacket, 
@@ -2586,17 +2577,6 @@ void  ViEChannel::IncomingRTCPPacket(const int8_t* rtcp_packet,
             return;
         }
     }
-
-
-   	static time_t last = 0;
-        int logInterval = 5;
-	if( time(NULL) > last + logInterval ) {
-		WEBRTC_TRACE(kTraceApiCall, kTraceVideo, ViEId(engine_id_, channel_id_),
-			"Period log per %d seconds: Video IncomingRTCPPacket(rtcpPacketLength=%d,"
-			" fromIP=%s, fromPort=%u)",
-			logInterval, rtcp_packet_length, from_ip, from_port);
-        last = time(NULL);
-	}
     
 	if (event_log_)
 		event_log_->LogRtcpPacket(kIncomingPacket,
@@ -3397,14 +3377,14 @@ int32_t ViEChannel::SetKeepAliveStatus(
     }
     if (enable && default_rtp_rtcp_->RTPKeepalive())
     {
-        WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceVideo,
+        WEBRTC_TRACE(yuntongxunwebrtc::kTraceWarning, yuntongxunwebrtc::kTraceVideo,
                      ViEId(engine_id_, channel_id_),
                      "%s: RTP keepalive already enabled", __FUNCTION__);
         return -1;
     }
     else if (!enable && !default_rtp_rtcp_->RTPKeepalive())
     {
-        WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceVideo,
+        WEBRTC_TRACE(yuntongxunwebrtc::kTraceWarning, yuntongxunwebrtc::kTraceVideo,
                      ViEId(engine_id_, channel_id_),
                      "%s: RTP keepalive already disabled", __FUNCTION__);
         return -1;

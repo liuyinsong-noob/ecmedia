@@ -132,28 +132,7 @@ int32_t VoEBaseImpl::RecordedDataIsAvailable(
         uint32_t micLevel,
         bool keyPressed,
         uint32_t& newMicLevel)
-{
-    //WEBRTC_TRACE(kTraceStream, kTraceVoice, VoEId(_shared->instance_id(), -1),
-    //             "VoEBaseImpl::RecordedDataIsAvailable(nSamples=%u, "
-    //                 "nBytesPerSample=%u, nChannels=%u, samplesPerSec=%u, "
-    //                 "totalDelayMS=%u, clockDrift=%d, micLevel=%u)",
-    //             nSamples, nBytesPerSample, nChannels, samplesPerSec,
-    //             totalDelayMS, clockDrift, micLevel);
-	LOG_COUNT_F(LS_STREAM, 10) << " nSamples = " << (unsigned long)nSamples << " nBytesPerSample = " << (unsigned long)nBytesPerSample << " nChannels = " << (unsigned long)nChannels << " samplesPerSec = "
-		<< (unsigned long)samplesPerSec << " totalDelayMS = " << (unsigned long)totalDelayMS << " clockDrift = " << (long)clockDrift << " micLevel = " << (unsigned long)micLevel;
-
-    static time_t last = 0;
-    int logInterval = 5;
-	if( time(NULL) > last + logInterval ) {
-		WEBRTC_TRACE(kTraceApiCall, kTraceVoice, VoEId(_shared->instance_id(), -1),
-			"Period log per %d seconds: Audio RecordedDataIsAvailable(nSamples=%u, "
-                     "nBytesPerSample=%u, nChannels=%u, samplesPerSec=%u, "
-                     "totalDelayMS=%u, clockDrift=%d, micLevel=%u)",
-                 logInterval, nSamples, nBytesPerSample, nChannels, samplesPerSec,
-                 totalDelayMS, clockDrift, micLevel);
-        last = time(NULL);
-	}
-    
+{   
     newMicLevel = static_cast<uint32_t>(ProcessRecordedDataWithAPM(
         NULL, 0, audioSamples, samplesPerSec, nChannels, nSamples,
         totalDelayMS, clockDrift, micLevel, keyPressed));

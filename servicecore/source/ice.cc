@@ -239,7 +239,7 @@ IceSession * ice_session_new(void)
 {
 	IceSession *session = ms_new(IceSession, 1);
 	if (session == NULL) {
-		PrintConsole("ice: Memory allocation of ICE session failed\n");
+		WriteLogToFile("ice: Memory allocation of ICE session failed\n");
 		return NULL;
 	}
 	ice_session_init(session);
@@ -300,7 +300,7 @@ IceCheckList * ice_check_list_new(void)
 {
 	IceCheckList *cl = ms_new(IceCheckList, 1);
 	if (cl == NULL) {
-		PrintConsole("ice_check_list_new: Memory allocation failed\n");
+		WriteLogToFile("ice_check_list_new: Memory allocation failed\n");
 		return NULL;
 	}
 	ice_check_list_init(cl);
@@ -681,7 +681,7 @@ static bool_t ice_check_list_is_frozen(const IceCheckList *cl)
 
 bool_t ice_check_list_is_mismatch(const IceCheckList *cl)
 {
-    PrintConsole("ice_check_list_is_mismatch = %d\n",cl->mismatch);
+    WriteLogToFile("ice_check_list_is_mismatch = %d\n",cl->mismatch);
 	return cl->mismatch;
 }
 
@@ -813,7 +813,7 @@ void ice_session_remove_check_list(IceSession *session, IceCheckList *cl)
 
 static int ice_find_default_candidate_from_componentID(const IceCandidate *candidate, const uint16_t *componentID)
 {
-    PrintConsole("candidate->is_default = %d, candidate->componentID = %u, componentID = %u\n",candidate->is_default, candidate->componentID, *componentID);
+    WriteLogToFile("candidate->is_default = %d, candidate->componentID = %u, componentID = %u\n",candidate->is_default, candidate->componentID, *componentID);
 	return !((candidate->is_default == TRUE) && (candidate->componentID == *componentID));
 }
 
@@ -886,7 +886,7 @@ static void ice_check_list_gather_candidates(IceCheckList *cl, Session_Index *si
         }
         else
         {
-            PrintConsole("WARNING: ice wrong network type!\n");
+            WriteLogToFile("WARNING: ice wrong network type!\n");
             return;
         }
         /*add end--------------------Sean20130722----------for video ice------------*/
@@ -1067,7 +1067,7 @@ static void ice_send_stun_server_binding_request(void* base, const struct sockad
 		memcpy(&transaction->transactionID, &msg.msgHdr.tr_id, sizeof(transaction->transactionID));
 		check->transactions = ms_list_append(check->transactions, transaction);
 		transactionID2string(&msg.msgHdr.tr_id, tr_id_str);
-		PrintConsole("ice: Send STUN binding request from port %u [%s]\n", check->srcport, tr_id_str);
+		WriteLogToFile("ice: Send STUN binding request from port %u [%s]\n", check->srcport, tr_id_str);
 //        printf("ice: Send STUN binding request from port %u [%s]\n", check->srcport, tr_id_str);
 
         if (IceNetworkAudio == isVideo) {
@@ -1132,7 +1132,7 @@ static void ice_send_binding_request(IceCheckList *cl, IceCandidatePair *pair, c
     //}
     //else
     {
-        PrintConsole("WARNING: ice wrong network type!\n");
+        WriteLogToFile("WARNING: ice wrong network type!\n");
         return;
     }
 //    yuntongxunwebrtc::VoEBase *base = (yuntongxunwebrtc::VoEBase *)rtp_session->VoEBase;
@@ -1141,7 +1141,7 @@ static void ice_send_binding_request(IceCheckList *cl, IceCandidatePair *pair, c
 
 	if (pair->state == ICP_InProgress) {
 		if (transaction == NULL) {
-			PrintConsole("ice: No transaction found for InProgress pair\n");
+			WriteLogToFile("ice: No transaction found for InProgress pair\n");
 			return;
 		}
 		if (pair->wait_transaction_timeout == TRUE) {
@@ -1174,7 +1174,7 @@ static void ice_send_binding_request(IceCheckList *cl, IceCandidatePair *pair, c
 //    PrintConsole("remote_ufrag = %s\n",ice_check_list_remote_ufrag(cl));
 	snprintf(username.value, sizeof(username.value) - 1, "%s:%s", ice_check_list_remote_ufrag(cl), ice_check_list_local_ufrag(cl));
 	username.sizeValue = strlen(username.value);
-    PrintConsole("remote_pwd = %s\n",ice_check_list_remote_pwd(cl));
+    WriteLogToFile("remote_pwd = %s\n",ice_check_list_remote_pwd(cl));
 	snprintf(password.value, sizeof(password.value) - 1, "%s", ice_check_list_remote_pwd(cl));
 	password.sizeValue = strlen(password.value);
 
@@ -1218,11 +1218,11 @@ static void ice_send_binding_request(IceCheckList *cl, IceCandidatePair *pair, c
 	if (len > 0) {
 		transactionID2string(&transaction->transactionID, tr_id_str);
 		if (pair->state == ICP_InProgress) {
-			PrintConsole("ice: Retransmit (%d) binding request for pair %p: %s:%u:%s --> %s:%u:%s [%s]\n", pair->retransmissions, pair,
+			WriteLogToFile("ice: Retransmit (%d) binding request for pair %p: %s:%u:%s --> %s:%u:%s [%s]\n", pair->retransmissions, pair,
 				pair->local->taddr.ip, pair->local->taddr.port, candidate_type_values[pair->local->type],
 				pair->remote->taddr.ip, pair->remote->taddr.port, candidate_type_values[pair->remote->type], tr_id_str);
 		} else {
-			PrintConsole("ice: Send binding request for %s pair %p: %s:%u:%s --> %s:%u:%s [%s]\n", candidate_pair_state_values[pair->state], pair,
+			WriteLogToFile("ice: Send binding request for %s pair %p: %s:%u:%s --> %s:%u:%s [%s]\n", candidate_pair_state_values[pair->state], pair,
 				pair->local->taddr.ip, pair->local->taddr.port, candidate_type_values[pair->local->type],
 				pair->remote->taddr.ip, pair->remote->taddr.port, candidate_type_values[pair->remote->type], tr_id_str);
 		}
@@ -1337,7 +1337,7 @@ static void ice_send_binding_response(const RtpSession *rtp_session, const OrtpE
 		source_addr.sin_port = htons(recvport);
 		source_addr.sin_family = AF_INET;
 		ice_inet_ntoa((struct sockaddr *)&source_addr, sizeof(source_addr), source_addr_str, sizeof(source_addr_str));
-		PrintConsole("ice: Send binding response: %s:%u --> %s:%u [%s]\n", source_addr_str, recvport, dest_addr_str, dest->port, tr_id_str);
+		WriteLogToFile("ice: Send binding response: %s:%u --> %s:%u [%s]\n", source_addr_str, recvport, dest_addr_str, dest->port, tr_id_str);
 
 		//TODO:
         //struct	in_addr sin_addr;
@@ -1406,7 +1406,7 @@ static void ice_send_error_response(const RtpSession *rtp_session, const OrtpEve
 		source_addr.sin_port = htons(recvport);
 		source_addr.sin_family = AF_INET;
 		ice_inet_ntoa((struct sockaddr *)&source_addr, sizeof(source_addr), source_addr_str, sizeof(source_addr_str));
-		PrintConsole("ice: Send error response: %s:%u --> %s:%u [%s]\n", source_addr_str, recvport, dest_addr_str, dest->port, tr_id_str);
+		WriteLogToFile("ice: Send error response: %s:%u --> %s:%u [%s]\n", source_addr_str, recvport, dest_addr_str, dest->port, tr_id_str);
 
 		//TODO:
         //struct	in_addr sin_addr;
@@ -1458,7 +1458,7 @@ static void ice_send_indication(const IceCandidatePair *pair, const RtpSession *
 
 	len = stunEncodeMessage(&indication, buf, len, NULL);
 	if (len > 0) {
-		PrintConsole("ice: Send indication for pair %p: %s:%u:%s --> %s:%u:%s\n", pair,
+		WriteLogToFile("ice: Send indication for pair %p: %s:%u:%s --> %s:%u:%s\n", pair,
 			pair->local->taddr.ip, pair->local->taddr.port, candidate_type_values[pair->local->type],
 			pair->remote->taddr.ip, pair->remote->taddr.port, candidate_type_values[pair->remote->type]);
 //		sendMessage(socket, buf, len, dest.addr, dest.port);
@@ -1508,27 +1508,27 @@ static int ice_find_candidate_from_ip_address(const IceCandidate *candidate, con
 static int ice_check_received_binding_request_attributes(const RtpSession *rtp_session, const OrtpEventData *evt_data, const StunMessage *msg, const StunAddress4 *remote_addr)
 {
 	if (!msg->hasMessageIntegrity) {
-		PrintConsole("ice: Received binding request missing MESSAGE-INTEGRITY attribute\n");
+		WriteLogToFile("ice: Received binding request missing MESSAGE-INTEGRITY attribute\n");
 		ice_send_error_response(rtp_session, evt_data, msg, 4, 0, remote_addr, "Missing MESSAGE-INTEGRITY attribute");
 		return -1;
 	}
 	if (!msg->hasUsername) {
-		PrintConsole("ice: Received binding request missing USERNAME attribute\n");
+		WriteLogToFile("ice: Received binding request missing USERNAME attribute\n");
 		ice_send_error_response(rtp_session, evt_data, msg, 4, 0, remote_addr, "Missing USERNAME attribute");
 		return -1;
 	}
 	if (!msg->hasFingerprint) {
-		PrintConsole("ice: Received binding request missing FINGERPRINT attribute\n");
+		WriteLogToFile("ice: Received binding request missing FINGERPRINT attribute\n");
 		ice_send_error_response(rtp_session, evt_data, msg, 4, 0, remote_addr, "Missing FINGERPRINT attribute");
 		return -1;
 	}
 	if (!msg->hasPriority) {
-		PrintConsole("ice: Received binding request missing PRIORITY attribute\n");
+		WriteLogToFile("ice: Received binding request missing PRIORITY attribute\n");
 		ice_send_error_response(rtp_session, evt_data, msg, 4, 0, remote_addr, "Missing PRIORITY attribute");
 		return -1;
 	}
 	if (!msg->hasIceControlling && !msg->hasIceControlled) {
-		PrintConsole("ice: Received binding request missing ICE-CONTROLLING or ICE-CONTROLLED attribute\n");
+		WriteLogToFile("ice: Received binding request missing ICE-CONTROLLING or ICE-CONTROLLED attribute\n");
 		ice_send_error_response(rtp_session, evt_data ,msg, 4, 0, remote_addr, "Missing ICE-CONTROLLING or ICE-CONTROLLED attribute");
 		return -1;
 	}
@@ -1549,7 +1549,7 @@ static int ice_check_received_binding_request_integrity(const IceCheckList *cl, 
 	newlen = htons(msg->msgHdr.msgLength);
 	memcpy(lenpos, &newlen, sizeof(uint16_t));
 	if (memcmp(msg->messageIntegrity.hash, hmac, sizeof(hmac)) != 0) {
-		PrintConsole("ice: Wrong MESSAGE-INTEGRITY in received binding request\n");
+		WriteLogToFile("ice: Wrong MESSAGE-INTEGRITY in received binding request\n");
 		ice_send_error_response(rtp_session, evt_data, msg, 4, 1, remote_addr, "Wrong MESSAGE-INTEGRITY attribute");
 		return -1;
 	}
@@ -1566,7 +1566,7 @@ static int ice_check_received_binding_request_username(const IceCheckList *cl, c
 	memcpy(username, msg->username.value, msg->username.sizeValue);
 	colon = strchr(username, ':');
 	if ((colon == NULL) || (strncmp(username, ice_check_list_local_ufrag(cl), colon - username) != 0)) {
-		PrintConsole("ice: Wrong USERNAME attribute\n");
+		WriteLogToFile("ice: Wrong USERNAME attribute\n");
 		ice_send_error_response(rtp_session, evt_data, msg, 4, 1, remote_addr, "Wrong USERNAME attribute");
 		return -1;
 	}
@@ -1577,18 +1577,18 @@ static int ice_check_received_binding_request_role_conflict(const IceCheckList *
 {
 	/* Detect and repair role conflicts according to 7.2.1.1. */
 	if ((cl->session111->role == IR_Controlling) && (msg->hasIceControlling)) {
-		PrintConsole("ice: Role conflict, both agents are CONTROLLING\n");
+		WriteLogToFile("ice: Role conflict, both agents are CONTROLLING\n");
 		if (cl->session111->tie_breaker >= msg->iceControlling.value) {
 			ice_send_error_response(rtp_session, evt_data, msg, 4, 87, remote_addr, "Role Conflict");
 			return -1;
 		} else {
-			PrintConsole("ice: Switch to the CONTROLLED role\n");
+			WriteLogToFile("ice: Switch to the CONTROLLED role\n");
 			ice_session_set_role(cl->session111, IR_Controlled);
 		}
 	} else if ((cl->session111->role == IR_Controlled) && (msg->hasIceControlled)) {
-		PrintConsole("ice: Role conflict, both agents are CONTROLLED\n");
+		WriteLogToFile("ice: Role conflict, both agents are CONTROLLED\n");
 		if (cl->session111->tie_breaker >= msg->iceControlled.value) {
-			PrintConsole("ice: Switch to the CONTROLLING role\n");
+			WriteLogToFile("ice: Switch to the CONTROLLING role\n");
 			ice_session_set_role(cl->session111, IR_Controlling);
 		} else {
 			ice_send_error_response(rtp_session, evt_data, msg, 4, 87, remote_addr, "Role Conflict");
@@ -1640,7 +1640,7 @@ static IceCandidate * ice_learn_peer_reflexive_candidate(IceCheckList *cl, const
 
 	elem = ms_list_find_custom(cl->remote_candidates, (MSCompareFunc)ice_find_candidate_from_transport_address, taddr);
 	if (elem == NULL) {
-		PrintConsole("ice: Learned peer reflexive candidate %s:%d\n", taddr->ip, taddr->port);
+		WriteLogToFile("ice: Learned peer reflexive candidate %s:%d\n", taddr->ip, taddr->port);
 		/* Add peer reflexive candidate to the remote candidates list. */
 		memset(foundation, '\0', sizeof(foundation));
 		ice_generate_arbitrary_foundation(foundation, sizeof(foundation), cl->remote_candidates);
@@ -1674,7 +1674,7 @@ static IceCandidatePair * ice_trigger_connectivity_check_on_binding_request(IceC
 	ice_fill_transport_address(&local_taddr, source_addr_str, recvport);
 	elem = ms_list_find_custom(cl->local_candidates, (MSCompareFunc)ice_find_candidate_from_transport_address, &local_taddr);
 	if (elem == NULL) {
-		PrintConsole("ice: Local candidate %s:%u not found!\n", local_taddr.ip, local_taddr.port);
+		WriteLogToFile("ice: Local candidate %s:%u not found!\n", local_taddr.ip, local_taddr.port);
 		return NULL;
 	}
 	candidates.local = (IceCandidate *)elem->data;
@@ -1683,7 +1683,7 @@ static IceCandidatePair * ice_trigger_connectivity_check_on_binding_request(IceC
 	} else {
 		elem = ms_list_find_custom(cl->remote_candidates, (MSCompareFunc)ice_find_candidate_from_transport_address, remote_taddr);
 		if (elem == NULL) {
-			PrintConsole("ice: Remote candidate %s:%u not found!\n", remote_taddr->ip, remote_taddr->port);
+			WriteLogToFile("ice: Remote candidate %s:%u not found!\n", remote_taddr->ip, remote_taddr->port);
 			return NULL;
 		}
 		candidates.remote = (IceCandidate *)elem->data;
@@ -1691,7 +1691,7 @@ static IceCandidatePair * ice_trigger_connectivity_check_on_binding_request(IceC
 	elem = ms_list_find_custom(cl->check_list, (MSCompareFunc)ice_find_pair_from_candidates, &candidates);
 	if (elem == NULL) {
 		/* The pair is not in the check list yet. */
-		PrintConsole("ice: Add new candidate pair in the check list, cl = %p,session_type = %d\n",cl,cl->rtp_session->session_type);
+		WriteLogToFile("ice: Add new candidate pair in the check list, cl = %p,session_type = %d\n",cl,cl->rtp_session->session_type);
 		/* Check if the pair is in the list of pairs even if it is not in the check list. */
 		elem = ms_list_find_custom(cl->pairs, (MSCompareFunc)ice_find_pair_from_candidates, &candidates);
 		if (elem == NULL) {
@@ -1793,7 +1793,7 @@ static int ice_check_received_binding_response_addresses(const RtpSession *rtp_s
 	// TODO: Handle IPv6 for ipi_addr
 	if ((remote_addr->addr != dest.addr) || (remote_addr->port != dest.port) || (ntohl(evt_data->packet->recv_addr.addr.ipi_addr.s_addr) != local.addr) || (local.port != pair->local->taddr.port)) {
 		/* Non-symmetric addresses, set the state of the pair to Failed as defined in 7.1.3.1. */
-		PrintConsole("ice: Non symmetric addresses, set state of pair %p to Failed\n", pair);
+		WriteLogToFile("ice: Non symmetric addresses, set state of pair %p to Failed\n", pair);
 		ice_pair_set_state(pair, ICP_Failed);
 		return -1;
 	}
@@ -1803,15 +1803,15 @@ static int ice_check_received_binding_response_addresses(const RtpSession *rtp_s
 static int ice_check_received_binding_response_attributes(const StunMessage *msg, const StunAddress4 *remote_addr)
 {
 	if (!msg->hasUsername) {
-		PrintConsole("ice: Received binding response missing USERNAME attribute\n");
+		WriteLogToFile("ice: Received binding response missing USERNAME attribute\n");
 		return -1;
 	}
 	if (!msg->hasFingerprint) {
-		PrintConsole("ice: Received binding response missing FINGERPRINT attribute\n");
+		WriteLogToFile("ice: Received binding response missing FINGERPRINT attribute\n");
 		return -1;
 	}
 	if (!msg->hasXorMappedAddress) {
-		PrintConsole("ice: Received binding response missing XOR-MAPPED-ADDRESS attribute\n");
+		WriteLogToFile("ice: Received binding response missing XOR-MAPPED-ADDRESS attribute\n");
 		return -1;
 	}
 	return 0;
@@ -1832,7 +1832,7 @@ static IceCandidate * ice_discover_peer_reflexive_candidate(IceCheckList *cl, co
 	taddr.port = msg->xorMappedAddress.ipv4.port;
 	elem = ms_list_find_custom(cl->local_candidates, (MSCompareFunc)ice_find_candidate_from_transport_address, &taddr);
 	if (elem == NULL) {
-		PrintConsole("ice: Discovered peer reflexive candidate %s:%d\n", taddr.ip, taddr.port);
+		WriteLogToFile("ice: Discovered peer reflexive candidate %s:%d\n", taddr.ip, taddr.port);
 		/* Add peer reflexive candidate to the local candidates list. */
 		candidate = ice_add_local_candidate(cl, "prflx", taddr.ip, taddr.port, pair->local->componentID, pair->local);
 		ice_compute_candidate_foundation(candidate, cl);
@@ -1879,7 +1879,7 @@ static IceCandidatePair * ice_construct_valid_pair(IceCheckList *cl, RtpSession 
 	elem = ms_list_find_custom(cl->valid_list, (MSCompareFunc)ice_find_valid_pair, valid_pair);
 	if (elem == NULL) {
 		cl->valid_list = ms_list_insert_sorted(cl->valid_list, valid_pair, (MSCompareFunc)ice_compare_valid_pair_priorities);
-		PrintConsole("ice: Added pair %p to the valid list: %s:%u:%s --> %s:%u:%s\n", pair,
+		WriteLogToFile("ice: Added pair %p to the valid list: %s:%u:%s --> %s:%u:%s\n", pair,
 			pair->local->taddr.ip, pair->local->taddr.port, candidate_type_values[pair->local->type],
 			pair->remote->taddr.ip, pair->remote->taddr.port, candidate_type_values[pair->remote->type]);
 		elem = ms_list_find_custom(cl->losing_pairs, (MSCompareFunc)ice_find_pair_from_candidates, &candidates);
@@ -1897,7 +1897,7 @@ static IceCandidatePair * ice_construct_valid_pair(IceCheckList *cl, RtpSession 
 			}
 		}
 	} else {
-		PrintConsole("ice: Pair already in the valid list: %s:%u:%s --> %s:%u:%s\n",
+		WriteLogToFile("ice: Pair already in the valid list: %s:%u:%s --> %s:%u:%s\n",
 			pair->local->taddr.ip, pair->local->taddr.port, candidate_type_values[pair->local->type],
 			pair->remote->taddr.ip, pair->remote->taddr.port, candidate_type_values[pair->remote->type]);
 		ms_free((void **)&valid_pair);
@@ -1914,7 +1914,7 @@ static int ice_compare_pair_foundations(const IceCandidatePair *p1, const IceCan
 static void ice_change_state_of_frozen_pairs_to_waiting(IceCandidatePair *pair, const IceCandidatePair *succeeded_pair)
 {
 	if ((pair != succeeded_pair) && (pair->state == ICP_Frozen) && (ice_compare_pair_foundations(pair, succeeded_pair) == 0)) {
-		PrintConsole("ice: Change state of pair %p from Frozen to Waiting\n", pair);
+		WriteLogToFile("ice: Change state of pair %p from Frozen to Waiting\n", pair);
 		ice_pair_set_state(pair, ICP_Waiting);
 	}
 }
@@ -2008,7 +2008,7 @@ static void ice_handle_received_binding_response(IceCheckList *cl, RtpSession *r
 			if (ms_list_find_custom(cl->stun_server_checks, (MSCompareFunc)ice_find_non_responded_stun_server_check, NULL) == NULL) {
 				cl->gathering_candidates = FALSE;
 				cl->gathering_finished = TRUE;
-				PrintConsole("ice: Finished candidates gathering for check list %p\n", cl);
+				WriteLogToFile("ice: Finished candidates gathering for check list %p\n", cl);
 				ice_dump_candidates(cl);
 				if (ms_list_find_custom(cl->session111->streams, (MSCompareFunc)ice_find_check_list_gathering_candidates, NULL) == NULL) {
 					/* Notify the application when there is no longer any check list gathering candidates. */
@@ -2032,7 +2032,7 @@ static void ice_handle_received_binding_response(IceCheckList *cl, RtpSession *r
 		/* We received an error response concerning an unknown binding request, ignore it... */
 		char tr_id_str[25];
 		transactionID2string(&msg->msgHdr.tr_id, tr_id_str);
-		PrintConsole("ice: Received a binding response for an unknown transaction ID: %s\n", tr_id_str);
+		WriteLogToFile("ice: Received a binding response for an unknown transaction ID: %s\n", tr_id_str);
 		return;
 	}
 
@@ -2077,7 +2077,7 @@ static void ice_handle_received_error_response(IceCheckList *cl, RtpSession *rtp
 
 	pair = (IceCandidatePair *)((IceTransaction *)elem->data)->pair;
 	ice_pair_set_state(pair, ICP_Failed);
-	PrintConsole("ice: Error response, set state to Failed for pair %p: %s:%u:%s --> %s:%u:%s\n", pair,
+	WriteLogToFile("ice: Error response, set state to Failed for pair %p: %s:%u:%s --> %s:%u:%s\n", pair,
 		pair->local->taddr.ip, pair->local->taddr.port, candidate_type_values[pair->local->type],
 		pair->remote->taddr.ip, pair->remote->taddr.port, candidate_type_values[pair->remote->type]);
 
@@ -2085,11 +2085,11 @@ static void ice_handle_received_error_response(IceCheckList *cl, RtpSession *rtp
 		/* Handle error 487 (Role Conflict) according to 7.1.3.1. */
 		switch (pair->role) {
 			case IR_Controlling:
-				PrintConsole("ice: Switch to the CONTROLLED role\n");
+				WriteLogToFile("ice: Switch to the CONTROLLED role\n");
 				ice_session_set_role(cl->session111, IR_Controlled);
 				break;
 			case IR_Controlled:
-				PrintConsole("ice: Switch to the CONTROLLING role\n");
+				WriteLogToFile("ice: Switch to the CONTROLLING role\n");
 				ice_session_set_role(cl->session111, IR_Controlling);
 				break;
 		}
@@ -2129,7 +2129,7 @@ void ice_handle_stun_packet(IceCheckList *cl, RtpSession *rtp_session, const Ort
     
 	res = stunParseMessage((char *) mp->b_rptr, mp->b_wptr - mp->b_rptr, &msg);
 	if (res == FALSE) {
-		PrintConsole("ice: Received invalid STUN packet\n");
+		WriteLogToFile("ice: Received invalid STUN packet\n");
 		return;
 	}
     
@@ -2138,14 +2138,14 @@ void ice_handle_stun_packet(IceCheckList *cl, RtpSession *rtp_session, const Ort
 	switch (aaddr->ss_family) {
 		case AF_INET6:
 			remote_port = ntohs(((struct sockaddr_in6 *)&evt_data->ep->addr)->sin6_port);
-			PrintConsole("ice: Received IPv6 STUN packet. Not supported yet!\n");
+			WriteLogToFile("ice: Received IPv6 STUN packet. Not supported yet!\n");
 			return;
 		case AF_INET:
 			udp_remote = (struct sockaddr_in*)&evt_data->ep->addr;
 			remote_port = ntohs(udp_remote->sin_port);
 			break;
 		default:
-			PrintConsole("ice: Wrong socket family\n");
+			WriteLogToFile("ice: Wrong socket family\n");
 			return;
 	}
 	ice_inet_ntoa((struct sockaddr *)&evt_data->ep->addr, evt_data->ep->addrlen, src6host, sizeof(src6host));
@@ -2162,18 +2162,18 @@ void ice_handle_stun_packet(IceCheckList *cl, RtpSession *rtp_session, const Ort
 	source_addr.sin_family = AF_INET;
 	ice_inet_ntoa((struct sockaddr *)&source_addr, sizeof(source_addr), source_addr_str, sizeof(source_addr_str));
 	if (STUN_IS_REQUEST(msg.msgHdr.msgType)) {
-        PrintConsole("ice: Recv binding request: %s:%u <-- %s:%u [%s]\n", source_addr_str, recvport, src6host, remote_port, tr_id_str);
+        WriteLogToFile("ice: Recv binding request: %s:%u <-- %s:%u [%s]\n", source_addr_str, recvport, src6host, remote_port, tr_id_str);
 		ice_handle_received_binding_request(cl, rtp_session, evt_data, &msg, &remote_addr, src6host);
 	} else if (STUN_IS_SUCCESS_RESP(msg.msgHdr.msgType)) {
-        PrintConsole("ice: Recv binding response: %s:%u <-- %s:%u [%s]\n", source_addr_str, recvport, src6host, remote_port, tr_id_str);
+        WriteLogToFile("ice: Recv binding response: %s:%u <-- %s:%u [%s]\n", source_addr_str, recvport, src6host, remote_port, tr_id_str);
 		ice_handle_received_binding_response(cl, rtp_session, evt_data, &msg, &remote_addr,data);
 	} else if (STUN_IS_ERR_RESP(msg.msgHdr.msgType)) {
-        PrintConsole("ice: Recv error response: %s:%u <-- %s:%u [%s]\n", source_addr_str, recvport, src6host, remote_port, tr_id_str);
+        WriteLogToFile("ice: Recv error response: %s:%u <-- %s:%u [%s]\n", source_addr_str, recvport, src6host, remote_port, tr_id_str);
 		ice_handle_received_error_response(cl, rtp_session, &msg);
 	} else if (STUN_IS_INDICATION(msg.msgHdr.msgType)) {
-        PrintConsole("ice: Recv indication: %s:%u <-- %s:%u [%s]\n", source_addr_str, recvport, src6host, remote_port, tr_id_str);
+        WriteLogToFile("ice: Recv indication: %s:%u <-- %s:%u [%s]\n", source_addr_str, recvport, src6host, remote_port, tr_id_str);
 	} else {
-		PrintConsole("ice: STUN message type not handled\n");
+		WriteLogToFile("ice: STUN message type not handled\n");
 	}
 }
 
@@ -2201,7 +2201,7 @@ static IceCandidate * ice_candidate_new(const char *type, const char *ip, int po
 		candidate_type = ICT_RelayedCandidate;
 	}
 	else {
-		PrintConsole("ice: Invalid candidate type\n");
+		WriteLogToFile("ice: Invalid candidate type\n");
 		return NULL;
 	}
 
@@ -2253,7 +2253,7 @@ IceCandidate * ice_add_local_candidate(IceCheckList* cl, const char* type, const
 	IceCandidate *candidate;
 
 	if (ms_list_size(cl->local_candidates) >= ICE_MAX_NB_CANDIDATES) {
-		PrintConsole("ice: Candidate list limited to %d candidates\n", ICE_MAX_NB_CANDIDATES);
+		WriteLogToFile("ice: Candidate list limited to %d candidates\n", ICE_MAX_NB_CANDIDATES);
 		return NULL;
 	}
 
@@ -2280,7 +2280,7 @@ IceCandidate * ice_add_remote_candidate(IceCheckList *cl, const char *type, cons
 	IceCandidate *candidate;
 
 	if (ms_list_size(cl->local_candidates) >= ICE_MAX_NB_CANDIDATES) {
-		PrintConsole("ice: Candidate list limited to %d candidates\n", ICE_MAX_NB_CANDIDATES);
+		WriteLogToFile("ice: Candidate list limited to %d candidates\n", ICE_MAX_NB_CANDIDATES);
 		return NULL;
 	}
 
@@ -2345,12 +2345,12 @@ void ice_add_losing_pair(IceCheckList *cl, uint16_t componentID, const char *loc
 			srflx_elem = ms_list_find_custom(cl->remote_candidates, (MSCompareFunc)ice_find_candidate_from_type_and_componentID, &tc);
 		}
 		if (srflx_elem != NULL) {
-			PrintConsole("ice: Add missing local candidate %s:%u:relay\n", local_addr, local_port);
+			WriteLogToFile("ice: Add missing local candidate %s:%u:relay\n", local_addr, local_port);
 			added_missing_relay_candidate = TRUE;
 			lr.local = ice_add_local_candidate(cl, "relay", local_addr, local_port, componentID, (IceCandidate*)srflx_elem->data);
 			ice_compute_candidate_foundation(lr.local, cl);
 		} else {
-			PrintConsole("ice: Local candidate %s:%u should have been found\n", local_addr, local_port);
+			WriteLogToFile("ice: Local candidate %s:%u should have been found\n", local_addr, local_port);
 			return;
 		}
 	} else {
@@ -2360,7 +2360,7 @@ void ice_add_losing_pair(IceCheckList *cl, uint16_t componentID, const char *loc
 	taddr.port = remote_port;
 	elem = ms_list_find_custom(cl->remote_candidates, (MSCompareFunc)ice_find_candidate_from_transport_address, &taddr);
 	if (elem == NULL) {
-		PrintConsole("ice: Remote candidate %s:%u should have been found\n", remote_addr, remote_port);
+		WriteLogToFile("ice: Remote candidate %s:%u should have been found\n", remote_addr, remote_port);
 		return;
 	}
 	lr.remote = (IceCandidate *)elem->data;
@@ -2391,13 +2391,13 @@ void ice_add_losing_pair(IceCheckList *cl, uint16_t componentID, const char *loc
 		ms_list_for_each2(cl->check_list, (void (*)(void*,void*))ice_check_if_losing_pair_should_cause_restart, &lif);
 		if ((lif.in_progress_candidates == FALSE) && (lif.failed_candidates == TRUE)) {
 			/* A network failure, such as a network partition or serious packet loss has most likely occured, restart ICE after some delay. */
-			PrintConsole("ice: ICE restart is needed!\n");
+			WriteLogToFile("ice: ICE restart is needed!\n");
 			cl->session111->event_time = ice_add_ms(ice_current_time(), 1000);
 			cl->session111->event_value = ORTP_EVENT_ICE_RESTART_NEEDED;
 			cl->session111->send_event = TRUE;
 		} else if (lif.in_progress_candidates == TRUE) {
 			/* Wait for the in progress checks to complete. */
-			PrintConsole("ice: Added losing pair, wait for InProgress checks to complete\n");
+			WriteLogToFile("ice: Added losing pair, wait for InProgress checks to complete\n");
 			elem = ms_list_find(cl->losing_pairs, pair);
 			if (elem == NULL) {
 				cl->losing_pairs = ms_list_append(cl->losing_pairs, pair);
@@ -2406,7 +2406,7 @@ void ice_add_losing_pair(IceCheckList *cl, uint16_t componentID, const char *loc
 	} else {
 		valid_pair = (IceValidCandidatePair *)elem->data;
 		valid_pair->selected = TRUE;
-		PrintConsole("ice: Select losing valid pair\n");
+		WriteLogToFile("ice: Select losing valid pair\n");
 	}
 }
 
@@ -2810,7 +2810,7 @@ static void ice_perform_regular_nomination(IceValidCandidatePair *valid_pair, Ch
 				MSTimeSpec curtime = ice_current_time();
 				if (cr->cl->nomination_delay_running == FALSE) {
 					/* There is a potential valid pair but it is a relayed candidate, wait a little so that a better choice may be found. */
-					PrintConsole("ice: Potential relayed valid pair, wait for a better pair.\n");
+					WriteLogToFile("ice: Potential relayed valid pair, wait for a better pair.\n");
 					cr->cl->nomination_delay_running = TRUE;
 					cr->cl->nomination_delay_start_time = ice_current_time();
 				} else if (ice_compare_time(curtime, cr->cl->nomination_delay_start_time) >= ICE_NOMINATION_DELAY) {
@@ -2934,7 +2934,7 @@ static void ice_continue_processing_on_next_check_list(IceCheckList *cl, RtpSess
 {
 	MSList *elem = ms_list_find(cl->session111->streams, cl);
 	if (elem == NULL) {
-		PrintConsole("ice: Could not find check list in the session\n");
+		WriteLogToFile("ice: Could not find check list in the session\n");
 		return;
 	}
 	elem = ms_list_find_custom(cl->session111->streams, (MSCompareFunc)ice_find_running_check_list, NULL);
@@ -2984,7 +2984,7 @@ static void ice_conclude_processing(IceCheckList *cl, RtpSession *rtp_session)
 			if ((cl->state != ICL_Completed) && (nb_losing_pairs == 0)) {
 				cl->state = ICL_Completed;
 				cl->nomination_delay_running = FALSE;
-				PrintConsole("ice: Finished ICE check list processing successfully!\n");
+				WriteLogToFile("ice: Finished ICE check list processing successfully!\n");
 				ice_dump_valid_list(cl);
 				/* Initialise keepalive time. */
 				cl->keepalive_time = ice_current_time();
@@ -3002,7 +3002,7 @@ static void ice_conclude_processing(IceCheckList *cl, RtpSession *rtp_session)
 			if (cb.result == TRUE) {
 				if (cl->state != ICL_Failed) {
 					cl->state = ICL_Failed;
-					PrintConsole("ice: Failed ICE check list processing!\n");
+					WriteLogToFile("ice: Failed ICE check list processing!\n");
 					ice_dump_valid_list(cl);
 					/* Notify the application of the failed processing. */
 					ev = ortp_event_new(ORTP_EVENT_ICE_CHECK_LIST_PROCESSING_FINISHED);
@@ -3133,7 +3133,7 @@ static void ice_send_stun_server_checks(IceStunServerCheck *check, IceCheckList 
             }
             else
             {
-                PrintConsole("WARNING: ice wrong network type!\n");
+                WriteLogToFile("WARNING: ice wrong network type!\n");
                 return;
             }
 //            ice_send_stun_server_binding_request(base, (struct sockaddr *)&cl->session->ss, cl->session->ss_len, check,0,cl->rtp_session->session_type,cl->rtp_session->channel);
@@ -3273,7 +3273,7 @@ void ice_check_list_process(IceCheckList *cl, RtpSession *rtp_session)
 			}
 			break;
 		case ICL_Failed:
-            PrintConsole("ICL_Failed\n");
+            WriteLogToFile("ICL_Failed\n");
 			/* Nothing to be done. */
 			break;
 	}
@@ -3324,7 +3324,7 @@ static char * ice_inet_ntoa(struct sockaddr *addr, int addrlen, char *dest, int 
 #else
 	err = getnameinfo(addr, addrlen, dest, destlen, NULL, 0, NI_NUMERICHOST);
 	if (err != 0) {
-		PrintConsole("ice: getnameinfo error: %s\n", gai_strerror(err));
+		WriteLogToFile("ice: getnameinfo error: %s\n", gai_strerror(err));
 	}
 #endif
 	return dest;
@@ -3476,9 +3476,9 @@ void ice_check_list_print_route(const IceCheckList *cl, const char *message)
 		memset(remote_rtcp_addr, '\0', sizeof(remote_rtcp_addr));
 		ice_get_remote_addr_and_ports_from_valid_pairs(cl, remote_rtp_addr, &remote_rtp_port, remote_rtcp_addr, &remote_rtcp_port, sizeof(remote_rtp_addr));
 		ice_get_local_addr_and_ports_from_valid_pairs(cl, local_rtp_addr, &local_rtp_port, local_rtcp_addr, &local_rtcp_port, sizeof(local_rtp_addr));
-		PrintConsole("%s\n", message);
-		PrintConsole("\tRTP: %s:%u --> %s:%u\n", local_rtp_addr, local_rtp_port, remote_rtp_addr, remote_rtp_port);
-		PrintConsole("\tRTCP: %s:%u --> %s:%u\n", local_rtcp_addr, local_rtcp_port, remote_rtcp_addr, remote_rtcp_port);
+		WriteLogToFile("%s\n", message);
+		WriteLogToFile("\tRTP: %s:%u --> %s:%u\n", local_rtp_addr, local_rtp_port, remote_rtp_addr, remote_rtp_port);
+		WriteLogToFile("\tRTCP: %s:%u --> %s:%u\n", local_rtcp_addr, local_rtcp_port, remote_rtcp_addr, remote_rtcp_port);
 	}
 }
 
@@ -3490,7 +3490,7 @@ void ice_dump_session(const IceSession* session)
 {
 	if (session == NULL) return;
 //#ifdef ANDROID
-	PrintConsole("Session:\n"
+	WriteLogToFile("Session:\n"
 		"\trole=%s tie-breaker=%llx\n"
 		"\tlocal_ufrag=%s local_pwd=%s\n\tremote_ufrag=%s remote_pwd=%s",
 		role_values[session->role], session->tie_breaker, session->local_ufrag, session->local_pwd, session->remote_ufrag, session->remote_pwd);
@@ -3505,7 +3505,7 @@ void ice_dump_session(const IceSession* session)
 
 static void ice_dump_candidate(const IceCandidate *candidate, const char * const prefix)
 {
-	PrintConsole("%s[%p]: %stype=%s ip=%s port=%u componentID=%d priority=%u foundation=%s base=%p\n", prefix, candidate,
+	WriteLogToFile("%s[%p]: %stype=%s ip=%s port=%u componentID=%d priority=%u foundation=%s base=%p\n", prefix, candidate,
 		((candidate->is_default == TRUE) ? "* " : "  "),
 		candidate_type_values[candidate->type], candidate->taddr.ip, candidate->taddr.port,
 		candidate->componentID, candidate->priority, candidate->foundation, candidate->base);
@@ -3514,15 +3514,15 @@ static void ice_dump_candidate(const IceCandidate *candidate, const char * const
 void ice_dump_candidates(const IceCheckList* cl)
 {
 	if (cl == NULL) return;
-	PrintConsole("Local candidates: cl = %p\n",cl);
+	WriteLogToFile("Local candidates: cl = %p\n",cl);
 	ms_list_for_each2(cl->local_candidates, (void (*)(void*,void*))ice_dump_candidate, (void *)"\t");
-	PrintConsole("Remote candidates: cl = %p\n",cl);
+	WriteLogToFile("Remote candidates: cl = %p\n",cl);
 	ms_list_for_each2(cl->remote_candidates, (void (*)(void*,void*))ice_dump_candidate, (void *)"\t");
 }
 
 static void ice_dump_candidate_pair(const IceCandidatePair *pair, int *i)
 {
-	PrintConsole("\t%d [%p]: %sstate=%s use=%d nominated=%d priority=%llu\n", *i, pair, ((pair->is_default == TRUE) ? "* " : "  "),
+	WriteLogToFile("\t%d [%p]: %sstate=%s use=%d nominated=%d priority=%llu\n", *i, pair, ((pair->is_default == TRUE) ? "* " : "  "),
 		candidate_pair_state_values[pair->state], pair->use_candidate, pair->is_nominated, pair->priority);
 	ice_dump_candidate(pair->local, "\t\tLocal: ");
 	ice_dump_candidate(pair->remote, "\t\tRemote: ");
@@ -3533,19 +3533,19 @@ void ice_dump_candidate_pairs(const IceCheckList* cl)
 {
 	int i = 1;
 	if (cl == NULL) return;
-	PrintConsole("Candidate pairs: cl = %p\n",cl);
+	WriteLogToFile("Candidate pairs: cl = %p\n",cl);
 	ms_list_for_each2(cl->pairs, (void (*)(void*,void*))ice_dump_candidate_pair, (void*)&i);
 }
 
 static void ice_dump_candidate_pair_foundation(const IcePairFoundation **foundation)
 {
-	PrintConsole("\t%s\t%s\n", (*foundation)->local, (*foundation)->remote);
+	WriteLogToFile("\t%s\t%s\n", (*foundation)->local, (*foundation)->remote);
 }
 
 void ice_dump_candidate_pairs_foundations(const IceCheckList* cl)
 {
 	if (cl == NULL) return;
-	PrintConsole("Candidate pairs foundations: cl = %p\n",cl);
+	WriteLogToFile("Candidate pairs foundations: cl = %p\n",cl);
 	ms_list_for_each(cl->foundations, (void (*)(void**))ice_dump_candidate_pair_foundation);
 }
 
@@ -3554,7 +3554,7 @@ static void ice_dump_valid_pair(const IceValidCandidatePair *valid_pair, int *i)
 	int j = *i;
 	ice_dump_candidate_pair(valid_pair->valid, &j);
 	if (valid_pair->selected) {
-		PrintConsole("\t--> selected\n");
+		WriteLogToFile("\t--> selected\n");
 	}
 	*i = j;
 }
@@ -3563,7 +3563,7 @@ void ice_dump_valid_list(const IceCheckList* cl)
 {
 	int i = 1;
 	if (cl == NULL) return;
-	PrintConsole("Valid list:\n");
+	WriteLogToFile("Valid list:\n");
 	ms_list_for_each2(cl->valid_list, (void (*)(void*,void*))ice_dump_valid_pair, &i);
 }
 
@@ -3571,7 +3571,7 @@ void ice_dump_check_list(const IceCheckList* cl)
 {
 	int i = 1;
 	if (cl == NULL) return;
-	PrintConsole("Check list: cl = %p\n",cl);
+	WriteLogToFile("Check list: cl = %p\n",cl);
 	ms_list_for_each2(cl->check_list, (void (*)(void*,void*))ice_dump_candidate_pair, (void*)&i);
 }
 
@@ -3579,18 +3579,18 @@ void ice_dump_triggered_checks_queue(const IceCheckList* cl)
 {
 	int i = 1;
 	if (cl == NULL) return;
-	PrintConsole("Triggered checks queue:\n");
+	WriteLogToFile("Triggered checks queue:\n");
 	ms_list_for_each2(cl->triggered_checks_queue, (void (*)(void*,void*))ice_dump_candidate_pair, (void*)&i);
 }
 
 static void ice_dump_componentID(const uint16_t **componentID)
 {
-	PrintConsole("\t%u\n", **componentID);
+	WriteLogToFile("\t%u\n", **componentID);
 }
 
 void ice_dump_componentIDs(const IceCheckList* cl)
 {
 	if (cl == NULL) return;
-	PrintConsole("Component IDs:\n");
+	WriteLogToFile("Component IDs:\n");
 	ms_list_for_each(cl->local_componentIDs, (void (*)(void**))ice_dump_componentID);
 }

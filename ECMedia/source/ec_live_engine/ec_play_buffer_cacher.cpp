@@ -74,7 +74,7 @@ namespace yuntongxunwebrtc{
     }
     
     void EC_AVCacher::run() {
-        PrintConsole("[EC_AVCacher INFO] %s begin\n", __FUNCTION__);
+        WriteLogToFile("[EC_AVCacher INFO] %s begin\n", __FUNCTION__);
         running_ = true;
         clearCacher();
 
@@ -84,7 +84,7 @@ namespace yuntongxunwebrtc{
     }
     
     void EC_AVCacher::shutdown() {
-        PrintConsole("[EC_AVCacher INFO] %s begin\n", __FUNCTION__);
+        WriteLogToFile("[EC_AVCacher INFO] %s begin\n", __FUNCTION__);
         running_ = false;
        
         playnetworkThread_->Stop();
@@ -92,7 +92,7 @@ namespace yuntongxunwebrtc{
     }
     
     void EC_AVCacher::setReceiverCallback(EC_ReceiverCallback *cb) {
-        PrintConsole("[EC_AVCacher INFO] %s begin\n", __FUNCTION__);
+        WriteLogToFile("[EC_AVCacher INFO] %s begin\n", __FUNCTION__);
         callback_ = cb;
     }
     
@@ -283,7 +283,7 @@ namespace yuntongxunwebrtc{
         got_audio_ = true;
         unsigned int outlen = 0;
         if (aac_decoder_ == NULL) {
-            PrintConsole("[EC_AVCacher INFO] %s create new faac decode handler\n", __FUNCTION__);
+            WriteLogToFile("[EC_AVCacher INFO] %s create new faac decode handler\n", __FUNCTION__);
             aac_decoder_ = aac_decoder_open((unsigned char*)pdata, len, &audio_channels_, &audio_sampleRate_);
             if (audio_channels_ == 0)
                 audio_channels_ = 1;
@@ -300,7 +300,7 @@ namespace yuntongxunwebrtc{
                 }
                 memmove(audio_cache_, audio_cache_ + ct * fsize, a_cache_len_);
             } else{
-                PrintConsole("[EC_AVCacher ERROR] %s faac decode failed, data: %p, length:%d, a_cache_len_:%d\n", __FUNCTION__, pdata, len, a_cache_len_);
+                WriteLogToFile("[EC_AVCacher ERROR] %s faac decode failed, data: %p, length:%d, a_cache_len_:%d\n", __FUNCTION__, pdata, len, a_cache_len_);
             }
         }
     }
@@ -338,7 +338,7 @@ namespace yuntongxunwebrtc{
         PlyPacket* pkt_audio = nullptr;
         _cs_list_audio->Enter();
         if (lst_audio_buffer_.size() > 0) {
-            PrintConsole("EC_AVCacher INFO] %s , lst_audio_buffer_ size:%d\n", __FUNCTION__, lst_audio_buffer_.size());
+            WriteLogToFile("EC_AVCacher INFO] %s , lst_audio_buffer_ size:%d\n", __FUNCTION__, lst_audio_buffer_.size());
             pkt_audio = lst_audio_buffer_.front();
             play_cur_time_ = pkt_audio->_dts;
             

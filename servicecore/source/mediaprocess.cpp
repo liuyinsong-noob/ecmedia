@@ -29,7 +29,7 @@ namespace yuntongxunwebrtc {
 
 static int NoCameraCaptureCb(const int id, const bool capture)
 {
-	PrintConsole("NoCameraCaptureCb id=%d, capture=%d\n", id, capture);
+	WriteLogToFile("NoCameraCaptureCb id=%d, capture=%d\n", id, capture);
 	if (!capture)
 	{
 		//no camera
@@ -45,7 +45,7 @@ static int NoCameraCaptureCb(const int id, const bool capture)
 
 int voe_callback(int channel, int errCode) {
 
-	PrintConsole("voe_callback channid=%d, errCode=%d", channel, errCode);
+	WriteLogToFile("voe_callback channid=%d, errCode=%d", channel, errCode);
 	return 0;
 }
 
@@ -70,7 +70,7 @@ void ServiceCore::ring_stop(int ringmode)
 	}
 	if ( stop_channel_id >=0 )
 	{
-		PrintConsole("ServiceCore::ring_stop(),ringmode=%d,channelID=%d\n",ringmode,stop_channel_id);
+		WriteLogToFile("ServiceCore::ring_stop(),ringmode=%d,channelID=%d\n",ringmode,stop_channel_id);
 		ECMedia_ring_stop(stop_channel_id);
 		if (0 == ringmode) {
 			local_playfile_channelID = -1;
@@ -143,7 +143,7 @@ void ServiceCore::serphone_core_update_streams_destinations(SerPhoneCall *call, 
 	if (call->audiostream && new_audiodesc) {
 		rtp_addr = (new_audiodesc->rtp_addr[0] != '\0') ? new_audiodesc->rtp_addr : new_md->addr;
 		rtcp_addr = (new_audiodesc->rtcp_addr[0] != '\0') ? new_audiodesc->rtcp_addr : new_md->addr;
-		PrintConsole("Change audio stream destination: RTP=%s:%d RTCP=%s:%d\n", rtp_addr, new_audiodesc->rtp_port, rtcp_addr, new_audiodesc->rtcp_port);
+		WriteLogToFile("Change audio stream destination: RTP=%s:%d RTCP=%s:%d\n", rtp_addr, new_audiodesc->rtp_port, rtcp_addr, new_audiodesc->rtcp_port);
 
 		int change_audio = ECMedia_audio_set_send_destination(call->m_AudioChannelID, new_audiodesc->rtp_port, rtp_addr, -1, new_audiodesc->rtcp_port, rtp_addr);
 //        int change_audio = base->SetSendDestination(call->m_AudioChannelID, 7078, "127.0.0.1",kVoEDefault, 7079);
@@ -157,7 +157,7 @@ void ServiceCore::serphone_core_update_streams_destinations(SerPhoneCall *call, 
 	if (call->videostream && new_videodesc) {
 		rtp_addr = (new_videodesc->rtp_addr[0] != '\0') ? new_videodesc->rtp_addr : new_md->addr;
 		rtcp_addr = (new_videodesc->rtcp_addr[0] != '\0') ? new_videodesc->rtcp_addr : new_md->addr;
-		PrintConsole("Change video stream destination: RTP=%s:%d RTCP=%s:%d\n", rtp_addr, new_videodesc->rtp_port, rtcp_addr, new_videodesc->rtcp_port);
+		WriteLogToFile("Change video stream destination: RTP=%s:%d RTCP=%s:%d\n", rtp_addr, new_videodesc->rtp_port, rtcp_addr, new_videodesc->rtcp_port);
 
 		int change_video = ECMedia_video_set_send_destination(call->m_VideoChannelID, rtp_addr, new_videodesc->rtp_port, rtp_addr, new_videodesc->rtcp_port);
 		if (0 == change_video && SalStreamSendRecv == new_videodesc->dir) {
@@ -198,7 +198,7 @@ void ServiceCore::serphone_core_update_streams(SerPhoneCall *call, SalMediaDescr
 
 	//add by xzq to trace the stream
 	if( new_md!= NULL) {
-		PrintConsole("Media stream is  R[%s:%d] <-->L[%s:%d]\n",new_md->addr, new_md->streams[0].port,
+		WriteLogToFile("Media stream is  R[%s:%d] <-->L[%s:%d]\n",new_md->addr, new_md->streams[0].port,
 			call->localdesc->addr,call->audio_port);
 	}
 	if ( m_ringplay_flag ){
@@ -218,13 +218,13 @@ void ServiceCore::serphone_core_update_streams(SerPhoneCall *call, SalMediaDescr
 		if (oldmd){
 			int md_changed = media_parameters_changed(call, oldmd, new_md);
 			if ((md_changed & SAL_MEDIA_DESCRIPTION_CODEC_CHANGED) || call->playing_ringbacktone) {
-				PrintConsole("Media descriptions are different, need to restart the streams.\n");
+				WriteLogToFile("Media descriptions are different, need to restart the streams.\n");
 
 			} else if (md_changed == SAL_MEDIA_DESCRIPTION_UNCHANGED) {
 				call->resultdesc=oldmd;
 				sal_media_description_unref(&new_md);
 				if (call->all_muted) {
-					PrintConsole("Early media finished, unmuting inputs...\n");
+					WriteLogToFile("Early media finished, unmuting inputs...\n");
 					//we were in early media, now we want to enable real media
 					serphone_call_enable_camera (call,serphone_call_camera_enabled (call));
 					if (call->m_AudioChannelID >=0)
@@ -234,12 +234,12 @@ void ServiceCore::serphone_core_update_streams(SerPhoneCall *call, SalMediaDescr
 					video_stream_change_camera(call->videostream,lc->video_conf.device );*/
 #endif
 				}
-				PrintConsole("No need to restart streams, SDP is unchanged.\n");
+				WriteLogToFile("No need to restart streams, SDP is unchanged.\n");
 				return;
 
 			} else {
 				if ( (md_changed & SAL_MEDIA_DESCRIPTION_NETWORK_CHANGED) ) {
-					PrintConsole("Network parameters have changed, update them.\n");
+					WriteLogToFile("Network parameters have changed, update them.\n");
 					serphone_core_update_streams_destinations(call, oldmd, new_md);
 				}
 				call->resultdesc = oldmd;
@@ -338,7 +338,7 @@ void ServiceCore::audio_stream_stop(int channelID)
 	if (channelID>=0) {
 		if (srtp_enable) {
 			if( ECMedia_shutdown_srtp_audio(channelID) ) {
-				PrintConsole("Remove SRTP fail code\n");
+				WriteLogToFile("Remove SRTP fail code\n");
 			}
 		}
 
@@ -466,7 +466,7 @@ void ServiceCore::video_stream_stop(int channelID,int captureID)
 
 int ServiceCore::return_video_width_height(int width,int height,int videoChannelID)
 {
-	PrintConsole("[DEBUG] %s videoChannelID:%d,width:%d, height:%d\n",__FUNCTION__,videoChannelID,width,height);
+	WriteLogToFile("[DEBUG] %s videoChannelID:%d,width:%d, height:%d\n",__FUNCTION__,videoChannelID,width,height);
 
 #ifdef VIDEO_ENABLED
 
@@ -491,7 +491,7 @@ int ServiceCore::return_video_width_height(int width,int height,int videoChannel
 
 int ServiceCore::onLiveStreamVideoResolution(void *handle, int width, int height)
 {
-	PrintConsole("[DEBUG] %s,width:%d, height:%d\n", __FUNCTION__, width, height);
+	WriteLogToFile("[DEBUG] %s,width:%d, height:%d\n", __FUNCTION__, width, height);
 	return 0;
 }
 void ServiceCore::serphone_call_start_media_streams(SerPhoneCall *call, bool_t all_inputs_muted,
@@ -511,7 +511,7 @@ void ServiceCore::serphone_call_start_media_streams(SerPhoneCall *call, bool_t a
 
 	if(call->m_AudioChannelID < 0)
 	{
-		PrintConsole("start_media_stream() called without prior init !\n");
+		WriteLogToFile("start_media_stream() called without prior init !\n");
 		return;
 	}
 	cname=serphone_address_as_string_uri_only(me);
@@ -571,7 +571,7 @@ void ServiceCore::serphone_call_start_audio_stream(SerPhoneCall *call, const cha
 #ifndef WIN32
 	ECMedia_init_audio();
 #endif
-	PrintConsole("yuntongxun trace %s begin\n",__FUNCTION__);
+	WriteLogToFile("yuntongxun trace %s begin\n",__FUNCTION__);
 	int used_pt=-1;
 	/* look for savp stream first */
 	const SalStreamDescription *stream=sal_media_description_find_stream(call->resultdesc,
@@ -610,7 +610,7 @@ void ServiceCore::serphone_call_start_audio_stream(SerPhoneCall *call, const cha
 				}
 				//encryptType = stream->crypto[0].algo;
 
-				PrintConsole("Here user_mode = %d, before func EnableSRTPReceive and EnableSRTPSend we check master key send = %s, \
+				WriteLogToFile("Here user_mode = %d, before func EnableSRTPReceive and EnableSRTPSend we check master key send = %s, \
 					stream->crypto[0].master_key receive = %s, which is after b64_encode\n",
 					user_mode,master_key,stream->crypto[0].master_key);
 
@@ -663,7 +663,7 @@ void ServiceCore::serphone_call_start_audio_stream(SerPhoneCall *call, const cha
 			}
 
 			//add by xzq to trace the stream
-			PrintConsole("Send Stream to Remote [%s:%d]\n",stream->addr[0]!='\0' ? stream->addr : call->resultdesc->addr,
+			WriteLogToFile("Send Stream to Remote [%s:%d]\n",stream->addr[0]!='\0' ? stream->addr : call->resultdesc->addr,
 				stream->port);
 			yuntongxunwebrtc::CodecInst codec_params = {0};
 			bool codec_found = false;
@@ -707,8 +707,8 @@ void ServiceCore::serphone_call_start_audio_stream(SerPhoneCall *call, const cha
 
 			if (codec_found) {
 				//add by xzq to trace the media
-				PrintConsole("yuntongxun trace %s middle 111\n",__FUNCTION__);
-				PrintConsole("Codec is : playload type = %d, payload name is %s  \n",
+				WriteLogToFile("yuntongxun trace %s middle 111\n",__FUNCTION__);
+				WriteLogToFile("Codec is : playload type = %d, payload name is %s  \n",
 					codec_params.pltype, codec_params.plname);
 
                 codec_params.fecEnabled = m_enable_fec;
@@ -758,7 +758,7 @@ void ServiceCore::serphone_call_start_audio_stream(SerPhoneCall *call, const cha
 				ECMedia_set_VAD_status(call->m_AudioChannelID, yuntongxunwebrtc::kVadAggressiveHigh, !m_dtxEnabled);
 			}
 			else {
-				PrintConsole("Can't find codec,mime(%s),clock(%d)\n",p->mime_type,p->clock_rate);
+				WriteLogToFile("Can't find codec,mime(%s),clock(%d)\n",p->mime_type,p->clock_rate);
 			}
 
 			if(stream->nack_support)
@@ -768,13 +768,13 @@ void ServiceCore::serphone_call_start_audio_stream(SerPhoneCall *call, const cha
 			ECMedia_set_RTCP_status(call->m_AudioChannelID);
 			//rtp_rtcp->SetFECStatus(call->m_AudioChannelID,  true);
 
-			PrintConsole("yuntongxun trace %s middle 112\n",__FUNCTION__);
+			WriteLogToFile("yuntongxun trace %s middle 112\n",__FUNCTION__);
 			if(m_usedSpeakerIndex >= 0)
 				ECMedia_select_playout_device(m_usedSpeakerIndex);
 			if(m_usedMicrophoneIndex >= 0)
 				ECMedia_select_record_device(m_usedMicrophoneIndex);
 			//hardware->SetPlayoutDevice(0);
-			PrintConsole("yuntongxun trace %s middle 113.\n",__FUNCTION__);
+			WriteLogToFile("yuntongxun trace %s middle 113.\n",__FUNCTION__);
 			if ( local_stream){
 				switch(local_stream->dir)
 				{
@@ -802,7 +802,7 @@ void ServiceCore::serphone_call_start_audio_stream(SerPhoneCall *call, const cha
 				ECMedia_audio_start_send(call->m_AudioChannelID);
                 ECMedia_audio_start_record();
 			}
-			PrintConsole("yuntongxun trace %s middle 114\n",__FUNCTION__);
+			WriteLogToFile("yuntongxun trace %s middle 114\n",__FUNCTION__);
 
 			//TODO:
 			//bool enabled = false;
@@ -826,15 +826,15 @@ void ServiceCore::serphone_call_start_audio_stream(SerPhoneCall *call, const cha
 			//		exmedia->Release();
 			//	}
 			//}
-			PrintConsole("yuntongxun trace %s middle 115\n",__FUNCTION__);
+			WriteLogToFile("yuntongxun trace %s middle 115\n",__FUNCTION__);
 			call->current_params.in_conference=call->params.in_conference;
 
 			ECMedia_set_voe_cb(call->m_AudioChannelID, voe_callback);
             SetAudioKeepAlive(call, true, 10);
-		}else PrintConsole("No audio stream accepted ?\n");
+		}else WriteLogToFile("No audio stream accepted ?\n");
 	}
 #endif
-	PrintConsole("yuntongxun trace %s end\n",__FUNCTION__);
+	WriteLogToFile("yuntongxun trace %s end\n",__FUNCTION__);
 }
 
 
@@ -863,7 +863,7 @@ void ServiceCore::serphone_call_start_video_stream(SerPhoneCall *call, const cha
 	if (stream && stream->dir!=SalStreamInactive && stream->port!=0){
 		call->video_profile=make_profile(call,call->resultdesc,stream,&used_pt);
 		if (used_pt == -1){
-			PrintConsole("No video stream accepted ?\n");
+			WriteLogToFile("No video stream accepted ?\n");
 		}
 		else {
 
@@ -886,7 +886,7 @@ void ServiceCore::serphone_call_start_video_stream(SerPhoneCall *call, const cha
 				}
 				//encryptType = stream->crypto[0].algo;
 
-				PrintConsole("Here user_mode = %d, master key send = %s, encryptType=%d,\n", user_mode, master_key, encryptType);
+				WriteLogToFile("Here user_mode = %d, master key send = %s, encryptType=%d,\n", user_mode, master_key, encryptType);
 				
 				ECMedia_enable_srtp_recv_video(call->m_VideoChannelID, encryptType, master_key);
 				ECMedia_enable_srtp_send_video(call->m_VideoChannelID, encryptType, master_key);
@@ -906,7 +906,7 @@ void ServiceCore::serphone_call_start_video_stream(SerPhoneCall *call, const cha
 			}//desktop share
 			else
 			{
-				PrintConsole(" m_videoModeChoose error !\n");
+				WriteLogToFile(" m_videoModeChoose error !\n");
 				return;
 			}
 
@@ -922,7 +922,7 @@ void ServiceCore::serphone_call_start_video_stream(SerPhoneCall *call, const cha
 //				render->StartRender(call->m_VideoChannelID);
 //				render->Release();
 
-                PrintConsole(" ECMedia_add_render windows:%d\n", m_videoWindow);
+                WriteLogToFile(" ECMedia_add_render windows:%d\n", m_videoWindow);
 
 				ECMedia_add_render(call->m_VideoChannelID,m_videoWindow,return_video_width_height);
 			}
@@ -997,7 +997,7 @@ void ServiceCore::serphone_call_start_video_stream(SerPhoneCall *call, const cha
 			delete []codecArray;
 
 			if (!codec_found) {
-				PrintConsole("Can not find video codec %s \n", p->mime_type);
+				WriteLogToFile("Can not find video codec %s \n", p->mime_type);
 			} else {
 				if(m_videoBitRates > 0 && m_videoBitRates > codec_params.minBitrate) {
 					//codec_params.startBitrate = min(max(m_videoBitRates, kMinVideoBitrate), kMaxVideoBitrate);
@@ -1079,17 +1079,17 @@ void ServiceCore::serphone_call_start_video_stream(SerPhoneCall *call, const cha
 						codec_params.startBitrate = m_desktop_bit_rate;
 				}
 
-				PrintConsole("Video Codec is : playload type = %d, payload name is %s  bitrate=%d width=%d height=%d\n",
+				WriteLogToFile("Video Codec is : playload type = %d, payload name is %s  bitrate=%d width=%d height=%d\n",
 					codec_params.plType, codec_params.plName, codec_params.startBitrate, codec_params.width, codec_params.height);
 
 				if (ECMedia_set_send_codec_video(call->m_VideoChannelID, codec_params) < 0)
 				{
-					PrintConsole("Error: ECMedia_set_send_codec_video() fail!");
+					WriteLogToFile("Error: ECMedia_set_send_codec_video() fail!");
 				}
 
 				if (ECMedia_set_receive_codec_video(call->m_VideoChannelID,codec_params) < 0)
 				{
-					PrintConsole("Error: ECMedia_set_receive_codec_video() fail!");
+					WriteLogToFile("Error: ECMedia_set_receive_codec_video() fail!");
 				}
 
 				ECMedia_set_video_rtp_keepalive(call->m_VideoChannelID, true, 10, codec_params.plType);
@@ -1100,7 +1100,7 @@ void ServiceCore::serphone_call_start_video_stream(SerPhoneCall *call, const cha
 				codec_params.codecType = yuntongxunwebrtc::kVideoCodecRED;
 				if (ECMedia_set_receive_codec_video(call->m_VideoChannelID,codec_params) < 0)
 				{
-					PrintConsole("Error: ECMedia_set_receive_codec_video() fail!");
+					WriteLogToFile("Error: ECMedia_set_receive_codec_video() fail!");
 				}
 				memset(codec_params.plName, 0, yuntongxunwebrtc::kPayloadNameSize);
 				memcpy(codec_params.plName, "ulpfec", 6);
@@ -1108,7 +1108,7 @@ void ServiceCore::serphone_call_start_video_stream(SerPhoneCall *call, const cha
 				codec_params.codecType = yuntongxunwebrtc::kVideoCodecULPFEC;
 				if (ECMedia_set_receive_codec_video(call->m_VideoChannelID,codec_params) < 0)
 				{
-					PrintConsole("Error: ECMedia_set_receive_codec_video() fail!");
+					WriteLogToFile("Error: ECMedia_set_receive_codec_video() fail!");
 				}
 #endif
 				//pSendStats_ = Serphone_set_video_send_statistics_proxy(call->m_VideoChannelID);
@@ -1142,7 +1142,7 @@ void ServiceCore::serphone_call_start_video_stream(SerPhoneCall *call, const cha
 			}		
 #endif
 			{
-				PrintConsole("ENABLE_REMB_TMMBR_CONFIG: videoNackEnabled=%d  true, \n", videoNackEnabled);
+				WriteLogToFile("ENABLE_REMB_TMMBR_CONFIG: videoNackEnabled=%d  true, \n", videoNackEnabled);
 				ECMedia_set_NACK_status_video(call->m_VideoChannelID, videoNackEnabled);
 				ECMedia_set_RTCP_status_video(call->m_VideoChannelID, 2/*kRtcpNonCompound_RFC5506*/);
 #ifdef WIN32
@@ -1163,7 +1163,7 @@ void ServiceCore::serphone_call_start_video_stream(SerPhoneCall *call, const cha
 				}
 #endif
 			}
-			PrintConsole("ENABLE_REMB_TMMBR_CONFIG: videoNackEnabled=%d  false, \n", videoNackEnabled);
+			WriteLogToFile("ENABLE_REMB_TMMBR_CONFIG: videoNackEnabled=%d  false, \n", videoNackEnabled);
 
 #ifndef ENABLE_REMB_TMMBR_CONFIG
 			//TODO:
@@ -1231,17 +1231,17 @@ int ServiceCore::startVideoCapture(SerPhoneCall *call)
 	yuntongxunwebrtc::CriticalSectionScoped lock(m_criticalSection);
 
 	if(!call) {
-		PrintConsole("startVideoCapture failed. call=%0x\n", call);
+		WriteLogToFile("startVideoCapture failed. call=%0x\n", call);
 		return -3;
 	}
 
 	if(call->m_CaptureDeviceId != -1) {
-		PrintConsole("startVideoCapture failed. already captured call->m_CaptureDeviceId=%d\n",call->m_CaptureDeviceId);
+		WriteLogToFile("startVideoCapture failed. already captured call->m_CaptureDeviceId=%d\n",call->m_CaptureDeviceId);
 		return -4;
 	}
 
 	if(!call->params.has_video) {
-		PrintConsole("startVideoCapture failed. this call is not video call\n");
+		WriteLogToFile("startVideoCapture failed. this call is not video call\n");
 		return -5;
 	}
 
@@ -1255,7 +1255,7 @@ int ServiceCore::startVideoCapture(SerPhoneCall *call)
 
 	char name[256], id[256];
 	if ( ECMedia_get_capture_device(m_usedCameraIndex,name,sizeof(name),id,sizeof(id)) < 0)  {
-		PrintConsole("Can not find video device \n");
+		WriteLogToFile("Can not find video device \n");
 		if(vtable.connect_camera_failed)
 			vtable.connect_camera_failed(this, this->current_call, m_usedCameraIndex, "");
 	} else {	
@@ -1276,7 +1276,7 @@ int ServiceCore::startVideoCapture(SerPhoneCall *call)
 		}		
 
 		if( ECMedia_connect_capture_device(call->m_CaptureDeviceId,call->m_VideoChannelID) < 0 ) {
-			PrintConsole("Open Camera:%s Failed!  \n", name);
+			WriteLogToFile("Open Camera:%s Failed!  \n", name);
 			if(vtable.connect_camera_failed)
 				vtable.connect_camera_failed(this, this->current_call, m_usedCameraIndex, name);
 		}
@@ -1285,7 +1285,7 @@ int ServiceCore::startVideoCapture(SerPhoneCall *call)
 			|| m_usedCameraIndex >= m_cameraCount
 			|| !m_cameraInfo[m_usedCameraIndex].capability 
 			|| m_usedCapabilityIndex >= m_cameraInfo[m_usedCameraIndex].capabilityCount ) {
-				PrintConsole("Invalid CameraIndex(%d) or capabilityIndex(%d)\n", m_usedCameraIndex, m_usedCapabilityIndex);
+				WriteLogToFile("Invalid CameraIndex(%d) or capabilityIndex(%d)\n", m_usedCameraIndex, m_usedCapabilityIndex);
 				if(vtable.connect_camera_failed)
 					vtable.connect_camera_failed(this, this->current_call, m_usedCameraIndex, "");
 
@@ -1313,7 +1313,7 @@ int ServiceCore::startVideoCapture(SerPhoneCall *call)
 			ECMediaRotateCapturedFrame tr = (ECMediaRotateCapturedFrame)m_camerRotate;
 			if(m_camerRotate == -1)  {
 				ECMedia_getOrientation(id,tr);
-				PrintConsole("GetOrientation %d \n", tr);
+				WriteLogToFile("GetOrientation %d \n", tr);
 			}
 
 			//TODO:
@@ -1322,7 +1322,7 @@ int ServiceCore::startVideoCapture(SerPhoneCall *call)
 			ECMedia_set_rotate_captured_frames(call->m_CaptureDeviceId,tr);
 			ECMedia_start_capture(call->m_CaptureDeviceId,cap);
 
-			PrintConsole("Use No %d camera:%s,height:%d,width:%d,framerate:%d,roate=%d \n",
+			WriteLogToFile("Use No %d camera:%s,height:%d,width:%d,framerate:%d,roate=%d \n",
 				m_usedCameraIndex,name,cap.height,cap.width,cap.maxfps,tr);
 
 			if( localVideoWindow ) {
@@ -1341,20 +1341,20 @@ int ServiceCore::startVideoDesktopCapture(SerPhoneCall *call)
 #ifdef VIDEO_ENABLED
 	yuntongxunwebrtc::CriticalSectionScoped lock(m_criticalSection);
 
-    PrintConsole("startVideoDesktopCapture . \n");
+    WriteLogToFile("startVideoDesktopCapture . \n");
 
 	if (!call) {
-		PrintConsole("startVideoDesktopCapture failed. call=%0x\n", call);
+		WriteLogToFile("startVideoDesktopCapture failed. call=%0x\n", call);
 		return -3;
 	}
 
 	if (call->m_desktopShareDeviceId != -1) {
-		PrintConsole("startVideoDesktopCapture failed. already captured call->m_CaptureDeviceId=%d\n", call->m_CaptureDeviceId);
+		WriteLogToFile("startVideoDesktopCapture failed. already captured call->m_CaptureDeviceId=%d\n", call->m_CaptureDeviceId);
 		return -4;
 	}
 
 	if (!call->params.has_video) {
-		PrintConsole("startVideoDesktopCapture failed. this call is not video call\n");
+		WriteLogToFile("startVideoDesktopCapture failed. this call is not video call\n");
 		return -5;
 	}
 	int type = 0; // ShareScreen=0 ShareWindow=1
@@ -1416,15 +1416,15 @@ int ServiceCore::selectCamera(int cameraIndex, int capabilityIndex,int fps,int r
 {
 #ifdef VIDEO_ENABLED
 	if (!m_cameraInfo)  {
-		PrintConsole("selectCamera m_vie or m_cameraInfo is NULL\n");
+		WriteLogToFile("selectCamera m_vie or m_cameraInfo is NULL\n");
 		return -1;
 	}
 	if( cameraIndex < 0 || cameraIndex >= m_cameraCount) {
-		PrintConsole("selectCamera cameraIndex is overflowing. cameraIndex=%d m_cameraCount=%d\n",cameraIndex, m_cameraCount);
+		WriteLogToFile("selectCamera cameraIndex is overflowing. cameraIndex=%d m_cameraCount=%d\n",cameraIndex, m_cameraCount);
 		return -1;
 	}
 	if( capabilityIndex < 0 || capabilityIndex >= m_cameraInfo[cameraIndex].capabilityCount ) {
-		PrintConsole("selectCamera capabilityIndex is overflowing. capabilityIndex=%d capabilityCount=%d\n", capabilityIndex, m_cameraInfo[cameraIndex].capabilityCount);
+		WriteLogToFile("selectCamera capabilityIndex is overflowing. capabilityIndex=%d capabilityCount=%d\n", capabilityIndex, m_cameraInfo[cameraIndex].capabilityCount);
 		return -1;
 	}
 
@@ -1464,7 +1464,7 @@ int ServiceCore::selectCamera(int cameraIndex, int capabilityIndex,int fps,int r
 				ECMedia_stop_capture(call->m_CaptureDeviceId);
 			};
 			if ( ECMedia_get_capture_device(m_usedCameraIndex,name,sizeof(name),id,sizeof(id)) < 0)  {
-				PrintConsole("Can not find video device \n");
+				WriteLogToFile("Can not find video device \n");
 				if(vtable.connect_camera_failed)
 					vtable.connect_camera_failed(this, this->current_call, m_usedCameraIndex, "");
 			} 
@@ -1476,7 +1476,7 @@ int ServiceCore::selectCamera(int cameraIndex, int capabilityIndex,int fps,int r
 				//ECmedia_enable_EnableBeautyFilter(call->m_CaptureDeviceId, true);
 				ECMedia_set_CaptureDeviceID(call->m_CaptureDeviceId);
 				if( ECMedia_connect_capture_device(call->m_CaptureDeviceId,call->m_VideoChannelID) < 0 ) {
-					PrintConsole("Open Camera:%s Failed!  \n", name);
+					WriteLogToFile("Open Camera:%s Failed!  \n", name);
 					if(vtable.connect_camera_failed)
 						vtable.connect_camera_failed(this, this->current_call, m_usedCameraIndex, name);
 				}
@@ -1508,7 +1508,7 @@ int ServiceCore::selectCamera(int cameraIndex, int capabilityIndex,int fps,int r
 				if( localVideoWindow ) {
 					ECMedia_set_local_video_window(call->m_CaptureDeviceId, localVideoWindow);
 				}
-				PrintConsole("Use No %d camera:%s,height:%d,width:%d,framerate:%d,rotate=%d \n",
+				WriteLogToFile("Use No %d camera:%s,height:%d,width:%d,framerate:%d,rotate=%d \n",
 					m_usedCameraIndex,name,cap.height,cap.width,cap.maxfps,tr);
 
 				yuntongxunwebrtc::VideoCodec tempVideoCodec;
@@ -1554,7 +1554,7 @@ int ServiceCore::getCameraInfo(CameraInfo **info)
 					m_cameraInfo[i].index = i;
 					strcpy(m_cameraInfo[i].name,name);
 					strcpy(m_cameraInfo[i].id, id);
-					PrintConsole(" camara device[%d] name[%s] id[%s]\n",i,name,id);
+					WriteLogToFile(" camara device[%d] name[%s] id[%s]\n",i,name,id);
 
 					m_cameraInfo[i].capabilityCount = ECMedia_num_of_capabilities(id,sizeof(id));
 					if( m_cameraInfo[i].capabilityCount >0 )
@@ -1568,7 +1568,7 @@ int ServiceCore::getCameraInfo(CameraInfo **info)
 							m_cameraInfo[i].capability[j].height =capability.height;
 							m_cameraInfo[i].capability[j].width =capability.width;
 							m_cameraInfo[i].capability[j].maxfps =capability.maxfps;
-							PrintConsole("camera[%d] capability[%d] height:%d ,width:%d,maxFPS:%d\n",
+							WriteLogToFile("camera[%d] capability[%d] height:%d ,width:%d,maxFPS:%d\n",
 								i,j,capability.height, capability.width,capability.maxfps);
 						}
 					}					
@@ -1694,7 +1694,7 @@ const char * ServiceCore::media_stream_type_str(MediaStream *stream) {
 }
 
 int ServiceCore::media_stream_set_dscp(MediaStream *stream, int dscp) {
-	PrintConsole("Setting DSCP to %i for %s stream.\n", dscp, media_stream_type_str(stream));
+	WriteLogToFile("Setting DSCP to %i for %s stream.\n", dscp, media_stream_type_str(stream));
 	return rtp_session_set_dscp(stream->session, dscp);
 }
 
@@ -1822,7 +1822,7 @@ void ServiceCore::serphone_call_init_media_streams(SerPhoneCall *call)
 	if (srtp_enable) {
 		int err = ECMedia_init_srtp_audio(call->m_AudioChannelID);
 		if (err) {
-			PrintConsole("Init audio SRTP fail code [%d]\n",err);
+			WriteLogToFile("Init audio SRTP fail code [%d]\n",err);
 		}
 	}
 		
@@ -1846,11 +1846,11 @@ void ServiceCore::serphone_call_init_media_streams(SerPhoneCall *call)
 		if( call->m_VideoChannelID >= 0 &&  md->nstreams > 1 ) {
 			ECMedia_set_network_type(call->m_AudioChannelID, call->m_VideoChannelID, networkType);
 			ECMedia_video_set_local_receiver(call->m_VideoChannelID,call->video_port, call->video_port+1);
-			ECMedia_set_MTU(call->m_VideoChannelID,1450);
+			ECMedia_set_MTU(call->m_VideoChannelID, 1300);
             if (srtp_enable) {
                 int err = ECMedia_init_srtp_video(call->m_VideoChannelID);
                 if (err) {
-                    PrintConsole("Init video SRTP fail code [%d]\n", err);
+                    WriteLogToFile("Init video SRTP fail code [%d]\n", err);
                 }
             }
 
@@ -1988,7 +1988,7 @@ void ServiceCore::serphone_core_playfile_to_remote(SerPhoneCall *call,char * fil
 {
 #if !defined(NO_VOIP_FUNCTION)
 	if (call==NULL){
-		PrintConsole("serphone_core_playfile_to_remote: call null,exit\n");
+		WriteLogToFile("serphone_core_playfile_to_remote: call null,exit\n");
 		return;
 	}
 	//TODO:
@@ -2010,7 +2010,7 @@ void ServiceCore::serphone_core_stop_playfile_to_remote(SerPhoneCall *call)
 {
 #if !defined(NO_VOIP_FUNCTION)
 	if (call==NULL){
-		PrintConsole("serphone_core_playfile_to_remote: call null,exit\n");
+		WriteLogToFile("serphone_core_playfile_to_remote: call null,exit\n");
 		return;
 	}
 	//TODO:
@@ -2034,7 +2034,7 @@ void serphone_core_set_android_objects(void* javaVM, void* env, void* context)
 int ServiceCore::serphone_core_set_audio_config_enabled(int type, bool_t enabled, int mode)
 {
 #if !defined(NO_VOIP_FUNCTION)
-	PrintConsole("serphone_core_set_audio_config_enabled type=%d enabled=%d mode=%d\n", type, enabled, mode);
+	WriteLogToFile("serphone_core_set_audio_config_enabled type=%d enabled=%d mode=%d\n", type, enabled, mode);
 	switch (type) {
 	case AUDIO_AGC:
 		m_agcEnabled = enabled;
@@ -2090,7 +2090,7 @@ int ServiceCore::serphone_core_get_audio_config_enabled(int type, bool_t *enable
 	default:
 		return -1;
 	}
-	PrintConsole("serphone_core_get_audio_config_enabled type=%d enabled=%d mode=%d\n", type, *enabled, *mode);
+	WriteLogToFile("serphone_core_get_audio_config_enabled type=%d enabled=%d mode=%d\n", type, *enabled, *mode);
 #endif
 	return 0;
 }
@@ -2189,8 +2189,8 @@ void ServiceCore::serphone_core_update_ice_from_remote_media_description(SerPhon
 					get_default_addr_and_port(candidate->componentID, md, stream, &addr, &port);
 
 					{
-						PrintConsole("[DEBUG] remtoe addr = %s,port = %d\n",addr,port);
-						PrintConsole("[DEBUG] remote candidate->addr = %s, candidate->port = %d\n",candidate->addr,candidate->port);
+						WriteLogToFile("[DEBUG] remtoe addr = %s,port = %d\n",addr,port);
+						WriteLogToFile("[DEBUG] remote candidate->addr = %s, candidate->port = %d\n",candidate->addr,candidate->port);
 					}
 
 					//                    sean modify
@@ -2285,12 +2285,12 @@ int ServiceCore::serphone_core_gather_ice_candidates(/*SerphoneCore *lc, */SerPh
 	if (audio_check_list == NULL) return -1;
 
 	if (this->sip_conf.ipv6_enabled){
-		PrintConsole("stun support is not implemented for ipv6\n");
+		WriteLogToFile("stun support is not implemented for ipv6\n");
 		return -1;
 	}
 
 	if (parse_hostname_to_addr(server, &ss, &ss_len) < 0) {
-		PrintConsole("Fail to parser stun server address: %s\n", server);
+		WriteLogToFile("Fail to parser stun server address: %s\n", server);
 		return -1;
 	}
 	if (this->vtable.display_status != NULL)
@@ -2298,7 +2298,7 @@ int ServiceCore::serphone_core_gather_ice_candidates(/*SerphoneCore *lc, */SerPh
 
 	/* Gather local host candidates. */
 	if (serphone_core_get_local_ip_for(AF_INET, server, local_addr_l) < 0) {
-		PrintConsole("Fail to get local ip\n");
+		WriteLogToFile("Fail to get local ip\n");
 		return -1;
 	}
 
@@ -2331,7 +2331,7 @@ int ServiceCore::serphone_core_gather_ice_candidates(/*SerphoneCore *lc, */SerPh
 
 
 
-	PrintConsole("ICE: gathering candidate from [%s]\n",server);
+	WriteLogToFile("ICE: gathering candidate from [%s]\n",server);
 	/* Gather local srflx candidates. */
 	ice_session_gather_candidates(call->ice_session, ss, ss_len);
 	return 0;
@@ -2372,7 +2372,7 @@ void ServiceCore::onStunPacket(const char* call_id, void*data,int len,const char
 
 void  ServiceCore::onAudioData(const char *call_id, const void *inData, int inLen, void *outData, int &outLen, bool send)
 {
-	PrintConsole("DEBUG: onAudioData called\n");
+	WriteLogToFile("DEBUG: onAudioData called\n");
 	if (vtable.throw_data_2_process)
 		vtable.throw_data_2_process(this,this->current_call,inData,inLen,outData,outLen,send);
 #ifdef HAIYUNTONG
@@ -2403,7 +2403,7 @@ void  ServiceCore::onAudioData(const char *call_id, const void *inData, int inLe
 
 void  ServiceCore::onOriginalAudioData(const char *call_id, const void *inData, int inLen, int sampleRate, int numChannels, bool send)
 {
-	PrintConsole("DEBUG: onOriginalAudioData called\n");
+	WriteLogToFile("DEBUG: onOriginalAudioData called\n");
 	if (!send) {
 		sampleRate = this->current_call->current_params.audio_codec->clock_rate;
 		numChannels = this->current_call->current_params.audio_codec->channels;
@@ -2639,13 +2639,13 @@ void ServiceCore::serphone_core_notify_incoming_call(SerPhoneCall *call){
 
 
 	if(ms_list_size(this->calls) ==1) {
-		PrintConsole("Incoming call, ringplay_flag=%d dmfs_playing_start_time=%d\n", this->m_ringplay_flag, this->dmfs_playing_start_time);
+		WriteLogToFile("Incoming call, ringplay_flag=%d dmfs_playing_start_time=%d\n", this->m_ringplay_flag, this->dmfs_playing_start_time);
 	} else {
-		PrintConsole("Incoming call, more than one call\n");
+		WriteLogToFile("Incoming call, more than one call\n");
 		MSList *calls= this->calls;
 		while(calls!= NULL){
 			SerPhoneCall *call = (SerPhoneCall *)calls->data;
-			PrintConsole("Incoming call, callid=%s\n", call->_user_call_id);
+			WriteLogToFile("Incoming call, callid=%s\n", call->_user_call_id);
 			calls=calls->next;
 		}
 	}
@@ -2725,7 +2725,7 @@ void ServiceCore::handle_ice_events(SerPhoneCall *call, OrtpEvent *ev, void *dat
 				call->ping_time=ping_time;
 			}
 		} else {
-			PrintConsole("No STUN answer from [%s], disabling ICE",serphone_core_get_stun_server());
+			WriteLogToFile("No STUN answer from [%s], disabling ICE",serphone_core_get_stun_server());
 			serphone_call_delete_ice_session(call);
 		}
 		switch (call->state) {
@@ -2908,7 +2908,7 @@ VideoStream *ServiceCore::video_stream_new(int loc_rtp_port, int loc_rtcp_port, 
 
 void ServiceCore::serphone_core_set_audio_pacinterval(int pacinterval)
 {
-	PrintConsole("serphone_core_set_audio_pacinterval pacinterval=%d\n",pacinterval);
+	WriteLogToFile("serphone_core_set_audio_pacinterval pacinterval=%d\n",pacinterval);
 	m_packetInterval = pacinterval;
 }
 
@@ -2979,14 +2979,14 @@ int ServiceCore::serphone_core_stop_rtp_dump(SerPhoneCall *call, int mediatype, 
 
 void ServiceCore::serphone_core_set_video_bitrates(int bitrates)
 {
-	PrintConsole("serphone_core_set_video_bitrates video bitrates=%d\n",bitrates);
+	WriteLogToFile("serphone_core_set_video_bitrates video bitrates=%d\n",bitrates);
 	m_videoBitRates = bitrates;
 }
 
 int ServiceCore::getPlayoutDeviceInfo(SpeakerInfo** speakerinfo)
 {
 #if !defined(NO_VOIP_FUNCTION)
-	PrintConsole("start getPlayoutDeviceInfo");
+	WriteLogToFile("start getPlayoutDeviceInfo");
 	bool mediaRelease = false;
 
 	if(m_speakerInfo)
@@ -3007,7 +3007,7 @@ int ServiceCore::getPlayoutDeviceInfo(SpeakerInfo** speakerinfo)
 	}
 
 	*speakerinfo = m_speakerInfo;
-	PrintConsole("end getPlayoutDeviceInfo");
+	WriteLogToFile("end getPlayoutDeviceInfo");
 	return m_speakerCount;
 #else
 	return 0;
@@ -3019,7 +3019,7 @@ int ServiceCore::selectPlayoutDevice(int index)
 #if !defined(NO_VOIP_FUNCTION)
 	if(!m_speakerInfo)
 	{
-		PrintConsole("there is no Speaker Info, can't select");
+		WriteLogToFile("there is no Speaker Info, can't select");
 		return -1;
 	}
 
@@ -3043,7 +3043,7 @@ int ServiceCore::selectPlayoutDevice(int index)
 int ServiceCore::getRecordDeviceInfo(MicroPhoneInfo** microphoneinfo)
 {
 #if !defined(NO_VOIP_FUNCTION)
-	PrintConsole("getRecordDeviceInfo");
+	WriteLogToFile("getRecordDeviceInfo");
 	bool mediaRelease = false;
 
 	if(m_microphoneInfo)
@@ -3065,7 +3065,7 @@ int ServiceCore::getRecordDeviceInfo(MicroPhoneInfo** microphoneinfo)
 	}
 
 	*microphoneinfo = m_microphoneInfo;
-	PrintConsole("getRecordDeviceInfo");
+	WriteLogToFile("getRecordDeviceInfo");
 
 	return m_microphoneCount;
 #else
@@ -3078,7 +3078,7 @@ int ServiceCore::selectRecordDevice(int index)
 #if !defined(NO_VOIP_FUNCTION)
 	if(!m_microphoneInfo)
 	{
-		PrintConsole("there is no MicroPhone Info, can't select");
+		WriteLogToFile("there is no MicroPhone Info, can't select");
 		return -1;
 	}
 
@@ -3102,7 +3102,7 @@ int ServiceCore::startDeliverVideoFrame(SerPhoneCall *call)
 #ifdef VIDEO_ENABLED
 	if(!call || call->m_VideoChannelID < 0)
 	{
-		PrintConsole("startDeliverVideoFrame failed, call is not ready!\n");
+		WriteLogToFile("startDeliverVideoFrame failed, call is not ready!\n");
 		return -1;
 	}
 	//TODO:
@@ -3128,7 +3128,7 @@ int ServiceCore::stopDeliverVideoFrame(SerPhoneCall *call)
 #ifdef VIDEO_ENABLED
 	if(!call || call->m_VideoChannelID < 0 /*|| !call->deliver_frame*/)
 	{
-		PrintConsole("stopDeliverVideoFrame failed, call is not ready!\n");
+		WriteLogToFile("stopDeliverVideoFrame failed, call is not ready!\n");
 		return -1;
 	}
 
@@ -3159,7 +3159,7 @@ int ServiceCore::getLocalVideoSnapshot(SerPhoneCall *call, unsigned char **buf, 
 #ifdef VIDEO_ENABLED
 	if(!call || call->m_VideoChannelID < 0)
 	{
-		PrintConsole("getLocalVideoSnapshot failed, call is not ready!\n");
+		WriteLogToFile("getLocalVideoSnapshot failed, call is not ready!\n");
 		return -1;
 	}
 	return ECMedia_get_local_video_snapshot(call->m_CaptureDeviceId, buf, size, width, height);
@@ -3172,7 +3172,7 @@ int ServiceCore::getLocalVideoSnapshot(SerPhoneCall *call, const char* filePath)
 #ifdef VIDEO_ENABLED
 	if(!call || call->m_VideoChannelID < 0)
 	{
-		PrintConsole("getLocalVideoSnapshot failed, call is not ready!\n");
+		WriteLogToFile("getLocalVideoSnapshot failed, call is not ready!\n");
 		return -1;
 	}
 	return ECMedia_save_local_video_snapshot(call->m_CaptureDeviceId, filePath);
@@ -3185,7 +3185,7 @@ int ServiceCore::getRemoteVideoSnapshot(SerPhoneCall *call, unsigned char **buf,
 #ifdef VIDEO_ENABLED
 	if(!call || call->m_VideoChannelID < 0)
 	{
-		PrintConsole("getRemoteVideoSnapshot failed, call is not ready!\n");
+		WriteLogToFile("getRemoteVideoSnapshot failed, call is not ready!\n");
 		return -1;
 	}
 	return ECMedia_get_remote_video_snapshot(call->m_VideoChannelID, buf, size, width, height);
@@ -3198,7 +3198,7 @@ int ServiceCore::getRemoteVideoSnapshot(SerPhoneCall *call, const char* filePath
 #ifdef VIDEO_ENABLED
 	if(!call || call->m_VideoChannelID < 0)
 	{
-		PrintConsole("getRemoteVideoSnapshot failed, call is not ready!\n");
+		WriteLogToFile("getRemoteVideoSnapshot failed, call is not ready!\n");
 		return -1;
 	}
 	return ECMedia_save_remote_video_snapshot(call->m_VideoChannelID, filePath);
@@ -3673,7 +3673,7 @@ int ServiceCore::serphone_set_video_conference_addr(const char *ip)
 		videoConferenceIp = (char *)malloc(ipLen+1);
 		if (!videoConferenceIp)
 		{
-			PrintConsole("ERROR: serphone_set_video_conference_addr mem alloc error\n");
+			WriteLogToFile("ERROR: serphone_set_video_conference_addr mem alloc error\n");
 			return -1;
 		}
 	}
@@ -3681,7 +3681,7 @@ int ServiceCore::serphone_set_video_conference_addr(const char *ip)
 	{
 		videoConferenceIp = (char *)realloc(videoConferenceIp, ipLen+1);
 		if (!videoConferenceIp) {
-			PrintConsole("ERROR: serphone_set_video_conference_addr mem alloc error\n");
+			WriteLogToFile("ERROR: serphone_set_video_conference_addr mem alloc error\n");
 			return -1;
 		}
 	}
@@ -3698,31 +3698,31 @@ int ServiceCore::serphone_set_video_conference_addr(const char *ip)
 int ServiceCore::serphone_set_video_window_and_request_video_accord_sip(const char *sipNo, void *videoWindowC, const char *conferenceNo, const char *confPasswd, int port)
 {
 	int ret = -1;
-	PrintConsole("[WARNING] %s called\n",__FUNCTION__);
+	WriteLogToFile("[WARNING] %s called\n",__FUNCTION__);
 #ifdef VIDEO_ENABLED
 	yuntongxunwebrtc::CriticalSectionScoped lock(m_criticalSection);
 	if (!sipNo) {
-		PrintConsole("[ERROR] request video failed, sip no is null, check it!\n");
+		WriteLogToFile("[ERROR] request video failed, sip no is null, check it!\n");
 		return -1;
 	}
 	if (!videoWindowC) {
-		PrintConsole("[ERROR] request video failed, video window is null, check it!\n");
+		WriteLogToFile("[ERROR] request video failed, video window is null, check it!\n");
 		return -2;
 	}
 	if (!conferenceNo) {
-		PrintConsole("[ERROR] request video failed, conferenceNo is null, check it!\n");
+		WriteLogToFile("[ERROR] request video failed, conferenceNo is null, check it!\n");
 		return -3;
 	}
 	if (!confPasswd) {
-		PrintConsole("[ERROR] request video failed, confPasswd is null, check it!\n");
+		WriteLogToFile("[ERROR] request video failed, confPasswd is null, check it!\n");
 		return -4;
 	}
 	if (!selfSipNo) {
-		PrintConsole("[ERROR] request video failed, self sip is null, check it!\n");
+		WriteLogToFile("[ERROR] request video failed, self sip is null, check it!\n");
 		return -5;
 	}
 	if (!videoConferenceIp) {
-		PrintConsole("[ERROR] request video failed, video conference ip is null, check it!\n");
+		WriteLogToFile("[ERROR] request video failed, video conference ip is null, check it!\n");
 		return -6;
 	}
 
@@ -3736,7 +3736,7 @@ int ServiceCore::serphone_set_video_window_and_request_video_accord_sip(const ch
 	int temp_video_channel_id = -1;
 	std::map<std::string, int>::iterator it = videoConferencePairSipChannel.find(sipNo);
 	if (it != videoConferencePairSipChannel.end()) {
-		PrintConsole("[WARNNING] you have got %s video media!\n",sipNo);
+		WriteLogToFile("[WARNNING] you have got %s video media!\n",sipNo);
 		reinviteFlag = true;
 		temp_video_channel_id = it->second;
 
@@ -3768,7 +3768,7 @@ int ServiceCore::serphone_set_video_window_and_request_video_accord_sip(const ch
 		std::map<int,VideoConferenceDesc *>::iterator itt = videoConferenceM.find(it->second);
 		temp = itt->second;
 		if (temp->conference_state == Video_Conference_State_Canceling) {
-			PrintConsole("[ERROR] %s is stopping, wait!",sipNo);
+			WriteLogToFile("[ERROR] %s is stopping, wait!",sipNo);
 			return -8;
 		}
 	}
@@ -3859,34 +3859,34 @@ int ServiceCore::serphone_set_video_window_and_request_video_accord_sip(const ch
 
 int ServiceCore::serphone_stop_conference_video_accord_sip(const char *sipNo, const char *conferenceNo, const char *confPasswd)
 {
-	PrintConsole("[WARNING] %s called\n",__FUNCTION__);
+	WriteLogToFile("[WARNING] %s called\n",__FUNCTION__);
 	int ret = -1;
 #ifdef VIDEO_ENABLED
 	yuntongxunwebrtc::CriticalSectionScoped lock(m_criticalSection);
 	if (!sipNo) {
-		PrintConsole("[ERROR] request video failed, sip no is null, check it!\n");
+		WriteLogToFile("[ERROR] request video failed, sip no is null, check it!\n");
 		return -1;
 	}
 	if (!conferenceNo) {
-		PrintConsole("[ERROR] request video failed, conferenceNo is null, check it!\n");
+		WriteLogToFile("[ERROR] request video failed, conferenceNo is null, check it!\n");
 		return -3;
 	}
 	if (!confPasswd) {
-		PrintConsole("[ERROR] request video failed, confPasswd is null, check it!\n");
+		WriteLogToFile("[ERROR] request video failed, confPasswd is null, check it!\n");
 		return -4;
 	}
 	if (!selfSipNo) {
-		PrintConsole("[ERROR] request video failed, self sip is null, check it!\n");
+		WriteLogToFile("[ERROR] request video failed, self sip is null, check it!\n");
 		return -5;
 	}
 	if (!videoConferenceIp) {
-		PrintConsole("[ERROR] request video failed, video conference ip is null, check it!\n");
+		WriteLogToFile("[ERROR] request video failed, video conference ip is null, check it!\n");
 		return -6;
 	}
 	//First check whether the specified sip has been requested
 	std::map<std::string, int>::iterator it = videoConferencePairSipChannel.find(sipNo);
 	if (it == videoConferencePairSipChannel.end()) {
-		PrintConsole("[WARNNING] you haven't got %s video media!\n",sipNo);
+		WriteLogToFile("[WARNNING] you haven't got %s video media!\n",sipNo);
 		return -7;
 	}
 
@@ -3896,7 +3896,7 @@ int ServiceCore::serphone_stop_conference_video_accord_sip(const char *sipNo, co
 	if (iter != videoConferenceM.end()) {
 		tempVideoConfDesc = iter->second;
 	} else {
-		PrintConsole("[ERROR] Cannot find specified video conference description according to channel id : %d\n",temp_video_channel_id);
+		WriteLogToFile("[ERROR] Cannot find specified video conference description according to channel id : %d\n",temp_video_channel_id);
 		return -7;
 	}
 
@@ -3956,7 +3956,7 @@ int ServiceCore::serphone_stop_conference_video_accord_sip(const char *sipNo, co
 	cursor++;
 
 	if (videoConferenceIp) {
-		PrintConsole("[DEBUG] %s send cancel oder on channel:%d\n",__FUNCTION__,temp_video_channel_id);
+		WriteLogToFile("[DEBUG] %s send cancel oder on channel:%d\n",__FUNCTION__,temp_video_channel_id);
 		int transmitted_bytes;
 		ECMedia_sendUDPPacket(temp_video_channel_id, data, cursor, transmitted_bytes, false,tempVideoConfDesc->server_port, videoConferenceIp);
 		tempVideoConfDesc->conference_state = Video_Conference_State_Canceling;
@@ -3992,7 +3992,7 @@ int ServiceCore::serphone_stop_conference_video_accord_sip(const char *sipNo, co
 //sean add begin 20140705 video conference
 void ServiceCore::onVideoConference(int channelID, int status, int payload)
 {
-	PrintConsole("[DEBUG] %s called\n",__FUNCTION__);
+	WriteLogToFile("[DEBUG] %s called\n",__FUNCTION__);
 #ifdef VIDEO_ENABLED
 	VideoConferenceDesc *tempVideoConfDesc = NULL;
 	std::map<int, VideoConferenceDesc*>::iterator it = videoConferenceM.find(channelID);
@@ -4002,10 +4002,10 @@ void ServiceCore::onVideoConference(int channelID, int status, int payload)
 	}
 	else
 	{
-		PrintConsole("[ERROR] Cannot find specified video conference description according to channel id : %d\n",channelID);
+		WriteLogToFile("[ERROR] Cannot find specified video conference description according to channel id : %d\n",channelID);
 		return;
 	}
-	PrintConsole("[DEBUG] in  %s conference_state:%d\n",__FUNCTION__,tempVideoConfDesc->conference_state);
+	WriteLogToFile("[DEBUG] in  %s conference_state:%d\n",__FUNCTION__,tempVideoConfDesc->conference_state);
 	if(tempVideoConfDesc->conference_state == Video_Conference_State_Requesting) {
 		switch (status) {
 		case Video_Conference_status_OK:
@@ -4028,7 +4028,7 @@ void ServiceCore::onVideoConference(int channelID, int status, int payload)
 					if(m_videoBitRates > 0 && m_videoBitRates > codec_params.minBitrate) {
 						codec_params.startBitrate = m_videoBitRates;
 					}
-					PrintConsole("Video Codec is : playload type = %d, payload name is %s  bitrate=%d width=%d height=%d\n",codec_params.plType, codec_params.plName, codec_params.startBitrate, codec_params.width, codec_params.height);
+					WriteLogToFile("Video Codec is : playload type = %d, payload name is %s  bitrate=%d width=%d height=%d\n",codec_params.plType, codec_params.plName, codec_params.startBitrate, codec_params.width, codec_params.height);
 					ECMedia_set_receive_codec_video(channelID,codec_params);
 				}
 				ECMedia_add_render(channelID,tempVideoConfDesc->video_window,return_video_width_height);
@@ -4044,7 +4044,7 @@ void ServiceCore::onVideoConference(int channelID, int status, int payload)
 			}
 			break;
 		default:
-			PrintConsole("[ERROR] VideoConference default\n");
+			WriteLogToFile("[ERROR] VideoConference default\n");
 			break;
 		}
 		tempVideoConfDesc->request_status = status;
@@ -4052,7 +4052,7 @@ void ServiceCore::onVideoConference(int channelID, int status, int payload)
 	}
 	else if( tempVideoConfDesc->conference_state ==Video_Conference_State_Canceling)
 	{
-		PrintConsole("[DEBUG] %s cancel response\n",__FUNCTION__);
+		WriteLogToFile("[DEBUG] %s cancel response\n",__FUNCTION__);
 		if (vtable.stop_specified_video_response) {
 			vtable.stop_specified_video_response(this,this->current_call,tempVideoConfDesc->remoteSip, status, tempVideoConfDesc->video_window);
 		}
@@ -4071,7 +4071,7 @@ void ServiceCore::onVideoConference(int channelID, int status, int payload)
 			}
 			break;
 		default:
-			PrintConsole("[ERROR] VideoConference default\n");
+			WriteLogToFile("[ERROR] VideoConference default\n");
 			break;
 		}
 
@@ -4105,7 +4105,7 @@ void ServiceCore::onVideoConference(int channelID, int status, int payload)
 
 int ServiceCore::serphone_set_video_conference_released()
 {
-	PrintConsole("[DEBUG] %s called\n",__FUNCTION__);
+	WriteLogToFile("[DEBUG] %s called\n",__FUNCTION__);
 #ifdef VIDEO_ENABLED
 	yuntongxunwebrtc::CriticalSectionScoped lock(m_criticalSection);
 	VideoConferenceDesc *tempVideoConfDesc = NULL;
@@ -4140,13 +4140,13 @@ int ServiceCore::serphone_set_video_conference_released()
 
 int ServiceCore::serphone_reset_conference_video_window(const char *sipNo, void *newVideoWindowC)
 {
-	PrintConsole("[DEBUG] %s called\n",__FUNCTION__);
+	WriteLogToFile("[DEBUG] %s called\n",__FUNCTION__);
 #ifdef VIDEO_ENABLED
 	std::map<std::string , int>::iterator it1 = videoConferencePairSipChannel.find(sipNo);
 	if (it1 != videoConferencePairSipChannel.end()) {
 		//ok, we get it
 		VideoConferenceDesc *temp = NULL;
-		PrintConsole("[DEBUG] look up sip:%s, channel id:%d\n",sipNo,it1->second);
+		WriteLogToFile("[DEBUG] look up sip:%s, channel id:%d\n",sipNo,it1->second);
 
 		std::map<int, VideoConferenceDesc *>::iterator it2 = videoConferenceM.find(it1->second);
 		if (it2 != videoConferenceM.end()) {
@@ -4160,13 +4160,13 @@ int ServiceCore::serphone_reset_conference_video_window(const char *sipNo, void 
 		}
 		else
 		{
-			PrintConsole("[WARNING] speciafied sip %s not exists, videoConferenceM\n",sipNo);
+			WriteLogToFile("[WARNING] speciafied sip %s not exists, videoConferenceM\n",sipNo);
 			return -4;
 		}
 	}
 	else
 	{
-		PrintConsole("[WARNING] speciafied sip %s not exists, videoConferencePairSipChannel\n",sipNo);
+		WriteLogToFile("[WARNING] speciafied sip %s not exists, videoConferencePairSipChannel\n",sipNo);
 		return -4;
 	}
 	return 0;
@@ -4311,7 +4311,7 @@ int ServiceCore::PlayVideoFromRtpDump(int localPort, const char *ptName, int plo
 		ECMedia_add_render(m_VideoChannelIDDump,videoWindow,return_video_width_height);
 	}
 
-	PrintConsole("ENABLE_REMB_TMMBR_CONFIG: videoNackEnabled=%d  true, \n", videoNackEnabled);
+	WriteLogToFile("ENABLE_REMB_TMMBR_CONFIG: videoNackEnabled=%d  true, \n", videoNackEnabled);
 	ECMedia_set_NACK_status_video(m_VideoChannelIDDump, videoNackEnabled);
 	ECMedia_set_RTCP_status_video(m_VideoChannelIDDump, 2/*kRtcpNonCompound_RFC5506*/);
 
@@ -4526,7 +4526,7 @@ int ServiceCore::getSnapshotWithoutCall(const char *filePath)
 
 	if(m_SnapshotDeviceId < 0)
 	{
-		PrintConsole("getLocalVideoSnapshot failed, call is not ready!\n");
+		WriteLogToFile("getLocalVideoSnapshot failed, call is not ready!\n");
 		return -1;
 	}
 	//TODO:
@@ -4985,7 +4985,7 @@ void ServiceCore::serserphone_call_start_desktop_share(SerPhoneCall *call, const
 	if (stream && stream->dir!=SalStreamInactive && stream->port!=0){
 		call->video_profile=make_profile(call,call->resultdesc,stream,&used_pt);
 		if (used_pt == -1){
-			PrintConsole("No video stream accepted ?\n");
+			WriteLogToFile("No video stream accepted ?\n");
 		}
 		else {
 			call->current_params.video_codec = rtp_profile_get_payload(call->video_profile, used_pt);
@@ -5534,11 +5534,11 @@ void setSsrcMediaType(unsigned int& ssrc, int type)
 {
 	//25bits ý??ԴID 1bit ý??Դ???? 2bits ý?????? 4bits ý??????
 	//ý?????ͣ? 0????Ƶ 1?? ??Ƶ 2????Ļ???? 3?? ????  
-	PrintConsole((char*)__FILE__, __LINE__, (char*)__FUNCTION__, 0, "begin ssrc=%u,type=%d", ssrc, type);
+	WriteLogToFile((char*)__FILE__, __LINE__, (char*)__FUNCTION__, 0, "begin ssrc=%u,type=%d", ssrc, type);
 	type = type & 0x00000003;//ֻȡ??2λ
 	ssrc = ssrc & 0xFFFFFFCF;//2bit??0??
 	ssrc = ssrc | (type << 4);//2bit??ֵ
-	PrintConsole((char*)__FILE__, __LINE__, (char*)__FUNCTION__, 0, "end ssrc=%u,type=%d", ssrc, type);
+	WriteLogToFile((char*)__FILE__, __LINE__, (char*)__FUNCTION__, 0, "end ssrc=%u,type=%d", ssrc, type);
 }
 void setSsrcMediaAttribute(unsigned int& ssrc, unsigned short width, unsigned short height, unsigned char maxFramerate)
 {
@@ -5562,7 +5562,7 @@ void setSsrcMediaAttribute(unsigned int& ssrc, unsigned short width, unsigned sh
 	14 1920*1080 30
 	15 2048*1080 30
 	*/
-	PrintConsole((char*)__FILE__, __LINE__, (char*)__FUNCTION__, 0, "begin ssrc=%u,width=%d,height=%d,maxFramerate=%d", ssrc, width, height, maxFramerate);
+	WriteLogToFile((char*)__FILE__, __LINE__, (char*)__FUNCTION__, 0, "begin ssrc=%u,width=%d,height=%d,maxFramerate=%d", ssrc, width, height, maxFramerate);
 	int type = 0;
 	int tmp = width*height;
 	if (tmp <= 12288)
@@ -5644,6 +5644,6 @@ void setSsrcMediaAttribute(unsigned int& ssrc, unsigned short width, unsigned sh
 
 	ssrc = ssrc & 0xFFFFFFF0;//4bit??0??
 	ssrc = ssrc | type;//4bit??ֵ
-	PrintConsole((char*)__FILE__, __LINE__, (char*)__FUNCTION__, 0, "end ssrc=%u,type=%d", ssrc, type);
+	WriteLogToFile((char*)__FILE__, __LINE__, (char*)__FUNCTION__, 0, "end ssrc=%u,type=%d", ssrc, type);
 }
 

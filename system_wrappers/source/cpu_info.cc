@@ -43,12 +43,7 @@ static int DetectNumberOfCores() {
     LOG(LS_ERROR) << "Failed to get number of cores";
     number_of_cores = 1;
   }
-#else
-  LOG(LS_ERROR) << "No function to get number of cores";
 #endif
-
-  LOG(LS_INFO) << "Available number of cores: " << number_of_cores;
-
   return number_of_cores;
 }
 }

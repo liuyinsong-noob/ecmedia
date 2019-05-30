@@ -37,12 +37,12 @@ void ServiceCore::serphone_subscription_new(SalOp *op, const char *from)
 		/* check if this subscriber is in our black list */
 		if (serphone_find_friend(this->subscribers,uri,&lf)){
 			if (lf->pol==LinphoneSPDeny){
-				PrintConsole("Rejecting %s because we already rejected it once.\n",from);
+				WriteLogToFile("Rejecting %s because we already rejected it once.\n",from);
 				sal_subscribe_decline(op);
 			}
 			else {
 				/* else it is in wait for approval state, because otherwise it is in the friend list.*/
-				PrintConsole("New subscriber found in friend list, in %s state.\n",__policy_enum_to_str(lf->pol));
+				WriteLogToFile("New subscriber found in friend list, in %s state.\n",__policy_enum_to_str(lf->pol));
 			}
 		}else {
 			sal_subscribe_accept(op);
@@ -102,7 +102,7 @@ void ServiceCore::serphone_notify_recv(SalOp *op, SalSubscribeStatus ss, SalPres
 		ms_free((void **)&tmp);
         tmp = NULL;
 	}else{
-		PrintConsole("But this person is not part of our friend list, so we don't care.\n");
+		WriteLogToFile("But this person is not part of our friend list, so we don't care.\n");
 	}
 	if (ss==SalSubscribeTerminated){
 		sal_op_release(op);
@@ -121,7 +121,7 @@ void ServiceCore::serphone_subscription_closed(SalOp *op)
 	if (lf!=NULL){
 		lf->insub=NULL;
 	}else{
-		PrintConsole("Receiving unsuscribe for unknown in-subscribtion from %s\n", sal_op_get_from(op));
+		WriteLogToFile("Receiving unsuscribe for unknown in-subscribtion from %s\n", sal_op_get_from(op));
 	}
 }
 
@@ -163,7 +163,7 @@ void ServiceCore::serphone_core_add_friend(SerphoneFriend *lf)
 		char *tmp=NULL;
 		const SerphoneAddress *addr=lf->serphone_friend_get_address();
 		if (addr) tmp=serphone_address_as_string(addr);
-		PrintConsole("Friend %s already in list, ignored.\n", tmp ? tmp : "unknown");
+		WriteLogToFile("Friend %s already in list, ignored.\n", tmp ? tmp : "unknown");
 		if (tmp) {ms_free((void **)&tmp);tmp = NULL;}
 		return ;
 	}
@@ -179,7 +179,7 @@ void ServiceCore::serphone_core_add_friend(SerphoneFriend *lf)
 void ServiceCore::serphone_core_notify_all_friends(SerphoneOnlineStatus os)
 {
 	MSList *elem;
-	PrintConsole("Notifying all friends that we are in status %i\n",os);
+	WriteLogToFile("Notifying all friends that we are in status %i\n",os);
 	for(elem=friends;elem!=NULL;elem=elem->next){
 		SerphoneFriend *lf=(SerphoneFriend *)elem->data;
 		if (lf->insub){

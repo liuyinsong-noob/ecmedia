@@ -104,12 +104,7 @@ WebRtc_Word32 VideoChannelNSOpenGL::GetChannelProperties(float& left,
 
 WebRtc_Word32 VideoChannelNSOpenGL::RenderFrame(const WebRtc_UWord32 /*streamId*/, I420VideoFrame& videoFrame)
 {
-
     _owner->LockAGLCntx();
-
-    WEBRTC_TRACE(kTraceInfo, kTraceVideoRenderer, _id, "RenderFrame _width = %d,videoFrame.Width = %d,_height = %d,videoFrame.Height = %d",_width,(int)videoFrame.width(),_height,(int)videoFrame.height());
-
-    
     if(_width != (int)videoFrame.width() ||
             _height != (int)videoFrame.height())
     {
@@ -204,16 +199,7 @@ int VideoChannelNSOpenGL::FrameSizeChange(int width, int height, int numberOfStr
 int VideoChannelNSOpenGL::DeliverFrame(unsigned char* buffer, int bufferSize, unsigned int /*timeStamp90kHz*/)
 {
     _owner->LockAGLCntx();
-    
-//    mblk_t mk;
-//    mk.data_ptr = buffer;
-//    mk.datalen = bufferSize;
-//    mk.h = _height;
-//    mk.w = _width;
-    
-    WEBRTC_TRACE(kTraceInfo, kTraceVideoRenderer, _id, "DeliverFrame h=%d w=%d datalen=%d", _height, _width, bufferSize);
     [_displayWindow renderI420Frame:(void *)buffer width:(NSInteger)_width height:(NSInteger)_height];
-
     _owner->UnlockAGLCntx();
     return 0;
 }

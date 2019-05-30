@@ -91,8 +91,8 @@ bool TRESTClient::CreateSubAccount(std::string name ,std::string& subAccount,
 		return false;
 	}
 	m_lastresponse = response.GetContentData();
-    PrintConsole("CreateSubAccount Request:%s\n",request.GetContentData().c_str());
-    PrintConsole("CreateSubAccount Response:%s\n", m_lastresponse.c_str());
+    WriteLogToFile("CreateSubAccount Request:%s\n",request.GetContentData().c_str());
+    WriteLogToFile("CreateSubAccount Response:%s\n", m_lastresponse.c_str());
 	if(response.GetStatusCode() != 200) 
 	{
 		m_errorMsg = "response error: status code : "+response.GetStatusCode();
@@ -388,7 +388,7 @@ bool TRESTClient::CheckPrivateProxyValid(const std::string& companyID, const std
     
 	std::string uri ("/2013-12-26/inner/checkCorpHost");
     
-	PrintConsole("CheckPrivateProxyValid m_server:%s,m_port:%d\n",m_server.c_str(),m_port);
+	WriteLogToFile("CheckPrivateProxyValid m_server:%s,m_port:%d\n",m_server.c_str(),m_port);
 	THttpClient client(m_server,m_port,false);
     client.SetTraceFunc(m_traceFun);
 
@@ -423,7 +423,7 @@ bool TRESTClient::CheckPrivateProxyValid(const std::string& companyID, const std
 	request.SetURI(uri.c_str());
     
 	THttpResponse response;
-    PrintConsole("CheckPrivateProxyValid Request:%s\n",request.GetContentData().c_str());
+    WriteLogToFile("CheckPrivateProxyValid Request:%s\n",request.GetContentData().c_str());
     
     
 	if( !client.SynHttpRequest(request, response) )
@@ -433,7 +433,7 @@ bool TRESTClient::CheckPrivateProxyValid(const std::string& companyID, const std
 		return false;
 	}
 	m_lastresponse = response.GetContentData();
-    PrintConsole("CheckPrivateProxyValid Response:%s\n", m_lastresponse.c_str());
+    WriteLogToFile("CheckPrivateProxyValid Response:%s\n", m_lastresponse.c_str());
     
     if (traceFile) {
         time_t temp = time(NULL);
