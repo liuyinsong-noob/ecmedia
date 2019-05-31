@@ -327,8 +327,6 @@ int32_t CongestionController::Process() {
   MaybeTriggerOnNetworkChanged();
   return 0;
 }
-    
-
 
 void CongestionController::MaybeTriggerOnNetworkChanged() {
   // TODO(perkj): |observer_| can be nullptr if the ctor that accepts a
@@ -341,13 +339,7 @@ void CongestionController::MaybeTriggerOnNetworkChanged() {
   int64_t rtt;
   bool estimate_changed = bitrate_controller_->GetNetworkParameters(
       &bitrate_bps, &fraction_loss, &rtt);
-    
-    int origin_bps = bitrate_bps;
-    if(estimate_changed)
-         max_gcc_result_ = GetMaxGccResultInLast5Secods(bitrate_bps);
-
-    
-    if (estimate_changed) {
+  if (estimate_changed) {
     pacer_->SetEstimatedBitrate(bitrate_bps);
     probe_controller_->SetEstimatedBitrate(bitrate_bps);
     retransmission_rate_limiter_->SetMaxRate(bitrate_bps);
@@ -356,13 +348,16 @@ void CongestionController::MaybeTriggerOnNetworkChanged() {
   bitrate_bps = IsNetworkDown() || IsSendQueueFull() ? 0 : bitrate_bps;
 
   if (HasNetworkParametersToReportChanged(bitrate_bps, fraction_loss, rtt)) {
-      bitrate_bps = max_gcc_result_;
+      
+      if (bitrate_bps-min_bitrate_bps_ <= 30) {
+          bitrate_bps += 20; 
+      }
     observer_->OnNetworkChanged(
         bitrate_bps, fraction_loss, rtt,
         delay_based_bwe_->GetProbingIntervalMs());
     remote_estimator_proxy_.OnBitrateChanged(bitrate_bps);
-      printf("GCCBwe %lld %u            \t\t\t origin %u\n", clock_->TimeInMilliseconds(), bitrate_bps, origin_bps);
-    //BWE_TEST_LOGGING_PLOT(1, "GCCBwe", clock_->TimeInMilliseconds(),bitrate_bps);
+    
+   // BWE_TEST_LOGGING_PLOT(1, "GCCBwe", clock_->TimeInMilliseconds(),bitrate_bps);
   }
     
 }
@@ -412,31 +407,5 @@ void CongestionController::OnTransportPacketsFeedback(const std::vector<PacketFe
         bitrate_controller_->OnDelayBasedBweResult(result);
     
 }
-    
-    bool CongestionController::GCCResultComparator(GCCResult a, GCCResult b){
-        uint32_t a_value = a.second;;
-        uint32_t b_value = b.second;
-        return a_value < b_value;
-    }
-    
-    
-    uint32_t CongestionController::GetMaxGccResultInLast5Secods(uint32_t new_gcc_value){
-        int64_t now_time = clock_->TimeInMilliseconds();
-        gcc_result_history_[now_time] = new_gcc_value;
-        GCCResults::iterator it = gcc_result_history_.lower_bound(now_time-5000);
-        if (it != gcc_result_history_.end()) {
-            gcc_result_history_.erase(gcc_result_history_.begin(), it);
-        }else
-            return new_gcc_value;
-        
-       GCCResults::iterator it_max = std::max_element(gcc_result_history_.begin(), gcc_result_history_.end(), CongestionController::GCCResultComparator);
-        if (it_max!=gcc_result_history_.end()) {
-            uint32_t max_gcc_result =  (*it_max).second;
-   //         printf("---- max_gcc_result (size = %llu) %lld %u \n", gcc_result_history_.size(), (*it_max).first, max_gcc_result);
-            return max_gcc_result;
-        }
-        
-        return new_gcc_value;
-    }
-    
+
 }  // namespace yuntongxunwebrtc

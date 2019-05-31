@@ -263,7 +263,8 @@ int H264VideoToolboxEncoder::InitEncode(const VideoCodec* codec_settings,
   target_bitrate_bps_ = codec_settings->startBitrate * 1000;
   bitrate_adjuster_.SetTargetBitrateBps(target_bitrate_bps_);
   
-    
+  SetManualMode(codec_settings->manualMode);
+  
   // TODO(tkchin): Try setting payload size via
   // kVTCompressionPropertyKey_MaxH264SliceBytes.
 
@@ -406,12 +407,14 @@ int H264VideoToolboxEncoder::SetRates(uint32_t new_bitrate_kbit,
                                       uint32_t frame_rate,
                                       uint32_t minBitrate_kbit,
                                       uint32_t maxBitrate_kbit) {
-  if(0 < minBitrate_kbit && new_bitrate_kbit < minBitrate_kbit){
-    target_bitrate_bps_ = minBitrate_kbit * 1000;
-  }else if(0 < maxBitrate_kbit && new_bitrate_kbit > maxBitrate_kbit){
-    target_bitrate_bps_ = maxBitrate_kbit * 1000;
-  }else{
-    target_bitrate_bps_ = new_bitrate_kbit * 1000;
+  if (GetManalMode()){
+    if(0 < minBitrate_kbit && new_bitrate_kbit < minBitrate_kbit){
+      target_bitrate_bps_ = minBitrate_kbit * 1000;
+    }else if(0 < maxBitrate_kbit && new_bitrate_kbit > maxBitrate_kbit){
+      target_bitrate_bps_ = maxBitrate_kbit * 1000;
+    }else{
+      target_bitrate_bps_ = new_bitrate_kbit * 1000;
+    }
   }
   bitrate_adjuster_.SetTargetBitrateBps(target_bitrate_bps_);
   int rate = bitrate_adjuster_.GetAdjustedBitrateBps();

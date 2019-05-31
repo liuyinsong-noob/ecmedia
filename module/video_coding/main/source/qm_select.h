@@ -13,6 +13,7 @@
 
 #include "common_types.h"
 #include "typedefs.h"
+#include "../system_wrappers/include/clock.h"
 
 /******************************************************/
 /* Quality Modes: Resolution and Robustness settings  */
@@ -224,7 +225,7 @@ class VCMQmMethod {
 // Resolution settings class
 class VCMQmResolution : public VCMQmMethod {
  public:
-  VCMQmResolution();
+  VCMQmResolution(Clock* clock);
   virtual ~VCMQmResolution();
 
   // Reset all quantities.
@@ -339,12 +340,14 @@ class VCMQmResolution : public VCMQmMethod {
   VCMResolutionScale* qm_;
   // Encoder rate control parameters.
   float target_bitrate_;
+  float encoder_sent_kbps_;
   float incoming_framerate_;
   float per_frame_bandwidth_;
   float buffer_level_;
 
   // Data accumulated every ~1sec from MediaOpt.
   float sum_target_rate_;
+  float sum_encoder_kbps_;
   float sum_incoming_framerate_;
   float sum_rate_MM_; //mm: mismatch
   float sum_rate_MM_sgn_;
@@ -361,6 +364,7 @@ class VCMQmResolution : public VCMQmMethod {
 
   // Quantities used for selection.
   float avg_target_rate_;
+  float avg_encoder_kbps_;
   float avg_incoming_framerate_;
   float avg_ratio_buffer_low_;
   float avg_rate_mismatch_;
@@ -368,6 +372,11 @@ class VCMQmResolution : public VCMQmMethod {
   float avg_packet_loss_;
   EncoderState encoder_state_;
   ResolutionAction action_;
+  
+  uint32_t select_up_count;
+  int64_t  select_up_start_time;
+  Clock*   select_up_clock_;
+  
   // Short history of the down-sampling actions from the Initialize() state.
   // This is needed for going up in resolution. Since the total amount of
   // down-sampling actions are constrained, the length of the list need not be

@@ -128,58 +128,88 @@ void VCMQmMethod::ComputeSpatial() {
     float minScale = 0.7f;
     float maxScale = 1.3f;//3.0/2.0;
     float multiplier_factor = 1.0f;
+    estimateRate = 0;
+    minBitrate = 0;
+    maxBitrate = 0;
     
     ImageType image_type = GetImageType(width_, height_);
-    estimateRate = kNormalTargetBitrate[image_type];
+    //estimateRate = kNormalTargetBitrate[image_type];
     switch (image_type) {
-      case kBASIC:        //BASIC        160*90
+      case kBASIC:        //BASIC        160*90, 73, [30,95]
         multiplier_factor = 6.1f;
+        minBitrate = 30;
+        maxBitrate = 100;
         //minBitrate = kNormalTargetBitrate[kBASIC] * minScale;
         break;
-      case kDBASIC:       //HBASIC       320*180
+      case kDBASIC:       //HBASIC       320*180, 144,[100,187]
+        minBitrate = 101;
+        maxBitrate = 180;
         multiplier_factor = 3.0f;
         break;
-      case kHVGA:         //HVGA         480*270
+      case kHVGA:         //HVGA         480*270, 237, [166,216]
+        minBitrate = 181;
+        maxBitrate = 300;
         multiplier_factor = 2.2f;
         break;
-      case kVGA:          //VGA          640*360
+      case kVGA:          //VGA          640*360, 345, [241,449]
+        minBitrate = 301;
+        maxBitrate = 500;
         multiplier_factor = 1.8f;
         break;
-      case kFTFULLHD:     //FTFULLHD     800*450
+      case kFTFULLHD:     //FTFULLHD     800*450, 480, [336,624]
+        minBitrate = 501;
+        maxBitrate = 620;
         multiplier_factor = 1.6f;
         break;
-      case kQFULLHD:      //QFULLHD      960*540
-        multiplier_factor = 1.4f;
+      case kQFULLHD:      //QFULLHD      960*540, 648, [453,842]
+        minBitrate = 621;
+        maxBitrate = 750;
+        multiplier_factor = 1.5f;
         break;
-      case kSFULLHD:      //SFULLHD      1120*630
+      case kSFULLHD:      //SFULLHD      1120*630, 735, [514,955]
+        minBitrate = 751;
+        maxBitrate = 850;
         multiplier_factor = 1.25f;
         break;
-      case kWHD:          //WHD         1280*720
+      case kWHD:          //WHD         1280*720, 768, [537,998]
+        minBitrate = 851;
+        maxBitrate = 1000;
         multiplier_factor = 1.15f;
         break;
       case kTQFULLHD:     //TQFULLHD    1440*810
-        multiplier_factor = 1.0f;
+        minBitrate = 1001;
+        maxBitrate = 1200;
+        multiplier_factor = 1.2f;
         break;
       case kFSFULLHD:     //FSFULLHD    1600*900
-        multiplier_factor = 0.95f;
+        minBitrate = 1201;
+        maxBitrate = 1400;
+        multiplier_factor = 1.1f;
         break;
       case kETFULLHD:     //ETFULLHD    1760*990
-        multiplier_factor = 0.9f;
+        minBitrate = 1401;
+        maxBitrate = 1600;
+        multiplier_factor = 1.1f;
         break;
       case kFULLHD:       //FULLHD      1920*1080
-        multiplier_factor = 0.8f;
+        minBitrate = 1601;
+        maxBitrate = 1800;
+        multiplier_factor = 1.2f;
         //maxBitrate = kNormalTargetBitrate[image_type] * 3.0/2.0;
         break;
       case kNumImageTypes:
         minBitrate = 500;
-        maxBitrate = 1200;
+        maxBitrate = 1000;
         return 0;
     }
     
     //Loose Bit Rate Mode
-    estimateRate = kSizeOfImageType[image_type]/1200 * multiplier_factor;
-    maxBitrate = estimateRate * maxScale;
-    minBitrate = estimateRate * minScale;
+    if (0 == estimateRate)
+      estimateRate = kSizeOfImageType[image_type]/1200 * multiplier_factor;
+    if (0 == maxBitrate)
+      maxBitrate = estimateRate * maxScale;
+    if (0 == minBitrate)
+      minBitrate = estimateRate * minScale;
     
 //    //Fixed bit rate mode
 //    if( image_type != kFULLHD )
@@ -252,8 +282,8 @@ FrameRateLevelClass VCMQmMethod::FrameRateLevel(float avg_framerate) {
 
 // RESOLUTION CLASS
 
-VCMQmResolution::VCMQmResolution()
-    :  qm_(new VCMResolutionScale()) {
+VCMQmResolution::VCMQmResolution(Clock* clock)
+    :  qm_(new VCMResolutionScale()),select_up_clock_(clock) {
   Reset();
 }
 
@@ -263,6 +293,7 @@ VCMQmResolution::~VCMQmResolution() {
 
 void VCMQmResolution::ResetRates() {
   sum_target_rate_ = 0.0f;
+  sum_encoder_kbps_ = 0.0f;
   sum_incoming_framerate_ = 0.0f;
   sum_rate_MM_ = 0.0f;
   sum_rate_MM_sgn_ = 0.0f;
@@ -285,10 +316,12 @@ void VCMQmResolution::ResetDownSamplingState() {
 
 void VCMQmResolution::Reset() {
   target_bitrate_ = 0.0f;
+  encoder_sent_kbps_ = 0.0f;
   incoming_framerate_ = 0.0f;
   buffer_level_ = 0.0f;
   per_frame_bandwidth_ = 0.0f;
   avg_target_rate_ = 0.0f;
+  avg_encoder_kbps_ = 0.0f;
   avg_incoming_framerate_ = 0.0f;
   avg_ratio_buffer_low_ = 0.0f;
   avg_rate_mismatch_ = 0.0f;
@@ -296,10 +329,12 @@ void VCMQmResolution::Reset() {
   avg_packet_loss_ = 0.0f;
   encoder_state_ = kStableEncoding;
   num_layers_ = 1;
-    qm_resolution_mode_ = kResolutionModeBoth;
+  qm_resolution_mode_ = kResolutionModeBoth;
   ResetRates();
   ResetDownSamplingState();
   ResetQM();
+  select_up_count = 0;
+  select_up_start_time = 0;
 }
 
 EncoderState VCMQmResolution::GetEncoderState() {
@@ -368,6 +403,7 @@ void VCMQmResolution::UpdateRates(float target_bitrate,
   // Sum the target bitrate: this is the encoder rate from previous update
   // (~1sec), i.e, before the update for next ~1sec.
   sum_target_rate_ += target_bitrate_;
+  sum_encoder_kbps_ += encoder_sent_rate;
   update_rate_cnt_++;
 
   // Sum the received (from RTCP reports) packet loss rates.
@@ -387,6 +423,7 @@ void VCMQmResolution::UpdateRates(float target_bitrate,
   // Update with the current new target and frame rate:
   // these values are ones the encoder will use for the current/next ~1sec.
   target_bitrate_ =  target_bitrate;
+  encoder_sent_kbps_ = encoder_sent_rate;
   incoming_framerate_ = incoming_framerate;
   sum_incoming_framerate_ += incoming_framerate_;
   // Update the per_frame_bandwidth:
@@ -475,6 +512,7 @@ void VCMQmResolution::SetDefaultAction() {
 
 void VCMQmResolution::ComputeRatesForSelection() {
   avg_target_rate_ = 0.0f;
+  avg_encoder_kbps_ = 0.0f;
   avg_incoming_framerate_ = 0.0f;
   avg_ratio_buffer_low_ = 0.0f;
   avg_rate_mismatch_ = 0.0f;
@@ -491,6 +529,8 @@ void VCMQmResolution::ComputeRatesForSelection() {
         static_cast<float>(update_rate_cnt_);
     avg_target_rate_ = static_cast<float>(sum_target_rate_) /
         static_cast<float>(update_rate_cnt_);
+    avg_encoder_kbps_ = static_cast<float>(sum_encoder_kbps_) /
+        static_cast<float>(update_rate_cnt_);
     avg_incoming_framerate_ = static_cast<float>(sum_incoming_framerate_) /
         static_cast<float>(update_rate_cnt_);
     avg_packet_loss_ =  static_cast<float>(sum_packet_loss_) /
@@ -500,6 +540,8 @@ void VCMQmResolution::ComputeRatesForSelection() {
   // with the current (i.e., next ~1sec) rate values.
   avg_target_rate_ = kWeightRate * avg_target_rate_ +
       (1.0 - kWeightRate) * target_bitrate_;
+  avg_encoder_kbps_ = kWeightRate * avg_encoder_kbps_ +
+      (1.0 - kWeightRate) * encoder_sent_kbps_;
   avg_incoming_framerate_ = kWeightRate * avg_incoming_framerate_ +
       (1.0 - kWeightRate) * incoming_framerate_;
   // Use base layer frame rate for temporal layers: this will favor spatial.
@@ -775,13 +817,31 @@ bool VCMQmResolution::ConditionForGoingUp(float fac_width,
   // Go back up if:
   // 1) target rate is above threshold and current encoder state is stable, or
   // 2) encoder state is easy (encoder is significantly under-shooting target).
+  uint32_t estimateRate = 0;
+  uint32_t minBitrate = 0;
+  uint32_t maxBitrate = 0;
+  GetEstimateBitrate(estimateRate, minBitrate, maxBitrate);
   if (((avg_target_rate_ > estimated_transition_rate_up) &&
       (encoder_state_ == kStableEncoding)) ||
-      (encoder_state_ == kEasyEncoding)) {
-    return true;
-  } else {
-    return false;
+      (encoder_state_ == kEasyEncoding) ||
+      avg_encoder_kbps_ >= maxBitrate) {
+    
+    if (avg_target_rate_ >= maxBitrate) {
+        select_up_count++;
+        if (1 == select_up_count){
+            select_up_start_time = select_up_clock_->TimeInMilliseconds();
+        }
+    }
+    if (select_up_count > 4 && select_up_clock_->TimeInMilliseconds() - select_up_start_time > 4000){
+      select_up_count = 0;
+      select_up_start_time = 0;
+      return true;
+    }
+  }else{
+    select_up_count = 0;
+    select_up_start_time = 0;
   }
+  return false;
 }
 
 void VCMQmResolution::SetQmResolutionMode(VCMQmResolutionMode mode) {
@@ -798,7 +858,13 @@ bool VCMQmResolution::GoingDownResolution() {
   // Resolution reduction if:
   // (1) target rate is below transition rate, or
   // (2) encoder is in stressed state and target rate below a max threshold.
+  uint32_t estimateRate;
+  uint32_t minBitrate;
+  uint32_t maxBitrate;
+  GetEstimateBitrate(estimateRate, minBitrate, maxBitrate);
+  
   if ((avg_target_rate_ < estimated_transition_rate_down ) ||
+      (avg_encoder_kbps_ <= minBitrate) ||
       (encoder_state_ == kStressedEncoding && avg_target_rate_ < max_rate)) {
     // Get the down-sampling action: based on content class, and how low
     // average target rate is relative to transition rate.
@@ -1043,8 +1109,8 @@ void  VCMQmResolution::UpdateCodecResolution() {
     }
       
     // Size should not exceed native sizes.
-    assert(qm_->codec_width <= native_width_);
-    assert(qm_->codec_height <= native_height_);
+//    assert(qm_->codec_width <= native_width_);
+//    assert(qm_->codec_height <= native_height_);
     // New sizes should be multiple of 2, otherwise spatial should not have
     // been selected.
     assert(qm_->codec_width % 2 == 0);
@@ -1272,9 +1338,12 @@ void VCMQmResolution::PickSpatialOrTemporal() {
     if (avg_incoming_framerate_ <= kLowFrameRate) {
         action_.spatial = kNoChangeSpatial;
         action_.temporal = down_action_history_[0].temporal;
-    } else if (avg_incoming_framerate_ <= kMiddleFrameRate) {
+    } else if (avg_incoming_framerate_ <= kMiddleFrameRate * 0.8) {
         action_.spatial = kNoChangeSpatial;
         action_.temporal = down_action_history_[0].temporal;
+    } else if (avg_incoming_framerate_ <= kMiddleFrameRate) {
+        action_.spatial = down_action_history_[0].spatial;
+        action_.temporal = kNoChangeTemporal;
     } else if (avg_incoming_framerate_ <= kHighFrameRate) {
         action_.spatial = down_action_history_[0].spatial;
         action_.temporal = kNoChangeTemporal;

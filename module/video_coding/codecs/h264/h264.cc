@@ -36,8 +36,9 @@ H264Encoder::H264Encoder()    : encoded_image_(),
     fps(12),
     mode(0),
     generate_keyframe(false),
-	num_of_cores_(0),
-    count(0){
+    num_of_cores_(0),
+    count(0),
+    curent_frame_(0){
         memset(&codec_, 0, sizeof(codec_));
 #ifdef HAVE_H264_BITSTREAM
 		_bitStreamBeforeSend = fopen(filename_soft_encode_h264, "wb");
@@ -97,16 +98,16 @@ int H264Encoder::SetRates(uint32_t new_bitrate_kbit, uint32_t new_framerate,
         new_bitrate_kbit = codec_.minBitrate;
     }
     
-    if(new_framerate < 5) {
-        new_framerate = 5;
+    if(new_framerate < 9) {
+        new_framerate = 9;
     }
-
+  
     if (GetManalMode()){
       new_bitrate_kbit =codec_.startBitrate ;
-      new_framerate = codec_.maxFramerate ;
+      new_framerate = curent_frame_;
     }else{
       codec_.startBitrate = new_bitrate_kbit;
-      codec_.maxFramerate = new_framerate;
+      curent_frame_ = new_framerate;
     }
   
     if(encoder_) {
@@ -132,40 +133,40 @@ int H264Encoder::InitEncode(const VideoCodec* inst,
                            size_t max_payload_size)
 {
 	x264_param_t param_;
-
 	codec_ = *inst;
+  curent_frame_ = inst->maxFramerate;
 	num_of_cores_ = number_of_cores;	
 
-    if ((inst == NULL) || (inst->maxFramerate < 1) 
-		|| (inst->maxBitrate > 0 && inst->startBitrate > inst->maxBitrate) 
-		|| (inst->width < 1 || inst->height < 1)
-		|| (number_of_cores < 1)) {
-        return WEBRTC_VIDEO_CODEC_ERR_PARAMETER;
-    } 
-    int retVal = Release();
-    if (retVal < 0) {
-        return retVal;
-    }
+  if ((inst == NULL) || (inst->maxFramerate < 1)
+  || (inst->maxBitrate > 0 && inst->startBitrate > inst->maxBitrate)
+  || (inst->width < 1 || inst->height < 1)
+  || (number_of_cores < 1)) {
+      return WEBRTC_VIDEO_CODEC_ERR_PARAMETER;
+  }
+  int retVal = Release();
+  if (retVal < 0) {
+      return retVal;
+  }
 
 	SetX264EncodeParameters(param_, inst->mode, inst->codecType);
-    encoder_ =  x264_encoder_open( &param_);
-    if (!encoder_) {
-        return WEBRTC_VIDEO_CODEC_ERROR;
-    }
+  encoder_ =  x264_encoder_open( &param_);
+  if (!encoder_) {
+      return WEBRTC_VIDEO_CODEC_ERROR;
+  }
 	
 	encoded_image_._size =  CalcBufferSize(yuntongxunwebrtc::kI420, codec_.width, codec_.height);
-    encoded_image_._buffer = new uint8_t[encoded_image_._size];
-    encoded_image_._length = 0;
-    encoded_image_._completeFrame = false;
+  encoded_image_._buffer = new uint8_t[encoded_image_._size];
+  encoded_image_._length = 0;
+  encoded_image_._completeFrame = false;
 
-    // random start 16 bits is enough.
-    picture_id_ = static_cast<uint16_t>(rand()) & 0x7FFF;
-    inited_ = true;
-  
-    SetManualMode(inst->manualMode);
-    return WEBRTC_VIDEO_CODEC_OK;
+  // random start 16 bits is enough.
+  picture_id_ = static_cast<uint16_t>(rand()) & 0x7FFF;
+  inited_ = true;
+
+  SetManualMode(inst->manualMode);
+  return WEBRTC_VIDEO_CODEC_OK;
 }
-    
+
 int H264Encoder::Encode(const I420VideoFrame& input_image,
                        const CodecSpecificInfo* codec_specific_info,
                        const std::vector<VideoFrameType>* frame_types)
@@ -177,13 +178,13 @@ int H264Encoder::Encode(const I420VideoFrame& input_image,
 	int num_nals=0;
 	bool send_key_frame = false;
 
-    if (!inited_
-		|| (encoded_complete_callback_ == NULL) ) {
-        return WEBRTC_VIDEO_CODEC_UNINITIALIZED;
-    }
-    if (input_image.IsZeroSize()) {
-        return WEBRTC_VIDEO_CODEC_ERR_PARAMETER;
-    }
+  if (!inited_
+  || (encoded_complete_callback_ == NULL) ) {
+      return WEBRTC_VIDEO_CODEC_UNINITIALIZED;
+  }
+  if (input_image.IsZeroSize()) {
+      return WEBRTC_VIDEO_CODEC_ERR_PARAMETER;
+  }
 	
 	for (size_t i = 0; i < frame_types->size();++i) {
 		if ((*frame_types)[i] == kKeyFrame) {
@@ -195,32 +196,25 @@ int H264Encoder::Encode(const I420VideoFrame& input_image,
 
 	if(codec_.width != input_image.width() || codec_.height != input_image.height())
 	{
-//		x264_param_t curparms;
-//		x264_encoder_parameters(encoder_, &curparms);
-//		curparms.i_width = input_image.width();
-//		curparms.i_height = input_image.height();
-//		x264_encoder_reconfig(encoder_, &curparms);
-		codec_.width = input_image.width();
-		codec_.height = input_image.height();
-		frameType = kKeyFrame;
-		WEBRTC_TRACE(yuntongxunwebrtc::kTraceError,
-			yuntongxunwebrtc::kTraceVideoCoding,
-			0,
-			"x264_encoder_reconfig:_framewidth=%d _frameheight=%d", codec_.width, codec_.height);
-        InitEncode(&codec_, num_of_cores_, 30000);
-        
+    if (!GetManalMode()){
+      codec_.width = input_image.width();
+      codec_.height = input_image.height();
+      frameType = kKeyFrame;
+      WEBRTC_TRACE(yuntongxunwebrtc::kTraceError,
+                   yuntongxunwebrtc::kTraceVideoCoding,
+                   0,
+                   "x264_encoder_reconfig:_framewidth=%d _frameheight=%d", codec_.width, codec_.height);
+      InitEncode(&codec_, num_of_cores_, 30000);
+    }
 	}
 
 	InitializeX264Pic(input_image, xpic, oxpic, frameType);
   
-    picture_id_ = (framenum_ + 1) & 0x7FFF;  // prepare next
+  picture_id_ = (framenum_ + 1) & 0x7FFF;  // prepare next
 
-    
-    int ret = x264_encoder_encode(encoder_,&xnals,&num_nals,&xpic,&oxpic);
-
+  int ret = x264_encoder_encode(encoder_,&xnals,&num_nals,&xpic,&oxpic);
 	if (ret > 0)
 	{
-		
 		CodecSpecificInfo codec;
 		CodecSpecificInfoH264 *h264Info = &(codec.codecSpecific.H264);
 		RTPFragmentationHeader fragment;
@@ -229,8 +223,6 @@ int H264Encoder::Encode(const I420VideoFrame& input_image,
 		h264Info->pictureId = framenum_;
 		h264Info->nonReference = bNonReference;
 		encoded_complete_callback_->Encoded(encoded_image_, &codec, &fragment);
-
-        
 		framenum_++;
 	}
 	else{
@@ -239,8 +231,7 @@ int H264Encoder::Encode(const I420VideoFrame& input_image,
 			0,
 			"x264_encoder_encode() error=%d.", ret);
 	}
-
-    return WEBRTC_VIDEO_CODEC_OK;
+  return WEBRTC_VIDEO_CODEC_OK;
 }
 
 int H264Encoder::SetChannelParameters(uint32_t /*packet_loss*/, int64_t rtt) {
@@ -265,7 +256,6 @@ WebRtc_Word32 H264Encoder::CodecConfigParameters(WebRtc_UWord8* /*buffer*/, WebR
     return WEBRTC_VIDEO_CODEC_OK;
 }
 
-
 void H264Encoder::SetX264EncodeParameters(x264_param_t &params, VideoCodecMode mode,
                                           VideoCodecType type )
 {
@@ -278,47 +268,36 @@ void H264Encoder::SetX264EncodeParameters(x264_param_t &params, VideoCodecMode m
 	{
 		x264_param_default_preset(p_params,x264_preset_names[2],"stillimage");
 	}
-    if( kVideoCodecH264HIGH == type ){
-        x264_param_apply_profile(p_params, x264_profile_names[2]);
-    }else{
-        x264_param_apply_profile(p_params, x264_profile_names[0]);
-    }
-#ifdef CRF
-	p_params->i_level_idc = 40;  //编码复杂度
-	p_params->i_width=codec_.width;
-	p_params->i_height=codec_.height;
-	p_params->i_fps_num = codec_.maxFramerate;
-	p_params->i_fps_den=1;
-	p_params->i_slice_max_size=1300;
-	p_params->b_annexb=1; //already set by defaule:默认支持字节流格式，即包含nal起始码前缀0x00 00 00 01；
-	//p_params->b_intra_refresh = true;
-	p_params->b_repeat_headers;
-	p_params->i_keyint_max = 50;
-
-    p_params->rc.i_bitrate = codec_.startBitrate;
-	p_params->rc.i_vbv_max_bitrate = codec_.startBitrate;
-	p_params->rc.i_vbv_buffer_size = codec_.startBitrate;
-#else
-//    codec_.startBitrate = codec_.startBitrate*25/codec_.maxFramerate;
-//    if (codec_.startBitrate > codec_.maxBitrate) {
-//        codec_.startBitrate = codec_.maxBitrate;
-//    };
+  
+  if( kVideoCodecH264HIGH == type ){
+      x264_param_apply_profile(p_params, x264_profile_names[2]);
+  }else{
+      x264_param_apply_profile(p_params, x264_profile_names[0]);
+  }
+  
+  p_params->i_width=codec_.width;
+  p_params->i_height=codec_.height;
+  p_params->i_fps_num = curent_frame_;
+  p_params->i_fps_den=1;
+  p_params->i_slice_max_size=1300;
+  p_params->b_annexb=1; //already set by defaule:默认支持字节流格式，即包含nal起始码前缀0x00 00 00 01；
+  p_params->rc.i_bitrate = codec_.startBitrate;
+  p_params->rc.i_vbv_max_bitrate = codec_.startBitrate;
+  
+  if (1){ //Default using CRF
+    p_params->i_level_idc = 40;  //编码复杂度
+    //p_params->b_intra_refresh = true;
+    p_params->b_repeat_headers;
+    p_params->i_keyint_max = 50;
+    p_params->rc.i_vbv_buffer_size = codec_.startBitrate;
+  }else{
     //p_params->i_level_idc = 40;  //编码复杂度
-    p_params->i_width=codec_.width;
-    p_params->i_height=codec_.height;
-    p_params->i_fps_num = codec_.maxFramerate;
-    p_params->i_fps_den=1;
-    p_params->i_slice_max_size=1300;
-    p_params->b_annexb=1; //already set by defaule:默认支持字节流格式，即包含nal起始码前缀0x00 00 00 01；
     //p_params->b_intra_refresh = true;
     p_params->b_repeat_headers = 1;
     //p_params->i_keyint_max = 50;
-    
     p_params->rc.i_rc_method = X264_RC_ABR;
-    p_params->rc.i_bitrate = codec_.startBitrate;
-    p_params->rc.i_vbv_max_bitrate = codec_.startBitrate;
-    p_params->rc.i_vbv_buffer_size = (codec_.startBitrate/codec_.maxFramerate);
-#endif
+    p_params->rc.i_vbv_buffer_size = (codec_.startBitrate/curent_frame_);
+  }
 }
 
 void H264Encoder::InitializeX264Pic(const I420VideoFrame& input_image, x264_picture_t &xpic, x264_picture_t &oxpic, VideoFrameType frame_type)

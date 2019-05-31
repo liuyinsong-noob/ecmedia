@@ -97,7 +97,7 @@ MediaOptimization::MediaOptimization(Clock* clock)
       key_frame_cnt_(0),
       delta_frame_cnt_(0),
       content_(new VCMContentMetricsProcessing()),
-      qm_resolution_(new VCMQmResolution()),
+      qm_resolution_(new VCMQmResolution(clock)),
       last_qm_update_time_(0),
       last_change_time_(0),
       num_layers_(0),
@@ -295,7 +295,8 @@ uint32_t MediaOptimization::SetTargetRates(
 
   // Source coding rate: total rate - protection overhead.
   target_bit_rate_ = target_bitrate - protection_overhead_bps;
-
+  sent_video_rate_kbps_ = sent_video_rate_kbps;
+  
   // Update encoding rates following protection settings.
   float target_video_bitrate_kbps =
       static_cast<float>(target_bit_rate_) / 1000.0f;
@@ -505,9 +506,9 @@ int32_t MediaOptimization::SelectQuality(
     return ret;
   }
 
-    if(qm->frame_rate < 5 ) {
-        qm->frame_rate = 5;
-    }
+  if(qm->frame_rate < kMinFrameRate ) {
+      qm->frame_rate = kMinFrameRate;
+  }
   // Check for updates to spatial/temporal modes.
   QMUpdate(qm, video_qmsettings_callback);
 

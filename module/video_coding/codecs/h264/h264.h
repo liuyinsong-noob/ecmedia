@@ -154,19 +154,21 @@ private:
     EncodedImage encoded_image_;
     EncodedImageCallback* encoded_complete_callback_;
     VideoCodec codec_;  
-	int num_of_cores_;
+    int num_of_cores_;
     bool inited_;
     uint16_t picture_id_;
     bool periodicKeyFrames_;
  
     int bitrate;
-	float fps;
+    float fps;
     int mode;
     uint32_t framenum_;
     bool generate_keyframe;    
     x264_t * encoder_;   
     bool stap_a_allowed;
     int count;
+    uint32_t curent_frame_;
+  
 #ifdef HAVE_H264_BITSTREAM
 	FILE *_bitStreamBeforeSend;
 #endif

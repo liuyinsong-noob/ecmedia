@@ -17,6 +17,7 @@
 #include "video_coding.h"
 #include "media_opt_util.h"
 #include "qm_select.h"
+#include "qm_select_data.h"
 #include "../system_wrappers/include/critical_section_wrapper.h"
 #include "../system_wrappers/include/scoped_ptr.h"
 #include "../base/thread_annotations.h"
@@ -159,6 +160,7 @@ class MediaOptimization {
   uint32_t send_statistics_zero_encode_ GUARDED_BY(crit_sect_);
   int32_t max_payload_size_ GUARDED_BY(crit_sect_);
   int target_bit_rate_ GUARDED_BY(crit_sect_);
+  int sent_video_rate_kbps_ GUARDED_BY(crit_sect_);
   float incoming_frame_rate_ GUARDED_BY(crit_sect_); //raw frame的接收帧率
   int64_t incoming_frame_times_[kFrameCountHistorySize] GUARDED_BY(crit_sect_);
   bool enable_qm_ GUARDED_BY(crit_sect_);
