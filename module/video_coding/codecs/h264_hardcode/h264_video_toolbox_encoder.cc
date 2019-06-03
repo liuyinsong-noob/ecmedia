@@ -407,7 +407,7 @@ int H264VideoToolboxEncoder::SetRates(uint32_t new_bitrate_kbit,
                                       uint32_t frame_rate,
                                       uint32_t minBitrate_kbit,
                                       uint32_t maxBitrate_kbit) {
-  if (GetManalMode()){
+  if (!GetManalMode()){
     if(0 < minBitrate_kbit && new_bitrate_kbit < minBitrate_kbit){
       target_bitrate_bps_ = minBitrate_kbit * 1000;
     }else if(0 < maxBitrate_kbit && new_bitrate_kbit > maxBitrate_kbit){
