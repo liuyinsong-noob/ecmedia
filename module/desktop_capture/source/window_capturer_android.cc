@@ -47,13 +47,12 @@ public:
   virtual void SetScreenShareActivity(void * activity);
 
   static void JNICALL ProvideScreeData(JNIEnv * env,
-                                         jobject,
-                                         jobject obj,
-                                         jbyteArray javaDesktopFrame,
-                                         jint data_len,
-                                         jint width,
-                                         jint height,
-                                         jlong context);
+                                        jobject,
+                                        jobject obj,
+                                        jbyteArray javaDesktopFrame,
+                                        jint data_len,
+                                        jint width,
+                                        jint height);
     
 public:
   static ScreenCapturerAndroid* current_obj_prt;
@@ -317,8 +316,7 @@ void JNICALL ScreenCapturerAndroid::ProvideScreeData(JNIEnv * env,
                                                     jbyteArray javaDesktopFrame,
                                                     jint length,
                                                     jint width,
-                                                    jint height,
-													jlong context) {
+                                                    jint height) {
     if(  ScreenCapturerAndroid::current_obj_prt == NULL) {
         WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceVideoCapture,
               -1, "%s: current screent capturer android obj is null.", __FUNCTION__);

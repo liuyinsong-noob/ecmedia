@@ -42,7 +42,7 @@
             android:layout_width="fill_parent"
            android:layout_height="wrap_content"
            android:gravity="center_horizontal"
-           android:textColor="#bed3ef"yuntongxun.com
+           android:textColor="#bed3ef"
            android:text="CopyRight@ 2014 cloopen.com"
            android:layout_alignParentBottom="true"
             android:layout_marginBottom="30dp"
