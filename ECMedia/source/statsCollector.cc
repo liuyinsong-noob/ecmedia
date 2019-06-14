@@ -242,6 +242,7 @@ void StatsCollector::DeleteVideoSendStatsProxy(int channelid)
 	}
 	DeleteFromReports(StatsReport::kStatsReportTypeVideoSend, channelid);
 	video_send_stats_proxies_.erase(pStatsProxy);
+    pStatsProxy = nullptr;
 	ViEBase*	vie_base = ViEBase::GetInterface(m_vie);
 	if (vie_base)
 	{
