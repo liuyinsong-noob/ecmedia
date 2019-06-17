@@ -378,6 +378,76 @@ class VideoSenderStatisticsInner : public ::yuntongxun_google::protobuf::Message
   inline ::yuntongxun_google::protobuf::int32 kstatsvaluenameactualencframerate() const;
   inline void set_kstatsvaluenameactualencframerate(::yuntongxun_google::protobuf::int32 value);
 
+  // optional int32 packets_rate = 40;
+  inline bool has_packets_rate() const;
+  inline void clear_packets_rate();
+  static const int kPacketsRateFieldNumber = 40;
+  inline ::yuntongxun_google::protobuf::int32 packets_rate() const;
+  inline void set_packets_rate(::yuntongxun_google::protobuf::int32 value);
+
+  // optional int32 rtx_packets_rate = 41;
+  inline bool has_rtx_packets_rate() const;
+  inline void clear_rtx_packets_rate();
+  static const int kRtxPacketsRateFieldNumber = 41;
+  inline ::yuntongxun_google::protobuf::int32 rtx_packets_rate() const;
+  inline void set_rtx_packets_rate(::yuntongxun_google::protobuf::int32 value);
+
+  // optional int32 first_rtp_packet_time_ms = 42;
+  inline bool has_first_rtp_packet_time_ms() const;
+  inline void clear_first_rtp_packet_time_ms();
+  static const int kFirstRtpPacketTimeMsFieldNumber = 42;
+  inline ::yuntongxun_google::protobuf::int32 first_rtp_packet_time_ms() const;
+  inline void set_first_rtp_packet_time_ms(::yuntongxun_google::protobuf::int32 value);
+
+  // optional int32 transmitted_packets = 43;
+  inline bool has_transmitted_packets() const;
+  inline void clear_transmitted_packets();
+  static const int kTransmittedPacketsFieldNumber = 43;
+  inline ::yuntongxun_google::protobuf::int32 transmitted_packets() const;
+  inline void set_transmitted_packets(::yuntongxun_google::protobuf::int32 value);
+
+  // optional int32 retransmitted_packets = 44;
+  inline bool has_retransmitted_packets() const;
+  inline void clear_retransmitted_packets();
+  static const int kRetransmittedPacketsFieldNumber = 44;
+  inline ::yuntongxun_google::protobuf::int32 retransmitted_packets() const;
+  inline void set_retransmitted_packets(::yuntongxun_google::protobuf::int32 value);
+
+  // optional int32 ec_packets = 45;
+  inline bool has_ec_packets() const;
+  inline void clear_ec_packets();
+  static const int kEcPacketsFieldNumber = 45;
+  inline ::yuntongxun_google::protobuf::int32 ec_packets() const;
+  inline void set_ec_packets(::yuntongxun_google::protobuf::int32 value);
+
+  // optional int32 first_packet_time_ms = 46;
+  inline bool has_first_packet_time_ms() const;
+  inline void clear_first_packet_time_ms();
+  static const int kFirstPacketTimeMsFieldNumber = 46;
+  inline ::yuntongxun_google::protobuf::int32 first_packet_time_ms() const;
+  inline void set_first_packet_time_ms(::yuntongxun_google::protobuf::int32 value);
+
+  // optional int32 pli_packets = 47;
+  inline bool has_pli_packets() const;
+  inline void clear_pli_packets();
+  static const int kPliPacketsFieldNumber = 47;
+  inline ::yuntongxun_google::protobuf::int32 pli_packets() const;
+  inline void set_pli_packets(::yuntongxun_google::protobuf::int32 value);
+
+  // optional int32 nack_requests = 48;
+  inline bool has_nack_requests() const;
+  inline void clear_nack_requests();
+  static const int kNackRequestsFieldNumber = 48;
+  inline ::yuntongxun_google::protobuf::int32 nack_requests() const;
+  inline void set_nack_requests(::yuntongxun_google::protobuf::int32 value);
+
+  // optional int32 unique_nack_requests = 49;
+  inline bool has_unique_nack_requests() const;
+  inline void clear_unique_nack_requests();
+  static const int kUniqueNackRequestsFieldNumber = 49;
+  inline ::yuntongxun_google::protobuf::int32 unique_nack_requests() const;
+  inline void set_unique_nack_requests(::yuntongxun_google::protobuf::int32 value);
+
   // @@protoc_insertion_point(class_scope:VideoSenderStatisticsInner)
  private:
   inline void set_has_kstatsvaluenamereporttype();
@@ -458,6 +528,26 @@ class VideoSenderStatisticsInner : public ::yuntongxun_google::protobuf::Message
   inline void clear_has_kstatsvaluenametargetencframerate();
   inline void set_has_kstatsvaluenameactualencframerate();
   inline void clear_has_kstatsvaluenameactualencframerate();
+  inline void set_has_packets_rate();
+  inline void clear_has_packets_rate();
+  inline void set_has_rtx_packets_rate();
+  inline void clear_has_rtx_packets_rate();
+  inline void set_has_first_rtp_packet_time_ms();
+  inline void clear_has_first_rtp_packet_time_ms();
+  inline void set_has_transmitted_packets();
+  inline void clear_has_transmitted_packets();
+  inline void set_has_retransmitted_packets();
+  inline void clear_has_retransmitted_packets();
+  inline void set_has_ec_packets();
+  inline void clear_has_ec_packets();
+  inline void set_has_first_packet_time_ms();
+  inline void clear_has_first_packet_time_ms();
+  inline void set_has_pli_packets();
+  inline void clear_has_pli_packets();
+  inline void set_has_nack_requests();
+  inline void clear_has_nack_requests();
+  inline void set_has_unique_nack_requests();
+  inline void clear_has_unique_nack_requests();
 
   ::std::string _unknown_fields_;
 
@@ -501,6 +591,16 @@ class VideoSenderStatisticsInner : public ::yuntongxun_google::protobuf::Message
   ::yuntongxun_google::protobuf::int32 kstatsvaluenamecodecsettingtargetbitrate_;
   ::yuntongxun_google::protobuf::int32 kstatsvaluenametargetencframerate_;
   ::yuntongxun_google::protobuf::int32 kstatsvaluenameactualencframerate_;
+  ::yuntongxun_google::protobuf::int32 packets_rate_;
+  ::yuntongxun_google::protobuf::int32 rtx_packets_rate_;
+  ::yuntongxun_google::protobuf::int32 first_rtp_packet_time_ms_;
+  ::yuntongxun_google::protobuf::int32 transmitted_packets_;
+  ::yuntongxun_google::protobuf::int32 retransmitted_packets_;
+  ::yuntongxun_google::protobuf::int32 ec_packets_;
+  ::yuntongxun_google::protobuf::int32 first_packet_time_ms_;
+  ::yuntongxun_google::protobuf::int32 pli_packets_;
+  ::yuntongxun_google::protobuf::int32 nack_requests_;
+  ::yuntongxun_google::protobuf::int32 unique_nack_requests_;
   mutable int _cached_size_;
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   friend void  protobuf_AddDesc_MediaStatisticsData_2eproto_impl();
@@ -784,6 +884,48 @@ class VideoReceiverStatisticsInner : public ::yuntongxun_google::protobuf::Messa
   inline ::yuntongxun_google::protobuf::int32 kstatsvaluenamejitterreceived() const;
   inline void set_kstatsvaluenamejitterreceived(::yuntongxun_google::protobuf::int32 value);
 
+  // optional int32 first_rtp_packet_time_ms = 30;
+  inline bool has_first_rtp_packet_time_ms() const;
+  inline void clear_first_rtp_packet_time_ms();
+  static const int kFirstRtpPacketTimeMsFieldNumber = 30;
+  inline ::yuntongxun_google::protobuf::int32 first_rtp_packet_time_ms() const;
+  inline void set_first_rtp_packet_time_ms(::yuntongxun_google::protobuf::int32 value);
+
+  // optional int32 transmitted_packets = 31;
+  inline bool has_transmitted_packets() const;
+  inline void clear_transmitted_packets();
+  static const int kTransmittedPacketsFieldNumber = 31;
+  inline ::yuntongxun_google::protobuf::int32 transmitted_packets() const;
+  inline void set_transmitted_packets(::yuntongxun_google::protobuf::int32 value);
+
+  // optional int32 retransmitted_packets = 32;
+  inline bool has_retransmitted_packets() const;
+  inline void clear_retransmitted_packets();
+  static const int kRetransmittedPacketsFieldNumber = 32;
+  inline ::yuntongxun_google::protobuf::int32 retransmitted_packets() const;
+  inline void set_retransmitted_packets(::yuntongxun_google::protobuf::int32 value);
+
+  // optional int32 fec = 33;
+  inline bool has_fec() const;
+  inline void clear_fec();
+  static const int kFecFieldNumber = 33;
+  inline ::yuntongxun_google::protobuf::int32 fec() const;
+  inline void set_fec(::yuntongxun_google::protobuf::int32 value);
+
+  // optional int32 first_rtcp_packet_time_ms = 34;
+  inline bool has_first_rtcp_packet_time_ms() const;
+  inline void clear_first_rtcp_packet_time_ms();
+  static const int kFirstRtcpPacketTimeMsFieldNumber = 34;
+  inline ::yuntongxun_google::protobuf::int32 first_rtcp_packet_time_ms() const;
+  inline void set_first_rtcp_packet_time_ms(::yuntongxun_google::protobuf::int32 value);
+
+  // optional int32 pli_packets = 35;
+  inline bool has_pli_packets() const;
+  inline void clear_pli_packets();
+  static const int kPliPacketsFieldNumber = 35;
+  inline ::yuntongxun_google::protobuf::int32 pli_packets() const;
+  inline void set_pli_packets(::yuntongxun_google::protobuf::int32 value);
+
   // @@protoc_insertion_point(class_scope:VideoReceiverStatisticsInner)
  private:
   inline void set_has_kstatsvaluenamereporttype();
@@ -844,11 +986,22 @@ class VideoReceiverStatisticsInner : public ::yuntongxun_google::protobuf::Messa
   inline void clear_has_kstatsvaluenamepacketslost();
   inline void set_has_kstatsvaluenamejitterreceived();
   inline void clear_has_kstatsvaluenamejitterreceived();
+  inline void set_has_first_rtp_packet_time_ms();
+  inline void clear_has_first_rtp_packet_time_ms();
+  inline void set_has_transmitted_packets();
+  inline void clear_has_transmitted_packets();
+  inline void set_has_retransmitted_packets();
+  inline void clear_has_retransmitted_packets();
+  inline void set_has_fec();
+  inline void clear_has_fec();
+  inline void set_has_first_rtcp_packet_time_ms();
+  inline void clear_has_first_rtcp_packet_time_ms();
+  inline void set_has_pli_packets();
+  inline void clear_has_pli_packets();
 
   ::std::string _unknown_fields_;
 
-  ::yuntongxun_google::protobuf::uint32 _has_bits_[1];
-  mutable int _cached_size_;
+  ::yuntongxun_google::protobuf::uint32 _has_bits_[2];
   ::yuntongxun_google::protobuf::int32 kstatsvaluenamereporttype_;
   ::yuntongxun_google::protobuf::int32 kstatsvaluenamechannelid_;
   ::yuntongxun_google::protobuf::int64 kstatsvaluenametimestamp_;
@@ -878,6 +1031,13 @@ class VideoReceiverStatisticsInner : public ::yuntongxun_google::protobuf::Messa
   ::yuntongxun_google::protobuf::int32 kstatsvaluenamelossfractioninpercent_;
   ::yuntongxun_google::protobuf::int32 kstatsvaluenamepacketslost_;
   ::yuntongxun_google::protobuf::int32 kstatsvaluenamejitterreceived_;
+  ::yuntongxun_google::protobuf::int32 first_rtp_packet_time_ms_;
+  ::yuntongxun_google::protobuf::int32 transmitted_packets_;
+  ::yuntongxun_google::protobuf::int32 retransmitted_packets_;
+  ::yuntongxun_google::protobuf::int32 fec_;
+  ::yuntongxun_google::protobuf::int32 first_rtcp_packet_time_ms_;
+  ::yuntongxun_google::protobuf::int32 pli_packets_;
+  mutable int _cached_size_;
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   friend void  protobuf_AddDesc_MediaStatisticsData_2eproto_impl();
   #else
@@ -1041,6 +1201,41 @@ class AudioSenderStatisticsInner : public ::yuntongxun_google::protobuf::Message
   inline ::yuntongxun_google::protobuf::int32 kstatsvaluenameechoreturnlossenhancement() const;
   inline void set_kstatsvaluenameechoreturnlossenhancement(::yuntongxun_google::protobuf::int32 value);
 
+  // optional int32 ssrc = 13;
+  inline bool has_ssrc() const;
+  inline void clear_ssrc();
+  static const int kSsrcFieldNumber = 13;
+  inline ::yuntongxun_google::protobuf::int32 ssrc() const;
+  inline void set_ssrc(::yuntongxun_google::protobuf::int32 value);
+
+  // optional int32 jitter_ms = 14;
+  inline bool has_jitter_ms() const;
+  inline void clear_jitter_ms();
+  static const int kJitterMsFieldNumber = 14;
+  inline ::yuntongxun_google::protobuf::int32 jitter_ms() const;
+  inline void set_jitter_ms(::yuntongxun_google::protobuf::int32 value);
+
+  // optional int32 bytes_sent = 15;
+  inline bool has_bytes_sent() const;
+  inline void clear_bytes_sent();
+  static const int kBytesSentFieldNumber = 15;
+  inline ::yuntongxun_google::protobuf::int32 bytes_sent() const;
+  inline void set_bytes_sent(::yuntongxun_google::protobuf::int32 value);
+
+  // optional int32 packets_sent = 16;
+  inline bool has_packets_sent() const;
+  inline void clear_packets_sent();
+  static const int kPacketsSentFieldNumber = 16;
+  inline ::yuntongxun_google::protobuf::int32 packets_sent() const;
+  inline void set_packets_sent(::yuntongxun_google::protobuf::int32 value);
+
+  // optional int32 packets_lost = 17;
+  inline bool has_packets_lost() const;
+  inline void clear_packets_lost();
+  static const int kPacketsLostFieldNumber = 17;
+  inline ::yuntongxun_google::protobuf::int32 packets_lost() const;
+  inline void set_packets_lost(::yuntongxun_google::protobuf::int32 value);
+
   // @@protoc_insertion_point(class_scope:AudioSenderStatisticsInner)
  private:
   inline void set_has_kstatsvaluenamereporttype();
@@ -1067,6 +1262,16 @@ class AudioSenderStatisticsInner : public ::yuntongxun_google::protobuf::Message
   inline void clear_has_kstatsvaluenameechoreturnloss();
   inline void set_has_kstatsvaluenameechoreturnlossenhancement();
   inline void clear_has_kstatsvaluenameechoreturnlossenhancement();
+  inline void set_has_ssrc();
+  inline void clear_has_ssrc();
+  inline void set_has_jitter_ms();
+  inline void clear_has_jitter_ms();
+  inline void set_has_bytes_sent();
+  inline void clear_has_bytes_sent();
+  inline void set_has_packets_sent();
+  inline void clear_has_packets_sent();
+  inline void set_has_packets_lost();
+  inline void clear_has_packets_lost();
 
   ::std::string _unknown_fields_;
 
@@ -1084,6 +1289,11 @@ class AudioSenderStatisticsInner : public ::yuntongxun_google::protobuf::Message
   ::yuntongxun_google::protobuf::int32 kstatsvaluenameechodelaystddev_;
   ::yuntongxun_google::protobuf::int32 kstatsvaluenameechoreturnloss_;
   ::yuntongxun_google::protobuf::int32 kstatsvaluenameechoreturnlossenhancement_;
+  ::yuntongxun_google::protobuf::int32 ssrc_;
+  ::yuntongxun_google::protobuf::int32 jitter_ms_;
+  ::yuntongxun_google::protobuf::int32 bytes_sent_;
+  ::yuntongxun_google::protobuf::int32 packets_sent_;
+  ::yuntongxun_google::protobuf::int32 packets_lost_;
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   friend void  protobuf_AddDesc_MediaStatisticsData_2eproto_impl();
   #else
@@ -1289,6 +1499,27 @@ class AudioReceiverStatisticsInner : public ::yuntongxun_google::protobuf::Messa
   inline ::yuntongxun_google::protobuf::int32 kstatsvaluenametransmitbitrate() const;
   inline void set_kstatsvaluenametransmitbitrate(::yuntongxun_google::protobuf::int32 value);
 
+  // optional int32 ssrc = 19;
+  inline bool has_ssrc() const;
+  inline void clear_ssrc();
+  static const int kSsrcFieldNumber = 19;
+  inline ::yuntongxun_google::protobuf::int32 ssrc() const;
+  inline void set_ssrc(::yuntongxun_google::protobuf::int32 value);
+
+  // optional int32 bytes_rcvd = 20;
+  inline bool has_bytes_rcvd() const;
+  inline void clear_bytes_rcvd();
+  static const int kBytesRcvdFieldNumber = 20;
+  inline ::yuntongxun_google::protobuf::int32 bytes_rcvd() const;
+  inline void set_bytes_rcvd(::yuntongxun_google::protobuf::int32 value);
+
+  // optional int32 packets_rcvd = 21;
+  inline bool has_packets_rcvd() const;
+  inline void clear_packets_rcvd();
+  static const int kPacketsRcvdFieldNumber = 21;
+  inline ::yuntongxun_google::protobuf::int32 packets_rcvd() const;
+  inline void set_packets_rcvd(::yuntongxun_google::protobuf::int32 value);
+
   // @@protoc_insertion_point(class_scope:AudioReceiverStatisticsInner)
  private:
   inline void set_has_kstatsvaluenamereporttype();
@@ -1327,6 +1558,12 @@ class AudioReceiverStatisticsInner : public ::yuntongxun_google::protobuf::Messa
   inline void clear_has_kstatsvaluenamejitterreceived();
   inline void set_has_kstatsvaluenametransmitbitrate();
   inline void clear_has_kstatsvaluenametransmitbitrate();
+  inline void set_has_ssrc();
+  inline void clear_has_ssrc();
+  inline void set_has_bytes_rcvd();
+  inline void clear_has_bytes_rcvd();
+  inline void set_has_packets_rcvd();
+  inline void clear_has_packets_rcvd();
 
   ::std::string _unknown_fields_;
 
@@ -1350,6 +1587,9 @@ class AudioReceiverStatisticsInner : public ::yuntongxun_google::protobuf::Messa
   ::yuntongxun_google::protobuf::int32 kstatsvaluenamepacketslost_;
   ::yuntongxun_google::protobuf::int32 kstatsvaluenamejitterreceived_;
   ::yuntongxun_google::protobuf::int32 kstatsvaluenametransmitbitrate_;
+  ::yuntongxun_google::protobuf::int32 ssrc_;
+  ::yuntongxun_google::protobuf::int32 bytes_rcvd_;
+  ::yuntongxun_google::protobuf::int32 packets_rcvd_;
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   friend void  protobuf_AddDesc_MediaStatisticsData_2eproto_impl();
   #else
@@ -2598,6 +2838,246 @@ inline void VideoSenderStatisticsInner::set_kstatsvaluenameactualencframerate(::
   // @@protoc_insertion_point(field_set:VideoSenderStatisticsInner.kStatsValueNameActualEncFrameRate)
 }
 
+// optional int32 packets_rate = 40;
+inline bool VideoSenderStatisticsInner::has_packets_rate() const {
+  return (_has_bits_[1] & 0x00000080u) != 0;
+}
+inline void VideoSenderStatisticsInner::set_has_packets_rate() {
+  _has_bits_[1] |= 0x00000080u;
+}
+inline void VideoSenderStatisticsInner::clear_has_packets_rate() {
+  _has_bits_[1] &= ~0x00000080u;
+}
+inline void VideoSenderStatisticsInner::clear_packets_rate() {
+  packets_rate_ = 0;
+  clear_has_packets_rate();
+}
+inline ::yuntongxun_google::protobuf::int32 VideoSenderStatisticsInner::packets_rate() const {
+  // @@protoc_insertion_point(field_get:VideoSenderStatisticsInner.packets_rate)
+  return packets_rate_;
+}
+inline void VideoSenderStatisticsInner::set_packets_rate(::yuntongxun_google::protobuf::int32 value) {
+  set_has_packets_rate();
+  packets_rate_ = value;
+  // @@protoc_insertion_point(field_set:VideoSenderStatisticsInner.packets_rate)
+}
+
+// optional int32 rtx_packets_rate = 41;
+inline bool VideoSenderStatisticsInner::has_rtx_packets_rate() const {
+  return (_has_bits_[1] & 0x00000100u) != 0;
+}
+inline void VideoSenderStatisticsInner::set_has_rtx_packets_rate() {
+  _has_bits_[1] |= 0x00000100u;
+}
+inline void VideoSenderStatisticsInner::clear_has_rtx_packets_rate() {
+  _has_bits_[1] &= ~0x00000100u;
+}
+inline void VideoSenderStatisticsInner::clear_rtx_packets_rate() {
+  rtx_packets_rate_ = 0;
+  clear_has_rtx_packets_rate();
+}
+inline ::yuntongxun_google::protobuf::int32 VideoSenderStatisticsInner::rtx_packets_rate() const {
+  // @@protoc_insertion_point(field_get:VideoSenderStatisticsInner.rtx_packets_rate)
+  return rtx_packets_rate_;
+}
+inline void VideoSenderStatisticsInner::set_rtx_packets_rate(::yuntongxun_google::protobuf::int32 value) {
+  set_has_rtx_packets_rate();
+  rtx_packets_rate_ = value;
+  // @@protoc_insertion_point(field_set:VideoSenderStatisticsInner.rtx_packets_rate)
+}
+
+// optional int32 first_rtp_packet_time_ms = 42;
+inline bool VideoSenderStatisticsInner::has_first_rtp_packet_time_ms() const {
+  return (_has_bits_[1] & 0x00000200u) != 0;
+}
+inline void VideoSenderStatisticsInner::set_has_first_rtp_packet_time_ms() {
+  _has_bits_[1] |= 0x00000200u;
+}
+inline void VideoSenderStatisticsInner::clear_has_first_rtp_packet_time_ms() {
+  _has_bits_[1] &= ~0x00000200u;
+}
+inline void VideoSenderStatisticsInner::clear_first_rtp_packet_time_ms() {
+  first_rtp_packet_time_ms_ = 0;
+  clear_has_first_rtp_packet_time_ms();
+}
+inline ::yuntongxun_google::protobuf::int32 VideoSenderStatisticsInner::first_rtp_packet_time_ms() const {
+  // @@protoc_insertion_point(field_get:VideoSenderStatisticsInner.first_rtp_packet_time_ms)
+  return first_rtp_packet_time_ms_;
+}
+inline void VideoSenderStatisticsInner::set_first_rtp_packet_time_ms(::yuntongxun_google::protobuf::int32 value) {
+  set_has_first_rtp_packet_time_ms();
+  first_rtp_packet_time_ms_ = value;
+  // @@protoc_insertion_point(field_set:VideoSenderStatisticsInner.first_rtp_packet_time_ms)
+}
+
+// optional int32 transmitted_packets = 43;
+inline bool VideoSenderStatisticsInner::has_transmitted_packets() const {
+  return (_has_bits_[1] & 0x00000400u) != 0;
+}
+inline void VideoSenderStatisticsInner::set_has_transmitted_packets() {
+  _has_bits_[1] |= 0x00000400u;
+}
+inline void VideoSenderStatisticsInner::clear_has_transmitted_packets() {
+  _has_bits_[1] &= ~0x00000400u;
+}
+inline void VideoSenderStatisticsInner::clear_transmitted_packets() {
+  transmitted_packets_ = 0;
+  clear_has_transmitted_packets();
+}
+inline ::yuntongxun_google::protobuf::int32 VideoSenderStatisticsInner::transmitted_packets() const {
+  // @@protoc_insertion_point(field_get:VideoSenderStatisticsInner.transmitted_packets)
+  return transmitted_packets_;
+}
+inline void VideoSenderStatisticsInner::set_transmitted_packets(::yuntongxun_google::protobuf::int32 value) {
+  set_has_transmitted_packets();
+  transmitted_packets_ = value;
+  // @@protoc_insertion_point(field_set:VideoSenderStatisticsInner.transmitted_packets)
+}
+
+// optional int32 retransmitted_packets = 44;
+inline bool VideoSenderStatisticsInner::has_retransmitted_packets() const {
+  return (_has_bits_[1] & 0x00000800u) != 0;
+}
+inline void VideoSenderStatisticsInner::set_has_retransmitted_packets() {
+  _has_bits_[1] |= 0x00000800u;
+}
+inline void VideoSenderStatisticsInner::clear_has_retransmitted_packets() {
+  _has_bits_[1] &= ~0x00000800u;
+}
+inline void VideoSenderStatisticsInner::clear_retransmitted_packets() {
+  retransmitted_packets_ = 0;
+  clear_has_retransmitted_packets();
+}
+inline ::yuntongxun_google::protobuf::int32 VideoSenderStatisticsInner::retransmitted_packets() const {
+  // @@protoc_insertion_point(field_get:VideoSenderStatisticsInner.retransmitted_packets)
+  return retransmitted_packets_;
+}
+inline void VideoSenderStatisticsInner::set_retransmitted_packets(::yuntongxun_google::protobuf::int32 value) {
+  set_has_retransmitted_packets();
+  retransmitted_packets_ = value;
+  // @@protoc_insertion_point(field_set:VideoSenderStatisticsInner.retransmitted_packets)
+}
+
+// optional int32 ec_packets = 45;
+inline bool VideoSenderStatisticsInner::has_ec_packets() const {
+  return (_has_bits_[1] & 0x00001000u) != 0;
+}
+inline void VideoSenderStatisticsInner::set_has_ec_packets() {
+  _has_bits_[1] |= 0x00001000u;
+}
+inline void VideoSenderStatisticsInner::clear_has_ec_packets() {
+  _has_bits_[1] &= ~0x00001000u;
+}
+inline void VideoSenderStatisticsInner::clear_ec_packets() {
+  ec_packets_ = 0;
+  clear_has_ec_packets();
+}
+inline ::yuntongxun_google::protobuf::int32 VideoSenderStatisticsInner::ec_packets() const {
+  // @@protoc_insertion_point(field_get:VideoSenderStatisticsInner.ec_packets)
+  return ec_packets_;
+}
+inline void VideoSenderStatisticsInner::set_ec_packets(::yuntongxun_google::protobuf::int32 value) {
+  set_has_ec_packets();
+  ec_packets_ = value;
+  // @@protoc_insertion_point(field_set:VideoSenderStatisticsInner.ec_packets)
+}
+
+// optional int32 first_packet_time_ms = 46;
+inline bool VideoSenderStatisticsInner::has_first_packet_time_ms() const {
+  return (_has_bits_[1] & 0x00002000u) != 0;
+}
+inline void VideoSenderStatisticsInner::set_has_first_packet_time_ms() {
+  _has_bits_[1] |= 0x00002000u;
+}
+inline void VideoSenderStatisticsInner::clear_has_first_packet_time_ms() {
+  _has_bits_[1] &= ~0x00002000u;
+}
+inline void VideoSenderStatisticsInner::clear_first_packet_time_ms() {
+  first_packet_time_ms_ = 0;
+  clear_has_first_packet_time_ms();
+}
+inline ::yuntongxun_google::protobuf::int32 VideoSenderStatisticsInner::first_packet_time_ms() const {
+  // @@protoc_insertion_point(field_get:VideoSenderStatisticsInner.first_packet_time_ms)
+  return first_packet_time_ms_;
+}
+inline void VideoSenderStatisticsInner::set_first_packet_time_ms(::yuntongxun_google::protobuf::int32 value) {
+  set_has_first_packet_time_ms();
+  first_packet_time_ms_ = value;
+  // @@protoc_insertion_point(field_set:VideoSenderStatisticsInner.first_packet_time_ms)
+}
+
+// optional int32 pli_packets = 47;
+inline bool VideoSenderStatisticsInner::has_pli_packets() const {
+  return (_has_bits_[1] & 0x00004000u) != 0;
+}
+inline void VideoSenderStatisticsInner::set_has_pli_packets() {
+  _has_bits_[1] |= 0x00004000u;
+}
+inline void VideoSenderStatisticsInner::clear_has_pli_packets() {
+  _has_bits_[1] &= ~0x00004000u;
+}
+inline void VideoSenderStatisticsInner::clear_pli_packets() {
+  pli_packets_ = 0;
+  clear_has_pli_packets();
+}
+inline ::yuntongxun_google::protobuf::int32 VideoSenderStatisticsInner::pli_packets() const {
+  // @@protoc_insertion_point(field_get:VideoSenderStatisticsInner.pli_packets)
+  return pli_packets_;
+}
+inline void VideoSenderStatisticsInner::set_pli_packets(::yuntongxun_google::protobuf::int32 value) {
+  set_has_pli_packets();
+  pli_packets_ = value;
+  // @@protoc_insertion_point(field_set:VideoSenderStatisticsInner.pli_packets)
+}
+
+// optional int32 nack_requests = 48;
+inline bool VideoSenderStatisticsInner::has_nack_requests() const {
+  return (_has_bits_[1] & 0x00008000u) != 0;
+}
+inline void VideoSenderStatisticsInner::set_has_nack_requests() {
+  _has_bits_[1] |= 0x00008000u;
+}
+inline void VideoSenderStatisticsInner::clear_has_nack_requests() {
+  _has_bits_[1] &= ~0x00008000u;
+}
+inline void VideoSenderStatisticsInner::clear_nack_requests() {
+  nack_requests_ = 0;
+  clear_has_nack_requests();
+}
+inline ::yuntongxun_google::protobuf::int32 VideoSenderStatisticsInner::nack_requests() const {
+  // @@protoc_insertion_point(field_get:VideoSenderStatisticsInner.nack_requests)
+  return nack_requests_;
+}
+inline void VideoSenderStatisticsInner::set_nack_requests(::yuntongxun_google::protobuf::int32 value) {
+  set_has_nack_requests();
+  nack_requests_ = value;
+  // @@protoc_insertion_point(field_set:VideoSenderStatisticsInner.nack_requests)
+}
+
+// optional int32 unique_nack_requests = 49;
+inline bool VideoSenderStatisticsInner::has_unique_nack_requests() const {
+  return (_has_bits_[1] & 0x00010000u) != 0;
+}
+inline void VideoSenderStatisticsInner::set_has_unique_nack_requests() {
+  _has_bits_[1] |= 0x00010000u;
+}
+inline void VideoSenderStatisticsInner::clear_has_unique_nack_requests() {
+  _has_bits_[1] &= ~0x00010000u;
+}
+inline void VideoSenderStatisticsInner::clear_unique_nack_requests() {
+  unique_nack_requests_ = 0;
+  clear_has_unique_nack_requests();
+}
+inline ::yuntongxun_google::protobuf::int32 VideoSenderStatisticsInner::unique_nack_requests() const {
+  // @@protoc_insertion_point(field_get:VideoSenderStatisticsInner.unique_nack_requests)
+  return unique_nack_requests_;
+}
+inline void VideoSenderStatisticsInner::set_unique_nack_requests(::yuntongxun_google::protobuf::int32 value) {
+  set_has_unique_nack_requests();
+  unique_nack_requests_ = value;
+  // @@protoc_insertion_point(field_set:VideoSenderStatisticsInner.unique_nack_requests)
+}
+
 // -------------------------------------------------------------------
 
 // VideoReceiverStatisticsInner
@@ -3350,6 +3830,150 @@ inline void VideoReceiverStatisticsInner::set_kstatsvaluenamejitterreceived(::yu
   // @@protoc_insertion_point(field_set:VideoReceiverStatisticsInner.kStatsValueNameJitterReceived)
 }
 
+// optional int32 first_rtp_packet_time_ms = 30;
+inline bool VideoReceiverStatisticsInner::has_first_rtp_packet_time_ms() const {
+  return (_has_bits_[0] & 0x20000000u) != 0;
+}
+inline void VideoReceiverStatisticsInner::set_has_first_rtp_packet_time_ms() {
+  _has_bits_[0] |= 0x20000000u;
+}
+inline void VideoReceiverStatisticsInner::clear_has_first_rtp_packet_time_ms() {
+  _has_bits_[0] &= ~0x20000000u;
+}
+inline void VideoReceiverStatisticsInner::clear_first_rtp_packet_time_ms() {
+  first_rtp_packet_time_ms_ = 0;
+  clear_has_first_rtp_packet_time_ms();
+}
+inline ::yuntongxun_google::protobuf::int32 VideoReceiverStatisticsInner::first_rtp_packet_time_ms() const {
+  // @@protoc_insertion_point(field_get:VideoReceiverStatisticsInner.first_rtp_packet_time_ms)
+  return first_rtp_packet_time_ms_;
+}
+inline void VideoReceiverStatisticsInner::set_first_rtp_packet_time_ms(::yuntongxun_google::protobuf::int32 value) {
+  set_has_first_rtp_packet_time_ms();
+  first_rtp_packet_time_ms_ = value;
+  // @@protoc_insertion_point(field_set:VideoReceiverStatisticsInner.first_rtp_packet_time_ms)
+}
+
+// optional int32 transmitted_packets = 31;
+inline bool VideoReceiverStatisticsInner::has_transmitted_packets() const {
+  return (_has_bits_[0] & 0x40000000u) != 0;
+}
+inline void VideoReceiverStatisticsInner::set_has_transmitted_packets() {
+  _has_bits_[0] |= 0x40000000u;
+}
+inline void VideoReceiverStatisticsInner::clear_has_transmitted_packets() {
+  _has_bits_[0] &= ~0x40000000u;
+}
+inline void VideoReceiverStatisticsInner::clear_transmitted_packets() {
+  transmitted_packets_ = 0;
+  clear_has_transmitted_packets();
+}
+inline ::yuntongxun_google::protobuf::int32 VideoReceiverStatisticsInner::transmitted_packets() const {
+  // @@protoc_insertion_point(field_get:VideoReceiverStatisticsInner.transmitted_packets)
+  return transmitted_packets_;
+}
+inline void VideoReceiverStatisticsInner::set_transmitted_packets(::yuntongxun_google::protobuf::int32 value) {
+  set_has_transmitted_packets();
+  transmitted_packets_ = value;
+  // @@protoc_insertion_point(field_set:VideoReceiverStatisticsInner.transmitted_packets)
+}
+
+// optional int32 retransmitted_packets = 32;
+inline bool VideoReceiverStatisticsInner::has_retransmitted_packets() const {
+  return (_has_bits_[0] & 0x80000000u) != 0;
+}
+inline void VideoReceiverStatisticsInner::set_has_retransmitted_packets() {
+  _has_bits_[0] |= 0x80000000u;
+}
+inline void VideoReceiverStatisticsInner::clear_has_retransmitted_packets() {
+  _has_bits_[0] &= ~0x80000000u;
+}
+inline void VideoReceiverStatisticsInner::clear_retransmitted_packets() {
+  retransmitted_packets_ = 0;
+  clear_has_retransmitted_packets();
+}
+inline ::yuntongxun_google::protobuf::int32 VideoReceiverStatisticsInner::retransmitted_packets() const {
+  // @@protoc_insertion_point(field_get:VideoReceiverStatisticsInner.retransmitted_packets)
+  return retransmitted_packets_;
+}
+inline void VideoReceiverStatisticsInner::set_retransmitted_packets(::yuntongxun_google::protobuf::int32 value) {
+  set_has_retransmitted_packets();
+  retransmitted_packets_ = value;
+  // @@protoc_insertion_point(field_set:VideoReceiverStatisticsInner.retransmitted_packets)
+}
+
+// optional int32 fec = 33;
+inline bool VideoReceiverStatisticsInner::has_fec() const {
+  return (_has_bits_[1] & 0x00000001u) != 0;
+}
+inline void VideoReceiverStatisticsInner::set_has_fec() {
+  _has_bits_[1] |= 0x00000001u;
+}
+inline void VideoReceiverStatisticsInner::clear_has_fec() {
+  _has_bits_[1] &= ~0x00000001u;
+}
+inline void VideoReceiverStatisticsInner::clear_fec() {
+  fec_ = 0;
+  clear_has_fec();
+}
+inline ::yuntongxun_google::protobuf::int32 VideoReceiverStatisticsInner::fec() const {
+  // @@protoc_insertion_point(field_get:VideoReceiverStatisticsInner.fec)
+  return fec_;
+}
+inline void VideoReceiverStatisticsInner::set_fec(::yuntongxun_google::protobuf::int32 value) {
+  set_has_fec();
+  fec_ = value;
+  // @@protoc_insertion_point(field_set:VideoReceiverStatisticsInner.fec)
+}
+
+// optional int32 first_rtcp_packet_time_ms = 34;
+inline bool VideoReceiverStatisticsInner::has_first_rtcp_packet_time_ms() const {
+  return (_has_bits_[1] & 0x00000002u) != 0;
+}
+inline void VideoReceiverStatisticsInner::set_has_first_rtcp_packet_time_ms() {
+  _has_bits_[1] |= 0x00000002u;
+}
+inline void VideoReceiverStatisticsInner::clear_has_first_rtcp_packet_time_ms() {
+  _has_bits_[1] &= ~0x00000002u;
+}
+inline void VideoReceiverStatisticsInner::clear_first_rtcp_packet_time_ms() {
+  first_rtcp_packet_time_ms_ = 0;
+  clear_has_first_rtcp_packet_time_ms();
+}
+inline ::yuntongxun_google::protobuf::int32 VideoReceiverStatisticsInner::first_rtcp_packet_time_ms() const {
+  // @@protoc_insertion_point(field_get:VideoReceiverStatisticsInner.first_rtcp_packet_time_ms)
+  return first_rtcp_packet_time_ms_;
+}
+inline void VideoReceiverStatisticsInner::set_first_rtcp_packet_time_ms(::yuntongxun_google::protobuf::int32 value) {
+  set_has_first_rtcp_packet_time_ms();
+  first_rtcp_packet_time_ms_ = value;
+  // @@protoc_insertion_point(field_set:VideoReceiverStatisticsInner.first_rtcp_packet_time_ms)
+}
+
+// optional int32 pli_packets = 35;
+inline bool VideoReceiverStatisticsInner::has_pli_packets() const {
+  return (_has_bits_[1] & 0x00000004u) != 0;
+}
+inline void VideoReceiverStatisticsInner::set_has_pli_packets() {
+  _has_bits_[1] |= 0x00000004u;
+}
+inline void VideoReceiverStatisticsInner::clear_has_pli_packets() {
+  _has_bits_[1] &= ~0x00000004u;
+}
+inline void VideoReceiverStatisticsInner::clear_pli_packets() {
+  pli_packets_ = 0;
+  clear_has_pli_packets();
+}
+inline ::yuntongxun_google::protobuf::int32 VideoReceiverStatisticsInner::pli_packets() const {
+  // @@protoc_insertion_point(field_get:VideoReceiverStatisticsInner.pli_packets)
+  return pli_packets_;
+}
+inline void VideoReceiverStatisticsInner::set_pli_packets(::yuntongxun_google::protobuf::int32 value) {
+  set_has_pli_packets();
+  pli_packets_ = value;
+  // @@protoc_insertion_point(field_set:VideoReceiverStatisticsInner.pli_packets)
+}
+
 // -------------------------------------------------------------------
 
 // AudioSenderStatisticsInner
@@ -3692,6 +4316,126 @@ inline void AudioSenderStatisticsInner::set_kstatsvaluenameechoreturnlossenhance
   set_has_kstatsvaluenameechoreturnlossenhancement();
   kstatsvaluenameechoreturnlossenhancement_ = value;
   // @@protoc_insertion_point(field_set:AudioSenderStatisticsInner.kStatsValueNameEchoReturnLossEnhancement)
+}
+
+// optional int32 ssrc = 13;
+inline bool AudioSenderStatisticsInner::has_ssrc() const {
+  return (_has_bits_[0] & 0x00001000u) != 0;
+}
+inline void AudioSenderStatisticsInner::set_has_ssrc() {
+  _has_bits_[0] |= 0x00001000u;
+}
+inline void AudioSenderStatisticsInner::clear_has_ssrc() {
+  _has_bits_[0] &= ~0x00001000u;
+}
+inline void AudioSenderStatisticsInner::clear_ssrc() {
+  ssrc_ = 0;
+  clear_has_ssrc();
+}
+inline ::yuntongxun_google::protobuf::int32 AudioSenderStatisticsInner::ssrc() const {
+  // @@protoc_insertion_point(field_get:AudioSenderStatisticsInner.ssrc)
+  return ssrc_;
+}
+inline void AudioSenderStatisticsInner::set_ssrc(::yuntongxun_google::protobuf::int32 value) {
+  set_has_ssrc();
+  ssrc_ = value;
+  // @@protoc_insertion_point(field_set:AudioSenderStatisticsInner.ssrc)
+}
+
+// optional int32 jitter_ms = 14;
+inline bool AudioSenderStatisticsInner::has_jitter_ms() const {
+  return (_has_bits_[0] & 0x00002000u) != 0;
+}
+inline void AudioSenderStatisticsInner::set_has_jitter_ms() {
+  _has_bits_[0] |= 0x00002000u;
+}
+inline void AudioSenderStatisticsInner::clear_has_jitter_ms() {
+  _has_bits_[0] &= ~0x00002000u;
+}
+inline void AudioSenderStatisticsInner::clear_jitter_ms() {
+  jitter_ms_ = 0;
+  clear_has_jitter_ms();
+}
+inline ::yuntongxun_google::protobuf::int32 AudioSenderStatisticsInner::jitter_ms() const {
+  // @@protoc_insertion_point(field_get:AudioSenderStatisticsInner.jitter_ms)
+  return jitter_ms_;
+}
+inline void AudioSenderStatisticsInner::set_jitter_ms(::yuntongxun_google::protobuf::int32 value) {
+  set_has_jitter_ms();
+  jitter_ms_ = value;
+  // @@protoc_insertion_point(field_set:AudioSenderStatisticsInner.jitter_ms)
+}
+
+// optional int32 bytes_sent = 15;
+inline bool AudioSenderStatisticsInner::has_bytes_sent() const {
+  return (_has_bits_[0] & 0x00004000u) != 0;
+}
+inline void AudioSenderStatisticsInner::set_has_bytes_sent() {
+  _has_bits_[0] |= 0x00004000u;
+}
+inline void AudioSenderStatisticsInner::clear_has_bytes_sent() {
+  _has_bits_[0] &= ~0x00004000u;
+}
+inline void AudioSenderStatisticsInner::clear_bytes_sent() {
+  bytes_sent_ = 0;
+  clear_has_bytes_sent();
+}
+inline ::yuntongxun_google::protobuf::int32 AudioSenderStatisticsInner::bytes_sent() const {
+  // @@protoc_insertion_point(field_get:AudioSenderStatisticsInner.bytes_sent)
+  return bytes_sent_;
+}
+inline void AudioSenderStatisticsInner::set_bytes_sent(::yuntongxun_google::protobuf::int32 value) {
+  set_has_bytes_sent();
+  bytes_sent_ = value;
+  // @@protoc_insertion_point(field_set:AudioSenderStatisticsInner.bytes_sent)
+}
+
+// optional int32 packets_sent = 16;
+inline bool AudioSenderStatisticsInner::has_packets_sent() const {
+  return (_has_bits_[0] & 0x00008000u) != 0;
+}
+inline void AudioSenderStatisticsInner::set_has_packets_sent() {
+  _has_bits_[0] |= 0x00008000u;
+}
+inline void AudioSenderStatisticsInner::clear_has_packets_sent() {
+  _has_bits_[0] &= ~0x00008000u;
+}
+inline void AudioSenderStatisticsInner::clear_packets_sent() {
+  packets_sent_ = 0;
+  clear_has_packets_sent();
+}
+inline ::yuntongxun_google::protobuf::int32 AudioSenderStatisticsInner::packets_sent() const {
+  // @@protoc_insertion_point(field_get:AudioSenderStatisticsInner.packets_sent)
+  return packets_sent_;
+}
+inline void AudioSenderStatisticsInner::set_packets_sent(::yuntongxun_google::protobuf::int32 value) {
+  set_has_packets_sent();
+  packets_sent_ = value;
+  // @@protoc_insertion_point(field_set:AudioSenderStatisticsInner.packets_sent)
+}
+
+// optional int32 packets_lost = 17;
+inline bool AudioSenderStatisticsInner::has_packets_lost() const {
+  return (_has_bits_[0] & 0x00010000u) != 0;
+}
+inline void AudioSenderStatisticsInner::set_has_packets_lost() {
+  _has_bits_[0] |= 0x00010000u;
+}
+inline void AudioSenderStatisticsInner::clear_has_packets_lost() {
+  _has_bits_[0] &= ~0x00010000u;
+}
+inline void AudioSenderStatisticsInner::clear_packets_lost() {
+  packets_lost_ = 0;
+  clear_has_packets_lost();
+}
+inline ::yuntongxun_google::protobuf::int32 AudioSenderStatisticsInner::packets_lost() const {
+  // @@protoc_insertion_point(field_get:AudioSenderStatisticsInner.packets_lost)
+  return packets_lost_;
+}
+inline void AudioSenderStatisticsInner::set_packets_lost(::yuntongxun_google::protobuf::int32 value) {
+  set_has_packets_lost();
+  packets_lost_ = value;
+  // @@protoc_insertion_point(field_set:AudioSenderStatisticsInner.packets_lost)
 }
 
 // -------------------------------------------------------------------
@@ -4180,6 +4924,78 @@ inline void AudioReceiverStatisticsInner::set_kstatsvaluenametransmitbitrate(::y
   set_has_kstatsvaluenametransmitbitrate();
   kstatsvaluenametransmitbitrate_ = value;
   // @@protoc_insertion_point(field_set:AudioReceiverStatisticsInner.kStatsValueNameTransmitBitrate)
+}
+
+// optional int32 ssrc = 19;
+inline bool AudioReceiverStatisticsInner::has_ssrc() const {
+  return (_has_bits_[0] & 0x00040000u) != 0;
+}
+inline void AudioReceiverStatisticsInner::set_has_ssrc() {
+  _has_bits_[0] |= 0x00040000u;
+}
+inline void AudioReceiverStatisticsInner::clear_has_ssrc() {
+  _has_bits_[0] &= ~0x00040000u;
+}
+inline void AudioReceiverStatisticsInner::clear_ssrc() {
+  ssrc_ = 0;
+  clear_has_ssrc();
+}
+inline ::yuntongxun_google::protobuf::int32 AudioReceiverStatisticsInner::ssrc() const {
+  // @@protoc_insertion_point(field_get:AudioReceiverStatisticsInner.ssrc)
+  return ssrc_;
+}
+inline void AudioReceiverStatisticsInner::set_ssrc(::yuntongxun_google::protobuf::int32 value) {
+  set_has_ssrc();
+  ssrc_ = value;
+  // @@protoc_insertion_point(field_set:AudioReceiverStatisticsInner.ssrc)
+}
+
+// optional int32 bytes_rcvd = 20;
+inline bool AudioReceiverStatisticsInner::has_bytes_rcvd() const {
+  return (_has_bits_[0] & 0x00080000u) != 0;
+}
+inline void AudioReceiverStatisticsInner::set_has_bytes_rcvd() {
+  _has_bits_[0] |= 0x00080000u;
+}
+inline void AudioReceiverStatisticsInner::clear_has_bytes_rcvd() {
+  _has_bits_[0] &= ~0x00080000u;
+}
+inline void AudioReceiverStatisticsInner::clear_bytes_rcvd() {
+  bytes_rcvd_ = 0;
+  clear_has_bytes_rcvd();
+}
+inline ::yuntongxun_google::protobuf::int32 AudioReceiverStatisticsInner::bytes_rcvd() const {
+  // @@protoc_insertion_point(field_get:AudioReceiverStatisticsInner.bytes_rcvd)
+  return bytes_rcvd_;
+}
+inline void AudioReceiverStatisticsInner::set_bytes_rcvd(::yuntongxun_google::protobuf::int32 value) {
+  set_has_bytes_rcvd();
+  bytes_rcvd_ = value;
+  // @@protoc_insertion_point(field_set:AudioReceiverStatisticsInner.bytes_rcvd)
+}
+
+// optional int32 packets_rcvd = 21;
+inline bool AudioReceiverStatisticsInner::has_packets_rcvd() const {
+  return (_has_bits_[0] & 0x00100000u) != 0;
+}
+inline void AudioReceiverStatisticsInner::set_has_packets_rcvd() {
+  _has_bits_[0] |= 0x00100000u;
+}
+inline void AudioReceiverStatisticsInner::clear_has_packets_rcvd() {
+  _has_bits_[0] &= ~0x00100000u;
+}
+inline void AudioReceiverStatisticsInner::clear_packets_rcvd() {
+  packets_rcvd_ = 0;
+  clear_has_packets_rcvd();
+}
+inline ::yuntongxun_google::protobuf::int32 AudioReceiverStatisticsInner::packets_rcvd() const {
+  // @@protoc_insertion_point(field_get:AudioReceiverStatisticsInner.packets_rcvd)
+  return packets_rcvd_;
+}
+inline void AudioReceiverStatisticsInner::set_packets_rcvd(::yuntongxun_google::protobuf::int32 value) {
+  set_has_packets_rcvd();
+  packets_rcvd_ = value;
+  // @@protoc_insertion_point(field_set:AudioReceiverStatisticsInner.packets_rcvd)
 }
 
 // -------------------------------------------------------------------

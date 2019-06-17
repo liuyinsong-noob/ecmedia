@@ -59,6 +59,20 @@ message VideoSenderStatisticsInner
 	optional int32 kStatsValueNameCodecSettingTargetBitrate = 37;
 	optional int32 kStatsValueNameTargetEncFrameRate = 38;
 	optional int32 kStatsValueNameActualEncFrameRate = 39;
+
+	optional int32  packets_rate                	= 40; // rtp 包发送率
+    optional int32  rtx_packets_rate           		= 41; // 重传 rtp 包发送率
+
+	optional int32 first_rtp_packet_time_ms			 = 42;
+	optional int32 transmitted_packets          	= 43; // Number of transmitted packets/bytes.
+	optional int32 retransmitted_packets        	= 44; // Number of retransmitted packets/bytes.
+	optional int32 ec_packets                  		= 45; // Number of redundancy packets/bytes.
+        
+    optional int32 first_packet_time_ms 			 = 46;
+
+	optional int32 pli_packets						= 47;
+	optional int32 nack_requests					= 48;
+	optional int32 unique_nack_requests				= 49;
 }
 
 message VideoReceiverStatisticsInner
@@ -105,6 +119,13 @@ message VideoReceiverStatisticsInner
 	optional int32 kStatsValueNameLossFractionInPercent = 27;
 	optional int32 kStatsValueNamePacketsLost = 28;
 	optional int32 kStatsValueNameJitterReceived = 29;
+
+	optional int32 first_rtp_packet_time_ms 		= 30;
+    optional int32 transmitted_packets 			   = 31;
+    optional int32 retransmitted_packets 		   = 32;
+    optional int32 fec 							   = 33;
+	optional int32 first_rtcp_packet_time_ms 		= 34;
+	optional int32 pli_packets 					   = 35;
 }
 
 message AudioSenderStatisticsInner
@@ -128,6 +149,12 @@ message AudioSenderStatisticsInner
 	optional int32 kStatsValueNameEchoDelayStdDev = 10;
 	optional int32 kStatsValueNameEchoReturnLoss = 11;
 	optional int32 kStatsValueNameEchoReturnLossEnhancement = 12;
+
+	optional int32 ssrc 				= 13;
+	optional int32 jitter_ms 		 	= 14;
+	optional int32 bytes_sent 			= 15;
+	optional int32 packets_sent 		= 16;
+	optional int32 packets_lost			= 17;
 }
 
 message AudioReceiverStatisticsInner
@@ -159,6 +186,10 @@ message AudioReceiverStatisticsInner
 	optional int32 kStatsValueNamePacketsLost = 16;
 	optional int32 kStatsValueNameJitterReceived = 17;
 	optional int32 kStatsValueNameTransmitBitrate = 18;
+
+	optional int32 ssrc 				= 19;
+	optional int32 bytes_rcvd     		= 20;
+	optional int32 packets_rcvd  		= 21;
 }
 message MediaStatisticsInner
 {

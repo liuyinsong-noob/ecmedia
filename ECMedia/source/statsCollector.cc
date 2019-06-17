@@ -178,7 +178,7 @@ bool StatsCollector::AddVideoSendStatsProxy(int channelid)
 		if (vie_capture)
 		{
 			vie_capture->RegisterObserver(capDevId_, *pStatsProxy);
-        vie_capture->RegisterObserver(camCaptureId_, *pStatsProxy);
+            vie_capture->RegisterObserver(camCaptureId_, *pStatsProxy);
 			vie_capture->Release();
 		}
 		
@@ -236,19 +236,24 @@ void StatsCollector::DeleteVideoSendStatsProxy(int channelid)
 			break;
 		}
 	}
-	if (!pStatsProxy)
-	{
+	if (!pStatsProxy) {
 		return;
 	}
 	DeleteFromReports(StatsReport::kStatsReportTypeVideoSend, channelid);
 	video_send_stats_proxies_.erase(pStatsProxy);
-    pStatsProxy = nullptr;
-	ViEBase*	vie_base = ViEBase::GetInterface(m_vie);
-	if (vie_base)
-	{
-		vie_base->DeregisterCpuOveruseObserver(channelid);
+ 
+	ViEBase* vie_base = ViEBase::GetInterface(m_vie);
+	if (vie_base) {
+        vie_base->DeregisterCpuOveruseObserver(channelid);
 		vie_base->Release();
 	}
+    
+    ViECapture* vie_capture = ViECapture::GetInterface(m_vie);
+    if (vie_capture) {
+        vie_capture->DeregisterObserver(capDevId_);
+        vie_capture->DeregisterObserver(camCaptureId_);
+        vie_capture->Release();
+    }
 #endif
 }
 
@@ -730,7 +735,13 @@ void StatsCollector::LoadAudioSenderReportToPbBuffer(StatsContentType type,
 	value = report.FindValue(StatsReport::kStatsValueNameTimestamp);
 	if (value)
 		statsData->set_kstatsvaluenametimestamp(value->uint64_val());
-    
+    value = report.FindValue(StatsReport::kStatsValueNameSsrc);
+    if (value)
+        statsData->set_ssrc(value->int32_val());
+
+    value = report.FindValue(StatsReport::kStatsValueNameJitterReceived);
+    if(value)
+        statsData->set_jitter_ms(value->int32_val());
     // send lossrate
     value = report.FindValue(StatsReport::kStatsValueNameLossFractionInPercent);
     if (value)
@@ -775,6 +786,10 @@ void StatsCollector::LoadAudioReceiverReportToPbBuffer(StatsContentType type,
 	value = report.FindValue(StatsReport::kStatsValueNameReportType);
 	if (value)
 		statsData->set_kstatsvaluenamereporttype(value->int32_val());
+    value = report.FindValue(StatsReport::kStatsValueNameSsrc);
+    if (value)
+        statsData->set_ssrc(value->int32_val());
+
 	value = report.FindValue(StatsReport::kStatsValueNameChannelId);
 	if (value)
 		statsData->set_kstatsvaluenamechannelid(value->int32_val());

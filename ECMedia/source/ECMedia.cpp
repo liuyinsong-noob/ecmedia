@@ -3012,6 +3012,8 @@ int ECMedia_allocate_capture_device(const char *id, size_t len, int& deviceid)
         capture->Release();
         if (ret != 0) {
             WEBRTC_TRACE(kTraceError, kTraceMediaApi, 0, "%s:%d failed to allocate capture device", __FUNCTION__, __LINE__);
+        } else {
+            g_statsCollector->SetVideoCaptureId(deviceid);
         }
         WEBRTC_TRACE(kTraceApiCall, kTraceMediaApi, 0, "%s:%d ends... with code: %d ", __FUNCTION__, __LINE__, ret);
         return ret;

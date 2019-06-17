@@ -106,6 +106,16 @@ const int VideoSenderStatisticsInner::kKStatsValueNameCodecSettingMaxBitrateFiel
 const int VideoSenderStatisticsInner::kKStatsValueNameCodecSettingTargetBitrateFieldNumber;
 const int VideoSenderStatisticsInner::kKStatsValueNameTargetEncFrameRateFieldNumber;
 const int VideoSenderStatisticsInner::kKStatsValueNameActualEncFrameRateFieldNumber;
+const int VideoSenderStatisticsInner::kPacketsRateFieldNumber;
+const int VideoSenderStatisticsInner::kRtxPacketsRateFieldNumber;
+const int VideoSenderStatisticsInner::kFirstRtpPacketTimeMsFieldNumber;
+const int VideoSenderStatisticsInner::kTransmittedPacketsFieldNumber;
+const int VideoSenderStatisticsInner::kRetransmittedPacketsFieldNumber;
+const int VideoSenderStatisticsInner::kEcPacketsFieldNumber;
+const int VideoSenderStatisticsInner::kFirstPacketTimeMsFieldNumber;
+const int VideoSenderStatisticsInner::kPliPacketsFieldNumber;
+const int VideoSenderStatisticsInner::kNackRequestsFieldNumber;
+const int VideoSenderStatisticsInner::kUniqueNackRequestsFieldNumber;
 #endif  // !_MSC_VER
 
 VideoSenderStatisticsInner::VideoSenderStatisticsInner()
@@ -166,6 +176,16 @@ void VideoSenderStatisticsInner::SharedCtor() {
   kstatsvaluenamecodecsettingtargetbitrate_ = 0;
   kstatsvaluenametargetencframerate_ = 0;
   kstatsvaluenameactualencframerate_ = 0;
+  packets_rate_ = 0;
+  rtx_packets_rate_ = 0;
+  first_rtp_packet_time_ms_ = 0;
+  transmitted_packets_ = 0;
+  retransmitted_packets_ = 0;
+  ec_packets_ = 0;
+  first_packet_time_ms_ = 0;
+  pli_packets_ = 0;
+  nack_requests_ = 0;
+  unique_nack_requests_ = 0;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
@@ -235,9 +255,13 @@ void VideoSenderStatisticsInner::Clear() {
   if (_has_bits_[24 / 32] & 4278190080) {
     ZR_(kstatsvaluenamecapturedframeheight_, kstatsvaluenamecodecsettingframerate_);
   }
-  if (_has_bits_[32 / 32] & 127) {
-    ZR_(kstatsvaluenamecodecsettingsimulcastnum_, kstatsvaluenameactualencframerate_);
+  if (_has_bits_[32 / 32] & 255) {
+    ZR_(kstatsvaluenamecodecsettingsimulcastnum_, packets_rate_);
   }
+  if (_has_bits_[40 / 32] & 65280) {
+    ZR_(rtx_packets_rate_, nack_requests_);
+  }
+  unique_nack_requests_ = 0;
 
 #undef OFFSET_OF_FIELD_
 #undef ZR_
@@ -838,6 +862,156 @@ bool VideoSenderStatisticsInner::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
+        if (input->ExpectTag(320)) goto parse_packets_rate;
+        break;
+      }
+
+      // optional int32 packets_rate = 40;
+      case 40: {
+        if (tag == 320) {
+         parse_packets_rate:
+          DO_((::yuntongxun_google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::yuntongxun_google::protobuf::int32, ::yuntongxun_google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+                 input, &packets_rate_)));
+          set_has_packets_rate();
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(328)) goto parse_rtx_packets_rate;
+        break;
+      }
+
+      // optional int32 rtx_packets_rate = 41;
+      case 41: {
+        if (tag == 328) {
+         parse_rtx_packets_rate:
+          DO_((::yuntongxun_google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::yuntongxun_google::protobuf::int32, ::yuntongxun_google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+                 input, &rtx_packets_rate_)));
+          set_has_rtx_packets_rate();
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(336)) goto parse_first_rtp_packet_time_ms;
+        break;
+      }
+
+      // optional int32 first_rtp_packet_time_ms = 42;
+      case 42: {
+        if (tag == 336) {
+         parse_first_rtp_packet_time_ms:
+          DO_((::yuntongxun_google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::yuntongxun_google::protobuf::int32, ::yuntongxun_google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+                 input, &first_rtp_packet_time_ms_)));
+          set_has_first_rtp_packet_time_ms();
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(344)) goto parse_transmitted_packets;
+        break;
+      }
+
+      // optional int32 transmitted_packets = 43;
+      case 43: {
+        if (tag == 344) {
+         parse_transmitted_packets:
+          DO_((::yuntongxun_google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::yuntongxun_google::protobuf::int32, ::yuntongxun_google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+                 input, &transmitted_packets_)));
+          set_has_transmitted_packets();
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(352)) goto parse_retransmitted_packets;
+        break;
+      }
+
+      // optional int32 retransmitted_packets = 44;
+      case 44: {
+        if (tag == 352) {
+         parse_retransmitted_packets:
+          DO_((::yuntongxun_google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::yuntongxun_google::protobuf::int32, ::yuntongxun_google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+                 input, &retransmitted_packets_)));
+          set_has_retransmitted_packets();
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(360)) goto parse_ec_packets;
+        break;
+      }
+
+      // optional int32 ec_packets = 45;
+      case 45: {
+        if (tag == 360) {
+         parse_ec_packets:
+          DO_((::yuntongxun_google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::yuntongxun_google::protobuf::int32, ::yuntongxun_google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+                 input, &ec_packets_)));
+          set_has_ec_packets();
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(368)) goto parse_first_packet_time_ms;
+        break;
+      }
+
+      // optional int32 first_packet_time_ms = 46;
+      case 46: {
+        if (tag == 368) {
+         parse_first_packet_time_ms:
+          DO_((::yuntongxun_google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::yuntongxun_google::protobuf::int32, ::yuntongxun_google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+                 input, &first_packet_time_ms_)));
+          set_has_first_packet_time_ms();
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(376)) goto parse_pli_packets;
+        break;
+      }
+
+      // optional int32 pli_packets = 47;
+      case 47: {
+        if (tag == 376) {
+         parse_pli_packets:
+          DO_((::yuntongxun_google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::yuntongxun_google::protobuf::int32, ::yuntongxun_google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+                 input, &pli_packets_)));
+          set_has_pli_packets();
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(384)) goto parse_nack_requests;
+        break;
+      }
+
+      // optional int32 nack_requests = 48;
+      case 48: {
+        if (tag == 384) {
+         parse_nack_requests:
+          DO_((::yuntongxun_google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::yuntongxun_google::protobuf::int32, ::yuntongxun_google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+                 input, &nack_requests_)));
+          set_has_nack_requests();
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(392)) goto parse_unique_nack_requests;
+        break;
+      }
+
+      // optional int32 unique_nack_requests = 49;
+      case 49: {
+        if (tag == 392) {
+         parse_unique_nack_requests:
+          DO_((::yuntongxun_google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::yuntongxun_google::protobuf::int32, ::yuntongxun_google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+                 input, &unique_nack_requests_)));
+          set_has_unique_nack_requests();
+        } else {
+          goto handle_unusual;
+        }
         if (input->ExpectAtEnd()) goto success;
         break;
       }
@@ -1061,6 +1235,56 @@ void VideoSenderStatisticsInner::SerializeWithCachedSizes(
   // optional int32 kStatsValueNameActualEncFrameRate = 39;
   if (has_kstatsvaluenameactualencframerate()) {
     ::yuntongxun_google::protobuf::internal::WireFormatLite::WriteInt32(39, this->kstatsvaluenameactualencframerate(), output);
+  }
+
+  // optional int32 packets_rate = 40;
+  if (has_packets_rate()) {
+    ::yuntongxun_google::protobuf::internal::WireFormatLite::WriteInt32(40, this->packets_rate(), output);
+  }
+
+  // optional int32 rtx_packets_rate = 41;
+  if (has_rtx_packets_rate()) {
+    ::yuntongxun_google::protobuf::internal::WireFormatLite::WriteInt32(41, this->rtx_packets_rate(), output);
+  }
+
+  // optional int32 first_rtp_packet_time_ms = 42;
+  if (has_first_rtp_packet_time_ms()) {
+    ::yuntongxun_google::protobuf::internal::WireFormatLite::WriteInt32(42, this->first_rtp_packet_time_ms(), output);
+  }
+
+  // optional int32 transmitted_packets = 43;
+  if (has_transmitted_packets()) {
+    ::yuntongxun_google::protobuf::internal::WireFormatLite::WriteInt32(43, this->transmitted_packets(), output);
+  }
+
+  // optional int32 retransmitted_packets = 44;
+  if (has_retransmitted_packets()) {
+    ::yuntongxun_google::protobuf::internal::WireFormatLite::WriteInt32(44, this->retransmitted_packets(), output);
+  }
+
+  // optional int32 ec_packets = 45;
+  if (has_ec_packets()) {
+    ::yuntongxun_google::protobuf::internal::WireFormatLite::WriteInt32(45, this->ec_packets(), output);
+  }
+
+  // optional int32 first_packet_time_ms = 46;
+  if (has_first_packet_time_ms()) {
+    ::yuntongxun_google::protobuf::internal::WireFormatLite::WriteInt32(46, this->first_packet_time_ms(), output);
+  }
+
+  // optional int32 pli_packets = 47;
+  if (has_pli_packets()) {
+    ::yuntongxun_google::protobuf::internal::WireFormatLite::WriteInt32(47, this->pli_packets(), output);
+  }
+
+  // optional int32 nack_requests = 48;
+  if (has_nack_requests()) {
+    ::yuntongxun_google::protobuf::internal::WireFormatLite::WriteInt32(48, this->nack_requests(), output);
+  }
+
+  // optional int32 unique_nack_requests = 49;
+  if (has_unique_nack_requests()) {
+    ::yuntongxun_google::protobuf::internal::WireFormatLite::WriteInt32(49, this->unique_nack_requests(), output);
   }
 
   output->WriteRaw(unknown_fields().data(),
@@ -1353,6 +1577,80 @@ int VideoSenderStatisticsInner::ByteSize() const {
           this->kstatsvaluenameactualencframerate());
     }
 
+    // optional int32 packets_rate = 40;
+    if (has_packets_rate()) {
+      total_size += 2 +
+        ::yuntongxun_google::protobuf::internal::WireFormatLite::Int32Size(
+          this->packets_rate());
+    }
+
+  }
+  if (_has_bits_[40 / 32] & (0xffu << (40 % 32))) {
+    // optional int32 rtx_packets_rate = 41;
+    if (has_rtx_packets_rate()) {
+      total_size += 2 +
+        ::yuntongxun_google::protobuf::internal::WireFormatLite::Int32Size(
+          this->rtx_packets_rate());
+    }
+
+    // optional int32 first_rtp_packet_time_ms = 42;
+    if (has_first_rtp_packet_time_ms()) {
+      total_size += 2 +
+        ::yuntongxun_google::protobuf::internal::WireFormatLite::Int32Size(
+          this->first_rtp_packet_time_ms());
+    }
+
+    // optional int32 transmitted_packets = 43;
+    if (has_transmitted_packets()) {
+      total_size += 2 +
+        ::yuntongxun_google::protobuf::internal::WireFormatLite::Int32Size(
+          this->transmitted_packets());
+    }
+
+    // optional int32 retransmitted_packets = 44;
+    if (has_retransmitted_packets()) {
+      total_size += 2 +
+        ::yuntongxun_google::protobuf::internal::WireFormatLite::Int32Size(
+          this->retransmitted_packets());
+    }
+
+    // optional int32 ec_packets = 45;
+    if (has_ec_packets()) {
+      total_size += 2 +
+        ::yuntongxun_google::protobuf::internal::WireFormatLite::Int32Size(
+          this->ec_packets());
+    }
+
+    // optional int32 first_packet_time_ms = 46;
+    if (has_first_packet_time_ms()) {
+      total_size += 2 +
+        ::yuntongxun_google::protobuf::internal::WireFormatLite::Int32Size(
+          this->first_packet_time_ms());
+    }
+
+    // optional int32 pli_packets = 47;
+    if (has_pli_packets()) {
+      total_size += 2 +
+        ::yuntongxun_google::protobuf::internal::WireFormatLite::Int32Size(
+          this->pli_packets());
+    }
+
+    // optional int32 nack_requests = 48;
+    if (has_nack_requests()) {
+      total_size += 2 +
+        ::yuntongxun_google::protobuf::internal::WireFormatLite::Int32Size(
+          this->nack_requests());
+    }
+
+  }
+  if (_has_bits_[48 / 32] & (0xffu << (48 % 32))) {
+    // optional int32 unique_nack_requests = 49;
+    if (has_unique_nack_requests()) {
+      total_size += 2 +
+        ::yuntongxun_google::protobuf::internal::WireFormatLite::Int32Size(
+          this->unique_nack_requests());
+    }
+
   }
   total_size += unknown_fields().size();
 
@@ -1495,6 +1793,40 @@ void VideoSenderStatisticsInner::MergeFrom(const VideoSenderStatisticsInner& fro
     if (from.has_kstatsvaluenameactualencframerate()) {
       set_kstatsvaluenameactualencframerate(from.kstatsvaluenameactualencframerate());
     }
+    if (from.has_packets_rate()) {
+      set_packets_rate(from.packets_rate());
+    }
+  }
+  if (from._has_bits_[40 / 32] & (0xffu << (40 % 32))) {
+    if (from.has_rtx_packets_rate()) {
+      set_rtx_packets_rate(from.rtx_packets_rate());
+    }
+    if (from.has_first_rtp_packet_time_ms()) {
+      set_first_rtp_packet_time_ms(from.first_rtp_packet_time_ms());
+    }
+    if (from.has_transmitted_packets()) {
+      set_transmitted_packets(from.transmitted_packets());
+    }
+    if (from.has_retransmitted_packets()) {
+      set_retransmitted_packets(from.retransmitted_packets());
+    }
+    if (from.has_ec_packets()) {
+      set_ec_packets(from.ec_packets());
+    }
+    if (from.has_first_packet_time_ms()) {
+      set_first_packet_time_ms(from.first_packet_time_ms());
+    }
+    if (from.has_pli_packets()) {
+      set_pli_packets(from.pli_packets());
+    }
+    if (from.has_nack_requests()) {
+      set_nack_requests(from.nack_requests());
+    }
+  }
+  if (from._has_bits_[48 / 32] & (0xffu << (48 % 32))) {
+    if (from.has_unique_nack_requests()) {
+      set_unique_nack_requests(from.unique_nack_requests());
+    }
   }
   mutable_unknown_fields()->append(from.unknown_fields());
 }
@@ -1551,6 +1883,16 @@ void VideoSenderStatisticsInner::Swap(VideoSenderStatisticsInner* other) {
     std::swap(kstatsvaluenamecodecsettingtargetbitrate_, other->kstatsvaluenamecodecsettingtargetbitrate_);
     std::swap(kstatsvaluenametargetencframerate_, other->kstatsvaluenametargetencframerate_);
     std::swap(kstatsvaluenameactualencframerate_, other->kstatsvaluenameactualencframerate_);
+    std::swap(packets_rate_, other->packets_rate_);
+    std::swap(rtx_packets_rate_, other->rtx_packets_rate_);
+    std::swap(first_rtp_packet_time_ms_, other->first_rtp_packet_time_ms_);
+    std::swap(transmitted_packets_, other->transmitted_packets_);
+    std::swap(retransmitted_packets_, other->retransmitted_packets_);
+    std::swap(ec_packets_, other->ec_packets_);
+    std::swap(first_packet_time_ms_, other->first_packet_time_ms_);
+    std::swap(pli_packets_, other->pli_packets_);
+    std::swap(nack_requests_, other->nack_requests_);
+    std::swap(unique_nack_requests_, other->unique_nack_requests_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
     std::swap(_has_bits_[1], other->_has_bits_[1]);
     _unknown_fields_.swap(other->_unknown_fields_);
@@ -1595,6 +1937,12 @@ const int VideoReceiverStatisticsInner::kKStatsValueNameLossModePart4FieldNumber
 const int VideoReceiverStatisticsInner::kKStatsValueNameLossFractionInPercentFieldNumber;
 const int VideoReceiverStatisticsInner::kKStatsValueNamePacketsLostFieldNumber;
 const int VideoReceiverStatisticsInner::kKStatsValueNameJitterReceivedFieldNumber;
+const int VideoReceiverStatisticsInner::kFirstRtpPacketTimeMsFieldNumber;
+const int VideoReceiverStatisticsInner::kTransmittedPacketsFieldNumber;
+const int VideoReceiverStatisticsInner::kRetransmittedPacketsFieldNumber;
+const int VideoReceiverStatisticsInner::kFecFieldNumber;
+const int VideoReceiverStatisticsInner::kFirstRtcpPacketTimeMsFieldNumber;
+const int VideoReceiverStatisticsInner::kPliPacketsFieldNumber;
 #endif  // !_MSC_VER
 
 VideoReceiverStatisticsInner::VideoReceiverStatisticsInner()
@@ -1645,6 +1993,12 @@ void VideoReceiverStatisticsInner::SharedCtor() {
   kstatsvaluenamelossfractioninpercent_ = 0;
   kstatsvaluenamepacketslost_ = 0;
   kstatsvaluenamejitterreceived_ = 0;
+  first_rtp_packet_time_ms_ = 0;
+  transmitted_packets_ = 0;
+  retransmitted_packets_ = 0;
+  fec_ = 0;
+  first_rtcp_packet_time_ms_ = 0;
+  pli_packets_ = 0;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
@@ -1711,9 +2065,10 @@ void VideoReceiverStatisticsInner::Clear() {
   if (_has_bits_[16 / 32] & 16711680) {
     ZR_(kstatsvaluenamebytesreceived_, kstatsvaluenamelossmodepart2_);
   }
-  if (_has_bits_[24 / 32] & 520093696) {
-    ZR_(kstatsvaluenamelossmodepart3_, kstatsvaluenamejitterreceived_);
+  if (_has_bits_[24 / 32] & 4278190080) {
+    ZR_(kstatsvaluenamelossmodepart3_, retransmitted_packets_);
   }
+  ZR_(fec_, pli_packets_);
 
 #undef OFFSET_OF_FIELD_
 #undef ZR_
@@ -2164,6 +2519,96 @@ bool VideoReceiverStatisticsInner::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
+        if (input->ExpectTag(240)) goto parse_first_rtp_packet_time_ms;
+        break;
+      }
+
+      // optional int32 first_rtp_packet_time_ms = 30;
+      case 30: {
+        if (tag == 240) {
+         parse_first_rtp_packet_time_ms:
+          DO_((::yuntongxun_google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::yuntongxun_google::protobuf::int32, ::yuntongxun_google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+                 input, &first_rtp_packet_time_ms_)));
+          set_has_first_rtp_packet_time_ms();
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(248)) goto parse_transmitted_packets;
+        break;
+      }
+
+      // optional int32 transmitted_packets = 31;
+      case 31: {
+        if (tag == 248) {
+         parse_transmitted_packets:
+          DO_((::yuntongxun_google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::yuntongxun_google::protobuf::int32, ::yuntongxun_google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+                 input, &transmitted_packets_)));
+          set_has_transmitted_packets();
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(256)) goto parse_retransmitted_packets;
+        break;
+      }
+
+      // optional int32 retransmitted_packets = 32;
+      case 32: {
+        if (tag == 256) {
+         parse_retransmitted_packets:
+          DO_((::yuntongxun_google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::yuntongxun_google::protobuf::int32, ::yuntongxun_google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+                 input, &retransmitted_packets_)));
+          set_has_retransmitted_packets();
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(264)) goto parse_fec;
+        break;
+      }
+
+      // optional int32 fec = 33;
+      case 33: {
+        if (tag == 264) {
+         parse_fec:
+          DO_((::yuntongxun_google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::yuntongxun_google::protobuf::int32, ::yuntongxun_google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+                 input, &fec_)));
+          set_has_fec();
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(272)) goto parse_first_rtcp_packet_time_ms;
+        break;
+      }
+
+      // optional int32 first_rtcp_packet_time_ms = 34;
+      case 34: {
+        if (tag == 272) {
+         parse_first_rtcp_packet_time_ms:
+          DO_((::yuntongxun_google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::yuntongxun_google::protobuf::int32, ::yuntongxun_google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+                 input, &first_rtcp_packet_time_ms_)));
+          set_has_first_rtcp_packet_time_ms();
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(280)) goto parse_pli_packets;
+        break;
+      }
+
+      // optional int32 pli_packets = 35;
+      case 35: {
+        if (tag == 280) {
+         parse_pli_packets:
+          DO_((::yuntongxun_google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::yuntongxun_google::protobuf::int32, ::yuntongxun_google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+                 input, &pli_packets_)));
+          set_has_pli_packets();
+        } else {
+          goto handle_unusual;
+        }
         if (input->ExpectAtEnd()) goto success;
         break;
       }
@@ -2337,6 +2782,36 @@ void VideoReceiverStatisticsInner::SerializeWithCachedSizes(
   // optional int32 kStatsValueNameJitterReceived = 29;
   if (has_kstatsvaluenamejitterreceived()) {
     ::yuntongxun_google::protobuf::internal::WireFormatLite::WriteInt32(29, this->kstatsvaluenamejitterreceived(), output);
+  }
+
+  // optional int32 first_rtp_packet_time_ms = 30;
+  if (has_first_rtp_packet_time_ms()) {
+    ::yuntongxun_google::protobuf::internal::WireFormatLite::WriteInt32(30, this->first_rtp_packet_time_ms(), output);
+  }
+
+  // optional int32 transmitted_packets = 31;
+  if (has_transmitted_packets()) {
+    ::yuntongxun_google::protobuf::internal::WireFormatLite::WriteInt32(31, this->transmitted_packets(), output);
+  }
+
+  // optional int32 retransmitted_packets = 32;
+  if (has_retransmitted_packets()) {
+    ::yuntongxun_google::protobuf::internal::WireFormatLite::WriteInt32(32, this->retransmitted_packets(), output);
+  }
+
+  // optional int32 fec = 33;
+  if (has_fec()) {
+    ::yuntongxun_google::protobuf::internal::WireFormatLite::WriteInt32(33, this->fec(), output);
+  }
+
+  // optional int32 first_rtcp_packet_time_ms = 34;
+  if (has_first_rtcp_packet_time_ms()) {
+    ::yuntongxun_google::protobuf::internal::WireFormatLite::WriteInt32(34, this->first_rtcp_packet_time_ms(), output);
+  }
+
+  // optional int32 pli_packets = 35;
+  if (has_pli_packets()) {
+    ::yuntongxun_google::protobuf::internal::WireFormatLite::WriteInt32(35, this->pli_packets(), output);
   }
 
   output->WriteRaw(unknown_fields().data(),
@@ -2557,6 +3032,50 @@ int VideoReceiverStatisticsInner::ByteSize() const {
           this->kstatsvaluenamejitterreceived());
     }
 
+    // optional int32 first_rtp_packet_time_ms = 30;
+    if (has_first_rtp_packet_time_ms()) {
+      total_size += 2 +
+        ::yuntongxun_google::protobuf::internal::WireFormatLite::Int32Size(
+          this->first_rtp_packet_time_ms());
+    }
+
+    // optional int32 transmitted_packets = 31;
+    if (has_transmitted_packets()) {
+      total_size += 2 +
+        ::yuntongxun_google::protobuf::internal::WireFormatLite::Int32Size(
+          this->transmitted_packets());
+    }
+
+    // optional int32 retransmitted_packets = 32;
+    if (has_retransmitted_packets()) {
+      total_size += 2 +
+        ::yuntongxun_google::protobuf::internal::WireFormatLite::Int32Size(
+          this->retransmitted_packets());
+    }
+
+  }
+  if (_has_bits_[32 / 32] & (0xffu << (32 % 32))) {
+    // optional int32 fec = 33;
+    if (has_fec()) {
+      total_size += 2 +
+        ::yuntongxun_google::protobuf::internal::WireFormatLite::Int32Size(
+          this->fec());
+    }
+
+    // optional int32 first_rtcp_packet_time_ms = 34;
+    if (has_first_rtcp_packet_time_ms()) {
+      total_size += 2 +
+        ::yuntongxun_google::protobuf::internal::WireFormatLite::Int32Size(
+          this->first_rtcp_packet_time_ms());
+    }
+
+    // optional int32 pli_packets = 35;
+    if (has_pli_packets()) {
+      total_size += 2 +
+        ::yuntongxun_google::protobuf::internal::WireFormatLite::Int32Size(
+          this->pli_packets());
+    }
+
   }
   total_size += unknown_fields().size();
 
@@ -2667,6 +3186,26 @@ void VideoReceiverStatisticsInner::MergeFrom(const VideoReceiverStatisticsInner&
     if (from.has_kstatsvaluenamejitterreceived()) {
       set_kstatsvaluenamejitterreceived(from.kstatsvaluenamejitterreceived());
     }
+    if (from.has_first_rtp_packet_time_ms()) {
+      set_first_rtp_packet_time_ms(from.first_rtp_packet_time_ms());
+    }
+    if (from.has_transmitted_packets()) {
+      set_transmitted_packets(from.transmitted_packets());
+    }
+    if (from.has_retransmitted_packets()) {
+      set_retransmitted_packets(from.retransmitted_packets());
+    }
+  }
+  if (from._has_bits_[32 / 32] & (0xffu << (32 % 32))) {
+    if (from.has_fec()) {
+      set_fec(from.fec());
+    }
+    if (from.has_first_rtcp_packet_time_ms()) {
+      set_first_rtcp_packet_time_ms(from.first_rtcp_packet_time_ms());
+    }
+    if (from.has_pli_packets()) {
+      set_pli_packets(from.pli_packets());
+    }
   }
   mutable_unknown_fields()->append(from.unknown_fields());
 }
@@ -2713,7 +3252,14 @@ void VideoReceiverStatisticsInner::Swap(VideoReceiverStatisticsInner* other) {
     std::swap(kstatsvaluenamelossfractioninpercent_, other->kstatsvaluenamelossfractioninpercent_);
     std::swap(kstatsvaluenamepacketslost_, other->kstatsvaluenamepacketslost_);
     std::swap(kstatsvaluenamejitterreceived_, other->kstatsvaluenamejitterreceived_);
+    std::swap(first_rtp_packet_time_ms_, other->first_rtp_packet_time_ms_);
+    std::swap(transmitted_packets_, other->transmitted_packets_);
+    std::swap(retransmitted_packets_, other->retransmitted_packets_);
+    std::swap(fec_, other->fec_);
+    std::swap(first_rtcp_packet_time_ms_, other->first_rtcp_packet_time_ms_);
+    std::swap(pli_packets_, other->pli_packets_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
+    std::swap(_has_bits_[1], other->_has_bits_[1]);
     _unknown_fields_.swap(other->_unknown_fields_);
     std::swap(_cached_size_, other->_cached_size_);
   }
@@ -2739,6 +3285,11 @@ const int AudioSenderStatisticsInner::kKStatsValueNameEchoDelayMedianFieldNumber
 const int AudioSenderStatisticsInner::kKStatsValueNameEchoDelayStdDevFieldNumber;
 const int AudioSenderStatisticsInner::kKStatsValueNameEchoReturnLossFieldNumber;
 const int AudioSenderStatisticsInner::kKStatsValueNameEchoReturnLossEnhancementFieldNumber;
+const int AudioSenderStatisticsInner::kSsrcFieldNumber;
+const int AudioSenderStatisticsInner::kJitterMsFieldNumber;
+const int AudioSenderStatisticsInner::kBytesSentFieldNumber;
+const int AudioSenderStatisticsInner::kPacketsSentFieldNumber;
+const int AudioSenderStatisticsInner::kPacketsLostFieldNumber;
 #endif  // !_MSC_VER
 
 AudioSenderStatisticsInner::AudioSenderStatisticsInner()
@@ -2772,6 +3323,11 @@ void AudioSenderStatisticsInner::SharedCtor() {
   kstatsvaluenameechodelaystddev_ = 0;
   kstatsvaluenameechoreturnloss_ = 0;
   kstatsvaluenameechoreturnlossenhancement_ = 0;
+  ssrc_ = 0;
+  jitter_ms_ = 0;
+  bytes_sent_ = 0;
+  packets_sent_ = 0;
+  packets_lost_ = 0;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
@@ -2832,7 +3388,10 @@ void AudioSenderStatisticsInner::Clear() {
       }
     }
   }
-  ZR_(kstatsvaluenameechodelaymedian_, kstatsvaluenameechoreturnlossenhancement_);
+  if (_has_bits_[8 / 32] & 65280) {
+    ZR_(kstatsvaluenameechodelaymedian_, packets_sent_);
+  }
+  packets_lost_ = 0;
 
 #undef OFFSET_OF_FIELD_
 #undef ZR_
@@ -2851,7 +3410,7 @@ bool AudioSenderStatisticsInner::MergePartialFromCodedStream(
       &unknown_fields_string);
   // @@protoc_insertion_point(parse_start:AudioSenderStatisticsInner)
   for (;;) {
-    ::std::pair< ::yuntongxun_google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
+    ::std::pair< ::yuntongxun_google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(16383);
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::yuntongxun_google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
@@ -3028,6 +3587,81 @@ bool AudioSenderStatisticsInner::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
+        if (input->ExpectTag(104)) goto parse_ssrc;
+        break;
+      }
+
+      // optional int32 ssrc = 13;
+      case 13: {
+        if (tag == 104) {
+         parse_ssrc:
+          DO_((::yuntongxun_google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::yuntongxun_google::protobuf::int32, ::yuntongxun_google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+                 input, &ssrc_)));
+          set_has_ssrc();
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(112)) goto parse_jitter_ms;
+        break;
+      }
+
+      // optional int32 jitter_ms = 14;
+      case 14: {
+        if (tag == 112) {
+         parse_jitter_ms:
+          DO_((::yuntongxun_google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::yuntongxun_google::protobuf::int32, ::yuntongxun_google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+                 input, &jitter_ms_)));
+          set_has_jitter_ms();
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(120)) goto parse_bytes_sent;
+        break;
+      }
+
+      // optional int32 bytes_sent = 15;
+      case 15: {
+        if (tag == 120) {
+         parse_bytes_sent:
+          DO_((::yuntongxun_google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::yuntongxun_google::protobuf::int32, ::yuntongxun_google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+                 input, &bytes_sent_)));
+          set_has_bytes_sent();
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(128)) goto parse_packets_sent;
+        break;
+      }
+
+      // optional int32 packets_sent = 16;
+      case 16: {
+        if (tag == 128) {
+         parse_packets_sent:
+          DO_((::yuntongxun_google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::yuntongxun_google::protobuf::int32, ::yuntongxun_google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+                 input, &packets_sent_)));
+          set_has_packets_sent();
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(136)) goto parse_packets_lost;
+        break;
+      }
+
+      // optional int32 packets_lost = 17;
+      case 17: {
+        if (tag == 136) {
+         parse_packets_lost:
+          DO_((::yuntongxun_google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::yuntongxun_google::protobuf::int32, ::yuntongxun_google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+                 input, &packets_lost_)));
+          set_has_packets_lost();
+        } else {
+          goto handle_unusual;
+        }
         if (input->ExpectAtEnd()) goto success;
         break;
       }
@@ -3116,6 +3750,31 @@ void AudioSenderStatisticsInner::SerializeWithCachedSizes(
   // optional int32 kStatsValueNameEchoReturnLossEnhancement = 12;
   if (has_kstatsvaluenameechoreturnlossenhancement()) {
     ::yuntongxun_google::protobuf::internal::WireFormatLite::WriteInt32(12, this->kstatsvaluenameechoreturnlossenhancement(), output);
+  }
+
+  // optional int32 ssrc = 13;
+  if (has_ssrc()) {
+    ::yuntongxun_google::protobuf::internal::WireFormatLite::WriteInt32(13, this->ssrc(), output);
+  }
+
+  // optional int32 jitter_ms = 14;
+  if (has_jitter_ms()) {
+    ::yuntongxun_google::protobuf::internal::WireFormatLite::WriteInt32(14, this->jitter_ms(), output);
+  }
+
+  // optional int32 bytes_sent = 15;
+  if (has_bytes_sent()) {
+    ::yuntongxun_google::protobuf::internal::WireFormatLite::WriteInt32(15, this->bytes_sent(), output);
+  }
+
+  // optional int32 packets_sent = 16;
+  if (has_packets_sent()) {
+    ::yuntongxun_google::protobuf::internal::WireFormatLite::WriteInt32(16, this->packets_sent(), output);
+  }
+
+  // optional int32 packets_lost = 17;
+  if (has_packets_lost()) {
+    ::yuntongxun_google::protobuf::internal::WireFormatLite::WriteInt32(17, this->packets_lost(), output);
   }
 
   output->WriteRaw(unknown_fields().data(),
@@ -3213,6 +3872,43 @@ int AudioSenderStatisticsInner::ByteSize() const {
           this->kstatsvaluenameechoreturnlossenhancement());
     }
 
+    // optional int32 ssrc = 13;
+    if (has_ssrc()) {
+      total_size += 1 +
+        ::yuntongxun_google::protobuf::internal::WireFormatLite::Int32Size(
+          this->ssrc());
+    }
+
+    // optional int32 jitter_ms = 14;
+    if (has_jitter_ms()) {
+      total_size += 1 +
+        ::yuntongxun_google::protobuf::internal::WireFormatLite::Int32Size(
+          this->jitter_ms());
+    }
+
+    // optional int32 bytes_sent = 15;
+    if (has_bytes_sent()) {
+      total_size += 1 +
+        ::yuntongxun_google::protobuf::internal::WireFormatLite::Int32Size(
+          this->bytes_sent());
+    }
+
+    // optional int32 packets_sent = 16;
+    if (has_packets_sent()) {
+      total_size += 2 +
+        ::yuntongxun_google::protobuf::internal::WireFormatLite::Int32Size(
+          this->packets_sent());
+    }
+
+  }
+  if (_has_bits_[16 / 32] & (0xffu << (16 % 32))) {
+    // optional int32 packets_lost = 17;
+    if (has_packets_lost()) {
+      total_size += 2 +
+        ::yuntongxun_google::protobuf::internal::WireFormatLite::Int32Size(
+          this->packets_lost());
+    }
+
   }
   total_size += unknown_fields().size();
 
@@ -3268,6 +3964,23 @@ void AudioSenderStatisticsInner::MergeFrom(const AudioSenderStatisticsInner& fro
     if (from.has_kstatsvaluenameechoreturnlossenhancement()) {
       set_kstatsvaluenameechoreturnlossenhancement(from.kstatsvaluenameechoreturnlossenhancement());
     }
+    if (from.has_ssrc()) {
+      set_ssrc(from.ssrc());
+    }
+    if (from.has_jitter_ms()) {
+      set_jitter_ms(from.jitter_ms());
+    }
+    if (from.has_bytes_sent()) {
+      set_bytes_sent(from.bytes_sent());
+    }
+    if (from.has_packets_sent()) {
+      set_packets_sent(from.packets_sent());
+    }
+  }
+  if (from._has_bits_[16 / 32] & (0xffu << (16 % 32))) {
+    if (from.has_packets_lost()) {
+      set_packets_lost(from.packets_lost());
+    }
   }
   mutable_unknown_fields()->append(from.unknown_fields());
 }
@@ -3297,6 +4010,11 @@ void AudioSenderStatisticsInner::Swap(AudioSenderStatisticsInner* other) {
     std::swap(kstatsvaluenameechodelaystddev_, other->kstatsvaluenameechodelaystddev_);
     std::swap(kstatsvaluenameechoreturnloss_, other->kstatsvaluenameechoreturnloss_);
     std::swap(kstatsvaluenameechoreturnlossenhancement_, other->kstatsvaluenameechoreturnlossenhancement_);
+    std::swap(ssrc_, other->ssrc_);
+    std::swap(jitter_ms_, other->jitter_ms_);
+    std::swap(bytes_sent_, other->bytes_sent_);
+    std::swap(packets_sent_, other->packets_sent_);
+    std::swap(packets_lost_, other->packets_lost_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
     _unknown_fields_.swap(other->_unknown_fields_);
     std::swap(_cached_size_, other->_cached_size_);
@@ -3329,6 +4047,9 @@ const int AudioReceiverStatisticsInner::kKStatsValueNameLossFractionInPercentFie
 const int AudioReceiverStatisticsInner::kKStatsValueNamePacketsLostFieldNumber;
 const int AudioReceiverStatisticsInner::kKStatsValueNameJitterReceivedFieldNumber;
 const int AudioReceiverStatisticsInner::kKStatsValueNameTransmitBitrateFieldNumber;
+const int AudioReceiverStatisticsInner::kSsrcFieldNumber;
+const int AudioReceiverStatisticsInner::kBytesRcvdFieldNumber;
+const int AudioReceiverStatisticsInner::kPacketsRcvdFieldNumber;
 #endif  // !_MSC_VER
 
 AudioReceiverStatisticsInner::AudioReceiverStatisticsInner()
@@ -3368,6 +4089,9 @@ void AudioReceiverStatisticsInner::SharedCtor() {
   kstatsvaluenamepacketslost_ = 0;
   kstatsvaluenamejitterreceived_ = 0;
   kstatsvaluenametransmitbitrate_ = 0;
+  ssrc_ = 0;
+  bytes_rcvd_ = 0;
+  packets_rcvd_ = 0;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
@@ -3431,7 +4155,9 @@ void AudioReceiverStatisticsInner::Clear() {
   if (_has_bits_[8 / 32] & 65280) {
     ZR_(kstatsvaluenameexpandrate_, kstatsvaluenamepacketslost_);
   }
-  ZR_(kstatsvaluenamejitterreceived_, kstatsvaluenametransmitbitrate_);
+  if (_has_bits_[16 / 32] & 2031616) {
+    ZR_(kstatsvaluenamejitterreceived_, packets_rcvd_);
+  }
 
 #undef OFFSET_OF_FIELD_
 #undef ZR_
@@ -3717,6 +4443,51 @@ bool AudioReceiverStatisticsInner::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
+        if (input->ExpectTag(152)) goto parse_ssrc;
+        break;
+      }
+
+      // optional int32 ssrc = 19;
+      case 19: {
+        if (tag == 152) {
+         parse_ssrc:
+          DO_((::yuntongxun_google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::yuntongxun_google::protobuf::int32, ::yuntongxun_google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+                 input, &ssrc_)));
+          set_has_ssrc();
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(160)) goto parse_bytes_rcvd;
+        break;
+      }
+
+      // optional int32 bytes_rcvd = 20;
+      case 20: {
+        if (tag == 160) {
+         parse_bytes_rcvd:
+          DO_((::yuntongxun_google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::yuntongxun_google::protobuf::int32, ::yuntongxun_google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+                 input, &bytes_rcvd_)));
+          set_has_bytes_rcvd();
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(168)) goto parse_packets_rcvd;
+        break;
+      }
+
+      // optional int32 packets_rcvd = 21;
+      case 21: {
+        if (tag == 168) {
+         parse_packets_rcvd:
+          DO_((::yuntongxun_google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::yuntongxun_google::protobuf::int32, ::yuntongxun_google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+                 input, &packets_rcvd_)));
+          set_has_packets_rcvd();
+        } else {
+          goto handle_unusual;
+        }
         if (input->ExpectAtEnd()) goto success;
         break;
       }
@@ -3835,6 +4606,21 @@ void AudioReceiverStatisticsInner::SerializeWithCachedSizes(
   // optional int32 kStatsValueNameTransmitBitrate = 18;
   if (has_kstatsvaluenametransmitbitrate()) {
     ::yuntongxun_google::protobuf::internal::WireFormatLite::WriteInt32(18, this->kstatsvaluenametransmitbitrate(), output);
+  }
+
+  // optional int32 ssrc = 19;
+  if (has_ssrc()) {
+    ::yuntongxun_google::protobuf::internal::WireFormatLite::WriteInt32(19, this->ssrc(), output);
+  }
+
+  // optional int32 bytes_rcvd = 20;
+  if (has_bytes_rcvd()) {
+    ::yuntongxun_google::protobuf::internal::WireFormatLite::WriteInt32(20, this->bytes_rcvd(), output);
+  }
+
+  // optional int32 packets_rcvd = 21;
+  if (has_packets_rcvd()) {
+    ::yuntongxun_google::protobuf::internal::WireFormatLite::WriteInt32(21, this->packets_rcvd(), output);
   }
 
   output->WriteRaw(unknown_fields().data(),
@@ -3970,6 +4756,27 @@ int AudioReceiverStatisticsInner::ByteSize() const {
           this->kstatsvaluenametransmitbitrate());
     }
 
+    // optional int32 ssrc = 19;
+    if (has_ssrc()) {
+      total_size += 2 +
+        ::yuntongxun_google::protobuf::internal::WireFormatLite::Int32Size(
+          this->ssrc());
+    }
+
+    // optional int32 bytes_rcvd = 20;
+    if (has_bytes_rcvd()) {
+      total_size += 2 +
+        ::yuntongxun_google::protobuf::internal::WireFormatLite::Int32Size(
+          this->bytes_rcvd());
+    }
+
+    // optional int32 packets_rcvd = 21;
+    if (has_packets_rcvd()) {
+      total_size += 2 +
+        ::yuntongxun_google::protobuf::internal::WireFormatLite::Int32Size(
+          this->packets_rcvd());
+    }
+
   }
   total_size += unknown_fields().size();
 
@@ -4045,6 +4852,15 @@ void AudioReceiverStatisticsInner::MergeFrom(const AudioReceiverStatisticsInner&
     if (from.has_kstatsvaluenametransmitbitrate()) {
       set_kstatsvaluenametransmitbitrate(from.kstatsvaluenametransmitbitrate());
     }
+    if (from.has_ssrc()) {
+      set_ssrc(from.ssrc());
+    }
+    if (from.has_bytes_rcvd()) {
+      set_bytes_rcvd(from.bytes_rcvd());
+    }
+    if (from.has_packets_rcvd()) {
+      set_packets_rcvd(from.packets_rcvd());
+    }
   }
   mutable_unknown_fields()->append(from.unknown_fields());
 }
@@ -4080,6 +4896,9 @@ void AudioReceiverStatisticsInner::Swap(AudioReceiverStatisticsInner* other) {
     std::swap(kstatsvaluenamepacketslost_, other->kstatsvaluenamepacketslost_);
     std::swap(kstatsvaluenamejitterreceived_, other->kstatsvaluenamejitterreceived_);
     std::swap(kstatsvaluenametransmitbitrate_, other->kstatsvaluenametransmitbitrate_);
+    std::swap(ssrc_, other->ssrc_);
+    std::swap(bytes_rcvd_, other->bytes_rcvd_);
+    std::swap(packets_rcvd_, other->packets_rcvd_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
     _unknown_fields_.swap(other->_unknown_fields_);
     std::swap(_cached_size_, other->_cached_size_);
