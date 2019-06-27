@@ -6,6 +6,166 @@ using namespace yuntongxunwebrtc;
 
 //FILE *file_test = NULL;
 
+static int AudioResampling(AVCodecContext * audio_dec_ctx,
+							const uint8_t ** ppFrame,
+							int src_nb_samples,
+							int out_sample_fmt,
+							int out_channels,
+							int out_sample_rate,
+							int *out_dst_nb_samples,
+							uint8_t **audio_chunk,
+						    int* audio_chunk_size)
+{
+
+	SwrContext * swr_ctx = NULL;
+	int data_size = 0;
+	int ret = 0;
+	int64_t src_ch_layout = AV_CH_LAYOUT_MONO;
+	int64_t dst_ch_layout = AV_CH_LAYOUT_MONO;
+	int dst_nb_channels = 0;
+	int dst_linesize = 0;
+	//int src_nb_samples = 0;
+	int dst_nb_samples = 0;
+	int max_dst_nb_samples = 0;
+	uint8_t **dst_data = NULL;
+	int resampled_data_size = 0;
+
+	swr_ctx = swr_alloc();
+	if (!swr_ctx)
+	{
+		return -1;
+	}
+
+	if (!audio_chunk || !audio_chunk_size || (0 >= *audio_chunk_size))
+	{
+		return -1;
+	}
+
+	src_ch_layout = (audio_dec_ctx->channels ==
+		av_get_channel_layout_nb_channels(audio_dec_ctx->channel_layout)) ?
+		audio_dec_ctx->channel_layout :
+		av_get_default_channel_layout(audio_dec_ctx->channels);
+
+	if (out_channels == 1)
+	{
+		dst_ch_layout = AV_CH_LAYOUT_MONO;
+	}
+	else if (out_channels == 2)
+	{
+		dst_ch_layout = AV_CH_LAYOUT_STEREO;
+	}
+	else
+	{
+		dst_ch_layout = AV_CH_LAYOUT_SURROUND;
+	}
+
+	if (src_ch_layout <= 0)
+	{
+		return -1;
+	}
+
+	//src_nb_samples = pAudioDecodeFrame->nb_samples;
+	if (src_nb_samples <= 0)
+	{
+		return -1;
+	}
+
+	av_opt_set_int(swr_ctx, "in_channel_layout", src_ch_layout, 0);
+	av_opt_set_int(swr_ctx, "in_sample_rate", audio_dec_ctx->sample_rate, 0);
+	av_opt_set_sample_fmt(swr_ctx, "in_sample_fmt", audio_dec_ctx->sample_fmt, 0);
+
+	av_opt_set_int(swr_ctx, "out_channel_layout", dst_ch_layout, 0);
+	av_opt_set_int(swr_ctx, "out_sample_rate", out_sample_rate, 0);
+	av_opt_set_sample_fmt(swr_ctx, "out_sample_fmt", (AVSampleFormat)out_sample_fmt, 0);
+
+	if ((ret = swr_init(swr_ctx)) < 0) {
+		return -1;
+	}
+
+	max_dst_nb_samples = dst_nb_samples = av_rescale_rnd(src_nb_samples,
+		out_sample_rate, audio_dec_ctx->sample_rate, AV_ROUND_UP);
+	if (max_dst_nb_samples <= 0)
+	{
+		return -1;
+	}
+
+	dst_nb_channels = av_get_channel_layout_nb_channels(dst_ch_layout);
+	ret = av_samples_alloc_array_and_samples(&dst_data, &dst_linesize, dst_nb_channels,
+		dst_nb_samples, (AVSampleFormat)out_sample_fmt, 0);
+	if (ret < 0)
+	{
+		return -1;
+	}
+
+	dst_nb_samples = av_rescale_rnd(swr_get_delay(swr_ctx, audio_dec_ctx->sample_rate) +
+		src_nb_samples, out_sample_rate, audio_dec_ctx->sample_rate, AV_ROUND_UP);
+	if (dst_nb_samples <= 0)
+	{
+		return -1;
+	}
+	if (dst_nb_samples > max_dst_nb_samples)
+	{
+		av_freep(&dst_data[0]);
+		ret = av_samples_alloc(dst_data, &dst_linesize, dst_nb_channels,
+			dst_nb_samples, (AVSampleFormat)out_sample_fmt, 1);
+		max_dst_nb_samples = dst_nb_samples;
+	}
+
+	if (swr_ctx)
+	{
+		ret = swr_convert(swr_ctx, dst_data, dst_nb_samples,
+			(const uint8_t **)ppFrame, src_nb_samples);
+		if (ret < 0)
+		{
+			return -1;
+		}
+
+		resampled_data_size = av_samples_get_buffer_size(&dst_linesize, dst_nb_channels,
+			ret, (AVSampleFormat)out_sample_fmt, 1);
+		if (resampled_data_size < 0)
+		{
+			return -1;
+		}
+	}
+	else
+	{
+		return -1;
+	}
+
+	if (!(*audio_chunk))
+	{
+		*audio_chunk = (uint8_t *)av_malloc(resampled_data_size * sizeof(uint8_t));
+		if (audio_chunk_size)
+		{
+			*audio_chunk_size = resampled_data_size;
+		}
+	}
+	if (audio_chunk_size && resampled_data_size != *audio_chunk_size)
+	{
+		av_freep(*audio_chunk);
+		*audio_chunk = (uint8_t *)av_malloc(resampled_data_size * sizeof(uint8_t));
+		*audio_chunk_size = resampled_data_size;
+	}
+	memcpy(*audio_chunk, dst_data[0], resampled_data_size);
+
+	if (dst_data)
+	{
+		av_freep(&dst_data[0]);
+	}
+	av_freep(&dst_data);
+	dst_data = NULL;
+
+	if (swr_ctx)
+	{
+		swr_free(&swr_ctx);
+	}
+	if (out_dst_nb_samples)
+	{
+		*out_dst_nb_samples = dst_nb_samples;
+	}
+	return resampled_data_size;
+}
+
 static AVStream *add_video_stream(AVFormatContext *oc,  enum AVCodecID codec_id, unsigned char *data)
 {
 	AVStream *formatSt = avformat_new_stream(oc, NULL);
@@ -110,6 +270,8 @@ static AVStream *add_audio_stream(AVFormatContext *oc, enum AVCodecID codec_id, 
 }
 
 h264_record::h264_record(void):audioStreamdIndex_(-1)
+	, audioResampeSize_(0)
+	, audioResampeData_(nullptr)
 {
 	waitkey_ = 1;
 	videoStreamdIndex_ = -1;
@@ -128,6 +290,12 @@ h264_record::h264_record(void):audioStreamdIndex_(-1)
 
 h264_record::~h264_record(void)
 {
+	if (audioResampeData_)
+	{
+		av_free(audioResampeData_);
+		audioResampeData_ = nullptr;
+		audioResampeSize_ = 0;
+	}
 	delete _recordVoipCrit;
 	_recordVoipCrit = NULL;
 }
@@ -299,10 +467,23 @@ int h264_record::write_audio_data(short *data, int len, int freq)
 
 		frame->nb_samples = audioFrameSize_;
 		frame->format = c->sample_fmt;
-		frame->channel_layout = c->channel_layout;
+		frame->channel_layout = c->channel_layout = AV_CH_LAYOUT_MONO;
 
-		ret = avcodec_fill_audio_frame(frame, c->channels, c->sample_fmt,
-				(uint8_t *)audioFrameBuf_, audioFrameSize_*2, 0);
+		int out_nb_sample = 0;
+		ret = AudioResampling(c, (const uint8_t**)&audioFrameBuf_, audioFrameSize_, AV_SAMPLE_FMT_FLTP, 1, c->sample_rate, &out_nb_sample, &audioResampeData_, &audioResampeSize_);
+		if (ret < 0)
+		{
+			av_frame_free(&frame);
+			return -1;
+		}
+
+		frame->nb_samples = out_nb_sample;
+		frame->format = AV_SAMPLE_FMT_FLTP;
+		frame->channel_layout = c->channel_layout = AV_CH_LAYOUT_MONO;
+		ret = avcodec_fill_audio_frame(frame, c->channels, AV_SAMPLE_FMT_FLTP, (uint8_t *)audioResampeData_, audioResampeSize_, 0);
+
+		//ret = avcodec_fill_audio_frame(frame, c->channels, c->sample_fmt,
+		//		(uint8_t *)audioFrameBuf_, audioFrameSize_*2, 0);
 		if(ret < 0) {
 			char buf[123];
 			av_strerror(ret, buf, 123);

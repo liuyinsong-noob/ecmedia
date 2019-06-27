@@ -1,4 +1,4 @@
-//
+﻿//
 //  ECMedia.c
 //  servicecoreVideo
 //
@@ -78,7 +78,7 @@ CurlPost *g_curlpost = nullptr;
 #endif
 
 
-#define ECMEDIA_VERSION "ecmedia_version: v2.3.3.5"
+#define ECMEDIA_VERSION "ecmedia_version: v2.3.3.4"
 
 enum {
     ERR_SDK_ALREADY_INIT = -1000,
@@ -3012,8 +3012,6 @@ int ECMedia_allocate_capture_device(const char *id, size_t len, int& deviceid)
         capture->Release();
         if (ret != 0) {
             WEBRTC_TRACE(kTraceError, kTraceMediaApi, 0, "%s:%d failed to allocate capture device", __FUNCTION__, __LINE__);
-        } else {
-            g_statsCollector->SetVideoCaptureId(deviceid);
         }
         WEBRTC_TRACE(kTraceApiCall, kTraceMediaApi, 0, "%s:%d ends... with code: %d ", __FUNCTION__, __LINE__, ret);
         return ret;

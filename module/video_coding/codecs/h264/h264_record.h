@@ -7,12 +7,13 @@ extern "C"
 #include "libavcodec_ios/avcodec.h"
 #include "libavformat_ios/avformat.h"
 #include "libavutil_ios/opt.h"
+#include "libswresample_ios/swresample.h"
 #else
 #include "libavcodec/avcodec.h"
 #include "libavformat/avformat.h"
 #include "libavutil/opt.h"
+#include "libswresample/swresample.h"
 #endif // endif __APPLE__
-//#include "libswresample/swresample.h"
 }
 #include "../system_wrappers/include/critical_section_wrapper.h"
 #include "../system_wrappers/include/clock.h"
@@ -74,6 +75,9 @@ private:
 	Clock* clock_;
 	int64_t baseAudioTime_;
 	int64_t lastAudioFrameNum_;
+
+	int audioResampeSize_;
+	uint8_t* audioResampeData_;
 };
 
 #endif
