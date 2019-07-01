@@ -3,11 +3,6 @@
 [![build status](http://git.yuntongxun.com/platform_sdk/ecmedia/badges/master/build.svg)](http://git.yuntongxun.com/platform-sdk/ecmedia/commits/master)
 
 
-Audio Video R&D Team
-
-[http://yuntongxun.com](http://yuntongxun.com) 
-
-
 
 ### Overview 
 
@@ -63,5 +58,15 @@ Ecmedia 工程目录结构
 #### Window
 
 进入 ecmedia 项目根目录下的 `demo_Win` 目录, 使用 vs 2015 打开，执行生成解决方案，即可生成对应的 ecmedia 动态库
+
+
+
+### contact
+
+@[Audio Video R&D Team](http://yuntongxun.com) 
+
+ 
+
+
 
 
