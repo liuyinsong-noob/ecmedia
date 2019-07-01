@@ -290,8 +290,6 @@ int32_t VideoCaptureImpl::IncomingFrame(
     rawFrameType = kVideoNV21;
 #endif
 
-    TRACE_EVENT1("yuntongxunwebrtc", "VC::IncomingFrame", "capture_time", captureTime);
-
     if (frameInfo.codecType == kVideoCodecUnknown)
     {
         // Not encoded, convert to I420.

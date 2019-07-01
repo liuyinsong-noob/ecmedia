@@ -1185,7 +1185,7 @@ void StatsCollector::AudioSenderInfo_AddBasic(const AudioSendStream::Stats info,
 											StatsReport *report)
 {
 	report->AddInt32(StatsReport::kStatsValueNameAudioInputLevel, info.audio_level);
-	report->AddUInt32(StatsReport::kStatsValueNameSsrc, info.local_ssrc);
+	report->AddInt32(StatsReport::kStatsValueNameSsrc, info.local_ssrc);
 	report->AddString(StatsReport::kStatsValueNameCodecImplementationName, info.codec_name);
 }
 
