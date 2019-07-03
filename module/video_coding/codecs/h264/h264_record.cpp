@@ -36,7 +36,7 @@ static int AudioResampling(AVCodecContext * audio_dec_ctx,
 		return -1;
 	}
 
-	if (!audio_chunk || !audio_chunk_size || (0 >= *audio_chunk_size))
+	if (!audio_chunk || !audio_chunk_size )
 	{
 		return -1;
 	}
