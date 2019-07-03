@@ -138,6 +138,7 @@ LOCAL_LDFLAGS += \
 	./third_party_libs/$(TARGET_ARCH_ABI)/libavformat.a \
 	./third_party_libs/$(TARGET_ARCH_ABI)/libavcodec.a \
 	./third_party_libs/$(TARGET_ARCH_ABI)/libavutil.a \
+	./third_party_libs/$(TARGET_ARCH_ABI)/libswresample.a \
 	./third_party_libs/$(TARGET_ARCH_ABI)/libswscale.a \
 	./third_party_libs/$(TARGET_ARCH_ABI)/libvpx.a \
 	./third_party_libs/$(TARGET_ARCH_ABI)/libcpufeatures.a \
