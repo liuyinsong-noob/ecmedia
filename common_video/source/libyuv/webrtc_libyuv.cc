@@ -102,6 +102,7 @@ size_t CalcBufferSize(VideoType type, int width, int height) {
     case kBGRA:
     case kARGB:
     case kRGBA:
+    case kABGR:
       buffer_size = width * height * 4;
       break;
     default:
