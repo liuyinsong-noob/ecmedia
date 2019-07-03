@@ -138,56 +138,56 @@ void VCMQmMethod::ComputeSpatial() {
       case kBASIC:        //BASIC        160*90, 73, [30,95]
         multiplier_factor = 6.1f;
         minBitrate = 30;
-        maxBitrate = 100;
+        maxBitrate = 159;
         //minBitrate = kNormalTargetBitrate[kBASIC] * minScale;
         break;
       case kDBASIC:       //HBASIC       320*180, 144,[100,187]
-        minBitrate = 101;
-        maxBitrate = 180;
+        minBitrate = 160;
+        maxBitrate = 279;
         multiplier_factor = 3.0f;
         break;
       case kHVGA:         //HVGA         480*270, 237, [166,216]
-        minBitrate = 181;
-        maxBitrate = 300;
+        minBitrate = 280;
+        maxBitrate = 399;
         multiplier_factor = 2.2f;
         break;
       case kVGA:          //VGA          640*360, 345, [241,449]
-        minBitrate = 301;
-        maxBitrate = 500;
+        minBitrate = 400;
+        maxBitrate = 549;
         multiplier_factor = 1.8f;
         break;
       case kFTFULLHD:     //FTFULLHD     800*450, 480, [336,624]
-        minBitrate = 501;
-        maxBitrate = 620;
+        minBitrate = 550;
+        maxBitrate = 699;
         multiplier_factor = 1.6f;
         break;
       case kQFULLHD:      //QFULLHD      960*540, 648, [453,842]
-        minBitrate = 621;
-        maxBitrate = 750;
+        minBitrate = 700;
+        maxBitrate = 849;
         multiplier_factor = 1.5f;
         break;
       case kSFULLHD:      //SFULLHD      1120*630, 735, [514,955]
-        minBitrate = 751;
-        maxBitrate = 850;
+        minBitrate = 850;
+        maxBitrate = 999;
         multiplier_factor = 1.25f;
         break;
       case kWHD:          //WHD         1280*720, 768, [537,998]
-        minBitrate = 851;
-        maxBitrate = 1000;
+        minBitrate = 1000;
+        maxBitrate = 1150;
         multiplier_factor = 1.15f;
         break;
       case kTQFULLHD:     //TQFULLHD    1440*810
-        minBitrate = 1001;
-        maxBitrate = 1200;
+        minBitrate = 1151;
+        maxBitrate = 1300;
         multiplier_factor = 1.2f;
         break;
       case kFSFULLHD:     //FSFULLHD    1600*900
-        minBitrate = 1201;
-        maxBitrate = 1400;
+        minBitrate = 1301;
+        maxBitrate = 1450;
         multiplier_factor = 1.1f;
         break;
       case kETFULLHD:     //ETFULLHD    1760*990
-        minBitrate = 1401;
+        minBitrate = 1451;
         maxBitrate = 1600;
         multiplier_factor = 1.1f;
         break;

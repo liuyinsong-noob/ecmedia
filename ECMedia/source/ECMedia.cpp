@@ -3705,9 +3705,9 @@ static void ECMedia_reset_send_codecinfo(VideoCodec& videoCodec)
       switch (scale)
       {
         case 4://360p
-          videoCodec.maxBitrate = 500;
+          videoCodec.maxBitrate = 550;
           videoCodec.minBitrate = 30;
-          videoCodec.startBitrate = 350;
+          videoCodec.startBitrate = 400;
           break;
         case 8://720p
           videoCodec.maxBitrate = 1100;
@@ -3715,9 +3715,9 @@ static void ECMedia_reset_send_codecinfo(VideoCodec& videoCodec)
           videoCodec.startBitrate = 900;
           break;
         default:
-          videoCodec.maxBitrate = 500;
+          videoCodec.maxBitrate = 550;
           videoCodec.minBitrate = 30;
-          videoCodec.startBitrate = 350;
+          videoCodec.startBitrate = 400;
         break;
       }
     }
