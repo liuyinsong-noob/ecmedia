@@ -84,6 +84,11 @@ int H264Encoder::SetRates(uint32_t new_bitrate_kbit, uint32_t new_framerate,
       codec_.minBitrate = minBitrate_kbit;
       codec_.maxBitrate = maxBitrate_kbit;
     }
+
+	if (codec_.mode == kScreensharing)
+	{
+		return WEBRTC_VIDEO_CODEC_OK;
+	}
   
     // update bit rate
     if (codec_.maxBitrate > 0 && new_bitrate_kbit > codec_.maxBitrate) {
@@ -260,14 +265,14 @@ void H264Encoder::SetX264EncodeParameters(x264_param_t &params, VideoCodecMode m
                                           VideoCodecType type )
 {
 	x264_param_t *p_params = &params;
-	if (mode==kRealtimeVideo || mode == kSaveToFile)
+	if (mode==kRealtimeVideo || mode == kSaveToFile || mode == kScreensharing)
 	{
 		x264_param_default_preset(p_params,x264_preset_names[2],"zerolatency");
 
-	}else if (mode == kScreensharing)
+	}/*else if (mode == kScreensharing)
 	{
 		x264_param_default_preset(p_params,x264_preset_names[2],"stillimage");
-	}
+	}*/
   
   if( kVideoCodecH264HIGH == type ){
       x264_param_apply_profile(p_params, x264_profile_names[2]);
@@ -297,6 +302,11 @@ void H264Encoder::SetX264EncodeParameters(x264_param_t &params, VideoCodecMode m
     //p_params->i_keyint_max = 50;
     p_params->rc.i_rc_method = X264_RC_ABR;
     p_params->rc.i_vbv_buffer_size = (codec_.startBitrate/curent_frame_);
+  }
+
+  if (codec_.mode == kScreensharing)
+  {
+	  p_params->rc.f_rf_constant = 16;
   }
 }
 
