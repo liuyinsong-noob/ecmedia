@@ -3663,7 +3663,10 @@ int ECMedia_get_receive_playloadType_audio(int channelid, CodecInst& audioCodec)
 static void ECMedia_reset_send_codecinfo(VideoCodec& videoCodec)
 {
 	unsigned short scale = 0;
-  
+	if (videoCodec.mode == kScreensharing) {//Updated by zhangn 20190723
+		videoCodec.manualMode = true;
+	}
+
   if (!videoCodec.manualMode){
 #ifdef WIN32 //Updated by zhangn 20190326
     //only support (160*n,90*n) [0<n<=12]
