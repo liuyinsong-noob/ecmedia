@@ -279,7 +279,7 @@
       <AdditionalIncludeDirectories>$(IntDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ResourceCompile>
     <PostBuildEvent>
-      <Command>copy account.ini ..\build\Win32\$(Configuration)\</Command>
+      <Command>if not exist ..\build\Win32\$(Configuration)\account.ini ( copy account.ini ..\build\Win32\$(Configuration)\ )</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -311,7 +311,7 @@
       <AdditionalIncludeDirectories>$(IntDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ResourceCompile>
     <PostBuildEvent>
-      <Command>copy account.ini ..\build\x64\$(Configuration)\</Command>
+      <Command>if not exist ..\build\x64\$(Configuration)\account.ini ( copy account.ini ..\build\x64\$(Configuration)\ )</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -353,7 +353,7 @@
       <EnableDpiAwareness>false</EnableDpiAwareness>
     </Manifest>
     <PostBuildEvent>
-      <Command>copy account.ini ..\build\Win32\$(Configuration)\</Command>
+      <Command>if not exist ..\build\Win32\$(Configuration)\account.ini ( copy account.ini ..\build\Win32\$(Configuration)\ )</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='VRelease|Win32'">
@@ -502,7 +502,7 @@
       <EnableDpiAwareness>false</EnableDpiAwareness>
     </Manifest>
     <PostBuildEvent>
-      <Command>copy account.ini ..\build\x64\$(Configuration)\</Command>
+      <Command>if not exist ..\build\x64\$(Configuration)\account.ini ( copy account.ini ..\build\x64\$(Configuration)\ )</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='VRelease|x64'">
