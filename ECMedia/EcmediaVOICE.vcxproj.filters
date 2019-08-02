@@ -36,9 +36,6 @@
     <ClInclude Include="include\CaptureScreen.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="source\curl_post.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
     <ClInclude Include="include\faaccodec.h">
       <Filter>头文件</Filter>
     </ClInclude>
