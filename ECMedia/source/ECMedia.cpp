@@ -3739,6 +3739,11 @@ int ECMedia_set_send_codec_video(int channelid, VideoCodec& videoCodec)
   
   ECMedia_reset_send_codecinfo(videoCodec);
 
+  if (videoCodec.mode == kScreensharing) {
+	  videoCodec.maxFramerate = 5;
+	  videoCodec.startBitrate = videoCodec.width*videoCodec.height*videoCodec.maxFramerate*0.1/1000;  //kbit for high profile
+  }
+
   WEBRTC_TRACE(kTraceApiCall, kTraceMediaApi, 0, "%s:%d begins..., channelid:%d videoCodec(width:%d height:%d pltype:%d plname:%s, startBitrate:%d, maxBitrate:%d, minBitrate:%d)",
                __FUNCTION__, __LINE__, channelid, videoCodec.width,videoCodec.height, videoCodec.plType,videoCodec.plName, videoCodec.startBitrate,videoCodec.maxBitrate, videoCodec.minBitrate);
 
