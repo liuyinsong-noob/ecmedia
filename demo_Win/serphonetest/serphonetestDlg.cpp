@@ -17,7 +17,7 @@
 #include <atlconv.h>
 
 #ifdef DEBUG
-#include "../third_party/vld/include/vld.h"
+//#include "../third_party/vld/include/vld.h"
 #endif
 
 #include "DlgStatistics.h"

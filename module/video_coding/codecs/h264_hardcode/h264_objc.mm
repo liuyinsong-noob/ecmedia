@@ -16,8 +16,8 @@
 #endif
 
 namespace yuntongxunwebrtc {
-bool iOSH264HardEncoder = false;
-bool iOSH264HardDecoder = false;
+bool iOSH264HardEncoder = true;
+bool iOSH264HardDecoder = true;
 
 // Get h264 hard encode state
 bool IsH264EncodeSupportedObjC() {

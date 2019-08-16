@@ -226,7 +226,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>libeay32.lib;ssleay32.lib;zlib.lib;libfaad2d.lib;activemq-cppd.lib;libfaac.lib;legacy_stdio_definitions.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>libeay32.lib;ssleay32.lib;zlib.lib;libfaad2d.lib;libfaac.lib;legacy_stdio_definitions.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>..\third_party\openssl;..\third_party\libzip;..\third_party\libfaad\win\lib\x86;..\third_party\libfaac\lib\win\x86;..\third_party\activemq-cpp\bin\x86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
     <Lib>
@@ -274,7 +274,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;libeay32.lib;ssleay32.lib;zlib.lib;libfaad2d.lib;libfaac.lib;activemq-cpp.lib;legacy_stdio_definitions.lib</AdditionalDependencies>
+      <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;libeay32.lib;ssleay32.lib;zlib.lib;libfaad2d.lib;libfaac.lib;legacy_stdio_definitions.lib</AdditionalDependencies>
       <AdditionalLibraryDirectories>..\third_party\openssl;..\third_party\libzip;..\third_party\libfaad\win\lib\x86;..\third_party\libfaac\lib\win\x86;..\third_party\activemq-cpp\bin\x86</AdditionalLibraryDirectories>
       <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
       <AdditionalOptions>
@@ -503,7 +503,6 @@
     <ClInclude Include="resource1.h" />
     <ClInclude Include="resource2.h" />
     <ClInclude Include="resource3.h" />
-    <ClInclude Include="source\curl_post.h" />
     <ClInclude Include="source\ec_live_engine\ec_aac_codec.h" />
     <ClInclude Include="source\ec_live_engine\ec_live_base.h" />
     <ClInclude Include="source\ec_live_engine\ec_live_common.h" />
@@ -526,7 +525,6 @@
     <ClCompile Include="..\module\common_types.cc" />
     <ClCompile Include="source\base64.c" />
     <ClCompile Include="source\CaptureScreen.cpp" />
-    <ClCompile Include="source\curl_post.cc" />
     <ClCompile Include="source\ECMedia.cpp" />
     <ClCompile Include="source\ec_live_engine\aacdecode.cc" />
     <ClCompile Include="source\ec_live_engine\aacencode.cc" />

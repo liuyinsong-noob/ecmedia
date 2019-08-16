@@ -1,4 +1,4 @@
-﻿//
+//
 //  ECMedia.c
 //  servicecoreVideo
 //
@@ -80,7 +80,7 @@ CurlPost *g_curlpost = nullptr;
 #endif
 
 
-#define ECMEDIA_VERSION "ecmedia_version: v2.3.3.4"
+#define ECMEDIA_VERSION "ecmedia_version: v2.3.3.7"
 
 enum {
     ERR_SDK_ALREADY_INIT = -1000,
@@ -3665,7 +3665,10 @@ int ECMedia_get_receive_playloadType_audio(int channelid, CodecInst& audioCodec)
 static void ECMedia_reset_send_codecinfo(VideoCodec& videoCodec)
 {
 	unsigned short scale = 0;
-  
+	if (videoCodec.mode == kScreensharing) {//Updated by zhangn 20190723
+		videoCodec.manualMode = true;
+	}
+
   if (!videoCodec.manualMode){
 #ifdef WIN32 //Updated by zhangn 20190326
     //only support (160*n,90*n) [0<n<=12]
@@ -3707,9 +3710,9 @@ static void ECMedia_reset_send_codecinfo(VideoCodec& videoCodec)
       switch (scale)
       {
         case 4://360p
-          videoCodec.maxBitrate = 550;
+          videoCodec.maxBitrate = 500;
           videoCodec.minBitrate = 30;
-          videoCodec.startBitrate = 400;
+          videoCodec.startBitrate = 350;
           break;
         case 8://720p
           videoCodec.maxBitrate = 1100;
@@ -3717,9 +3720,9 @@ static void ECMedia_reset_send_codecinfo(VideoCodec& videoCodec)
           videoCodec.startBitrate = 900;
           break;
         default:
-          videoCodec.maxBitrate = 550;
+          videoCodec.maxBitrate = 500;
           videoCodec.minBitrate = 30;
-          videoCodec.startBitrate = 400;
+          videoCodec.startBitrate = 350;
         break;
       }
     }

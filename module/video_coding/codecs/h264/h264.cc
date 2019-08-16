@@ -38,7 +38,7 @@ H264Encoder::H264Encoder()    : encoded_image_(),
     generate_keyframe(false),
     num_of_cores_(0),
     count(0),
-    curent_frame_(0){
+	current_frame_(0){
         memset(&codec_, 0, sizeof(codec_));
 #ifdef HAVE_H264_BITSTREAM
 		_bitStreamBeforeSend = fopen(filename_soft_encode_h264, "wb");
@@ -84,6 +84,11 @@ int H264Encoder::SetRates(uint32_t new_bitrate_kbit, uint32_t new_framerate,
       codec_.minBitrate = minBitrate_kbit;
       codec_.maxBitrate = maxBitrate_kbit;
     }
+
+	if (codec_.mode == kScreensharing)
+	{
+		return WEBRTC_VIDEO_CODEC_OK;
+	}
   
     // update bit rate
     if (codec_.maxBitrate > 0 && new_bitrate_kbit > codec_.maxBitrate) {
@@ -104,10 +109,10 @@ int H264Encoder::SetRates(uint32_t new_bitrate_kbit, uint32_t new_framerate,
   
     if (GetManalMode()){
       new_bitrate_kbit =codec_.startBitrate ;
-      new_framerate = curent_frame_;
+      new_framerate = current_frame_;
     }else{
       codec_.startBitrate = new_bitrate_kbit;
-      curent_frame_ = new_framerate;
+	  current_frame_ = new_framerate;
     }
   
     if(encoder_) {
@@ -134,7 +139,7 @@ int H264Encoder::InitEncode(const VideoCodec* inst,
 {
 	x264_param_t param_;
 	codec_ = *inst;
-  curent_frame_ = inst->maxFramerate;
+	current_frame_ = inst->maxFramerate;
 	num_of_cores_ = number_of_cores;	
 
   if ((inst == NULL) || (inst->maxFramerate < 1)
@@ -260,14 +265,14 @@ void H264Encoder::SetX264EncodeParameters(x264_param_t &params, VideoCodecMode m
                                           VideoCodecType type )
 {
 	x264_param_t *p_params = &params;
-	if (mode==kRealtimeVideo || mode == kSaveToFile)
+	if (mode==kRealtimeVideo || mode == kSaveToFile || mode == kScreensharing)
 	{
 		x264_param_default_preset(p_params,x264_preset_names[2],"zerolatency");
 
-	}else if (mode == kScreensharing)
+	}/*else if (mode == kScreensharing)
 	{
 		x264_param_default_preset(p_params,x264_preset_names[2],"stillimage");
-	}
+	}*/
   
   if( kVideoCodecH264HIGH == type ){
       x264_param_apply_profile(p_params, x264_profile_names[2]);
@@ -277,27 +282,32 @@ void H264Encoder::SetX264EncodeParameters(x264_param_t &params, VideoCodecMode m
   
   p_params->i_width=codec_.width;
   p_params->i_height=codec_.height;
-  p_params->i_fps_num = curent_frame_;
+  p_params->i_fps_num = current_frame_;
   p_params->i_fps_den=1;
   p_params->i_slice_max_size=1300;
   p_params->b_annexb=1; //already set by defaule:默认支持字节流格式，即包含nal起始码前缀0x00 00 00 01；
-  p_params->rc.i_bitrate = codec_.startBitrate;
-  p_params->rc.i_vbv_max_bitrate = codec_.startBitrate;
   
   if (1){ //Default using CRF
     p_params->i_level_idc = 40;  //编码复杂度
-    //p_params->b_intra_refresh = true;
-    p_params->b_repeat_headers;
-    p_params->i_keyint_max = 50;
-    p_params->rc.i_vbv_buffer_size = codec_.startBitrate;
+    p_params->b_repeat_headers = true;
+  //  p_params->i_keyint_max = 50;
+	p_params->rc.i_rc_method = X264_RC_ABR;
+	p_params->rc.i_bitrate = codec_.startBitrate;
+    p_params->rc.i_vbv_buffer_size = codec_.startBitrate/current_frame_;
+	p_params->rc.i_vbv_max_bitrate = codec_.startBitrate;
   }else{
     //p_params->i_level_idc = 40;  //编码复杂度
     //p_params->b_intra_refresh = true;
     p_params->b_repeat_headers = 1;
     //p_params->i_keyint_max = 50;
     p_params->rc.i_rc_method = X264_RC_ABR;
-    p_params->rc.i_vbv_buffer_size = (codec_.startBitrate/curent_frame_);
+    p_params->rc.i_vbv_buffer_size = (codec_.startBitrate/ current_frame_);
   }
+
+ /* if (codec_.mode == kScreensharing)
+  {
+	  p_params->rc.f_rf_constant = 16;
+  }*/
 }
 
 void H264Encoder::InitializeX264Pic(const I420VideoFrame& input_image, x264_picture_t &xpic, x264_picture_t &oxpic, VideoFrameType frame_type)

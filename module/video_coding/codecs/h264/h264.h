@@ -167,7 +167,7 @@ private:
     x264_t * encoder_;   
     bool stap_a_allowed;
     int count;
-    uint32_t curent_frame_;
+    uint32_t current_frame_;
   
 #ifdef HAVE_H264_BITSTREAM
 	FILE *_bitStreamBeforeSend;

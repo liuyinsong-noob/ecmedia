@@ -63,9 +63,6 @@
     <ClInclude Include="include\RecordLocal.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="source\curl_post.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
     <ClInclude Include="source\MediaStatisticsData.pb.h">
       <Filter>源文件</Filter>
     </ClInclude>
@@ -135,9 +132,6 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="source\faaccodec.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="source\curl_post.cc">
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="source\RecordLocal.cpp">
