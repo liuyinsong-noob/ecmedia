@@ -407,7 +407,18 @@ class AudioDeviceAndroid {
             int readBytes = 0;
             _recBuffer.rewind(); // Reset the position to start of buffer
             readBytes = _audioRecord.read(_tempBufRec, 0, lengthInBytes);
-            // DoLog("read " + readBytes + "from SC");
+
+            //TODO: huping add.
+//            DoLog("read " + readBytes + " from SC");
+//            int[] temp = new int[30];
+//            for(int i = 0; i < 30; i++) {
+//                temp[i] = byteToInt(_tempBufRec[i]);
+//            }
+//            DoLog("read " + readBytes + " from SC, value is: "
+//                    + "[0]" + temp[0] +  ", [3]" + temp[3]
+//                    + ", [10]" + temp[10] + ", [20]" + temp[20]
+//                    + ", [25]" + temp[25]);
+
             _recBuffer.put(_tempBufRec);
 
             if (readBytes != lengthInBytes) {
@@ -427,6 +438,12 @@ class AudioDeviceAndroid {
 
         return (_bufferedPlaySamples);
     }
+
+//    public static int byteToInt(byte b) {
+//        //Java 总是把 byte 当做有符处理；我们可以通过将其和 0xFF 进行二进制与得到它的无符值
+//        return b & 0xFF;
+//    }
+
 
     @SuppressWarnings("unused")
     private int SetPlayoutSpeaker(boolean loudspeakerOn) {

@@ -14,6 +14,7 @@
 #include "../system_wrappers/include/aligned_malloc.h"
 #include "../system_wrappers/include/scoped_ptr.h"
 #include "../module/typedefs.h"
+#include "../../system_wrappers/include/aligned_malloc.h"
 
 namespace yuntongxunwebrtc {
 

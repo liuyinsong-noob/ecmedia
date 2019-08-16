@@ -70,6 +70,8 @@
 #include "../system_wrappers/include/critical_section_wrapper.h"
 #include "base64.h"
 #include "MediaStatisticsData.pb.h"
+#include "../../system_wrappers/include/trace.h"
+#include "../../module/common_types.h"
 
 #ifdef ENABLE_LIB_CURL
 #ifdef WIN32
@@ -764,7 +766,7 @@ int ECMedia_init_audio()
     WEBRTC_TRACE(kTraceApiCall, kTraceMediaApi, 0, "%s:%d begins...", __FUNCTION__, __LINE__);
     if(m_voe)
     {
-        WEBRTC_TRACE(kTraceWarning, kTraceMediaApi, 0, "%s:%d %s Voice engine already create", __FUNCTION__, __LINE__);
+        WEBRTC_TRACE(kTraceWarning, kTraceMediaApi, 0, "%s:%d Voice engine already create", __FUNCTION__, __LINE__);
         return 1;
     }
     m_voe = VoiceEngine::Create();

@@ -31,6 +31,7 @@
 #include "../system_wrappers/include/trace_event.h"
 
 #include "../system_wrappers/include/trace.h"
+#include "../../../../../../third_party/libvpx/libvpx/vpx/vpx_image.h"
 
 namespace yuntongxunwebrtc {
 namespace {

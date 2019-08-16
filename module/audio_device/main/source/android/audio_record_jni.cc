@@ -1270,8 +1270,8 @@ bool AudioRecordJni::RecThreadProcess()
     // Check again since recording may have stopped during Java call
     if (_recording)
     {
-      //            WEBRTC_TRACE(kTraceDebug, kTraceAudioDevice, _id,
-      //                         "total delay is %d", msPlayDelay + _delayRecording);
+                  WEBRTC_TRACE(kTraceDebug, kTraceAudioDevice, _id,
+                               "total delay is %d",   _delayRecording);
 
       // Copy data to our direct buffer (held by java sc object)
       // todo: Give _javaDirectRecBuffer directly to VoE?

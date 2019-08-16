@@ -18,6 +18,7 @@
 
 // NOTE(ajm): Path provided by gn.
 #include "./third_party/libyuv/include/libyuv.h"
+#include "../../module/video_coding/codecs/h264_hardcode/video_frame_buffer.h"
 
 namespace yuntongxunwebrtc {
 

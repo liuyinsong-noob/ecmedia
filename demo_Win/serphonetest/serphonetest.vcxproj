@@ -254,7 +254,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_WINDOWS;_DEBUG;_UNICODE;UNICODE;_CRT_SECURE_NO_WARNINGS</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>../../servicecore\include;../../servicecore\interface;../../module;../../system_wrappers/interface;../../third_party\protobuf\src;../../base/</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../../servicecore\include;../../servicecore\interface;../../module;../../system_wrappers/interface;../../third_party\activemq-cpp\apr\include;../../third_party\protobuf\src;../../base/</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -265,7 +265,7 @@
       </IgnoreAllDefaultLibraries>
       <IgnoreSpecificDefaultLibraries>
       </IgnoreSpecificDefaultLibraries>
-      <AdditionalLibraryDirectories>$(DXSDK_DIR)/lib/x86;../../third_party\vld\lib\Win32;../build/debug</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>E:\winws\ecmedia\ECMedia;$(DXSDK_DIR)/lib/x86;../../third_party\vld\lib\Win32;../build/debug</AdditionalLibraryDirectories>
       <AdditionalOptions>/VERBOSE:LIB %(AdditionalOptions)</AdditionalOptions>
     </Link>
     <Midl>

@@ -19,36 +19,50 @@ LOCAL_CPP_EXTENSION := .cc
 LOCAL_SRC_FILES := \
     compare.cc           \
     compare_common.cc    \
-    compare_neon64.cc    \
     compare_gcc.cc       \
+    compare_mmi.cc       \
+    compare_msa.cc       \
+    compare_neon.cc      \
+    compare_neon64.cc    \
     convert.cc           \
     convert_argb.cc      \
     convert_from.cc      \
     convert_from_argb.cc \
     convert_to_argb.cc   \
     convert_to_i420.cc   \
-    convert_jpeg.cc      \
-    mjpeg_decoder.cc     \
-    mjpeg_validate.cc    \
     cpu_id.cc            \
     planar_functions.cc  \
     rotate.cc            \
+    rotate_any.cc        \
     rotate_argb.cc       \
-    rotate_mips.cc       \
+    rotate_common.cc     \
+    rotate_gcc.cc        \
+    rotate_mmi.cc        \
+    rotate_msa.cc        \
+    rotate_neon.cc       \
     rotate_neon64.cc     \
     row_any.cc           \
     row_common.cc        \
-    row_mips.cc          \
+    row_gcc.cc           \
+    row_mmi.cc           \
+    row_msa.cc           \
+    row_neon.cc          \
     row_neon64.cc        \
-    row_gcc.cc	        \
     scale.cc             \
     scale_any.cc         \
     scale_argb.cc        \
     scale_common.cc      \
-    scale_mips.cc        \
-    scale_neon64.cc      \
     scale_gcc.cc         \
+    scale_mmi.cc         \
+    scale_msa.cc         \
+    scale_neon.cc        \
+    scale_neon64.cc      \
+    convert_jpeg.cc      \
+    mjpeg_decoder.cc     \
+    mjpeg_validate.cc    \
     video_common.cc
+
+
 
 # Flags passed to both C and C++ files.
 LOCAL_CFLAGS := \

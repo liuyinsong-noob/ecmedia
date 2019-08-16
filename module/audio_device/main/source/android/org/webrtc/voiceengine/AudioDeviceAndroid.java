@@ -52,9 +52,9 @@ class AudioDeviceAndroid {
     AudioDeviceAndroid() {
         try {
             _playBuffer = ByteBuffer.allocateDirect(2 * 480); // Max 10 ms @ 48
-                                                              // kHz
+            // kHz
             _recBuffer = ByteBuffer.allocateDirect(2 * 480); // Max 10 ms @ 48
-                                                             // kHz
+            // kHz
         } catch (Exception e) {
             DoLog(e.getMessage());
         }
@@ -67,9 +67,9 @@ class AudioDeviceAndroid {
     private int InitRecording(int audioSource, int sampleRate) {
         // get the minimum buffer size that can be used
         int minRecBufSize =
-                        AudioRecord.getMinBufferSize(sampleRate,
-                                        AudioFormat.CHANNEL_CONFIGURATION_MONO,
-                                        AudioFormat.ENCODING_PCM_16BIT);
+                AudioRecord.getMinBufferSize(sampleRate,
+                        AudioFormat.CHANNEL_CONFIGURATION_MONO,
+                        AudioFormat.ENCODING_PCM_16BIT);
 
         // DoLog("min rec buf size is " + minRecBufSize);
 
@@ -86,11 +86,11 @@ class AudioDeviceAndroid {
 
         try {
             _audioRecord = new AudioRecord(
-                            audioSource,
-                            sampleRate,
-                            AudioFormat.CHANNEL_CONFIGURATION_MONO,
-                            AudioFormat.ENCODING_PCM_16BIT,
-                            recBufSize);
+                    audioSource,
+                    sampleRate,
+                    AudioFormat.CHANNEL_CONFIGURATION_MONO,
+                    AudioFormat.ENCODING_PCM_16BIT,
+                    recBufSize);
 
         } catch (Exception e) {
             DoLog(e.getMessage());
@@ -131,9 +131,9 @@ class AudioDeviceAndroid {
     private int InitPlayback(int sampleRate) {
         // get the minimum buffer size that can be used
         int minPlayBufSize =
-                        AudioTrack.getMinBufferSize(sampleRate,
-                                        AudioFormat.CHANNEL_CONFIGURATION_MONO,
-                                        AudioFormat.ENCODING_PCM_16BIT);
+                AudioTrack.getMinBufferSize(sampleRate,
+                        AudioFormat.CHANNEL_CONFIGURATION_MONO,
+                        AudioFormat.ENCODING_PCM_16BIT);
 
         // DoLog("min play buf size is " + minPlayBufSize);
 
@@ -152,11 +152,11 @@ class AudioDeviceAndroid {
 
         try {
             _audioTrack = new AudioTrack(
-                            AudioManager.STREAM_VOICE_CALL,
-                            sampleRate,
-                            AudioFormat.CHANNEL_CONFIGURATION_MONO,
-                            AudioFormat.ENCODING_PCM_16BIT,
-                            playBufSize, AudioTrack.MODE_STREAM);
+                    AudioManager.STREAM_VOICE_CALL,
+                    sampleRate,
+                    AudioFormat.CHANNEL_CONFIGURATION_MONO,
+                    AudioFormat.ENCODING_PCM_16BIT,
+                    playBufSize, AudioTrack.MODE_STREAM);
         } catch (Exception e) {
             DoLog(e.getMessage());
             return -1;
@@ -172,7 +172,7 @@ class AudioDeviceAndroid {
 
         if (_audioManager == null && _context != null) {
             _audioManager = (AudioManager)
-                _context.getSystemService(Context.AUDIO_SERVICE);
+                    _context.getSystemService(Context.AUDIO_SERVICE);
         }
 
         // Return max playout volume
@@ -209,7 +209,7 @@ class AudioDeviceAndroid {
         try {
             // only stop if we are recording
             if (_audioRecord.getRecordingState() ==
-              AudioRecord.RECORDSTATE_RECORDING) {
+                    AudioRecord.RECORDSTATE_RECORDING) {
                 // stop recording
                 try {
                     _audioRecord.stop();
@@ -284,14 +284,14 @@ class AudioDeviceAndroid {
         try {
             if (_audioTrack == null) {
                 return -2; // We have probably closed down while waiting for
-                           // play lock
+                // play lock
             }
 
             // Set priority, only do once
             if (_doPlayInit == true) {
                 try {
                     android.os.Process.setThreadPriority(
-                        android.os.Process.THREAD_PRIORITY_URGENT_AUDIO);
+                            android.os.Process.THREAD_PRIORITY_URGENT_AUDIO);
                 } catch (Exception e) {
                     DoLog("Set play thread priority failed: " + e.getMessage());
                 }
@@ -342,14 +342,14 @@ class AudioDeviceAndroid {
         try {
             if (_audioRecord == null) {
                 return -2; // We have probably closed down while waiting for rec
-                           // lock
+                // lock
             }
 
             // Set priority, only do once
             if (_doRecInit == true) {
                 try {
                     android.os.Process.setThreadPriority(
-                        android.os.Process.THREAD_PRIORITY_URGENT_AUDIO);
+                            android.os.Process.THREAD_PRIORITY_URGENT_AUDIO);
                 } catch (Exception e) {
                     DoLog("Set rec thread priority failed: " + e.getMessage());
                 }
@@ -385,7 +385,7 @@ class AudioDeviceAndroid {
         // create audio manager if needed
         if (_audioManager == null && _context != null) {
             _audioManager = (AudioManager)
-                _context.getSystemService(Context.AUDIO_SERVICE);
+                    _context.getSystemService(Context.AUDIO_SERVICE);
         }
 
         if (_audioManager == null) {
@@ -407,8 +407,8 @@ class AudioDeviceAndroid {
         } else {
             // 2.x devices
             if ((android.os.Build.BRAND.equals("Samsung") ||
-                            android.os.Build.BRAND.equals("samsung")) &&
-                            ((5 == apiLevel) || (6 == apiLevel) ||
+                    android.os.Build.BRAND.equals("samsung")) &&
+                    ((5 == apiLevel) || (6 == apiLevel) ||
                             (7 == apiLevel))) {
                 // Samsung 2.0, 2.0.1 and 2.1 devices
                 if (loudspeakerOn) {
@@ -435,14 +435,14 @@ class AudioDeviceAndroid {
         // create audio manager if needed
         if (_audioManager == null && _context != null) {
             _audioManager = (AudioManager)
-                _context.getSystemService(Context.AUDIO_SERVICE);
+                    _context.getSystemService(Context.AUDIO_SERVICE);
         }
 
         int retVal = -1;
 
         if (_audioManager != null) {
             _audioManager.setStreamVolume(AudioManager.STREAM_VOICE_CALL,
-                            level, 0);
+                    level, 0);
             retVal = 0;
         }
 
@@ -455,14 +455,14 @@ class AudioDeviceAndroid {
         // create audio manager if needed
         if (_audioManager == null && _context != null) {
             _audioManager = (AudioManager)
-                _context.getSystemService(Context.AUDIO_SERVICE);
+                    _context.getSystemService(Context.AUDIO_SERVICE);
         }
 
         int level = -1;
 
         if (_audioManager != null) {
             level = _audioManager.getStreamVolume(
-                AudioManager.STREAM_VOICE_CALL);
+                    AudioManager.STREAM_VOICE_CALL);
         }
 
         return level;
@@ -473,7 +473,7 @@ class AudioDeviceAndroid {
 
         if (_audioManager == null && _context != null) {
             _audioManager = (AudioManager)
-                _context.getSystemService(Context.AUDIO_SERVICE);
+                    _context.getSystemService(Context.AUDIO_SERVICE);
         }
 
         if (_audioManager == null) {
@@ -485,11 +485,11 @@ class AudioDeviceAndroid {
         // decided,
         // the condition should be changed to include API level 8 to H-1.
         if ((android.os.Build.BRAND.equals("Samsung") || android.os.Build.BRAND
-                        .equals("samsung")) && (8 == apiLevel)) {
+                .equals("samsung")) && (8 == apiLevel)) {
             // Set Samsung specific VoIP mode for 2.2 devices
             int mode =
-                            (startCall ? 4 /* VoIP mode */
-                                            : AudioManager.MODE_NORMAL);
+                    (startCall ? 4 /* VoIP mode */
+                            : AudioManager.MODE_NORMAL);
             _audioManager.setMode(mode);
             if (_audioManager.getMode() != mode) {
                 DoLogErr("Could not set audio mode for Samsung device");

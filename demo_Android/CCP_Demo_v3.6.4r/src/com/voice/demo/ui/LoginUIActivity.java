@@ -213,7 +213,8 @@ public class LoginUIActivity extends CCPBaseActivity implements View.OnClickList
 	/**
 	 * 
 	 */
-	public void doSDKRegist() {
+	public void
+	doSDKRegist() {
 		showConnectionProgress(getString(R.string.dialog_message_text));
 		ITask iTask = new ITask(TaskKey.KEY_SDK_REGIST);
 		addTask(iTask);

@@ -17,6 +17,10 @@
 #include "desktop_and_cursor_composer.h"
 #include "vie_frame_provider_base.h"
 
+#include "../system_wrappers/include/critical_section_wrapper.h"
+#include "../system_wrappers/include/event_wrapper.h"
+#include "../system_wrappers/include/thread_wrapper.h"
+
 namespace yuntongxunwebrtc {
 
 class CriticalSectionWrapper;
@@ -87,6 +91,14 @@ protected:
     DesktopShareErrCode GetErrCode(CaptureErrCode errCode);
 
 private:
+    int rgb_fd_;
+    int yuv_fd_;
+    scoped_ptr<CriticalSectionWrapper> rgb_yuv_cs_;
+
+    uint8_t *y_dest_;
+    uint8_t *u_dest_;
+    uint8_t *v_dest_;
+
     int     desktop_share_id_;
     int     last_width_;
     int     last_height_;

@@ -86,7 +86,8 @@ WebRtc_Word32 ScreenCapturer::SetAndroidObjects(void* javaVM, void* env, void* j
 	JNIEnv* thisEnv = (JNIEnv*)env;
   
   WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceVideoCapture, -1,
-	            "[ScreenCapturerAndroid INFO]: set android objects: jvm:%p, context:%p, env:%p", ScreenCapturerAndroid::g_jvm, ScreenCapturerAndroid::g_javaContext, thisEnv);
+	            "[ScreenCapturerAndroid INFO]: set android objects: jvm:%p, context:%p, env:%p",
+	            ScreenCapturerAndroid::g_jvm, ScreenCapturerAndroid::g_javaContext, thisEnv);
 	// get java capture class type (note path to class packet)	               
 	jclass screenCaptureClassLocal = thisEnv->FindClass(AndroidJavaScreenCaptureClass);
 	if (!screenCaptureClassLocal) {

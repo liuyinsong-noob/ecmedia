@@ -15,6 +15,7 @@
 #include "../system_wrappers/include/thread_wrapper.h"
 #include "../system_wrappers/include/tick_util.h"
 #include "vie_encoder.h"
+#include "../../common_video/libyuv/include/webrtc_libyuv.h"
 //#if __APPLE__
 //#include "window_capturer_ios.h"
 //#endif
@@ -66,6 +67,7 @@ VieDesktopCapturer::VieDesktopCapturer(int id,int engine_id):
     desktop_capture_event_(*EventTimerWrapper::Create()),
     thread_wait_time_ms_(100),
     wait_time_cs_(CriticalSectionWrapper::CreateCriticalSection()),
+    rgb_yuv_cs_(CriticalSectionWrapper::CreateCriticalSection()),
 	capture_err_code_cb_(NULL), 
 	capture_frame_change_cb_(NULL)
 {
@@ -128,6 +130,8 @@ void VieDesktopCapturer::OnCaptureCompleted(DesktopFrame* frame, CaptureErrCode 
         frame = NULL;
         return;
     }
+
+    CriticalSectionScoped rgb_yuv_lock(rgb_yuv_cs_.get());
 
     int width = frame->size().width();
     int height = frame->size().height();
@@ -360,6 +364,8 @@ int VieDesktopCapturer::CaptrueShareFrame( yuntongxunwebrtc::I420VideoFrame& vid
 #ifdef WEBRTC_IOS
     screen_capturer_->Capture(DesktopRegion());
 #endif
+
+    CriticalSectionScoped rgb_yuv_lock(rgb_yuv_cs_.get());
 
     if(!has_share_frame_) {
         return -1;

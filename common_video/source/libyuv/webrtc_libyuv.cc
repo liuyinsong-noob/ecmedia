@@ -16,6 +16,8 @@
 // NOTE(ajm): Path provided by gyp.
 #ifndef __ANDROID__
 #include "./third_party/libyuv/include/libyuv.h"
+#include "../../../module/video_coding/main/include/video_frame.h"
+
 #else
 #include "./third_party/libyuv-android/include/libyuv.h"
 #endif
@@ -309,6 +311,36 @@ int ConvertVideoType(VideoType video_type) {
 void NeedFlipI420Frame(bool flag) {
     needFlipI420Frame = flag;
 }
+
+
+int ConvertToI420(const uint8_t* sample,
+                      size_t sample_size,
+                      uint8_t* dst_y,
+                      int dst_stride_y,
+                      uint8_t* dst_u,
+                      int dst_stride_u,
+                      uint8_t* dst_v,
+                      int dst_stride_v,
+                      int crop_x,
+                      int crop_y,
+                      int src_width,
+                      int src_height,
+                      int crop_width,
+                      int crop_height,
+                      VideoRotation rotation,
+                  VideoType src_video_type) {
+
+    return libyuv::ConvertToI420(sample, sample_size,
+                                 dst_y, dst_stride_y,
+                                 dst_u, dst_stride_u,
+                                 dst_v, dst_stride_v,
+                                 crop_x, crop_y,
+                                 src_width, src_height,
+                                 crop_width, crop_height,
+                                 ConvertRotationMode(rotation),
+                                 ConvertVideoType(src_video_type));
+}
+
     
 int ConvertToI420(VideoType src_video_type,
                   const uint8_t* src_frame,
