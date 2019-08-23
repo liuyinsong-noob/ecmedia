@@ -70,6 +70,10 @@ ECMEDIA_API int ECMedia_audio_create_channel(int& channelid, bool is_video);
 /*
  *1
  */
+ECMEDIA_API int ECMedia_set_old_conference_flag(int channelid, bool is_video, bool is_oldconf);
+/*
+*1
+*/
 ECMEDIA_API bool ECMedia_get_recording_status();
 /*
  *1

@@ -309,6 +309,14 @@ class ViEEncoder
 	uint32_t ssrc_index1; //higher layer
     FILE *_bitStreamBeforeSend;
   //---end
+
+//begin add by leixb for old conference to discard extension heard
+public:
+	void SetOldConferenceFlag(bool oldConf);
+private:
+	bool _old_conference;
+//end add by leixb
+
 };
 
 }  // namespace webrtc

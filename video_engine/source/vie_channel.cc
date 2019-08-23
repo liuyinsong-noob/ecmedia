@@ -206,7 +206,8 @@ ViEChannel::ViEChannel(int32_t channel_id,
 	remote_frame_callback_(nullptr),//add by dingxf
 	transport_feedback_observer_(transport_feedback_observer),
 	ssrc_observer_(NULL),
-    _local_create_transport(false){
+    _local_create_transport(false),
+	_old_conference(false){
   RtpRtcp::Configuration configuration = CreateRtpRtcpConfiguration();
   configuration.remote_bitrate_estimator = remote_bitrate_estimator;
   configuration.receive_statistics = vie_receiver_.GetReceiveStatistics();
@@ -926,14 +927,22 @@ int ViEChannel::SetSendTimestampOffsetStatus(bool enable, int id) {
     send_timestamp_extension_id_ = id;
     rtp_rtcp_->DeregisterSendRtpHeaderExtension(
         kRtpExtensionTransmissionTimeOffset);
-    error = rtp_rtcp_->RegisterSendRtpHeaderExtension(
-        kRtpExtensionTransmissionTimeOffset, id);
+
+	if (!_old_conference) {
+		error = rtp_rtcp_->RegisterSendRtpHeaderExtension(
+			kRtpExtensionTransmissionTimeOffset, id);
+	}
+
     for (std::list<RtpRtcp*>::iterator it = simulcast_rtp_rtcp_.begin();
          it != simulcast_rtp_rtcp_.end(); it++) {
       (*it)->DeregisterSendRtpHeaderExtension(
           kRtpExtensionTransmissionTimeOffset);
-      error |= (*it)->RegisterSendRtpHeaderExtension(
-          kRtpExtensionTransmissionTimeOffset, id);
+
+	  if (!_old_conference) {
+		  error |= (*it)->RegisterSendRtpHeaderExtension(
+			  kRtpExtensionTransmissionTimeOffset, id);
+	  }
+
     }
   } else {
     // Disable the extension.
@@ -961,14 +970,22 @@ int ViEChannel::SetSendAbsoluteSendTimeStatus(bool enable, int id) {
     absolute_send_time_extension_id_ = id;
     rtp_rtcp_->DeregisterSendRtpHeaderExtension(
         kRtpExtensionAbsoluteSendTime);
-    error = rtp_rtcp_->RegisterSendRtpHeaderExtension(
-        kRtpExtensionAbsoluteSendTime, id);
+
+	if (!_old_conference) {
+		error = rtp_rtcp_->RegisterSendRtpHeaderExtension(
+			kRtpExtensionAbsoluteSendTime, id);
+	}
+
     for (std::list<RtpRtcp*>::iterator it = simulcast_rtp_rtcp_.begin();
          it != simulcast_rtp_rtcp_.end(); it++) {
       (*it)->DeregisterSendRtpHeaderExtension(
           kRtpExtensionAbsoluteSendTime);
-      error |= (*it)->RegisterSendRtpHeaderExtension(
-          kRtpExtensionAbsoluteSendTime, id);
+
+	  if (!_old_conference) {
+		  error |= (*it)->RegisterSendRtpHeaderExtension(
+			  kRtpExtensionAbsoluteSendTime, id);
+	  }
+
     }
   } else {
     // Disable the extension.

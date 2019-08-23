@@ -195,7 +195,8 @@ ViEEncoder::ViEEncoder(int32_t engine_id,
 	packet_router_(packet_router),
 	transport_feedback_observer_(transport_feedback_observer),
 	retransmission_rate_limiter_(retransmission_rate_limiter),
-	rtc_event_log_(rtc_event_log){
+	rtc_event_log_(rtc_event_log),
+	_old_conference(false){
   bitrate_observer_.reset(new ViEBitrateObserver(this));
   pacing_callback_.reset(new ViEPacedSenderCallback(this));
   send_statistics_proxy_.reset(new SendStatisticsProxy(channel_id));
@@ -231,6 +232,17 @@ ViEEncoder::ViEEncoder(int32_t engine_id,
 //   std::vector<uint32_t> ssrcs;
 //   ssrcs.push_back(ssrc);
 //   encoder_feedback_->SetSsrcs(ssrcs); //need to fix: by ylr
+}
+
+void ViEEncoder::SetOldConferenceFlag(bool oldConf)
+{
+	_old_conference = oldConf;
+
+	if (oldConf) {
+#ifdef ENABLE_GCC
+		default_rtp_rtcp_->DeregisterSendRtpHeaderExtension(kRtpExtensionTransportSequenceNumber);
+#endif
+	}
 }
 
 RtpRtcp* ViEEncoder::CreateRtpRtcpModule() {
@@ -523,7 +535,10 @@ int32_t ViEEncoder::SetEncoder(const yuntongxunwebrtc::VideoCodec& video_codec) 
 		  rtp_rtcp->SetSendingMediaStatus(default_rtp_rtcp_->SendingMedia());
 		  rtp_rtcp->SetRtxSendStatus(default_rtp_rtcp_->RtxSendStatus());
 
-		  rtp_rtcp->RegisterSendRtpHeaderExtension(kRtpExtensionTransportSequenceNumber, 5);
+		  if (!_old_conference) {
+			  rtp_rtcp->RegisterSendRtpHeaderExtension(kRtpExtensionTransportSequenceNumber, 5);
+		  }
+
 		  rtp_rtcp->SetRTCPStatus(kCompound);
 		  rtp_rtcp->SetTransport(default_rtp_rtcp_->GetTransport());
 		  //TODO: need to set slave_ssrc

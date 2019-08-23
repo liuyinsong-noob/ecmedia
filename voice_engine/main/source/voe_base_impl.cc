@@ -753,6 +753,25 @@ int VoEBaseImpl::InitializeChannel(voe::ChannelOwner* channel_owner)
     return channel_owner->channel()->ChannelId();
 }
 
+//add by leixb for old conference
+int VoEBaseImpl::SetOldConferenceFlag(int channel, bool oldConf)
+{
+	WEBRTC_TRACE(kTraceApiCall, kTraceVoice, VoEId(_shared->instance_id(), -1),
+		"SetOldConferenceFlag(channel=%d)", channel);
+
+	// Set state and id for the specified channel.
+	voe::ChannelOwner ch = _shared->channel_manager().GetChannel(channel);
+	voe::Channel* channelPtr = ch.channel();
+	if (channelPtr == NULL)
+	{
+		_shared->SetLastError(VE_CHANNEL_NOT_VALID, kTraceError,
+			"SetOldConferenceFlag() failed to locate channel");
+		return -1;
+	}
+	channelPtr->SetOldConferenceFlag(oldConf);
+	return 0;
+}
+
 int VoEBaseImpl::DeleteChannel(int channel)
 {
     WEBRTC_TRACE(kTraceApiCall, kTraceVoice, VoEId(_shared->instance_id(), -1),

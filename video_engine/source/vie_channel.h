@@ -775,6 +775,12 @@ public:
           bool _local_create_transport;
 //---end
  
+//begin add by leixb for old conference to discard extension heard
+public:
+	void SetOldConferenceFlag(bool oldConf) { _old_conference = oldConf; }
+private:
+	bool _old_conference;
+//end add by leixb
 };
 
 }  // namespace webrtc

@@ -51,6 +51,9 @@ class ViEBaseImpl
                             int original_channel);
   virtual int CreateReceiveChannel(int& video_channel,  // NOLINT
                                    int original_channel);
+
+  virtual int SetOldConferenceFlag(int video_channel, bool oldConf);//add by leixb for old conference
+
   virtual int DeleteChannel(const int video_channel);
   virtual int ConnectAudioChannel(const int video_channel,
                                   const int audio_channel);

@@ -207,6 +207,31 @@ int ViEBaseImpl::CreateReceiveChannel(int& video_channel,  // NOLINT
   return CreateChannel(video_channel, original_channel, false);
 }
 
+//add by leixb for old conference
+int ViEBaseImpl::SetOldConferenceFlag(int video_channel, bool oldConf)
+{
+	LOG_F(LS_INFO) << "SetOldConferenceFlag, video channel: " << video_channel;
+
+	ViEChannelManagerScoped cs(*(shared_data_.channel_manager()));
+	ViEChannel* vie_channel = cs.Channel(video_channel);
+	if (!vie_channel) {
+		shared_data_.SetLastError(kViEBaseInvalidChannelId);
+		return -1;
+	}
+
+	vie_channel->SetOldConferenceFlag(oldConf);
+
+	// Deregister the ViEEncoder if no other channel is using it.
+	ViEEncoder* vie_encoder = cs.Encoder(video_channel);
+	if (!vie_encoder) {
+		shared_data_.SetLastError(kViEBaseInvalidChannelId);
+		return -1;
+	}
+
+	vie_encoder->SetOldConferenceFlag(oldConf);
+	return 0;
+}
+
 int ViEBaseImpl::DeleteChannel(const int video_channel) {
   {
     ViEChannelManagerScoped cs(*(shared_data_.channel_manager()));

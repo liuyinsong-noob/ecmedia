@@ -43,6 +43,8 @@ public:
     virtual int CreateChannel();
     virtual int CreateChannel(const Config& config);
 
+	virtual int SetOldConferenceFlag(int channel, bool oldConf);//add by leixb for old conference
+
     virtual int DeleteChannel(int channel);
 
     virtual int StartReceive(int channel);

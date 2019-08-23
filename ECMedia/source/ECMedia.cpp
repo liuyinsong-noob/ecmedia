@@ -909,6 +909,48 @@ int ECMedia_audio_create_channel(int& channelid, bool is_video)
     }
 }
 
+int ECMedia_set_old_conference_flag(int channelid, bool is_video, bool is_oldconf)
+{
+	WEBRTC_TRACE(kTraceApiCall, kTraceMediaApi, 0, "%s:%d begins..., %s channelid is: %d", __FUNCTION__, __LINE__, is_video ? "video" : "audio", channelid);
+	if (!is_video) {
+		AUDIO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
+		VoEBase *base = VoEBase::GetInterface(m_voe);
+		if (base) {
+			base->SetOldConferenceFlag(channelid, is_oldconf);
+			base->Release();
+			WEBRTC_TRACE(kTraceApiCall, kTraceMediaApi, 0, "%s:%d ends with channelid %d", __FUNCTION__, __LINE__, channelid);
+			return 0;
+		}
+		else
+		{
+			WEBRTC_TRACE(kTraceError, kTraceMediaApi, 0, "%s:%d failed to get VoEBase", __FUNCTION__, __LINE__);
+			channelid = -1;
+			return -99;
+		}
+	}
+	else
+	{
+#ifdef VIDEO_ENABLED
+		VIDEO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
+		ViEBase *base = ViEBase::GetInterface(m_vie);
+		if (base) {
+			base->SetOldConferenceFlag(channelid, is_oldconf);
+			base->Release();
+			WEBRTC_TRACE(kTraceApiCall, kTraceMediaApi, 0, "%s:%d ends with video channelid %d", __FUNCTION__, __LINE__, channelid);
+			return 0;
+		}
+		else
+		{
+			WEBRTC_TRACE(kTraceError, kTraceMediaApi, 0, "%s:%d failed to get ViEBase", __FUNCTION__, __LINE__);
+			channelid = -1;
+			return -99;
+		}
+#endif
+		WEBRTC_TRACE(kTraceApiCall, kTraceMediaApi, 0, "%s:%d ends...", __FUNCTION__, __LINE__);
+		return -1;
+	}
+}
+
 bool ECMedia_get_recording_status()
 {
     WEBRTC_TRACE(kTraceApiCall, kTraceMediaApi, 0, "%s:%d begins...", __FUNCTION__, __LINE__);

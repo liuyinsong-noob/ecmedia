@@ -1016,7 +1016,8 @@ Channel::Channel(int32_t channelId,
     _receiveData(NULL),
     _rtp_port(0),
     _isSetRemoteSsrc(false),
-    clock_(Clock::GetRealTimeClock())
+    clock_(Clock::GetRealTimeClock()),
+	_old_conference(false)
 {
     WEBRTC_TRACE(kTraceMemory, kTraceVoice, VoEId(_instanceId,_channelId),
                  "Channel::Channel() - ctor");
@@ -3279,7 +3280,9 @@ Channel::GetRemoteSSRC(unsigned int& ssrc)
 }
 
 int Channel::SetSendAudioLevelIndicationStatus(bool enable, unsigned char id) {
-  _includeAudioLevelIndication = enable;
+  if (!_old_conference) {
+	_includeAudioLevelIndication = enable;
+  }
   return SetSendRtpHeaderExtension(enable, kRtpExtensionAudioLevel, id);
 }
 
@@ -3697,7 +3700,7 @@ int Channel::SetREDStatus(bool enable, int redPayloadtype) {
     }
   }
 
-    if(enable) {
+    if(enable && !_old_conference) {
         // register receiver rtp loss rate extension header, add by zhaoyou
         rtp_header_parser_->RegisterRtpHeaderExtension(kRtpExtensionLossRate, 10);
         // register sender rtp loss rate extension header, add by zhaoyou
@@ -4648,7 +4651,7 @@ int Channel::SetSendRtpHeaderExtension(bool enable, RTPExtensionType type,
                                        unsigned char id) {
   int error = 0;
   _rtpRtcpModule->DeregisterSendRtpHeaderExtension(type);
-  if (enable) {
+  if (enable && !_old_conference) {
     error = _rtpRtcpModule->RegisterSendRtpHeaderExtension(type, id);
   }
   return error;

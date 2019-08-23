@@ -213,6 +213,8 @@ class WEBRTC_DLLEXPORT ViEBase {
   virtual int CreateReceiveChannel(int& video_channel,
                                    int original_channel) = 0;
 
+  virtual int SetOldConferenceFlag(int video_channel, bool oldConf) = 0;//add by leixb for old conference
+
   // Deletes an existing channel and releases the utilized resources.
   virtual int DeleteChannel(const int video_channel) = 0;
 

@@ -811,6 +811,13 @@ private:
     WebRtc_UWord32 _rtpTimeOutSeconds;
     int _rtp_port;
     unsigned int _remote_ssrc;//for distribute remote audio stream
+
+//begin add by leixb for old conference to discard extension heard
+public:
+	void SetOldConferenceFlag(bool oldConf) { _old_conference = oldConf; }
+private:
+	bool _old_conference;
+//end add by leixb
 };
 
 }  // namespace voe

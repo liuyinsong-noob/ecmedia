@@ -1,3 +1,7 @@
+Version 2.3.3.9
+1、接口改变
+2、[feature]: not send extension head when old conference
+
 Version 2.3.2.12
 1. 接口不变
 2. [bugfix]: 防止UIView缩放模式由拉伸模式变为比例缩放模式后，UIView周围还残留之前图像
