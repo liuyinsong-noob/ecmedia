@@ -66,11 +66,14 @@ ViEChannelManager::~ViEChannelManager() {
 	pacer_thread_->Stop();
 	ProcessThread::DestroyProcessThread(pacer_thread_);
 	module_process_thread_->DeRegisterModule(call_stats_.get());
-  while (channel_map_.size() > 0) {
-    ChannelMap::iterator it = channel_map_.begin();
-    // DeleteChannel will erase this channel from the map and invalidate |it|.
-    DeleteChannel(it->first);
-  }
+	{
+		CriticalSectionScoped cs(channel_id_critsect_);
+		while (channel_map_.size() > 0) {
+			ChannelMap::iterator it = channel_map_.begin();
+			// DeleteChannel will erase this channel from the map and invalidate |it|.
+			DeleteChannel(it->first);
+		}
+	}
 
   if (voice_sync_interface_) {
     voice_sync_interface_->Release();
@@ -620,6 +623,7 @@ bool ViEChannelManager::CreateChannelObject(
   vie_channel->SetRtcEventLog(rtc_event_log_.get());
   vie_channel->SetSsrcObserver(vie_encoder);
   // Store the channel, add it to the channel group and save the vie_encoder.
+  CriticalSectionScoped cs(channel_id_critsect_);
   channel_map_[channel_id] = vie_channel;
   vie_encoder_map_[channel_id] = vie_encoder;
   return true;
@@ -718,7 +722,7 @@ void ViEChannelManager::OnNetworkChanged(uint32_t bitrate_bps,
 										int64_t probing_interval_ms)
 {
 	//todo : tell vie_encoder, later we can add bitrateAllocator here 
-	;
+	CriticalSectionScoped cs(channel_id_critsect_);
 	for (EncoderMap::iterator it=vie_encoder_map_.begin(); it!=vie_encoder_map_.end(); it++)
 	{
 		ViEEncoder *vie_encoder = it->second;

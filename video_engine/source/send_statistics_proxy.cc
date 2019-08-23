@@ -71,21 +71,29 @@ void SendStatisticsProxy::RateCounter::PurgeOldStats()
 {
 	int64_t old_stats_ms = yuntongxunwebrtc::Time() - kStatsTimeoutMs;
 	std::list<Sample>::iterator it = sample_list_.begin();
-	while(it!= sample_list_.end())
+	while (it != sample_list_.end())
 	{
 		int64_t sample_time = it->first;
 		if (sample_time < old_stats_ms)
-		{
-			it++;
-			sample_list_.pop_front();
-			if (sample_list_.size() == 0)
-			{
-				break;
-			}
-		}
+			it = sample_list_.erase(it);
 		else
-			it++;
+			break;
 	}
+	//while(it!= sample_list_.end())
+	//{
+	//	int64_t sample_time = it->first;
+	//	if (sample_time < old_stats_ms)
+	//	{
+	//		it++;
+	//		sample_list_.pop_front();
+	//		if (sample_list_.size() == 0)
+	//		{
+	//			break;
+	//		}
+	//	}
+	//	else
+	//		it++;
+	//}
 }
 
 void SendStatisticsProxy::RtcpBlocksCounter::AddSample(const RtcpStatistics& rtcp_stats)
@@ -99,21 +107,29 @@ void SendStatisticsProxy::RtcpBlocksCounter::PurgeOldStats()
 {
 	int64_t old_stats_ms = yuntongxunwebrtc::Time() - kStatsTimeoutMs;
 	std::list<RtcpSample>::iterator it = sample_list_.begin();
-	while(it != sample_list_.end())
+	while (it != sample_list_.end())
 	{
 		int64_t sample_time = it->first;
 		if (sample_time < old_stats_ms)
-		{
-			it++;
-			sample_list_.pop_front();
-			if (sample_list_.size() == 0)
-			{
-				break;
-			}
-		}
+			it = sample_list_.erase(it);
 		else
-			it++;
+			break;
 	}
+	//while(it != sample_list_.end())
+	//{
+	//	int64_t sample_time = it->first;
+	//	if (sample_time < old_stats_ms)
+	//	{
+	//		it++;
+	//		sample_list_.pop_front();
+	//		if (sample_list_.size() == 0)
+	//		{
+	//			break;
+	//		}
+	//	}
+	//	else
+	//		it++;
+	//}
 }
 
 uint8_t SendStatisticsProxy::RtcpBlocksCounter::AvgFractionLost() const
@@ -153,21 +169,29 @@ void SendStatisticsProxy::BitrateStatsCounter::PurgeOldStats()
 {
 	int64_t old_stats_ms = yuntongxunwebrtc::Time() - kStatsTimeoutMs;
 	std::list<BitrateSample>::iterator it = sample_list_.begin();
-	while(it != sample_list_.end())
+	while (it != sample_list_.end())
 	{
 		int64_t sample_time = it->first;
 		if (sample_time < old_stats_ms)
-		{
-			it++;
-			sample_list_.pop_front();
-			if (sample_list_.size() == 0)
-			{
-				break;
-			}
-		}
+			it = sample_list_.erase(it);
 		else
-			it++;
+			break;
 	}
+	//while(it != sample_list_.end())
+	//{
+	//	int64_t sample_time = it->first;
+	//	if (sample_time < old_stats_ms)
+	//	{
+	//		it++;
+	//		sample_list_.pop_front();
+	//		if (sample_list_.size() == 0)
+	//		{
+	//			break;
+	//		}
+	//	}
+	//	else
+	//		it++;
+	//}
 }
 
 uint32_t SendStatisticsProxy::BitrateStatsCounter::AvgBitbitRate()
