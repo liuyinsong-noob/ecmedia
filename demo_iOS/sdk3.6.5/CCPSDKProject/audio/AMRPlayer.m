@@ -8,10 +8,10 @@
 #import "AMRPlayer.h"
 #include "interf_dec.h"
 
-const unsigned int PACKETNUM =  25;//20ms * 25 = 0.5s ,每个包25帧,可以播放0.5秒
-const float KSECONDSPERBUFFER = 0.2; //每秒播放0.2个缓冲
-const unsigned int AMRFRAMELEN = 32; //帧长
-const unsigned int PERREADFRAME =  10;//每次读取帧数
+const unsigned int CONST_PACKETNUM =  25;//20ms * 25 = 0.5s ,每个包25帧,可以播放0.5秒
+const float CONST_KSECONDSPERBUFFER = 0.2; //每秒播放0.2个缓冲
+const unsigned int CONST_AMRFRAMELEN = 32; //帧长
+const unsigned int CONST_PERREADFRAME =  10;//每次读取帧数
 static unsigned int gBufferSizeBytes = 0x10000;
 
 @implementation AMRPlayer
@@ -87,7 +87,7 @@ static void BufferCallback(void *inUserData, AudioQueueRef inAQ, AudioQueueBuffe
     //status = AudioFileReadPackets( audioFile, NO, &numBytes, packetDescs, packetIndex, &numPackets, audioQueueBuffer->mAudioData);
     
     //-----
-    short pcmBuf[1600]={0};//KSECONDSPERBUFFER * 160 * 50;
+    short pcmBuf[1600]={0};//CONST_KSECONDSPERBUFFER * 160 * 50;
     
     int readAMRFrame = 0;
     const short block_size[16]={ 12, 13, 15, 17, 19, 20, 26, 31, 5, 0, 0, 0, 0, 0, 0, 0 };
@@ -96,7 +96,7 @@ static void BufferCallback(void *inUserData, AudioQueueRef inAQ, AudioQueueBuffe
     
     int rCout=0;
     // while (fread(analysis, sizeof (unsigned char), 1, file_analysis ) > 0)
-    while (readAMRFrame < PERREADFRAME && (rCout=fread(analysis, sizeof (unsigned char), 1, _amrFile)))
+    while (readAMRFrame < CONST_PERREADFRAME && (rCout=fread(analysis, sizeof (unsigned char), 1, _amrFile)))
     {
         int dec_mode = (analysis[0] >> 3) & 0x000F;
         
@@ -215,7 +215,7 @@ static void BufferCallback(void *inUserData, AudioQueueRef inAQ, AudioQueueBuffe
     
     // 创建并分配缓存空间
     packetIndex = 0;
-    gBufferSizeBytes = KSECONDSPERBUFFER *  2 * 160 * 50 *2; //MR122 size * 2
+    gBufferSizeBytes = CONST_KSECONDSPERBUFFER *  2 * 160 * 50 *2; //MR122 size * 2
     
     for (int i = 0; i < NUM_BUFFERS; i++) {
         AudioQueueAllocateBuffer(queue, gBufferSizeBytes, &buffers[i]);//&mBuffers[i]
@@ -256,14 +256,14 @@ static void BufferCallback(void *inUserData, AudioQueueRef inAQ, AudioQueueBuffe
     //        packetIndex += numPackets;
     //    }
     
-    short pcmBuf[1600]={0};; //KSECONDSPERBUFFER * 160 * 50
+    short pcmBuf[1600]={0};; //CONST_KSECONDSPERBUFFER * 160 * 50
     
     int readAMRFrame = 0;
     const short block_size[16]={ 12, 13, 15, 17, 19, 20, 26, 31, 5, 0, 0, 0, 0, 0, 0, 0 };
     char analysis[32]={0};
     
     int rCout=0;
-    while (readAMRFrame < PERREADFRAME && (rCout=fread(analysis, sizeof (unsigned char), 1, _amrFile)))
+    while (readAMRFrame < CONST_PERREADFRAME && (rCout=fread(analysis, sizeof (unsigned char), 1, _amrFile)))
     {
         
         _hasReadSize += rCout;
