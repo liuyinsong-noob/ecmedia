@@ -505,7 +505,7 @@ int NetEqImpl::InsertPacketInternal(const WebRtcRTPHeader& rtp_header,
 
   bool update_sample_rate_and_channels = false;
   // Reinitialize NetEq if it's needed (changed SSRC or first call).
-  if ((main_header.ssrc != ssrc_) || first_packet_) {
+  if ((main_header.ssrc != ssrc_) || first_packet_ || rtp_header.header.markerBit) {
     // Note: |first_packet_| will be cleared further down in this method, once
     // the packet has been successfully inserted into the packet buffer.
 
