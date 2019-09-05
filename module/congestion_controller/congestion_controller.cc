@@ -342,7 +342,7 @@ void CongestionController::MaybeTriggerOnNetworkChanged() {
   if (estimate_changed) {
     pacer_->SetEstimatedBitrate(bitrate_bps);
     probe_controller_->SetEstimatedBitrate(bitrate_bps);
-    retransmission_rate_limiter_->SetMaxRate(bitrate_bps);
+    //retransmission_rate_limiter_->SetMaxRate(bitrate_bps);
   }
 
   bitrate_bps = IsNetworkDown() || IsSendQueueFull() ? 0 : bitrate_bps;

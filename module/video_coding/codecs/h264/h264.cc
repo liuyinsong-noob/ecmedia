@@ -284,7 +284,7 @@ void H264Encoder::SetX264EncodeParameters(x264_param_t &params, VideoCodecMode m
   p_params->i_height=codec_.height;
   p_params->i_fps_num = current_frame_;
   p_params->i_fps_den=1;
-  p_params->i_slice_max_size=1300;
+  p_params->i_slice_max_size=500;
   p_params->b_annexb=1; //already set by defaule:默认支持字节流格式，即包含nal起始码前缀0x00 00 00 01；
   
   if (1){ //Default using CRF
