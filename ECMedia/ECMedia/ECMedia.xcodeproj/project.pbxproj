@@ -20,17 +20,9 @@
 		1F79654B1FE7BA8800A254CA /* libremote_bitrate_estimator_Mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F79654A1FE7BA8800A254CA /* libremote_bitrate_estimator_Mac.a */; };
 		1F886CF720CA426D0073669C /* libharfbuzz_mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F886CF220CA426D0073669C /* libharfbuzz_mac.a */; };
 		1F886D3B20CA5D250073669C /* libfreetype.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F886D3320CA5D240073669C /* libfreetype.a */; };
-		1F886D3C20CA5D250073669C /* libpostproc.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F886D3420CA5D240073669C /* libpostproc.a */; };
-		1F886D3D20CA5D250073669C /* libavcodec.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F886D3520CA5D240073669C /* libavcodec.a */; };
-		1F886D3E20CA5D250073669C /* libavfilter.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F886D3620CA5D240073669C /* libavfilter.a */; };
-		1F886D3F20CA5D250073669C /* libavdevice.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F886D3720CA5D240073669C /* libavdevice.a */; };
-		1F886D4020CA5D250073669C /* libavutil.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F886D3820CA5D240073669C /* libavutil.a */; };
-		1F886D4120CA5D250073669C /* libswscale.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F886D3920CA5D240073669C /* libswscale.a */; };
-		1F886D4220CA5D250073669C /* libswresample.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F886D3A20CA5D250073669C /* libswresample.a */; };
 		1F886D4420CA5D6B0073669C /* libx264.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F886D4320CA5D6A0073669C /* libx264.a */; };
 		1F886D4620CA5D860073669C /* libvpx.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F886D4520CA5D860073669C /* libvpx.a */; };
 		1F8EE0021E5D6EB200C04C10 /* RecordLocal.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1F8EE0011E5D6EB200C04C10 /* RecordLocal.cpp */; };
-		1F8EE0551E5D7B8B00C04C10 /* libavformat.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F8EE0541E5D7B8B00C04C10 /* libavformat.a */; };
 		1F930D8F1F6A9D7A00EBDE34 /* srs_librtmp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1F930D8C1F6A9D7A00EBDE34 /* srs_librtmp.cpp */; };
 		1F930D921F6A9D8F00EBDE34 /* ec_ts_parser.cc in Sources */ = {isa = PBXBuildFile; fileRef = 1F930D901F6A9D8F00EBDE34 /* ec_ts_parser.cc */; };
 		1F930DAA1F6A9D9A00EBDE34 /* htl_app_hls_load.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1F930D931F6A9D9A00EBDE34 /* htl_app_hls_load.cpp */; };
@@ -94,6 +86,14 @@
 		450D71E51F15FB0000CD5776 /* libcongestion_controller.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 45619C951F14C7FF008B2068 /* libcongestion_controller.a */; };
 		450D72071F1606EB00CD5776 /* common_types.cc in Sources */ = {isa = PBXBuildFile; fileRef = 450D72061F1606EB00CD5776 /* common_types.cc */; };
 		450D727A1F17200D00CD5776 /* librtc_event_log.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 450D726E1F171DC100CD5776 /* librtc_event_log.a */; };
+		451E4A7E2328E512007AB647 /* libswresample.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F886D3A20CA5D250073669C /* libswresample.a */; };
+		451E4A7F2328E513007AB647 /* libswscale.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F886D3920CA5D240073669C /* libswscale.a */; };
+		451E4A802328E513007AB647 /* libavformat.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F8EE0541E5D7B8B00C04C10 /* libavformat.a */; };
+		451E4A812328E513007AB647 /* libavdevice.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F886D3720CA5D240073669C /* libavdevice.a */; };
+		451E4A822328E513007AB647 /* libpostproc.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F886D3420CA5D240073669C /* libpostproc.a */; };
+		451E4A832328E513007AB647 /* libavcodec.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F886D3520CA5D240073669C /* libavcodec.a */; };
+		451E4A842328E513007AB647 /* libavfilter.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F886D3620CA5D240073669C /* libavfilter.a */; };
+		451E4A852328E513007AB647 /* libavutil.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F886D3820CA5D240073669C /* libavutil.a */; };
 		4547E2CC1F15F2520014FB7E /* libcommon_video.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 45619CC91F14D906008B2068 /* libcommon_video.a */; };
 		55D3C7101B81C8CD00D770BC /* b64.c in Sources */ = {isa = PBXBuildFile; fileRef = 05B4FEE61B40FA0200274327 /* b64.c */; };
 		55D3C7111B81C8CD00D770BC /* ECMedia.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 05E86F371B3BA16D00BDBCE6 /* ECMedia.cpp */; };
@@ -1584,19 +1584,19 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				451E4A7E2328E512007AB647 /* libswresample.a in Frameworks */,
+				451E4A7F2328E513007AB647 /* libswscale.a in Frameworks */,
+				451E4A802328E513007AB647 /* libavformat.a in Frameworks */,
+				451E4A812328E513007AB647 /* libavdevice.a in Frameworks */,
+				451E4A822328E513007AB647 /* libpostproc.a in Frameworks */,
+				451E4A832328E513007AB647 /* libavcodec.a in Frameworks */,
+				451E4A842328E513007AB647 /* libavfilter.a in Frameworks */,
+				451E4A852328E513007AB647 /* libavutil.a in Frameworks */,
 				1FE95B5820CA61AA00ABC454 /* libfaac.a in Frameworks */,
 				1FE95B5620CA619900ABC454 /* libfaad.a in Frameworks */,
 				1F886D4620CA5D860073669C /* libvpx.a in Frameworks */,
 				1F886D4420CA5D6B0073669C /* libx264.a in Frameworks */,
 				1F886D3B20CA5D250073669C /* libfreetype.a in Frameworks */,
-				1F886D3C20CA5D250073669C /* libpostproc.a in Frameworks */,
-				1F886D3D20CA5D250073669C /* libavcodec.a in Frameworks */,
-				1F886D3E20CA5D250073669C /* libavfilter.a in Frameworks */,
-				1F886D3F20CA5D250073669C /* libavdevice.a in Frameworks */,
-				1F886D4020CA5D250073669C /* libavutil.a in Frameworks */,
-				1F886D4120CA5D250073669C /* libswscale.a in Frameworks */,
-				1F886D4220CA5D250073669C /* libswresample.a in Frameworks */,
-				1F8EE0551E5D7B8B00C04C10 /* libavformat.a in Frameworks */,
 				1F79652F1FE7B95100A254CA /* libremote_bitrate_estimator.a in Frameworks */,
 				1FA4AA911FC6C1E600936805 /* libECImage.a in Frameworks */,
 				1F9AB0E71F8CB79F0046DF9D /* libprotobuf.a in Frameworks */,
@@ -2675,6 +2675,7 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				English,
 				en,
 			);
 			mainGroup = ADB519261B27DFCA0009077D;
