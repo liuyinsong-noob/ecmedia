@@ -24,6 +24,7 @@
 #include "scaler.h"
 #include "opengles_display.h"
 
+
 enum AttribEnum
 {
     ATTRIB_VERTEX,
@@ -124,8 +125,8 @@ enum TextureType
             // add to new parent
             [self.parentView addSubview:self];
         }
-
-        [self updatePreview];
+        
+       // [self updatePreview];
         isRunning = TRUE;
     }
 }
@@ -426,7 +427,12 @@ enum TextureType
 
 - (void)setVideoSize:(GLuint)width height:(GLuint)height
 {
-    if(_videoW > 1 && _videoH > 1){
+    
+    float aspect_ratio_old = _videoW/_videoH;
+    float aspect_ratio_new = width/height;
+    
+    
+    if(_videoW > 1 && _videoH > 1 && aspect_ratio_new != aspect_ratio_old){
         [self clearFrame];
     }
     _videoW = width;
@@ -458,7 +464,7 @@ enum TextureType
     // 防止UIView缩放模式由拉伸模式变为比例缩放模式后, UIView周围还残留之前图像
     if(_lastContentMode != self.contentMode) {
         _lastContentMode = self.contentMode;
-        [self clearFrame];
+      //  [self clearFrame];
     }
     
     // 防止UIView尺寸又大变小, UIView周围还残留之前图像
@@ -468,7 +474,7 @@ enum TextureType
         _parentScreenH = _lastViewHeight;
         _parentScreenW = _lastViewWidth;
         self.frame = self.parentView.bounds;
-        [self clearFrame];
+      //  [self clearFrame];
     }
     
     [EAGLContext setCurrentContext:_glContext];
