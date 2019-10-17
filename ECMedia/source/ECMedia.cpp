@@ -72,6 +72,7 @@
 #include "MediaStatisticsData.pb.h"
 #include "../../system_wrappers/include/trace.h"
 #include "../../module/common_types.h"
+#include "../../system_wrappers/include/logging.h"
 
 #ifdef ENABLE_LIB_CURL
 #ifdef WIN32
@@ -80,7 +81,7 @@ CurlPost *g_curlpost = nullptr;
 #endif
 
 
-#define ECMEDIA_VERSION "ecmedia_version: v2.3.3.13"
+#define ECMEDIA_VERSION "ecmedia_version: v2.3.3.14"
 
 enum {
     ERR_SDK_ALREADY_INIT = -1000,
@@ -2272,12 +2273,14 @@ int ECMedia_get_media_statistics(int channelid, bool is_video, MediaStatisticsIn
         WEBRTC_TRACE(kTraceApiCall, kTraceMediaApi, 0, "%s:%d ends...", __FUNCTION__, __LINE__);
         return -1;
     }
+	yuntongxunwebrtc::CallStatistics stats;
+	memset(&stats, 0, sizeof(stats));
     if(!is_video)
     {
         AUDIO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
         VoERTP_RTCP *rtp_rtcp = VoERTP_RTCP::GetInterface(m_voe);
         if(rtp_rtcp){
-            yuntongxunwebrtc::CallStatistics stats;
+            //yuntongxunwebrtc::CallStatistics stats;
             rtp_rtcp->GetRTCPStatistics(channelid,stats);
             call_stats.bytesReceived = stats.bytesReceived;
             call_stats.bytesSent =stats.bytesSent;
@@ -2289,6 +2292,12 @@ int ECMedia_get_media_statistics(int channelid, bool is_video, MediaStatisticsIn
             call_stats.packetsSent = stats.packetsSent;
             call_stats.rttMs = stats.rttMs;
             rtp_rtcp->Release();
+
+			LOG_F(LS_INFO) << " audio fractionLost statistics: "
+				<< " stats.rttMs: " << stats.rttMs
+				<< " stats.fractionLost: " << (stats.fractionLost * 100 / 255.0) << "%"
+				<< " stats.fractionLost: " << stats.fractionLost
+				<< " stats.cumulativeLost: " << stats.cumulativeLost;
         }
     }
 #ifdef VIDEO_ENABLED
@@ -2297,7 +2306,7 @@ int ECMedia_get_media_statistics(int channelid, bool is_video, MediaStatisticsIn
         VIDEO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
         ViERTP_RTCP *rtp_rtcp = ViERTP_RTCP::GetInterface(m_vie);
         if(rtp_rtcp){
-            yuntongxunwebrtc::CallStatistics stats;
+            //yuntongxunwebrtc::CallStatistics stats;
             //rtp_rtcp->GetSentRTCPStatistics(channelid, stats.fractionLost, stats.cumulativeLost, stats.extendedMax, stats.jitterSamples, stats.rttMs);
             rtp_rtcp->GetReceivedRTCPStatistics(channelid, stats.fractionLost, stats.cumulativeLost, stats.extendedMax, stats.jitterSamples, stats.rttMs);
             rtp_rtcp->GetRTPStatistics(channelid, stats.bytesSent, stats.packetsSent, stats.bytesReceived, stats.packetsReceived);
@@ -2312,6 +2321,12 @@ int ECMedia_get_media_statistics(int channelid, bool is_video, MediaStatisticsIn
             call_stats.packetsSent = stats.packetsSent;
             call_stats.rttMs = stats.rttMs;
             rtp_rtcp->Release();
+
+			LOG_F(LS_INFO) << " video fractionLost statistics: "
+				<< " stats.rttMs: " << stats.rttMs
+				<< " stats.fractionLost: " << (stats.fractionLost * 100 / 255.0) << "%"
+				<< " stats.fractionLost: " << stats.fractionLost
+				<< " stats.cumulativeLost: " << stats.cumulativeLost;
         }
     }
 #endif

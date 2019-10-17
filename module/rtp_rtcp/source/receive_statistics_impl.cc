@@ -18,6 +18,7 @@
 #include "../module/rtp_rtcp/source/rtp_rtcp_config.h"
 #include "../module/rtp_rtcp/source/time_util.h"
 #include "../system_wrappers/include/clock.h"
+#include "../system_wrappers/include/logging.h"
 
 namespace yuntongxunwebrtc {
 
@@ -39,6 +40,7 @@ StreamStatisticianImpl::StreamStatisticianImpl(
       cumulative_loss_(0),
       jitter_q4_transmission_time_offset_(0),
       last_receive_time_ms_(0),
+	  last_calculate_time_ms_(0),
       last_received_timestamp_(0),
       last_received_transmission_time_offset_(0),
       received_seq_first_(0),
@@ -94,6 +96,7 @@ void StreamStatisticianImpl::UpdateCounters(const RTPHeader& header,
   if (!in_order && retransmitted) {
     receive_counters_.retransmitted.AddPacket(packet_length, header);
   }
+  //LOG_F(LS_INFO) << " header.sequenceNumber: " << header.sequenceNumber << " is in_order: " << in_order << " is retransmitted: " << retransmitted;
 
   if (header.extension.hasTransportSequenceNumber) {
     use_extend_transport_sequence_ = false; //true;
@@ -242,7 +245,18 @@ bool StreamStatisticianImpl::GetStatistics(RtcpStatistics* statistics,
       return true;
     }
 
-    *statistics = CalculateRtcpStatistics();
+    //*statistics = CalculateRtcpStatistics();
+	int64_t curr_calculate_time_ms = clock_->TimeInMilliseconds();
+	int64_t calc_diff = curr_calculate_time_ms - last_calculate_time_ms_;
+	if (!IsTimeToRecalculateStatistics(2 * kStatisticsProcessIntervalMs))
+	{
+		*statistics = last_reported_statistics_;
+	}
+	else
+	{
+		*statistics = CalculateRtcpStatistics();
+		LOG_F(LS_INFO) << " statistics->fraction_lost: " << (statistics->fraction_lost * 100 / 255.0) << "% statistics->cumulative_lost: " << statistics->cumulative_lost << " current TimeInMilliseconds: " << curr_calculate_time_ms << " time interval for calc: " << calc_diff;
+	}
   }
 
   NotifyRtcpCallback();
@@ -296,7 +310,7 @@ RtcpStatistics StreamStatisticianImpl::CalculateRtcpStatistics() {
   if (!use_extend_transport_sequence_) {
 	  retransmitted_packets =
 		 receive_counters_.retransmitted.packets - last_report_old_packets_;
-	  rec_since_last += retransmitted_packets;
+	  //rec_since_last += retransmitted_packets;
   }
 
 
@@ -348,8 +362,22 @@ RtcpStatistics StreamStatisticianImpl::CalculateRtcpStatistics() {
 //  BWE_TEST_LOGGING_PLOT_WITH_SSRC(
 //      1, "received_seq_max_pkts", clock_->TimeInMilliseconds(),
 //      (received_seq_max_ - received_seq_first_), ssrc_);
+  LOG_F(LS_INFO) << " exp_since_last: " << exp_since_last << " rec_since_last: " << rec_since_last << " missing: " << missing << " retransmitted_packets: " << retransmitted_packets << " real_lost: " << real_lost;
+  //LOG_F(LS_INFO) << " stats.fraction_lost: " << (stats.fraction_lost * 100 / 255.0) << "% stats.cumulative_lost: " << stats.cumulative_lost;
 
   return stats;
+}
+
+bool StreamStatisticianImpl::IsTimeToRecalculateStatistics(int64_t interval_ms)
+{
+	int64_t curr_calculate_time_ms = clock_->TimeInMilliseconds();
+	int64_t calc_diff = curr_calculate_time_ms - last_calculate_time_ms_;
+	if (calc_diff > interval_ms)
+	{
+		last_calculate_time_ms_ = curr_calculate_time_ms;
+		return true;
+	}
+	return false;
 }
 
 void StreamStatisticianImpl::GetDataCounters(

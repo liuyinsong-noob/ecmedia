@@ -1410,7 +1410,7 @@ int32_t ViEChannel::GetReceivedRtcpStatistics(uint16_t* fraction_lost,
       vie_receiver_.GetReceiveStatistics()->GetStatistician(remote_ssrc);
   RtcpStatistics receive_stats;
   if (!statistician || !statistician->GetStatistics(
-      &receive_stats, rtp_rtcp_->RTCP() == kOff)) {
+      &receive_stats, /*rtp_rtcp_->RTCP() == kOff*/true)) {
     return -1;
   }
   *fraction_lost = receive_stats.fraction_lost;
