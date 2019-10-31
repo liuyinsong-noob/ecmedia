@@ -458,6 +458,17 @@ int ViECodecImpl::SetReceiveCodec(const int video_channel,
 	  return -1;
   }
 
+  plName = "zhongyiH264";
+  memset(video_codec_second.plName, 0, yuntongxunwebrtc::kPayloadNameSize);
+  memcpy(video_codec_second.plName, plName.c_str(), plName.length());
+  video_codec_second.plType = 102;
+  video_codec_second.codecType = yuntongxunwebrtc::kVideoCodecH264;
+
+  if (vie_channel->SetReceiveCodec(video_codec_second) != 0) {
+	  shared_data_->SetLastError(kViECodecUnknownError);
+	  return -1;
+  }
+
   LOG(LS_INFO) << "second Codec type " << video_codec_second.codecType
 	  << ", second payload type " << static_cast<int>(video_codec_second.plType);
 
