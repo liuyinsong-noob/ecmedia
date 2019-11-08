@@ -733,7 +733,6 @@ int ECMedia_ring_start(int& channelid, const char *filename, bool loop)
     if (m_voe){
         VoEBase* base = VoEBase::GetInterface(m_voe);
         VoEFile* file  = VoEFile::GetInterface(m_voe);
-        
         channelid = base->CreateChannel();
         string strFileName;
 #ifdef WIN32
@@ -782,7 +781,6 @@ int ECMedia_init_audio()
     if( base->Init() != 0) {
         VoiceEngine::Delete(m_voe);
         m_voe = NULL;
-        
         WEBRTC_TRACE(kTraceError, kTraceMediaApi, 0, "%s:%d Init Voice Engine Error, error code is %d", __FUNCTION__, __LINE__, base->LastError());
         return base->LastError(); //base init failed
     }
@@ -1119,10 +1117,10 @@ int ECMedia_audio_set_send_destination(int channelid, int rtp_port, const char *
         return -99;
     }
 }
-
+//add trace by wx
 int ECMedia_audio_set_socks5_send_data(int channel_id, unsigned char *data, int length, bool isRTCP)
 {
-    WEBRTC_TRACE(kTraceApiCall, kTraceMediaApi, 0, "%s:%d begins..., channelid: %d", __FUNCTION__, __LINE__, channel_id);
+    WEBRTC_TRACE(kTraceApiCall, kTraceMediaApi, 0, "%s:%d begins..., channelid: %d length: %d isRTCP: %s", __FUNCTION__, __LINE__, channel_id,length, isRTCP?"Yes":"No");
     AUDIO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
     VoEBase *base = VoEBase::GetInterface(m_voe);
     if (base) {
@@ -1748,10 +1746,10 @@ int ECMedia_audio_stop_send(int channelid)
         return -99;
     }
 }
-
+//TODO
 int ECMedia_Register_voice_engine_observer(int channelid)
 {
-    //TODO
+   	WEBRTC_TRACE(kTraceWarning, kTraceMediaApi, 0, "%s:%d Try to use undefined ECMedia_Register_voice_engine_observer ...", __FUNCTION__, __LINE__);
     return 0;
 }
 
@@ -1933,7 +1931,7 @@ int ECMedia_set_packet_timeout_noti(int channel, int timeout)
         return -99;
     }
 }
-
+//TODO
 int ECMedia_get_packet_timeout_noti(int channel, bool& enabled, int& timeout)
 {
     WEBRTC_TRACE(kTraceApiCall, kTraceMediaApi, 0, "%s:%d begins... and channelid: %d", __FUNCTION__, __LINE__, channel);
@@ -3161,6 +3159,7 @@ int ECMedia_getOrientation(const char *id, ECMediaRotateCapturedFrame &tr)
         if (ret != 0) {
             WEBRTC_TRACE(kTraceError, kTraceMediaApi, 0, "%s:%d failed to get orientation", __FUNCTION__, __LINE__);
         }
+		WEBRTC_TRACE(kTraceApiCall, kTraceMediaApi, 0, "%s:%d ends... with code: %d ", __FUNCTION__, __LINE__, ret);
         return ret;
     }
     else
@@ -3172,8 +3171,10 @@ int ECMedia_getOrientation(const char *id, ECMediaRotateCapturedFrame &tr)
 
 int ECMedia_set_no_camera_capture_cb(int deviceid, onEcMediaNoCameraCaptureCb no_camera_capture_cb)
 {
+	WEBRTC_TRACE(kTraceApiCall, kTraceMediaApi, 0, "%s:%d begins...", __FUNCTION__, __LINE__);//add by wx
     //g_NoCameraCaptureCb = no_camera_capture_cb;
 	ECViECaptureObserverManager::getInst()->addCaptureObserver(deviceid, no_camera_capture_cb);
+	WEBRTC_TRACE(kTraceApiCall, kTraceMediaApi, 0, "%s:%d ends...", __FUNCTION__, __LINE__);//add by wx
     return 0;
 }
 
@@ -3278,7 +3279,7 @@ int ECMedia_set_rotate_captured_frames(int deviceid, ECMediaRotateCapturedFrame 
 
 int ECMedia_set_local_video_window(int deviceid, void *video_window)
 {
-    WEBRTC_TRACE(kTraceApiCall, kTraceMediaApi, 0, "%s:%d begins... deviceid:%d video_window:%p ", __FUNCTION__, __LINE__, deviceid, video_window);
+    WEBRTC_TRACE(kTraceApiCall, kTraceMediaApi, 0, "%s:%d begins... deviceid:%d video_window:0x%p ", __FUNCTION__, __LINE__, deviceid, video_window);
     VIDEO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
     ViECapture *capture = ViECapture::GetInterface(m_vie);
     if (capture) {
@@ -3577,7 +3578,7 @@ int ECMedia_get_supported_codecs_video(VideoCodec codecs[])
 // call it after m_vie have create
 int ECMedia_iOS_h264_hard_codec_switch(bool encoder, bool decoder)
 {
-    WEBRTC_TRACE(kTraceApiCall, kTraceMediaApi, 0, "%s:%d begins...", __FUNCTION__, __LINE__);
+    WEBRTC_TRACE(kTraceApiCall, kTraceMediaApi, 0, "%s:%d begins...encoder: %s decoder: %s", __FUNCTION__, __LINE__, encoder?"Yes":"No", decoder ? "Yes" : "No");
     VIDEO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
     ViECodec *codec = ViECodec::GetInterface(m_vie);
     if (codec) {
@@ -3698,7 +3699,7 @@ int ECMedia_set_receive_playloadType_audio(int channelid, CodecInst& audioCodec)
 
 int ECMedia_get_receive_playloadType_audio(int channelid, CodecInst& audioCodec)
 {
-    WEBRTC_TRACE(kTraceApiCall, kTraceMediaApi, 0, "%s:%d begins... and channelid: %d", __FUNCTION__, __LINE__, channelid);
+	WEBRTC_TRACE(kTraceApiCall, kTraceMediaApi, 0, "%s:%d begins... and channelid: %d", __FUNCTION__, __LINE__, channelid);
     AUDIO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
     VoECodec *codec = VoECodec::GetInterface(m_voe);
     if (codec) {
@@ -3717,10 +3718,20 @@ int ECMedia_get_receive_playloadType_audio(int channelid, CodecInst& audioCodec)
         return -99;
     }
 }
-
+//add trace by wx
 #ifdef VIDEO_ENABLED
 static void ECMedia_reset_send_codecinfo(VideoCodec& videoCodec)
 {
+	WEBRTC_TRACE(kTraceApiCall, kTraceMediaApi, 0, "%s:%d begins...,videoCodec(width:%d height:%d pltype:%d plname:%s, startBitrate:%d, maxBitrate:%d, minBitrate:%d)",
+		__FUNCTION__,
+		__LINE__,
+		videoCodec.width,
+		videoCodec.height,
+		videoCodec.plType,
+		videoCodec.plName,
+		videoCodec.startBitrate, 
+		videoCodec.maxBitrate,
+		videoCodec.minBitrate);//add by wx 
 	unsigned short scale = 0;
 	if (videoCodec.mode == kScreensharing) {//Updated by zhangn 20190723
 		videoCodec.manualMode = true;
@@ -3784,11 +3795,12 @@ static void ECMedia_reset_send_codecinfo(VideoCodec& videoCodec)
       }
     }
   }
+  WEBRTC_TRACE(kTraceApiCall, kTraceMediaApi, 0, "%s:%d ends...", __FUNCTION__, __LINE__);//add by wx
 }
 int ECMedia_set_send_codec_video(int channelid, VideoCodec& videoCodec)
 {
-    WEBRTC_TRACE(kTraceApiCall, kTraceMediaApi, 0, "%s:%d begins..., channelid:%d videoCodec(width:%d height:%d pltype:%d plname:%s, startBitrate:%d, maxBitrate:%d, minBitrate:%d)",
-                 __FUNCTION__, __LINE__, channelid, videoCodec.width,videoCodec.height, videoCodec.plType,videoCodec.plName, videoCodec.startBitrate,videoCodec.maxBitrate, videoCodec.minBitrate);
+	WEBRTC_TRACE(kTraceApiCall, kTraceMediaApi, 0, "%s:%d begins..., channelid:%d videoCodec(width:%d height:%d pltype:%d plname:%s, startBitrate:%d, maxBitrate:%d, minBitrate:%d)",
+		__FUNCTION__, __LINE__, channelid, videoCodec.width, videoCodec.height, videoCodec.plType, videoCodec.plName, videoCodec.startBitrate, videoCodec.maxBitrate, videoCodec.minBitrate);
     if (videoCodec.width == 0 || videoCodec.height == 0) {
         WEBRTC_TRACE(kTraceError, kTraceMediaApi, 0, "%s:%d invalid param width or height", __FUNCTION__, __LINE__);
         WEBRTC_TRACE(kTraceApiCall, kTraceMediaApi, 0, "%s:%d ends...", __FUNCTION__, __LINE__);
@@ -3921,10 +3933,11 @@ int ECMedia_set_stun_cb_video(int channelid, onEcMediaStunPacket stun_cb)
         return -99;
     }
 }
-
+//add trace by wx 
 int ECMedia_set_receive_codec_video(int channelid, VideoCodec& videoCodec)
 {
-    WEBRTC_TRACE(kTraceApiCall, kTraceMediaApi, 0, "%s:%d begins... and channelid: %d", __FUNCTION__, __LINE__, channelid);
+	WEBRTC_TRACE(kTraceApiCall, kTraceMediaApi, 0, "%s:%d begins..., channelid:%d videoCodec(width:%d height:%d pltype:%d plname:%s, startBitrate:%d, maxBitrate:%d, minBitrate:%d)",
+		__FUNCTION__, __LINE__, channelid, videoCodec.width, videoCodec.height, videoCodec.plType, videoCodec.plName, videoCodec.startBitrate, videoCodec.maxBitrate, videoCodec.minBitrate);
     VIDEO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
     ViECodec *codec = ViECodec::GetInterface(m_vie);
     if (codec) {
@@ -3946,7 +3959,7 @@ int ECMedia_set_receive_codec_video(int channelid, VideoCodec& videoCodec)
 
 int ECMedia_get_receive_codec_video(int channelid, VideoCodec& videoCodec)
 {
-    WEBRTC_TRACE(kTraceApiCall, kTraceMediaApi, 0, "%s:%d begins... and channelid: %d", __FUNCTION__, __LINE__, channelid);
+    WEBRTC_TRACE(kTraceApiCall, kTraceMediaApi, 0, "%s:%d begins... and channelid: %d ", __FUNCTION__, __LINE__, channelid);
     VIDEO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
     ViECodec *codec = ViECodec::GetInterface(m_vie);
     if (codec) {
@@ -3993,9 +4006,10 @@ int ECMedia_sendUDPPacket(const int channelid,
         return -99;
     }
 }
+////add trace by wx
 int ECMedia_set_NACK_status_video(int channelid, bool enabled)
 {
-    WEBRTC_TRACE(kTraceApiCall, kTraceMediaApi, 0, "%s:%d begins... and channelid: %d", __FUNCTION__, __LINE__, channelid);
+    WEBRTC_TRACE(kTraceApiCall, kTraceMediaApi, 0, "%s:%d begins... and channelid: %d enabled: %s", __FUNCTION__, __LINE__, channelid, enabled?"Yes":"No");
     VIDEO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
     ViERTP_RTCP *rtp_rtcp = ViERTP_RTCP::GetInterface(m_vie);
     if (rtp_rtcp) {
@@ -4014,13 +4028,14 @@ int ECMedia_set_NACK_status_video(int channelid, bool enabled)
         return -99;
     }
 }
-
+//add trace by wx
 int ECMedia_set_FEC_status_video(const int channelid,
                                  const bool enable,
                                  const unsigned char payload_typeRED,
                                  const unsigned char payload_typeFEC)
 {
-    WEBRTC_TRACE(kTraceApiCall, kTraceMediaApi, 0, "%s:%d begins... and channelid: %d", __FUNCTION__, __LINE__, channelid);
+	WEBRTC_TRACE(kTraceApiCall, kTraceMediaApi, 0, "%s:%d begins... and channelid: %d enable: %s payload_typeRED: %s payload_typeFEC: %s",
+		__FUNCTION__, __LINE__, channelid, enable, payload_typeRED, payload_typeFEC);
     VIDEO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
     ViERTP_RTCP *rtp_rtcp = ViERTP_RTCP::GetInterface(m_vie);
     if (rtp_rtcp) {
@@ -4040,13 +4055,14 @@ int ECMedia_set_FEC_status_video(const int channelid,
     }
     
 }
-
+//add trace by wx
 int ECMedia_set_HybridNACKFEC_status_video(const int channelid,
                                            const bool enable,
                                            const unsigned char payload_typeRED,
                                            const unsigned char payload_typeFEC)
 {
-    WEBRTC_TRACE(kTraceApiCall, kTraceMediaApi, 0, "%s:%d begins... and channelid: %d", __FUNCTION__, __LINE__, channelid);
+    WEBRTC_TRACE(kTraceApiCall, kTraceMediaApi, 0, "%s:%d begins... and channelid: %d enable: %s payload_typeRED: %s payload_typeFEC: %s",
+		__FUNCTION__, __LINE__, channelid, enable, payload_typeRED, payload_typeFEC);
     VIDEO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
     ViERTP_RTCP *rtp_rtcp = ViERTP_RTCP::GetInterface(m_vie);
     if (rtp_rtcp) {
@@ -4066,10 +4082,10 @@ int ECMedia_set_HybridNACKFEC_status_video(const int channelid,
     }
     
 }
-
+//add trace by wx
 int ECMedia_set_RTCP_status_video(int channelid, int mode)
 {
-    WEBRTC_TRACE(kTraceApiCall, kTraceMediaApi, 0, "%s:%d begins... and channelid: %d", __FUNCTION__, __LINE__, channelid);
+    WEBRTC_TRACE(kTraceApiCall, kTraceMediaApi, 0, "%s:%d begins... and channelid: %d mode: %d", __FUNCTION__, __LINE__, channelid,mode);
     VIDEO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
     ViERTP_RTCP *rtp_rtcp = ViERTP_RTCP::GetInterface(m_vie);
     if (rtp_rtcp) {
@@ -4088,9 +4104,11 @@ int ECMedia_set_RTCP_status_video(int channelid, int mode)
         return -99;
     }
 }
+//add trace by wx
 int ECMedia_setVideoConferenceFlag(int channel,const char *selfSipNo ,const char *sipNo, const char *conferenceNo, const char *confPasswd, int port, const char *ip)
 {
-    WEBRTC_TRACE(kTraceApiCall, kTraceMediaApi, 0, "%s:%d begins... and channelid: %d", __FUNCTION__, __LINE__, channel);
+    WEBRTC_TRACE(kTraceApiCall, kTraceMediaApi, 0, "%s:%d begins... and channelid: %d sipNo: %s conferenceNo: %s confPasswd: %s  port: %d ip: %s", 
+		__FUNCTION__, __LINE__, channel, sipNo, conferenceNo, confPasswd, port,ip);
     VIDEO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
     ViENetwork *network = ViENetwork::GetInterface(m_vie);
     if (network) {
@@ -4127,10 +4145,10 @@ int ECMedia_send_key_frame(int channel)
         return -99;
     }
 }
-
+//add trace by wx
 int ECMedia_video_EnableIPV6(int channel, bool flag)
 {
-    WEBRTC_TRACE(kTraceApiCall, kTraceMediaApi, 0, "%s:%d begins... and channelid: %d", __FUNCTION__, __LINE__, channel);
+    WEBRTC_TRACE(kTraceApiCall, kTraceMediaApi, 0, "%s:%d begins... and channelid: %d flag: %s", __FUNCTION__, __LINE__, channel,flag?"Yes":"No");
     VIDEO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
     ViENetwork *network = ViENetwork::GetInterface(m_vie);
     if (network) {
@@ -4814,9 +4832,10 @@ int ECMedia_set_VAD_status(int channelid, VadModes mode, bool dtx_enabled)
 
 
 //CAUTION: noNetwork/wifi/other
+//add trace by wx
 int ECMedia_set_network_type(int audio_channelid, int video_channelid, const char *type)
 {
-    WEBRTC_TRACE(kTraceApiCall, kTraceMediaApi, 0, "%s:%d begins..., audio_channelid: %d, video_channelid: %d ", __FUNCTION__, __LINE__, audio_channelid, video_channelid);
+    WEBRTC_TRACE(kTraceApiCall, kTraceMediaApi, 0, "%s:%d begins..., audio_channelid: %d, video_channelid: %d type: %s", __FUNCTION__, __LINE__, audio_channelid, video_channelid,type);
     if (!type || strcmp(type, "noNetwork")==0) {
         WEBRTC_TRACE(kTraceError, kTraceMediaApi, 0, "%s:%d invalid network type", __FUNCTION__, __LINE__);
         WEBRTC_TRACE(kTraceApiCall, kTraceMediaApi, 0, "%s:%d ends...", __FUNCTION__, __LINE__);
@@ -4893,35 +4912,43 @@ int ECMedia_IsIPv6Enabled(int channel)
 }
 int ECMedia_AmrNBCreateEnc()
 {
+	WEBRTC_TRACE(kTraceApiCall, kTraceMediaApi, 0, "%s:%d begins...", __FUNCTION__, __LINE__);
     return AmrNBCreateEnc();
 }
 int ECMedia_AmrNBCreateDec()
 {
+	WEBRTC_TRACE(kTraceApiCall, kTraceMediaApi, 0, "%s:%d begins...", __FUNCTION__, __LINE__);
     return AmrNBCreateDec();
 }
 int ECMedia_AmrNBFreeEnc()
 {
+	WEBRTC_TRACE(kTraceApiCall, kTraceMediaApi, 0, "%s:%d begins...", __FUNCTION__, __LINE__);
     return AmrNBFreeEnc();
 }
 int ECMedia_AmrNBFreeDec()
 {
+	WEBRTC_TRACE(kTraceApiCall, kTraceMediaApi, 0, "%s:%d begins...", __FUNCTION__, __LINE__);
     return AmrNBFreeDec();
 }
 int ECMedia_AmrNBEncode(short* input, short len, short*output, short mode)
 {
+	WEBRTC_TRACE(kTraceApiCall, kTraceMediaApi, 0, "%s:%d begins...", __FUNCTION__, __LINE__);
     return AmrNBEncode(input, len, output, mode);
 }
 int ECMedia_AmrNBEncoderInit(short dtxMode)
 {
+	WEBRTC_TRACE(kTraceApiCall, kTraceMediaApi, 0, "%s:%d begins...", __FUNCTION__, __LINE__);
     return AmrNBEncoderInit(dtxMode);
 }
 int ECMedia_AmrNBDecode(short* encoded, int len, short* decoded)
 {
+	WEBRTC_TRACE(kTraceApiCall, kTraceMediaApi, 0, "%s:%d begins...", __FUNCTION__, __LINE__);
     return AmrNBDecode(encoded, len, decoded);
 }
 
 int ECMedia_AmrNBVersion(char *versionStr, short len)
 {
+	WEBRTC_TRACE(kTraceApiCall, kTraceMediaApi, 0, "%s:%d begins...", __FUNCTION__, __LINE__);
     return AmrNBVersion(versionStr, len);
 }
 
@@ -5036,10 +5063,10 @@ int ECMedia_disable_srtp_recv_audio(int channel)
     WEBRTC_TRACE(kTraceApiCall, kTraceMediaApi, 0, "%s:%d ends...", __FUNCTION__, __LINE__);
     return -1;
 }
-
+//add trace by wx
 int ECMedia_start_record_playout(int channel, char *filename)
 {
-    WEBRTC_TRACE(kTraceApiCall, kTraceMediaApi, 0, "%s:%d begins..., channelid: %d", __FUNCTION__, __LINE__, channel);
+    WEBRTC_TRACE(kTraceApiCall, kTraceMediaApi, 0, "%s:%d begins..., channelid: %d filename: %s", __FUNCTION__, __LINE__, channel,filename);
     AUDIO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
     VoEFile *file = VoEFile::GetInterface(m_voe);
     if (file) {
@@ -5072,10 +5099,10 @@ int ECMedia_stop_record_playout(int channel)
     WEBRTC_TRACE(kTraceError, kTraceMediaApi, 0, "%s:%d get VoEFile failed", __FUNCTION__, __LINE__);
     return -1;
 }
-
+//add trace by wx
 int ECMedia_start_record_microphone(char *filename)
 {
-    WEBRTC_TRACE(kTraceApiCall, kTraceMediaApi, 0, "%s:%d begins...", __FUNCTION__, __LINE__);
+    WEBRTC_TRACE(kTraceApiCall, kTraceMediaApi, 0, "%s:%d begins...filename: %s", __FUNCTION__, __LINE__, filename);
     AUDIO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
     VoEFile *file = VoEFile::GetInterface(m_voe);
     if (file) {
@@ -5110,10 +5137,10 @@ int ECMedia_stop_record_microphone()
     WEBRTC_TRACE(kTraceApiCall, kTraceMediaApi, 0, "%s:%d ends...", __FUNCTION__, __LINE__);
     return -1;
 }
-
+//add trace by wx
 int ECMedia_start_record_send_voice(char *filename)
 {
-    WEBRTC_TRACE(kTraceApiCall, kTraceMediaApi, 0, "%s:%d begins...", __FUNCTION__, __LINE__);
+    WEBRTC_TRACE(kTraceApiCall, kTraceMediaApi, 0, "%s:%d begins...filename: %s", __FUNCTION__, __LINE__,filename);
     AUDIO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
     VoEFile *file = VoEFile::GetInterface(m_voe);
     if (file) {
@@ -5156,7 +5183,6 @@ int ECMedia_set_CaptureDeviceID(int videoCapDevId)
     WEBRTC_TRACE(kTraceApiCall, kTraceMediaApi, 0, "%s:%d ends...",__FUNCTION__, __LINE__);
     return 0;
 }
-
 int ECMedia_Check_Record_Permission(bool &enabled) {
     WEBRTC_TRACE(kTraceApiCall, kTraceMediaApi, 0, "%s:%d begins...",__FUNCTION__, __LINE__);
     AUDIO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
@@ -5178,9 +5204,10 @@ int ECMedia_Check_Record_Permission(bool &enabled) {
     }
 }
 #ifdef VIDEO_ENABLED
+//add trace by wx
 ECMEDIA_API int ECMedia_setBeautyFace(int deviceid, bool enable)
 {
-    WEBRTC_TRACE(kTraceApiCall, kTraceMediaApi, 0, "%s:%d begins... ", __FUNCTION__, __LINE__);
+    WEBRTC_TRACE(kTraceApiCall, kTraceMediaApi, 0, "%s:%d begins... deviceid: %d enable: %s", __FUNCTION__, __LINE__, deviceid, enable?"Yes":"No");
     ViECapture *capture = ViECapture::GetInterface(m_vie);
     if (capture) {
         int ret = capture->setBeautyFace(deviceid, enable);
@@ -5397,7 +5424,7 @@ int ECMedia_get_window_list(int desktop_captureid, WindowShare **windowList)
 
 bool ECMedia_select_screen(int desktop_captureid, ScreenID screeninfo)
 {
-    WEBRTC_TRACE(kTraceApiCall, kTraceMediaApi, 0, "%s:%d begins... captureid: %d", __FUNCTION__, __LINE__, desktop_captureid);
+    WEBRTC_TRACE(kTraceApiCall, kTraceMediaApi, 0, "%s:%d begins... captureid: %d ScreenID: %d", __FUNCTION__, __LINE__, desktop_captureid, screeninfo);
     VIDEO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
     ViEDesktopShare *vie_desktopshare = ViEDesktopShare::GetInterface(m_vie);
     if (vie_desktopshare) {
@@ -5416,10 +5443,10 @@ bool ECMedia_select_screen(int desktop_captureid, ScreenID screeninfo)
         return false;
     }
 }
-
+//add trace by wx
 bool ECMedia_select_window(int desktop_captureid, WindowID windowinfo)
 {
-    WEBRTC_TRACE(kTraceApiCall, kTraceMediaApi, 0, "%s:%d begins... desktop_captureid: %d", __FUNCTION__, __LINE__, desktop_captureid);
+    WEBRTC_TRACE(kTraceApiCall, kTraceMediaApi, 0, "%s:%d begins... desktop_captureid: %d WindowID: %d", __FUNCTION__, __LINE__, desktop_captureid, windowinfo);
     VIDEO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
     ViEDesktopShare *vie_desktopshare = ViEDesktopShare::GetInterface(m_vie);
     if (vie_desktopshare) {
@@ -5522,9 +5549,10 @@ int ECMedia_set_desktop_share_window_change_cb(int desktop_captureid, int channe
         return -99;
     }
 }
+//add trace by wx
 int ECmedia_set_shield_mosaic(int video_channel, bool flag)
 {
-    WEBRTC_TRACE(kTraceApiCall, kTraceMediaApi, 0, "%s:%d begins..., video_channel: %d", __FUNCTION__, __LINE__, video_channel);
+    WEBRTC_TRACE(kTraceApiCall, kTraceMediaApi, 0, "%s:%d begins..., video_channel: %d flag: %s", __FUNCTION__, __LINE__, video_channel,flag?"Yes":"No");
     VIDEO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
     ViENetwork *network = ViENetwork::GetInterface(m_vie);
     if (network) {
@@ -5659,10 +5687,11 @@ int ECMedia_setVideoPreviewViewer(void *handle, void *viewer) {
 #endif
     return -1;
 }
-
+//add trace by wx at 2019.11.8
 int ECMedia_ConfigLiveVideoStream(void *handle, LiveVideoStreamConfig config)
 {
-    WEBRTC_TRACE(kTraceApiCall, kTraceMediaApi, 0, "%s:%d begins...", __FUNCTION__, __LINE__);
+    WEBRTC_TRACE(kTraceApiCall, kTraceMediaApi, 0, "%s:%d begins...LiveVideoStreamConfiginfo(fps:%d auto_bitrate:%s camera_index:%d frmae_degree:%d resolution:%d)",
+		__FUNCTION__, __LINE__,config._fps,config._auto_bitrate?"Yes":"No",config._camera_index,(int)config._frmae_degree,(int)config._resolution);
 #ifdef VIDEO_ENABLED
     if(handle) {
         ECLiveEngine *engine = (ECLiveEngine*)handle;
@@ -5677,9 +5706,9 @@ int ECMedia_ConfigLiveVideoStream(void *handle, LiveVideoStreamConfig config)
     WEBRTC_TRACE(kTraceApiCall, kTraceMediaApi, 0, "%s:%d ends...", __FUNCTION__, __LINE__);
     return -1;
 }
-
+//add trace by wx at 2019.11.8
 int ECMedia_setLiveVideoFrameDegree(void *handle, ECLiveFrameDegree degree) {
-    WEBRTC_TRACE(kTraceApiCall, kTraceMediaApi, 0, "%s:%d begins...", __FUNCTION__, __LINE__);
+    WEBRTC_TRACE(kTraceApiCall, kTraceMediaApi, 0, "%s:%d begins...ECLiveFrameDegree:%d", __FUNCTION__, __LINE__,(int)degree);
 #ifdef VIDEO_ENABLED
     if(handle) {
         ECLiveEngine *engine = (ECLiveEngine*)handle;
@@ -5694,9 +5723,9 @@ int ECMedia_setLiveVideoFrameDegree(void *handle, ECLiveFrameDegree degree) {
     return -1;
 #endif
 }
-
+//add trace by wx at 2019.11.08
 int ECMedia_SwitchLiveCamera(void *handle, int camera_index) {
-    WEBRTC_TRACE(kTraceApiCall, kTraceMediaApi, 0, "%s:%d begins...", __FUNCTION__, __LINE__);
+    WEBRTC_TRACE(kTraceApiCall, kTraceMediaApi, 0, "%s:%d begins...camera_index:%d", __FUNCTION__, __LINE__, camera_index);
 #ifdef VIDEO_ENABLED
     if(handle) {
         ECLiveEngine *engine = (ECLiveEngine*)handle;
@@ -5714,9 +5743,10 @@ int ECMedia_SwitchLiveCamera(void *handle, int camera_index) {
 }
 
 // push stream
+//add trace by wx at 2019.11.08
 int ECMedia_pushLiveStream(void *handle, const char *url, ECLiveStreamNetworkStatusCallBack callback)
 {
-    WEBRTC_TRACE(kTraceApiCall, kTraceMediaApi, 0, "%s:%d begins...", __FUNCTION__, __LINE__);
+    WEBRTC_TRACE(kTraceApiCall, kTraceMediaApi, 0, "%s:%d begins...url=%s", __FUNCTION__, __LINE__,url);
 #ifdef VIDEO_ENABLED
     if(handle) {
         ECLiveEngine *engine = (ECLiveEngine*)handle;
@@ -5734,10 +5764,10 @@ int ECMedia_pushLiveStream(void *handle, const char *url, ECLiveStreamNetworkSta
     WEBRTC_TRACE(kTraceApiCall, kTraceMediaApi, 0, "%s:%d ends...", __FUNCTION__, __LINE__);
     return -1;
 }
-
+////add trace by wx at 2019.11.08
 int ECMedia_playLiveStream(void *handle, const char * url, ECLiveStreamNetworkStatusCallBack callback)
 {
-    WEBRTC_TRACE(kTraceApiCall, kTraceMediaApi, 0, "%s:%d begins...", __FUNCTION__, __LINE__);
+    WEBRTC_TRACE(kTraceApiCall, kTraceMediaApi, 0, "%s:%d begins...url=%s", __FUNCTION__, __LINE__,url);
 #ifdef VIDEO_ENABLED
     int ret = -1;
     if(handle) {
@@ -5841,12 +5871,18 @@ ECMEDIA_API int ECMedia_SelectShareWindow(void *handle, int type, int id)
     return 0;
 }
 /********************* ec live stream api end ****************/
-
+//add trace by wx at 2019.11.08
 ECMEDIA_API int  ECMedia_startRecordLocalMedia(const char *fileName, void *localview)
 {
     
 #ifdef VIDEO_ENABLED
     WEBRTC_TRACE(kTraceApiCall, kTraceMediaApi, 0, "%s:%d begins... ", __FUNCTION__, __LINE__);
+	if (!fileName) {
+		WEBRTC_TRACE(kTraceError, kTraceMediaApi, 0, "%s:%d fileName is NULL", __FUNCTION__, __LINE__);
+		WEBRTC_TRACE(kTraceApiCall, kTraceMediaApi, 0, "%s:%d ends...", __FUNCTION__, __LINE__);
+		return -1;
+	}
+	WEBRTC_TRACE(kTraceApiCall, kTraceMediaApi, 0, "%s:%d fileName is %s ", __FUNCTION__, __LINE__,fileName);
     if (!g_recordLocal) {
         g_recordLocal = new RecordLocal();
         if (!g_recordLocal) {
@@ -5936,11 +5972,11 @@ ECMEDIA_API int ECMedia_setAudioRed(int channelid, bool enable, int payloadType)
     }
     
 }
-
+//add trace by wx at 2019.11.08
 ECMEDIA_API int ECMedia_audio_enable_magic_sound(int channelid, bool is_enable)
 {
-    WEBRTC_TRACE(kTraceApiCall, kTraceMediaApi, 0, "%s:%d begins... channelid: %d",
-                 __FUNCTION__, __LINE__, channelid);
+    WEBRTC_TRACE(kTraceApiCall, kTraceMediaApi, 0, "%s:%d begins... channelid: %d enable:%s",
+                 __FUNCTION__, __LINE__, channelid,is_enable?"Yes":"No");
     VoEBase *base = VoEBase::GetInterface(m_voe);
     if (base) {
         int ret = base->enableSoundTouch(channelid, is_enable);
@@ -6041,11 +6077,11 @@ ECMEDIA_API int ECMedia_audio_set_microphone_gain(int channelid, float gain)
         return -99;
     }
 }
-
+//add trace by wx at 2019.11.08
 int ECMedia_video_set_mix_mediastream(int channel, bool enable, char *mixture, unsigned char version)
 {
 #ifdef VIDEO_ENABLED
-    WEBRTC_TRACE(kTraceApiCall, kTraceMediaApi, 0, "%s:%d begins...,channelid:%d ", __FUNCTION__, __LINE__, channel);
+    WEBRTC_TRACE(kTraceApiCall, kTraceMediaApi, 0, "%s:%d begins...,channelid:%d enable:%s", __FUNCTION__, __LINE__, channel,enable?"Yes":"No");
     VIDEO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
     ViENetwork *network = ViENetwork::GetInterface(m_vie);
     if (network) {
@@ -6105,15 +6141,25 @@ int ECMedia_releaseAll(){
 #endif
     return -1;
 }
-
+//add TRACE by wx 2019.11.7
 bool ECMedia_StartDesktopShareConnect(DesktopShareConnectData* pConnectData)
 {
+	WEBRTC_TRACE(kTraceApiCall, kTraceMediaApi, 0, "%s:%d begins... ", __FUNCTION__, __LINE__);
 #ifdef VIDEO_ENABLED
+	VIDEO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
 	if (!pConnectData)
 	{
+		WEBRTC_TRACE(kTraceError, kTraceMediaApi, 0, "%s:%d pConnectData is NULL!", __FUNCTION__, __LINE__);
+		WEBRTC_TRACE(kTraceApiCall, kTraceMediaApi, 0, "%s:%d ends...", __FUNCTION__, __LINE__);
 		return false;
 	}
-
+	WEBRTC_TRACE(kTraceApiCall, kTraceMediaApi, 0, "%s:%d pConnectDatainfo(nCodecPayloadType:%d bRtcpMultiplexing:%s nVideoSsrc:%d codecName:%s) ",
+		__FUNCTION__,
+		__LINE__, 
+		pConnectData->nCodecPayloadType,
+		pConnectData->bRtcpMultiplexing? "YES" : "NO",
+		pConnectData->nVideoSsrc,
+		pConnectData->codecName);
 	bool bRet = true;
 	int nCodecPayloadType = pConnectData->nCodecPayloadType;
 	bool bRtcpMultiplexing = pConnectData->bRtcpMultiplexing;
@@ -6248,6 +6294,10 @@ bool ECMedia_StartDesktopShareConnect(DesktopShareConnectData* pConnectData)
 		ECMedia_StopDesktopShareConnect(pConnectData);
 		pConnectData->nDesktopShareChannelId = -1;
 		pConnectData->nDesktopShareCaptureId = -1;
+		WEBRTC_TRACE(kTraceError, kTraceMediaApi, 0, "%s:%d ECMedia_StartDesktopShareConnect failed!", __FUNCTION__, __LINE__);
+		WEBRTC_TRACE(kTraceApiCall, kTraceMediaApi, 0, "%s:%d ends...", __FUNCTION__, __LINE__);
+	}else {
+		WEBRTC_TRACE(kTraceApiCall, kTraceMediaApi, 0, "%s:%d ends...", __FUNCTION__, __LINE__);
 	}
 
 	return bRet;
@@ -6255,15 +6305,25 @@ bool ECMedia_StartDesktopShareConnect(DesktopShareConnectData* pConnectData)
 #endif
 	return -1;
 }
-
+//add TRACE by wx at 2019.11.7
 bool ECMedia_StopDesktopShareConnect(DesktopShareConnectData* pConnectData)
 {
+	WEBRTC_TRACE(kTraceApiCall, kTraceMediaApi, 0, "%s:%d begins...", __FUNCTION__, __LINE__);
 #ifdef VIDEO_ENABLED
+	VIDEO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
 	if (!pConnectData || (pConnectData->nDesktopShareChannelId < 0 && pConnectData->nDesktopShareCaptureId < 0))
 	{
+		WEBRTC_TRACE(kTraceError, kTraceMediaApi, 0, "%s:%d ECMedia_StopDesktopShareConnect failed!", __FUNCTION__, __LINE__);
+		WEBRTC_TRACE(kTraceApiCall, kTraceMediaApi, 0, "%s:%d ends...", __FUNCTION__, __LINE__);
 		return false;
 	}
-
+	WEBRTC_TRACE(kTraceApiCall, kTraceMediaApi, 0, "%s:%d pConnectDatainfo(nCodecPayloadType:%d bRtcpMultiplexing:%s nVideoSsrc:%d codecName:%s) ",
+		__FUNCTION__,
+		__LINE__,
+		pConnectData->nCodecPayloadType,
+		pConnectData->bRtcpMultiplexing ? "YES" : "NO",
+		pConnectData->nVideoSsrc,
+		pConnectData->codecName);
 	bool bRet = true;
 	if (pConnectData->nDesktopShareCaptureId > 0)
 	{
@@ -6274,15 +6334,16 @@ bool ECMedia_StopDesktopShareConnect(DesktopShareConnectData* pConnectData)
 	bRet |= ECMedia_video_stop_receive(pConnectData->nDesktopShareChannelId) == 0;
 	bRet |= ECMedia_video_stop_send(pConnectData->nDesktopShareChannelId) == 0;
 	bRet |= ECMedia_delete_channel(pConnectData->nDesktopShareChannelId, true) == 0;
-
+	WEBRTC_TRACE(kTraceApiCall, kTraceMediaApi, 0, "%s:%d ends...", __FUNCTION__, __LINE__);
 	return bRet;
 #endif
+	WEBRTC_TRACE(kTraceApiCall, kTraceMediaApi, 0, "%s:%d ends...", __FUNCTION__, __LINE__);
 	return -1;
 }
 
 int ECMedia_set_local_offline_video_window(int deviceid, void *video_window)
 {
-	WEBRTC_TRACE(kTraceApiCall, kTraceMediaApi, 0, "%s:%d begins... deviceid:%d video_window:%p ", __FUNCTION__, __LINE__, deviceid, video_window);
+	WEBRTC_TRACE(kTraceApiCall, kTraceMediaApi, 0, "%s:%d begins... deviceid:%d video_window:0x%p ", __FUNCTION__, __LINE__, deviceid, video_window);
 #ifdef VIDEO_ENABLED
 	VIDEO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
 	ViECapture *capture = ViECapture::GetInterface(m_vie);
@@ -6307,8 +6368,8 @@ int ECMedia_set_local_offline_video_window(int deviceid, void *video_window)
 		}
 		else
 		{
-			return -1;
 			WEBRTC_TRACE(kTraceError, kTraceMediaApi, 0, "%s:%d render is null. ", __FUNCTION__, __LINE__);
+			return -1;
 		}
 #else
 		ret = capture->SetLocalVideoWindow(deviceid, video_window);
@@ -6326,10 +6387,12 @@ int ECMedia_set_local_offline_video_window(int deviceid, void *video_window)
 #endif
 	return -1;
 }
-
+//add Trace by wx at 2019.11.7
 bool ECMedia_GetVideoCodec(int nCodecPayloadType, yuntongxunwebrtc::VideoCodec *pCodecParams = nullptr, CameraCapability *pCapability = nullptr)
 {
+	WEBRTC_TRACE(kTraceApiCall, kTraceMediaApi, 0, "%s:%d begins...nCodecPayloadType:%d", __FUNCTION__, __LINE__, nCodecPayloadType);
 #ifdef VIDEO_ENABLED
+	VIDEO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
 	string strCodecName;
 	CameraCapability capability;
 	if (!pCapability)
@@ -6363,11 +6426,15 @@ bool ECMedia_GetVideoCodec(int nCodecPayloadType, yuntongxunwebrtc::VideoCodec *
 	int num_codec = ECMedia_num_of_supported_codecs_video();
 	if (num_codec <= 0)
 	{
+		WEBRTC_TRACE(kTraceError, kTraceMediaApi, 0, "%s:%d failed to get VideoCodec because of num_codec<0", __FUNCTION__, __LINE__);
+		WEBRTC_TRACE(kTraceApiCall, kTraceMediaApi, 0, "%s:%d ends... ", __FUNCTION__, __LINE__);
 		return false;
 	}
 	yuntongxunwebrtc::VideoCodec *codecArray = new yuntongxunwebrtc::VideoCodec[num_codec];
 	if (ECMedia_get_supported_codecs_video(codecArray) != 0)
 	{
+		WEBRTC_TRACE(kTraceError, kTraceMediaApi, 0, "%s:%d failed to get VideoCodec", __FUNCTION__, __LINE__);
+		WEBRTC_TRACE(kTraceApiCall, kTraceMediaApi, 0, "%s:%d ends... ", __FUNCTION__, __LINE__);
 		return false;
 	}
 	for (int i = 0; i < num_codec; i++) {
@@ -6392,19 +6459,28 @@ bool ECMedia_GetVideoCodec(int nCodecPayloadType, yuntongxunwebrtc::VideoCodec *
 	{
 		memcpy(pCodecParams, &codec_params, sizeof(codec_params));
 	}
+	WEBRTC_TRACE(kTraceApiCall, kTraceMediaApi, 0, "%s:%d ends... ", __FUNCTION__, __LINE__);
 	return true;
 #endif
+	WEBRTC_TRACE(kTraceApiCall, kTraceMediaApi, 0, "%s:%d ends... ", __FUNCTION__, __LINE__);
 	return false;
 }
-
+//add Trace by wx at 2019.11.7
 bool ECMedia_StopOfflineVideoConnect(int nChannelId, int nDeviceId)
 {
+	WEBRTC_TRACE(kTraceApiCall, kTraceMediaApi, 0, "%s:%d begins...", __FUNCTION__, __LINE__);
 #ifdef VIDEO_ENABLED
 	if (nChannelId < 0 || (nChannelId < 0 && nDeviceId < 0))
 	{
+		WEBRTC_TRACE(kTraceError, kTraceMediaApi, 0, "%s:%d failed to StopOfflineVideoConnect", __FUNCTION__, __LINE__);
+		WEBRTC_TRACE(kTraceApiCall, kTraceMediaApi, 0, "%s:%d ends...", __FUNCTION__, __LINE__);
 		return false;
 	}
-
+	WEBRTC_TRACE(kTraceApiCall, kTraceMediaApi, 0, "%s:%d  nChannelId:%d nDeviceId:%d ",
+		__FUNCTION__,
+		__LINE__,
+		nChannelId,
+		nDeviceId);
 	bool bRet = false;
 	if (nDeviceId > 0)
 	{
@@ -6414,20 +6490,31 @@ bool ECMedia_StopOfflineVideoConnect(int nChannelId, int nDeviceId)
 	bRet |= ECMedia_video_stop_receive(nChannelId) == 0;
 	bRet |= ECMedia_video_stop_send(nChannelId) == 0;
 	bRet |= ECMedia_delete_channel(nChannelId, true) == 0;
-
+	WEBRTC_TRACE(kTraceApiCall, kTraceMediaApi, 0, "%s:%d ends...", __FUNCTION__, __LINE__);
 	return bRet;
 #endif
+	WEBRTC_TRACE(kTraceApiCall, kTraceMediaApi, 0, "%s:%d ends...", __FUNCTION__, __LINE__);
 	return false;
 }
-
+//add Trace by wx at 2019.11.7
 bool ECMedia_StartOfflineVideoConnect(int *pChannelId, int *pCaptureId, void* pLocalWindow, int nCodecPayloadType, yuntongxunwebrtc::VideoCodec *pCodecParams)
 {
+	WEBRTC_TRACE(kTraceApiCall, kTraceMediaApi, 0, "%s:%d begins...", __FUNCTION__, __LINE__);
 #ifdef VIDEO_ENABLED
+	VIDEO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
 	if (!pChannelId || !pCaptureId)
 	{
+		WEBRTC_TRACE(kTraceError, kTraceMediaApi, 0, "%s:%d failed to StartOfflineVideoConnect", __FUNCTION__, __LINE__);
+		WEBRTC_TRACE(kTraceApiCall, kTraceMediaApi, 0, "%s:%d ends...", __FUNCTION__, __LINE__);
 		return false;
 	}
-
+	WEBRTC_TRACE(kTraceApiCall, kTraceMediaApi, 0, "%s:%d (*pChannelId:%d *pCaptureId:%d pLocalWindow:0x%p nCodecPayloadType:%d\
+		CodecParamsinfo(VideoCodecType:%d plName:%s plType:%d automode:%s wideth:%d height:%d startBitrate:%d maxBitrate:%d minBitrate:%d\
+        targetBitrate:%d maxFramerate:%s qpMax:%d numberOfSimulcastStreams:%s VideoCodecMode:%d  ))",
+		__FUNCTION__,__LINE__,*pChannelId,*pCaptureId,pLocalWindow,nCodecPayloadType,
+		pCodecParams->codecType, pCodecParams->plName, pCodecParams->plType, pCodecParams->automode?"Yes":"No", pCodecParams->width,
+		pCodecParams->height, pCodecParams->startBitrate, pCodecParams->maxBitrate, pCodecParams->minBitrate, pCodecParams->targetBitrate,
+		pCodecParams->maxFramerate, pCodecParams->qpMax, pCodecParams->numberOfSimulcastStreams, pCodecParams->mode);
 	int nCount = 0;
 	int nLocalVideoPort = 6778;
 	int nRemoteVideoPort = 8778;
@@ -6514,18 +6601,23 @@ bool ECMedia_StartOfflineVideoConnect(int *pChannelId, int *pCaptureId, void* pL
 
 	if (!bRet)
 	{
+		WEBRTC_TRACE(kTraceError, kTraceMediaApi, 0, "%s:%d failed to StartOfflineVideoConnect", __FUNCTION__, __LINE__);
 		ECMedia_StopOfflineVideoConnect(*pChannelId, *pCaptureId);
 	}
-
+	WEBRTC_TRACE(kTraceApiCall, kTraceMediaApi, 0, "%s:%d ends...", __FUNCTION__, __LINE__);
 	return bRet;
 #endif
+	WEBRTC_TRACE(kTraceApiCall, kTraceMediaApi, 0, "%s:%d ends...", __FUNCTION__, __LINE__);
 	return false;
 }
-
+//add Trace by wx at 2019.11.7
 bool ECMedia_StopOfflineAudioConnect(int nChannelId)
 {
+	WEBRTC_TRACE(kTraceApiCall, kTraceMediaApi, 0, "%s:%d begins...nChannelId:%d", __FUNCTION__, __LINE__, nChannelId);
 	if (nChannelId < 0)
 	{
+		WEBRTC_TRACE(kTraceError, kTraceMediaApi, 0, "%s:%d failed to StopOfflineAudioConnect", __FUNCTION__, __LINE__);
+		WEBRTC_TRACE(kTraceApiCall, kTraceMediaApi, 0, "%s:%d ends...", __FUNCTION__, __LINE__);
 		return -1;
 	}
 
@@ -6536,17 +6628,20 @@ bool ECMedia_StopOfflineAudioConnect(int nChannelId)
 	bRet |= ECMedia_audio_stop_receive(nChannelId) == 0;
 	bRet |= ECMedia_audio_stop_send(nChannelId) == 0;
 	bRet |= ECMedia_delete_channel(nChannelId, false) == 0;
-
+	WEBRTC_TRACE(kTraceApiCall, kTraceMediaApi, 0, "%s:%d ends...", __FUNCTION__, __LINE__);
 	return bRet;
 }
-
+//add Trace by wx at 2019.11.7
 bool ECMedia_StartOfflineAudioConnect(int *pChannelId)
 {
+	WEBRTC_TRACE(kTraceApiCall, kTraceMediaApi, 0, "%s:%d begins...", __FUNCTION__, __LINE__);
 	if (!pChannelId)
 	{
+		WEBRTC_TRACE(kTraceError, kTraceMediaApi, 0, "%s:%d failed to StartOfflineAudioConnect pChannelId=NULL", __FUNCTION__, __LINE__);
+		WEBRTC_TRACE(kTraceApiCall, kTraceMediaApi, 0, "%s:%d ends...", __FUNCTION__, __LINE__);
 		return false;
 	}
-
+	WEBRTC_TRACE(kTraceApiCall, kTraceMediaApi, 0, "%s:%d begins...*pChannelId=%d", __FUNCTION__, __LINE__, *pChannelId);
 	bool bRet = false;
 	int nLocalAudioPort = 5678;
 	int nRemoteAudioPort = 6789;
@@ -6566,15 +6661,29 @@ bool ECMedia_StartOfflineAudioConnect(int *pChannelId)
 
 	if (!bRet && *pChannelId >= 0)
 	{
+		WEBRTC_TRACE(kTraceError, kTraceMediaApi, 0, "%s:%d failed to StartOfflineAudioConnect", __FUNCTION__, __LINE__);
 		ECMedia_StopOfflineAudioConnect(*pChannelId);
 	}
-
+	WEBRTC_TRACE(kTraceApiCall, kTraceMediaApi, 0, "%s:%d ends...", __FUNCTION__, __LINE__);
 	return bRet;
 }
-
+//add Trace by wx at 2019.11.7
 bool ECMedia_Start_record_offline_video(int nVideoChannelId, int nCodecPayloadType, const char* pFilename, yuntongxunwebrtc::VideoCodec *pCodecParams = nullptr)
 {
+	if (!pFilename) {
+		WEBRTC_TRACE(kTraceError, kTraceMediaApi, 0, "%s:%d pFilename is NULL!", __FUNCTION__, __LINE__);
+		WEBRTC_TRACE(kTraceApiCall, kTraceMediaApi, 0, "%s:%d ends...", __FUNCTION__, __LINE__);
+		return false;
+	}
+	
+	WEBRTC_TRACE(kTraceApiCall, kTraceMediaApi, 0, "%s:%d begins...(nVideoChannelId:%d nCodecPayloadType:%d Filename:%s) ",
+		__FUNCTION__, 
+		__LINE__,
+		nVideoChannelId,
+		nCodecPayloadType,
+		*pFilename);
 #ifdef VIDEO_ENABLED
+	VIDEO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
 	CodecInst audio_codec;
 	int num_codec = ECMedia_num_of_supported_codecs_audio();
 	if (num_codec > 0)
@@ -6602,6 +6711,8 @@ bool ECMedia_Start_record_offline_video(int nVideoChannelId, int nCodecPayloadTy
 			{
 				if (!ECMedia_GetVideoCodec(nCodecPayloadType, &codec_params))
 				{
+					WEBRTC_TRACE(kTraceError, kTraceMediaApi, 0, "%s:%d failed to GetVideoCodec", __FUNCTION__, __LINE__);
+					WEBRTC_TRACE(kTraceApiCall, kTraceMediaApi, 0, "%s:%d ends...", __FUNCTION__, __LINE__);
 					return false;
 				}
 			}
@@ -6613,17 +6724,21 @@ bool ECMedia_Start_record_offline_video(int nVideoChannelId, int nCodecPayloadTy
 				if (file_record->StartRecordOutgoingVideo(nVideoChannelId, pFilename, AudioSource::MICROPHONE, audio_codec, codec_params) == 0)
 				{
 					file_record->Release();
+					WEBRTC_TRACE(kTraceApiCall, kTraceMediaApi, 0, "%s:%d ends...", __FUNCTION__, __LINE__);
 					return true;
 				}
 			}
+			WEBRTC_TRACE(kTraceError, kTraceMediaApi, 0, "%s:%d failed to GetViEFile", __FUNCTION__, __LINE__);
 		}
 	}
 #endif
+	WEBRTC_TRACE(kTraceApiCall, kTraceMediaApi, 0, "%s:%d ends...", __FUNCTION__, __LINE__);
 	return false;
 }
-
+//add Trace by wx at 2019.11.7
 bool ECMedia_Stop_record_offline_video(int nVideoChannelId)
 {
+	WEBRTC_TRACE(kTraceApiCall, kTraceMediaApi, 0, "%s:%d begins...(nVideoChannelId:%d)", __FUNCTION__, __LINE__,nVideoChannelId);
 #ifdef VIDEO_ENABLED
 	if (m_vie)
 	{
@@ -6633,43 +6748,72 @@ bool ECMedia_Stop_record_offline_video(int nVideoChannelId)
 			if (file_record->StopRecordOutgoingVideo(nVideoChannelId) == 0)
 			{
 				file_record->Release();
+				WEBRTC_TRACE(kTraceApiCall, kTraceMediaApi, 0, "%s:%d ends...", __FUNCTION__, __LINE__);
 				return true;
 			}
 		}
 	}
+	WEBRTC_TRACE(kTraceError, kTraceMediaApi, 0, "%s:%d failed to ECMedia_Stop_record_offline_video", __FUNCTION__, __LINE__);
 #endif
+	WEBRTC_TRACE(kTraceApiCall, kTraceMediaApi, 0, "%s:%d ends...", __FUNCTION__, __LINE__);
 	return false;
 }
-
+//add Trace by wx at 2019.11.7
 bool ECMedia_StartStoreLocalOfflineMediaToFile(int *pAudioChannelId, int *pVideoChannelId, int *pDeviceCaptureId, void *pLocalWindow, int nCodecPayloadType, const char* pFilename)
 {
+	if (!pFilename) {
+		WEBRTC_TRACE(kTraceError, kTraceMediaApi, 0, "%s:%d pFilename is NULL!", __FUNCTION__, __LINE__);
+		WEBRTC_TRACE(kTraceApiCall, kTraceMediaApi, 0, "%s:%d ends...", __FUNCTION__, __LINE__);
+		return false;
+	}
+	WEBRTC_TRACE(kTraceApiCall, kTraceMediaApi, 0, "%s:%d begins...(AudioChannelId:%d VideoChannelId:%d DeviceCaptureId:%d pLocalWindow:ox%p nCodecPayloadType:%d Filename:%s) ",
+		__FUNCTION__,
+		__LINE__,
+		*pAudioChannelId,
+		*pAudioChannelId,
+		*pDeviceCaptureId,
+		pLocalWindow,
+		nCodecPayloadType,
+		*pFilename);
 #ifdef VIDEO_ENABLED
+	VIDEO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
 	yuntongxunwebrtc::VideoCodec videoCodec;
 	if (ECMedia_StartOfflineAudioConnect(pAudioChannelId) && ECMedia_StartOfflineVideoConnect(pVideoChannelId, pDeviceCaptureId, pLocalWindow, nCodecPayloadType, &videoCodec))
 	{
 		if (ECMedia_start_record_local_video(*pAudioChannelId, *pVideoChannelId, pFilename) == 0)
 		{
+			WEBRTC_TRACE(kTraceApiCall, kTraceMediaApi, 0, "%s:%d ends...", __FUNCTION__, __LINE__);
 			return true;
 		}
 		else
 		{
 			ECMedia_StopOfflineAudioConnect(*pAudioChannelId);
 			ECMedia_StopOfflineVideoConnect(*pVideoChannelId, *pDeviceCaptureId);
+			WEBRTC_TRACE(kTraceError, kTraceMediaApi, 0, "%s:%d failed to ECMedia_Stop_record_offline_video", __FUNCTION__, __LINE__);
+			WEBRTC_TRACE(kTraceApiCall, kTraceMediaApi, 0, "%s:%d ends...", __FUNCTION__, __LINE__);
 		}
 	}
 #endif
 	return false;
 }
-
+//add Trace by wx at 2019.11.7
 bool ECMedia_StopStoreLocalOfflineMediaToFile(int nAudioChannelId, int nVideoChannelId, int nDeviceId)
 {
+	WEBRTC_TRACE(kTraceApiCall, kTraceMediaApi, 0, "%s:%d begins...(nAudioChannelId:%d nVideoChannelId:%d nDeviceId:%d) ",
+		__FUNCTION__,
+		__LINE__,
+		nAudioChannelId,
+		nVideoChannelId,
+		nDeviceId);
 #ifdef VIDEO_ENABLED
 	bool bOk = true;
 	bOk |= ECMedia_stop_record_local_video(nAudioChannelId, nVideoChannelId) == 0;
 	bOk |= ECMedia_StopOfflineAudioConnect(nAudioChannelId);
 	bOk |= ECMedia_StopOfflineVideoConnect(nVideoChannelId, nDeviceId);
+	WEBRTC_TRACE(kTraceApiCall, kTraceMediaApi, 0, "%s:%d ends...", __FUNCTION__, __LINE__);
 	return bOk;
 #else
+	WEBRTC_TRACE(kTraceApiCall, kTraceMediaApi, 0, "%s:%d ends...", __FUNCTION__, __LINE__);
 	return false;
 #endif
 }

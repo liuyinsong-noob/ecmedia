@@ -33,9 +33,6 @@
     <ClInclude Include="include\StunMessageCallBack.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="interface\ECMedia.h">
-      <Filter>interface</Filter>
-    </ClInclude>
     <ClInclude Include="include\CaptureScreen.h">
       <Filter>头文件</Filter>
     </ClInclude>
@@ -110,6 +107,9 @@
     </ClInclude>
     <ClInclude Include="source\ec_live_engine\srs-librtmp\srs_rtmp_io.hpp">
       <Filter>源文件\ec_live_engine\ec_srs_rtmp</Filter>
+    </ClInclude>
+    <ClInclude Include="interface\ECMedia.h">
+      <Filter>interface</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
