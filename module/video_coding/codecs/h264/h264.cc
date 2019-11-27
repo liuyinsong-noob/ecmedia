@@ -121,9 +121,9 @@ int H264Encoder::SetRates(uint32_t new_bitrate_kbit, uint32_t new_framerate,
         curparms.i_fps_num = new_framerate;
         curparms.i_fps_den = 1;
         //new_bitrate_kbit = new_bitrate_kbit*25/new_framerate;
-        curparms.rc.i_bitrate = new_bitrate_kbit;
-        curparms.rc.i_vbv_max_bitrate = new_bitrate_kbit;
-        curparms.rc.i_vbv_buffer_size = new_bitrate_kbit/new_framerate;
+		curparms.rc.i_bitrate = new_bitrate_kbit;
+		curparms.rc.i_vbv_max_bitrate = new_bitrate_kbit;
+		curparms.rc.i_vbv_buffer_size = new_bitrate_kbit*2;
 
         int retval = x264_encoder_reconfig(encoder_, &curparms);
         if (retval < 0)
@@ -153,13 +153,13 @@ int H264Encoder::InitEncode(const VideoCodec* inst,
       return retVal;
   }
 
-	SetX264EncodeParameters(param_, inst->mode, inst->codecType);
+  SetX264EncodeParameters(param_, inst->mode, inst->codecType);
   encoder_ =  x264_encoder_open( &param_);
   if (!encoder_) {
       return WEBRTC_VIDEO_CODEC_ERROR;
   }
 	
-	encoded_image_._size =  CalcBufferSize(yuntongxunwebrtc::kI420, codec_.width, codec_.height);
+  encoded_image_._size =  CalcBufferSize(yuntongxunwebrtc::kI420, codec_.width, codec_.height);
   encoded_image_._buffer = new uint8_t[encoded_image_._size];
   encoded_image_._length = 0;
   encoded_image_._completeFrame = false;
@@ -285,24 +285,18 @@ void H264Encoder::SetX264EncodeParameters(x264_param_t &params, VideoCodecMode m
   p_params->i_fps_num = current_frame_;
   p_params->i_fps_den=1;
   p_params->i_slice_max_size=500;
-  p_params->b_annexb=1; //already set by defaule:默认支持字节流格式，即包含nal起始码前缀0x00 00 00 01；
+  p_params->b_annexb=1; //a e:默认支持字节流格式，即包含nal起始码前缀0x00 00 00 01；
   
-  if (1){ //Default using CRF
-    p_params->i_level_idc = 40;  //编码复杂度
-    p_params->b_repeat_headers = true;
-  //  p_params->i_keyint_max = 50;
+	//Default using CRF
+	//p_params->i_level_idc = 40;  //编码复杂度
+	p_params->b_repeat_headers = true;
+	p_params->i_bframe = 0;
+	p_params->i_keyint_max = current_frame_ * 5;
 	p_params->rc.i_rc_method = X264_RC_ABR;
 	p_params->rc.i_bitrate = codec_.startBitrate;
-    p_params->rc.i_vbv_buffer_size = codec_.startBitrate/current_frame_;
+	p_params->rc.i_vbv_buffer_size = codec_.startBitrate*2;
 	p_params->rc.i_vbv_max_bitrate = codec_.startBitrate;
-  }else{
-    //p_params->i_level_idc = 40;  //编码复杂度
-    //p_params->b_intra_refresh = true;
-    p_params->b_repeat_headers = 1;
-    //p_params->i_keyint_max = 50;
-    p_params->rc.i_rc_method = X264_RC_ABR;
-    p_params->rc.i_vbv_buffer_size = (codec_.startBitrate/ current_frame_);
-  }
+
 
  /* if (codec_.mode == kScreensharing)
   {

@@ -289,7 +289,7 @@ void onRemoteVideoRatioChanged(const char *callid, int width, int height, bool i
 
 	if (g_dlgFullScreen)
 	{
-		CRect   temprect(0, 0, width, height);
+		CRect   temprect(0, 0, width*2, height*2);
 		g_dlgFullScreen->MoveWindow(&temprect, TRUE);
 		g_dlgFullScreen->ShowWindow(SW_SHOW);
 	}
@@ -371,7 +371,7 @@ CserphonetestDlg::CserphonetestDlg(CWnd* pParent /*=NULL*/)
 	m_SentResolution_height = 0;
 	m_videoPayloadeName = _T("H264");
 	m_audioPayloadName = _T("G729");
-	m_videoPT = 97;
+	m_videoPT = 96;
 	m_audioPT = 111;
 	m_localSSRC = 0;
 	m_remoteSSRC = 0;
@@ -659,7 +659,7 @@ BOOL CserphonetestDlg::OnInitDialog()
 
 	if (m_dlgFullScreen == NULL)
 	{
-		CRect   temprect(0,0,1440,900);
+		CRect   temprect(0,0,1,1);
 		m_dlgFullScreen = new CDlgFullScreen;
 		m_dlgFullScreen->Create(IDD_DIALOG_FULL_SCREEN, this);
 		m_dlgFullScreen->MoveWindow(&temprect, TRUE);
@@ -876,7 +876,7 @@ void CserphonetestDlg::OnBnClickedButton1()
 
 	if (m_dlgFullScreen == NULL)
 	{
-		CRect   temprect(0, 0, 1440, 900);
+		CRect   temprect(0, 0, 320, 240);
 		m_dlgFullScreen = new CDlgFullScreen;
 		m_dlgFullScreen->Create(IDD_DIALOG_FULL_SCREEN, this);
 		m_dlgFullScreen->MoveWindow(&temprect, TRUE);
@@ -1402,7 +1402,8 @@ void CserphonetestDlg::OnBnClickedButton25()
 	//	m_dlgFullScreen->MoveWindow(&temprect, TRUE);
 
 	//}
-	//m_dlgFullScreen->ShowWindow(SW_SHOW);
+	m_dlgFullScreen->ShowWindow(SW_SHOW);
+	g_dlgFullScreen = m_dlgFullScreen;
 
 	if (!strcmp(W2A(m_videoPayloadeName.GetBuffer(0)), "H264")||!strcmp(W2A(m_videoPayloadeName.GetBuffer(0)), "h264"))
 	{
@@ -1413,9 +1414,9 @@ void CserphonetestDlg::OnBnClickedButton25()
 	}
 
 	int index = m_encryptType.GetCurSel();
-	//int ret = PlayVideoFromRtpDump(localPort, ptName, payloadType, /*m_dlgFullScreen->GetSafeHwnd()*/lcwnd->GetSafeHwnd(), index, W2A(m_encryptionKey.GetBuffer(0)));
+	int ret = PlayVideoFromRtpDump(localPort, ptName, payloadType, m_dlgFullScreen->GetSafeHwnd(), index, W2A(m_encryptionKey.GetBuffer(0)));
 	//int ret = PlayVideoFromRtpDump(localPort, "VP8", 120, lcwnd->GetSafeHwnd(), index, W2A(m_encryptionKey.GetBuffer(0)));
-	int ret = PlayVideoFromRtpDump(localPort, "VP8", 120, m_dlgFullScreen->GetSafeHwnd(), index, W2A(m_encryptionKey.GetBuffer(0)));
+	//int ret = PlayVideoFromRtpDump(localPort, "VP8", 120, m_dlgFullScreen->GetSafeHwnd(), index, W2A(m_encryptionKey.GetBuffer(0)));
 
 
 }
