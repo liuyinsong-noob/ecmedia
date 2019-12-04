@@ -294,6 +294,15 @@ Channel::SendRtp(int channel, const uint8_t *data, size_t len, const PacketOptio
 	}
 
 	int backDataLen = 0;
+	int headerLength = 12;
+	RTPHeader header;
+	if (!rtp_header_parser_->Parse(bufferToSendPtr, bufferLength, &header)) {
+		WEBRTC_TRACE(yuntongxunwebrtc::kTraceDebug, yuntongxunwebrtc::kTraceVoice, _channelId,
+			"Incoming packet: invalid RTP header");
+		return -1;
+	}
+	headerLength = header.headerLength;
+
 //	if (_serviceCoreCallBack && _processDataFlag && bufferLength > 12) {
 //		if (NULL == this->_sendData) {
 //			this->_sendData = (void *)malloc(733);
@@ -306,16 +315,16 @@ Channel::SendRtp(int channel, const uint8_t *data, size_t len, const PacketOptio
 //		bufferLength = backDataLen+12;
 //	}
     
-    if (_audio_data_cb /*&& _processDataFlag*/ && bufferLength > 12) {
+    if (_audio_data_cb /*&& _processDataFlag*/ && bufferLength > headerLength) {
         if (NULL == this->_sendData) {
             this->_sendData = (void *)malloc(733);
             
         }
 //        typedef int (*onAudioData)(int channelid, const void *data, int inLen, void *outData, int &outLen, bool send);
-        _audio_data_cb(_channelId, bufferToSendPtr+12, (int)(bufferLength-12), (WebRtc_UWord8 *)this->_sendData+12, backDataLen, true);
-        memcpy(this->_sendData, bufferToSendPtr, 12);
+        _audio_data_cb(_channelId, bufferToSendPtr+ headerLength, (int)(bufferLength- headerLength), (WebRtc_UWord8 *)this->_sendData+ headerLength, backDataLen, true);
+        memcpy(this->_sendData, bufferToSendPtr, headerLength);
         bufferToSendPtr = (WebRtc_UWord8*)this->_sendData;
-        bufferLength = backDataLen+12;
+        bufferLength = backDataLen+ headerLength;
     }
     
     if (!_transportPtr) {
@@ -5375,15 +5384,30 @@ void
 		}
 	}
 
+	int headerlength = 12;
+	//---begin
+	const uint8_t* received_packet = reinterpret_cast<const uint8_t*>(rtpBufferPtr);
+	RTPHeader header;
+	if (!rtp_header_parser_->Parse(received_packet, rtpPacketLength, &header)) {
+		WEBRTC_TRACE(yuntongxunwebrtc::kTraceDebug, yuntongxunwebrtc::kTraceVoice, _channelId,
+			"Incoming packet: invalid RTP header");
+		return;
+	}
+	headerlength = header.headerLength;
+    //WEBRTC_TRACE(kTraceStateInfo, kTraceVoice,
+    //             VoEId(_instanceId,_channelId),
+    //             "seq %u, ssrc %u\n", header.sequenceNumber, header.ssrc);
+	LOG_COUNT_CONTINUIOUS_F(LS_INFO, 10, header.sequenceNumber) << "seq: " << header.sequenceNumber << ", ssrc: " << header.ssrc;
+
 	int backDataLen = 0;
-	if (_audio_data_cb /*&& _processDataFlag*/ && rtpBufferLength > 12) {
+	if (_audio_data_cb /*&& _processDataFlag*/ && rtpBufferLength > headerlength) {
 		if (NULL == this->_receiveData) {
 			this->_receiveData = (void *)malloc(733);
 		}
-		_audio_data_cb(_channelId, rtpBufferPtr+12, rtpBufferLength-12, (WebRtc_UWord8 *)this->_receiveData+12, backDataLen, false);
-		memcpy(this->_receiveData, rtpBufferPtr, 12);
+		_audio_data_cb(_channelId, rtpBufferPtr+ headerlength, rtpBufferLength- headerlength, (WebRtc_UWord8 *)this->_receiveData+ headerlength, backDataLen, false);
+		memcpy(this->_receiveData, rtpBufferPtr, headerlength);
 		rtpBufferPtr = (WebRtc_UWord8*)this->_receiveData;
-		rtpBufferLength = backDataLen+12;
+		rtpBufferLength = backDataLen+ headerlength;
 	}
 	
 	// Dump the RTP packet to a file (if RTP dump is enabled).
@@ -5395,20 +5419,6 @@ void
 //			"Channel::SendPacket() RTP dump to input file failed");
 	}
 
-	//---begin
-	const uint8_t* received_packet = reinterpret_cast<const uint8_t*>(rtpBufferPtr);
-	RTPHeader header;
-	/*if (!rtp_header_parser_->Parse(received_packet, rtpPacketLength, &header)) {
-		WEBRTC_TRACE(yuntongxunwebrtc::kTraceDebug, yuntongxunwebrtc::kTraceVoice, _channelId,
-			"Incoming packet: invalid RTP header");
-		return -1;
-	}*/
-
-	rtp_header_parser_->Parse(received_packet, rtpBufferLength, &header);
-    //WEBRTC_TRACE(kTraceStateInfo, kTraceVoice,
-    //             VoEId(_instanceId,_channelId),
-    //             "seq %u, ssrc %u\n", header.sequenceNumber, header.ssrc);
-	LOG_COUNT_CONTINUIOUS_F(LS_INFO, 10, header.sequenceNumber) << "seq: " << header.sequenceNumber << ", ssrc: " << header.ssrc;
     
     // audio loss rate, added by sean
     if (header.extension.hasLossRate) {
