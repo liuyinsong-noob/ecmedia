@@ -403,7 +403,7 @@ void StreamStatisticianImpl::LastReceiveTimeNtp(uint32_t* secs,
 bool StreamStatisticianImpl::IsRetransmitOfOldPacket(
     const RTPHeader& header, int64_t min_rtt) const {
   yuntongxunwebrtc::CritScope cs(&stream_lock_);
-  if (header.sequenceNumber <= received_seq_max_)
+  if (IsNewerSequenceNumber(header.sequenceNumber, received_seq_max_))
   {
 	  LOG_F(LS_INFO) << " header.sequenceNumber: " << header.sequenceNumber << " received_seq_max: " << received_seq_max_;
 	  return true;
