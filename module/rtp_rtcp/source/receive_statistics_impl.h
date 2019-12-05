@@ -57,8 +57,6 @@ class StreamStatisticianImpl : public StreamStatistician {
   void NotifyRtpCallback() LOCKS_EXCLUDED(stream_lock_);
   void NotifyRtcpCallback() LOCKS_EXCLUDED(stream_lock_);
 
-  bool IsTimeToRecalculateStatistics(int64_t interval_ms);
-
   Clock* const clock_;
   yuntongxunwebrtc::CriticalSection stream_lock_;
   RateStatistics incoming_bitrate_;

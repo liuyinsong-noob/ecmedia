@@ -248,12 +248,13 @@ bool StreamStatisticianImpl::GetStatistics(RtcpStatistics* statistics,
     //*statistics = CalculateRtcpStatistics();
 	int64_t curr_calculate_time_ms = clock_->TimeInMilliseconds();
 	int64_t calc_diff = curr_calculate_time_ms - last_calculate_time_ms_;
-	if (!IsTimeToRecalculateStatistics(2 * kStatisticsProcessIntervalMs))
+	if (calc_diff <= (2 * kStatisticsProcessIntervalMs))
 	{
 		*statistics = last_reported_statistics_;
 	}
 	else
 	{
+		last_calculate_time_ms_ = curr_calculate_time_ms;
 		*statistics = CalculateRtcpStatistics();
 		LOG_F(LS_INFO) << " statistics->fraction_lost: " << (statistics->fraction_lost * 100 / 255.0) << "% statistics->cumulative_lost: " << statistics->cumulative_lost << " current TimeInMilliseconds: " << curr_calculate_time_ms << " time interval for calc: " << calc_diff;
 	}
@@ -366,18 +367,6 @@ RtcpStatistics StreamStatisticianImpl::CalculateRtcpStatistics() {
   //LOG_F(LS_INFO) << " stats.fraction_lost: " << (stats.fraction_lost * 100 / 255.0) << "% stats.cumulative_lost: " << stats.cumulative_lost;
 
   return stats;
-}
-
-bool StreamStatisticianImpl::IsTimeToRecalculateStatistics(int64_t interval_ms)
-{
-	int64_t curr_calculate_time_ms = clock_->TimeInMilliseconds();
-	int64_t calc_diff = curr_calculate_time_ms - last_calculate_time_ms_;
-	if (calc_diff > interval_ms)
-	{
-		last_calculate_time_ms_ = curr_calculate_time_ms;
-		return true;
-	}
-	return false;
 }
 
 void StreamStatisticianImpl::GetDataCounters(
