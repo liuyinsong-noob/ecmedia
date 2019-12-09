@@ -473,7 +473,13 @@ enum TextureType
         _lastViewHeight = self.parentView.bounds.size.height;
         _parentScreenH = _lastViewHeight;
         _parentScreenW = _lastViewWidth;
-        self.frame = self.parentView.bounds;
+      dispatch_async(dispatch_get_main_queue(), ^{
+          @synchronized(self)
+          {
+            self.frame = self.parentView.bounds;
+          }
+      });
+      
       //  [self clearFrame];
     }
     
