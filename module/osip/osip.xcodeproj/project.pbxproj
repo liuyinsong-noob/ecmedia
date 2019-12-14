@@ -507,6 +507,7 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				English,
 				en,
 			);
 			mainGroup = 3F96FF1C15C9085E004FCC3F;
@@ -652,6 +653,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SYMROOT = ../../IOSProject/out/baselib;
+				VALID_ARCHS = "arm64 arm64e armv7 armv7s i386 x86_64";
 			};
 			name = Debug;
 		};
@@ -682,6 +684,7 @@
 				SKIP_INSTALL = YES;
 				SYMROOT = ../../IOSProject/out/baselib;
 				VALIDATE_PRODUCT = YES;
+				VALID_ARCHS = "arm64 arm64e armv7 armv7s i386 x86_64";
 			};
 			name = Release;
 		};

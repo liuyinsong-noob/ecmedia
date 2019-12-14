@@ -460,6 +460,7 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				English,
 				en,
 			);
 			mainGroup = 55A7510415C8CAB9001B246A;
@@ -700,7 +701,7 @@
 				SHARED_PRECOMPS_DIR = "$(CACHE_ROOT)/SharedPrecompiledHeaders";
 				SKIP_INSTALL = YES;
 				SYMROOT = build;
-				VALID_ARCHS = "armv7 arm64";
+				VALID_ARCHS = "armv7 arm64 i386 x86_64";
 			};
 			name = Debug;
 		};
@@ -784,7 +785,7 @@
 				SKIP_INSTALL = YES;
 				SYMROOT = build;
 				VALIDATE_PRODUCT = YES;
-				VALID_ARCHS = "armv7 arm64";
+				VALID_ARCHS = "armv7 arm64 i386 x86_64";
 			};
 			name = Release;
 		};

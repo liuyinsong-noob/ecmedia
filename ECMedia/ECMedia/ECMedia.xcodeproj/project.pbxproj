@@ -4153,7 +4153,7 @@
 				PROVISIONING_PROFILE = "583c75fa-c6d0-4347-bf3b-207c04539db7";
 				SKIP_INSTALL = YES;
 				STRIP_STYLE = debugging;
-				VALID_ARCHS = "arm64 armv7 armv7s";
+				VALID_ARCHS = "arm64 armv7 armv7s i386 x86_64";
 			};
 			name = Debug;
 		};
@@ -4233,7 +4233,7 @@
 				PROVISIONING_PROFILE = "583c75fa-c6d0-4347-bf3b-207c04539db7";
 				SKIP_INSTALL = YES;
 				STRIP_STYLE = debugging;
-				VALID_ARCHS = "arm64 armv7 armv7s";
+				VALID_ARCHS = "arm64 armv7 armv7s i386 x86_64";
 			};
 			name = Release;
 		};

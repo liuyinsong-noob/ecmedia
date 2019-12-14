@@ -349,6 +349,7 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				English,
 				en,
 			);
 			mainGroup = 050207E516FAB900008FBA62;
@@ -511,7 +512,7 @@
 				SKIP_INSTALL = YES;
 				STRIP_STYLE = "non-global";
 				VALIDATE_PRODUCT = YES;
-				VALID_ARCHS = "armv7 arm64";
+				VALID_ARCHS = "armv7 arm64 i386 x86_64";
 			};
 			name = Debug;
 		};
@@ -544,7 +545,7 @@
 				PRODUCT_NAME = ccpapisdk;
 				SKIP_INSTALL = YES;
 				STRIP_STYLE = "non-global";
-				VALID_ARCHS = "armv7 arm64";
+				VALID_ARCHS = "armv7 arm64 i386 x86_64";
 			};
 			name = Release;
 		};

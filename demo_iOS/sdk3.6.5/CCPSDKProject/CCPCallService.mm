@@ -4962,7 +4962,7 @@ char *OSTypeToStr(char *buf, OSType t)
     else
     {
         UIApplication *app=[UIApplication sharedApplication];
-        UIStatusBar *statusBar=[app valueForKey:@"statusBar"];
+        id statusBar=[app valueForKey:@"statusBar"];
         UIStatusBarForegroundView *foregroundView=[statusBar valueForKey:@"foregroundView"];
         NSArray *subviews=[foregroundView subviews];
         UIStatusBarDataNetworkItemView *dataNetworkItemView = nil;
