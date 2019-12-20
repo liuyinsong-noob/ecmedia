@@ -598,8 +598,8 @@ int32_t ViEChannel::SetSendCodec(const VideoCodec& video_codec,
 	  rtp_rtcp->SetSSRC(default_rtp_rtcp->SSRC());
       rtp_rtcp->RegisterRtcpStatisticsCallback(
           rtp_rtcp_->GetRtcpStatisticsCallback());
-      rtp_rtcp->RegisterSendChannelRtpStatisticsCallback(
-          rtp_rtcp_->GetSendChannelRtpStatisticsCallback());
+      //rtp_rtcp->RegisterSendChannelRtpStatisticsCallback(
+      //    rtp_rtcp_->GetSendChannelRtpStatisticsCallback());
 	  default_it++;
     }
     // |RegisterSimulcastRtpRtcpModules| resets all old weak pointers and old
@@ -1431,9 +1431,10 @@ int32_t ViEChannel::GetReceivedRtcpStatistics(uint16_t* fraction_lost,
 
 void ViEChannel::RegisterReceiveChannelRtcpStatisticsCallback(
     RtcpStatisticsCallback* callback) {
+    
   vie_receiver_.GetReceiveStatistics()->RegisterRtcpStatisticsCallback(
       callback);
-  rtp_rtcp_->RegisterRtcpStatisticsCallback(callback);
+  //rtp_rtcp_->RegisterRtcpStatisticsCallback(callback);
 }
 
 void ViEChannel::RegisterReceiveChannelRtcpPacketTypeCounterObserverCallback(yuntongxunwebrtc::RtcpPacketTypeCounterObserver *observer)
@@ -1527,7 +1528,7 @@ void ViEChannel::RegisterSendChannelRtpStatisticsCallback(
     for (std::list<RtpRtcp*>::iterator it = simulcast_rtp_rtcp_.begin();
          it != simulcast_rtp_rtcp_.end();
          it++) {
-      (*it)->RegisterSendChannelRtpStatisticsCallback(callback);
+      //(*it)->RegisterSendChannelRtpStatisticsCallback(callback);
     }
   }
 }
@@ -3500,14 +3501,11 @@ void ViEChannel::SetDefaultSimulcatRtpRtcp(std::list<RtpRtcp*> default_simulcast
     std::list<RtpRtcp*>::iterator it = default_simulcast_rtp_rtcp_.begin();
     while(it != default_simulcast_rtp_rtcp_.end())
     {
-        (*it)->RegisterRtcpStatisticsCallback(receive_statistics_proxy_.get());
-//        (*it)->RegisterRtcpPacketTypeCounterObserverCallback(receive_frame_count_observer_.get());
+        //(*it)->RegisterRtcpStatisticsCallback(receive_statistics_proxy_.get());
         
         it++;
     }
-    default_rtp_rtcp_->RegisterRtcpStatisticsCallback(receive_statistics_proxy_.get());
-//    default_rtp_rtcp_->RegisterRtcpPacketTypeCounterObserverCallback(receive_frame_count_observer_.get());
-    
+    //default_rtp_rtcp_->RegisterRtcpStatisticsCallback(receive_statistics_proxy_.get());
 }
 
 void ViEChannel::SetSsrcObserver(SsrcObserver* ssrcObserver) {

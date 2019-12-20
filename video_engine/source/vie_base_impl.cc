@@ -427,14 +427,15 @@ void ViEBaseImpl::RegisterSendStatisticsProxy(
     return;
   }
   ViEEncoder* vie_encoder = cs.Encoder(channel);
-    assert(vie_encoder);
+  assert(vie_encoder);
   
   vie_channel->RegisterReceiveRtcpPacketTypeCounterObserver(send_statistics_proxy);
   vie_channel->RegisterSendFrameCountObserver(send_statistics_proxy);
   vie_channel->RegisterSendSideDelayObserver(send_statistics_proxy);
-  //rtp/rtcp
+
   vie_channel->RegisterSendChannelRtpStatisticsCallback(send_statistics_proxy);
- // vie_channel->RegisterSendChannelRtcpStatisticsCallback(send_statistics_proxy);
+  vie_channel->RegisterSendChannelRtcpStatisticsCallback(send_statistics_proxy);
+    
   vie_channel->RegisterSendBitrateObserver(send_statistics_proxy);
 }
 

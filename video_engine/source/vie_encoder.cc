@@ -579,9 +579,9 @@ int32_t ViEEncoder::SetEncoder(const yuntongxunwebrtc::VideoCodec& video_codec) 
 		  if (rtp_rtcp->RegisterSendPayload(video_codec) != 0) {
 			  return -1;
 		  }
-		  
-		  rtp_rtcp->RegisterRtcpStatisticsCallback(
-			  rtp_rtcp->GetRtcpStatisticsCallback());
+
+		  //rtp_rtcp->RegisterRtcpStatisticsCallback(
+			//  rtp_rtcp->GetRtcpStatisticsCallback());
 		  rtp_rtcp->RegisterSendChannelRtpStatisticsCallback(
 			  rtp_rtcp->GetSendChannelRtpStatisticsCallback());
 	  }

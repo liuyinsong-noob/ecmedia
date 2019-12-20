@@ -698,11 +698,13 @@ VideoSendStream::Config SendStatisticsProxy::GetConfig() const
 
 VideoSendStream::StreamStats* SendStatisticsProxy::GetStreamStats(uint32_t ssrc)
 {
-	if (NumberOfSimulcastStreams() == 0) {
+    //not yet support simulcast statistics.hubin
+	//if (NumberOfSimulcastStreams() == 0) {
 		return &stats_.stream;
-	}
-	else 
-		return GetStatsEntry(false, ssrc);
+	//}
+    //else {
+    //    return GetStatsEntry(false, ssrc);
+    //}
 }
 
 #ifdef WIN32

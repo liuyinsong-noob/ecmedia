@@ -52,9 +52,9 @@ namespace yuntongxunwebrtc{
 	{
 		updateEvent_->Wait(100);
 		const int64_t now = clock_->TimeInMilliseconds();
-		const int64_t kUpdateIntervalMs = 1000; //1000ms¶¨Ê±Æ÷
+		const int64_t kUpdateIntervalMs = 1000; //1000msï¿½ï¿½Ê±ï¿½ï¿½
 		if (now >= last_process_time_ + kUpdateIntervalMs) {
-			//Í³¼Æ¸÷ÖÖ·¢ËÍÐÅÏ¢
+			//Í³ï¿½Æ¸ï¿½ï¿½Ö·ï¿½ï¿½ï¿½ï¿½ï¿½Ï¢
 			last_process_time_ = now;
 			CriticalSectionScoped lock(crit_.get());
 			UpdateStats();
@@ -66,6 +66,40 @@ namespace yuntongxunwebrtc{
 	{
 		CriticalSectionScoped lock(crit_.get());
 		timestamp = clock_->TimeInMilliseconds();
+        
+        WEBRTC_TRACE(kTraceStream, kTraceVoice, -1, "audio send: local_ssrc(%d) \n \
+            bytes_sent(%d) \n \
+            packets_sent(%d) \n \
+            packets_lost(%d) \n \
+            fraction_lost(%f) \n \
+            codec_name(%s) \n \
+            ext_seqnum(%d) \n \
+            jitter_ms(%d) \n \
+            rtt_ms(%d) \n \
+            audio_level(%d) \n \
+            aec_quality_min(%f) \n \
+            echo_delay_median_ms(%d) \n \
+            echo_delay_std_ms(%d) \n \
+            echo_return_loss(%d) \n \
+            echo_return_loss_enhancement(%d) \n \
+            typing_noise_detected(%d) \n",
+               audioSendStats_.local_ssrc,
+               audioSendStats_.bytes_sent,
+               audioSendStats_.packets_sent,
+               audioSendStats_.packets_lost,
+               audioSendStats_.fraction_lost,
+               audioSendStats_.codec_name.c_str(),
+               audioSendStats_.ext_seqnum,
+               audioSendStats_.jitter_ms,
+               audioSendStats_.rtt_ms,
+               audioSendStats_.audio_level,
+               audioSendStats_.aec_quality_min,
+               audioSendStats_.echo_delay_median_ms,
+               audioSendStats_.echo_delay_std_ms,
+               audioSendStats_.echo_return_loss,
+               audioSendStats_.echo_return_loss_enhancement,
+               audioSendStats_.typing_noise_detected);
+        
 		return audioSendStats_;
 	}
 

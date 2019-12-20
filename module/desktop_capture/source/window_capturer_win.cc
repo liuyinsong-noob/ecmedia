@@ -27,15 +27,69 @@ namespace {
 
 typedef HRESULT (WINAPI *DwmIsCompositionEnabledFunc)(BOOL* enabled);
 
+int GetWindowTextSafe(HWND hWnd, LPTSTR lpString, int nMaxCount)
+{
+	if (NULL == hWnd || FALSE == IsWindow(hWnd) || NULL == lpString || 0 == nMaxCount)
+	{
+		return GetWindowText(hWnd, lpString, nMaxCount);
+	}
+	DWORD dwHwndProcessID = 0;
+	DWORD dwHwndThreadID = 0;
+	dwHwndThreadID = GetWindowThreadProcessId(hWnd, &dwHwndProcessID);		//��ȡ���������Ľ��̺��߳�ID
+
+	if (dwHwndProcessID != GetCurrentProcessId())		//���ڽ��̲��ǵ�ǰ���ý���ʱ������ԭ������
+	{
+		return GetWindowText(hWnd, lpString, nMaxCount);
+	}
+
+	//���ڽ����ǵ�ǰ����ʱ��
+	if (dwHwndThreadID == GetCurrentThreadId())			//�����߳̾��ǵ�ǰ�����̣߳�����ԭ������
+	{
+		return GetWindowText(hWnd, lpString, nMaxCount);
+	}
+
+#ifndef _UNICODE
+	WCHAR *lpStringUnicode = new WCHAR[nMaxCount];
+	InternalGetWindowText(hWnd, lpStringUnicode, nMaxCount);
+	int size = WideCharToMultiByte(CP_ACP, 0, lpStringUnicode, -1, NULL, 0, NULL, NULL);
+	if (size <= nMaxCount)
+	{
+		size = WideCharToMultiByte(CP_ACP, 0, lpStringUnicode, -1, lpString, size, NULL, NULL);
+		if (NULL != lpStringUnicode)
+		{
+			delete[]lpStringUnicode;
+			lpStringUnicode = NULL;
+		}
+		return size;
+	}
+	if (NULL != lpStringUnicode)
+	{
+		delete[]lpStringUnicode;
+		lpStringUnicode = NULL;
+	}
+	return 0;
+
+#else
+	return InternalGetWindowText(hWnd, lpString, nMaxCount);
+#endif
+}
+
+
 BOOL CALLBACK WindowsEnumerationHandler(HWND hwnd, LPARAM param) {
+
   WindowCapturer::WindowList* list =
       reinterpret_cast<WindowCapturer::WindowList*>(param);
 
   // Skip windows that are invisible, have no title, or are owned,
   // unless they have the app window style set.
-  int len = GetWindowTextLength(hwnd);
+ // int len = GetWindowTextLength(hwnd);
+
+  const size_t kTitleLength = 500;
+  WCHAR window_title[kTitleLength];
+  int len = GetWindowTextSafe(hwnd, window_title, kTitleLength);
   HWND owner = GetWindow(hwnd, GW_OWNER);
   LONG exstyle = GetWindowLong(hwnd, GWL_EXSTYLE);
+
   if (len == 0  || !IsWindowVisible(hwnd) ||
       (owner && !(exstyle & WS_EX_APPWINDOW))) {
     return TRUE;
@@ -45,27 +99,29 @@ BOOL CALLBACK WindowsEnumerationHandler(HWND hwnd, LPARAM param) {
   const size_t kClassLength = 256;
   WCHAR class_name[kClassLength];
   GetClassName(hwnd, class_name, kClassLength);
+
   // Skip Program Manager window and the Start button. This is the same logic
   // that's used in Win32WindowPicker in libjingle. Consider filtering other
   // windows as well (e.g. toolbars).
-  if (wcscmp(class_name, L"Progman") == 0 || wcscmp(class_name, L"Button") == 0)
-    return TRUE;
-
+  if (wcscmp(class_name, L"Progman") == 0 || wcscmp(class_name, L"Button") == 0) {
+	  return TRUE;
+  }
+    
   WindowCapturer::Window window;
   window.id = reinterpret_cast<WindowCapturer::WindowId>(hwnd);
 
-  const size_t kTitleLength = 500;
-  WCHAR window_title[kTitleLength];
+  //const size_t kTitleLength = 500;
+  //WCHAR window_title[kTitleLength];
   // Truncate the title if it's longer than kTitleLength.
-  GetWindowText(hwnd, window_title, kTitleLength);
+  //GetWindowText(hwnd, window_title, kTitleLength);
+  //GetWindowTextSafe(hwnd, window_title, kTitleLength);
   window.title = yuntongxunwebrtc::ToUtf8(window_title);
 
   // Skip windows when we failed to convert the title or it is empty.
-  if (window.title.empty())
-    return TRUE;
-
+  if (window.title.empty()) {
+	  return TRUE;
+  }
   list->push_back(window);
-
   return TRUE;
 }
 
@@ -146,8 +202,10 @@ bool WindowCapturerWin::IsAeroEnabled() {
 bool WindowCapturerWin::GetWindowList(WindowList* windows) {
   WindowList result;
   LPARAM param = reinterpret_cast<LPARAM>(&result);
-  if (!EnumWindows(&WindowsEnumerationHandler, param))
-    return false;
+  if (!EnumWindows(&WindowsEnumerationHandler, param)) {
+	  return false;
+  }
+
   windows->swap(result);
   return true;
 }

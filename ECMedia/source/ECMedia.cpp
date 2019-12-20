@@ -286,6 +286,57 @@ void ECViECaptureObserver::NoPictureAlarm(const int capture_id, const CaptureAla
         m_callback(capture_id, alarm);
     }
 }
+
+//根据固定的策略，决定小流的分辨率
+void get_slave_video_resolution(int masterVideoWidth, int masterVideoHeight, int &slaveVideoWidth, int &slaveVideoHeight) {
+	/*
+	R_160_120 = 0,	//4:3
+	R_240_180,		//4:3
+	R_320_180,		//16:9
+	R_320_240,		//4:3
+	R_480_272,		//16:9
+	R_480_360,		//4:3
+	R_640_360,		//16:9
+	R_640_480,		//4:3
+	R_960_544,		//16:9
+	R_960_720,		//4:3
+	R_1280_720 = 10,//16:9
+	R_1280_960,		//4:3
+	R_1920_1080,	//16:9
+	R_1920_1440		//4:3
+	*/
+	int resolution = masterVideoWidth * masterVideoHeight;
+	if (resolution <= 480 * 360) {
+		slaveVideoWidth = slaveVideoHeight = 0;
+	}
+	else if (resolution == 640 * 360 || resolution == 960 * 554) {
+		slaveVideoWidth = 320;
+		slaveVideoHeight = 184;
+	}
+	else if (resolution == 640 * 480 || resolution == 960 * 720) {
+		slaveVideoWidth = 320;
+		slaveVideoHeight = 240;
+	}
+	else if (resolution == 1280 * 720 || resolution == 1920 * 1080) {
+		slaveVideoWidth = 480;
+		slaveVideoHeight = 272;
+	}
+	else if (resolution == 1280 * 920 || resolution == 1920 * 1440) {
+		slaveVideoWidth = 480;
+		slaveVideoHeight = 360;
+	}
+	else {
+		slaveVideoWidth = 320;
+        slaveVideoHeight = 240;
+	}
+	if (masterVideoWidth < masterVideoHeight) {
+		int tmpValue = slaveVideoWidth;
+		slaveVideoWidth = slaveVideoHeight;
+		slaveVideoHeight = tmpValue;
+	}
+	return;
+}
+
 #endif
 
 yuntongxunwebrtc::VoiceEngine* m_voe = NULL;
@@ -3751,14 +3802,14 @@ static void ECMedia_reset_send_codecinfo(VideoCodec& videoCodec)
       if (0 != videoCodec.height % 160 || 0 != videoCodec.width % 90) {
         videoCodec.width = scale * 90;
         videoCodec.height = scale * 160;
-      }
+	  }
     }
     else {
       scale = videoCodec.width / 160;
       if (0 != videoCodec.width % 160 || 0 != videoCodec.height % 90) {
         videoCodec.width = scale * 160;
         videoCodec.height = scale * 90;
-      }
+	}
     }
 #endif
   }
@@ -3769,10 +3820,17 @@ static void ECMedia_reset_send_codecinfo(VideoCodec& videoCodec)
 	if (videoCodec.height % 8)
 		videoCodec.height = (videoCodec.height / 8 + 1) * 8;
 	
+	if (videoCodec.numberOfSimulcastStreams > 1) {
+		int slaveW, slaveH;
+		get_slave_video_resolution(videoCodec.width, videoCodec.height, slaveW, slaveH);
+		videoCodec.simulcastStream[0].width = slaveW;
+		videoCodec.simulcastStream[0].height = slaveH;
+	}
+
 	if (videoCodec.codecType == kVideoCodecH264) {
 		videoCodec.codecType = kVideoCodecH264HIGH;
 	}
-  
+
   if (!videoCodec.manualMode){
     if (kVideoCodecH264HIGH == videoCodec.codecType) {
       switch (scale)
@@ -3799,8 +3857,8 @@ static void ECMedia_reset_send_codecinfo(VideoCodec& videoCodec)
 }
 int ECMedia_set_send_codec_video(int channelid, VideoCodec& videoCodec)
 {
-	WEBRTC_TRACE(kTraceApiCall, kTraceMediaApi, 0, "%s:%d begins..., channelid:%d videoCodec(width:%d height:%d pltype:%d plname:%s, startBitrate:%d, maxBitrate:%d, minBitrate:%d)",
-		__FUNCTION__, __LINE__, channelid, videoCodec.width, videoCodec.height, videoCodec.plType, videoCodec.plName, videoCodec.startBitrate, videoCodec.maxBitrate, videoCodec.minBitrate);
+	WEBRTC_TRACE(kTraceApiCall, kTraceMediaApi, 0, "%s:%d begins..., channelid:%d videoCodec(width:%d height:%d pltype:%d plname:%s, startBitrate:%d, maxBitrate:%d, minBitrate:%d, numberOfSimulcastStreams:%d)",
+		__FUNCTION__, __LINE__, channelid, videoCodec.width, videoCodec.height, videoCodec.plType, videoCodec.plName, videoCodec.startBitrate, videoCodec.maxBitrate, videoCodec.minBitrate, videoCodec.numberOfSimulcastStreams);
     if (videoCodec.width == 0 || videoCodec.height == 0) {
         WEBRTC_TRACE(kTraceError, kTraceMediaApi, 0, "%s:%d invalid param width or height", __FUNCTION__, __LINE__);
         WEBRTC_TRACE(kTraceApiCall, kTraceMediaApi, 0, "%s:%d ends...", __FUNCTION__, __LINE__);
@@ -3810,8 +3868,8 @@ int ECMedia_set_send_codec_video(int channelid, VideoCodec& videoCodec)
   
   ECMedia_reset_send_codecinfo(videoCodec);
 
-  WEBRTC_TRACE(kTraceApiCall, kTraceMediaApi, 0, "%s:%d begins..., channelid:%d videoCodec(width:%d height:%d pltype:%d plname:%s, startBitrate:%d, maxBitrate:%d, minBitrate:%d)",
-               __FUNCTION__, __LINE__, channelid, videoCodec.width,videoCodec.height, videoCodec.plType,videoCodec.plName, videoCodec.startBitrate,videoCodec.maxBitrate, videoCodec.minBitrate);
+  WEBRTC_TRACE(kTraceApiCall, kTraceMediaApi, 0, "%s:%d after reset..., channelid:%d videoCodec(width:%d height:%d pltype:%d plname:%s, startBitrate:%d, maxBitrate:%d, minBitrate:%d, numberOfSimulcastStreams:%d)",
+               __FUNCTION__, __LINE__, channelid, videoCodec.width,videoCodec.height, videoCodec.plType,videoCodec.plName, videoCodec.startBitrate,videoCodec.maxBitrate, videoCodec.minBitrate, videoCodec.numberOfSimulcastStreams);
 
     ViECodec *codec = ViECodec::GetInterface(m_vie);
     if (codec) {
@@ -5353,6 +5411,7 @@ int ECMedia_get_screen_list(int desktop_captureid, ScreenID **screenList)
         if (m_pScreenlist != NULL)
             delete[] m_pScreenlist;
         m_screenlist.clear();
+
         bool ret = vie_desktopshare->GetScreenList(desktop_captureid, m_screenlist);
         vie_desktopshare->Release();
         int num = m_screenlist.size();
@@ -5364,9 +5423,6 @@ int ECMedia_get_screen_list(int desktop_captureid, ScreenID **screenList)
             temp++;
         }
         *screenList = m_pScreenlist;
-        if (ret != 0) {
-            WEBRTC_TRACE(kTraceError, kTraceMediaApi, 0, "%s:%d failed to get screen list", __FUNCTION__, __LINE__);
-        }
         WEBRTC_TRACE(kTraceApiCall, kTraceMediaApi, 0, "%s:%d ends... with code: %d\n", __FUNCTION__, __LINE__, num);
         return num;
     }
@@ -5406,9 +5462,6 @@ int ECMedia_get_window_list(int desktop_captureid, WindowShare **windowList)
             temp++;
         }
         *windowList = m_pWindowlist;
-        if (ret != 0) {
-            WEBRTC_TRACE(kTraceError, kTraceMediaApi, 0, "%s:%d failed to get window list", __FUNCTION__, __LINE__);
-        }
         WEBRTC_TRACE(kTraceApiCall, kTraceMediaApi, 0, "%s:%d ends... with code: %d\n", __FUNCTION__, __LINE__, num);
         return num;
     }

@@ -1996,6 +1996,7 @@ int32_t Channel::ReceivedRTPPacket(const int8_t* data, size_t length,
   if (header.payload_type_frequency < 0)
     return -1;
   bool in_order = IsPacketInOrder(header);
+    
   rtp_receive_statistics_->IncomingPacket(header, length,
       IsPacketRetransmitted(header, in_order));
   rtp_payload_registry_->SetIncomingPayloadType(header);
@@ -3611,6 +3612,7 @@ Channel::GetRTPStatistics(CallStatistics& stats)
     RtcpStatistics statistics;
     StreamStatistician* statistician =
         rtp_receive_statistics_->GetStatistician(rtp_receiver_->SSRC());
+        
     if (!statistician || !statistician->GetStatistics(
         &statistics, _rtpRtcpModule->RTCP() == kOff)) {
       _engineStatisticsPtr->SetLastError(
@@ -5432,7 +5434,7 @@ void
 		rtp_payload_registry_->GetPayloadTypeFrequency(header.payloadType);
 	if (header.payload_type_frequency < 0)
 		return ;
-	bool in_order = IsPacketInOrder(header);
+	bool in_order = IsPacketInOrder(header);        
 	rtp_receive_statistics_->IncomingPacket(header, rtpBufferLength,
 		IsPacketRetransmitted(header, in_order));
 	rtp_payload_registry_->SetIncomingPayloadType(header);

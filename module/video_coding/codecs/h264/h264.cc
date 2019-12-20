@@ -43,7 +43,6 @@ H264Encoder::H264Encoder()    : encoded_image_(),
 #ifdef HAVE_H264_BITSTREAM
 		_bitStreamBeforeSend = fopen(filename_soft_encode_h264, "wb");
 #endif
-
 }
 
 H264Encoder::~H264Encoder() {
@@ -201,16 +200,16 @@ int H264Encoder::Encode(const I420VideoFrame& input_image,
 
 	if(codec_.width != input_image.width() || codec_.height != input_image.height())
 	{
-    if (!GetManalMode()){
-      codec_.width = input_image.width();
-      codec_.height = input_image.height();
-      frameType = kKeyFrame;
-      WEBRTC_TRACE(yuntongxunwebrtc::kTraceError,
-                   yuntongxunwebrtc::kTraceVideoCoding,
-                   0,
-                   "x264_encoder_reconfig:_framewidth=%d _frameheight=%d", codec_.width, codec_.height);
-      InitEncode(&codec_, num_of_cores_, 30000);
-    }
+		if (!GetManalMode()) {
+			codec_.width = input_image.width();
+			codec_.height = input_image.height();
+			frameType = kKeyFrame;
+			WEBRTC_TRACE(yuntongxunwebrtc::kTraceError,
+				yuntongxunwebrtc::kTraceVideoCoding,
+				0,
+				"x264_encoder_reconfig:_framewidth=%d _frameheight=%d", codec_.width, codec_.height);
+			InitEncode(&codec_, num_of_cores_, 30000);
+		}
 	}
 
 	InitializeX264Pic(input_image, xpic, oxpic, frameType);

@@ -244,6 +244,7 @@ void StatsCollector::DeleteVideoSendStatsProxy(int channelid)
  
 	ViEBase* vie_base = ViEBase::GetInterface(m_vie);
 	if (vie_base) {
+        vie_base->RegisterSendStatisticsProxy(channelid, NULL);
         vie_base->DeregisterCpuOveruseObserver(channelid);
 		vie_base->Release();
 	}
@@ -273,6 +274,12 @@ void StatsCollector::DeleteVideoRecvStatsProxy(int channelid)
 	{
 		return;
 	}
+    ViERender* vie_render = ViERender::GetInterface(m_vie);
+    if (vie_render)
+    {
+        vie_render->AddRenderCallback(channelid, NULL);
+        vie_render->Release();
+    }
 	DeleteFromReports(StatsReport::kStatsReportTypeVideoRecv, channelid);
 	video_receive_stats_proxies_.erase(pStatsProxy);
 }
@@ -434,8 +441,10 @@ void StatsCollector::LoadReportsToPbBuffer(StatsContentType type, MediaStatistic
 	else if (type == kStatsContentSimplified)
 	{
 		reports = &reports_simplifed_;
-	}
-
+    } else {
+        return;
+    }
+    
 	for (const auto *r : *reports)
 	{
 		StatsReport report = *r;
@@ -582,9 +591,8 @@ void StatsCollector::VideoSenderInfo_AddNetworkStats(const VideoSendStream::Stat
             // todo simulcast
         }
     }
-
-    report->AddInt32(StatsReport::kStatsValueNameLossFractionInPercent, fraction_lost);
-    report->AddInt32(StatsReport::kStatsValueNameJitterReceived, jitter);
+    //report->AddInt32(StatsReport::kStatsValueNameLossFractionInPercent, fraction_lost);
+    //report->AddInt32(StatsReport::kStatsValueNameJitterReceived, jitter);
     report->AddInt32(StatsReport::kStatsValueNameRttInMs, static_cast<int32_t>(info.call.rtt_ms));
     report->AddInt32(StatsReport::kStatsValueNameBucketDelayInMs, static_cast<int32_t>(info.call.pacer_delay_ms));
 }
@@ -623,15 +631,16 @@ void StatsCollector::VideoSenderInfo_AddRtpStats(const VideoSendStream::Stats in
 void StatsCollector::VideoSenderInfo_AddRtcpStats(const VideoSendStream::Stats info,
 													StatsReport *report)
 {
-	if (info.config.encoder_settings.numberOfSimulcastStreams == 0) {
+	//if (info.config.encoder_settings.numberOfSimulcastStreams == 0) {
 		report->AddInt32(StatsReport::kStatsValueNamePacketsLost, info.stream.rtcp_stats.cumulative_lost);
+        report->AddInt32(StatsReport::kStatsValueNameLossFractionInPercent, info.stream.rtcp_stats.fraction_lost*100/255);
 		report->AddInt32(StatsReport::kStatsValueNameFirsReceived, info.stream.rtcp_packet_type_counts.fir_packets);
 		report->AddInt32(StatsReport::kStatsValueNameNacksReceived, info.stream.rtcp_packet_type_counts.nack_packets);
 		report->AddInt32(StatsReport::kStatsValueNameNacksRequestsReceived, info.stream.rtcp_packet_type_counts.nack_requests);
 		report->AddInt32(StatsReport::kStatsValueNameNacksUniqueRequestsReceived, info.stream.rtcp_packet_type_counts.unique_nack_requests);
-	} else { //TODO: simulcast
+	//} else { //TODO: simulcast
         
-	}
+	//}
 }
 #endif
 
@@ -656,8 +665,8 @@ void StatsCollector::ExtractVideoSenderInfo(bool isFullStats)
 		if (!report)
 		{
 			return;
-		}		
-		
+		}
+        
 		VideoSenderInfo_AddEncoderSetting(info, report);
 		VideoSenderInfo_AddCpuMetrics(info, report);
 		VideoSenderInfo_AddRtpStats(info, report);

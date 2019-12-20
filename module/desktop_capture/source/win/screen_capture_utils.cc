@@ -12,6 +12,7 @@
 
 #include <assert.h>
 #include <windows.h>
+#include "../system_wrappers/include/trace.h"
 
 namespace yuntongxunwebrtc {
 
@@ -25,12 +26,15 @@ bool GetScreenList(ScreenCapturer::ScreenList* screens) {
     enum_result = EnumDisplayDevices(NULL, device_index, &device, 0);
 
     // |enum_result| is 0 if we have enumerated all devices.
-    if (!enum_result)
-      break;
+	if (!enum_result) {
+		break;
+	}
+      
 
     // We only care about active displays.
-    if (!(device.StateFlags & DISPLAY_DEVICE_ACTIVE))
-      continue;
+	if (!(device.StateFlags & DISPLAY_DEVICE_ACTIVE)) {
+		continue;
+	}
 
     ScreenCapturer::Screen screen;
     screen.id = device_index;

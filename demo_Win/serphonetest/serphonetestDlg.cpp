@@ -289,7 +289,7 @@ void onRemoteVideoRatioChanged(const char *callid, int width, int height, bool i
 
 	if (g_dlgFullScreen)
 	{
-		CRect   temprect(0, 0, width*2, height*2);
+		CRect   temprect(0, 0, width, height);
 		g_dlgFullScreen->MoveWindow(&temprect, TRUE);
 		g_dlgFullScreen->ShowWindow(SW_SHOW);
 	}
@@ -1402,6 +1402,8 @@ void CserphonetestDlg::OnBnClickedButton25()
 	//	m_dlgFullScreen->MoveWindow(&temprect, TRUE);
 
 	//}
+	CRect   temprect(0, 0, 320, 240);
+	m_dlgFullScreen->MoveWindow(&temprect, TRUE);
 	m_dlgFullScreen->ShowWindow(SW_SHOW);
 	g_dlgFullScreen = m_dlgFullScreen;
 

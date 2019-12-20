@@ -63,9 +63,9 @@ bool AudioReceiveStream::ProcessRecvStatistics()
 {
 	updateEvent_->Wait(100);
 	const int64_t now = clock_->TimeInMilliseconds();
-	const int64_t kUpdateIntervalMs = 1000; //1000ms¶¨Ê±Æ÷
+	const int64_t kUpdateIntervalMs = 1000; //1000msï¿½ï¿½Ê±ï¿½ï¿½
 	if (now >= last_process_time_ + kUpdateIntervalMs) {
-		//Í³¼Æ¸÷ÖÖ·¢ËÍÐÅÏ¢
+		//Í³ï¿½Æ¸ï¿½ï¿½Ö·ï¿½ï¿½ï¿½ï¿½ï¿½Ï¢
 		last_process_time_ = now;
 		UpdateStats();
 	}
@@ -76,6 +76,54 @@ AudioReceiveStream::Stats AudioReceiveStream::GetStats(int64_t &timestamp) const
 {
 	CriticalSectionScoped lock(crit_.get());
 	timestamp = clock_->TimeInMilliseconds();
+             
+    WEBRTC_TRACE(kTraceStream, kTraceVoice, -1, "audio received: remote_ssrc(%d) bytes_rcvd(%d) \n\
+     packets_rcvd(%d) \n \
+     packets_lost(%d) \n \
+     fraction_lost(%f)\n \
+     codec_name(%s) \n \
+     ext_seqnum(%d) \n \
+     jitter_ms(%d) \n \
+     jitter_buffer_ms(%d) \n \
+     jitter_buffer_preferred_ms(%d) \n \
+     delay_estimate_ms(%d) \n \
+     audio_level(%d) \n \
+     expand_rate(%f) \n \
+     speech_expand_rate(%f) \n \
+     secondary_decoded_rate(%f) \n \
+     accelerate_rate(%f) \n \
+     preemptive_expand_rate(%f) \n \
+     decoding_calls_to_silence_generator(%d) \n \
+     decoding_calls_to_neteq(%d) \n \
+     decoding_normal(%d) \n \
+     decoding_plc(%d) \n \
+     decoding_cng(%d) \n \
+     decoding_plc_cng(%d) \n \
+     capture_start_ntp_time_ms(%d) \n",
+           audioRecvStats_.remote_ssrc,
+            audioRecvStats_.bytes_rcvd,
+            audioRecvStats_.packets_rcvd,
+            audioRecvStats_.packets_lost,
+            audioRecvStats_.fraction_lost,
+            audioRecvStats_.codec_name.c_str(),
+           audioRecvStats_. ext_seqnum,
+            audioRecvStats_.jitter_ms,
+            audioRecvStats_.jitter_buffer_ms,
+            audioRecvStats_.jitter_buffer_preferred_ms,
+            audioRecvStats_.delay_estimate_ms,
+            audioRecvStats_.audio_level,
+            audioRecvStats_.expand_rate,
+            audioRecvStats_.speech_expand_rate,
+            audioRecvStats_.secondary_decoded_rate,
+            audioRecvStats_.accelerate_rate,
+            audioRecvStats_.preemptive_expand_rate,
+            audioRecvStats_.decoding_calls_to_silence_generator,
+            audioRecvStats_.decoding_calls_to_neteq,
+            audioRecvStats_.decoding_normal,
+            audioRecvStats_.decoding_plc,
+            audioRecvStats_.decoding_cng,
+            audioRecvStats_.decoding_plc_cng,
+           audioRecvStats_.capture_start_ntp_time_ms);
 	return audioRecvStats_;
 }
 
@@ -99,7 +147,6 @@ void AudioReceiveStream::UpdateStats()
 	VoEVolumeControl *voe_volume = VoEVolumeControl::GetInterface(voe_);
 
 	CodecInst codec;
-
 	CriticalSectionScoped lock(crit_.get());
 	if (voe_codec)
 	{
@@ -115,7 +162,8 @@ void AudioReceiveStream::UpdateStats()
 	{
 		CallStatistics callstats;
 		voe_rtprtcp->GetRemoteSSRC(channel_id_, audioRecvStats_.remote_ssrc);
-		voe_rtprtcp->GetRTCPStatistics(channel_id_, callstats);
+        voe_rtprtcp->GetRTCPStatistics(channel_id_, callstats);
+        
         audioRecvStats_.bitrate = callstats.received_bitrate;
 		audioRecvStats_.bytes_rcvd = callstats.bytesReceived;
 		audioRecvStats_.packets_rcvd = callstats.packetsReceived;

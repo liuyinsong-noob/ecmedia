@@ -75,7 +75,7 @@ enum { kMaxNackListSize = 250 };
 
 // Id definitions
 enum {
-	kViEChannelIdBase = 0x0,
+	kViEChannelIdBase = 0x10,
 	kViEChannelIdMax = 0xFF,
 	kViECaptureIdBase = 0x1001,
 	kViECaptureIdMax = 0x10FF,
