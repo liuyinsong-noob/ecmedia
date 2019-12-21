@@ -25,6 +25,9 @@
 #import <OpenGLES/EAGLDrawable.h>
 #import <OpenGLES/ES2/gl.h>
 #import <OpenGLES/ES2/glext.h>
+#import <GLKit/GLKit.h>
+#include "common_video/include/i420_video_frame.h"
+using namespace yuntongxunwebrtc;
 
 
 
@@ -90,6 +93,8 @@
 
 #pragma mark - 接口
 - (void)renderI420Frame:(void *)framebufer width:(NSInteger)width height:(NSInteger)height;
+#pragma mark - 接口
+- (void)renderI420Frame2:(yuntongxunwebrtc::I420VideoFrame &)videoFrame width:(NSInteger)width height:(NSInteger)height;
 
 /**
  清除画面

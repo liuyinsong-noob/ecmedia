@@ -114,26 +114,8 @@ WebRtc_Word32 VideoChannelNSOpenGL::RenderFrame(const WebRtc_UWord32 /*streamId*
             return -1;
         }
     }
-
     int heightt = videoFrame.height();
     int widtht = videoFrame.width();
-    
-    int a=0,i;
-    for (i=0; i<heightt; i++)
-    {
-        memcpy(_buffer+a,videoFrame.buffer(kYPlane) + i * videoFrame.stride(kYPlane), widtht);
-        a+=widtht;
-    }
-    for (i=0; i<heightt/2; i++)
-    {
-        memcpy(_buffer+a,videoFrame.buffer(kUPlane) + i * videoFrame.stride(kUPlane), widtht/2);
-        a+=widtht/2;
-    }
-    for (i=0; i<heightt/2; i++)
-    {
-        memcpy(_buffer+a,videoFrame.buffer(kVPlane) + i * videoFrame.stride(kVPlane), widtht/2);
-        a+=widtht/2;
-    }
     
 #ifdef seanDebugRender
     if (_debugFile) {
@@ -142,8 +124,8 @@ WebRtc_Word32 VideoChannelNSOpenGL::RenderFrame(const WebRtc_UWord32 /*streamId*
     }
 #endif
     
-    int ret = DeliverFrame(_buffer, a, videoFrame.timestamp());
-
+   // int ret = DeliverFrame(_buffer, videoFrame.stride(kYPlane), videoFrame.stride(kUPlane), videoFrame.stride(kVPlane) );
+  int ret = DeliverFrame(videoFrame);
     _owner->UnlockAGLCntx();
     return ret;
 }
@@ -200,6 +182,13 @@ int VideoChannelNSOpenGL::DeliverFrame(unsigned char* buffer, int bufferSize, un
 {
     _owner->LockAGLCntx();
     [_displayWindow renderI420Frame:(void *)buffer width:(NSInteger)_width height:(NSInteger)_height];
+    _owner->UnlockAGLCntx();
+    return 0;
+}
+int VideoChannelNSOpenGL::DeliverFrame(I420VideoFrame& videoFrame)
+{
+    _owner->LockAGLCntx();
+    [_displayWindow renderI420Frame2:videoFrame width:(NSInteger)_width height:(NSInteger)_height];
     _owner->UnlockAGLCntx();
     return 0;
 }

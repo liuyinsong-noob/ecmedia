@@ -23,7 +23,14 @@
 
 #include "scaler.h"
 #include "opengles_display.h"
+#if TARGET_OS_IPHONE
+#import <OpenGLES/ES3/gl.h>
+#else
+#import <OpenGL/gl3.h>
+#endif
 
+//#if TARGET_OS_IPHONE
+#define RTC_PIXEL_FORMAT GL_LUMINANCE
 
 enum AttribEnum
 {
@@ -42,37 +49,37 @@ enum TextureType
 
 //fragment shader program
 #define FSH @"varying lowp vec2 TexCoordOut;\
-    \
-    uniform sampler2D SamplerY;\
-    uniform sampler2D SamplerU;\
-    uniform sampler2D SamplerV;\
-    \
-    void main(void)\
-    {\
-    mediump vec3 yuv;\
-    lowp vec3 rgb;\
-    \
-    yuv.x = texture2D(SamplerY, TexCoordOut).r;\
-    yuv.y = texture2D(SamplerU, TexCoordOut).r - 0.5;\
-    yuv.z = texture2D(SamplerV, TexCoordOut).r - 0.5;\
-    \
-    rgb = mat3( 1,       1,         1,\
-    0,       -0.39465,  2.03211,\
-    1.13983, -0.58060,  0) * yuv;\
-    \
-    gl_FragColor = vec4(rgb, 1);\
-    \
+\
+uniform sampler2D SamplerY;\
+uniform sampler2D SamplerU;\
+uniform sampler2D SamplerV;\
+\
+void main(void)\
+{\
+mediump vec3 yuv;\
+lowp vec3 rgb;\
+\
+yuv.x = texture2D(SamplerY, TexCoordOut).r;\
+yuv.y = texture2D(SamplerU, TexCoordOut).r - 0.5;\
+yuv.z = texture2D(SamplerV, TexCoordOut).r - 0.5;\
+\
+rgb = mat3( 1,       1,         1,\
+0,       -0.39465,  2.03211,\
+1.13983, -0.58060,  0) * yuv;\
+\
+gl_FragColor = vec4(rgb, 1);\
+\
 }"
 
 // vertex shader program
 #define VSH @"attribute vec4 position;\
-    attribute vec2 TexCoordIn;\
-    varying vec2 TexCoordOut;\
-    \
-    void main(void)\
-    {\
-    gl_Position = position;\
-    TexCoordOut = TexCoordIn;\
+attribute vec2 TexCoordIn;\
+varying vec2 TexCoordOut;\
+\
+void main(void)\
+{\
+gl_Position = position;\
+TexCoordOut = TexCoordIn;\
 }"
 
 @interface ECIOSDisplay (PrivateMethods)
@@ -121,12 +128,12 @@ enum TextureType
             // remove from old parent
             _parentScreenW = self.parentView.bounds.size.width;
             _parentScreenH = self.parentView.bounds.size.height;
-             [self removeFromSuperview];
+            [self removeFromSuperview];
             // add to new parent
             [self.parentView addSubview:self];
         }
         
-       // [self updatePreview];
+        // [self updatePreview];
         isRunning = TRUE;
     }
 }
@@ -227,10 +234,10 @@ enum TextureType
     // view opaque, TRUE: opaque
     eaglLayer.opaque = TRUE;
     eaglLayer.drawableProperties = [NSDictionary dictionaryWithObjectsAndKeys:
-                                   [NSNumber numberWithBool:YES], kEAGLDrawablePropertyRetainedBacking,
-                                   kEAGLColorFormatRGBA8, kEAGLDrawablePropertyColorFormat,
-                                   //[NSNumber numberWithBool:YES], kEAGLDrawablePropertyRetainedBacking,
-                                   nil];
+                                    [NSNumber numberWithBool:YES], kEAGLDrawablePropertyRetainedBacking,
+                                    kEAGLColorFormatRGBA8, kEAGLDrawablePropertyColorFormat,
+                                    //[NSNumber numberWithBool:YES], kEAGLDrawablePropertyRetainedBacking,
+                                    nil];
     
     [self setAutoresizingMask: UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight];
     [self registerNotification];
@@ -239,21 +246,22 @@ enum TextureType
     // view scale
     self.contentScaleFactor = [UIScreen mainScreen].scale;
     _viewScale = [UIScreen mainScreen].scale;
-
+    
     // alloc opengl version 2 context
-    _glContext = [[EAGLContext alloc] initWithAPI:kEAGLRenderingAPIOpenGLES2];
+    //  _glContext = [[EAGLContext alloc] initWithAPI:kEAGLRenderingAPIOpenGLES2];
+    _glContext = [[EAGLContext alloc] initWithAPI:kEAGLRenderingAPIOpenGLES3];
     // set context
     if(!_glContext || ![EAGLContext setCurrentContext:_glContext]) {
         return NO;
     }
-
+    
     // config texture
     [self configYUVTexture];
     // load shader
     [self loadYUVShader];
-
+    
     glUseProgram(_program);
-
+    
     //
     GLuint textureUniformY = glGetUniformLocation(_program, "SamplerY");
     GLuint textureUniformU = glGetUniformLocation(_program, "SamplerU");
@@ -261,7 +269,7 @@ enum TextureType
     glUniform1i(textureUniformY, 0);
     glUniform1i(textureUniformU, 1);
     glUniform1i(textureUniformV, 2);
-   
+    
     // init lastContentMode
     _lastContentMode = UIViewContentModeScaleAspectFit;
     return YES;
@@ -277,21 +285,21 @@ enum TextureType
         NSLog(@"create texture failed\n");
         return;
     }
-
+    
     glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D, _textureYUV[TEXY]);
     glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_LINEAR);
     glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_LINEAR);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-
+    
     glActiveTexture(GL_TEXTURE1);
     glBindTexture(GL_TEXTURE_2D, _textureYUV[TEXU]);
     glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_LINEAR);
     glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_LINEAR);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-
+    
     glActiveTexture(GL_TEXTURE2);
     glBindTexture(GL_TEXTURE_2D, _textureYUV[TEXV]);
     glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_LINEAR);
@@ -307,19 +315,19 @@ enum TextureType
     GLuint vertexShader = [self compileShader:VSH withType:GL_VERTEX_SHADER];
     // compile fragment shader
     GLuint fragmentShader = [self compileShader:FSH withType:GL_FRAGMENT_SHADER];
-
+    
     // attach shader
     _program = glCreateProgram();
     glAttachShader(_program, vertexShader);
     glAttachShader(_program, fragmentShader);
-
+    
     // bind program
     glBindAttribLocation(_program, ATTRIB_VERTEX, "position");
     glBindAttribLocation(_program, ATTRIB_TEXTURE, "TexCoordIn");
-
+    
     // link
     glLinkProgram(_program);
-
+    
     // is link success
     GLint linkSuccess;
     glGetProgramiv(_program, GL_LINK_STATUS, &linkSuccess);
@@ -329,12 +337,12 @@ enum TextureType
         NSString *messageString = [NSString stringWithUTF8String:messages];
         NSLog(@"link shader failed:%@", messageString);
     }
-
+    
     // delete shader
     if (vertexShader) {
         glDeleteShader(vertexShader);
     }
-
+    
     if (fragmentShader) {
         glDeleteShader(fragmentShader);
     }
@@ -352,10 +360,10 @@ enum TextureType
     } else {
         // NSLog(@"shader code-->%@", shaderString);
     }
-
+    
     // shader handle
     GLuint shaderHandle = glCreateShader(shaderType);
-
+    
     // set shader source
     const char * shaderStringUTF8 = [shaderString UTF8String];
     int shaderStringLength = (int)[shaderString length];
@@ -374,7 +382,7 @@ enum TextureType
         NSLog(@"%@", messageString);
         return -1;
     }
-
+    
     return shaderHandle;
 }
 
@@ -408,21 +416,136 @@ enum TextureType
         if (width != _videoW || height != _videoH) {
             [self setVideoSize:width height:height];
         }
-
+        
         // texture setting
         [EAGLContext setCurrentContext:_glContext];
         glBindTexture(GL_TEXTURE_2D, _textureYUV[TEXY]);
         glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, width, height, GL_RED_EXT, GL_UNSIGNED_BYTE, framebufer);
-
+        
         glBindTexture(GL_TEXTURE_2D, _textureYUV[TEXU]);
         glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, width/2, height/2, GL_RED_EXT, GL_UNSIGNED_BYTE, (uint8_t *)framebufer + width * height);
-
+        
         glBindTexture(GL_TEXTURE_2D, _textureYUV[TEXV]);
         glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, width/2, height/2, GL_RED_EXT, GL_UNSIGNED_BYTE, (uint8_t *)framebufer + width * height * 5 / 4);
-
+        
         // render frame
         [self doRenderFrame];
     }
+}
+- (void)renderI420Frame2:(yuntongxunwebrtc::I420VideoFrame &)videoFrame width:(NSInteger)width height:(NSInteger)height
+{
+    if (UIApplicationStateActive == [UIApplication sharedApplication].applicationState) {
+        isRendering = YES;
+    }
+    else {
+        isRendering = NO;
+        return;
+    }
+    // render when view ready
+    if (!self.window) {
+        return;
+    }
+    if(!isRendering) {
+        return;
+    }
+    
+    @synchronized(self)
+    {
+        if (width != _videoW || height != _videoH) {
+            [self setVideoSize:videoFrame];
+        }
+        bool strid_eq_width = !(width == videoFrame.stride(kYPlane));
+        // texture setting
+        [EAGLContext setCurrentContext:_glContext];
+        glBindTexture(GL_TEXTURE_2D, _textureYUV[TEXY]);
+        // glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, width, height, GL_RED_EXT, GL_UNSIGNED_BYTE, videoFrame.buffer(kYPlane));
+       strid_eq_width ? glPixelStorei(GL_UNPACK_ROW_LENGTH, videoFrame.stride(kYPlane)) : void();
+        glTexImage2D(GL_TEXTURE_2D,
+                     0,
+                     RTC_PIXEL_FORMAT,
+                     static_cast<GLsizei>(width),
+                     static_cast<GLsizei>(height),
+                     0,
+                     RTC_PIXEL_FORMAT,
+                     GL_UNSIGNED_BYTE,
+                     videoFrame.buffer(kYPlane));
+        strid_eq_width ? glPixelStorei(GL_UNPACK_ROW_LENGTH, 0) : void();
+        
+        strid_eq_width = !(width/2 == videoFrame.stride(kUPlane));
+        glBindTexture(GL_TEXTURE_2D, _textureYUV[TEXU]);
+        // glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, (width)/2, (height)/2, GL_RED_EXT, GL_UNSIGNED_BYTE, (uint8_t *)videoFrame.buffer(kUPlane));
+        
+        strid_eq_width ? glPixelStorei(GL_UNPACK_ROW_LENGTH, videoFrame.stride(kUPlane)) : void();
+        glTexImage2D(GL_TEXTURE_2D,
+                     0,
+                     RTC_PIXEL_FORMAT,
+                     static_cast<GLsizei>(width/2),
+                     static_cast<GLsizei>(height/2),
+                     0,
+                     RTC_PIXEL_FORMAT,
+                     GL_UNSIGNED_BYTE,
+                     videoFrame.buffer(kUPlane));
+         strid_eq_width ? glPixelStorei(GL_UNPACK_ROW_LENGTH, 0) : void();
+        
+        
+        glBindTexture(GL_TEXTURE_2D, _textureYUV[TEXV]);
+        // glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, (width)/2, (height)/2, GL_RED_EXT, GL_UNSIGNED_BYTE, (uint8_t *)videoFrame.buffer(kVPlane));
+        strid_eq_width ? glPixelStorei(GL_UNPACK_ROW_LENGTH, videoFrame.stride(kVPlane)) : void();
+        glTexImage2D(GL_TEXTURE_2D,
+                     0,
+                     RTC_PIXEL_FORMAT,
+                     static_cast<GLsizei>(width/2),
+                     static_cast<GLsizei>(height/2),
+                     0,
+                     RTC_PIXEL_FORMAT,
+                     GL_UNSIGNED_BYTE,
+                     videoFrame.buffer(kVPlane));
+        strid_eq_width ?  glPixelStorei(GL_UNPACK_ROW_LENGTH, 0) : void();
+        
+        
+        
+        // render frame
+        [self doRenderFrame];
+    }
+}
+- (void)setVideoSize:(yuntongxunwebrtc::I420VideoFrame &)videoFrame
+{
+    int width = videoFrame.width();
+    int height = videoFrame.height();
+    
+    int stride_y = videoFrame.stride(kYPlane);
+    int stride_u = videoFrame.stride(kUPlane);
+    int stride_v = videoFrame.stride(kVPlane);
+    float aspect_ratio_old = _videoW/_videoH;
+    float aspect_ratio_new = width/height;
+    
+    
+    if(_videoW > 1 && _videoH > 1 && aspect_ratio_new != aspect_ratio_old){
+        [self clearFrame];
+    }
+    _videoW = width;
+    _videoH = height;
+    
+    // I420 frame size : width * height * 3/2
+    void *frameBuffer = malloc(stride_y * height +  stride_u* height/2 + stride_v *height/2 + 1);
+    if(frameBuffer) {
+        memset(frameBuffer, 0x0, stride_y * height + stride_u* height/2 + stride_v *height/2+ 1) ;
+    }
+    
+    [EAGLContext setCurrentContext:_glContext];
+    glBindTexture(GL_TEXTURE_2D, _textureYUV[TEXY]);
+    //    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+    //    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+    //    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+    //    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+    
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RED_EXT, width, height, 0, GL_RED_EXT, GL_UNSIGNED_BYTE, videoFrame.buffer(kYPlane));
+    glBindTexture(GL_TEXTURE_2D, _textureYUV[TEXU]);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RED_EXT, (width)/2, (height)/2, 0, GL_RED_EXT, GL_UNSIGNED_BYTE, (uint8_t *)videoFrame.buffer(kUPlane) );
+    
+    glBindTexture(GL_TEXTURE_2D, _textureYUV[TEXV]);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RED_EXT, (width)/2, (height)/2, 0, GL_RED_EXT, GL_UNSIGNED_BYTE, (uint8_t *)videoFrame.buffer(kVPlane)  );
+    free(frameBuffer);
 }
 
 - (void)setVideoSize:(GLuint)width height:(GLuint)height
@@ -442,7 +565,7 @@ enum TextureType
     if(frameBuffer) {
         memset(frameBuffer, 0x0, width * height * 1.5);
     }
-
+    
     [EAGLContext setCurrentContext:_glContext];
     glBindTexture(GL_TEXTURE_2D, _textureYUV[TEXY]);
     //    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
@@ -455,7 +578,7 @@ enum TextureType
     glTexImage2D(GL_TEXTURE_2D, 0, GL_RED_EXT, width/2, height/2, 0, GL_RED_EXT, GL_UNSIGNED_BYTE, (uint8_t *)frameBuffer + width * height);
     
     glBindTexture(GL_TEXTURE_2D, _textureYUV[TEXV]);
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RED_EXT, width/2, height/2, 0, GL_RED_EXT, GL_UNSIGNED_BYTE, (uint8_t *)frameBuffer + width * height * 5 / 4);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RED_EXT, width/2, height/2, 0, GL_RED_EXT, GL_UNSIGNED_BYTE, (uint8_t *)frameBuffer + width * height* 5/4);
     free(frameBuffer);
 }
 
@@ -473,14 +596,14 @@ enum TextureType
         _lastViewHeight = self.parentView.bounds.size.height;
         _parentScreenH = _lastViewHeight;
         _parentScreenW = _lastViewWidth;
-      dispatch_async(dispatch_get_main_queue(), ^{
-          @synchronized(self)
-          {
-            self.frame = self.parentView.bounds;
-          }
-      });
-      
-      //  [self clearFrame];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            @synchronized(self)
+            {
+                self.frame = self.parentView.bounds;
+            }
+        });
+        
+        //  [self clearFrame];
     }
     
     [EAGLContext setCurrentContext:_glContext];
@@ -536,7 +659,7 @@ enum TextureType
     
     // static GLfloat squareVertices[8];
     GLfloat squareVertices[8];
-
+    
     squareVertices[0] = (float)(x - w) / _parentScreenW - 0.;
     squareVertices[1] = (float)(y - h) / _parentScreenH - 0.;
     squareVertices[2] = (float)(x + w) / _parentScreenW - 0.;
@@ -545,7 +668,6 @@ enum TextureType
     squareVertices[5] = (float)(y + h) / _parentScreenH - 0.;
     squareVertices[6] = (float)(x + w) / _parentScreenW - 0.;
     squareVertices[7] = (float)(y + h) / _parentScreenH - 0.;
-
     
     GLfloat coordVertices[] = {
         0.0f,   1.0f,
@@ -553,7 +675,6 @@ enum TextureType
         0.0f,   0.0f,
         1.0f,   0.0f,
     };
-
     if (UIApplicationStateActive == [UIApplication sharedApplication].applicationState) {
         isRendering = YES;
     }
@@ -567,14 +688,14 @@ enum TextureType
     // update attribute values
     glVertexAttribPointer(ATTRIB_VERTEX, 2, GL_FLOAT, 0, 0, squareVertices);
     glEnableVertexAttribArray(ATTRIB_VERTEX);
-
+    
     glVertexAttribPointer(ATTRIB_TEXTURE, 2, GL_FLOAT, 0, 0, coordVertices);
     glEnableVertexAttribArray(ATTRIB_TEXTURE);
-
+    
     // draw frame buffer
     glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
     glBindRenderbuffer(GL_RENDERBUFFER, _renderBuffer);
- 
+    
     [_glContext presentRenderbuffer:GL_RENDERBUFFER];
 }
 
@@ -639,11 +760,11 @@ enum TextureType
     if (_framebuffer) {
         glDeleteFramebuffers(1, &_framebuffer);
     }
-
+    
     if (_renderBuffer) {
         glDeleteRenderbuffers(1, &_renderBuffer);
     }
-
+    
     _framebuffer = 0;
     _renderBuffer = 0;
 }
