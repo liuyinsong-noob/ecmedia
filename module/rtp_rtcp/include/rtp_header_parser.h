@@ -31,7 +31,7 @@ class RtpHeaderParser {
   // at once.
   virtual bool Parse(const uint8_t* packet,
                      size_t length,
-                     RTPHeader* header) const = 0;
+                     RTPHeader* header) = 0;
 
   // Registers an RTP header extension and binds it to |id|.
   virtual bool RegisterRtpHeaderExtension(RTPExtensionType type,

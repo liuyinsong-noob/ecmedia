@@ -902,6 +902,7 @@ Channel::Channel(int32_t channelId,
     volume_settings_critsect_(*CriticalSectionWrapper::CreateCriticalSection()),
     _instanceId(instanceId),
     _channelId(channelId),
+    rtp_header_parser_sender_(RtpHeaderParser::Create()),
     rtp_header_parser_(RtpHeaderParser::Create()),
     rtp_payload_registry_(
         new RTPPayloadRegistry(RTPPayloadStrategy::CreateStrategy(true))),
@@ -5388,7 +5389,7 @@ void
 	//---begin
 	const uint8_t* received_packet = reinterpret_cast<const uint8_t*>(rtpBufferPtr);
 	RTPHeader header;
-	if (!rtp_header_parser_->Parse(received_packet, rtpPacketLength, &header)) {
+	if (!rtp_header_parser_sender_->Parse(received_packet, rtpPacketLength, &header)) {
 		WEBRTC_TRACE(yuntongxunwebrtc::kTraceDebug, yuntongxunwebrtc::kTraceVoice, _channelId,
 			"Incoming packet: invalid RTP header");
 		return;

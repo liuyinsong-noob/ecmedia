@@ -521,6 +521,7 @@ private:
 
     ChannelState channel_state_;
 
+	scoped_ptr<RtpHeaderParser> rtp_header_parser_sender_;
     scoped_ptr<RtpHeaderParser> rtp_header_parser_;
     scoped_ptr<RTPPayloadRegistry> rtp_payload_registry_;
     scoped_ptr<ReceiveStatistics> rtp_receive_statistics_;

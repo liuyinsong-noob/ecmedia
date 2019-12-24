@@ -23,7 +23,7 @@ class RtpHeaderParserImpl : public RtpHeaderParser {
 
   bool Parse(const uint8_t* packet,
              size_t length,
-             RTPHeader* header) const override;
+             RTPHeader* header) override;
 
   bool RegisterRtpHeaderExtension(RTPExtensionType type, uint8_t id) override;
 
@@ -37,6 +37,10 @@ class RtpHeaderParserImpl : public RtpHeaderParser {
   RtpHeaderExtensionMap rtp_header_extension_map_ GUARDED_BY(critical_section_);
   ECMedia_ConferenceParticipantCallback *_participantCallback; //added by zhaoyou.
   int callConferenceParticipantCallbacktimeInterVal_;
+    
+  uint8_t last_arr_csrc_count_;
+  uint32_t last_arrOfCSRCs_[kRtpCsrcSize];
+  int64_t base_time;
 };
 
 RtpHeaderParser* RtpHeaderParser::Create() {
@@ -45,7 +49,11 @@ RtpHeaderParser* RtpHeaderParser::Create() {
 
 RtpHeaderParserImpl::RtpHeaderParserImpl()
     : _participantCallback(nullptr),
-    callConferenceParticipantCallbacktimeInterVal_(0) {}
+    callConferenceParticipantCallbacktimeInterVal_(1) {
+        last_arr_csrc_count_ = 0;
+        memset(last_arrOfCSRCs_, 0, sizeof(uint32_t)*kRtpCsrcSize);
+        base_time = 0;
+    }
 
 bool RtpHeaderParser::IsRtcp(const uint8_t* packet, size_t length) {
   RtpUtility::RtpHeaderParser rtp_parser(packet, length);
@@ -54,7 +62,7 @@ bool RtpHeaderParser::IsRtcp(const uint8_t* packet, size_t length) {
 
 bool RtpHeaderParserImpl::Parse(const uint8_t* packet,
                                 size_t length,
-                                RTPHeader* header) const {
+                                RTPHeader* header) {
   RtpUtility::RtpHeaderParser rtp_parser(packet, length);
   memset(header, 0, sizeof(*header));
 
@@ -70,9 +78,7 @@ bool RtpHeaderParserImpl::Parse(const uint8_t* packet,
   }
   
   /****  callback conference csrc array when csrc array changed, added by zhaoyou ******/
-  static uint8_t last_arr_csrc_count_ = 0;
-  static uint32_t last_arrOfCSRCs_[kRtpCsrcSize] = {0};
-  static int64_t base_time = 0;
+
   bool should_send = false;
   {
       int64_t current_time = Clock::GetRealTimeClock()->TimeInMilliseconds();
