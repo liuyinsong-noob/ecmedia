@@ -1,0 +1,14 @@
+prefix=/Users/yukening/Downloads/ecmedia/third_party/ffmpeg_4.2.1/thin/x86_64
+exec_prefix=${prefix}
+libdir=/Users/yukening/Downloads/ecmedia/third_party/ffmpeg_4.2.1/thin/x86_64/lib
+includedir=/Users/yukening/Downloads/ecmedia/third_party/ffmpeg_4.2.1/thin/x86_64/include
+
+Name: libavfilter
+Description: FFmpeg audio/video filtering library
+Version: 7.57.100
+Requires: libavutil >= 56.31.100
+Requires.private: 
+Conflicts:
+Libs: -L${libdir}  -lavfilter -pthread -lm
+Libs.private: 
+Cflags: -I${includedir}

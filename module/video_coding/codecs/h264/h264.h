@@ -8,7 +8,7 @@
 extern "C"
 {
 #if MAC_IPHONE
-#include "x264_ios.h"
+#include "x264.h"
 #else
 #include "x264.h"
 #endif

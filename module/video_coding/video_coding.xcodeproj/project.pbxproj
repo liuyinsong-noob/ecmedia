@@ -845,6 +845,7 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				English,
 				en,
 			);
 			mainGroup = 55AD14AC15C89FA8008A2BDA;
@@ -1068,8 +1069,8 @@
 					./codecs/vp8/main/interface,
 					./codecs/h264,
 					../../third_party/libvpx/libvpx,
-					../../third_party/libx264,
-					../../third_party/ffmpeg,
+					"../../third_party/ffmpeg-4.2.1/fat-x264/include",
+					"../../third_party/ffmpeg-4.2.1/FFmpeg-iOS/include",
 					../../module/common_video/source,
 					../../module/common_video/interface,
 					../../module/video_coding/main/source/utility/include,
@@ -1081,7 +1082,7 @@
 					../../module/audioprocess/source/,
 					"../../third_party/libyuv-ios/include",
 					../../module/video_coding/codecs/h264_hardcode,
-					../../third_party/ffmpeg/libavcodec_ios,
+					"../../third_party/ffmpeg-4.2.1/FFmpeg-iOS/include/libavcodec",
 					../../base,
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
@@ -1155,8 +1156,8 @@
 					./codecs/vp8/main/interface,
 					./codecs/h264,
 					../../third_party/libvpx/libvpx,
-					../../third_party/libx264,
-					../../third_party/ffmpeg,
+					"../../third_party/ffmpeg-4.2.1/fat-x264/include",
+					"../../third_party/ffmpeg-4.2.1/FFmpeg-iOS/include",
 					../../module/common_video/source,
 					../../module/common_video/interface,
 					../../module/video_coding/main/source/utility/include,
@@ -1168,7 +1169,7 @@
 					../../module/audioprocess/source/,
 					"../../third_party/libyuv-ios/include",
 					../../module/video_coding/codecs/h264_hardcode,
-					../../third_party/ffmpeg/libavcodec_ios,
+					"../../third_party/ffmpeg-4.2.1/FFmpeg-iOS/include/libavcodec",
 					../../base,
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;

@@ -1,0 +1,14 @@
+prefix=/Users/yukening/Downloads/ecmedia/third_party/ffmpeg_4.2.1/thin/i386
+exec_prefix=${prefix}
+libdir=/Users/yukening/Downloads/ecmedia/third_party/ffmpeg_4.2.1/thin/i386/lib
+includedir=/Users/yukening/Downloads/ecmedia/third_party/ffmpeg_4.2.1/thin/i386/include
+
+Name: libpostproc
+Description: FFmpeg postprocessing library
+Version: 55.5.100
+Requires: libavutil >= 56.31.100
+Requires.private: 
+Conflicts:
+Libs: -L${libdir}  -lpostproc -lm
+Libs.private: 
+Cflags: -I${includedir}

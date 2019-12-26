@@ -1,0 +1,11 @@
+prefix=/Users/yukening/Downloads/ecmedia/third_party/ffmpeg_4.2.1/thin-x264/armv7
+exec_prefix=${prefix}
+libdir=${exec_prefix}/lib
+includedir=${prefix}/include
+
+Name: x264
+Description: H.264 (MPEG4 AVC) encoder library
+Version: 0.159.2991
+Libs: -L${exec_prefix}/lib -lx264 -lpthread -lm -ldl
+Libs.private: 
+Cflags: -I${prefix}/include 

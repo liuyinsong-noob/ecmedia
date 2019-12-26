@@ -208,7 +208,7 @@ static AVStream *add_video_stream(AVFormatContext *oc,  enum AVCodecID codec_id,
 
 	///* Some formats want stream headers to be separate. */
 	if (oc->oformat->flags & AVFMT_GLOBALHEADER)
-		context->flags |= CODEC_FLAG_GLOBAL_HEADER;
+		context->flags |= AV_CODEC_FLAG_GLOBAL_HEADER;
 
 	return formatSt;
 }
@@ -253,7 +253,7 @@ static AVStream *add_audio_stream(AVFormatContext *oc, enum AVCodecID codec_id, 
 
 	//Some formats want stream headers to be separate. 
 	if (oc->oformat->flags & AVFMT_GLOBALHEADER)
-		c->flags |= CODEC_FLAG_GLOBAL_HEADER;
+		c->flags |= AV_CODEC_FLAG_GLOBAL_HEADER;
 
 	int ret = avcodec_open2(c, audio_codec, NULL);
 	if (ret < 0) {

@@ -3875,6 +3875,9 @@ int ECMedia_set_send_codec_video(int channelid, VideoCodec& videoCodec)
     if (codec) {
         WEBRTC_TRACE(kTraceApiCall, kTraceMediaApi, 0, "%s:%d plType:%d plname:%s", __FUNCTION__, __LINE__, videoCodec.plType,
                      videoCodec.plName);
+        videoCodec.codecType = kVideoCodecH264HIGH;
+        //videoCodec.plName =  "H264";
+        memcpy(videoCodec.plName, "H264", 4);
         int ret = codec->SetSendCodec(channelid, videoCodec);
         codec->Release();
         if (ret != 0) {

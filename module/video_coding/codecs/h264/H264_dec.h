@@ -17,7 +17,7 @@ extern "C"
 #if defined(_WIN32)
     #include "libavcodec/avcodec.h"
 #elif MAC_IPHONE
-    #include "libavcodec_ios/avcodec.h"
+    #include "libavcodec/avcodec.h"
 #else
     #include "libavcodec/avcodec.h"
 #endif

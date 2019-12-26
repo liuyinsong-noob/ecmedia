@@ -4,10 +4,10 @@
 extern "C"
 {
 #ifdef __APPLE__
-#include "libavcodec_ios/avcodec.h"
-#include "libavformat_ios/avformat.h"
-#include "libavutil_ios/opt.h"
-#include "libswresample_ios/swresample.h"
+#include "libavcodec/avcodec.h"
+#include "libavformat/avformat.h"
+#include "libavutil/opt.h"
+#include "libswresample/swresample.h"
 #else
 #include "libavcodec/avcodec.h"
 #include "libavformat/avformat.h"

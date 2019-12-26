@@ -1,0 +1,14 @@
+prefix=/Users/yukening/Downloads/ecmedia/third_party/ffmpeg_4.2.1/thin/x86_64
+exec_prefix=${prefix}
+libdir=/Users/yukening/Downloads/ecmedia/third_party/ffmpeg_4.2.1/thin/x86_64/lib
+includedir=/Users/yukening/Downloads/ecmedia/third_party/ffmpeg_4.2.1/thin/x86_64/include
+
+Name: libavutil
+Description: FFmpeg utility library
+Version: 56.31.100
+Requires: 
+Requires.private: 
+Conflicts:
+Libs: -L${libdir}  -lavutil -pthread -lm -framework VideoToolbox -framework CoreFoundation -framework CoreMedia -framework CoreVideo
+Libs.private: 
+Cflags: -I${includedir}
