@@ -77,7 +77,7 @@ AudioReceiveStream::Stats AudioReceiveStream::GetStats(int64_t &timestamp) const
 	CriticalSectionScoped lock(crit_.get());
 	timestamp = clock_->TimeInMilliseconds();
              
-    WEBRTC_TRACE(kTraceStream, kTraceVoice, -1, "audio received: remote_ssrc(%d) bytes_rcvd(%d) \n\
+ /*   WEBRTC_TRACE(kTraceStream, kTraceVoice, -1, "audio received: remote_ssrc(%d) bytes_rcvd(%d) \n\
      packets_rcvd(%d) \n \
      packets_lost(%d) \n \
      fraction_lost(%f)\n \
@@ -123,7 +123,7 @@ AudioReceiveStream::Stats AudioReceiveStream::GetStats(int64_t &timestamp) const
             audioRecvStats_.decoding_plc,
             audioRecvStats_.decoding_cng,
             audioRecvStats_.decoding_plc_cng,
-           audioRecvStats_.capture_start_ntp_time_ms);
+           audioRecvStats_.capture_start_ntp_time_ms);*/
 	return audioRecvStats_;
 }
 

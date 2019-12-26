@@ -67,7 +67,7 @@ namespace yuntongxunwebrtc{
 		CriticalSectionScoped lock(crit_.get());
 		timestamp = clock_->TimeInMilliseconds();
         
-        WEBRTC_TRACE(kTraceStream, kTraceVoice, -1, "audio send: local_ssrc(%d) \n \
+  /*      WEBRTC_TRACE(kTraceStream, kTraceVoice, -1, "audio send: local_ssrc(%d) \n \
             bytes_sent(%d) \n \
             packets_sent(%d) \n \
             packets_lost(%d) \n \
@@ -98,7 +98,7 @@ namespace yuntongxunwebrtc{
                audioSendStats_.echo_delay_std_ms,
                audioSendStats_.echo_return_loss,
                audioSendStats_.echo_return_loss_enhancement,
-               audioSendStats_.typing_noise_detected);
+               audioSendStats_.typing_noise_detected);*/
         
 		return audioSendStats_;
 	}
