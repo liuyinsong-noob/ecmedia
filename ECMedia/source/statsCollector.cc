@@ -1204,7 +1204,7 @@ void StatsCollector::AudioSenderInfo_AddNetworkStats(const AudioSendStream::Stat
     report->AddInt32(StatsReport::kStatsValueNameTransmitBitrate, info.bitrate);
 	report->AddInt32(StatsReport::kStatsValueNameJitterReceived, info.jitter_ms);
 	report->AddInt32(StatsReport::kStatsValueNameRttInMs, static_cast<int32_t>(info.rtt_ms));
-	report->AddInt32(StatsReport::kStatsValueNameLossFractionInPercent, static_cast<int32_t>(info.fraction_lost));
+	report->AddInt32(StatsReport::kStatsValueNameLossFractionInPercent, static_cast<int32_t>(info.fraction_lost) * 100 /255);
 }
 
 void StatsCollector::AudioSenderInfo_AddEchoStats(const AudioSendStream::Stats info,
@@ -1240,7 +1240,7 @@ void StatsCollector::AudioReceiverInfo_AddNetworkStats(const AudioReceiveStream:
 	report->AddFloat(StatsReport::kStatsValueNameExpandRate, info.expand_rate);
 	report->AddFloat(StatsReport::kStatsValueNamePreemptiveExpandRate, info.preemptive_expand_rate);
 
-	report->AddInt32(StatsReport::kStatsValueNameLossFractionInPercent, info.fraction_lost);
+	report->AddInt32(StatsReport::kStatsValueNameLossFractionInPercent, info.fraction_lost * 100 / 255);
 	report->AddInt32(StatsReport::kStatsValueNamePacketsLost, info.packets_lost);
 	report->AddInt32(StatsReport::kStatsValueNameJitterReceived, info.jitter_ms);
     report->AddInt32(StatsReport::kStatsValueNameTransmitBitrate, info.bitrate);
