@@ -81,7 +81,7 @@ CurlPost *g_curlpost = nullptr;
 #endif
 
 
-#define ECMEDIA_VERSION "ecmedia_version: v2.3.3.19"
+#define ECMEDIA_VERSION "ecmedia_version: v2.3.3.20"
 
 enum {
     ERR_SDK_ALREADY_INIT = -1000,
