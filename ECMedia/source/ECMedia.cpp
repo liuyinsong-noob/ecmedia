@@ -3825,6 +3825,9 @@ static void ECMedia_reset_send_codecinfo(VideoCodec& videoCodec)
 		get_slave_video_resolution(videoCodec.width, videoCodec.height, slaveW, slaveH);
 		videoCodec.simulcastStream[0].width = slaveW;
 		videoCodec.simulcastStream[0].height = slaveH;
+		if (slaveH == 0 || slaveW == 0) {
+			videoCodec.numberOfSimulcastStreams = 0;
+		}
 	}
 
 	if (videoCodec.codecType == kVideoCodecH264) {

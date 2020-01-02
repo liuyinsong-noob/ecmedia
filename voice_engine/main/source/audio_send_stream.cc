@@ -67,12 +67,9 @@ namespace yuntongxunwebrtc{
 		CriticalSectionScoped lock(crit_.get());
 		timestamp = clock_->TimeInMilliseconds();
         
-  /*      WEBRTC_TRACE(kTraceStream, kTraceVoice, -1, "audio send: local_ssrc(%d) \n \
+        /*WEBRTC_TRACE(kTraceStream, kTraceVoice, -1, "this:%ld channelid:%d audio send: local_ssrc(%d) packets_lost(%d) fraction_lost(%d)\n \
             bytes_sent(%d) \n \
             packets_sent(%d) \n \
-            packets_lost(%d) \n \
-            fraction_lost(%f) \n \
-            codec_name(%s) \n \
             ext_seqnum(%d) \n \
             jitter_ms(%d) \n \
             rtt_ms(%d) \n \
@@ -82,13 +79,12 @@ namespace yuntongxunwebrtc{
             echo_delay_std_ms(%d) \n \
             echo_return_loss(%d) \n \
             echo_return_loss_enhancement(%d) \n \
-            typing_noise_detected(%d) \n",
+            typing_noise_detected(%d) \n", (long)this, channel_id_,
                audioSendStats_.local_ssrc,
+		       audioSendStats_.packets_lost,
+			   audioSendStats_.fraction_lost,
                audioSendStats_.bytes_sent,
                audioSendStats_.packets_sent,
-               audioSendStats_.packets_lost,
-               audioSendStats_.fraction_lost,
-               audioSendStats_.codec_name.c_str(),
                audioSendStats_.ext_seqnum,
                audioSendStats_.jitter_ms,
                audioSendStats_.rtt_ms,
@@ -124,6 +120,9 @@ namespace yuntongxunwebrtc{
 			voe_rtprtcp->GetLocalSSRC(channel_id_, audioSendStats_.local_ssrc);
 			voe_rtprtcp->GetRTCPStatistics(channel_id_, callstats);
         
+			WEBRTC_TRACE(kTraceStream, kTraceVoice, -1, "this:%ld channelid:%d audio sended fractionLost:%d cumulativeLost:%d",
+				(long)this, channel_id_, callstats.fractionLost, callstats.cumulativeLost);
+
 			audioSendStats_.bytes_sent      = callstats.bytesSent;
 			audioSendStats_.packets_sent    = callstats.packetsSent;
 			audioSendStats_.jitter_ms       = callstats.jitterSamples;

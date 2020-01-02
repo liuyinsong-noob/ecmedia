@@ -77,11 +77,9 @@ AudioReceiveStream::Stats AudioReceiveStream::GetStats(int64_t &timestamp) const
 	CriticalSectionScoped lock(crit_.get());
 	timestamp = clock_->TimeInMilliseconds();
              
- /*   WEBRTC_TRACE(kTraceStream, kTraceVoice, -1, "audio received: remote_ssrc(%d) bytes_rcvd(%d) \n\
+	/*WEBRTC_TRACE(kTraceStream, kTraceVoice, -1, "this:%ld channelid:%d audio received: remote_ssrc(%d) packets_lost(%d) fraction_lost(%d)\n \
+	 bytes_rcvd(%d) \n\
      packets_rcvd(%d) \n \
-     packets_lost(%d) \n \
-     fraction_lost(%f)\n \
-     codec_name(%s) \n \
      ext_seqnum(%d) \n \
      jitter_ms(%d) \n \
      jitter_buffer_ms(%d) \n \
@@ -99,13 +97,12 @@ AudioReceiveStream::Stats AudioReceiveStream::GetStats(int64_t &timestamp) const
      decoding_plc(%d) \n \
      decoding_cng(%d) \n \
      decoding_plc_cng(%d) \n \
-     capture_start_ntp_time_ms(%d) \n",
+     capture_start_ntp_time_ms(%d) \n", (long)this, channel_id_,
            audioRecvStats_.remote_ssrc,
+		    audioRecvStats_.packets_lost,
+		    audioRecvStats_.fraction_lost,
             audioRecvStats_.bytes_rcvd,
             audioRecvStats_.packets_rcvd,
-            audioRecvStats_.packets_lost,
-            audioRecvStats_.fraction_lost,
-            audioRecvStats_.codec_name.c_str(),
            audioRecvStats_. ext_seqnum,
             audioRecvStats_.jitter_ms,
             audioRecvStats_.jitter_buffer_ms,
@@ -168,7 +165,7 @@ void AudioReceiveStream::UpdateStats()
 		audioRecvStats_.bytes_rcvd = callstats.bytesReceived;
 		audioRecvStats_.packets_rcvd = callstats.packetsReceived;
 		audioRecvStats_.packets_lost = callstats.cumulativeLost;
-		audioRecvStats_.fraction_lost = callstats.fractionLost;
+		audioRecvStats_.fraction_lost = (int)callstats.fractionLost;
 		audioRecvStats_.capture_start_ntp_time_ms = callstats.capture_start_ntp_time_ms_;
 		audioRecvStats_.ext_seqnum = callstats.extendedMax;
 
@@ -216,5 +213,8 @@ void AudioReceiveStream::UpdateStats()
 		audioRecvStats_.audio_level = static_cast<int32_t>(level);
 		voe_volume->Release();
 	}
+
+
+
 }
 }
