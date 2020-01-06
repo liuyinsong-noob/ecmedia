@@ -84,7 +84,6 @@ WebRtc_Word32 DeviceInfoAndroid::GetDeviceName(
     WebRtc_UWord32 deviceUniqueIdUTF8Length,
     char* /*productUniqueIdUTF8*/,
     WebRtc_UWord32 /*productUniqueIdUTF8Length*/) {
-
   JNIEnv *env;
   jclass javaCmDevInfoClass;
   jobject javaCmDevInfoObject;
@@ -155,7 +154,6 @@ WebRtc_Word32 DeviceInfoAndroid::GetDeviceName(
 
 WebRtc_Word32 DeviceInfoAndroid::CreateCapabilityMap(
     const char* deviceUniqueIdUTF8) {
-
 //  MapItem* item = NULL;
 //  while ((item = _captureCapabilities.Last())) {
 //    delete (VideoCaptureCapability*) item->GetItem();
@@ -266,7 +264,7 @@ WebRtc_Word32 DeviceInfoAndroid::CreateCapabilityMap(
 
 WebRtc_Word32 DeviceInfoAndroid::GetOrientation(
     const char* deviceUniqueIdUTF8,
-    VideoCaptureRotation& orientation) {
+    VideoCaptureRotation& orientation) {            
   JNIEnv *env;
   jclass javaCmDevInfoClass;
   jobject javaCmDevInfoObject;

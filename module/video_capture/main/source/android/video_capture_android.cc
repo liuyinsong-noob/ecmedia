@@ -58,7 +58,6 @@ jobject VideoCaptureAndroid::g_javaContext = NULL;
  */
 WebRtc_Word32 VideoCaptureAndroid::SetAndroidObjects(void* javaVM, void* env,
                                                      void* javaContext) {
-
 	g_jvm = static_cast<JavaVM*> (javaVM);
 	g_javaContext = static_cast<jobject> (javaContext);
 	JNIEnv* thisEnv = (JNIEnv*)env;
@@ -144,51 +143,51 @@ WebRtc_Word32 VideoCaptureAndroid::SetAndroidObjects(void* javaVM, void* env,
 	      return -1;
 	  }
 
-       if (g_javaCmDevInfoObject == NULL) {
-        	// get the method ID for the Android Java CaptureClass static
-        	//CreateVideoCaptureAndroid factory method.
-        	jmethodID cid = thisEnv->GetStaticMethodID(
-        	    g_javaCmDevInfoClass,
-        	    "CreateVideoCaptureDeviceInfoAndroid",
-        	    "(ILandroid/content/Context;)"
-        	    "Lcom/yuntongxun/ecsdk/core/voip/VideoCaptureDeviceInfoAndroid;");
-        	if (cid == NULL) {
-        	  WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceVideoCapture, -1,
-        	               "%s: could not get java"
-        	               "VideoCaptureDeviceInfoAndroid constructor ID",
-        	               __FUNCTION__);
-        	  return -1;
-        	}
+      //  if (g_javaCmDevInfoObject == NULL) {
+      //   	// get the method ID for the Android Java CaptureClass static
+      //   	//CreateVideoCaptureAndroid factory method.
+      //   	jmethodID cid = thisEnv->GetStaticMethodID(
+      //   	    g_javaCmDevInfoClass,
+      //   	    "CreateVideoCaptureDeviceInfoAndroid",
+      //   	    "(ILandroid/content/Context;)"
+      //   	    "Lcom/yuntongxun/ecsdk/core/voip/VideoCaptureDeviceInfoAndroid;");
+      //   	if (cid == NULL) {
+      //   	  WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceVideoCapture, -1,
+      //   	               "%s: could not get java"
+      //   	               "VideoCaptureDeviceInfoAndroid constructor ID",
+      //   	               __FUNCTION__);
+      //   	  return -1;
+      //   	}
 
-        	WEBRTC_TRACE(yuntongxunwebrtc::kTraceDebug, yuntongxunwebrtc::kTraceVideoCapture, -1,
-        	             "%s: construct static java device object", __FUNCTION__);
+      //   	WEBRTC_TRACE(yuntongxunwebrtc::kTraceDebug, yuntongxunwebrtc::kTraceVideoCapture, -1,
+      //   	             "%s: construct static java device object", __FUNCTION__);
 
-        	// construct the object by calling the static constructor object
-        	jobject javaCameraDeviceInfoObjLocal =
-        	    thisEnv->CallStaticObjectMethod(g_javaCmDevInfoClass,
-        	                                cid, (int) -1,
-        	                                g_javaContext);
-        	if (!javaCameraDeviceInfoObjLocal) {
-        	  WEBRTC_TRACE(yuntongxunwebrtc::kTraceWarning, yuntongxunwebrtc::kTraceVideoCapture, -1,
-        	               "%s: could not create Java Capture Device info object",
-        	               __FUNCTION__);
-        	  return -1;
-        	}
-        	// create a reference to the object (to tell JNI that
-        	// we are referencing it after this function has returned)
-        	g_javaCmDevInfoObject = thisEnv->NewGlobalRef(javaCameraDeviceInfoObjLocal);
-        	if (!g_javaCmDevInfoObject) {
-        	  WEBRTC_TRACE(yuntongxunwebrtc::kTraceError,
-        	               yuntongxunwebrtc::kTraceAudioDevice,
-        	               -1,
-        	               "%s: could not create Java"
-        	               "cameradevinceinfo object reference",
-        	               __FUNCTION__);
-        	  return -1;
-        	}
-        	// Delete local object ref, we only use the global ref
-        	thisEnv->DeleteLocalRef(javaCameraDeviceInfoObjLocal);
-        }
+      //   	// construct the object by calling the static constructor object
+      //   	jobject javaCameraDeviceInfoObjLocal =
+      //   	    thisEnv->CallStaticObjectMethod(g_javaCmDevInfoClass,
+      //   	                                cid, (int) -1,
+      //   	                                g_javaContext);
+      //   	if (!javaCameraDeviceInfoObjLocal) {
+      //   	  WEBRTC_TRACE(yuntongxunwebrtc::kTraceWarning, yuntongxunwebrtc::kTraceVideoCapture, -1,
+      //   	               "%s: could not create Java Capture Device info object",
+      //   	               __FUNCTION__);
+      //   	  return -1;
+      //   	}
+      //   	// create a reference to the object (to tell JNI that
+      //   	// we are referencing it after this function has returned)
+      //   	g_javaCmDevInfoObject = thisEnv->NewGlobalRef(javaCameraDeviceInfoObjLocal);
+      //   	if (!g_javaCmDevInfoObject) {
+      //   	  WEBRTC_TRACE(yuntongxunwebrtc::kTraceError,
+      //   	               yuntongxunwebrtc::kTraceAudioDevice,
+      //   	               -1,
+      //   	               "%s: could not create Java"
+      //   	               "cameradevinceinfo object reference",
+      //   	               __FUNCTION__);
+      //   	  return -1;
+      //   	}
+      //   	// Delete local object ref, we only use the global ref
+      //   	thisEnv->DeleteLocalRef(javaCameraDeviceInfoObjLocal);
+      //   }
     
     return 0;
 }
