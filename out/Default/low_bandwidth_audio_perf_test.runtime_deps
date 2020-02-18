@@ -1,0 +1,8 @@
+../../audio/test/low_bandwidth_audio_test.py
+../../resources/voice_engine/audio_tiny16.wav
+../../resources/voice_engine/audio_tiny48.wav
+low_bandwidth_audio_test.exe
+../../tools_webrtc/audio_quality/win/PolqaOem64.dll
+../../tools_webrtc/audio_quality/win/PolqaOem64.exe
+../../tools_webrtc/audio_quality/win/pesq.exe
+../../tools_webrtc/audio_quality/win/vcomp120.dll

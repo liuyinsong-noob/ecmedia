@@ -38,13 +38,9 @@
 .settings
 .sw?
 /Makefile
-/base
-/build
 /buildtools
 /ios
 /mojo
-/out
-/testing
 /third_party
 /tools
 /tools_webrtc/android/profiling/flamegraph
@@ -68,3 +64,13 @@
 /xcodebuild
 /.vscode
 !webrtc/*
+*.exe
+*.pdb
+*.obj
+*.stamp
+*.lib
+*.ninja_deps
+*.ninja_log
+*.dll
+*.o
+*.o.d
