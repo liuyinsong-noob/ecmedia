@@ -1,3 +1,11 @@
+这个工程下载后，把以下目录从原有能编译的webrtc工程里面的下列文件夹拷贝过来：
+out
+resources
+third_party
+tools
+buildtools
+
+
 **WebRTC is a free, open software project** that provides browsers and mobile
 applications with Real-Time Communications (RTC) capabilities via simple APIs.
 The WebRTC components have been optimized to best serve this purpose.
