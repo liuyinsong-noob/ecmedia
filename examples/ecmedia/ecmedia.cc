@@ -6,8 +6,6 @@
 #include "api/rtp_sender_interface.h"
 #include "api/rtp_transceiver_interface.h"
 
-
-
 webrtc::ECBaseManager* g_ECMedia = nullptr;
 
 /******************init**********************************************************/
@@ -43,7 +41,7 @@ ECMEDIA_API bool ECMedia_create_transport(const char* l_addr,
                                           const char* tid) {
   return g_ECMedia->CreateTransport(l_addr, l_port, r_addr, r_port, tid);
 }
- 
+
 ECMEDIA_API bool ECMedia_create_channel(const char* tid,
                                         int& channel_id,
                                         bool is_video) {
@@ -78,11 +76,13 @@ ECMEDIA_API bool ECMedia_request_remote_ssrc(int channel_id, int ssrc) {
   return g_ECMedia->RequestRemoteSsrc(channel_id, ssrc);
 }
 
-ECMEDIA_API bool ECMedia_get_video_codecs(char* jsonVideoCodecInfos,int* length){
-  return g_ECMedia->GetVideoCodecs(jsonVideoCodecInfos,  length);
+ECMEDIA_API bool ECMedia_get_video_codecs(char* jsonVideoCodecInfos,
+                                          int* length) {
+  return g_ECMedia->GetVideoCodecs(jsonVideoCodecInfos, length);
 }
 
-ECMEDIA_API bool ECMedia_get_audio_codecs(char* jsonAudioCodecInfos,int* length) {
+ECMEDIA_API bool ECMedia_get_audio_codecs(char* jsonAudioCodecInfos,
+                                          int* length) {
   return g_ECMedia->GetAudioCodecs(jsonAudioCodecInfos, length);
 }
 /**********************************render********************************************/
@@ -98,8 +98,7 @@ ECMEDIA_API bool ECMedia_add_remote_render(int channel_id, void* video_window) {
 
 /***********************ssrc*********************************************************/
 ECMEDIA_API bool ECMedia_video_set_local_ssrc(int peer_id, unsigned int ssrc) {
- 
-    return g_ECMedia->SetVideoLocalSsrc(peer_id, ssrc);
+  return g_ECMedia->SetVideoLocalSsrc(peer_id, ssrc);
 }
 
 ECMEDIA_API bool ECMedia_video_set_remote_ssrc(int peer_id, unsigned int ssrc) {
@@ -125,13 +124,11 @@ ECMEDIA_API void ECMedia_destroy_audio_track(void* track) {
 }
 
 ECMEDIA_API void* ECMedia_create_video_track(const char* track_params) {
-
- /*ECMEDIA_API void* ECMedia_create_video_track(int video_mode,
-                                             const char* track_id,
-                                             int camera_index) {*/
+  /*ECMEDIA_API void* ECMedia_create_video_track(int video_mode,
+                                              const char* track_id,
+                                              int camera_index) {*/
   std::string ss = track_params;
 
-  
   return g_ECMedia->CreateVideoTrack(ss);
 }
 
@@ -143,23 +140,22 @@ ECMEDIA_API bool ECMedia_preview_video_track(int window_id, void* track) {
   return g_ECMedia->PreviewTrack(window_id, track);
 }
 
-ECMEDIA_API bool ECMedia_select_video_source(
-    const char* tid,
-    int channelid,
-    const char* track_id,
-    void* video_track,
-    const char* s_ids) {
+ECMEDIA_API bool ECMedia_select_video_source(const char* tid,
+                                             int channelid,
+                                             const char* track_id,
+                                             void* video_track,
+                                             const char* s_ids) {
   std::vector<std::string> stream_ids;
   std::string ss = s_ids;
   size_t n = 0;
-  while (( n= ss.find(',')) != ss.npos) {
+  while ((n = ss.find(',')) != ss.npos) {
     std::string st = ss.substr(0, n);
     ss = ss.substr(n + 1);
     stream_ids.push_back(st);
-   // return true;
+    // return true;
   }
   stream_ids.push_back(ss);
- 
+
   return g_ECMedia->SelectVideoSource(tid, channelid, track_id, video_track,
                                       stream_ids);
 }
@@ -175,7 +171,7 @@ ECMEDIA_API bool ECMedia_select_audio_source(
 }
 
 ECMEDIA_API bool ECMedia_set_video_nack_status(const int channelId,
-	const bool enable_nack) {
+                                               const bool enable_nack) {
   return g_ECMedia->SetVideoNackStatus(channelId, enable_nack);
 }
 
@@ -184,75 +180,72 @@ ECMEDIA_API bool ECMedia_set_video_ulpfec_status(
     const bool enable,
     const uint8_t payloadtype_red,
     const uint8_t payloadtype_fec) {
-  return g_ECMedia->SetVideoUlpFecStatus( channelId,  enable,payloadtype_red, payloadtype_fec);
+  return g_ECMedia->SetVideoUlpFecStatus(channelId, enable, payloadtype_red,
+                                         payloadtype_fec);
 }
 
-ECMEDIA_API bool ECMedia_set_video_degradation_mode(const int channelId, int mode) {
+ECMEDIA_API bool ECMedia_set_video_degradation_mode(const int channelId,
+                                                    int mode) {
   webrtc::DegradationPreference video_mode;
-	switch (mode) { 
-	   case 0:
-         video_mode = webrtc::DegradationPreference::DISABLED;
-         break;
-       case 1:
-          video_mode = webrtc::DegradationPreference::MAINTAIN_FRAMERATE;
-         break;
-       case 2:
-         video_mode = webrtc::DegradationPreference::MAINTAIN_RESOLUTION;
-         break;
-       case 3:  
-       default:
-         video_mode = webrtc::DegradationPreference::BALANCED;
-         break;
-
+  switch (mode) {
+    case 0:
+      video_mode = webrtc::DegradationPreference::DISABLED;
+      break;
+    case 1:
+      video_mode = webrtc::DegradationPreference::MAINTAIN_FRAMERATE;
+      break;
+    case 2:
+      video_mode = webrtc::DegradationPreference::MAINTAIN_RESOLUTION;
+      break;
+    case 3:
+    default:
+      video_mode = webrtc::DegradationPreference::BALANCED;
+      break;
   }
-  return g_ECMedia->SetVideoDegradationMode(channelId,video_mode);
+  return g_ECMedia->SetVideoDegradationMode(channelId, video_mode);
 }
 
 ECMEDIA_API bool ECMedia_send_key_frame(const int channelId) {
   return g_ECMedia->SendKeyFrame(channelId);
 }
 
-ECMEDIA_API bool ECMedia_set_key_frame_request_callback(const int channelId,void* cb) {
+ECMEDIA_API bool ECMedia_set_key_frame_request_callback(const int channelId,
+                                                        void* cb) {
   return g_ECMedia->SetKeyFrameRequestCallback(channelId, cb);
-  }
+}
 
 ECMEDIA_API bool ECMedia_set_aec(bool enable) {
   return g_ECMedia->SetAEC(enable);
-  }
+}
 
 ECMEDIA_API bool ECMedia_set_agc(bool enable) {
-    return g_ECMedia->SetAEC(enable);
-  }
+  return g_ECMedia->SetAEC(enable);
+}
 
 ECMEDIA_API bool ECMedia_set_ns(bool enable) {
-    return g_ECMedia->SetAEC(enable);
-  }
+  return g_ECMedia->SetAEC(enable);
+}
 
 ECMEDIA_API void* ECMedia_create_audio_device() {
-    return g_ECMedia->CreateAudioDevice();
-  }
+  return g_ECMedia->CreateAudioDevice();
+}
 
 ECMEDIA_API bool ECMedia_set_audio_recording_volume(uint32_t vol) {
-    return g_ECMedia->SetAudioRecordingVolume(vol);
-  }
+  return g_ECMedia->SetAudioRecordingVolume(vol);
+}
 
-ECMEDIA_API bool ECMedia_get_audio_device_list(const char* json) {
-    return g_ECMedia->GetAudioDeviceList(json);
-  }
+ECMEDIA_API bool ECMedia_get_audio_device_list(char* json, int* len) {
+  return g_ECMedia->GetAudioDeviceList(json, len);
+}
 
 ECMEDIA_API bool ECMedia_set_audio_recording_device(int index) {
-    return g_ECMedia->SetAudioRecordingDevice(index);
-  }
+  return g_ECMedia->SetAudioRecordingDevice(index);
+}
 
 ///////////////////////////////////////////////////////////////////////////////////////
 /**************************************************************************************/
 
-
-
-
-
-
-//ECMEDIA_API int ECMedia_init_audio() {
+// ECMEDIA_API int ECMedia_init_audio() {
 //  if (g_ECMedia == nullptr) {
 //    g_ECMedia = webrtc::ECBaseManager::GetInstance();
 //  }
@@ -260,12 +253,12 @@ ECMEDIA_API bool ECMedia_set_audio_recording_device(int index) {
 //  return 0;
 //}
 //
-//ECMEDIA_API int ECMedia_uninit_audio() {
+// ECMEDIA_API int ECMedia_uninit_audio() {
 //  webrtc::ECBaseManager::DestroyInstance();
 //  return 0;
 //}
 //
-//ECMEDIA_API int ECMedia_init_video() {
+// ECMEDIA_API int ECMedia_init_video() {
 //  if (g_ECMedia == nullptr) {
 //    g_ECMedia = webrtc::ECBaseManager::GetInstance();
 //  }
@@ -273,7 +266,7 @@ ECMEDIA_API bool ECMedia_set_audio_recording_device(int index) {
 //  return 0;
 //}
 //
-//ECMEDIA_API int ECMedia_uninit_video() {
+// ECMEDIA_API int ECMedia_uninit_video() {
 //  webrtc::ECBaseManager::DestroyInstance();
 //  return 0;
 //}
@@ -287,18 +280,13 @@ ECMEDIA_API int ECMedia_create_engine() {
 
 /****************video capture********************/
 
-
 ECMEDIA_API bool ECMedia_get_video_devices(char* devices, int* len) {
   return g_ECMedia->GetVideoDevices(devices, len);
 }
 
-
-
 ECMEDIA_API int ECMedia_delete_channel(int peer_id) {
   return g_ECMedia->DeleteBaseManager(peer_id);
 }
-
-
 
 ECMEDIA_API int ECMdeia_num_of_capture_devices() {
   RTC_DCHECK(g_ECMedia);
@@ -346,7 +334,7 @@ ECMEDIA_API int ECMedia_connect_capture_device(int deviceid, int peer_id) {
   return g_ECMedia->ConnectCaptureDevice(deviceid, peer_id);
 }
 
-//ECMEDIA_API int ECMedia_set_local_video_window(int deviceid,
+// ECMEDIA_API int ECMedia_set_local_video_window(int deviceid,
 //                                               void* video_window) {
 //  RTC_DCHECK(g_ECMedia);
 //  return g_ECMedia->SetLocalVideoWindow(deviceid, video_window);
@@ -368,9 +356,7 @@ ECMEDIA_API int ECMedia_stop_capture(int deviceid) {
   return g_ECMedia->StopCapturer(deviceid);
 }
 
-
 /****************video render********************/
-
 
 ECMEDIA_API int ECMedia_stop_local_render(int peer_id, int deviceid) {
   RTC_DCHECK(g_ECMedia);
@@ -382,10 +368,8 @@ ECMEDIA_API int ECMedia_stop_remote_render(int peer_id, int deviceid) {
   return g_ECMedia->StopRemoteRender(peer_id, deviceid);
 }
 
-
 /*******************audio capture************************/
 ECMEDIA_API int ECMedia_start_mic(int peer_id, int deviceid) {
-
   return g_ECMedia->StartMicCapture(deviceid);
 }
 
@@ -396,8 +380,6 @@ ECMEDIA_API int ECMedia_start_sendrecv(int peer_id) {
 
   return 0;
 }
-
-
 
 ECMEDIA_API int ECMedia_video_start_receive(int peer_id) {
   return int();
@@ -417,10 +399,9 @@ ECMEDIA_API int ECMedia_video_stop_send(int peer_id) {
   return g_ECMedia->StopAllCapturer();
 }
 
-
 /*********************audio receive send*****************/
 ECMEDIA_API int ECMedia_audio_start_receive(int peer_id) {
-   return 0;
+  return 0;
 }
 
 ECMEDIA_API int ECMedia_audio_stop_receive(int peer_id) {
@@ -435,21 +416,17 @@ ECMEDIA_API int ECMedia_audio_stop_send(int peer_id) {
   return 0;
 }
 
-/***********************begin connect audio video channel***************************/
+/***********************begin connect audio video
+ * channel***************************/
 
-ECMEDIA_API bool ECMedia_start_connect(int audio_channel_id, int video_channel_id)
-{
+ECMEDIA_API bool ECMedia_start_connect(int audio_channel_id,
+                                       int video_channel_id) {
   return g_ECMedia->StartConnectChannel(audio_channel_id, video_channel_id);
 }
-
-
-
-
 
 /*********************codec**********************/
 ECMEDIA_API int ECMedia_get_supported_codecs_video(
     std::vector<ecmedia::VideoCodec>* video_codecs) {
-  
   cricket::VideoCodecs cricket_video_codecs;
   g_ECMedia->GetVideoCodecs(&cricket_video_codecs);
 
@@ -462,13 +439,13 @@ ECMEDIA_API int ECMedia_get_supported_codecs_video(
 }
 
 ECMEDIA_API int ECMedia_get_supported_codecs_audio(
-   std::vector<ecmedia::AudioCodec>* audio_codecs) {
-
-	cricket::AudioCodecs cricket_audio_codecs;
+    std::vector<ecmedia::AudioCodec>* audio_codecs) {
+  cricket::AudioCodecs cricket_audio_codecs;
   g_ECMedia->GetAudioCodecs(&cricket_audio_codecs);
 
   for (auto cr : cricket_audio_codecs) {
-    ecmedia::AudioCodec ec(cr.id, cr.name, cr.clockrate, cr.bitrate, cr.channels);
+    ecmedia::AudioCodec ec(cr.id, cr.name, cr.clockrate, cr.bitrate,
+                           cr.channels);
     audio_codecs->push_back(ec);
   }
 
@@ -477,7 +454,6 @@ ECMEDIA_API int ECMedia_get_supported_codecs_audio(
 
 ECMEDIA_API int ECMedia_set_send_codec_video(int peer_id,
                                              ecmedia::VideoCodec* video_codec) {
-
   cricket::VideoCodec cricket_video_codec(video_codec->id, video_codec->name);
 
   g_ECMedia->SetSendCodecVideo(&cricket_video_codec);
@@ -488,22 +464,18 @@ ECMEDIA_API int ECMedia_set_send_codec_video(int peer_id,
 ECMEDIA_API int ECMedia_set_receive_codec_video(
     int peer_id,
     ecmedia::VideoCodec* video_codec) {
-
   cricket::VideoCodec cricket_video_codec(video_codec->id, video_codec->name);
- 
+
   g_ECMedia->SetReceiveCodecVideo(peer_id, &cricket_video_codec);
 
   return 0;
 }
 
-ECMEDIA_API int ECMedia_set_send_codec_audio(
-	int peer_id,
-    ecmedia::AudioCodec* audio_codec) {
-
-
-  cricket::AudioCodec cricket_audio_codec(audio_codec->id, audio_codec->name,
-                                          audio_codec->clockrate,
-                                          audio_codec->bitrate, audio_codec->channels);
+ECMEDIA_API int ECMedia_set_send_codec_audio(int peer_id,
+                                             ecmedia::AudioCodec* audio_codec) {
+  cricket::AudioCodec cricket_audio_codec(
+      audio_codec->id, audio_codec->name, audio_codec->clockrate,
+      audio_codec->bitrate, audio_codec->channels);
   g_ECMedia->SetSendCodecAudio(&cricket_audio_codec);
 
   return 0;
@@ -512,7 +484,6 @@ ECMEDIA_API int ECMedia_set_send_codec_audio(
 ECMEDIA_API int ECMedia_set_receive_playloadType_audio(
     int peer_id,
     ecmedia::AudioCodec* audio_codec) {
-
   cricket::AudioCodec cricket_audio_codec(
       audio_codec->id, audio_codec->name, audio_codec->clockrate,
       audio_codec->bitrate, audio_codec->channels);
@@ -522,17 +493,12 @@ ECMEDIA_API int ECMedia_set_receive_playloadType_audio(
   return 0;
 }
 
-
-
-
-
-    /***************************ip port************************/
+/***************************ip port************************/
 ECMEDIA_API int ECMedia_video_set_send_destination(int peer_id,
                                                    const char* r_addr,
                                                    const char* l_addr,
-	                                               int port)
-                                                  {
-  //g_ECMedia->SetSendDestination(peer_id, r_addr, l_addr,port);
+                                                   int port) {
+  // g_ECMedia->SetSendDestination(peer_id, r_addr, l_addr,port);
 
   return 0;
 }
@@ -541,14 +507,29 @@ ECMEDIA_API int ECMedia_audio_set_send_destination(int peer_id,
                                                    const char* r_addr,
                                                    const char* l_addr,
                                                    int port) {
- // g_ECMedia->SetSendDestination(peer_id, r_addr, l_addr, port);
+  // g_ECMedia->SetSendDestination(peer_id, r_addr, l_addr, port);
   return 0;
 }
 
 /*ECMEDIA_API void ECMedia_add_tracks() {
 
-	 g_ECMedia->AddTracks();
+         g_ECMedia->AddTracks();
 }*/
 ECMEDIA_API int ECMedia_set_video_protect_mode(int mode) {
   return 0;
+}
+//wwx
+ECMEDIA_API bool ECMedia_set_remote_ssrc_video(char* setting, int channel_id) {
+  return g_ECMedia->SetSendSsrcVideo(setting, channel_id);
+}
+
+ECMEDIA_API bool ECMedia_set_remote_ssrc_audio(char* setting, int channel_id) {
+  return g_ECMedia->SetSendSsrcAudio(setting, channel_id);
+}
+ECMEDIA_API bool ECMedia_SetRemoteSsrcAfterSelectAudioSource(int channelId){
+  return g_ECMedia->SetRemoteSsrcAfterSelectAudioSource(channelId);
+}
+
+ECMEDIA_API bool ECMedia_SetRemoteSsrcAfterSelectVideoSource(int channelId) {
+  return g_ECMedia->SetRemoteSsrcAfterSelectVideoSource(channelId);
 }

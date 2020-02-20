@@ -76,11 +76,18 @@ ECMEDIA_API bool ECMedia_create_transport(const char* l_addr,
 /*** 函数名: 创建通道                                                     ***/
 /*** 功能:   媒体库创建逻辑通道                                           ***/
 /*** 返回值: 类型  bool   true  成功      false  失败                     ***/
-/*** 函数参数1: 名称    tid                  类型   int                   ***/
+/*** 函数参数1: 名称    tid                  类型   char*                 ***/
 /*** 函数参数2: 名称    channel_id           类型   int                   ***/
 /*** 函数参数3: 名称    is_video             类型   bool                  ***/
 /****************************************************************************/
 ECMEDIA_API bool ECMedia_create_channel(const char* tid, int& channel_id, bool is_video= true);
+
+
+
+ECMEDIA_API bool ECMedia_create_video_channel(const char* tid, int& channel_id);
+
+
+ECMEDIA_API bool ECMedia_create_voice_channel(const char* tid, int& channel_id);
 
 /****************************************************************************/
 /*** 函数名: 释放通道                                                     ***/
@@ -108,6 +115,15 @@ ECMEDIA_API bool ECMedia_start_channel(int channel_id);
 /*** 函数参数2: 名称    is_video             类型   bool                  ***/
 /****************************************************************************/
 ECMEDIA_API bool ECMedia_stop_channel(int channel_id, bool is_video = true);
+
+/****************************************************************************/
+/*** 函数名: ECMedia_delete_channel                                       ***/
+/*** 功能:   删除通道                                                     ***/
+/*** 返回值: 类型  int        0   成功   其他  失败                       ***/
+/*** 函数参数1: 类型  int        peer_id                                  ***/
+/***未实现                       ***/
+/****************************************************************************/
+ECMEDIA_API int ECMedia_delete_channel(int peer_id);
 
 /****************************************************************************/
 /*** 函数名: 增加本地渲染窗口                                             ***/
@@ -209,7 +225,7 @@ ECMEDIA_API void ECMedia_destroy_video_track(void* track);
 /****************************************************************************/
 ECMEDIA_API bool ECMedia_preview_video_track(int window_id, void* track);
 
-    /****************************************************************************/
+/****************************************************************************/
 /*** 函数名: 选择视频源                                                   ***/
 /*** 功能:   绑定视频源track与逻辑通道channel_id                          ***/
 /*** 返回值: 类型  bool    true  成功      false  失败                    ***/ 
@@ -266,6 +282,13 @@ ECMEDIA_API bool ECMedia_set_local_audio_mute(int channel_id, bool bMute);
 /****************************************************************************/
 ECMEDIA_API bool ECMedia_set_remote_audio_mute(int channel_id, bool bMute);
 
+/****************************************************************************/
+/*** 函数名: ECMedia_request_remote_ssrc                                  ***/
+/*** 功能:   请求远端ssrc                                                 ***/
+/*** 返回值: 类型  bool        true   成功   false  失败                  ***/
+/*** 函数参数1: 类型  int       channel_id                                ***/
+/*** 函数参数2: 类型  int       ssrc                                      ***/
+/****************************************************************************/
 ECMEDIA_API bool ECMedia_request_remote_ssrc(int channel_id, int ssrc);
 
 /****************************************************************************/
@@ -286,69 +309,219 @@ ECMEDIA_API bool ECMedia_get_video_codecs(char* jsonVideoCodecInfos,int* length)
 /****************************************************************************/
 ECMEDIA_API bool ECMedia_get_audio_codecs(char* jsonAudioCodecInfos,int* length);
 
-
+/****************************************************************************/
+/*** 函数名: 设置视频NACK状态                                             ***/
+/*** 功能:   设置视频是否使用NACK重传机制                                 ***/
+/*** 返回值: 类型  bool    true  成功      false  失败                    ***/
+/*** 函数参数1: 名称   channelId              类型    int                 ***/
+/*** 函数参数2: 名称   enable_nack            类型    bool                ***/
+/****************************************************************************/
 ECMEDIA_API bool ECMedia_set_video_nack_status(const int channelId, const bool enable_nack);
 
+/****************************************************************************/
+/*** 函数名: 设置视频的Fec功能                                            ***/
+/*** 功能:   开启或关闭视频Fec功能                                        ***/
+/*** 返回值: 类型  bool    true  成功      false  失败                    ***/
+/*** 函数参数1: 名称    channel_id       类型   int                       ***/
+/*** 函数参数2: 名称    enable    	   类型   bool                      ***/
+/*** 函数参数3: 名称    payloadtype_red  类型   uint8_t                   ***/
+/*** 函数参数4: 名称    payloadtype_fec  类型   uint8_t                   ***/
+/****************************************************************************/
 ECMEDIA_API bool ECMedia_set_video_ulpfec_status(const int channelId,
                           const bool enable,
                           const uint8_t payloadtype_red,
                           const uint8_t payloadtype_fec);
 
-ECMEDIA_API bool ECMedia_set_video_degradation_mode(const int channelId, int mode);
+/****************************************************************************/
+/*** 函数名: 设置视频的DegradationMode功能                                ***/
+/*** 功能:   开启或关闭视频DegradationMode功能                            ***/
+/*** 返回值: 类型  bool    true  成功      false  失败                    ***/
+/*** 函数参数1: 名称    channel_id       类型   int                       ***/
+/*** 函数参数2: 名称    mode      	   类型   DegradationPreference       ***/
+/****************************************************************************/
+ECMEDIA_API bool ECMedia_set_video_degradation_mode(const int channelId,
+                                                    int mode);
 
+/****************************************************************************/
+/*** 函数名: 关键帧发送                                                   ***/
+/*** 功能:   发送关键帧                                                   ***/
+/*** 返回值: 类型  bool    true  成功      false  失败                    ***/
+/*** 函数参数1: 名称    channel_id       类型   int                       ***/
+/****************************************************************************/
 ECMEDIA_API bool ECMedia_send_key_frame(const int channelId);
 
-ECMEDIA_API bool ECMedia_set_key_frame_request_callback(const int channelId, void* cb);
+/****************************************************************************/
+/*** 函数名: 设置关键帧回调请求                                           ***/
+/*** 功能:   设置请求关键帧回调                                           ***/
+/*** 返回值: 类型  bool    true  成功      false  失败                    ***/
+/*** 函数参数1: 名称    channel_id       类型   int                       ***/
+/*** 函数参数1: 名称    cb        类型  OnRequestKeyFrameCallback函数指针 ***/
+/****************************************************************************/
+ECMEDIA_API bool ECMedia_set_key_frame_request_callback(const int channelId,
+                                                        void* cb);
 
+/****************************************************************************/
+/*** 函数名: 设置回声消除                                                 ***/
+/*** 功能:   音频通话回音消除                                             ***/
+/*** 返回值: 类型  bool    true  成功      false  失败                    ***/
+/*** 函数参数1: 名称    enable       类型   bool                          ***/
+/*** 此函数需要在CreateChannel之前使用                                    ***/
+/****************************************************************************/
 ECMEDIA_API bool ECMedia_set_aec(bool enable);
 
+/****************************************************************************/
+/*** 函数名: 设置语音自动增益功能                                         ***/
+/*** 功能:   语音自动增益                                                 ***/
+/*** 返回值: 类型  bool    true  成功      false  失败                    ***/
+/*** 函数参数1: 名称    enable       类型   bool                          ***/
+/*** 此函数需要在CreateChannel之前使用                                    ***/
+/****************************************************************************/
 ECMEDIA_API bool ECMedia_set_agc(bool enable);
 
+/****************************************************************************/
+/*** 函数名: 设置语音噪声抑制功能                                         ***/
+/*** 功能:   语音噪声抑制                                                 ***/
+/*** 返回值: 类型  bool    true  成功      false  失败                    ***/
+/*** 函数参数1: 名称    enable       类型   bool                          ***/
+/*** 此函数需要在CreateChannel之前使用                                    ***/
+/****************************************************************************/
 ECMEDIA_API bool ECMedia_set_ns(bool enable);
 
+/****************************************************************************/
+/*** 函数名: 创建音频设备对象                                             ***/
+/*** 功能:   获取底层AudioDeviceModule对象                                ***/
+/*** 返回值: 类型  void*                                                  ***/
+/****************************************************************************/
 ECMEDIA_API void* ECMedia_create_audio_device();
 
+
+/****************************************************************************/
+/*** 函数名: 设置录音音量                                                 ***/
+/*** 功能:   设置录音设备录音音量                                         ***/
+/*** 返回值: 类型  bool        true  成功      false   失败               ***/
+/*** 函数参数1: 名称   vol                类型    uint32_t                ***/
+/****************************************************************************/
 ECMEDIA_API bool ECMedia_set_audio_recording_volume(uint32_t vol);
 
-ECMEDIA_API bool ECMedia_get_audio_device_list(const char* json);
+/****************************************************************************/
+/*** 函数名: 获取录音设备列表                                              ***/
+/*** 功能:   获取录音设备列表字符串                                        ***/
+/*** 返回值: 类型  bool        true  成功      false   失败                ***/
+/*** 函数参数1: 名称   json                类型    char*                   ***/
+/*** 函数参数2: 名称   len                 类型    int*                    ***/
+/*****************************************************************************/
+ECMEDIA_API bool ECMedia_get_audio_device_list(char* json, int* len);
 
+/****************************************************************************/
+/*** 函数名: 设置录音设备                                                  ***/
+/*** 功能:   根据索引选择需要使用的录音设备                                ***/
+/*** 返回值: 类型  bool        true  成功      false   失败                ***/
+/*** 函数参数1: 名称   i                   类型    int                     ***/
+/*****************************************************************************/
 ECMEDIA_API bool ECMedia_set_audio_recording_device(int index);
 
+/****************************************************************************/
+/*** 函数名: 获取视频设备                                                 ***/
+/*** 功能:   获取本地视频摄像头信息                                       ***/
+/*** 返回值: 类型  bool    true  成功      false  失败                    ***/
+/*** 函数参数1: 名称   devices                类型    char*               ***/
+/*** 函数参数2: 名称   *len  devices内存长度   类型    int*               ***/
+/****************************************************************************/
 ECMEDIA_API bool ECMedia_get_video_devices(char* devices, int* len);
 
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/****************************************************************************/
+/*** 函数名: ECMdeia_num_of_capture_devices                               ***/
+/*** 功能:   获取当前系统所有视频设备                                     ***/
+/*** 返回值: 类型  int         视频设备个数                               ***/
+/****************************************************************************/
+ECMEDIA_API int ECMdeia_num_of_capture_devices();
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
-
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // ECMEDIA_API int ECMedia_init_audio();
 // ECMEDIA_API int ECMedia_uninit_audio();
 // ECMEDIA_API int ECMedia_init_video();
 // ECMEDIA_API int ECMedia_uninit_video();
-
 //ECMEDIA_API int ECMedia_audio_create_channel(int& peer_id, bool is_video);
 //ECMEDIA_API int ECMedia_delete_channel(int& peer_id, bool is_video);
 
-ECMEDIA_API int ECMedia_delete_channel(int peer_id);
 
-ECMEDIA_API int ECMdeia_num_of_capture_devices();
+
+/****************************************************************************/
+/*** 函数名: ECMedia_get_capture_device                                   ***/
+/*** 功能:   根据索引获取摄像头信息                                       ***/
+/*** 返回值: 类型  int         0 成功      -1失败                         ***/
+/*** 函数参数1: 名称   index                类型    int                   ***/
+/*** 函数参数2: 名称   name                 类型    char*                 ***/
+/*** 函数参数3: 名称   name_len             类型    int                   ***/
+/*** 函数参数4: 名称   id                   类型    char*                 ***/
+/*** 函数参数5: 名称   id_len               类型    int                   ***/
+/****************************************************************************/
 ECMEDIA_API int ECMedia_get_capture_device(int index,
                                            char* name,
                                            int name_len,
                                            char* id,
                                            int id_len);
+
+/****************************************************************************/
+/*** 函数名: ECMedia_num_of_capabilities                                  ***/
+/*** 功能:   根据摄像头id获取摄像头能力个数                               ***/
+/*** 返回值: 类型  int         摄像头能力个数     -1 失败                 ***/
+/*** 函数参数1: 名称   id                   类型    char*                 ***/
+/*** 函数参数2: 名称   id_len               类型    int                   ***/
+/****************************************************************************/
 ECMEDIA_API int ECMedia_num_of_capabilities(const char* id, int id_len);
 
+/****************************************************************************/
+/*** 函数名: ECMedia_get_capture_capability                               ***/
+/*** 功能:   根据摄像头id和索引获取摄像头能力                             ***/
+/*** 返回值: 类型  int         0      成功                                ***/
+/*** 函数参数1: 名称   id                   类型    char*                 ***/
+/*** 函数参数2: 名称   id_len               类型    int                   ***/
+/*** 函数参数3: 名称   index                类型    int                   ***/
+/*** 函数参数4: 名称   capability           类型   CameraCapability&      ***/
+/****************************************************************************/
 ECMEDIA_API int ECMedia_get_capture_capability(const char* id,
                                                int id_len,
                                                int index,
                                                CameraCapability& capability);
+
+/****************************************************************************/
+/*** 函数名: ECMedia_allocate_capture_device                              ***/
+/*** 功能:   根据摄像头id获取分配摄像头                                   ***/
+/*** 返回值: 类型  int        0  成功             -1 失败                 ***/
+/*** 函数参数1: 名称   id                   类型    char*                 ***/
+/*** 函数参数2: 名称   len                  类型    int                   ***/
+/*** 函数参数3: 名称   deviceid             类型    int&                  ***/
+/****************************************************************************/
 ECMEDIA_API int ECMedia_allocate_capture_device(const char* id,
                                                 int len,
                                                 int& deviceid);
+
+/****************************************************************************/
+/*** 函数名: ECMedia_connect_capture_device                               ***/
+/*** 功能:   连接摄像头                                                   ***/
+/*** 返回值: 类型  int        0  成功             -1 失败                 ***/
+/*** 函数参数1: 名称   deviceid             类型    int                   ***/
+/*** 函数参数2: 名称   peer_id              类型    int                   ***/
+/****************************************************************************/
 ECMEDIA_API int ECMedia_connect_capture_device(int deviceid, int peer_id);
 
+/****************************************************************************/
+/*** 函数名: ECMedia_start_capture                                        ***/
+/*** 功能:   开启摄像头                                                   ***/
+/*** 返回值: 类型  int        0  成功             -1 失败                 ***/
+/*** 函数参数1: 名称   deviceid             类型    int                   ***/
+/*** 函数参数2: 名称   cam                  类型    CameraCapability      ***/
+/****************************************************************************/
 ECMEDIA_API int ECMedia_start_capture(int deviceid, CameraCapability cam);
+
+/****************************************************************************/
+/*** 函数名: ECMedia_stop_capture                                        ***/
+/*** 功能:   关闭摄像头                                                   ***/
+/*** 返回值: 类型  int        0  成功             -1 失败                 ***/
+/*** 函数参数1: 名称   deviceid             类型    int                   ***/
+/****************************************************************************/
 ECMEDIA_API int ECMedia_stop_capture(int deviceid);
 
 //ECMEDIA_API int ECMedia_set_local_video_window(int deviceid,
@@ -357,89 +530,258 @@ ECMEDIA_API int ECMedia_stop_capture(int deviceid);
 // NOTE: add_render not only add render, but also start rendering as well.
 // maybe we should change the add_xxx into start_xxx
 
+/****************************************************************************/
+/*** 函数名: ECMedia_stop_local_render                                    ***/
+/*** 功能:   停止渲染本地视频                                             ***/
+/*** 返回值: 类型  int        0  成功             -1 失败                 ***/
+/*** 函数参数1: 名称   peer_id             类型    int                    ***/
+/*** 函数参数2: 名称   deviceid            类型    int                    ***/
+/****************************************************************************/
 ECMEDIA_API int ECMedia_stop_local_render(int peer_id, int deviceid);
+
+/****************************************************************************/
+/*** 函数名: ECMedia_stop_remote_render                                   ***/
+/*** 功能:   停止渲染远端视频                                             ***/
+/*** 返回值: 类型  int        0  成功             -1 失败                 ***/
+/*** 函数参数1: 名称   peer_id             类型    int                    ***/
+/*** 函数参数2: 名称   deviceid            类型    int                    ***/
+/****************************************************************************/
 ECMEDIA_API int ECMedia_stop_remote_render(int peer_id, int deviceid);
 
 // ECMEDIA_API int ECMedia_num_of_supported_codecs_video();
 
 // ECMEDIA_API int ECMedia_num_of_supported_codecs_audio();
 
+/****************************************************************************/
+/*** 函数名: ECMedia_start_mic                                            ***/
+/*** 功能:   开启麦克风                                                   ***/
+/*** 返回值: 类型  int        0  成功             -1 失败                 ***/
+/*** 函数参数1: 名称   peer_id             类型    int                    ***/
+/*** 函数参数2: 名称   deviceid            类型    int                    ***/
+/****************************************************************************/
 ECMEDIA_API int ECMedia_start_mic(int peer_id, int deviceid);
 
+
+/****************************************************************************/
+/*** 函数名: ECMedia_start_sendrecv                                       ***/
+/*** 功能:   开始接收发送                                                 ***/
+/*** 返回值: 类型  int        0  成功             -1 失败                 ***/
+/*** 函数参数1: 名称   peer_id             类型    int                    ***/
+/****************************************************************************/
 ECMEDIA_API int ECMedia_start_sendrecv(int peer_id);
 
+/****************************************************************************/
+/*** 函数名: ECMedia_video_start_receive                                  ***/
+/*** 功能:   开始接收视频流                                               ***/
+/*** 返回值: 类型  int        0  成功             -1 失败                 ***/
+/*** 函数参数1: 名称   peer_id             类型    int                    ***/
+/****************************************************************************/
+/***未实现***/
 ECMEDIA_API int ECMedia_video_start_receive(int peer_id);
-/*
- *
- */
+
+/****************************************************************************/
+/*** 函数名: ECMedia_video_stop_receive                                   ***/
+/*** 功能:   停止接收视频流                                               ***/
+/*** 返回值: 类型  int        0  成功             -1 失败                 ***/
+/*** 函数参数1: 名称   peer_id             类型    int                    ***/
+/****************************************************************************/
+/***未实现***/
 ECMEDIA_API int ECMedia_video_stop_receive(int peer_id);
-/*
- *
- */
+
+/****************************************************************************/
+/*** 函数名: ECMedia_video_start_send                                     ***/
+/*** 功能:   开始发送视频流                                               ***/
+/*** 返回值: 类型  int        0  成功             -1 失败                 ***/
+/*** 函数参数1: 名称   peer_id             类型    int                    ***/
+/****************************************************************************/
 ECMEDIA_API int ECMedia_video_start_send(int peer_id);
-/*
- *
- */
+
+/****************************************************************************/
+/*** 函数名: ECMedia_video_stop_send                                     ***/
+/*** 功能:   停止发送视频流                                               ***/
+/*** 返回值: 类型  int        0  成功             -1 失败                 ***/
+/*** 函数参数1: 名称   peer_id             类型    int                    ***/
+/****************************************************************************/
 ECMEDIA_API int ECMedia_video_stop_send(int peer_id);
 
-/*
- *1
- */
+/****************************************************************************/
+/*** 函数名: ECMedia_audio_start_receive                                  ***/
+/*** 功能:   开始接受音频流                                               ***/
+/*** 返回值: 类型  int        0  成功             -1 失败                 ***/
+/*** 函数参数1: 名称   peer_id             类型    int                    ***/
+/****************************************************************************/
+/***未实现***/
 ECMEDIA_API int ECMedia_audio_start_receive(int peer_id);
-/*
- *1
- */
+
+/****************************************************************************/
+/*** 函数名: ECMedia_audio_stop_receive                                  ***/
+/*** 功能:   停止接受音频流                                               ***/
+/*** 返回值: 类型  int        0  成功             -1 失败                 ***/
+/*** 函数参数1: 名称   peer_id             类型    int                    ***/
+/****************************************************************************/
+/***未实现***/
 ECMEDIA_API int ECMedia_audio_stop_receive(int peer_id);
-/*
- *1
- */
+
+/****************************************************************************/
+/*** 函数名: ECMedia_audio_start_send                                     ***/
+/*** 功能:   开始发送音频流                                               ***/
+/*** 返回值: 类型  int        0  成功             -1 失败                 ***/
+/*** 函数参数1: 名称   peer_id             类型    int                    ***/
+/****************************************************************************/
+/***未实现***/
 ECMEDIA_API int ECMedia_audio_start_send(int peer_id);
-/*
- *1
- */
+
+/****************************************************************************/
+/*** 函数名: ECMedia_audio_stop_send                                      ***/
+/*** 功能:   停止发送音频流                                               ***/
+/*** 返回值: 类型  int        0  成功             -1 失败                 ***/
+/*** 函数参数1: 名称   peer_id             类型    int                    ***/
+/****************************************************************************/
+/***未实现***/
 ECMEDIA_API int ECMedia_audio_stop_send(int peer_id);
 
+/****************************************************************************/
+/*** 函数名: ECMedia_start_connect                                        ***/
+/*** 功能:   开始连接音频和视频通道                                       ***/
+/*** 返回值: 类型  bool        true  成功           false 失败           ***/
+/*** 函数参数1: 名称   audio_channel_id             类型    int           ***/
+/*** 函数参数2: 名称   video_channel_id             类型    int           ***/
+/****************************************************************************/
+/***未实现***/
 ECMEDIA_API bool ECMedia_start_connect(int audio_channel_id, int video_channel_id);
 
-
-
-
-
+/****************************************************************************/
+/*** 函数名: ECMedia_get_supported_codecs_video                               ***/
+/*** 功能:   获取支持的视频编码参数                                           ***/
+/*** 返回值: 类型  int        0  成功            -1 失败                     ***/
+/*** 函数参数1: 名称：video_codecs  类型   std::vector<ecmedia::VideoCodec>*  ***/
+/****************************************************************************/
 ECMEDIA_API int ECMedia_get_supported_codecs_video(
     std::vector<ecmedia::VideoCodec>* video_codecs);
 
+/****************************************************************************/
+/*** 函数名: ECMedia_get_supported_codecs_audio                               ***/
+/*** 功能:   获取支持的音频编码参数                                           ***/
+/*** 返回值: 类型  int        0  成功            -1 失败                      ***/
+/*** 函数参数1: 名称：audio_codecs  类型   std::vector<ecmedia::AudioCodec>*  ***/
+/****************************************************************************/
 ECMEDIA_API int ECMedia_get_supported_codecs_audio(
     std::vector<ecmedia::AudioCodec>* audio_codecs);
 
+/****************************************************************************/
+/*** 函数名: ECMedia_set_send_codec_video                                 ***/
+/*** 功能:   设置发送端视频编码                                           ***/
+/*** 返回值: 类型  int        0  成功            -1 失败                  ***/
+/*** 函数参数1: 名称：peer_id       类型   ecmedia::int                   ***/
+/*** 函数参数2: 名称：video_codecs  类型   ecmedia::VideoCodec*           ***/
+/****************************************************************************/
 ECMEDIA_API int ECMedia_set_send_codec_video(int peer_id,
                                              ecmedia::VideoCodec* video_codec);
 
+/****************************************************************************/
+/*** 函数名: ECMedia_set_receive_codec_video                              ***/
+/*** 功能:   设置接收端视频编码                                           ***/
+/*** 返回值: 类型  int        0  成功            -1 失败                  ***/
+/*** 函数参数1: 名称：peer_id       类型   ecmedia::int                   ***/
+/*** 函数参数2: 名称：video_codecs  类型   ecmedia::VideoCodec*           ***/
+/****************************************************************************/
 ECMEDIA_API int ECMedia_set_receive_codec_video(
     int peer_id,
     ecmedia::VideoCodec* video_codec);
 
+/****************************************************************************/
+/*** 函数名: ECMedia_set_send_codec_audio                                 ***/
+/*** 功能:   设置发送端音频编码                                           ***/
+/*** 返回值: 类型  int        0  成功            -1 失败                  ***/
+/*** 函数参数1: 名称：peer_id       类型   ecmedia::int                   ***/
+/*** 函数参数2: 名称：audio_codecs  类型   ecmedia::AudioCodec*           ***/
+/****************************************************************************/
 ECMEDIA_API int ECMedia_set_send_codec_audio(int peer_id,
                                              ecmedia::AudioCodec* audio_codec);
 
+/****************************************************************************/
+/*** 函数名: ECMedia_set_receive_codec_audio                              ***/
+/*** 功能:   设置接收端音频编码                                           ***/
+/*** 返回值: 类型  int        0  成功            -1 失败                  ***/
+/*** 函数参数1: 名称：peer_id       类型   ecmedia::int                   ***/
+/*** 函数参数2: 名称：audio_codecs  类型   ecmedia::AudioCodec*           ***/
+/****************************************************************************/
 ECMEDIA_API int ECMedia_set_receive_playloadType_audio(
     int peer_id,
     ecmedia::AudioCodec* audio_codec);
 
+/****************************************************************************/
+/*** 函数名: ECMedia_video_set_send_destination                           ***/
+/*** 功能:   设置视频发送地址                                             ***/
+/*** 返回值: 类型  int        0  成功            -1 失败                  ***/
+/*** 函数参数1: 名称：peer_id       类型   ecmedia::int                   ***/
+/*** 函数参数2: 名称：r_addr        类型   char*                          ***/
+/*** 函数参数3: 名称：l_addr        类型   char*                          ***/
+/*** 函数参数4: 名称：port          类型   int                            ***/
+/****************************************************************************/
+/*未实现*/
 ECMEDIA_API int ECMedia_video_set_send_destination(int peer_id,
                                                    const char* r_addr,
                                                    const char* l_addr,
                                                    int port);
 
-
-
-
+/****************************************************************************/
+/*** 函数名: ECMedia_audio_set_send_destination                           ***/
+/*** 功能:   设置音频发送地址                                             ***/
+/*** 返回值: 类型  int        0  成功            -1 失败                  ***/
+/*** 函数参数1: 名称：peer_id       类型   ecmedia::int                   ***/
+/*** 函数参数2: 名称：r_addr        类型   char*                          ***/
+/*** 函数参数3: 名称：l_addr        类型   char*                          ***/
+/*** 函数参数4: 名称：port          类型   int                            ***/
+/****************************************************************************/
+/*未实现*/
 ECMEDIA_API int ECMedia_audio_set_send_destination(int peer_id,
                                                    const char* r_addr,
                                                    const char* l_addr,
                                                    int port);
-
+/****************************************************************************/
+/*** 函数名: ECMedia_set_video_protect_mode                               ***/
+/*** 功能:   设置视频保护模式                                             ***/
+/*** 返回值: 类型  int        0  成功            -1 失败                  ***/
+/*** 函数参数1: 名称：mode                 类型     int                   ***/
+/****************************************************************************/
+/*未实现*/
 ECMEDIA_API int ECMedia_set_video_protect_mode(int mode);
 
+//wwx
+/****************************************************************************/
+/*** 函数名: ECMedia_set_remote_ssrc_video                                ***/
+/*** 功能:   创建视频通道后需要设置远端ssrc使用                           ***/
+/*** 返回值: 类型  bool       0  成功            -1 失败                  ***/
+/*** 函数参数1: 名称：tid                 类型     char*                  ***/
+/*** 函数参数2: 名称：channel_id          类型     int                    ***/
+/****************************************************************************/
+ECMEDIA_API bool ECMedia_set_remote_ssrc_video(char* tid, int channel_id);
+
+/****************************************************************************/
+/*** 函数名: ECMedia_set_remote_ssrc_video                                ***/
+/*** 功能:   创建音频通道后需要设置远端ssrc使用                           ***/
+/*** 返回值: 类型  bool       0  成功            -1 失败                  ***/
+/*** 函数参数1: 名称：tid                 类型     char*                  ***/
+/*** 函数参数2: 名称：channel_id          类型     int                    ***/
+/****************************************************************************/
+ECMEDIA_API bool ECMedia_set_remote_ssrc_audio(char* tid, int channel_id);
+
+/****************************************************************************/
+/*** 函数名: ECMedia_SetRemoteSsrcAfterSelectAudioSource                  ***/
+/*** 功能:   选择音频源之后需要设置远端ssrc使用                           ***/
+/*** 返回值: 类型  bool       0  成功            -1 失败                  ***/
+/*** 函数参数1: 名称：channelId                 类型     int              ***/
+/****************************************************************************/
+ECMEDIA_API bool ECMedia_SetRemoteSsrcAfterSelectAudioSource(int channelId);
+
+/****************************************************************************/
+/*** 函数名: ECMedia_SetRemoteSsrcAfterSelectVideoSource                  ***/
+/*** 功能:   选择视频源之后需要设置远端ssrc使用                           ***/
+/*** 返回值: 类型  bool       0  成功            -1 失败                  ***/
+/*** 函数参数1: 名称：channelId                 类型     int              ***/
+/****************************************************************************/
+ECMEDIA_API bool ECMedia_SetRemoteSsrcAfterSelectVideoSource(int channelId);
 //ECMEDIA_API void ECMedia_add_tracks();
 #ifdef __cplusplus
 }

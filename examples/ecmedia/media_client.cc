@@ -209,7 +209,9 @@ bool MediaClient::Initialize() {
 void MediaClient::UnInitialize() {
   transceivers_.clear();
   mapChannelSsrcs_.clear();
-  if (channelGenerator_) {
+  IdAudioTrainsceiver_.clear();
+  IdVideoTrainsceiver_.clear();
+  if (channelGenerator_){
     channelGenerator_->ResetGenerator();
   }
 }
@@ -455,7 +457,6 @@ bool MediaClient::CreateVideoChannel(const std::string& settings,
                                      int channelId) {
   EC_CHECK_VALUE(channel_manager_, false);
   EC_CHECK_VALUE(transport_controller_, false);
-
   bool bOk = false;
   webrtc::CryptoOptions option;
   bool bSrtpRequired = false;
@@ -515,10 +516,10 @@ bool MediaClient::CreateVideoChannel(const std::string& settings,
   video_stream_params.cname = "DcRqgGg4U0HjSqLy";
   video_stream_params.id = ksVideoLabel;
 
-  std::vector<uint32_t> ssrcsRemote;
+  // std::vector<uint32_t> ssrcsRemote;
   std::vector<uint32_t> ssrcsLocal;
   GetMediaSsrc(true, channelId, ssrcsLocal);
-  GetMediaSsrc(false, channelId, ssrcsRemote);
+  // GetMediaSsrc(false, channelId, ssrcsRemote);
   std::vector<uint32_t>::iterator it = ssrcsLocal.begin();
   while (it != ssrcsLocal.end()) {
     video_stream_params.add_ssrc(*it);
@@ -533,8 +534,8 @@ bool MediaClient::CreateVideoChannel(const std::string& settings,
   bOk = worker_thread_->Invoke<bool>(RTC_FROM_HERE, [&] {
     return video_channel_->media_channel()->AddSendStream(video_stream_params);
   });
-
-  cricket::StreamParams video_stream_params_recv;
+  //
+  /*cricket::StreamParams video_stream_params_recv;
   video_stream_params_recv.cname = "DcRqgGg4U0HjSqLy";
   video_stream_params_recv.id = ksVideoLabel;
 
@@ -558,6 +559,7 @@ bool MediaClient::CreateVideoChannel(const std::string& settings,
     return video_channel_->media_channel()->AddRecvStream(
         video_stream_params_recv);
   });
+ 
 
   webrtc::RtpDemuxerCriteria demuxer_criteria;
   demuxer_criteria.mid = config.transportId;
@@ -567,20 +569,117 @@ bool MediaClient::CreateVideoChannel(const std::string& settings,
     itr++;
   }
   transport_controller_->RegisterRtpDemuxerSink(demuxer_criteria,
-                                                video_channel_);
+                                                video_channel_);*/
   mVideoChannels_[channelId] = video_channel_;
 
   return bOk;
 }
 
+bool MediaClient::SetRemoteSsrcAfterCreatedAudioChannel(
+    const std::string& settings,
+    int channel_id) {
+  EC_CHECK_VALUE(worker_thread_, false);
+  EC_CHECK_VALUE(transport_controller_, false);
+  bool bOk = false;
+  cricket::VoiceChannel* voice_channel_ = mVoiceChannels_[channel_id];
+  std::vector<uint32_t> ssrcsRemote;
+  GetMediaSsrc(false, channel_id, ssrcsRemote);
+
+  AudioCodecConfig config;
+  if (!ParseAudioCodecSetting(settings.c_str(), &config)) {
+    return false;
+  }
+
+  cricket::StreamParams audio_stream_recv;
+  audio_stream_recv.cname = "DcRqgGg4U0HjSqLy";
+  audio_stream_recv.id = ksAudioLabel;
+  std::vector<uint32_t>::iterator itr = ssrcsRemote.begin();
+  while (itr != ssrcsRemote.end()) {
+    audio_stream_recv.add_ssrc(*itr);
+    itr++;
+  }
+
+  cricket::AudioRecvParameters recvParams;
+  channel_manager_->GetSupportedAudioReceiveCodecs(&recvParams.codecs);
+  channel_manager_->GetSupportedAudioRtpHeaderExtensions(
+      &recvParams.extensions);
+
+  bOk = worker_thread_->Invoke<bool>(RTC_FROM_HERE, [&] {
+    return voice_channel_->media_channel()->SetRecvParameters(recvParams);
+  });
+
+  bOk = worker_thread_->Invoke<bool>(RTC_FROM_HERE, [&] {
+    return voice_channel_->media_channel()->AddRecvStream(audio_stream_recv);
+  });
+
+  webrtc::RtpDemuxerCriteria demuxer_criteria;
+  demuxer_criteria.mid = config.transportId;
+  itr = ssrcsRemote.begin();
+  while (itr != ssrcsRemote.end()) {
+    demuxer_criteria.ssrcs.insert(*itr);
+    itr++;
+  }
+  transport_controller_->RegisterRtpDemuxerSink(demuxer_criteria,
+                                                voice_channel_);
+  return bOk;
+}
+// wwx
+bool MediaClient::SetRemoteSsrcAfterCreatedVideoChannel(
+    const std::string& settings,
+    int channel_id) {
+  EC_CHECK_VALUE(worker_thread_, false);
+  EC_CHECK_VALUE(transport_controller_, false);
+  bool bOk = false;
+  cricket::VideoChannel* video_channel_ = mVideoChannels_[channel_id];
+  std::vector<uint32_t> ssrcsRemote;
+  GetMediaSsrc(false, channel_id, ssrcsRemote);
+
+  cricket::StreamParams video_stream_params_recv;
+  video_stream_params_recv.cname = "DcRqgGg4U0HjSqLy";
+  video_stream_params_recv.id = ksVideoLabel;
+  VideoCodecConfig config;
+  if (!ParseVideoCodecSetting(settings.c_str(), &config)) {
+    return false;
+  }
+  std::vector<uint32_t>::iterator itr = ssrcsRemote.begin();
+  while (itr != ssrcsRemote.end()) {
+    video_stream_params_recv.add_ssrc(*itr);
+    itr++;
+  }
+  cricket::VideoRecvParameters video_recv_params;
+  channel_manager_->GetSupportedVideoCodecs(&video_recv_params.codecs);
+  channel_manager_->GetSupportedVideoRtpHeaderExtensions(
+      &video_recv_params.extensions);
+
+  bOk = worker_thread_->Invoke<bool>(RTC_FROM_HERE, [&] {
+    return video_channel_->media_channel()->SetRecvParameters(
+        video_recv_params);
+  });
+
+  bOk = worker_thread_->Invoke<bool>(RTC_FROM_HERE, [&] {
+    return video_channel_->media_channel()->AddRecvStream(
+        video_stream_params_recv);
+  });
+  webrtc::RtpDemuxerCriteria demuxer_criteria;
+  demuxer_criteria.mid = config.transportId;
+  itr = ssrcsRemote.begin();
+  while (itr != ssrcsRemote.end()) {
+    demuxer_criteria.ssrcs.insert(*itr);
+    itr++;
+  }
+  transport_controller_->RegisterRtpDemuxerSink(demuxer_criteria,
+                                                video_channel_);
+  return bOk;
+}
+
 bool MediaClient::RequestRemoteSsrc(int channel_id, int32_t ssrc) {
-  cricket::WebRtcVideoChannel* internal_video_channel = GetInternalVideoChannel(channel_id);
+  cricket::WebRtcVideoChannel* internal_video_channel =
+      GetInternalVideoChannel(channel_id);
   bool bOk = false;
   bOk = worker_thread_->Invoke<bool>(RTC_FROM_HERE, [&] {
     return internal_video_channel->RequestRemoteSsrc(channel_id, ssrc);
   });
   return bOk;
-
 }
 
 bool MediaClient::SetLocalMute(int channel_id, bool bMute) {
@@ -646,16 +745,17 @@ bool MediaClient::CreateVoiceChannel(const std::string& settings,
   channel_manager_->GetSupportedAudioSendCodecs(&sendParams.codecs);
   channel_manager_->GetSupportedAudioRtpHeaderExtensions(
       &sendParams.extensions);
+
   FilterAudioCodec(config, sendParams.codecs);
 
   cricket::StreamParams audio_stream_send;
   audio_stream_send.cname = "DcRqgGg4U0HjSqLy";
   audio_stream_send.id = ksAudioLabel;
 
-  std::vector<uint32_t> ssrcsRemote;
+  // std::vector<uint32_t> ssrcsRemote;
   std::vector<uint32_t> ssrcsLocal;
   GetMediaSsrc(true, channelId, ssrcsLocal);
-  GetMediaSsrc(false, channelId, ssrcsRemote);
+  // GetMediaSsrc(false, channelId, ssrcsRemote);
   std::vector<uint32_t>::iterator it = ssrcsLocal.begin();
   while (it != ssrcsLocal.end()) {
     audio_stream_send.add_ssrc(*it);
@@ -670,40 +770,81 @@ bool MediaClient::CreateVoiceChannel(const std::string& settings,
     return voice_channel_->media_channel()->AddSendStream(audio_stream_send);
   });
 
-  cricket::StreamParams audio_stream_recv;
-  audio_stream_recv.cname = "DcRqgGg4U0HjSqLy";
-  audio_stream_recv.id = ksAudioLabel;
-  std::vector<uint32_t>::iterator itr = ssrcsRemote.begin();
-  while (itr != ssrcsRemote.end()) {
-    audio_stream_recv.add_ssrc(*itr);
-    itr++;
-  }
+  /* cricket::StreamParams audio_stream_recv;
+   audio_stream_recv.cname = "DcRqgGg4U0HjSqLy";
+   audio_stream_recv.id = ksAudioLabel;
+   std::vector<uint32_t>::iterator itr = ssrcsRemote.begin();
+   while (itr != ssrcsRemote.end()) {
+     audio_stream_recv.add_ssrc(*itr);
+     itr++;
+   }
 
-  cricket::AudioRecvParameters recvParams;
-  channel_manager_->GetSupportedAudioReceiveCodecs(&recvParams.codecs);
-  channel_manager_->GetSupportedAudioRtpHeaderExtensions(
-      &recvParams.extensions);
+   cricket::AudioRecvParameters recvParams;
+   channel_manager_->GetSupportedAudioReceiveCodecs(&recvParams.codecs);
+   channel_manager_->GetSupportedAudioRtpHeaderExtensions(
+       &recvParams.extensions);
 
-  bOk = worker_thread_->Invoke<bool>(RTC_FROM_HERE, [&] {
-    return voice_channel_->media_channel()->SetRecvParameters(recvParams);
-  });
+   bOk = worker_thread_->Invoke<bool>(RTC_FROM_HERE, [&] {
+     return voice_channel_->media_channel()->SetRecvParameters(recvParams);
+   });
 
-  bOk = worker_thread_->Invoke<bool>(RTC_FROM_HERE, [&] {
-    return voice_channel_->media_channel()->AddRecvStream(audio_stream_recv);
-  });
+   bOk = worker_thread_->Invoke<bool>(RTC_FROM_HERE, [&] {
+     return voice_channel_->media_channel()->AddRecvStream(audio_stream_recv);
+   });
 
-  webrtc::RtpDemuxerCriteria demuxer_criteria;
-  demuxer_criteria.mid = config.transportId;
-  itr = ssrcsRemote.begin();
-  while (itr != ssrcsRemote.end()) {
-    demuxer_criteria.ssrcs.insert(*itr);
-    itr++;
-  }
-  transport_controller_->RegisterRtpDemuxerSink(demuxer_criteria,
-                                                voice_channel_);
+   webrtc::RtpDemuxerCriteria demuxer_criteria;
+   demuxer_criteria.mid = config.transportId;
+   itr = ssrcsRemote.begin();
+   while (itr != ssrcsRemote.end()) {
+     demuxer_criteria.ssrcs.insert(*itr);
+     itr++;
+   }
+   transport_controller_->RegisterRtpDemuxerSink(demuxer_criteria,
+                                                 voice_channel_);*/
   mVoiceChannels_[channelId] = voice_channel_;
 
   return bOk;
+}
+//wwx
+bool MediaClient::SetRemoteSsrcAfterSelectAudioSource(int channelId) {
+  bool bOk = false;
+  bOk = signaling_thread_->Invoke<bool>(RTC_FROM_HERE, [this, channelId] {
+    
+    RTC_DCHECK_RUN_ON(signaling_thread_);
+    auto transceiverAudio = IdAudioTrainsceiver_[channelId];
+    std::vector<uint32_t> ssrcsRemote;
+    GetMediaSsrc(false, channelId, ssrcsRemote);
+    std::vector<uint32_t>::iterator itr = ssrcsRemote.begin();
+    if (transceiverAudio->internal()->receiver_internal()) {
+		while (itr != ssrcsRemote.end()) {
+	    transceiverAudio->internal()->receiver_internal()->SetupMediaChannel(*itr);
+	    itr++;
+		}
+    }
+    return true;
+  });   
+  return bOk;
+ }
+
+bool MediaClient::SetRemoteSsrcAfterSelectVideoSource(int channelId) {
+   
+  bool bResult = false;
+  bResult = signaling_thread_->Invoke<bool>(RTC_FROM_HERE, [this, channelId] {
+    RTC_DCHECK_RUN_ON(signaling_thread_);
+    auto transceiverVideo = IdVideoTrainsceiver_[channelId];
+    std::vector<uint32_t> ssrcsRemote;
+    GetMediaSsrc(false, channelId, ssrcsRemote);
+    std::vector<uint32_t>::iterator itr = ssrcsRemote.begin();
+    if (transceiverVideo->internal()->receiver_internal()) {
+        while (itr != ssrcsRemote.end()) {
+          transceiverVideo->internal()->receiver_internal()->SetupMediaChannel(
+              *itr);
+          itr++;
+        }
+    }
+    return true;
+   });
+  return bResult;
 }
 
 bool MediaClient::SelectVoiceSource(
@@ -743,23 +884,31 @@ bool MediaClient::SelectVoiceSource(
                 signaling_thread_, new webrtc::AudioRtpReceiver(
                                        worker_thread_, rtc::CreateRandomUuid(),
                                        std::vector<std::string>({})));
+
     EC_CHECK_VALUE(receiverAudio, false);
+
     auto transceiverAudio =
         webrtc::RtpTransceiverProxyWithInternal<webrtc::RtpTransceiver>::Create(
             signaling_thread_,
             new webrtc::RtpTransceiver(senderAudio, receiverAudio));
+
     std::string mid = GetMidFromChannelId(channelId);
+
     transceiverAudio->internal()->set_mid(mid);
+
     EC_CHECK_VALUE(transceiverAudio, false);
     transceivers_.push_back(transceiverAudio);
+    // wwx
+    IdAudioTrainsceiver_[channelId] = transceiverAudio;
+
     EC_CHECK_VALUE(mVoiceChannels_[channelId], false);
 
-    std::vector<uint32_t> ssrcsRemote;
+    //std::vector<uint32_t> ssrcsRemote;
     std::vector<uint32_t> ssrcsLocal;
     GetMediaSsrc(true, channelId, ssrcsLocal);
-    GetMediaSsrc(false, channelId, ssrcsRemote);
+   // GetMediaSsrc(false, channelId, ssrcsRemote);
     std::vector<uint32_t>::iterator it = ssrcsLocal.begin();
-    std::vector<uint32_t>::iterator itr = ssrcsRemote.begin();
+   //std::vector<uint32_t>::iterator itr = ssrcsRemote.begin();
     if (transceiverAudio->internal()) {
       transceiverAudio->internal()->SetChannel(mVoiceChannels_[channelId]);
       if (transceiverAudio->internal()->sender_internal()) {
@@ -768,13 +917,13 @@ bool MediaClient::SelectVoiceSource(
           it++;
         }
       }
-      if (transceiverAudio->internal()->receiver_internal()) {
+      /*if (transceiverAudio->internal()->receiver_internal()) {
         while (itr != ssrcsRemote.end()) {
           transceiverAudio->internal()->receiver_internal()->SetupMediaChannel(
               *itr);
           itr++;
         }
-      }
+      }*/
     }
 
     return true;
@@ -836,32 +985,33 @@ bool MediaClient::SelectVideoSource(
     // transceiverVideo->internal()->AddSender
     EC_CHECK_VALUE(transceiverVideo, false);
     transceivers_.push_back(transceiverVideo);
+	//wwx
+    IdVideoTrainsceiver_[channelid]=transceiverVideo;
+
     EC_CHECK_VALUE(mVideoChannels_[channelid], false);
-    std::vector<uint32_t> ssrcsRemote;
+    //std::vector<uint32_t> ssrcsRemote;
     std::vector<uint32_t> ssrcsLocal;
     GetMediaSsrc(true, channelid, ssrcsLocal);
-    GetMediaSsrc(false, channelid, ssrcsRemote);
+    //GetMediaSsrc(false, channelid, ssrcsRemote);
     std::vector<uint32_t>::iterator it = ssrcsLocal.begin();
-    std::vector<uint32_t>::iterator itr = ssrcsRemote.begin();
+    //std::vector<uint32_t>::iterator itr = ssrcsRemote.begin();
     if (transceiverVideo->internal()) {
       transceiverVideo->internal()->set_created_by_addtrack(true);
       transceiverVideo->internal()->set_direction(
           webrtc::RtpTransceiverDirection::kSendRecv);
-
-      transceiverVideo->internal()->SetChannel(mVideoChannels_[channelid]);
+	  transceiverVideo->internal()->SetChannel(mVideoChannels_[channelid]);
       if (transceiverVideo->internal()->sender_internal()) {
         while (it != ssrcsLocal.end()) {
           transceiverVideo->internal()->sender_internal()->SetSsrc(*it);
           it++;
         }
       }
-      if (transceiverVideo->internal()->receiver_internal()) {
+	  /*if (transceiverVideo->internal()->receiver_internal()) {
         while (itr != ssrcsRemote.end()) {
-          transceiverVideo->internal()->receiver_internal()->SetupMediaChannel(
-              *itr);
+          transceiverVideo->internal()->receiver_internal()->SetupMediaChannel(*itr);
           itr++;
         }
-      }
+      }*/
     }
 
     return bOk;
@@ -871,11 +1021,19 @@ bool MediaClient::SelectVideoSource(
 
 void MediaClient::DestroyLocalAudioTrack(
     rtc::scoped_refptr<webrtc::AudioTrackInterface> track) {
-  if (track) {
-    track->GetSource()->Release();
-    while (track.release() != nullptr)
-      ;
+  if (audio_track_ == track) {
+    audio_track_.get()->GetSource()->Release();
+    audio_track_.release();
+    audio_track_ = nullptr;
   }
+  /* if (track.get()) {
+     if (track->GetSource()) {
+       track->GetSource()->Release();
+     }
+   
+     while (track.release() != nullptr);*/
+  // track = nullptr;
+  //}
 }
 rtc::scoped_refptr<webrtc::AudioTrackInterface>
 MediaClient::CreateLocalVoiceTrack(const std::string& track_id) {
@@ -911,13 +1069,13 @@ void MediaClient::DestroyLocalVideoTrack(
     for (int i = 0; i < 20; i++) {
       if (track == video_tracks_[i]) {
         video_tracks_[i] = NULL;
+        signaling_thread_->Invoke<void>(
+            RTC_FROM_HERE, [track] { track.get()->GetSource()->Release(); });
+        while (track.release() != nullptr)
+          ;
         break;
       }
     }
-    signaling_thread_->Invoke<void>(
-        RTC_FROM_HERE, [track] { track.get()->GetSource()->Release(); });
-    while (track.release() != nullptr)
-      ;
   }
 }
 
@@ -988,7 +1146,6 @@ MediaClient::CreateLocalVideoTrack(const std::string& track_params) {
   }
   return NULL;
 }
-
 
 bool MediaClient::RequestRemoteVideo(int channel_id, int32_t remote_ssrc) {
   return true;
@@ -1204,7 +1361,6 @@ bool MediaClient::SetRemoteVideoRenderWindow(int channel_Id, void* view) {
 
 bool MediaClient::ReleaseChannelId(int channelId) {
   EC_CHECK_VALUE((channelId >= 0), false);
-
   std::map<int, ChannelSsrcs>::iterator it;
   it = mapChannelSsrcs_.find(channelId);
   if (it != mapChannelSsrcs_.end()) {
@@ -1764,8 +1920,8 @@ bool MediaClient::RemoveVideoCodec(cricket::VideoCodecs& input_codecs,
   return true;
 }
 
-bool MediaClient::SetAEC(bool a) {
-  audio_options_.echo_cancellation = a;
+bool MediaClient::SetAEC(bool enable) {
+  audio_options_.echo_cancellation = enable;
   EC_CHECK_VALUE(audio_options_.echo_cancellation, true);
   /*channel_manager_->media_engine()
       ->voice()
@@ -1775,16 +1931,16 @@ bool MediaClient::SetAEC(bool a) {
 
   return true;
 }
-bool MediaClient::SetAGC(bool a) {
-  audio_options_.auto_gain_control = a;
+bool MediaClient::SetAGC(bool enable) {
+  audio_options_.auto_gain_control = enable;
   // bool enabled;
   // enabled=own_adm->BuiltInAECIsAvailable;
   EC_CHECK_VALUE(audio_options_.auto_gain_control, true);
   // return enabled;
   return true;
 }
-bool MediaClient::SetNS(bool a) {
-  audio_options_.noise_suppression = a;
+bool MediaClient::SetNS(bool enable) {
+  audio_options_.noise_suppression = enable;
   EC_CHECK_VALUE(audio_options_.noise_suppression, true);
   return true;
 }
@@ -1837,30 +1993,59 @@ bool MediaClient::SetAudioRecordingVolume(uint32_t vol) {
   return true;
 }
 
-bool MediaClient::GetAudioDeviceList(const char* json) {
-  EC_CHECK_VALUE((own_adm != nullptr), false);
-  const int num = own_adm->RecordingDevices();
-  int i = 0;
-  if (num <= 0) {
-    return false;
+bool MediaClient::GetAudioDeviceList(char* json, int* length) {
+  /* EC_CHECK_VALUE((own_adm != nullptr), false);
+   const int num = own_adm->RecordingDevices();
+   int i = 0;
+   if (num <= 0) {
+     return false;
+   }
+   Json::Value devices(Json::objectValue);
+   for (i = 0; i < num; i++) {
+     char name[webrtc::kAdmMaxDeviceNameSize];
+     char guid[webrtc::kAdmMaxGuidSize];
+     int ret = own_adm->RecordingDeviceName(i, name, guid);
+     EC_CHECK_VALUE((ret != -1), false);
+     Json::Value device(Json::objectValue);
+     device["deviceIndex"] = i;
+     device["deviceName"] = name;
+     device["deviceGuid"] = guid;
+     devices["devices"].append(device);
+   }
+   std::string strDevice = devices.toStyledString();
+   json = strDevice.c_str();
+   own_adm->InitRecording();
+   return true;*/
+  if (json && length) {
+    EC_CHECK_VALUE((own_adm != nullptr), false);
+    const int num = own_adm->RecordingDevices();
+    int i = 0;
+    if (num <= 0) {
+      return false;
+    }
+    Json::Value devices(Json::objectValue);
+    for (i = 0; i < num; i++) {
+      char name[webrtc::kAdmMaxDeviceNameSize];
+      char guid[webrtc::kAdmMaxGuidSize];
+      int ret = own_adm->RecordingDeviceName(i, name, guid);
+      EC_CHECK_VALUE((ret != -1), false);
+      Json::Value device(Json::objectValue);
+      device["deviceIndex"] = i;
+      device["deviceName"] = name;
+      device["deviceGuid"] = guid;
+      devices["devices"].append(device);
+    }
+    std::string strDevice = devices.toStyledString();
+    int len = strDevice.length();
+    if (len > *length) {
+      return false;
+    } else {
+      std::memset(json, 0, *length);
+      std::memcpy(json, strDevice.c_str(), len);
+      own_adm->InitRecording();
+      return true;
+    }
   }
-  Json::Value devices(Json::objectValue);
-  for (i = 0; i < num; i++) {
-    char name[webrtc::kAdmMaxDeviceNameSize];
-    char guid[webrtc::kAdmMaxGuidSize];
-    int ret = own_adm->RecordingDeviceName(i, name, guid);
-    EC_CHECK_VALUE((ret != -1), false);
-    Json::Value device(Json::objectValue);
-    device["deviceIndex"] = i;
-    device["deviceName"] = name;
-    device["deviceGuid"] = guid;
-    devices["devices"].append(device);
-  }
-  std::string strDevice = devices.toStyledString();
-  json = strDevice.c_str();
-  own_adm->InitRecording();
-  return true;
-
   return false;
 }
 

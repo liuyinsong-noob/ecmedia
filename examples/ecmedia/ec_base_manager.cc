@@ -40,7 +40,7 @@ void ECBaseManager::DestroyInstance() {
 
 ECBaseManager::ECBaseManager() : local_window_(nullptr) {
   vcm_device_info_.reset(webrtc::VideoCaptureFactory::CreateDeviceInfo());
-  Init();
+  Init();//创建network_thread_ ；worker_thread_；signaling_thread_三个线程；
 }
 
 ECBaseManager::~ECBaseManager() {
@@ -265,8 +265,8 @@ bool ECBaseManager::SetAudioRecordingVolume(uint32_t vol) {
   return MediaClient::GetInstance()->SetAudioRecordingVolume(vol);
 }
 
-bool ECBaseManager::GetAudioDeviceList(const char* json) {
-  return MediaClient::GetInstance()->GetAudioDeviceList(json);
+bool ECBaseManager::GetAudioDeviceList(char* json, int* len) {
+  return MediaClient::GetInstance()->GetAudioDeviceList(json, len);
 }
 
 bool ECBaseManager::SetAudioRecordingDevice(int index) {
@@ -486,9 +486,7 @@ int ECBaseManager::VideoStartSend(int peer_id) {
   if (!peer_manager) {
     return -1;
   }
-
   peer_manager->SetLocalAndRemoteDescription();
-
   return 0;
 }
 
@@ -573,5 +571,24 @@ void ECBaseManager::SetSendDestination(int peer_id,
     m_pMediaClient->AddTracks();
   }
 }*/
+bool ECBaseManager::SetSendSsrcVideo(const std::string& settings,
+                                     int channel_id) {
+  return MediaClient::GetInstance()->SetRemoteSsrcAfterCreatedVideoChannel(settings,
+                                                                    channel_id);
+}
 
+bool ECBaseManager::SetSendSsrcAudio(const std::string& settings,
+                                     int channel_id) {
+  return MediaClient::GetInstance()->SetRemoteSsrcAfterCreatedAudioChannel(settings,
+                                                                    channel_id);
+}
+bool ECBaseManager::SetRemoteSsrcAfterSelectAudioSource(int channelId) {
+ return MediaClient::GetInstance()->SetRemoteSsrcAfterSelectAudioSource(
+      channelId);
+}
+
+bool ECBaseManager::SetRemoteSsrcAfterSelectVideoSource(int channelId) {
+ return MediaClient::GetInstance()->SetRemoteSsrcAfterSelectVideoSource(
+      channelId);
+}
 }  // namespace webrtc

@@ -459,14 +459,27 @@ class MediaClient : public sigslot::has_slots<> {
   /****************************************************************************/ 
   bool SetRemoteMute(int channel_id, bool bMute);  //------add
 
+  /****************************************************************************/
+  /*** 函数名: RequestRemoteVideo                                           ***/
+  /*** 功能:   请求远端视频                                                 ***/
+  /*** 返回值: 类型  bool    true  成功      false  失败                    ***/
+  /*** 函数参数1: 名称    channel_id           类型   int                   ***/
+  /*** 函数参数2: 名称    remote_ssrc          类型   int_32_t              ***/
+  /****************************************************************************/ 
   bool RequestRemoteVideo(int channel_id, int32_t remote_ssrc);
 
+  /****************************************************************************/
+  /*** 函数名: RequestRemoteSsrc                                            ***/
+  /*** 功能:   请求远端ssrc                                                 ***/
+  /*** 返回值: 类型  bool        true   成功   false  失败                  ***/
+  /*** 函数参数1: 类型  int       channel_id                                ***/
+  /*** 函数参数2: 类型  int32_t       ssrc                                  ***/
+  /****************************************************************************/
   bool RequestRemoteSsrc(int channel_id, int32_t ssrc);
   /****************************************************************************/
   /*** 函数名: GetNumberOfVideoDevices                                      ***/
   /*** 功能:   获取当前系统所有视频设备                                     ***/
-  /*** 返回值: 类型  uint32_t    视频设备个数
-   * ***/
+  /*** 返回值: 类型  uint32_t    视频设备个数                               ***/
   /****************************************************************************/
   uint32_t GetNumberOfVideoDevices();
 
@@ -530,31 +543,122 @@ class MediaClient : public sigslot::has_slots<> {
   /****************************************************************************/
   bool SetVideoDegradationMode(const int channelId,
                                const webrtc::DegradationPreference mode);
-
+  /****************************************************************************/
+  /*** 函数名: 关键帧发送                                                   ***/
+  /*** 功能:   发送关键帧                                                   ***/
+  /*** 返回值: 类型  bool    true  成功      false  失败                    ***/
+  /*** 函数参数1: 名称    channel_id       类型   int                       ***/
+  /****************************************************************************/
   bool SendKeyFrame(const int channelId);
-
+  /****************************************************************************/
+  /*** 函数名: 设置关键帧回调请求                                           ***/
+  /*** 功能:   设置请求关键帧回调                                           ***/
+  /*** 返回值: 类型  bool    true  成功      false  失败                    ***/
+  /*** 函数参数1: 名称    channel_id       类型   int                       ***/
+  /*** 函数参数1: 名称    cb        类型  OnRequestKeyFrameCallback函数指针 ***/
+  /****************************************************************************/
   bool SetKeyFrameRequestCallback(const int channelId, OnRequestKeyFrameCallback cb);
   //////////////////////////ylr interface end////////////////////////////////
 
  //////////////////////////zjy interface start///////////////////////////////
-  //此函数需要在CreateChannel之前使用
-  bool SetAEC(bool a);
+  
+  /****************************************************************************/
+  /*** 函数名: 设置回声消除                                                 ***/
+  /*** 功能:   音频通话回音消除                                             ***/
+  /*** 返回值: 类型  bool    true  成功      false  失败                    ***/
+  /*** 函数参数1: 名称    enable       类型   bool                          ***/
+  /*** 此函数需要在CreateChannel之前使用                                    ***/
+  /****************************************************************************/
+  bool SetAEC(bool enable);
+  /****************************************************************************/
+  /*** 函数名: 设置语音自动增益功能                                         ***/
+  /*** 功能:   语音自动增益                                                 ***/
+  /*** 返回值: 类型  bool    true  成功      false  失败                    ***/
+  /*** 函数参数1: 名称    enable       类型   bool                          ***/
+  /*** 此函数需要在CreateChannel之前使用                                    ***/
+  /****************************************************************************/
+  bool SetAGC(bool enable);
+  /****************************************************************************/
+  /*** 函数名: 设置语音噪声抑制功能                                         ***/
+  /*** 功能:   语音噪声抑制                                                 ***/
+  /*** 返回值: 类型  bool    true  成功      false  失败                    ***/
+  /*** 函数参数1: 名称    enable       类型   bool                          ***/
+  /*** 此函数需要在CreateChannel之前使用                                    ***/
+  /****************************************************************************/
+  bool SetNS(bool enable);
 
-  bool SetAGC(bool a);
-
-  bool SetNS(bool a);
-
+  /****************************************************************************/
+  /*** 函数名: 创建音频设备对象                                             ***/
+  /*** 功能:   获取底层AudioDeviceModule对象                                ***/
+  /*** 返回值: 类型  scoped_refptr<webrtc::AudioDeviceModule>               ***/
+  /****************************************************************************/
   rtc::scoped_refptr<webrtc::AudioDeviceModule> CreateAudioDevice();
 
   // int GetAudioRecordingDevice(const int a);
 
+  /****************************************************************************/
+  /*** 函数名: 设置录音音量                                                 ***/
+  /*** 功能:   设置录音设备录音音量                                         ***/
+  /*** 返回值: 类型  bool        true  成功      false   失败               ***/
+  /*** 函数参数1: 名称   vol                类型    uint32_t                ***/
+  /****************************************************************************/
   bool SetAudioRecordingVolume(uint32_t vol);
+ 
+/****************************************************************************/
+/*** 函数名: 获取录音设备列表                                              ***/
+/*** 功能:   获取录音设备列表字符串                                        ***/
+/*** 返回值: 类型  bool        true  成功      false   失败                ***/
+/*** 函数参数1: 名称   json                类型    char*                   ***/
+/*** 函数参数2: 名称   length                 类型    int*                 ***/
+/*****************************************************************************/
+  bool GetAudioDeviceList( char* json, int* length);
 
-  bool GetAudioDeviceList(const char* json);
-
+/****************************************************************************/
+/*** 函数名: 设置录音设备                                                  ***/
+/*** 功能:   根据索引选择需要使用的录音设备                                ***/
+/*** 返回值: 类型  bool        true  成功      false   失败                ***/
+/*** 函数参数1: 名称   i                   类型    int                     ***/
+/*****************************************************************************/
   bool SetAudioRecordingDevice(int i);
  ///////////////////////// zjy interface end//////////////////////////////////
 
+  /****************************************************************************/
+  /*** 函数名: SetRemoteSsrcAfterCreatedVideoChannel                        ***/
+  /*** 功能:   创建视频通道后需要设置远端ssrc使用                           ***/
+  /*** 返回值: 类型  bool       0  成功            -1 失败                  ***/
+  /*** 函数参数1: 名称：settings            类型     char*                  ***/
+  /*** 函数参数2: 名称：channel_id          类型     int                    ***/
+  /****************************************************************************/
+  bool SetRemoteSsrcAfterCreatedVideoChannel(
+      const std::string& settings,
+      int channel_id);
+
+  /****************************************************************************/
+  /*** 函数名: SetRemoteSsrcAfterCreatedAudioChannel                        ***/
+  /*** 功能:   创建音频通道后需要设置远端ssrc使用                           ***/
+  /*** 返回值: 类型  bool       0  成功            -1 失败                  ***/
+  /*** 函数参数1: 名称：settings            类型     char*                  ***/
+  /*** 函数参数2: 名称：channel_id          类型     int                    ***/
+  /****************************************************************************/
+  bool SetRemoteSsrcAfterCreatedAudioChannel(
+      const std::string& settings,
+      int channel_id);
+
+  /****************************************************************************/
+  /*** 函数名: SetRemoteSsrcAfterSelectAudioSource                          ***/
+  /*** 功能:   选择音频源之后需要设置远端ssrc使用                           ***/
+  /*** 返回值: 类型  bool       0  成功            -1 失败                  ***/
+  /*** 函数参数1: 名称：channelId                 类型     int              ***/
+  /****************************************************************************/
+  bool SetRemoteSsrcAfterSelectAudioSource(int channelId);
+
+  /****************************************************************************/
+  /*** 函数名: SetRemoteSsrcAfterSelectVideoSource                          ***/
+  /*** 功能:   选择视频源之后需要设置远端ssrc使用                           ***/
+  /*** 返回值: 类型  bool       0  成功            -1 失败                  ***/
+  /*** 函数参数1: 名称：channelId                 类型     int              ***/
+  /****************************************************************************/
+  bool SetRemoteSsrcAfterSelectVideoSource(int channelId);
  private:
     MediaClient();
 
@@ -567,8 +671,8 @@ class MediaClient : public sigslot::has_slots<> {
 	bool CreateCall(webrtc::RtcEventLog* event_log);
 
 	bool CreateTransportController(bool disable_encryp = true);
-
-	bool CreateVideoChannel(const std::string& settings, int channel_id);
+    
+    bool CreateVideoChannel(const std::string& settings, int channel_id);
 
     bool CreateVoiceChannel(const std::string& settingsvvv, int channel_id);
 
@@ -588,7 +692,7 @@ class MediaClient : public sigslot::has_slots<> {
 				webrtc::RtpTransceiver>> transceiver);
 
 	void DestroyChannelInterface(cricket::ChannelInterface* channel);
-
+	
 	cricket::ChannelInterface* GetChannel(const std::string& mid);
 
 	cricket::RtpDataChannel* rtp_data_channel() const;
@@ -662,7 +766,14 @@ class MediaClient : public sigslot::has_slots<> {
 	std::map<int, cricket::VideoChannel*> mVideoChannels_;
 
 	std::map<int, cricket::VoiceChannel*> mVoiceChannels_;
-   
+	//wwx
+    std::map < int,
+            rtc::scoped_refptr<webrtc::RtpTransceiverProxyWithInternal<
+                webrtc::RtpTransceiver>>> IdAudioTrainsceiver_;
+    std::map<int,
+            rtc::scoped_refptr<webrtc::RtpTransceiverProxyWithInternal<
+                 webrtc::RtpTransceiver>>>IdVideoTrainsceiver_;
+
 	std::vector<rtc::scoped_refptr<webrtc::RtpTransceiverProxyWithInternal<webrtc::RtpTransceiver>>> transceivers_;
 
     std::map<std::string, rtc::scoped_refptr<webrtc::RtpSenderInterface>> RtpSenders_;
