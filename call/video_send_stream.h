@@ -188,6 +188,7 @@ class VideoSendStream {
   virtual Stats GetStats() = 0;
 
   virtual void SendKeyframe() = 0;
+  virtual void RequestRemoteSsrc(int32_t ssrc) =0;
 
  protected:
   virtual ~VideoSendStream() {}

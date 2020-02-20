@@ -109,6 +109,7 @@ class RtpVideoSender : public RtpVideoSenderInterface,
   std::map<uint32_t, RtpPayloadState> GetRtpPayloadStates() const override;
 
   void DeliverRtcp(const uint8_t* packet, size_t length) override;
+  void RequestRemoteSsrc(int32_t ssrc) override;
 
   // Implements webrtc::VCMProtectionCallback.
   int ProtectionRequest(const FecProtectionParams* delta_params,

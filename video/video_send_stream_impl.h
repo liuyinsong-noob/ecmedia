@@ -97,6 +97,8 @@ class VideoSendStreamImpl : public webrtc::BitrateAllocatorObserver,
   void RegisterProcessThread(ProcessThread* module_process_thread);
   void DeRegisterProcessThread();
 
+
+  void RequestRemoteSsrc(int32_t ssrc);
   void DeliverRtcp(const uint8_t* packet, size_t length);
   void UpdateActiveSimulcastLayers(const std::vector<bool> active_layers);
   void Start();
@@ -109,6 +111,7 @@ class VideoSendStreamImpl : public webrtc::BitrateAllocatorObserver,
 
   absl::optional<float> configured_pacing_factor_;
 
+ 
  private:
   // Implements BitrateAllocatorObserver.
   uint32_t OnBitrateUpdated(BitrateAllocationUpdate update) override;

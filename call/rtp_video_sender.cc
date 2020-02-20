@@ -547,7 +547,14 @@ bool RtpVideoSender::NackEnabled() const {
   const bool nack_enabled = rtp_config_.nack.rtp_history_ms > 0;
   return nack_enabled;
 }
-
+void RtpVideoSender::RequestRemoteSsrc(int32_t ssrc) {
+  for (size_t i = 0; i < rtp_streams_.size(); ++i) {
+    uint32_t bandwidth = 1;
+    uint32_t localssrc = 0;
+    uint32_t remote_ssrc = ssrc;
+    rtp_streams_[i].rtp_rtcp->SendSingleTMMBR(bandwidth,localssrc,remote_ssrc);
+  }
+}
 uint32_t RtpVideoSender::GetPacketizationOverheadRate() const {
   uint32_t packetization_overhead_bps = 0;
   for (size_t i = 0; i < rtp_streams_.size(); ++i) {
