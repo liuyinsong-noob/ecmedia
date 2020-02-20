@@ -140,6 +140,8 @@ void VideoSendStream::UpdateActiveSimulcastLayers(
   thread_sync_event_.Wait(rtc::Event::kForever);
 }
 
+
+
 void VideoSendStream::Start() {
   RTC_DCHECK_RUN_ON(&thread_checker_);
   RTC_LOG(LS_INFO) << "VideoSendStream::Start";
@@ -214,6 +216,8 @@ void VideoSendStream::DeliverRtcp(const uint8_t* packet, size_t length) {
   // Called on a network thread.
   send_stream_->DeliverRtcp(packet, length);
 }
-
+void VideoSendStream::RequestRemoteSsrc(int32_t ssrc) {
+  send_stream_->RequestRemoteSsrc(ssrc);
+}
 }  // namespace internal
 }  // namespace webrtc
