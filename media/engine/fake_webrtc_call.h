@@ -167,6 +167,8 @@ class FakeVideoSendStream final
   void SendKeyframe() {
     
   }
+  void RequestRemoteSsrc(int32_t ssrc) {}
+
  private:
   // rtc::VideoSinkInterface<VideoFrame> implementation.
   void OnFrame(const webrtc::VideoFrame& frame) override;

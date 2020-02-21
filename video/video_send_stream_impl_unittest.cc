@@ -73,6 +73,7 @@ class MockRtpVideoSender : public RtpVideoSenderInterface {
                      std::vector<RtpSequenceNumberMap::Info>(
                          uint32_t ssrc,
                          rtc::ArrayView<const uint16_t> sequence_numbers));
+  MOCK_METHOD1(RequestRemoteSsrc, void(int32_t));
 };
 
 BitrateAllocationUpdate CreateAllocation(int bitrate_bps) {
