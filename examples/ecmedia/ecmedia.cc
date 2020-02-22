@@ -8,11 +8,16 @@
 
 webrtc::ECBaseManager* g_ECMedia = nullptr;
 
+ECMEDIA_API bool ECMedia_set_trace(const char* path, const int level) {
+    g_ECMedia->SetTrace(path, level);
+    return true;
+}
 /******************init**********************************************************/
 ECMEDIA_API int ECMedia_init() {
   if (g_ECMedia == nullptr) {
     g_ECMedia = webrtc::ECBaseManager::GetInstance();
     g_ECMedia->Init();
+   //ECMedia_set_trace(".\ecmediaAPI.txt", 1);
     return 0;
   }
   return -1;
@@ -518,7 +523,7 @@ ECMEDIA_API int ECMedia_audio_set_send_destination(int peer_id,
 ECMEDIA_API int ECMedia_set_video_protect_mode(int mode) {
   return 0;
 }
-//wwx
+// wwx
 ECMEDIA_API bool ECMedia_set_remote_ssrc_video(char* setting, int channel_id) {
   return g_ECMedia->SetSendSsrcVideo(setting, channel_id);
 }
@@ -526,7 +531,7 @@ ECMEDIA_API bool ECMedia_set_remote_ssrc_video(char* setting, int channel_id) {
 ECMEDIA_API bool ECMedia_set_remote_ssrc_audio(char* setting, int channel_id) {
   return g_ECMedia->SetSendSsrcAudio(setting, channel_id);
 }
-ECMEDIA_API bool ECMedia_SetRemoteSsrcAfterSelectAudioSource(int channelId){
+ECMEDIA_API bool ECMedia_SetRemoteSsrcAfterSelectAudioSource(int channelId) {
   return g_ECMedia->SetRemoteSsrcAfterSelectAudioSource(channelId);
 }
 

@@ -35,6 +35,7 @@ class ECBaseManager : public sigslot::has_slots<> {
 
   ~ECBaseManager();
   void Init();
+  bool SetTrace(const char* path, const int level);
 
   bool GenerateChannelId(int& id);
 

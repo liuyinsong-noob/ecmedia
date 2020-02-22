@@ -6,6 +6,7 @@
 #include <memory>
 #include <string>
 
+#include "ec_log.h"
 #include "../../api/media_stream_interface.h"
 #include "../../api/media_transport_interface.h"
 #include "../../api/peer_connection_interface.h"
@@ -220,7 +221,7 @@ class MediaClient : public sigslot::has_slots<> {
 
  virtual ~MediaClient();
 
-
+ bool SetTrace(const char* path, int min_sev);
   /***************************************************************************/
   /*** 函数名: 初始化                                                      ***/
   /*** 功能:   获取媒体库实例                                              ***/
@@ -731,6 +732,9 @@ class MediaClient : public sigslot::has_slots<> {
     static MediaClient* m_pInstance;
 
     static rtc::CriticalSection m_critical;
+
+	//std::unique_ptr<rtc::LogSink*> ec_log_ = nullptr;
+    rtc::LogSink* ec_log_ = nullptr;
 
     rtc::scoped_refptr<webrtc::AudioTrackInterface> audio_track_ = nullptr;
 

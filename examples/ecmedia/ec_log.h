@@ -4,7 +4,7 @@
 #include "rtc_base/logging.h"
 class ECLog : public rtc::LogSink {
  public:
-  ECLog(char* log_path);
+  ECLog(const char* log_path);
   ~ECLog();
   virtual void OnLogMessage(const std::string& message) override;
 

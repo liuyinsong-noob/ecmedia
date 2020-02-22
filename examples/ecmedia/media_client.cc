@@ -181,6 +181,20 @@ MediaClient::~MediaClient() {
       }
     });
   }
+  if (ec_log_) {
+    delete ec_log_;
+  }
+}
+
+bool MediaClient::SetTrace(const char* path, int min_sev) {
+
+	if (!ec_log_) {
+     //ec_log_.reset(new ECLog(path));
+	ec_log_= new ECLog(path);
+   	}
+    rtc::LoggingSeverity ls = (rtc::LoggingSeverity)min_sev;
+    rtc::LogMessage::AddLogToStream(ec_log_,ls);
+    return true;
 }
 
 bool MediaClient::Initialize() {
@@ -203,6 +217,8 @@ bool MediaClient::Initialize() {
     });
     m_bInitialized = bOk;
   }
+  //wwx
+ //SetTrace("ecmediaAPI.txt", 1);
   return bOk;
 }
 
@@ -897,6 +913,7 @@ bool MediaClient::SelectVoiceSource(
     transceiverAudio->internal()->set_mid(mid);
 
     EC_CHECK_VALUE(transceiverAudio, false);
+
     transceivers_.push_back(transceiverAudio);
     // wwx
     IdAudioTrainsceiver_[channelId] = transceiverAudio;
@@ -925,7 +942,6 @@ bool MediaClient::SelectVoiceSource(
         }
       }*/
     }
-
     return true;
   });
   return bResult;

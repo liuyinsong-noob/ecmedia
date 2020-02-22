@@ -23,12 +23,20 @@ using ecmedia_sdk::MediaClient;
 ECBaseManager* ECBaseManager::g_instance = nullptr;
 rtc::CriticalSection ECBaseManager::getIns_crit_;
 
+bool ECBaseManager::SetTrace(const char* path, const int level){
+  MediaClient::GetInstance()->SetTrace(path, level);
+  return true;
+}
+
+
 ECBaseManager* ECBaseManager::GetInstance() {
   rtc::CritScope lock(&getIns_crit_);
   if (g_instance == nullptr)
     g_instance = new ECBaseManager();
   return g_instance;
 }
+
+
 
 void ECBaseManager::DestroyInstance() {
   rtc::CritScope lock(&getIns_crit_);

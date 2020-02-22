@@ -1,15 +1,20 @@
 #include "ec_log.h"
 
-ECLog::ECLog(char* log_path) {
+ECLog::ECLog(const char* log_path) {
   fstream_.open(log_path, std::fstream::out | std::fstream::binary);
   if (fstream_.is_open())
   {
     int i = 0;
     i = 1;
   } else {
-    fstream_.open(".\111.txt");
+    if (log_path) {
+      fstream_.open(log_path);
+    }else{
+    fstream_.open(".\ecmediaAPI.txt");
+    }
   }
 }
+
 ECLog ::~ECLog() {
   if (fstream_.is_open()) {
     int i = 0;
