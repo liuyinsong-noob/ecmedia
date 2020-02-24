@@ -735,7 +735,7 @@ class MediaClient : public sigslot::has_slots<> {
 
 	//std::unique_ptr<rtc::LogSink*> ec_log_ = nullptr;
     rtc::LogSink* ec_log_ = nullptr;
-
+    bool bfirst = true;
     rtc::scoped_refptr<webrtc::AudioTrackInterface> audio_track_ = nullptr;
 
     rtc::scoped_refptr<webrtc::VideoTrackInterface> video_tracks_[20];

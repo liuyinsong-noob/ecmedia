@@ -193,18 +193,20 @@ MediaClient::~MediaClient() {
   }
   RTC_LOG(INFO) << " end...";
 }
-
+//wwx
 bool MediaClient::SetTrace(const char* path, int min_sev) {
   RTC_LOG(INFO) << " begin..."
                 << "path:" << path << "min_sev:" << min_sev;
 
 	if (!ec_log_) {
-     //ec_log_.reset(new ECLog(path));
-	ec_log_= new ECLog(path);
+     ec_log_= new ECLog(path);
    	}
     rtc::LoggingSeverity ls = (rtc::LoggingSeverity)min_sev;
-    rtc::LogMessage::AddLogToStream(ec_log_,ls);
-    RTC_LOG(INFO) << " end...";
+    if (bfirst) {
+      rtc::LogMessage::AddLogToStream(ec_log_, ls);
+      bfirst = false;
+	}
+	RTC_LOG(INFO) << " end...";
     return true;
 }
 
@@ -230,8 +232,8 @@ bool MediaClient::Initialize() {
     m_bInitialized = bOk;
   }
   //wwx
- //SetTrace("ecmediaAPI.txt", 1);
-  RTC_LOG(INFO) << " end...";
+  //SetTrace("ecmediaAPI.txt", 1);
+  RTC_LOG(INFO) << "wwx end...";
   return bOk;
 }
 
