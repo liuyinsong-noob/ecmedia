@@ -138,37 +138,37 @@ MediaClient* MediaClient::m_pInstance = NULL;
 rtc::CriticalSection MediaClient::m_critical;
 
 MediaClient* MediaClient::GetInstance() {
-  RTC_LOG(INFO) << " begin...";
+  RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__  << "() "<< " begin...";
   rtc::CritScope lock(&m_critical);
   if (m_pInstance == NULL) {
     m_pInstance = new MediaClient();
     RTC_CHECK(m_pInstance);
   }
-  RTC_LOG(INFO) << " end...";
+  RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__  << "() "<< " end...";
   return m_pInstance;
 
 }
 
 void MediaClient::DestroyInstance() {
-  RTC_LOG(INFO) << " begin...";
+  RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__  << "() "<< " begin...";
   rtc::CritScope lock(&m_critical);
   if (m_pInstance) {
     delete m_pInstance;
     m_pInstance = NULL;
   }
-  RTC_LOG(INFO) << " end...";
+  RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__  << "() "<< " end...";
 }
 
 MediaClient::MediaClient() {
-  RTC_LOG(INFO) << " begin...";
+  RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__  << "() "<< " begin...";
   m_bInitialized = false;
   m_nConnected = SC_UNCONNECTED;
   vsum_ = 0;
-  RTC_LOG(INFO) << " end...";
+  RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__  << "() "<< " end...";
 }
 
 MediaClient::~MediaClient() {
-  RTC_LOG(INFO) << " begin...";
+  RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__  << "() "<< " begin...";
   if (signaling_thread_) {
     signaling_thread_->Invoke<void>(RTC_FROM_HERE, [this] {
       RTC_DCHECK_RUN_ON(signaling_thread_);
@@ -191,11 +191,11 @@ MediaClient::~MediaClient() {
   if (ec_log_) {
     delete ec_log_;
   }
-  RTC_LOG(INFO) << " end...";
+  RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__  << "() "<< " end...";
 }
 //wwx
 bool MediaClient::SetTrace(const char* path, int min_sev) {
-  RTC_LOG(INFO) << " begin..."
+  RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__  << "() "<< " begin..."
                 << "path:" << path << "min_sev:" << min_sev;
 
 	if (!ec_log_) {
@@ -206,12 +206,12 @@ bool MediaClient::SetTrace(const char* path, int min_sev) {
       rtc::LogMessage::AddLogToStream(ec_log_, ls);
       bfirst = false;
 	}
-	RTC_LOG(INFO) << " end...";
+    RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__  << "() "<< " end...";
     return true;
 }
 
 bool MediaClient::Initialize() {
-  RTC_LOG(INFO) << " begin...";
+  RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__  << "( )   " << "() "<< " begin...";
   bool bOk = true;
   if (!m_bInitialized) {
     bOk &= CreateThreads();
@@ -232,13 +232,13 @@ bool MediaClient::Initialize() {
     m_bInitialized = bOk;
   }
   //wwx
-  //SetTrace("ecmediaAPI.txt", 1);
-  RTC_LOG(INFO) << "wwx end...";
+  SetTrace("ecmediaAPI.txt", 1);
+  RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__  << "( )   " << "() "<< "wwx end...";
   return bOk;
 }
 
 void MediaClient::UnInitialize() {
-  RTC_LOG(INFO) << " begin...";
+  RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__  << "( )   " << "() "<< " begin...";
   transceivers_.clear();
   mapChannelSsrcs_.clear();
   IdAudioTrainsceiver_.clear();
@@ -246,36 +246,36 @@ void MediaClient::UnInitialize() {
   if (channelGenerator_){
     channelGenerator_->ResetGenerator();
   }
-  RTC_LOG(INFO) << " end...";
+  RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__  << "( )   " << "() "<< " end...";
 }
 
 void MediaClient::DestroyTransport() {
-  RTC_LOG(INFO) << " begin...";
+  RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__  << "( )   " << "() "<< " begin...";
   if (m_nConnected == SC_CONNECTED) {
     m_nConnected = SC_DISCONNECTING;
     signaling_thread_->Invoke<bool>(RTC_FROM_HERE,
                                     [&] { return DisposeConnect(); });
     m_nConnected = SC_UNCONNECTED;
   }
-  RTC_LOG(INFO) << " end...";
+  RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__  << "() "<< " end...";
 }
 
 bool MediaClient::GenerateChannelId(int* channelId) {
-  RTC_LOG(INFO) << " begin...";
+  RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__  << "() "<< " begin...";
   EC_CHECK_VALUE(channelId, false);
   EC_CHECK_VALUE((channelGenerator_), false);
 
   if (channelGenerator_->GeneratorId(*channelId)) {
     mapChannelSsrcs_[*channelId].mid = getStrFromInt(*channelId);
-    RTC_LOG(INFO) << " end ... return true";
+    RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__  << "() "<< " end ... return true";
     return true;
   }
-  RTC_LOG(INFO) << " end... return false";
+  RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__  << "() "<< " end... return false";
   return false;
 }
 
 bool MediaClient::CreateThreads() {
-  RTC_LOG(INFO) << " begin...";
+  RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__  << "() "<< " begin...";
   if (!network_thread_) {
     owned_network_thread_ = rtc::Thread::CreateWithSocketServer();
     owned_network_thread_->SetName("pc_network_thread", nullptr);
@@ -298,12 +298,12 @@ bool MediaClient::CreateThreads() {
     signaling_thread_ = owned_signaling_thread_.get();
   }
   EC_CHECK_VALUE(signaling_thread_, false);
-  RTC_LOG(INFO) << " end...";
+  RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__  << "() "<< " end...";
   return true;
 }
 
 bool MediaClient::CreateRtcEventLog() {
-  RTC_LOG(INFO) << " begin...";
+  RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__  << "() "<< " begin...";
   RTC_DCHECK_RUN_ON(worker_thread_);
 
   std::unique_ptr<webrtc::RtcEventLogFactoryInterface> event_log_factory =
@@ -319,12 +319,12 @@ bool MediaClient::CreateRtcEventLog() {
 
   EC_CHECK_VALUE(event_log_, false);
   event_log_ptr_ = event_log_.get();
-  RTC_LOG(INFO) << " end...";
+  RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__  << "() "<< " end...";
   return true;
 }
 
 bool MediaClient::CreateChannelManager() {
-  RTC_LOG(INFO) << " begin...";
+  RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__  << "() "<< " begin...";
   RTC_DCHECK_RUN_ON(signaling_thread_);
   rtc::InitRandom(rtc::Time32());
 
@@ -361,12 +361,12 @@ bool MediaClient::CreateChannelManager() {
 
   bool bOk = channel_manager_->Init();
   EC_CHECK_VALUE(bOk, false);
-  RTC_LOG(INFO) << " end...";
+  RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__  << "() "<< " end...";
   return bOk;
 }
 
 bool MediaClient::CreateCall(webrtc::RtcEventLog* event_log) {
-  RTC_LOG(INFO) << " begin..."
+  RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__  << "() "<< " begin..."
                 << "event_log:" << event_log;
   RTC_DCHECK_RUN_ON(worker_thread_);
 
@@ -410,7 +410,7 @@ bool MediaClient::CreateCall(webrtc::RtcEventLog* event_log) {
   call_ptr_ = call_.get();
 
   channel_manager_->SetVideoRtxEnabled(true);
-  RTC_LOG(INFO) << " end...";
+  RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__  << "() "<< " end...";
   return true;
 }
 
@@ -422,7 +422,7 @@ bool MediaClient::CreateTransport(const char* local_addr,
                                   int remote_port,
                                   const std::string& tid,
                                   bool bUdp) {
-  RTC_LOG(INFO) << " begin..."
+  RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__  << "() "<< " begin..."
                 << "local_addr:" << local_addr << "local_port:" << local_port
                 << "remote_addr:" << remote_addr
                 << "remote_port:" << remote_port << "tid:" << tid
@@ -458,11 +458,11 @@ bool MediaClient::CreateTransport(const char* local_addr,
       transport_controller_->setUdpConnection(
           tid, default_socket_factory_.get(), local, remote);
   });
-  RTC_LOG(INFO) << " end...";
+  RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__  << "() "<< " end...";
   return true;
 }
 void MediaClient::DestroyChannel(int channel_id, bool is_video) {
-  RTC_LOG(INFO) << " begin..."
+  RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__  << "() "<< " begin..."
                 << "channel_id:" << channel_id << "is_video:" << is_video;
   if (is_video) {
     cricket::VideoChannel* channel = mVideoChannels_[channel_id];
@@ -474,13 +474,13 @@ void MediaClient::DestroyChannel(int channel_id, bool is_video) {
       }
     }
   }
-  RTC_LOG(INFO) << " end...";
+  RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__  << "() "<< " end...";
 }
 
 bool MediaClient::CreateChannel(const std::string& settings,
                                 int channel_id,
                                 bool is_video) {
-  RTC_LOG(INFO) << " begin..."
+  RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__  << "() "<< " begin..."
                 << "settings:" << settings << "channel_id:" << channel_id
                 << "is_video:" << is_video;
   bool bOk = false;
@@ -503,13 +503,13 @@ bool MediaClient::CreateChannel(const std::string& settings,
       transports_[tid] = channels;
     }
   }
-  RTC_LOG(INFO) << " end...";
+  RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__  << "() "<< " end...";
   return bOk;
 }
 
 bool MediaClient::CreateVideoChannel(const std::string& settings,
                                      int channelId) {
-  RTC_LOG(INFO) << " begin..."
+  RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__  << "() "<< " begin..."
                 << "settings:" << settings << "channel_id:" << channelId;
   EC_CHECK_VALUE(channel_manager_, false);
   EC_CHECK_VALUE(transport_controller_, false);
@@ -631,14 +631,14 @@ bool MediaClient::CreateVideoChannel(const std::string& settings,
   transport_controller_->RegisterRtpDemuxerSink(demuxer_criteria,
                                                 video_channel_);*/
   mVideoChannels_[channelId] = video_channel_;
-  RTC_LOG(INFO) << " end...";
+  RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__  << "() "<< " end...";
   return bOk;
 }
 
 bool MediaClient::SetRemoteSsrcAfterCreatedAudioChannel(
     const std::string& settings,
     int channel_id) {
-  RTC_LOG(INFO) << " begin..."
+  RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__  << "() "<< " begin..."
                 << "settings:" << settings << "channel_id:" << channel_id;
   EC_CHECK_VALUE(worker_thread_, false);
   EC_CHECK_VALUE(transport_controller_, false);
@@ -683,14 +683,14 @@ bool MediaClient::SetRemoteSsrcAfterCreatedAudioChannel(
   }
   transport_controller_->RegisterRtpDemuxerSink(demuxer_criteria,
                                                 voice_channel_);
-  RTC_LOG(INFO) << " end...";
+  RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__  << "() "<< " end...";
   return bOk;
 }
 // wwx
 bool MediaClient::SetRemoteSsrcAfterCreatedVideoChannel(
     const std::string& settings,
     int channel_id) {
-  RTC_LOG(INFO) << " begin..."
+  RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__  << "() "<< " begin..."
                 << "settings:" << settings << "channel_id:" << channel_id;
   EC_CHECK_VALUE(worker_thread_, false);
   EC_CHECK_VALUE(transport_controller_, false);
@@ -734,12 +734,12 @@ bool MediaClient::SetRemoteSsrcAfterCreatedVideoChannel(
   }
   transport_controller_->RegisterRtpDemuxerSink(demuxer_criteria,
                                                 video_channel_);
-  RTC_LOG(INFO) << " end...";
+  RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__  << "() "<< " end...";
   return bOk;
 }
 
 bool MediaClient::RequestRemoteSsrc(int channel_id, int32_t ssrc) {
-  RTC_LOG(INFO) << " begin..."
+  RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__  << "() "<< " begin..."
                 << "channel_id:" << channel_id << "ssrc:" << ssrc;
   cricket::WebRtcVideoChannel* internal_video_channel =
       GetInternalVideoChannel(channel_id);
@@ -747,12 +747,12 @@ bool MediaClient::RequestRemoteSsrc(int channel_id, int32_t ssrc) {
   bOk = worker_thread_->Invoke<bool>(RTC_FROM_HERE, [&] {
     return internal_video_channel->RequestRemoteSsrc(channel_id, ssrc);
   });
-  RTC_LOG(INFO) << " end...";
+  RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__  << "() "<< " end...";
   return bOk;
 }
 
 bool MediaClient::SetLocalMute(int channel_id, bool bMute) {
-  RTC_LOG(INFO) << " begin..."
+  RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__  << "() "<< " begin..."
                 << "channel_id:" << channel_id << "bMute:" << bMute;
   for (const auto& transceiver : transceivers_) {
     std::string mid = GetMidFromChannelId(channel_id);
@@ -761,12 +761,12 @@ bool MediaClient::SetLocalMute(int channel_id, bool bMute) {
       break;
     }
   }
-  RTC_LOG(INFO) << " end...";
+  RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__  << "() "<< " end...";
   return false;
 }
 
 bool MediaClient::SetRemoteMute(int channel_id, bool bMute) {
-  RTC_LOG(INFO) << " begin..."
+  RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__  << "() "<< " begin..."
                 << "channel_id:" << channel_id << "bMute:" << bMute;
   for (const auto& transceiver : transceivers_) {
     std::string mid = GetMidFromChannelId(channel_id);
@@ -775,13 +775,13 @@ bool MediaClient::SetRemoteMute(int channel_id, bool bMute) {
       break;
     }
   }
-  RTC_LOG(INFO) << " end...";
+  RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__  << "() "<< " end...";
   return false;
 }
 
 bool MediaClient::CreateVoiceChannel(const std::string& settings,
                                      int channelId) {
-  RTC_LOG(INFO) << " begin..."
+  RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__  << "() "<< " begin..."
                 << "settings:" << settings << "channelId:" << channelId;
   EC_CHECK_VALUE(channel_manager_, false);
   EC_CHECK_VALUE(transport_controller_, false);
@@ -879,12 +879,12 @@ bool MediaClient::CreateVoiceChannel(const std::string& settings,
    transport_controller_->RegisterRtpDemuxerSink(demuxer_criteria,
                                                  voice_channel_);*/
   mVoiceChannels_[channelId] = voice_channel_;
-  RTC_LOG(INFO) << " end...";
+  RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__  << "() "<< " end...";
   return bOk;
 }
 //wwx
 bool MediaClient::SetRemoteSsrcAfterSelectAudioSource(int channelId) {
-  RTC_LOG(INFO) << " begin..."
+  RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__  << "() "<< " begin..."
                 << "channelId:" << channelId;
   bool bOk = false;
   bOk = signaling_thread_->Invoke<bool>(RTC_FROM_HERE, [this, channelId] {
@@ -902,12 +902,13 @@ bool MediaClient::SetRemoteSsrcAfterSelectAudioSource(int channelId) {
     }
     return true;
   });   
-  RTC_LOG(INFO) << " end...";
+  RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__  << "() "<< " end...";
   return bOk;
  }
 
 bool MediaClient::SetRemoteSsrcAfterSelectVideoSource(int channelId) {
-   RTC_LOG(INFO) << " begin..." << "channelId:" << channelId;
+   RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__  << "() "<< " begin..."
+                 << "channelId:" << channelId;
    
   bool bResult = false;
   bResult = signaling_thread_->Invoke<bool>(RTC_FROM_HERE, [this, channelId] {
@@ -925,7 +926,7 @@ bool MediaClient::SetRemoteSsrcAfterSelectVideoSource(int channelId) {
     }
     return true;
    });
-  RTC_LOG(INFO) << " end...";
+  RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__  << "() "<< " end...";
   return bResult;
 }
 
@@ -933,7 +934,7 @@ bool MediaClient::SelectVoiceSource(
     int channelId,
     const std::string& track_id,
     rtc::scoped_refptr<webrtc::AudioTrackInterface> audiotrack) {
-  RTC_LOG(INFO) << " begin..."
+  RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__  << "() "<< " begin..."
                 << "channelId:" << channelId
                 << "track_id:" << track_id << "audiotrack:" << audiotrack;
   bool bResult = false;
@@ -1013,7 +1014,7 @@ bool MediaClient::SelectVoiceSource(
     }
     return true;
   });
-  RTC_LOG(INFO) << " end...";
+  RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__  << "() "<< " end...";
   return bResult;
 }
 
@@ -1021,7 +1022,7 @@ bool MediaClient::SelectVideoSource(
     int channelid,
     const std::string& track_id,
     rtc::scoped_refptr<webrtc::VideoTrackInterface> video_track) {
-  RTC_LOG(INFO) << " begin..."
+  RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__  << "() "<< " begin..."
                 << "channelid:" << channelid << "track_id:" << track_id
                 << "video_track:" << video_track;
   bool bResult = false;
@@ -1105,20 +1106,20 @@ bool MediaClient::SelectVideoSource(
 
     return bOk;
   });
-  RTC_LOG(INFO) << " end...";
+  RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__  << "() "<< " end...";
   return bResult;
 }
 
 void MediaClient::DestroyLocalAudioTrack(
     rtc::scoped_refptr<webrtc::AudioTrackInterface> track) {
-  RTC_LOG(INFO) << " begin..."
+  RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__  << "() "<< " begin..."
                 << "track:" << track;
   if (audio_track_ == track) {
     audio_track_.get()->GetSource()->Release();
     audio_track_.release();
     audio_track_ = nullptr;
   }
-  RTC_LOG(INFO) << " end...";
+  RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__  << "() "<< " end...";
   /* if (track.get()) {
      if (track->GetSource()) {
        track->GetSource()->Release();
@@ -1134,7 +1135,8 @@ void MediaClient::DestroyLocalAudioTrack(
 }
 rtc::scoped_refptr<webrtc::AudioTrackInterface>
 MediaClient::CreateLocalVoiceTrack(const std::string& track_id) {
-  RTC_LOG(INFO) << " begin..." << "track_id:" << track_id;
+  RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__  << "() "<< " begin..."
+                << "track_id:" << track_id;
   if (signaling_thread_) {
     audio_track_ =
         signaling_thread_
@@ -1158,13 +1160,13 @@ MediaClient::CreateLocalVoiceTrack(const std::string& track_id) {
                   return audio_track;
                 });
   }
-  RTC_LOG(INFO) << " end...";
+  RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__  << "() "<< " end...";
   return audio_track_;
 }
 
 void MediaClient::DestroyLocalVideoTrack(
     rtc::scoped_refptr<webrtc::VideoTrackInterface> track) {
-  RTC_LOG(INFO) << " begin..."
+  RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__  << "() "<< " begin..."
                 << "track:" << track;
   if (track) {
     for (int i = 0; i < 20; i++) {
@@ -1178,12 +1180,12 @@ void MediaClient::DestroyLocalVideoTrack(
       }
     }
   }
-  RTC_LOG(INFO) << " end...";
+  RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__  << "() "<< " end...";
 }
 
 rtc::scoped_refptr<webrtc::VideoTrackInterface>
 MediaClient::CreateLocalVideoTrack(const std::string& track_params) {
-  RTC_LOG(INFO) << " begin..."
+  RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__  << "() "<< " begin..."
                 << "track_params:" << track_params;
   Json::Reader reader;
   Json::Value jmessage;
@@ -1248,18 +1250,18 @@ MediaClient::CreateLocalVideoTrack(const std::string& track_params) {
     return video_tracks_[vsum_ - 1];
     // video_tracks_[track_id] = video_track_;
   }
-  RTC_LOG(INFO) << " end...";
+  RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__  << "() "<< " end...";
   return NULL;
 }
 
 bool MediaClient::RequestRemoteVideo(int channel_id, int32_t remote_ssrc) {
-  RTC_LOG(INFO) << " begin..."
+  RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__  << "() "<< " begin..."
                 << "channel_id:" << channel_id << "remote_ssrc" << remote_ssrc;
   return true;
 }
 
 bool MediaClient::StartChannel(int channel_id) {
-  RTC_LOG(INFO) << " begin..."
+  RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__  << "() "<< " begin..."
                 << "channel_id:" << channel_id;
   bool bOk = false;
   m_nConnected = SC_CONNECTED;
@@ -1278,12 +1280,12 @@ bool MediaClient::StartChannel(int channel_id) {
     }
     return false;
   });
-  RTC_LOG(INFO) << " end...";
+  RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__  << "() "<< " end...";
   return bOk;
 }
 
 bool MediaClient::StopChannel(int channel_id) {
-  RTC_LOG(INFO) << " begin..."
+  RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__  << "() "<< " begin..."
                 << "channel_id:" << channel_id;
   bool bOk = false;
 
@@ -1303,14 +1305,14 @@ bool MediaClient::StopChannel(int channel_id) {
     });
     return true;
   }
-  RTC_LOG(INFO) << " end...";
+  RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__  << "() "<< " end...";
   return bOk;
 }
 /////////////////////////////////MultiChannel  end
 ///////////////////////////////////////////////////////////////
 
 bool MediaClient::CreateTransportController(bool disable_encryp) {
-  RTC_LOG(INFO) << " begin..."
+  RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__  << "() "<< " begin..."
                 << "disable_encryp:" << disable_encryp;
   EC_CHECK_VALUE(network_thread_, false);
 
@@ -1326,21 +1328,21 @@ bool MediaClient::CreateTransportController(bool disable_encryp) {
       signaling_thread_, network_thread_, nullptr /*port_allocator_.get()*/,
       nullptr /*async_resolver_factory_.get()*/, config));
   EC_CHECK_VALUE(transport_controller_, false);
-  RTC_LOG(INFO) << " end...";
+  RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__  << "() "<< " end...";
   return true;
 }
 
 void MediaClient::OnSentPacket_w(const rtc::SentPacket& sent_packet) {
-  RTC_LOG(INFO) << " begin...";
+  RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__  << "() "<< " begin...";
   RTC_DCHECK_RUN_ON(worker_thread_);
   EC_CHECK_VALUE(call_, void());
   call_->OnSentPacket(sent_packet);
-  RTC_LOG(INFO) << " begin...";
+  RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__  << "() "<< " end...";
 
 }
 
 bool MediaClient::DisposeConnect() {
-  RTC_LOG(INFO) << " begin...";
+  RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__  << "() "<< " begin...";
   RTC_DCHECK_RUN_ON(signaling_thread_);
 
   for (const auto& transceiver : transceivers_) {
@@ -1360,12 +1362,12 @@ bool MediaClient::DisposeConnect() {
     call_.reset();
     event_log_.reset();
   });
-  RTC_LOG(INFO) << " end...";
+  RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__  << "() "<< " end...";
   return true;
 }
 
 void MediaClient::DestroyAllChannels() {
-  RTC_LOG(INFO) << " begin...";
+  RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__  << "() "<< " begin...";
   for (const auto& transceiver : transceivers_) {
     if (transceiver->media_type() == cricket::MEDIA_TYPE_VIDEO) {
       DestroyTransceiverChannel(transceiver);
@@ -1376,14 +1378,14 @@ void MediaClient::DestroyAllChannels() {
       DestroyTransceiverChannel(transceiver);
     }
   }
-  RTC_LOG(INFO) << " end...";
+  RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__  << "() "<< " end...";
 }
 
 void MediaClient::DestroyTransceiverChannel(
     rtc::scoped_refptr<
         webrtc::RtpTransceiverProxyWithInternal<webrtc::RtpTransceiver>>
         transceiver) {
-  RTC_LOG(INFO) << " begin..."
+  RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__  << "() "<< " begin..."
                 << "transceiver:" << transceiver;
   RTC_DCHECK(transceiver);
 
@@ -1392,11 +1394,11 @@ void MediaClient::DestroyTransceiverChannel(
     transceiver->internal()->SetChannel(nullptr);
     DestroyChannelInterface(channel);
   }
-  RTC_LOG(INFO) << " end...";
+  RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__  << "() "<< " end...";
 }
 
 void MediaClient::DestroyChannelInterface(cricket::ChannelInterface* channel) {
-  RTC_LOG(INFO) << " begin..."
+  RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__  << "() "<< " begin..."
                 << "channel:" << channel;
   EC_CHECK_VALUE(channel, void());
   EC_CHECK_VALUE(channel_manager_, void());
@@ -1420,7 +1422,8 @@ void MediaClient::DestroyChannelInterface(cricket::ChannelInterface* channel) {
 }
 
 cricket::ChannelInterface* MediaClient::GetChannel(const std::string& mid) {
-  RTC_LOG(INFO) << " begin..." << "mid:" << mid;
+  RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__  << "() "<< " begin..."
+                << "mid:" << mid;
   for (const auto& transceiver : transceivers_) {
     cricket::ChannelInterface* channel = transceiver->internal()->channel();
     if (channel && channel->content_name() == mid) {
@@ -1430,30 +1433,30 @@ cricket::ChannelInterface* MediaClient::GetChannel(const std::string& mid) {
   if (rtp_data_channel() && rtp_data_channel()->content_name() == mid) {
     return rtp_data_channel();
   }
-  RTC_LOG(INFO) << " end...";
+  RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__  << "() "<< " end...";
   return nullptr;
 }
 
 cricket::RtpDataChannel* MediaClient::rtp_data_channel() const {
-  RTC_LOG(INFO) << " begin..."
+  RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__  << "() "<< " begin..."
                 << "rtp_data_channel_:" << rtp_data_channel_;
   return rtp_data_channel_;
 }
 
 bool MediaClient::InitRenderWndsManager() {
-  RTC_LOG(INFO) << " begin...";
+  RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__  << "() "<< " begin...";
 #if defined WEBRTC_WIN
   if (!renderWndsManager_) {
     renderWndsManager_.reset(new win_render::RenderWndsManager());
   }
   EC_CHECK_VALUE(renderWndsManager_, false);
 #endif
-  RTC_LOG(INFO) << " end...";
+  RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__  << "() "<< " end...";
   return true;
 }
 
 bool MediaClient::SetLocalVideoRenderWindow(int window_id, void* view) {
-  RTC_LOG(INFO) << " begin..."
+  RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__  << "() "<< " begin..."
                 << "window_id:" << window_id << "view:" << view;
 #if defined WEBRTC_WIN
   EC_CHECK_VALUE(view, false);
@@ -1464,12 +1467,12 @@ bool MediaClient::SetLocalVideoRenderWindow(int window_id, void* view) {
 
   renderWndsManager_->SetLocalRenderWnd(window_id, view, nullptr);
 #endif
-  RTC_LOG(INFO) << " end...";
+  RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__  << "() "<< " end...";
   return true;
 }
 
 bool MediaClient::PreviewTrack(int window_id, void* video_track) {
-  RTC_LOG(INFO) << " begin..."
+  RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__  << "() "<< " begin..."
                 << "window_id:" << window_id;
   webrtc::VideoTrackInterface* track =
       (webrtc::VideoTrackInterface*)(video_track);
@@ -1477,12 +1480,12 @@ bool MediaClient::PreviewTrack(int window_id, void* video_track) {
   EC_CHECK_VALUE(renderWndsManager_, false);
   return renderWndsManager_->StartLocalRenderer(window_id, track);
 #endif
-  RTC_LOG(INFO) << " end...";
+  RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__  << "() "<< " end...";
   return true;
 }
 
 bool MediaClient::SetRemoteVideoRenderWindow(int channel_Id, void* view) {
-  RTC_LOG(INFO) << " begin..."
+  RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__  << "() "<< " begin..."
                 << "channel_Id:" << channel_Id << "view:" << view;
   EC_CHECK_VALUE((channel_Id >= 0), false);
 #if defined WEBRTC_WIN
@@ -1494,12 +1497,12 @@ bool MediaClient::SetRemoteVideoRenderWindow(int channel_Id, void* view) {
 
   renderWndsManager_->AddRemoteRenderWnd(channel_Id, view, nullptr);
 #endif
-  RTC_LOG(INFO) << " end...";
+  RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__  << "() "<< " end...";
   return true;
 }
 
 bool MediaClient::ReleaseChannelId(int channelId) {
-  RTC_LOG(INFO) << " begin..."
+  RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__  << "() "<< " begin..."
                 << "channelId:" << channelId;
   EC_CHECK_VALUE((channelId >= 0), false);
   std::map<int, ChannelSsrcs>::iterator it;
@@ -1513,12 +1516,12 @@ bool MediaClient::ReleaseChannelId(int channelId) {
     mapChannelSsrcs_.erase(it);
     return true;
   }
-  RTC_LOG(INFO) << " end...";
+  RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__  << "() "<< " end...";
   return false;
 }
 
 bool MediaClient::AddMediaSsrc(bool is_local, int channelId, uint32_t ssrc) {
-  RTC_LOG(INFO) << " begin..."
+  RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__  << "() "<< " begin..."
                 << "is_local:" << is_local << "channelId:" << channelId
                 << "ssrc:" << ssrc;
   EC_CHECK_VALUE((channelId >= 0), false);
@@ -1542,7 +1545,7 @@ bool MediaClient::AddMediaSsrc(bool is_local, int channelId, uint32_t ssrc) {
 bool MediaClient::GetMediaSsrc(bool is_local,
                                int channelId,
                                std::vector<uint32_t>& ssrcs) {
-  RTC_LOG(INFO) << " begin..."
+  RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__  << "() "<< " begin..."
                 << "is_local:" << is_local << "channelId:" << channelId;
   //  EC_CHECK_VALUE(ssrc, false);
   EC_CHECK_VALUE((channelId >= 0), false);
@@ -1564,7 +1567,8 @@ bool MediaClient::GetMediaSsrc(bool is_local,
 
 
 std::string MediaClient::GetMidFromChannelId(int channelId) {
-  RTC_LOG(INFO) << " begin..." << "channelId:" << channelId;
+  RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__  << "() "<< " begin..."
+                << "channelId:" << channelId;
   std::string mid;
   EC_CHECK_VALUE((channelId >= 0), mid);
 
@@ -1573,14 +1577,14 @@ std::string MediaClient::GetMidFromChannelId(int channelId) {
   if (it != mapChannelSsrcs_.end()) {
     mid = it->second.mid;
   }
-  RTC_LOG(INFO) << " end..."
+  RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__  << "() "<< " end..."
                 << " return mid:" << mid;
   return mid;
 }
 
 bool MediaClient::FilterAudioCodec(const AudioCodecConfig& config,
                                    std::vector<cricket::AudioCodec>& vec) {
-  RTC_LOG(INFO) << " begin...";
+  RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__  << "() "<< " begin...";
   std::string name;
   std::string cname = config.codecName;
   absl::AsciiStrToUpper(&cname);
@@ -1595,13 +1599,13 @@ bool MediaClient::FilterAudioCodec(const AudioCodecConfig& config,
       it = vec.erase(it);
     }
   }
-  RTC_LOG(INFO) << " end...";
+  RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__  << "() "<< " end...";
   return vec.size() > 0;
 }
 
 bool MediaClient::FilterVideoCodec(const VideoCodecConfig& config,
                                    std::vector<cricket::VideoCodec>& vec) {
-  RTC_LOG(INFO) << " begin...";
+  RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__  << "() "<< " begin...";
   std::string name;
   std::string cname = config.codecName;
   absl::AsciiStrToLower(&cname);
@@ -1621,25 +1625,25 @@ bool MediaClient::FilterVideoCodec(const VideoCodecConfig& config,
       it = vec.erase(it);
     }
   }
-  RTC_LOG(INFO) << " end...";
+  RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__  << "() "<< " end...";
   return vec.size() > 0;
 }
 
 uint32_t MediaClient::GetNumberOfVideoDevices() {
-  RTC_LOG(INFO) << " begin...";
+  RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__  << "() "<< " begin...";
   std::unique_ptr<webrtc::VideoCaptureModule::DeviceInfo> info(
       webrtc::VideoCaptureFactory::CreateDeviceInfo());
   if (info) {
-    RTC_LOG(INFO) << " end..."
+    RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__  << "() "<< " end..."
                   << " info->NumberOfDevices():" << info->NumberOfDevices();
     return info->NumberOfDevices();
   }
-  RTC_LOG(INFO) << " end...";
+  RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__  << "() "<< " end...";
   return 0;
 }
 
 bool MediaClient::GetVideoDevices(char* jsonDeviceInfos, int* length) {
-  RTC_LOG(INFO) << " begin..."
+  RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__  << "() "<< " begin..."
                 << " jsonDeviceInfos:" << jsonDeviceInfos
                 << "length:" << length;
   if (length) {
@@ -1698,7 +1702,7 @@ bool MediaClient::GetVideoDevices(char* jsonDeviceInfos, int* length) {
 }
 
 bool MediaClient::GetVideoCodecs(char* jsonVideoCodecInfos, int* length) {
-  RTC_LOG(INFO) << " begin..."
+  RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__  << "() "<< " begin..."
                 << " jsonVideoCodecInfos:" << jsonVideoCodecInfos
                 << "length:" << length;
   if (channel_manager_ && length) {
@@ -1727,7 +1731,7 @@ bool MediaClient::GetVideoCodecs(char* jsonVideoCodecInfos, int* length) {
 }
 
 bool MediaClient::GetAudioCodecs(char* jsonAudioCodecInfos, int* length) {
-  RTC_LOG(INFO) << " begin..."
+  RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__  << "() "<< " begin..."
                 << " jsonAudioCodecInfos:" << jsonAudioCodecInfos
                 << "length:" << length;
   if (channel_manager_ && length) {
@@ -1759,7 +1763,7 @@ bool MediaClient::GetAudioCodecs(char* jsonAudioCodecInfos, int* length) {
 
 bool MediaClient::ParseVideoDeviceSetting(const char* videoDeviceSettings,
                                           VideoDeviceConfig* config) {
-  RTC_LOG(INFO) << " begin..."
+  RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__  << "() "<< " begin..."
                 << " videoDeviceSettings:" << videoDeviceSettings
                 << "config:" << config;
   if (videoDeviceSettings && config) {
@@ -1800,7 +1804,7 @@ bool MediaClient::ParseVideoDeviceSetting(const char* videoDeviceSettings,
 
 bool MediaClient::ParseAudioCodecSetting(const char* audioCodecSettings,
                                          AudioCodecConfig* config) {
-  RTC_LOG(INFO) << " begin..."
+  RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__  << "() "<< " begin..."
                 << " audioCodecSettings:" << audioCodecSettings
                 << "config:" << config;
   if (audioCodecSettings && config) {
@@ -1850,7 +1854,7 @@ bool MediaClient::ParseAudioCodecSetting(const char* audioCodecSettings,
 
 bool MediaClient::ParseVideoCodecSetting(const char* videoCodecSettings,
                                          VideoCodecConfig* config) {
-  RTC_LOG(INFO) << " begin..."
+  RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__  << "() "<< " begin..."
                 << " videoCodecSettings:" << videoCodecSettings
                 << "config:" << config;
   if (videoCodecSettings && config) {
@@ -1911,7 +1915,7 @@ bool MediaClient::ParseVideoCodecSetting(const char* videoCodecSettings,
 bool MediaClient::GetStringJsonString(const char* json,
                                       const std::string& key,
                                       std::string* value) {
-  RTC_LOG(INFO) << " begin..."
+  RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__  << "() "<< " begin..."
                 << " json:" << json << "key:" << key << "value:" << value;
   if (json && !key.empty() && value) {
     Json::Reader reader;
@@ -1933,7 +1937,7 @@ bool MediaClient::GetStringJsonString(const char* json,
 bool MediaClient::GetIntJsonString(const char* json,
                                    const std::string& key,
                                    int* value) {
-  RTC_LOG(INFO) << " begin..."
+  RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__  << "() "<< " begin..."
                 << " json:" << json << "key:" << key << "value:" << value;
   if (json && !key.empty() && value) {
     Json::Reader reader;
@@ -1955,7 +1959,7 @@ bool MediaClient::GetIntJsonString(const char* json,
 
 cricket::WebRtcVideoChannel* MediaClient::GetInternalVideoChannel(
     const int channelId) {
-  RTC_LOG(INFO) << " begin..."
+  RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__  << "() "<< " begin..."
                 << " channelId:" << channelId;
   if (mVideoChannels_[channelId]) {
     cricket::VideoChannel* videoChannel = mVideoChannels_[channelId];
@@ -1963,11 +1967,11 @@ cricket::WebRtcVideoChannel* MediaClient::GetInternalVideoChannel(
     // downcast from VideoMediaChannel to WebrtcVideoChannel
     cricket::WebRtcVideoChannel* internal_video_channel =
         static_cast<cricket::WebRtcVideoChannel*>(media_channel);
-    RTC_LOG(INFO) << " end..."
+    RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__  << "() "<< " end..."
                   << " internal_video_channel:" << internal_video_channel;
     return internal_video_channel;
   }
-  RTC_LOG(INFO) << " end... nullptr";
+  RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__  << "() "<< " end... nullptr";
   return nullptr;
 }
 
@@ -2006,7 +2010,7 @@ bool MediaClient::SetVideoUlpFecStatus(const int channelId,
                                        const bool enable,
                                        const uint8_t payloadtype_red,
                                        const uint8_t payloadtype_fec) {
-  RTC_LOG(INFO) << " begin..."
+  RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__  << "() "<< " begin..."
                 << " channelId:" << channelId << "enable:" << enable
                 << "payloadtype_red:" << payloadtype_red
                 << "payloadtype_fec:" << payloadtype_fec;
@@ -2038,7 +2042,7 @@ bool MediaClient::SetVideoUlpFecStatus(const int channelId,
 bool MediaClient::SetVideoDegradationMode(
     const int channelId,
     const webrtc::DegradationPreference mode) {
-  RTC_LOG(INFO) << " begin..."
+  RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__  << "() "<< " begin..."
                 << " channelId:" << channelId;
   cricket::WebRtcVideoChannel* internal_video_channel =
       GetInternalVideoChannel(channelId);
@@ -2064,7 +2068,7 @@ bool MediaClient::SetVideoDegradationMode(
 }
 
 bool MediaClient::SendKeyFrame(const int channelId) {
-  RTC_LOG(INFO) << " begin..."
+  RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__  << "() "<< " begin..."
                 << " channelId:" << channelId;
   cricket::WebRtcVideoChannel* internal_video_channel =
       GetInternalVideoChannel(channelId);
@@ -2076,7 +2080,7 @@ bool MediaClient::SendKeyFrame(const int channelId) {
 
 bool MediaClient::SetKeyFrameRequestCallback(const int channelId,
                                              OnRequestKeyFrameCallback cb) {
-  RTC_LOG(INFO) << " begin..."
+  RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__  << "() "<< " begin..."
                 << " channelId:" << channelId;
   cricket::WebRtcVideoChannel* internal_video_channel =
       GetInternalVideoChannel(channelId);
@@ -2089,7 +2093,7 @@ bool MediaClient::SetKeyFrameRequestCallback(const int channelId,
 bool MediaClient::InsertVideoCodec(cricket::VideoCodecs& input_codecs,
                                    const std::string& codec_name,
                                    uint8_t payload_type) {
-  RTC_LOG(INFO) << " begin...";
+  RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__  << "() "<< " begin...";
   auto it = input_codecs.begin();
   for (; it != input_codecs.end(); it++) {
     if ((*it).name == codec_name) {
@@ -2106,7 +2110,7 @@ bool MediaClient::InsertVideoCodec(cricket::VideoCodecs& input_codecs,
 
 bool MediaClient::RemoveVideoCodec(cricket::VideoCodecs& input_codecs,
                                    const std::string& codec_name) {
-  RTC_LOG(INFO) << " begin...";
+  RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__  << "() "<< " begin...";
   auto it = input_codecs.begin();
   for (; it != input_codecs.end();) {
     if ((*it).name == codec_name) {
@@ -2119,7 +2123,7 @@ bool MediaClient::RemoveVideoCodec(cricket::VideoCodecs& input_codecs,
 }
 
 bool MediaClient::SetAEC(bool enable) {
-  RTC_LOG(INFO) << " begin..."
+  RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__  << "() "<< " begin..."
                 << " enable:" << enable;
   audio_options_.echo_cancellation = enable;
   EC_CHECK_VALUE(audio_options_.echo_cancellation, true);
@@ -2132,7 +2136,7 @@ bool MediaClient::SetAEC(bool enable) {
   return true;
 }
 bool MediaClient::SetAGC(bool enable) {
-  RTC_LOG(INFO) << " ebeginnd..."
+  RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__  << "() "<< " begin..."
                 << " enable:" << enable;
   audio_options_.auto_gain_control = enable;
   // bool enabled;
@@ -2142,7 +2146,7 @@ bool MediaClient::SetAGC(bool enable) {
   return true;
 }
 bool MediaClient::SetNS(bool enable) {
-  RTC_LOG(INFO) << " begin..."
+  RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__  << "() "<< " begin..."
                 << " enable:" << enable;
   audio_options_.noise_suppression = enable;
   EC_CHECK_VALUE(audio_options_.noise_suppression, true);
@@ -2150,7 +2154,7 @@ bool MediaClient::SetNS(bool enable) {
 }
 
 rtc::scoped_refptr<webrtc::AudioDeviceModule> MediaClient::CreateAudioDevice() {
-  RTC_LOG(INFO) << " begin...";
+  RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__  << "() "<< " begin...";
   own_adm = webrtc::AudioDeviceModule::Create(
       webrtc::AudioDeviceModule::kPlatformDefaultAudio);
   own_adm->Init();
@@ -2185,7 +2189,8 @@ bool MediaClient::SetAudioRecordingVolume(uint32_t vol) {
   assert(own_adm);
   own_adm->Init();
  */
-  RTC_LOG(INFO) << " begin..." << " vol:" << vol;
+  RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__  << "() "<< " begin..."
+                << " vol:" << vol;
   EC_CHECK_VALUE((own_adm != nullptr), false);
   bool can_vol = false;
   own_adm->MicrophoneVolumeIsAvailable(&can_vol);
@@ -2200,7 +2205,7 @@ bool MediaClient::SetAudioRecordingVolume(uint32_t vol) {
 }
 
 bool MediaClient::GetAudioDeviceList(char* json, int* length) {
-  RTC_LOG(INFO) << " begin..."
+  RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__  << "() "<< " begin..."
                 << " json:" << json << "length:" << length;
   /* EC_CHECK_VALUE((own_adm != nullptr), false);
    const int num = own_adm->RecordingDevices();
@@ -2258,7 +2263,7 @@ bool MediaClient::GetAudioDeviceList(char* json, int* length) {
 }
 
 bool MediaClient::SetAudioRecordingDevice(int i) {
-  RTC_LOG(INFO) << " begin..."
+  RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__  << "() "<< " begin..."
                 << " i:" << i;
   EC_CHECK_VALUE((own_adm != nullptr), false);
   int num_devices = own_adm->RecordingDevices();
@@ -2317,14 +2322,14 @@ bool TransportControllerObserve::OnTransportChanged(
 
 ///////////////////////////////////ChannelGenerator/////////////////////////////////
 ChannelGenerator::ChannelGenerator() {
-  RTC_LOG(INFO) << " begin...";
+  RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__  << "() "<< " begin...";
   ResetGenerator();
 }
 
 ChannelGenerator::~ChannelGenerator() {}
 
 bool ChannelGenerator::GeneratorId(int& id) {
-  RTC_LOG(INFO) << " begin..."
+  RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__  << "() "<< " begin..."
                 << " id:" << id ;
   rtc::CritScope lock(&id_critsect_);
   for (size_t i = kBaseId; i < kMaxId; i++) {
@@ -2338,7 +2343,7 @@ bool ChannelGenerator::GeneratorId(int& id) {
 }
 
 void ChannelGenerator::ResetGenerator() {
-  RTC_LOG(INFO) << " begin...";
+  RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__  << "() "<< " begin...";
   rtc::CritScope lock(&id_critsect_);
   memset(idBools_, 0, kMaxId - kBaseId);
 }
@@ -2364,7 +2369,7 @@ VideoRenderer::VideoRenderer(HWND wnd,
                              int height,
                              webrtc::VideoTrackInterface* track_to_render)
     : wnd_(wnd), rendered_track_(track_to_render) {
-  RTC_LOG(INFO) << " begin..."
+  RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__  << "() "<< " begin..."
                 << " wnd:" << wnd << "width:" << width << "height:" << height
                 << "track_to_render:" << track_to_render;
   ::InitializeCriticalSection(&buffer_lock_);
@@ -2388,7 +2393,7 @@ VideoRenderer::VideoRenderer(HWND wnd,
 }
 
 VideoRenderer::~VideoRenderer() {
-  RTC_LOG(INFO) << " begin...";
+  RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__  << "() "<< " begin...";
   if (rendered_track_) {
     rendered_track_->RemoveSink(this);
   }
@@ -2397,7 +2402,7 @@ VideoRenderer::~VideoRenderer() {
 
 bool VideoRenderer::UpdateVideoTrack(
     webrtc::VideoTrackInterface* track_to_render) {
-  RTC_LOG(INFO) << " begin..."
+  RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__  << "() "<< " begin..."
                 << " track_to_render:" << track_to_render;
   if (rendered_track_) {
     rendered_track_->RemoveSink(this);
@@ -2411,7 +2416,7 @@ bool VideoRenderer::UpdateVideoTrack(
 }
 
 void VideoRenderer::SetSize(int width, int height) {
-  RTC_LOG(INFO) << " begin..."
+  RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__  << "() "<< " begin..."
                 << " width:" << width << "height:" << height;
   AutoLock<VideoRenderer> lock(this);
 
@@ -2427,7 +2432,7 @@ void VideoRenderer::SetSize(int width, int height) {
 }
 
 void VideoRenderer::OnFrame(const webrtc::VideoFrame& video_frame) {
-  RTC_LOG(INFO) << " begin...";
+  RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__  << "() "<< " begin...";
   {
     AutoLock<VideoRenderer> lock(this);
 
@@ -2450,7 +2455,7 @@ void VideoRenderer::OnFrame(const webrtc::VideoFrame& video_frame) {
 }
 
 void VideoRenderer::Paint() {
-  RTC_LOG(INFO) << " begin...";
+  RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__  << "() "<< " begin...";
   if (image_ != nullptr && handle() != nullptr && hDC_ != nullptr) {
     int srcWidth = bmi_.bmiHeader.biWidth;
     int srcHeight = abs(bmi_.bmiHeader.biHeight);
@@ -2482,7 +2487,7 @@ void VideoRenderer::Paint() {
 RenderWndsManager::RenderWndsManager() {}
 
 RenderWndsManager::~RenderWndsManager() {
-  RTC_LOG(INFO) << " begin...";
+  RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__  << "() "<< " begin...";
   // localRender_.reset();
   mapLocalRenderWnds.clear();
   mapRemoteRenderWnds.clear();
@@ -2491,7 +2496,7 @@ RenderWndsManager::~RenderWndsManager() {
 bool RenderWndsManager::StartLocalRenderer(
     int window_id,
     webrtc::VideoTrackInterface* local_video) {
-  RTC_LOG(INFO) << " begin..."
+  RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__  << "() "<< " begin..."
                 << " window_id:" << window_id << "local_video:" << local_video;
   std::map<int, ptr_render>::iterator it = mapLocalRenderWnds.find(window_id);
   if (it != mapLocalRenderWnds.end()) {
@@ -2504,7 +2509,7 @@ bool RenderWndsManager::StartLocalRenderer(
 bool RenderWndsManager::StartRemoteRenderer(
     int channelId,
     webrtc::VideoTrackInterface* remote_video) {
-  RTC_LOG(INFO) << " begin..."
+  RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__  << "() "<< " begin..."
                 << " channelId:" << channelId
                 << "remote_video:" << remote_video;
   std::map<int, ptr_render>::iterator it = mapRemoteRenderWnds.find(channelId);
@@ -2518,7 +2523,7 @@ void RenderWndsManager::SetLocalRenderWnd(
     int window_id,
     void* winLocal,
     webrtc::VideoTrackInterface* track_to_render) {
-  RTC_LOG(INFO) << " begin..."
+  RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__  << "() "<< " begin..."
                 << " window_id:" << window_id << "winLocal:" << winLocal
                 << "track_to_render:" << track_to_render;
   ptr_render it;
@@ -2531,7 +2536,7 @@ void RenderWndsManager::AddRemoteRenderWnd(
     int channelId,
     void* winRemote,
     webrtc::VideoTrackInterface* track_to_render) {
-  RTC_LOG(INFO) << " begin..."
+  RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__  << "() "<< " begin..."
                 << " channelId:" << channelId << "winRemote:" << winRemote
                 << "track_to_render:" << track_to_render;
   ptr_render it;
@@ -2543,7 +2548,7 @@ void RenderWndsManager::AddRemoteRenderWnd(
 bool RenderWndsManager::UpdateVideoTrack(
     int channelId,
     webrtc::VideoTrackInterface* track_to_render) {
-  RTC_LOG(INFO) << " begin..."
+  RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__  << "() "<< " begin..."
                 << " channelId:" << channelId
                 << "track_to_render:" << track_to_render;
   std::map<int, ptr_render>::iterator it = mapRemoteRenderWnds.find(channelId);
@@ -2554,7 +2559,7 @@ bool RenderWndsManager::UpdateVideoTrack(
 }
 
 void* RenderWndsManager::GetRemoteWnd(int channelId) {
-  RTC_LOG(INFO) << " begin..."
+  RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__  << "() "<< " begin..."
                 << " channelId:" << channelId;
   std::map<int, ptr_render>::iterator it = mapRemoteRenderWnds.find(channelId);
   if (it != mapRemoteRenderWnds.end()) {
@@ -2564,7 +2569,7 @@ void* RenderWndsManager::GetRemoteWnd(int channelId) {
 }
 
 bool RenderWndsManager::RemoveRemoteRenderWnd(int channelId) {
-  RTC_LOG(INFO) << " begin..."
+  RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__  << "() "<< " begin..."
                 << " channelId:" << channelId;
   std::map<int, ptr_render>::iterator it = mapRemoteRenderWnds.find(channelId);
   if (it != mapRemoteRenderWnds.end()) {
@@ -2575,7 +2580,7 @@ bool RenderWndsManager::RemoveRemoteRenderWnd(int channelId) {
 }
 
 std::vector<int> RenderWndsManager::GetAllRemoteChanelIds() {
-  RTC_LOG(INFO) << " begin...";
+  RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__  << "() "<< " begin...";
   std::vector<int> vec;
   std::map<int, ptr_render>::iterator it = mapRemoteRenderWnds.begin();
   while (it != mapRemoteRenderWnds.end()) {
