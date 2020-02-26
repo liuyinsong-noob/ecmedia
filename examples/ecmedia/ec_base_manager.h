@@ -201,11 +201,7 @@ class ECBaseManager : public sigslot::has_slots<> {
                           const char* r_addr,
                           const char* l_addr,
                           int vrtp_port);
-  //wwx
-  bool SetSendSsrcVideo(const std::string& settings, int channel_id);
-  bool SetSendSsrcAudio(const std::string& settings, int channel_id);
-  bool SetRemoteSsrcAfterSelectAudioSource(int channelId);
-  bool SetRemoteSsrcAfterSelectVideoSource(int channelId);
+
   
  private:
   typedef std::pair<std::string, VideoCapturer*> UniqueIdVideoCapturerPair;

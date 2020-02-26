@@ -748,32 +748,5 @@ void ECBaseManager::SetSendDestination(int peer_id,
     m_pMediaClient->AddTracks();
   }
 }*/
-bool ECBaseManager::SetSendSsrcVideo(const std::string& settings,
-                                     int channel_id) {
-  RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__  << "() "<< " begin..."
-                << "channel_id:" << channel_id;
-  return MediaClient::GetInstance()->SetRemoteSsrcAfterCreatedVideoChannel(settings,
-                                                                    channel_id);
-}
 
-bool ECBaseManager::SetSendSsrcAudio(const std::string& settings,
-                                     int channel_id) {
-  RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__  << "() "<< " begin..."
-                << "settings:" << settings << "channel_id:" << channel_id;
-  return MediaClient::GetInstance()->SetRemoteSsrcAfterCreatedAudioChannel(settings,
-                                                                    channel_id);
-}
-bool ECBaseManager::SetRemoteSsrcAfterSelectAudioSource(int channelId) {
-  RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__  << "() "<< " begin..."
-                << "channelId:" << channelId;
- return MediaClient::GetInstance()->SetRemoteSsrcAfterSelectAudioSource(
-      channelId);
-}
-
-bool ECBaseManager::SetRemoteSsrcAfterSelectVideoSource(int channelId) {
-  RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__  << "() "<< " begin..."
-                << "channelId:" << channelId;
- return MediaClient::GetInstance()->SetRemoteSsrcAfterSelectVideoSource(
-      channelId);
-}
 }  // namespace webrtc

@@ -623,43 +623,6 @@ class MediaClient : public sigslot::has_slots<> {
   bool SetAudioRecordingDevice(int i);
  ///////////////////////// zjy interface end//////////////////////////////////
 
-  /****************************************************************************/
-  /*** 函数名: SetRemoteSsrcAfterCreatedVideoChannel                        ***/
-  /*** 功能:   创建视频通道后需要设置远端ssrc使用                           ***/
-  /*** 返回值: 类型  bool       0  成功            -1 失败                  ***/
-  /*** 函数参数1: 名称：settings            类型     char*                  ***/
-  /*** 函数参数2: 名称：channel_id          类型     int                    ***/
-  /****************************************************************************/
-  bool SetRemoteSsrcAfterCreatedVideoChannel(
-      const std::string& settings,
-      int channel_id);
-
-  /****************************************************************************/
-  /*** 函数名: SetRemoteSsrcAfterCreatedAudioChannel                        ***/
-  /*** 功能:   创建音频通道后需要设置远端ssrc使用                           ***/
-  /*** 返回值: 类型  bool       0  成功            -1 失败                  ***/
-  /*** 函数参数1: 名称：settings            类型     char*                  ***/
-  /*** 函数参数2: 名称：channel_id          类型     int                    ***/
-  /****************************************************************************/
-  bool SetRemoteSsrcAfterCreatedAudioChannel(
-      const std::string& settings,
-      int channel_id);
-
-  /****************************************************************************/
-  /*** 函数名: SetRemoteSsrcAfterSelectAudioSource                          ***/
-  /*** 功能:   选择音频源之后需要设置远端ssrc使用                           ***/
-  /*** 返回值: 类型  bool       0  成功            -1 失败                  ***/
-  /*** 函数参数1: 名称：channelId                 类型     int              ***/
-  /****************************************************************************/
-  bool SetRemoteSsrcAfterSelectAudioSource(int channelId);
-
-  /****************************************************************************/
-  /*** 函数名: SetRemoteSsrcAfterSelectVideoSource                          ***/
-  /*** 功能:   选择视频源之后需要设置远端ssrc使用                           ***/
-  /*** 返回值: 类型  bool       0  成功            -1 失败                  ***/
-  /*** 函数参数1: 名称：channelId                 类型     int              ***/
-  /****************************************************************************/
-  bool SetRemoteSsrcAfterSelectVideoSource(int channelId);
  private:
     MediaClient();
 
@@ -770,14 +733,7 @@ class MediaClient : public sigslot::has_slots<> {
 	std::map<int, cricket::VideoChannel*> mVideoChannels_;
 
 	std::map<int, cricket::VoiceChannel*> mVoiceChannels_;
-	//wwx
-    std::map < int,
-            rtc::scoped_refptr<webrtc::RtpTransceiverProxyWithInternal<
-                webrtc::RtpTransceiver>>> IdAudioTrainsceiver_;
-    std::map<int,
-            rtc::scoped_refptr<webrtc::RtpTransceiverProxyWithInternal<
-                 webrtc::RtpTransceiver>>>IdVideoTrainsceiver_;
-
+   
 	std::vector<rtc::scoped_refptr<webrtc::RtpTransceiverProxyWithInternal<webrtc::RtpTransceiver>>> transceivers_;
 
     std::map<std::string, rtc::scoped_refptr<webrtc::RtpSenderInterface>> RtpSenders_;

@@ -755,40 +755,6 @@ ECMEDIA_API int ECMedia_audio_set_send_destination(int peer_id,
 /*未实现*/
 ECMEDIA_API int ECMedia_set_video_protect_mode(int mode);
 
-//wwx
-/****************************************************************************/
-/*** 函数名: ECMedia_set_remote_ssrc_video                                ***/
-/*** 功能:   创建视频通道后需要设置远端ssrc使用                           ***/
-/*** 返回值: 类型  bool       0  成功            -1 失败                  ***/
-/*** 函数参数1: 名称：tid                 类型     char*                  ***/
-/*** 函数参数2: 名称：channel_id          类型     int                    ***/
-/****************************************************************************/
-ECMEDIA_API bool ECMedia_set_remote_ssrc_video(char* tid, int channel_id);
-
-/****************************************************************************/
-/*** 函数名: ECMedia_set_remote_ssrc_video                                ***/
-/*** 功能:   创建音频通道后需要设置远端ssrc使用                           ***/
-/*** 返回值: 类型  bool       0  成功            -1 失败                  ***/
-/*** 函数参数1: 名称：tid                 类型     char*                  ***/
-/*** 函数参数2: 名称：channel_id          类型     int                    ***/
-/****************************************************************************/
-ECMEDIA_API bool ECMedia_set_remote_ssrc_audio(char* tid, int channel_id);
-
-/****************************************************************************/
-/*** 函数名: ECMedia_SetRemoteSsrcAfterSelectAudioSource                  ***/
-/*** 功能:   选择音频源之后需要设置远端ssrc使用                           ***/
-/*** 返回值: 类型  bool       0  成功            -1 失败                  ***/
-/*** 函数参数1: 名称：channelId                 类型     int              ***/
-/****************************************************************************/
-ECMEDIA_API bool ECMedia_SetRemoteSsrcAfterSelectAudioSource(int channelId);
-
-/****************************************************************************/
-/*** 函数名: ECMedia_SetRemoteSsrcAfterSelectVideoSource                  ***/
-/*** 功能:   选择视频源之后需要设置远端ssrc使用                           ***/
-/*** 返回值: 类型  bool       0  成功            -1 失败                  ***/
-/*** 函数参数1: 名称：channelId                 类型     int              ***/
-/****************************************************************************/
-ECMEDIA_API bool ECMedia_SetRemoteSsrcAfterSelectVideoSource(int channelId);
 //ECMEDIA_API void ECMedia_add_tracks();
 #ifdef __cplusplus
 }

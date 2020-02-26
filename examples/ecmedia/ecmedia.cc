@@ -719,26 +719,3 @@ ECMEDIA_API int ECMedia_set_video_protect_mode(int mode) {
                 << "mode:" << mode;
   return 0;
 }
-// wwx
-ECMEDIA_API bool ECMedia_set_remote_ssrc_video(char* setting, int channel_id) {
-  RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__  << "() "<< " begin..."
-                << "setting:" << setting << "channel_id:" << channel_id;
-  return g_ECMedia->SetSendSsrcVideo(setting, channel_id);
-}
-
-ECMEDIA_API bool ECMedia_set_remote_ssrc_audio(char* setting, int channel_id) {
-  RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__  << "() "<< " begin..."
-                << "setting:" << setting << "channel_id:" << channel_id;
-  return g_ECMedia->SetSendSsrcAudio(setting, channel_id);
-}
-ECMEDIA_API bool ECMedia_SetRemoteSsrcAfterSelectAudioSource(int channelId){
-  RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__  << "() "<< " begin..."
-                << "channelId:" << channelId;
-  return g_ECMedia->SetRemoteSsrcAfterSelectAudioSource(channelId);
-}
-
-ECMEDIA_API bool ECMedia_SetRemoteSsrcAfterSelectVideoSource(int channelId) {
-  RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__  << "() "<< " begin..."
-                << "channelId:" << channelId;
-  return g_ECMedia->SetRemoteSsrcAfterSelectVideoSource(channelId);
-}

@@ -1618,10 +1618,15 @@ bool GeneralTransportController::RegisterRtpDemuxerSink(
     const RtpDemuxerCriteria& criteria,
     webrtc::RtpPacketSinkInterface* sink) {
   auto general_transport = GetGeneralTransportForMid(criteria.mid);
+  RtpDemuxerCriteria crit;
+  crit.mid = "";
+  crit.payload_types = criteria.payload_types;
+  crit.rsid = criteria.rsid;
+  crit.ssrcs = criteria.ssrcs;
   if (general_transport && general_transport->rtp_transport()) {
     // jsep_transport->rtp_transport()->RegisterRtpDemuxerSink(, );
     return network_thread_->Invoke<bool>(RTC_FROM_HERE, [&] {
-      return general_transport->rtp_transport()->RegisterRtpDemuxerSink(criteria,sink);
+      return general_transport->rtp_transport()->RegisterRtpDemuxerSink(crit,sink);
     });
     // return true;
   }
