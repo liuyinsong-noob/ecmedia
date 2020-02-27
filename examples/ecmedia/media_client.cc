@@ -241,8 +241,6 @@ void MediaClient::UnInitialize() {
   RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__  << "( )   " << "() "<< " begin...";
   transceivers_.clear();
   mapChannelSsrcs_.clear();
-  IdAudioTrainsceiver_.clear();
-  IdVideoTrainsceiver_.clear();
   if (channelGenerator_){
     channelGenerator_->ResetGenerator();
   }
