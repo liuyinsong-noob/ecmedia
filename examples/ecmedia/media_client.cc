@@ -469,6 +469,7 @@ void MediaClient::DestroyChannel(int channel_id, bool is_video) {
       if (channel == channel_1) {
         transceiver->internal()->SetChannel(nullptr);
         DestroyChannelInterface(channel_1);
+        mVideoChannels_[channel_id] = nullptr;
       }
     }
   }

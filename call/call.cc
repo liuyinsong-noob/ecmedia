@@ -908,6 +908,9 @@ void Call::DestroyVideoSendStream(webrtc::VideoSendStream* send_stream) {
         ++it;
       }
     }
+    if (send_stream_impl == nullptr) {
+      send_stream_impl = static_cast<VideoSendStream*>(send_stream);
+    }
     video_send_streams_.erase(send_stream_impl);
   }
   RTC_CHECK(send_stream_impl != nullptr);
