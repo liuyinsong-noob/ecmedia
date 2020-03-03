@@ -13,6 +13,7 @@
 #include "../module/rtp_rtcp/source/rtp_header_extension.h"
 #include "../module/rtp_rtcp/source/rtp_utility.h"
 #include "../system_wrappers/include/clock.h"
+#include "logging.h"
 
 namespace yuntongxunwebrtc {
 
@@ -87,9 +88,13 @@ bool RtpHeaderParserImpl::Parse(const uint8_t* packet,
           base_time = Clock::GetRealTimeClock()->TimeInMilliseconds();
       }
   }
+    
     if(_participantCallback && should_send) {
       if(last_arr_csrc_count_ != header->numCSRCs) {
           // ConferenceParticipantCallback
+          for(int i=0;i< header->numCSRCs; i++) {
+              LOG(LS_DEBUG) << "audio csrc count changed, participantCallback i:" << i << " ssrc:" << header->arrOfCSRCs[i];
+          }
           _participantCallback(header->arrOfCSRCs, header->numCSRCs);
           last_arr_csrc_count_ = header->numCSRCs;
           for(int i = 0; i< header->numCSRCs; i++) {
@@ -101,6 +106,9 @@ bool RtpHeaderParserImpl::Parse(const uint8_t* packet,
               // callback only once, when csrc list change
               if(header->arrOfCSRCs[i] != last_arrOfCSRCs_[i]) {
                   if(need_callback) {
+                      for(int i=0;i< header->numCSRCs; i++) {
+                          LOG(LS_DEBUG) << "audio csrc ssrc changed, participantCallback i:" << i << " ssrc:" << header->arrOfCSRCs[i];
+                      }
                       _participantCallback(header->arrOfCSRCs, header->numCSRCs);
                       need_callback = false;
                   }
@@ -128,12 +136,12 @@ bool RtpHeaderParserImpl::DeregisterRtpHeaderExtension(RTPExtensionType type) {
     
 int RtpHeaderParserImpl::setECMediaConferenceParticipantCallback(ECMedia_ConferenceParticipantCallback* cb) {
     if(cb == nullptr) {
-        // LOG(LS_ERROR) << "ECMedia_ConferenceParticipantCallback is null.";
+        LOG(LS_ERROR) << "setECMediaConferenceParticipantCallback is null.";
         return -1;
     }
     
     if(_participantCallback == cb) {
-        // LOG(LS_WARNING) << "ECMedia_ConferenceParticipantCallback already have been set.";
+        LOG(LS_WARNING) << "setECMediaConferenceParticipantCallback already have been set.";
         return 0;
     }
     
@@ -143,7 +151,7 @@ int RtpHeaderParserImpl::setECMediaConferenceParticipantCallback(ECMedia_Confere
     
 void RtpHeaderParserImpl::setECMediaConferenceParticipantCallbackTimeInterVal(int timeInterVal) {
     if(timeInterVal < 0 ) {
-        // LOG(LS_ERROR) << "setECMediaConferenceParticipantCallbackTimeInterVal is null.";
+        LOG(LS_ERROR) << "setECMediaConferenceParticipantCallback timeInterVal is 0.";
         timeInterVal = 0;
     }
     

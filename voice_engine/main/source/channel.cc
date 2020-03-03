@@ -296,7 +296,7 @@ Channel::SendRtp(int channel, const uint8_t *data, size_t len, const PacketOptio
 	int backDataLen = 0;
 	int headerLength = 12;
 	RTPHeader header;
-	if (!rtp_header_parser_->Parse(bufferToSendPtr, bufferLength, &header)) {
+	if (!rtp_header_parser_sender_->Parse(bufferToSendPtr, bufferLength, &header)) {
 		WEBRTC_TRACE(yuntongxunwebrtc::kTraceDebug, yuntongxunwebrtc::kTraceVoice, _channelId,
 			"Incoming packet: invalid RTP header");
 		return -1;
@@ -3712,6 +3712,7 @@ int Channel::SetREDStatus(bool enable, int redPayloadtype) {
     }
   }
 
+    //if(enable && !_old_conference) {
     if(enable && !_old_conference) {
         // register receiver rtp loss rate extension header, add by zhaoyou
         rtp_header_parser_->RegisterRtpHeaderExtension(kRtpExtensionLossRate, 10);
@@ -5391,7 +5392,7 @@ void
 	//---begin
 	const uint8_t* received_packet = reinterpret_cast<const uint8_t*>(rtpBufferPtr);
 	RTPHeader header;
-	if (!rtp_header_parser_sender_->Parse(received_packet, rtpPacketLength, &header)) {
+	if (!rtp_header_parser_->Parse(received_packet, rtpPacketLength, &header)) {
 		WEBRTC_TRACE(yuntongxunwebrtc::kTraceDebug, yuntongxunwebrtc::kTraceVoice, _channelId,
 			"Incoming packet: invalid RTP header");
 		return;

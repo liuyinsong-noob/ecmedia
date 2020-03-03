@@ -1592,7 +1592,7 @@ int ECMedia_set_pcm_audio_data_cb(int channelid, ECMedia_PCMDataCallBack callbac
 }
 
 int ECMedia_setECMedia_ConferenceParticipantCallback(int channelid, ECMedia_ConferenceParticipantCallback* callback) {
-    WEBRTC_TRACE(kTraceApiCall, kTraceMediaApi, 0, "%s:%d begins... and channelid: %d", __FUNCTION__, __LINE__, channelid);
+    WEBRTC_TRACE(kTraceApiCall, kTraceMediaApi, 0, "%s:%d begins... and channelid: %d callback:%ld", __FUNCTION__, __LINE__, channelid, (long)callback);
     AUDIO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
     
     VoEBase *base = VoEBase::GetInterface(m_voe);
@@ -3898,8 +3898,7 @@ int ECMedia_get_send_codec_video(int channelid, VideoCodec& videoCodec)
 {
     WEBRTC_TRACE(kTraceApiCall, kTraceMediaApi, 0, "%s:%d begins... and channelid: %d", __FUNCTION__, __LINE__, channelid);
     VIDEO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
-    ViECodec *codec = ViECodec::GetInterface(m_vie);
-    if (codec) {
+    ViECodec *codec = ViECodec::GetInterface(m_vie);     if (codec) {
         int ret = codec->GetSendCodec(channelid, videoCodec);
         codec->Release();
         if (ret != 0) {
