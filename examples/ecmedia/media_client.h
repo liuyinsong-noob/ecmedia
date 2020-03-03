@@ -695,15 +695,16 @@ class MediaClient : public sigslot::has_slots<> {
     static MediaClient* m_pInstance;
 
     static rtc::CriticalSection m_critical;
-
+    bool isCreateCall;
 	//std::unique_ptr<rtc::LogSink*> ec_log_ = nullptr;
     rtc::LogSink* ec_log_ = nullptr;
     bool bfirst = true;
-    rtc::scoped_refptr<webrtc::AudioTrackInterface> audio_track_ = nullptr;
+    rtc::scoped_refptr<webrtc::AudioTrackInterface> audio_tracks_[5];
 
     rtc::scoped_refptr<webrtc::VideoTrackInterface> video_tracks_[20];
 
     int vsum_;
+    int asum_;
 
 	webrtc::RtcEventLog* event_log_ptr_ = nullptr;
 
@@ -736,7 +737,7 @@ class MediaClient : public sigslot::has_slots<> {
    
 	std::vector<rtc::scoped_refptr<webrtc::RtpTransceiverProxyWithInternal<webrtc::RtpTransceiver>>> transceivers_;
 
-    std::map<std::string, rtc::scoped_refptr<webrtc::RtpSenderInterface>> RtpSenders_;
+    //std::map<std::string, rtc::scoped_refptr<webrtc::RtpSenderInterface>> RtpSenders_;
 
 	struct cricket::MediaConfig media_config_;
 
@@ -769,7 +770,7 @@ class MediaClient : public sigslot::has_slots<> {
 #endif
 
     bool     m_bInitialized;
-
+    bool     m_bControll;
     uint32_t m_nConnected;
 
    /* struct ChannelSsrc {

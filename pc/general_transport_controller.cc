@@ -1158,6 +1158,7 @@ void GeneralTransportController::DestroyAllGeneralTransports_n() {
   }
 
   general_transports_by_name_.clear();
+  mid_to_transport_.clear();
 }
 // lzm-------------
 /*void GeneralTransportController::SetIceRole_n(cricket::IceRole ice_role) {
@@ -1598,6 +1599,16 @@ bool GeneralTransportController::ReleaseUdpConnection(const std::string& mid) {
   cricket::GeneralTransportChannel* general_channel =GetGeneralTransportChannelByMid(mid);
   if (general_channel) {
     general_channel->ReleaseUdpConnection();
+    std::map<std::string, cricket::GeneralTransportChannel*>::iterator it =
+        general_transport_channels_by_mid_.begin();
+	while (it != general_transport_channels_by_mid_.end())
+	{
+      if (it->first == mid) {
+            general_transport_channels_by_mid_.erase(it);
+        break;
+	  }
+      it++;
+	}
   }
   return true;
 }
