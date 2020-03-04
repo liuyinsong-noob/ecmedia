@@ -593,7 +593,7 @@ class MediaClient : public sigslot::has_slots<> {
   /*** 功能:   获取底层AudioDeviceModule对象                                ***/
   /*** 返回值: 类型  scoped_refptr<webrtc::AudioDeviceModule>               ***/
   /****************************************************************************/
-  rtc::scoped_refptr<webrtc::AudioDeviceModule> CreateAudioDevice();
+ bool CreateAudioDevice();
 
   // int GetAudioRecordingDevice(const int a);
 

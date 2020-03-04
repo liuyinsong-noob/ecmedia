@@ -2082,36 +2082,23 @@ bool MediaClient::SetNS(bool enable) {
   return true;
 }
 
-rtc::scoped_refptr<webrtc::AudioDeviceModule> MediaClient::CreateAudioDevice() {
-  RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__  << "() "<< " begin...";
-  if(own_adm == nullptr){
-  own_adm = webrtc::AudioDeviceModule::Create(
-      webrtc::AudioDeviceModule::kPlatformDefaultAudio);
-  own_adm->Init();
-}
-  return own_adm;
-  //  } else if (audio_layer_ == webrtc::AudioDeviceModule::kWindowsCoreAudio2)
-  //  {
-  //#ifdef WEBRTC_WIN
-  //    // We must initialize the COM library on a thread before we calling any
-  //    of
-  //    // the library functions. All COM functions in the ADM will return
-  //    // CO_E_NOTINITIALIZED otherwise.
-  //    com_initializer_ =
-  //    absl::make_unique<webrtc::webrtc_win::ScopedCOMInitializer>(
-  //        webrtc::webrtc_win::ScopedCOMInitializer::kMTA);
-  //    EC_CHECK_VALUE(com_initializer_->Succeeded(),nullptr);
-  //    //EC_CHECK_VALUE(webrtc::webrtc_win::core_audio_utility::IsSupported(),nullptr);
-  //    //EC_CHECK_VALUE(webrtc::webrtc_win::core_audio_utility::IsMMCSSSupported(),nullptr);
-  //    return webrtc::CreateWindowsCoreAudioAudioDeviceModuleForTest(
-  //        task_queue_factory_.get());
-  //#else
-  //    return nullptr;
-  //#endif
-  /*} else {*/
-  // return nullptr;
-  // }
-}
+  bool MediaClient::CreateAudioDevice() {
+    RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__ << "() "
+                  << " begin...";
+    bool bOk = signaling_thread_->Invoke<bool>(RTC_FROM_HERE, [this] {
+      if (own_adm == nullptr) {
+        own_adm = webrtc::AudioDeviceModule::Create(
+            webrtc::AudioDeviceModule::kPlatformDefaultAudio);
+        own_adm->Init();
+        return true;
+      } else {
+        return false;
+      }
+     
+    });
+  
+  return bOk;
+  }
 
 bool MediaClient::SetAudioRecordingVolume(uint32_t vol) {
   /*rtc::scoped_refptr<webrtc::AudioDeviceModule> own_adm;

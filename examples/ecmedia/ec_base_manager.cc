@@ -353,7 +353,8 @@ bool ECBaseManager::SetNS(bool enable) {
 
 void* ECBaseManager::CreateAudioDevice() {
   RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__  << "() "<< " begin...";
-  return (void*)MediaClient::GetInstance()->CreateAudioDevice();
+  return NULL;
+  //(void*)MediaClient::GetInstance()->CreateAudioDevice();
 }
 
 bool ECBaseManager::SetAudioRecordingVolume(uint32_t vol) {
