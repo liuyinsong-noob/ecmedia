@@ -2123,79 +2123,84 @@ bool MediaClient::SetAudioRecordingVolume(uint32_t vol) {
   return true;
 }
 
-char*  MediaClient::GetAudioDeviceList(int* length) {
-  RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__  << "() "<< " begin..."
+char* MediaClient::GetAudioDeviceList(int* length) {
+  RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__ << "() "
+                << " begin..."
                 << "length:" << length;
-    CreateAudioDevice();
- // if (json && length) {
-    EC_CHECK_VALUE((own_adm != nullptr), NULL);
-    const int num = own_adm->RecordingDevices();
-    int i = 0;
-    if (num <= 0) {
-      *length = 0;
-      return NULL;
-      //return false;
-    }
-    Json::Value devices(Json::objectValue);
-    for (i = 0; i < num; i++) {
-      char name[webrtc::kAdmMaxDeviceNameSize];
-      char guid[webrtc::kAdmMaxGuidSize];
-      int ret = own_adm->RecordingDeviceName(i, name, guid);
-      
-      EC_CHECK_VALUE((ret != -1), NULL);
-      Json::Value device(Json::objectValue);
-      device["deviceIndex"] = i;
-      device["deviceName"] = name;
-      device["deviceGuid"] = guid;
-      devices["devices"].append(device);
-    }
-    std::string strDevice = devices.toStyledString();
-  
-   /* if (len > *length) {
-      return false;
-    } else {
-      std::memset(json, 0, *length);
-      std::memcpy(json, strDevice.c_str(), len);
-      own_adm->InitRecording();
-      return true;
-    }*/
-	//std::memcpy(pAudioDevice,strDevice.c_str(),len);
-	own_adm->InitRecording();
-	//  return true;
-    const int num2 = own_adm->PlayoutDevices();
-    if (num2 <= 0) {
-      return NULL;
-    }
-    Json::Value playdevices(Json::objectValue);
-    for (i = 0; i < num2; i++) {
-      char name[webrtc::kAdmMaxDeviceNameSize];
-      char guid[webrtc::kAdmMaxGuidSize];
-      int ret = own_adm->PlayoutDeviceName(i, name, guid);
+  CreateAudioDevice();
+  // if (json && length) {
+  EC_CHECK_VALUE((own_adm != nullptr), NULL);
+  const int num = own_adm->RecordingDevices();
+  int i = 0;
+  if (num <= 0) {
+    *length = 0;
+    return NULL;
+    // return false;
+  }
+  Json::Value devices(Json::objectValue);
+  Json::Value d(Json::objectValue);
+  for (i = 0; i < num; i++) {
+    char name[webrtc::kAdmMaxDeviceNameSize];
+    char guid[webrtc::kAdmMaxGuidSize];
+    int ret = own_adm->RecordingDeviceName(i, name, guid);
 
-      EC_CHECK_VALUE((ret != -1), NULL);
-      Json::Value device(Json::objectValue);
-      device["deviceIndex"] = i;
-      device["deviceName"] = name;
-      device["deviceGuid"] = guid;
-      playdevices["devices"].append(device);
-    }
-    std::string strDevice2 = playdevices.toStyledString();
-    std::string strDev = strDevice + strDevice2;
-     int len = strDev.length();
-    if(pAudioDevice != nullptr){
-       delete [] pAudioDevice;
-     }
-	pAudioDevice = new char [len+1];
-	memset(pAudioDevice,0,len+1);
-    std::memcpy(pAudioDevice, strDev.c_str(), len);
-   // json =pAudioDevice;
-    *length = len+1;
-    RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__ << pAudioDevice
-                  << "length:" << *length;
-    return pAudioDevice;
- //   int len2 = strDevice2.length();
-    
- // }
+    EC_CHECK_VALUE((ret != -1), NULL);
+    Json::Value device(Json::objectValue);
+    device["deviceIndex"] = i;
+    device["deviceName"] = name;
+    device["deviceGuid"] = guid;
+   // d["devices"].append(device);
+    d["recordings"].append(device);
+  }
+  devices["devices"].append(d); 
+ // std::string strDevice = devices.toStyledString();
+
+  /* if (len > *length) {
+     return false;
+   } else {
+     std::memset(json, 0, *length);
+     std::memcpy(json, strDevice.c_str(), len);
+     own_adm->InitRecording();
+     return true;
+   }*/
+  // std::memcpy(pAudioDevice,strDevice.c_str(),len);
+  own_adm->InitRecording();
+  //  return true;
+  const int num2 = own_adm->PlayoutDevices();
+  if (num2 <= 0) {
+    return NULL;
+  }
+  Json::Value playdevices(Json::objectValue);
+  for (i = 0; i < num2; i++) {
+    char name[webrtc::kAdmMaxDeviceNameSize];
+    char guid[webrtc::kAdmMaxGuidSize];
+    int ret = own_adm->PlayoutDeviceName(i, name, guid);
+
+    EC_CHECK_VALUE((ret != -1), NULL);
+    Json::Value device(Json::objectValue);
+    device["deviceIndex"] = i;
+    device["deviceName"] = name;
+    device["deviceGuid"] = guid;
+    playdevices["playouts"].append(device);
+  }
+  d["devices"].append(playdevices);
+  std::string strDevice = d.toStyledString();
+  //std::string strDev = strDevice + strDevice2;
+  int len = strDevice.length();
+  if (pAudioDevice != nullptr) {
+    delete[] pAudioDevice;
+  }
+  pAudioDevice = new char[len + 1];
+  memset(pAudioDevice, 0, len + 1);
+  std::memcpy(pAudioDevice, strDevice.c_str(), len);
+  // json =pAudioDevice;
+  *length = len + 1;
+  RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__ << pAudioDevice
+                << "length:" << *length;
+  return pAudioDevice;
+  //   int len2 = strDevice2.length();
+
+  // }
   return NULL;
 }
 
