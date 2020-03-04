@@ -123,7 +123,7 @@ class ECBaseManager : public sigslot::has_slots<> {
 
   bool SetAudioRecordingVolume(uint32_t vol);
 
-  bool GetAudioDeviceList(char* json, int* len);
+  char* GetAudioDeviceList(int* len);
 
   bool SetAudioRecordingDevice(int i);
   bool GetVideoDevices(char* devices, int* len);

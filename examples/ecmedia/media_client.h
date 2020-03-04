@@ -612,7 +612,7 @@ class MediaClient : public sigslot::has_slots<> {
 /*** 函数参数1: 名称   json                类型    char*                   ***/
 /*** 函数参数2: 名称   length                 类型    int*                 ***/
 /*****************************************************************************/
-  bool GetAudioDeviceList( char* json, int* length);
+  char* GetAudioDeviceList(int* length);
 
 /****************************************************************************/
 /*** 函数名: 设置录音设备                                                  ***/
@@ -696,6 +696,7 @@ class MediaClient : public sigslot::has_slots<> {
 
     static rtc::CriticalSection m_critical;
     bool isCreateCall;
+    char* pAudioDevice;
 	//std::unique_ptr<rtc::LogSink*> ec_log_ = nullptr;
     rtc::LogSink* ec_log_ = nullptr;
     bool bfirst = true;

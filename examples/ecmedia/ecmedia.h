@@ -417,7 +417,7 @@ ECMEDIA_API bool ECMedia_set_audio_recording_volume(uint32_t vol);
 /*** 函数参数1: 名称   json                类型    char*                   ***/
 /*** 函数参数2: 名称   len                 类型    int*                    ***/
 /*****************************************************************************/
-ECMEDIA_API bool ECMedia_get_audio_device_list(char* json, int* len);
+ECMEDIA_API char* ECMedia_get_audio_device_list(int* len);
 
 /****************************************************************************/
 /*** 函数名: 设置录音设备                                                  ***/

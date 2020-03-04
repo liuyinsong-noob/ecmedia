@@ -1561,7 +1561,7 @@ int32_t AudioDeviceWindowsCore::PlayoutDeviceName(
 
   if (ret == 0) {
     // Convert the endpoint device's friendly-name to UTF-8
-    if (WideCharToMultiByte(CP_UTF8, 0, szDeviceName, -1, name,
+    if (WideCharToMultiByte(CP_ACP, 0, szDeviceName, -1, name,
                             kAdmMaxDeviceNameSize, NULL, NULL) == 0) {
       RTC_LOG(LS_ERROR)
           << "WideCharToMultiByte(CP_UTF8) failed with error code "
@@ -1637,7 +1637,7 @@ int32_t AudioDeviceWindowsCore::RecordingDeviceName(
 
   if (ret == 0) {
     // Convert the endpoint device's friendly-name to UTF-8
-    if (WideCharToMultiByte(CP_UTF8, 0, szDeviceName, -1, name,
+    if (WideCharToMultiByte(CP_ACP, 0, szDeviceName, -1, name,
                             kAdmMaxDeviceNameSize, NULL, NULL) == 0) {
       RTC_LOG(LS_ERROR)
           << "WideCharToMultiByte(CP_UTF8) failed with error code "

@@ -362,10 +362,10 @@ bool ECBaseManager::SetAudioRecordingVolume(uint32_t vol) {
   return MediaClient::GetInstance()->SetAudioRecordingVolume(vol);
 }
 
-bool ECBaseManager::GetAudioDeviceList(char* json, int* len) {
+char* ECBaseManager::GetAudioDeviceList(int* len) {
   RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__  << "() "<< " begin..."
-                << "json:" << json << "len:" << len;
-  return MediaClient::GetInstance()->GetAudioDeviceList(json, len);
+                << "len:" << len;
+  return MediaClient::GetInstance()->GetAudioDeviceList( len);
 }
 
 bool ECBaseManager::SetAudioRecordingDevice(int index) {

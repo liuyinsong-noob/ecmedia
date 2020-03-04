@@ -163,6 +163,8 @@ MediaClient::MediaClient() {
   m_bInitialized = false;
   m_bControll = false;
   isCreateCall = true;
+  pAudioDevice = nullptr;
+  own_adm = nullptr;
   m_nConnected = SC_UNCONNECTED;
   mVideoChannels_.clear();
   mVoiceChannels_.clear();
@@ -190,6 +192,11 @@ MediaClient::~MediaClient() {
  
     });
   }
+ if(own_adm != nullptr){
+    own_adm->Release();
+	
+ }
+    
   if (ec_log_) {
     delete ec_log_;
   }
@@ -238,7 +245,12 @@ void MediaClient::UnInitialize() {
   RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__  << "( )   " << "() "<< " begin...";
   transceivers_.clear();
   mapChannelSsrcs_.clear();
- 
+  if (pAudioDevice != nullptr) {
+    delete[] pAudioDevice;
+  }
+  if (own_adm != nullptr) {
+    own_adm->Release();
+  }
   if (channelGenerator_){
     channelGenerator_->ResetGenerator();
   }
@@ -2072,9 +2084,11 @@ bool MediaClient::SetNS(bool enable) {
 
 rtc::scoped_refptr<webrtc::AudioDeviceModule> MediaClient::CreateAudioDevice() {
   RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__  << "() "<< " begin...";
+  if(own_adm == nullptr){
   own_adm = webrtc::AudioDeviceModule::Create(
       webrtc::AudioDeviceModule::kPlatformDefaultAudio);
   own_adm->Init();
+}
   return own_adm;
   //  } else if (audio_layer_ == webrtc::AudioDeviceModule::kWindowsCoreAudio2)
   //  {
@@ -2108,6 +2122,7 @@ bool MediaClient::SetAudioRecordingVolume(uint32_t vol) {
  */
   RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__  << "() "<< " begin..."
                 << " vol:" << vol;
+  CreateAudioDevice();
   EC_CHECK_VALUE((own_adm != nullptr), false);
   bool can_vol = false;
   own_adm->MicrophoneVolumeIsAvailable(&can_vol);
@@ -2121,44 +2136,26 @@ bool MediaClient::SetAudioRecordingVolume(uint32_t vol) {
   return true;
 }
 
-bool MediaClient::GetAudioDeviceList(char* json, int* length) {
+char*  MediaClient::GetAudioDeviceList(int* length) {
   RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__  << "() "<< " begin..."
-                << " json:" << json << "length:" << length;
-  /* EC_CHECK_VALUE((own_adm != nullptr), false);
-   const int num = own_adm->RecordingDevices();
-   int i = 0;
-   if (num <= 0) {
-     return false;
-   }
-   Json::Value devices(Json::objectValue);
-   for (i = 0; i < num; i++) {
-     char name[webrtc::kAdmMaxDeviceNameSize];
-     char guid[webrtc::kAdmMaxGuidSize];
-     int ret = own_adm->RecordingDeviceName(i, name, guid);
-     EC_CHECK_VALUE((ret != -1), false);
-     Json::Value device(Json::objectValue);
-     device["deviceIndex"] = i;
-     device["deviceName"] = name;
-     device["deviceGuid"] = guid;
-     devices["devices"].append(device);
-   }
-   std::string strDevice = devices.toStyledString();
-   json = strDevice.c_str();
-   own_adm->InitRecording();
-   return true;*/
-  if (json && length) {
-    EC_CHECK_VALUE((own_adm != nullptr), false);
+                << "length:" << length;
+    CreateAudioDevice();
+ // if (json && length) {
+    EC_CHECK_VALUE((own_adm != nullptr), NULL);
     const int num = own_adm->RecordingDevices();
     int i = 0;
     if (num <= 0) {
-      return false;
+      *length = 0;
+      return NULL;
+      //return false;
     }
     Json::Value devices(Json::objectValue);
     for (i = 0; i < num; i++) {
       char name[webrtc::kAdmMaxDeviceNameSize];
       char guid[webrtc::kAdmMaxGuidSize];
       int ret = own_adm->RecordingDeviceName(i, name, guid);
-      EC_CHECK_VALUE((ret != -1), false);
+      
+      EC_CHECK_VALUE((ret != -1), NULL);
       Json::Value device(Json::objectValue);
       device["deviceIndex"] = i;
       device["deviceName"] = name;
@@ -2166,22 +2163,59 @@ bool MediaClient::GetAudioDeviceList(char* json, int* length) {
       devices["devices"].append(device);
     }
     std::string strDevice = devices.toStyledString();
-    int len = strDevice.length();
-    if (len > *length) {
+  
+   /* if (len > *length) {
       return false;
     } else {
       std::memset(json, 0, *length);
       std::memcpy(json, strDevice.c_str(), len);
       own_adm->InitRecording();
       return true;
+    }*/
+	//std::memcpy(pAudioDevice,strDevice.c_str(),len);
+	own_adm->InitRecording();
+	//  return true;
+    const int num2 = own_adm->PlayoutDevices();
+    if (num2 <= 0) {
+      return NULL;
     }
-  }
-  return false;
+    Json::Value playdevices(Json::objectValue);
+    for (i = 0; i < num2; i++) {
+      char name[webrtc::kAdmMaxDeviceNameSize];
+      char guid[webrtc::kAdmMaxGuidSize];
+      int ret = own_adm->PlayoutDeviceName(i, name, guid);
+
+      EC_CHECK_VALUE((ret != -1), NULL);
+      Json::Value device(Json::objectValue);
+      device["deviceIndex"] = i;
+      device["deviceName"] = name;
+      device["deviceGuid"] = guid;
+      playdevices["devices"].append(device);
+    }
+    std::string strDevice2 = playdevices.toStyledString();
+    std::string strDev = strDevice + strDevice2;
+     int len = strDev.length();
+    if(pAudioDevice != nullptr){
+       delete [] pAudioDevice;
+     }
+	pAudioDevice = new char [len+1];
+	memset(pAudioDevice,0,len+1);
+    std::memcpy(pAudioDevice, strDev.c_str(), len);
+   // json =pAudioDevice;
+    *length = len+1;
+    RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__ << pAudioDevice
+                  << "length:" << *length;
+    return pAudioDevice;
+ //   int len2 = strDevice2.length();
+    
+ // }
+  return NULL;
 }
 
 bool MediaClient::SetAudioRecordingDevice(int i) {
   RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__  << "() "<< " begin..."
                 << " i:" << i;
+  CreateAudioDevice();
   EC_CHECK_VALUE((own_adm != nullptr), false);
   int num_devices = own_adm->RecordingDevices();
   if (audio_layer_ == webrtc::AudioDeviceModule::kWindowsCoreAudio2) {
@@ -2196,12 +2230,12 @@ bool MediaClient::SetAudioRecordingDevice(int i) {
 #ifdef WEBRTC_WIN
   // On Windows, verify the alternative method where the user can select device
   // by role.
-  EC_CHECK_VALUE(
+/*  EC_CHECK_VALUE(
       (own_adm->SetRecordingDevice(webrtc::AudioDeviceModule::kDefaultDevice)),
       false);
   EC_CHECK_VALUE((own_adm->SetRecordingDevice(
                      webrtc::AudioDeviceModule::kDefaultCommunicationDevice)),
-                 false);
+                 false);*/
 #endif
   if (!(own_adm->SetRecordingDevice(i))) {
     own_adm->InitRecording();

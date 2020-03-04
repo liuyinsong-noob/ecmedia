@@ -329,10 +329,10 @@ ECMEDIA_API bool ECMedia_set_audio_recording_volume(uint32_t vol) {
   return g_ECMedia->SetAudioRecordingVolume(vol);
 }
 
-ECMEDIA_API bool ECMedia_get_audio_device_list(char* json, int* len) {
+ECMEDIA_API char* ECMedia_get_audio_device_list(int* len) {
   RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__  << "() "<< " begins..."
-                << "json:" << json << "len:" << len;
-  return g_ECMedia->GetAudioDeviceList(json, len);
+                 << "len:" << len;
+  return g_ECMedia->GetAudioDeviceList(len);
 }
 
 ECMEDIA_API bool ECMedia_set_audio_recording_device(int index) {
