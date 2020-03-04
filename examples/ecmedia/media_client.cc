@@ -2194,8 +2194,8 @@ char* MediaClient::GetAudioDeviceList(int* length) {
     device["deviceGuid"] = guid;
     playdevices["playouts"].append(device);
   }
-  d["devices"].append(playdevices);
-  std::string strDevice = d.toStyledString();
+  devices["devices"].append(playdevices);
+  std::string strDevice = devices.toStyledString();
   //std::string strDev = strDevice + strDevice2;
   int len = strDevice.length();
   if (pAudioDevice != nullptr) {
