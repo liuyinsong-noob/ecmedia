@@ -341,6 +341,12 @@ ECMEDIA_API bool ECMedia_set_audio_recording_device(int index) {
   return g_ECMedia->SetAudioRecordingDevice(index);
 }
 
+ECMEDIA_API bool ECMedia_set_audio_playout_device(int index){
+ RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__  << "() "<< " begins..."
+                << "index:" << index ;
+  return g_ECMedia->SetAudioPlayoutDevice(index);
+}
+
 ///////////////////////////////////////////////////////////////////////////////////////
 /**************************************************************************************/
 

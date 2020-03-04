@@ -125,7 +125,10 @@ class ECBaseManager : public sigslot::has_slots<> {
 
   char* GetAudioDeviceList(int* len);
 
-  bool SetAudioRecordingDevice(int i);
+  bool SetAudioRecordingDevice(int index);
+
+  bool SetAudioPlayoutDevice(int index);
+
   bool GetVideoDevices(char* devices, int* len);
  ////////////////////////////////////////////////////////////////////////////////////////
   /*************************************************************************************/

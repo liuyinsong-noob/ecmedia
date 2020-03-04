@@ -373,6 +373,14 @@ bool ECBaseManager::SetAudioRecordingDevice(int index) {
                 << "index:" << index;
   return MediaClient::GetInstance()->SetAudioRecordingDevice(index);
 }
+
+bool ECBaseManager::SetAudioPlayoutDevice(int index) {
+  RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__ << "() "
+                << " begin..."
+                << "index:" << index;
+  return MediaClient::GetInstance()->SetAudioPlayoutDevice(index);
+  }
+
 int ECBaseManager::NumOfCaptureDevices() {
   RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__  << "() "<< " begin...";
   return MediaClient::GetInstance()->GetNumberOfVideoDevices();

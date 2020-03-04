@@ -2245,7 +2245,23 @@ bool MediaClient::SetAudioRecordingDevice(int i) {
   else
     return false;
 }
+bool MediaClient::SetAudioPlayoutDevice(int i) {
+  CreateAudioDevice();
+  EC_CHECK_VALUE((own_adm != nullptr), false);
+  int num_devices = own_adm->PlayoutDevices();
+  EC_CHECK_VALUE((num_devices != 0), false);
+  // Verify that all available recording devices can be set (not enabled yet).
+  for (int j = 0; j < num_devices; ++j) {
+    int ret = own_adm->SetPlayoutDevice(j);
+    EC_CHECK_VALUE((ret != -1), false);
+  }
 
+  if (!(own_adm->SetPlayoutDevice(i))) {
+    own_adm->InitPlayout();
+    return true;
+  }else
+    return false;
+}
 ///////////////////////////////////TransportControllerObserve/////////////////////////////////
 TransportControllerObserve::TransportControllerObserve(
     rtc::Thread* network_thread,
