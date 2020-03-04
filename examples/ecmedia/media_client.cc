@@ -635,13 +635,11 @@ bool MediaClient::CreateVideoChannel(const std::string& settings,
   cricket::VideoSendParameters vidoe_send_params;
   vidoe_send_params.mid = mid;
 
- 
-
-  channel_manager_->GetSupportedVideoCodecs(&vidoe_send_params.codecs);
-  FilterVideoCodec(config, vidoe_send_params.codecs);
-  channel_manager_->GetSupportedVideoRtpHeaderExtensions(
-      &vidoe_send_params.extensions);
-
+  /* channel_manager_->GetSupportedVideoCodecs(&vidoe_send_params.codecs);
+   FilterVideoCodec(config, vidoe_send_params.codecs);
+   channel_manager_->GetSupportedVideoRtpHeaderExtensions(
+       &vidoe_send_params.extensions);
+   */
   /* if (vidoe_send_params.codecs.size() > 0) {
      vidoe_send_params.codecs.at(0).params[cricket::kCodecParamMinBitrate] =
          getStrFromInt(config.minBitrateKps);
@@ -669,6 +667,7 @@ bool MediaClient::CreateVideoChannel(const std::string& settings,
     it++;
   }
 
+
   bOk = worker_thread_->Invoke<bool>(RTC_FROM_HERE, [&] {
     return video_channel_->media_channel()->SetSendParameters(
         vidoe_send_params);
@@ -688,9 +687,11 @@ bool MediaClient::CreateVideoChannel(const std::string& settings,
     itr++;
   }
   cricket::VideoRecvParameters video_recv_params;
-  channel_manager_->GetSupportedVideoCodecs(&video_recv_params.codecs);
-  channel_manager_->GetSupportedVideoRtpHeaderExtensions(
-      &video_recv_params.extensions);
+  signaling_thread_->Invoke<void>(RTC_FROM_HERE, [&] {
+    channel_manager_->GetSupportedVideoCodecs(&video_recv_params.codecs);
+    channel_manager_->GetSupportedVideoRtpHeaderExtensions(
+        &video_recv_params.extensions);
+  });
 
   bOk = worker_thread_->Invoke<bool>(RTC_FROM_HERE, [&] {
     return video_channel_->media_channel()->SetRecvParameters(
@@ -708,8 +709,11 @@ bool MediaClient::CreateVideoChannel(const std::string& settings,
     demuxer_criteria.ssrcs.insert(*itr);
     itr++;
   }
-  transport_controller_->RegisterRtpDemuxerSink(demuxer_criteria,
-                                                video_channel_);
+
+  if (demuxer_criteria.ssrcs.size()) {
+    transport_controller_->RegisterRtpDemuxerSink(demuxer_criteria,
+                                                  video_channel_);
+  }
   mVideoChannels_[channelId] = video_channel_;
 
   return bOk;
@@ -796,9 +800,11 @@ bool MediaClient::CreateVoiceChannel(const std::string& settings,
   cricket::AudioSendParameters sendParams;
   sendParams.mid = mid;
 
-  channel_manager_->GetSupportedAudioSendCodecs(&sendParams.codecs);
-  channel_manager_->GetSupportedAudioRtpHeaderExtensions(
-      &sendParams.extensions);
+  signaling_thread_->Invoke<void>(RTC_FROM_HERE, [&] {
+    channel_manager_->GetSupportedAudioSendCodecs(&sendParams.codecs);
+    channel_manager_->GetSupportedAudioRtpHeaderExtensions(
+        &sendParams.extensions);
+  });
 
   FilterAudioCodec(config, sendParams.codecs);
 
@@ -1666,7 +1672,9 @@ bool MediaClient::GetAudioCodecs(char* jsonAudioCodecInfos, int* length) {
   if (channel_manager_ && length) {
     Json::Value codecs(Json::objectValue);
     cricket::AudioSendParameters sendParams;
-    channel_manager_->GetSupportedAudioSendCodecs(&sendParams.codecs);
+    signaling_thread_->Invoke<void>(RTC_FROM_HERE, [&] {
+      channel_manager_->GetSupportedAudioSendCodecs(&sendParams.codecs);
+    });
 
     for (auto codec : sendParams.codecs) {
       Json::Value jsonCodec(Json::objectValue);
@@ -2002,9 +2010,12 @@ bool MediaClient::SendKeyFrame(const int channelId) {
   cricket::WebRtcVideoChannel* internal_video_channel =
       GetInternalVideoChannel(channelId);
   if (internal_video_channel) {
-    internal_video_channel->SendKeyframe();
+    worker_thread_->Invoke<bool>(RTC_FROM_HERE, [=] {
+      RTC_DCHECK_RUN_ON(worker_thread_);
+      return internal_video_channel->SendKeyframe();
+    });
   }
-  return false;
+  return true;
 }
 
 bool MediaClient::SetKeyFrameRequestCallback(const int channelId,
