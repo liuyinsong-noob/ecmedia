@@ -6,16 +6,26 @@
 #include "api/rtp_sender_interface.h"
 #include "api/rtp_transceiver_interface.h"
 
+
 webrtc::ECBaseManager* g_ECMedia = nullptr;
 
 ECMEDIA_API bool ECMedia_set_trace(const char* path, const int level) {
-    g_ECMedia->SetTrace(path, level);
+	//hubintest
+	//g_ECMedia->SetTrace(path, level);
+	g_ECMedia->SetTrace(path, 0);
+
+	//end
+
+
+
+
     return true;
 }
 /******************init**********************************************************/
 ECMEDIA_API int ECMedia_init() {
   if (g_ECMedia == nullptr) {
     g_ECMedia = webrtc::ECBaseManager::GetInstance();
+
     g_ECMedia->Init();
    //ECMedia_set_trace(".\ecmediaAPI.txt", 1);
     RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__  << "() "<< " end... return 0";

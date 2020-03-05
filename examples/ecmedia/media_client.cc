@@ -514,18 +514,21 @@ void MediaClient::DestroyChannel(int channel_id, bool is_video) {
       if (it->first == channel_id) {
         cricket::VideoChannel* channel = it->second;
         if (channel != nullptr) {
+          channel->disconnect_all();
           for (auto transceiver : transceivers_) {
             cricket::ChannelInterface* channel_1 =
                 transceiver->internal()->channel();
             if (channel == channel_1) {
-              transceiver->internal()->SetChannel(nullptr);
-              DestroyChannelInterface(channel);
+				if (signaling_thread_) {
+					signaling_thread_->Invoke<void>(RTC_FROM_HERE, [&] {
+						RTC_DCHECK_RUN_ON(signaling_thread_);
+						transceiver->internal()->SetChannel(nullptr);
+					});
+				}              
+				 DestroyChannelInterface(channel);
             }
           }
         }
-        if (it->second != nullptr) {
-          it->second->disconnect_all();
-		}
        
         mVideoChannels_.erase(it);
         break;
@@ -539,16 +542,17 @@ void MediaClient::DestroyChannel(int channel_id, bool is_video) {
       if (ait->first == channel_id) {
         cricket::VoiceChannel* channel = ait->second;
         if (channel != nullptr) {
-			for (auto transceiver : transceivers_) {
-			  cricket::ChannelInterface* channel_1 = transceiver->internal()->channel();
-			  if (channel == channel_1) {
-				transceiver->internal()->SetChannel(nullptr);
-				DestroyChannelInterface(channel);
-			  }
-			}
-		}
-        if (ait->second != nullptr) {
-           ait->second->disconnect_all();
+          channel->disconnect_all();
+          for (auto transceiver : transceivers_) {
+            cricket::ChannelInterface* channel_1 =
+                transceiver->internal()->channel();
+            if (channel == channel_1) {
+              signaling_thread_->Invoke<void>(RTC_FROM_HERE, [=] {
+                  transceiver->internal()->SetChannel(nullptr);
+                  DestroyChannelInterface(channel);
+              });
+            }
+          }
         }
         mVoiceChannels_.erase(ait);
         break;
@@ -1283,9 +1287,14 @@ bool MediaClient::DisposeConnect() {
   }
 
   DestroyAllChannels();
-  transport_controller_->DestroyAllGeneralTransports_n();
-  transport_controller_.reset(nullptr);
-  transportControllerObserve_.reset(nullptr);
+
+  network_thread_->Invoke<void>(RTC_FROM_HERE, [this] {
+	  RTC_DCHECK_RUN_ON(network_thread_);
+	  transport_controller_->DestroyAllGeneralTransports_n();
+	  transport_controller_.reset(nullptr);
+	  transportControllerObserve_.reset(nullptr);
+  });
+
   m_bControll = false;
 #if defined WEBRTC_WIN
   renderWndsManager_.reset(nullptr);
