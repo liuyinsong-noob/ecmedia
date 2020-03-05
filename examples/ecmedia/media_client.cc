@@ -248,9 +248,7 @@ void MediaClient::UnInitialize() {
   if (pAudioDevice != nullptr) {
     delete[] pAudioDevice;
   }
-  if (own_adm != nullptr) {
-    own_adm->Release();
-  }
+  
   if (channelGenerator_){
     channelGenerator_->ResetGenerator();
   }
