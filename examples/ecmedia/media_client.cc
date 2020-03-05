@@ -635,11 +635,11 @@ bool MediaClient::CreateVideoChannel(const std::string& settings,
   cricket::VideoSendParameters vidoe_send_params;
   vidoe_send_params.mid = mid;
 
-  /* channel_manager_->GetSupportedVideoCodecs(&vidoe_send_params.codecs);
+  channel_manager_->GetSupportedVideoCodecs(&vidoe_send_params.codecs);
    FilterVideoCodec(config, vidoe_send_params.codecs);
    channel_manager_->GetSupportedVideoRtpHeaderExtensions(
        &vidoe_send_params.extensions);
-   */
+   
   /* if (vidoe_send_params.codecs.size() > 0) {
      vidoe_send_params.codecs.at(0).params[cricket::kCodecParamMinBitrate] =
          getStrFromInt(config.minBitrateKps);
