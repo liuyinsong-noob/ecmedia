@@ -768,7 +768,12 @@ bool MediaClient::CreateVoiceChannel(const std::string& settings,
                 << "settings:" << settings << "channelId:" << channelId;
   EC_CHECK_VALUE(channel_manager_, false);
   EC_CHECK_VALUE(transport_controller_, false);
-
+  SetAEC(true);
+  SetNS(true);
+  SetAGC(true);
+  audio_options_.experimental_agc = true;
+  audio_options_.experimental_ns = true;
+  audio_options_.delay_agnostic_aec = true;
   webrtc::CryptoOptions option;
   bool bOk = false;
   bool bSrtpRequired = false;
