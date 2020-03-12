@@ -608,9 +608,8 @@ class MediaClient : public sigslot::has_slots<> {
 /****************************************************************************/
 /*** 函数名: 获取录音设备列表                                              ***/
 /*** 功能:   获取录音设备列表字符串                                        ***/
-/*** 返回值: 类型  bool        true  成功      false   失败                ***/
-/*** 函数参数1: 名称   json                类型    char*                   ***/
-/*** 函数参数2: 名称   length                 类型    int*                 ***/
+/*** 返回值: 类型  char*                                                   ***/
+/*** 函数参数1: 名称   length                 类型    int*                 ***/
 /*****************************************************************************/
   char* GetAudioDeviceList(int* length);
 
@@ -746,7 +745,8 @@ class MediaClient : public sigslot::has_slots<> {
    
 	std::vector<rtc::scoped_refptr<webrtc::RtpTransceiverProxyWithInternal<webrtc::RtpTransceiver>>> transceivers_;
 
-    //std::map<std::string, rtc::scoped_refptr<webrtc::RtpSenderInterface>> RtpSenders_;
+    std::map<int, rtc::scoped_refptr<webrtc::RtpSenderInterface>> RtpSenders_;
+    std::map<int, rtc::scoped_refptr<webrtc::VideoTrackInterface>>TrackChannels_;
 
 	struct cricket::MediaConfig media_config_;
 

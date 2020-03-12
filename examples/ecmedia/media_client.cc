@@ -507,6 +507,15 @@ void MediaClient::DestroyChannel(int channel_id, bool is_video) {
   }
 
   if (is_video) {
+    for (auto t : TrackChannels_) {
+      if (t.first == channel_id) {
+        RtpSenders_[t.first].get()->SetTrack(nullptr);
+       
+        renderWndsManager_->StartLocalRenderer(t.first,nullptr);
+        RtpSenders_.erase(RtpSenders_.find(channel_id));
+        TrackChannels_.erase(TrackChannels_.find(channel_id));
+	  }
+    }
     it = mVideoChannels_.begin();
     while (it != mVideoChannels_.end()) {
       if (it->first == channel_id) {
@@ -971,10 +980,13 @@ bool MediaClient::SelectVideoSource(
                                                             video_track] {
     RTC_DCHECK_RUN_ON(signaling_thread_);
     bool bOk = false;
-
-    auto video_sender = webrtc::VideoRtpSender::Create(
-        worker_thread_, track_id /*rtc::CreateRandomUuid()*/);
-    EC_CHECK_VALUE(video_sender, false);
+    if (RtpSenders_.find(channelid) != RtpSenders_.end()) {
+      bOk = RtpSenders_[channelid].get()->SetTrack(video_track);
+       
+    } else {
+      auto video_sender = webrtc::VideoRtpSender::Create(
+          worker_thread_, track_id /*rtc::CreateRandomUuid()*/);
+      EC_CHECK_VALUE(video_sender, false);
 
     rtc::scoped_refptr<
         webrtc::RtpSenderProxyWithInternal<webrtc::RtpSenderInternal>>
@@ -982,7 +994,9 @@ bool MediaClient::SelectVideoSource(
             webrtc::RtpSenderInternal>::Create(signaling_thread_, video_sender);
     EC_CHECK_VALUE(senderVideo, false);
 
-    bOk = senderVideo->SetTrack(video_track);
+      bOk = senderVideo->SetTrack(video_track);
+      RtpSenders_[channelid] = senderVideo;
+    
     EC_CHECK_VALUE(bOk, false);
     const std::vector<std::string>& stream_ids = {"stream_id"};
     // senderVideo->internal()->set_stream_ids({"stream_id"});
@@ -1039,11 +1053,15 @@ bool MediaClient::SelectVideoSource(
           itr++;
         }
       }
-    }
-
+     }
+	}
     return bOk;
   });
-  RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__  << "() "<< " end...";
+  if (bResult) {
+    TrackChannels_[channelid] = video_track;
+  }
+  RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__ << "() "
+                << " end...";
   return bResult;
 }
 
@@ -1106,6 +1124,13 @@ void MediaClient::DestroyLocalVideoTrack(
   RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__  << "() "<< " begin..."
                 << "track:" << track;
   if (track) {
+    for (auto t : TrackChannels_) {
+      if (t.second == track) {
+        RtpSenders_[t.first].get()->SetTrack(nullptr);
+       
+        renderWndsManager_->StartLocalRenderer(t.first,nullptr);
+	  }
+    }
     for (int i = 0; i < 20; i++) {
       if (track == video_tracks_[i]) {
         video_tracks_[i] = NULL;
@@ -2187,7 +2212,7 @@ char* MediaClient::GetAudioDeviceList(int* length) {
      return true;
    }*/
   // std::memcpy(pAudioDevice,strDevice.c_str(),len);
-  own_adm->InitRecording();
+  // own_adm->InitRecording();
   //  return true;
   const int num2 = own_adm->PlayoutDevices();
   if (num2 <= 0) {
