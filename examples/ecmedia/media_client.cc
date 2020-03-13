@@ -245,8 +245,11 @@ void MediaClient::UnInitialize() {
   RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__  << "( )   " << "() "<< " begin...";
   transceivers_.clear();
   mapChannelSsrcs_.clear();
+  TrackChannels_.clear();
+  RtpSenders_.clear();
   if (pAudioDevice != nullptr) {
     delete[] pAudioDevice;
+    pAudioDevice = nullptr;
   }
   
   if (channelGenerator_){
