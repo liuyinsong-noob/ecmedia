@@ -1402,7 +1402,20 @@ PacketReceiver::DeliveryStatus Call::DeliverRtp(MediaType media_type,
              is_keep_alive_packet);
 
   ReadLockScoped read_lock(*receive_crit_);
-  auto it = receive_rtp_config_.find(parsed_packet.Ssrc());
+  uint32_t packetSsrc = 0;
+  if (media_type == MediaType::VIDEO) {
+    uint32_t temp = parsed_packet.Ssrc();
+    uint8_t buf[4] = {0};
+    buf[0] = temp & 0xF0;
+    buf[1] = temp >> 8;
+    buf[2] = temp >> 16;
+    buf[3] = temp >> 24;
+    packetSsrc = buf[0] + buf[1] * 256 + buf[2] * 256 * 256 + buf[3] * 256 * 256 * 256;
+  } else {
+    packetSsrc = parsed_packet.Ssrc();
+  }
+  auto it = receive_rtp_config_.find(packetSsrc);
+ // auto it = receive_rtp_config_.find(parsed_packet.Ssrc());
   if (it == receive_rtp_config_.end()) {
     RTC_LOG(LS_ERROR) << "receive_rtp_config_ lookup failed for ssrc "
                       << parsed_packet.Ssrc();

@@ -254,7 +254,17 @@ RtpPacketSinkInterface* RtpDemuxer::ResolveSink(
   if (ssrc_sink_it != sink_by_ssrc_.end()) {
     return ssrc_sink_it->second;
   }
-
+  uint32_t temp = ssrc;
+  uint8_t buf[4] = {0};
+  buf[0] = temp & 0xF0;
+  buf[1] = temp >> 8;
+  buf[2] = temp >> 16;
+  buf[3] = temp >> 24;
+  uint32_t tepSsrc = buf[0] + buf[1] * 256 + buf[2] * 256 * 256 + buf[3] * 256 * 256 * 256;
+  const auto tepSsrc_sink_it = sink_by_ssrc_.find(tepSsrc);
+  if (tepSsrc_sink_it != sink_by_ssrc_.end()) {
+    return tepSsrc_sink_it->second;
+  }
   // Legacy senders will only signal payload type, support that as last resort.
   return ResolveSinkByPayloadType(packet.PayloadType(), ssrc);
 }

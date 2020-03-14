@@ -1509,7 +1509,14 @@ bool MediaClient::AddMediaSsrc(bool is_local, int channelId, uint32_t ssrc) {
       it->second.ssrcLocal.push_back(ssrc);
 
     } else {
-      it->second.ssrcRemote.push_back(ssrc);
+      uint8_t buf[4] = {0};
+      uint32_t temp = ssrc;
+      buf[0] = temp & 0xF0;
+      buf[1] = temp >> 8;
+      buf[2] = temp >> 16;
+      buf[3] = temp >> 24;
+      uint32_t ssrcRemote = buf[0] + buf[1] * 256 + buf[2] * 256 * 256 + buf[3] * 256 * 256 * 256;
+      it->second.ssrcRemote.push_back(ssrcRemote);
     }
     return true;
   }
