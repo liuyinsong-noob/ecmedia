@@ -191,6 +191,7 @@ int WebRtcOpus_Encode(OpusEncInst* inst,
 
 int16_t WebRtcOpus_SetBitRate(OpusEncInst* inst, int32_t rate) {
   if (inst) {
+    rate = 48000;
     return ENCODER_CTL(inst, OPUS_SET_BITRATE(rate));
   } else {
     return -1;

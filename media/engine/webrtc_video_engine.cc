@@ -233,9 +233,9 @@ static int GetMaxDefaultVideoBitrateKbps(int width,
                                          bool is_screenshare) {
   int max_bitrate;
   if (width * height <= 320 * 240) {
-    max_bitrate = 600;
+    max_bitrate = 500;
   } else if (width * height <= 640 * 480) {
-    max_bitrate = 1700;
+    max_bitrate = 600;
   } else if (width * height <= 960 * 540) {
     max_bitrate = 2000;
   } else {
