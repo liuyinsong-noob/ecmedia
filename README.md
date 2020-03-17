@@ -5,6 +5,8 @@ third_party
 tools
 buildtools
 
+打开x264svc codec:
+gn gen out/Default --args="is_debug=false target_cpu=\"x86\" rtc_use_h264=true proprietary_codecs=true" --ide=vs2017
 
 **WebRTC is a free, open software project** that provides browsers and mobile
 applications with Real-Time Communications (RTC) capabilities via simple APIs.
