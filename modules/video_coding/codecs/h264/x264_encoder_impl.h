@@ -7,7 +7,7 @@
 
 // before using x264-svc, must define macro RLCLOUD
 #define RLCLOUD 1
-#include "third_party/libx264svc_win/x64/include/x264.h"
+#include "third_party/libx264svc_win/x86/include/x264.h"
 
 namespace webrtc {
 

@@ -139,6 +139,7 @@ X264EncoderImpl::X264EncoderImpl(const cricket::VideoCodec& codec)
       packetization_mode_string == "1") {
     packetization_mode_ = H264PacketizationMode::NonInterleaved;
   }
+  packetization_mode_ = H264PacketizationMode::NonInterleaved;
   downscaled_buffers_.reserve(kMaxSimulcastStreams - 1);
   encoded_images_.reserve(kMaxSimulcastStreams);
   encoders_.reserve(kMaxSimulcastStreams);
@@ -317,17 +318,14 @@ int32_t X264EncoderImpl::SetRateAllocation(
       configurations_[i].SetStreamState(true);
 
       // Update h264 encoder.
-	  if (encoders_[i]) {
+      if (encoders_[i]) {
         x264_param_t curparms;
         x264_encoder_parameters(encoders_[i], &curparms);
         curparms.i_fps_num = configurations_[i].max_frame_rate;
         curparms.i_fps_den = 1;
-        // new_bitrate_kbit = new_bitrate_kbit*25/new_framerate;
-        curparms.rc.i_bitrate = configurations_[i].target_bps;
-        curparms.rc.i_vbv_max_bitrate = configurations_[i].target_bps;
-        curparms.rc.i_vbv_buffer_size =
-            configurations_[i].target_bps / configurations_[i].max_frame_rate;
-
+        curparms.rc.i_bitrate = configurations_[i].target_bps/1000;
+        curparms.rc.i_vbv_max_bitrate = configurations_[i].target_bps/1000;
+        curparms.rc.i_vbv_buffer_size = configurations_[i].target_bps/1000;
         int retval = x264_encoder_reconfig(encoders_[i], &curparms);
         if (retval < 0)
           return WEBRTC_VIDEO_CODEC_ERROR;
@@ -458,23 +456,26 @@ int32_t X264EncoderImpl::Encode(
 #ifdef SAVE_ENCODEDE_FILE
     if (output_files_[i]) {
       for (int idx = 0; idx < num_nals; idx++) {
-        output_files_[i].write(reinterpret_cast<char*>(pnals_out[idx].p_payload),
-                               pnals_out[idx].i_payload);
+        output_files_[i].write(
+            reinterpret_cast<char*>(pnals_out[idx].p_payload),
+            pnals_out[idx].i_payload);
       }
     }
 #endif
-    RTC_LOG(LS_INFO) << "encoder id: " << i << " encoders size: " << encoders_.size();
+    RTC_LOG(LS_INFO) << "encoder id: " << i
+                     << " encoders size: " << encoders_.size();
+
     int temporal_id = -1;
     for (int idx = 0; idx < num_nals; idx++) {
       int nal_unit_type = pnals_out[idx].i_type;
       int offset = pnals_out[idx].b_long_startcode ? 4 : 3;
-      if (nal_unit_type == 14 && i==1) {
+      if (nal_unit_type == 14 && i == 1) {
         temporal_id = (pnals_out[idx].p_payload[offset + 1 + 2] & 0xE0) >> 5;
         RTC_LOG(LS_INFO) << "NAL type: " << pnals_out[idx + 1].i_type
                          << " temporal_id: " << temporal_id;
       }
     }
-  //  RTC_DCHECK_NE(temporal_id, -1);
+    //  RTC_DCHECK_NE(temporal_id, -1);
     encoded_images_[i]._encodedWidth = configurations_[i].width;
     encoded_images_[i]._encodedHeight = configurations_[i].height;
     encoded_images_[i].SetTimestamp(input_frame.timestamp());
@@ -539,7 +540,7 @@ x264_param_t X264EncoderImpl::CreateEncoderParams(size_t i) const {
   x264_param_t param;
   x264_param_t* p_params = &param;
   x264_param_default_preset(p_params, x264_preset_names[2], "zerolatency");
-  int idx = (codec_.numberOfSimulcastStreams-1) - i;
+  int idx = (codec_.numberOfSimulcastStreams - 1) - i;
   RTC_DCHECK_GE(idx, 0);
   if (codec_.mode == VideoCodecMode::kRealtimeVideo) {
     p_params->i_width = configurations_[i].width;
@@ -547,14 +548,14 @@ x264_param_t X264EncoderImpl::CreateEncoderParams(size_t i) const {
     p_params->i_fps_num = configurations_[i].max_frame_rate;
     p_params->i_fps_den = 1;
     p_params->i_keyint_max = configurations_[i].key_frame_interval;
-    p_params->b_annexb = 1; 
+    p_params->b_annexb = 1;
     p_params->rc.i_rc_method = X264_RC_ABR;
-    p_params->rc.i_bitrate = codec_.simulcastStream[idx].targetBitrate*1000;
-    p_params->rc.i_vbv_buffer_size =
-        p_params->rc.i_bitrate / configurations_[i].max_frame_rate;
-    p_params->rc.i_vbv_max_bitrate = codec_.startBitrate;
-
-	p_params->iTemporalLayers = num_temporal_layers_;
+    p_params->rc.i_bitrate = codec_.simulcastStream[idx].targetBitrate;
+    p_params->rc.i_vbv_buffer_size = codec_.simulcastStream[idx].targetBitrate;
+    p_params->rc.i_vbv_max_bitrate = codec_.simulcastStream[idx].targetBitrate;
+#ifdef RLCLOUD
+    p_params->iTemporalLayers = num_temporal_layers_;
+#endif
   }
 
   return param;
