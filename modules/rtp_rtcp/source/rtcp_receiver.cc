@@ -196,6 +196,13 @@ void RTCPReceiver::SetSsrcs(uint32_t main_ssrc,
   rtc::CritScope lock(&rtcp_receiver_lock_);
   main_ssrc_ = main_ssrc;
   registered_ssrcs_ = registered_ssrcs;
+  uint8_t buf[4] = {0};
+  uint32_t temp = main_ssrc_;
+  buf[0] = temp & 0xF0;
+  buf[1] = temp >> 8;
+  buf[2] = temp >> 16;
+  buf[3] = temp >> 24;
+  general_main_ssrc_ = buf[0] + buf[1] * 256 + buf[2] * 256 * 256 + buf[3] * 256 * 256 * 256;
 }
 
 int32_t RTCPReceiver::RTT(uint32_t remote_ssrc,
@@ -669,8 +676,16 @@ void RTCPReceiver::HandleNack(const CommonHeader& rtcp_block,
     ++num_skipped_packets_;
     return;
   }
-
-  if (receiver_only_ || main_ssrc_ != nack.media_ssrc())  // Not to us.
+//modify by yukening
+ // if (receiver_only_ || main_ssrc_ != nack.media_ssrc())  // Not to us.
+  uint32_t temp = nack.media_ssrc();
+  uint8_t buf[4] = {0};
+  buf[0] = temp & 0xF0;
+  buf[1] = temp >> 8;
+  buf[2] = temp >> 16;
+  buf[3] = temp >> 24;
+  uint32_t general_media_ssrc = buf[0] + buf[1] * 256 + buf[2] * 256 * 256 + buf[3] * 256 * 256 * 256;
+  if (receiver_only_ ||  general_main_ssrc_ != general_media_ssrc)  // Not to us.
     return;
 
   packet_information->nack_sequence_numbers.insert(
@@ -808,7 +823,16 @@ void RTCPReceiver::HandlePli(const CommonHeader& rtcp_block,
     return;
   }
 
-  if (main_ssrc_ == pli.media_ssrc()) {
+  //modify by yukening
+   //if (main_ssrc_ == pli.media_ssrc())
+    uint32_t temp = pli.media_ssrc();
+    uint8_t buf[4] = {0};
+    buf[0] = temp & 0xF0;
+    buf[1] = temp >> 8;
+    buf[2] = temp >> 16;
+    buf[3] = temp >> 24;
+    uint32_t pli_media_ssrc = buf[0] + buf[1] * 256 + buf[2] * 256 * 256 + buf[3] * 256 * 256 * 256;
+  if ( general_main_ssrc_ == pli_media_ssrc ){
     ++packet_type_counter_.pli_packets;
     // Received a signal that we need to send a new key frame.
     packet_information->packet_type_flags |= kRtcpPli;
@@ -831,7 +855,16 @@ void RTCPReceiver::HandleTmmbr(const CommonHeader& rtcp_block,
   }
 
   for (const rtcp::TmmbItem& request : tmmbr.requests()) {
-    if (main_ssrc_ != request.ssrc() || request.bitrate_bps() == 0)
+    //modify by yukening
+    //  if (main_ssrc_ != request.ssrc() || request.bitrate_bps() == 0)
+     uint32_t temp = request.ssrc();
+     uint8_t buf[4] = {0};
+     buf[0] = temp & 0xF0;
+     buf[1] = temp >> 8;
+     buf[2] = temp >> 16;
+     buf[3] = temp >> 24;
+     uint32_t general_request_ssrc = buf[0] + buf[1] * 256 + buf[2] * 256 * 256 + buf[3] * 256 * 256 * 256;
+    if (general_main_ssrc_ != general_request_ssrc || request.bitrate_bps() == 0)
       continue;
 
     TmmbrInformation* tmmbr_info = FindOrCreateTmmbrInfo(tmmbr.sender_ssrc());
@@ -907,7 +940,16 @@ void RTCPReceiver::HandleFir(const CommonHeader& rtcp_block,
 
   for (const rtcp::Fir::Request& fir_request : fir.requests()) {
     // Is it our sender that is requested to generate a new keyframe.
-    if (main_ssrc_ != fir_request.ssrc)
+    //if (main_ssrc_ != fir_request.ssrc)
+     // continue;
+    uint32_t temp = fir_request.ssrc;
+    uint8_t buf[4] = {0};
+    buf[0] = temp & 0xF0;
+    buf[1] = temp >> 8;
+    buf[2] = temp >> 16;
+    buf[3] = temp >> 24;
+    uint32_t tepSsrc = buf[0] + buf[1] * 256 + buf[2] * 256 * 256 + buf[3] * 256 * 256 * 256;
+    if(tepSsrc != general_main_ssrc_)
       continue;
 
     ++packet_type_counter_.fir_packets;

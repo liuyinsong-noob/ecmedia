@@ -271,6 +271,8 @@ class RTCPReceiver {
 
   size_t num_skipped_packets_;
   int64_t last_skipped_packets_warning_ms_;
+  //add by yukening
+  uint32_t general_main_ssrc_ RTC_GUARDED_BY(rtcp_receiver_lock_);
 };
 }  // namespace webrtc
 #endif  // MODULES_RTP_RTCP_SOURCE_RTCP_RECEIVER_H_
