@@ -326,6 +326,10 @@ class RTC_EXPORT GeneralTransportChannel : public IceTransportInternal {
   void OnConnectionDestroyed(GeneralConnection* connection);
   void OnNominated(GeneralConnection* conn);
   // add by dxf end
+  
+  //add by yukening
+  void OnSentPacket(GeneralConnection* connection,
+                    const rtc::SentPacket& sent_packet);
 
   void CheckAndPing();
 

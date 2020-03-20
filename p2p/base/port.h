@@ -953,6 +953,7 @@ class GeneralConnection : public CandidatePairInterface,
 
 
   sigslot::signal4<GeneralConnection*, const char*, size_t, int64_t> SignalReadPacket;
+  sigslot::signal2<GeneralConnection*, const rtc::SentPacket&> SignalSentPacket;
 
   sigslot::signal1<GeneralConnection*> SignalReadyToSend;
 
@@ -961,7 +962,10 @@ class GeneralConnection : public CandidatePairInterface,
 
   // Called when the socket is currently able to send.
   void OnReadyToSend();
-
+                     
+  void OnSentPacket(rtc::AsyncPacketSocket* socket,
+                    const rtc::SentPacket& sent_packet);
+                     
   // Called when a connection is determined to be no longer useful to us.  We
   // still keep it around in case the other side wants to use it.  But we can
   // safely stop pinging on it and we can allow it to time out if the other

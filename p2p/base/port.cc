@@ -3008,14 +3008,18 @@ int GeneralConnection::Send(const void* data,
   stats_.sent_total_packets++;
   int sent = 0;
   if (udpSocket_) {
+//       RTC_LOG(LS_WARNING) << "ykn : GeneralConnection::Send address is : "
+//                           << inet_ntoa(addrRemote_.ipaddr().ipv4_address())
+//           <<" and size is : " << size;
     sent = udpSocket_->SendTo(data, size, addrRemote_, options);
   }
   if (sent <= 0) {
     //RTC_DCHECK(sent < 0);
-    //error_ = port_->GetError();
+    error_ = port_->GetError();
+      //port_->GetError()
     stats_.sent_discarded_packets++;
   } else {
-    send_rate_tracker_.AddSamples(sent);
+    //send_rate_tracker_.AddSamples(sent);
   }
   return sent;
 }
@@ -3067,6 +3071,10 @@ void GeneralConnection::OnReadPacket(rtc::AsyncPacketSocket* socket,
   //                                    packet_time_us);
   //  }
   //}
+}
+void GeneralConnection::OnSentPacket(rtc::AsyncPacketSocket* socket,
+                           const rtc::SentPacket& sent_packet) {
+  SignalSentPacket(this,sent_packet);
 }
 
 ///////////////////////////////////////////////////////////////////////////////

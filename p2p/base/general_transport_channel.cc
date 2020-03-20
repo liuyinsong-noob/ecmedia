@@ -2578,6 +2578,8 @@ bool GeneralTransportChannel::setUdpConnection(
         this, &GeneralTransportChannel::OnConnectionDestroyed);
     general_connection_->SignalNominated.connect(
         this, &GeneralTransportChannel::OnNominated);
+    general_connection_->SignalSentPacket.connect(
+          this, &GeneralTransportChannel::OnSentPacket);
 
   }
   if (general_connection_ && socketFactory) {
@@ -2589,6 +2591,7 @@ bool GeneralTransportChannel::setUdpConnection(
       general_connection_->setUdpSocket(udpSocket_, addrRemote);
       udpSocket_->SignalReadPacket.connect(general_connection_,
                                             &GeneralConnection::OnReadPacket);
+      udpSocket_->SignalSentPacket.connect(general_connection_, &GeneralConnection::OnSentPacket);
 
       //writable_ = true;
       SetWritable(true);
@@ -2684,6 +2687,13 @@ void GeneralTransportChannel::OnReadPacket(GeneralConnection* connection,
   //if (ice_role_ == ICEROLE_CONTROLLED) {
   //  MaybeSwitchSelectedConnection(connection, "data received");
   //}
+}
+
+void GeneralTransportChannel::OnSentPacket(GeneralConnection* connection,
+                  const rtc::SentPacket& sent_packet){
+   RTC_DCHECK(network_thread_ == rtc::Thread::Current());
+  
+  SignalSentPacket(this,sent_packet);
 }
 
 void GeneralTransportChannel::OnReadyToSend(GeneralConnection* connection) {
