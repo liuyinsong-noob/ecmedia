@@ -649,6 +649,12 @@ bool MediaClient::CreateVideoChannel(const std::string& settings,
   cricket::VideoSendParameters vidoe_send_params;
   vidoe_send_params.mid = mid;
 
+
+  // add bu yukening
+  const int kMaxBandwidthBps = 2000000;
+  vidoe_send_params.max_bandwidth_bps = kMaxBandwidthBps;
+  //
+
   channel_manager_->GetSupportedVideoCodecs(&vidoe_send_params.codecs);
    FilterVideoCodec(config, vidoe_send_params.codecs);
    channel_manager_->GetSupportedVideoRtpHeaderExtensions(

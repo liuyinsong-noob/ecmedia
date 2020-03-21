@@ -31,6 +31,7 @@
 #include "rtc_base/race_checker.h"
 #include "rtc_base/task_queue.h"
 #include "rtc_base/task_utils/repeating_task.h"
+#include "modules/congestion_controller/bbr/bbr_factory.h"
 
 namespace webrtc {
 class Clock;

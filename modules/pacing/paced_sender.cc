@@ -207,7 +207,7 @@ void PacedSender::SetPacingRates(uint32_t pacing_rate_bps,
   pacing_bitrate_kbps_ = pacing_rate_bps / 1000;
   padding_budget_.set_target_rate_kbps(padding_rate_bps / 1000);
 
-  RTC_LOG(LS_VERBOSE) << "bwe:pacer_updated pacing_kbps="
+  RTC_LOG(LS_INFO) << "bwe:pacer_updated pacing_kbps="
                       << pacing_bitrate_kbps_
                       << " padding_budget_kbps=" << padding_rate_bps / 1000;
 }
