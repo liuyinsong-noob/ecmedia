@@ -3829,39 +3829,48 @@ static void ECMedia_reset_send_codecinfo(VideoCodec& videoCodec)
 			videoCodec.numberOfSimulcastStreams = 0;
 		}
 	}
-
 	if (videoCodec.codecType == kVideoCodecH264) {
 		videoCodec.codecType = kVideoCodecH264HIGH;
 	}
-
-  if (!videoCodec.manualMode){
-    if (kVideoCodecH264HIGH == videoCodec.codecType) {
-      switch (scale)
-      {
-        case 4://360p
-          videoCodec.maxBitrate = 500;
-          videoCodec.minBitrate = 30;
-          videoCodec.startBitrate = 350;
-          break;
-        case 8://720p
-          videoCodec.maxBitrate = 1100;
-          videoCodec.minBitrate = 100;
-          videoCodec.startBitrate = 900;
-          break;
-        default:
-          videoCodec.maxBitrate = 500;
-          videoCodec.minBitrate = 30;
-          videoCodec.startBitrate = 350;
-        break;
-      }
-    }
-  }
+	if (kVideoCodecH264HIGH == videoCodec.codecType)
+	{
+		if (!videoCodec.manualMode) {
+			switch (scale)
+			{
+			case 4://360p
+				videoCodec.maxBitrate = 500;
+				videoCodec.minBitrate = 30;
+				videoCodec.startBitrate = 350;
+				break;
+			case 8://720p
+				videoCodec.maxBitrate = 1100;
+				videoCodec.minBitrate = 100;
+				videoCodec.startBitrate = 900;
+				break;
+			default:
+				videoCodec.maxBitrate = 500;
+				videoCodec.minBitrate = 30;
+				videoCodec.startBitrate = 350;
+				break;
+			}
+		}
+		if(videoCodec.width==480&&videoCodec.height==640&&videoCodec.startBitrate>600) {//fixed bitrate when use phone;
+			videoCodec.maxBitrate = 600;
+			videoCodec.minBitrate = 100;
+			videoCodec.startBitrate = 400;
+		}
+	}
+  
   WEBRTC_TRACE(kTraceApiCall, kTraceMediaApi, 0, "%s:%d ends...", __FUNCTION__, __LINE__);//add by wx
 }
 int ECMedia_set_send_codec_video(int channelid, VideoCodec& videoCodec)
 {
-	WEBRTC_TRACE(kTraceApiCall, kTraceMediaApi, 0, "%s:%d begins..., channelid:%d videoCodec(width:%d height:%d pltype:%d plname:%s, startBitrate:%d, maxBitrate:%d, minBitrate:%d, numberOfSimulcastStreams:%d)",
-		__FUNCTION__, __LINE__, channelid, videoCodec.width, videoCodec.height, videoCodec.plType, videoCodec.plName, videoCodec.startBitrate, videoCodec.maxBitrate, videoCodec.minBitrate, videoCodec.numberOfSimulcastStreams);
+	WEBRTC_TRACE(kTraceApiCall, kTraceMediaApi, 0, "%s:%d begins..., \
+	channelid:%d videoCodec(width:%d height:%d pltype:%d plname:%s, startBitrate:%d, maxBitrate:%d, minBitrate:%d, numberOfSimulcastStreams:%d\
+	maxFramerate:%d manualMode:%d  mode:%d(video==0;screen_share==1)",
+	__FUNCTION__, __LINE__,
+	channelid, videoCodec.width, videoCodec.height, videoCodec.plType, videoCodec.plName, videoCodec.startBitrate, videoCodec.maxBitrate, 
+	videoCodec.minBitrate, videoCodec.numberOfSimulcastStreams,videoCodec.maxFramerate,videoCodec.manualMode,videoCodec.mode);
     if (videoCodec.width == 0 || videoCodec.height == 0) {
         WEBRTC_TRACE(kTraceError, kTraceMediaApi, 0, "%s:%d invalid param width or height", __FUNCTION__, __LINE__);
         WEBRTC_TRACE(kTraceApiCall, kTraceMediaApi, 0, "%s:%d ends...", __FUNCTION__, __LINE__);
@@ -3871,14 +3880,16 @@ int ECMedia_set_send_codec_video(int channelid, VideoCodec& videoCodec)
   
   ECMedia_reset_send_codecinfo(videoCodec);
 
-  WEBRTC_TRACE(kTraceApiCall, kTraceMediaApi, 0, "%s:%d after reset..., channelid:%d videoCodec(width:%d height:%d pltype:%d plname:%s, startBitrate:%d, maxBitrate:%d, minBitrate:%d, numberOfSimulcastStreams:%d)",
-               __FUNCTION__, __LINE__, channelid, videoCodec.width,videoCodec.height, videoCodec.plType,videoCodec.plName, videoCodec.startBitrate,videoCodec.maxBitrate, videoCodec.minBitrate, videoCodec.numberOfSimulcastStreams);
+ // WEBRTC_TRACE(kTraceApiCall, kTraceMediaApi, 0, "%s:%d after reset..., channelid:%d videoCodec(width:%d height:%d pltype:%d plname:%s, startBitrate:%d, maxBitrate:%d, minBitrate:%d, numberOfSimulcastStreams:%d)",
+ //             __FUNCTION__, __LINE__, channelid, videoCodec.width,videoCodec.height, videoCodec.plType,videoCodec.plName, videoCodec.startBitrate,videoCodec.maxBitrate, videoCodec.minBitrate, videoCodec.numberOfSimulcastStreams);
 
     ViECodec *codec = ViECodec::GetInterface(m_vie);
     if (codec) {
         WEBRTC_TRACE(kTraceApiCall, kTraceMediaApi, 0, "%s:%d plType:%d plname:%s", __FUNCTION__, __LINE__, videoCodec.plType,
                      videoCodec.plName);
         int ret = codec->SetSendCodec(channelid, videoCodec);
+		//add by wx
+		ECMedia_get_send_codec_video(channelid, videoCodec);
         codec->Release();
         if (ret != 0) {
             WEBRTC_TRACE(kTraceError, kTraceMediaApi, 0, "%s:%d failed to set video send codec", __FUNCTION__, __LINE__);
@@ -3899,7 +3910,13 @@ int ECMedia_get_send_codec_video(int channelid, VideoCodec& videoCodec)
     WEBRTC_TRACE(kTraceApiCall, kTraceMediaApi, 0, "%s:%d begins... and channelid: %d", __FUNCTION__, __LINE__, channelid);
     VIDEO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
     ViECodec *codec = ViECodec::GetInterface(m_vie);     if (codec) {
-        int ret = codec->GetSendCodec(channelid, videoCodec);
+    int ret = codec->GetSendCodec(channelid, videoCodec);
+	WEBRTC_TRACE(kTraceApiCall, kTraceMediaApi, 0, "%s:%d begins..., \
+	channelid:%d videoCodec(width:%d height:%d pltype:%d plname:%s, startBitrate:%d, maxBitrate:%d, minBitrate:%d, numberOfSimulcastStreams:%d\
+	maxFramerate:%d manualMode:%d  mode:%d(video==0;screen_share==1)",
+	__FUNCTION__, __LINE__,
+	channelid, videoCodec.width, videoCodec.height, videoCodec.plType, videoCodec.plName, videoCodec.startBitrate, videoCodec.maxBitrate,
+	videoCodec.minBitrate, videoCodec.numberOfSimulcastStreams, videoCodec.maxFramerate, videoCodec.manualMode, videoCodec.mode);
         codec->Release();
         if (ret != 0) {
             WEBRTC_TRACE(kTraceError, kTraceMediaApi, 0, "%s:%d failed to get video send codec", __FUNCTION__, __LINE__);
