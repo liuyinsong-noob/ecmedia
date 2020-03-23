@@ -1693,7 +1693,8 @@ bool WebRtcVoiceMediaChannel::SetSendCodecs(
     // "unchanged" so that BWE isn't affected.
     bitrate_config.start_bitrate_bps = -1;
   }
-  call_->GetTransportControllerSend()->SetSdpBitrateParameters(bitrate_config);
+
+  //hubintest call_->GetTransportControllerSend()->SetSdpBitrateParameters(bitrate_config);
 
   // Check if the transport cc feedback or NACK status has changed on the
   // preferred send codec, and in that case reconfigure all receive streams.

@@ -3015,7 +3015,7 @@ int GeneralConnection::Send(const void* data,
   }
   if (sent <= 0) {
     //RTC_DCHECK(sent < 0);
-    error_ = port_->GetError();
+    error_ = udpSocket_->GetError();
       //port_->GetError()
     stats_.sent_discarded_packets++;
   } else {

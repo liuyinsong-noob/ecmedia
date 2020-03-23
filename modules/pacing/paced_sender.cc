@@ -121,6 +121,9 @@ void PacedSender::Pause() {
   // a new (longer) estimate for when to call Process().
   if (process_thread_)
     process_thread_->WakeUp(this);
+
+  RTC_LOG(LS_INFO) << "PacedSender::Pause";
+    
 }
 
 void PacedSender::Resume() {
@@ -136,15 +139,27 @@ void PacedSender::Resume() {
   // refresh the estimate for when to call Process().
   if (process_thread_)
     process_thread_->WakeUp(this);
+
+  RTC_LOG(LS_INFO) << "PacedSender::Resume";
 }
 
 void PacedSender::SetCongestionWindow(int64_t congestion_window_bytes) {
   rtc::CritScope cs(&critsect_);
+
+  RTC_LOG(LS_INFO)
+      << "PacedSender::SetCongestionWindow congestion_window_bytes:" 
+      << congestion_window_bytes;
+
   congestion_window_bytes_ = congestion_window_bytes;
 }
 
 void PacedSender::UpdateOutstandingData(int64_t outstanding_bytes) {
   rtc::CritScope cs(&critsect_);
+
+  RTC_LOG(LS_INFO)
+      << "PacedSender::UpdateOutstandingData outstanding_bytes:"
+	<< outstanding_bytes;
+
   outstanding_bytes_ = outstanding_bytes;
 }
 
@@ -176,6 +191,10 @@ void PacedSender::SetProbingEnabled(bool enabled) {
 void PacedSender::SetEstimatedBitrate(uint32_t bitrate_bps) {
   if (bitrate_bps == 0)
     RTC_LOG(LS_ERROR) << "PacedSender is not designed to handle 0 bitrate.";
+
+  RTC_LOG(LS_INFO) << "PacedSender::SetEstimatedBitrate bitrate_bps:"
+                   << bitrate_bps;
+
   rtc::CritScope cs(&critsect_);
   estimated_bitrate_bps_ = bitrate_bps;
   padding_budget_.set_target_rate_kbps(
@@ -190,6 +209,11 @@ void PacedSender::SetEstimatedBitrate(uint32_t bitrate_bps) {
 
 void PacedSender::SetSendBitrateLimits(int min_send_bitrate_bps,
                                        int padding_bitrate) {
+
+	 RTC_LOG(LS_INFO) << "PacedSender::SetSendBitrateLimits min_send_bitrate_bps:"
+                   << min_send_bitrate_bps
+                   << "padding_bitrate:" << padding_bitrate;
+
   rtc::CritScope cs(&critsect_);
   min_send_bitrate_kbps_ = min_send_bitrate_bps / 1000;
   pacing_bitrate_kbps_ =
@@ -204,10 +228,11 @@ void PacedSender::SetPacingRates(uint32_t pacing_rate_bps,
                                  uint32_t padding_rate_bps) {
   rtc::CritScope cs(&critsect_);
   RTC_DCHECK(pacing_rate_bps > 0);
-  pacing_bitrate_kbps_ = pacing_rate_bps / 1000;
+  pacing_bitrate_kbps_ = pacing_rate_bps / 1000;  
+
   padding_budget_.set_target_rate_kbps(padding_rate_bps / 1000);
 
-  RTC_LOG(LS_INFO) << "bwe:pacer_updated pacing_kbps="
+  RTC_LOG(LS_INFO) << "PacedSender::SetPacingRates bwe:pacer_updated pacing_kbps="
                       << pacing_bitrate_kbps_
                       << " padding_budget_kbps=" << padding_rate_bps / 1000;
 }

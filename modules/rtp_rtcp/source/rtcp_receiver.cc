@@ -671,6 +671,11 @@ void RTCPReceiver::HandleSdes(const CommonHeader& rtcp_block,
 
 void RTCPReceiver::HandleNack(const CommonHeader& rtcp_block,
                               PacketInformation* packet_information) {
+
+	//hubintest close nack
+	return;
+
+	//
   rtcp::Nack nack;
   if (!nack.Parse(rtcp_block)) {
     ++num_skipped_packets_;

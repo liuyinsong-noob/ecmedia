@@ -660,7 +660,7 @@ bool MediaClient::CreateVideoChannel(const std::string& settings,
    channel_manager_->GetSupportedVideoRtpHeaderExtensions(
        &vidoe_send_params.extensions);
    
-  /* if (vidoe_send_params.codecs.size() > 0) {
+  if (vidoe_send_params.codecs.size() > 0) {
      vidoe_send_params.codecs.at(0).params[cricket::kCodecParamMinBitrate] =
          getStrFromInt(config.minBitrateKps);
      vidoe_send_params.codecs.at(0).params[cricket::kCodecParamMaxBitrate] =
@@ -670,8 +670,8 @@ bool MediaClient::CreateVideoChannel(const std::string& settings,
      // sendParams.codecs.at(0).params[cricket::kDefaultVideoMaxFramerate] =
      //    getStrFromInt(config.maxFramerate);
      vidoe_send_params.codecs.at(0).params[cricket::kCodecParamMaxQuantization]
-   = getStrFromInt(config.maxQp);
-   }*/
+ = getStrFromInt(config.maxQp);
+   }
 
   cricket::StreamParams video_stream_params;
   video_stream_params.cname = "DcRqgGg4U0HjSqLy";
@@ -846,6 +846,11 @@ bool MediaClient::CreateVoiceChannel(const std::string& settings,
     audio_stream_send.add_ssrc(*it);
     it++;
   }
+
+    // add bu yukening
+  const int kMaxBandwidthBps = 2000000;
+  sendParams.max_bandwidth_bps = kMaxBandwidthBps;
+  //
 
   bOk = worker_thread_->Invoke<bool>(RTC_FROM_HERE, [&] {
     return voice_channel_->media_channel()->SetSendParameters(sendParams);
@@ -1307,12 +1312,11 @@ bool MediaClient::CreateTransportController(bool disable_encryp) {
 }
 
 void MediaClient::OnSentPacket_w(const rtc::SentPacket& sent_packet) {
-  RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__  << "(),"<< " begin... ";
+  //RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__  << "() "<< " begin...";
   RTC_DCHECK_RUN_ON(worker_thread_);
   EC_CHECK_VALUE(call_, void());
   call_->OnSentPacket(sent_packet);
-  RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__  << "(),"<< " end... ";
-
+  //RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__  << "() "<< " end...";
 }
 
 bool MediaClient::DisposeConnect() {
@@ -2440,8 +2444,8 @@ bool VideoRenderer::UpdateVideoTrack(
 }
 
 void VideoRenderer::SetSize(int width, int height) {
-  RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__  << "(),"<< " begin... "
-                << ", width: " << width << ", height: " << height;
+  //RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__  << "() "<< " begin..."
+  //              << " width:" << width << "height:" << height;
   AutoLock<VideoRenderer> lock(this);
 
   if (width == bmi_.bmiHeader.biWidth && height == bmi_.bmiHeader.biHeight) {
@@ -2456,7 +2460,7 @@ void VideoRenderer::SetSize(int width, int height) {
 }
 
 void VideoRenderer::OnFrame(const webrtc::VideoFrame& video_frame) {
-  RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__  << "(),"<< " begin... ";
+  //RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__  << "() "<< " begin...";
   {
     AutoLock<VideoRenderer> lock(this);
 
@@ -2479,7 +2483,7 @@ void VideoRenderer::OnFrame(const webrtc::VideoFrame& video_frame) {
 }
 
 void VideoRenderer::Paint() {
-  RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__  << "(),"<< " begin... ";
+  //RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__  << "() "<< " begin...";
   if (image_ != nullptr && handle() != nullptr && hDC_ != nullptr) {
     int srcWidth = bmi_.bmiHeader.biWidth;
     int srcHeight = abs(bmi_.bmiHeader.biHeight);
