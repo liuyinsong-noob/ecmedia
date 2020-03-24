@@ -3709,6 +3709,18 @@ int ECMedia_set_send_codec_audio(int channelid, CodecInst& audioCodec)
     VoECodec *codec = VoECodec::GetInterface(m_voe);
     if (codec) {
         int ret = codec->SetSendCodec(channelid, audioCodec);
+		codec->GetSendCodec(channelid, audioCodec);
+		WEBRTC_TRACE(kTraceApiCall, kTraceMediaApi, 0,
+			"%s:%d getaudioCodec... and channelid: %d audioCodec(pltype: %d plname: %s plfreq: %d pacsize: %d channels: %d rate: %d)",
+			__FUNCTION__,
+			__LINE__,
+			channelid,
+			audioCodec.pltype,
+			audioCodec.plname,
+			audioCodec.plfreq,
+			audioCodec.pacsize,
+			audioCodec.channels,
+			audioCodec.rate);
         codec->Release();
         if (ret != 0) {
             WEBRTC_TRACE(kTraceError, kTraceMediaApi, 0, "%s:%d failed to set audio send codec", __FUNCTION__, __LINE__);
@@ -3858,6 +3870,13 @@ static void ECMedia_reset_send_codecinfo(VideoCodec& videoCodec)
 			videoCodec.maxBitrate = 600;
 			videoCodec.minBitrate = 100;
 			videoCodec.startBitrate = 400;
+		}
+		if (videoCodec.width*videoCodec.height == 1280 * 720 && videoCodec.mode == 1)//fixed bitrate and maxframerate when use screenSharing;
+		{
+			videoCodec.maxFramerate = 5;
+			videoCodec.startBitrate = 800;
+			videoCodec.minBitrate = 400;
+			videoCodec.maxBitrate = 1500;
 		}
 	}
   
