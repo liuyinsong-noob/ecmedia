@@ -81,7 +81,7 @@ CurlPost *g_curlpost = nullptr;
 #endif
 
 
-#define ECMEDIA_VERSION "ecmedia_version: v2.3.3.21"
+#define ECMEDIA_VERSION "ecmedia_version: v2.3.3.22"
 
 enum {
     ERR_SDK_ALREADY_INIT = -1000,
@@ -3694,7 +3694,8 @@ int ECMedia_get_send_codec_audio(int channelid, CodecInst& audioCodec)
 int ECMedia_set_send_codec_audio(int channelid, CodecInst& audioCodec)
 {
     WEBRTC_TRACE(kTraceApiCall, kTraceMediaApi, 0,
-                 "%s:%d begins... and channelid: %d audioCodec(pltype: %d plname: %s plfreq: %d pacsize: %d channels: %d rate: %d)",
+                 "%s:%d begins... and channelid: %d audioCodec(pltype: %d plname: %s plfreq: %d pacsize: %d channels: %d rate: %d\
+                  fecEnabled: %d  packetLossRate: %d)",
                  __FUNCTION__,
                  __LINE__,
                  channelid,
@@ -3703,15 +3704,19 @@ int ECMedia_set_send_codec_audio(int channelid, CodecInst& audioCodec)
                  audioCodec.plfreq,
                  audioCodec.pacsize,
                  audioCodec.channels,
-                 audioCodec.rate);
+                 audioCodec.rate,
+				 audioCodec.fecEnabled,
+		         audioCodec.packetLossRate);
     
     AUDIO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
     VoECodec *codec = VoECodec::GetInterface(m_voe);
     if (codec) {
+		//audioCodec.rate = 20000;
         int ret = codec->SetSendCodec(channelid, audioCodec);
 		codec->GetSendCodec(channelid, audioCodec);
 		WEBRTC_TRACE(kTraceApiCall, kTraceMediaApi, 0,
-			"%s:%d getaudioCodec... and channelid: %d audioCodec(pltype: %d plname: %s plfreq: %d pacsize: %d channels: %d rate: %d)",
+			"%s:%d begins... and channelid: %d audioCodec(pltype: %d plname: %s plfreq: %d pacsize: %d channels: %d rate: %d\
+                  fecEnabled: %d  packetLossRate: %d)",
 			__FUNCTION__,
 			__LINE__,
 			channelid,
@@ -3720,7 +3725,9 @@ int ECMedia_set_send_codec_audio(int channelid, CodecInst& audioCodec)
 			audioCodec.plfreq,
 			audioCodec.pacsize,
 			audioCodec.channels,
-			audioCodec.rate);
+			audioCodec.rate,
+			audioCodec.fecEnabled,
+			audioCodec.packetLossRate);
         codec->Release();
         if (ret != 0) {
             WEBRTC_TRACE(kTraceError, kTraceMediaApi, 0, "%s:%d failed to set audio send codec", __FUNCTION__, __LINE__);
