@@ -385,6 +385,7 @@ bool MediaClient::CreateChannelManager() {
 
   EC_CHECK_VALUE(channel_manager_, false);
 
+  channel_manager_->SetVideoRtxEnabled(true);
   bool bOk = channel_manager_->Init();
   EC_CHECK_VALUE(bOk, false);
   RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__  << "(),"<< " end... ";
@@ -398,7 +399,7 @@ bool MediaClient::CreateCall(webrtc::RtcEventLog* event_log) {
 
   const int kMinBandwidthBps = 30000;
   const int kStartBandwidthBps = 300000;
-  const int kMaxBandwidthBps = 2000000;
+  const int kMaxBandwidthBps = 1000000;
 
   EC_CHECK_VALUE(channel_manager_, false);
   EC_CHECK_VALUE(channel_manager_->media_engine(), false);
@@ -433,7 +434,7 @@ bool MediaClient::CreateCall(webrtc::RtcEventLog* event_log) {
   call_ = std::unique_ptr<webrtc::Call>(call_factory->CreateCall(call_config));
   EC_CHECK_VALUE(call_, false);
   call_ptr_ = call_.get();
-  channel_manager_->SetVideoRtxEnabled(true);
+  //channel_manager_->SetVideoRtxEnabled(true);
   call_factory.release();
   RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__  << "(),"<< " end... ";
   return true;
@@ -651,7 +652,7 @@ bool MediaClient::CreateVideoChannel(const std::string& settings,
 
 
   // add bu yukening
-  const int kMaxBandwidthBps = 2000000;
+  const int kMaxBandwidthBps = 1000000;
   vidoe_send_params.max_bandwidth_bps = kMaxBandwidthBps;
   //
 
@@ -660,7 +661,7 @@ bool MediaClient::CreateVideoChannel(const std::string& settings,
    channel_manager_->GetSupportedVideoRtpHeaderExtensions(
        &vidoe_send_params.extensions);
    
-  if (vidoe_send_params.codecs.size() > 0) {
+  /* if (vidoe_send_params.codecs.size() > 0) {
      vidoe_send_params.codecs.at(0).params[cricket::kCodecParamMinBitrate] =
          getStrFromInt(config.minBitrateKps);
      vidoe_send_params.codecs.at(0).params[cricket::kCodecParamMaxBitrate] =
@@ -670,8 +671,8 @@ bool MediaClient::CreateVideoChannel(const std::string& settings,
      // sendParams.codecs.at(0).params[cricket::kDefaultVideoMaxFramerate] =
      //    getStrFromInt(config.maxFramerate);
      vidoe_send_params.codecs.at(0).params[cricket::kCodecParamMaxQuantization]
- = getStrFromInt(config.maxQp);
-   }
+   = getStrFromInt(config.maxQp);
+   }*/
 
   cricket::StreamParams video_stream_params;
   video_stream_params.cname = "DcRqgGg4U0HjSqLy";
@@ -684,6 +685,7 @@ bool MediaClient::CreateVideoChannel(const std::string& settings,
   std::vector<uint32_t>::iterator it = ssrcsLocal.begin();
   while (it != ssrcsLocal.end()) {
     video_stream_params.add_ssrc(*it);
+     video_stream_params.AddFidSsrc(*it,  *it | 0x40);
     it++;
   }
 
@@ -704,6 +706,7 @@ bool MediaClient::CreateVideoChannel(const std::string& settings,
   std::vector<uint32_t>::iterator itr = ssrcsRemote.begin();
   while (itr != ssrcsRemote.end()) {
     video_stream_params_recv.add_ssrc(*itr);
+    video_stream_params_recv.AddFidSsrc(*itr, *itr | 0x40);
     itr++;
   }
   cricket::VideoRecvParameters video_recv_params;
@@ -1613,7 +1616,9 @@ bool MediaClient::FilterVideoCodec(const VideoCodecConfig& config,
       it++;
     } else if (name.compare(cname) == 0 && config.payloadType == it->id) {
       it++;
-    } else {
+    }else if (name.compare("rtx") == 0 && it->id == config.payloadType + 1) {
+      it++;
+    }else {
       it = vec.erase(it);
     }
   }

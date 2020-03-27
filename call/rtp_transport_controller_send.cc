@@ -70,9 +70,9 @@ RtpTransportControllerSend::RtpTransportControllerSend(
       observer_(nullptr),
       controller_factory_override_(controller_factory),
       controller_factory_fallback_(
-          //absl::make_unique<GoogCcNetworkControllerFactory>(event_log,
+          // absl::make_unique<GoogCcNetworkControllerFactory>(event_log,
           //                                                  predictor_factory)),
-		  absl::make_unique<BbrNetworkControllerFactory>()),
+          absl::make_unique<BbrNetworkControllerFactory>()),
       process_interval_(controller_factory_fallback_->GetProcessInterval()),
       last_report_block_time_(Timestamp::ms(clock_->TimeInMilliseconds())),
       reset_feedback_on_route_change_(
@@ -518,7 +518,7 @@ void RtpTransportControllerSend::PostUpdates(NetworkControlUpdate update) {
       pacer_.SetCongestionWindow(PacedSender::kNoCongestionWindow);
   }
   if (update.pacer_config) {
-    pacer_.SetPacingRates(update.pacer_config->data_rate().bps(),
+    pacer_.SetPacingRates(update.pacer_config->data_rate().bps() + 100000,
                           update.pacer_config->pad_rate().bps());
   }
   for (const auto& probe : update.probe_cluster_configs) {
@@ -526,6 +526,10 @@ void RtpTransportControllerSend::PostUpdates(NetworkControlUpdate update) {
     pacer_.CreateProbeCluster(bitrate_bps, probe.id);
   }
   if (update.target_rate) {
+    float loss = update.target_rate ? update.target_rate->network_estimate.loss_rate_ratio : 0.0;
+    printf("yukening loss is %f \n",loss);
+    (*update.target_rate).target_rate = (*update.target_rate).target_rate * (0.9 - loss);
+     printf("yukening encode bps is %lld \n",(*update.target_rate).target_rate.bps());
     control_handler_->SetTargetRate(*update.target_rate);
     UpdateControlState();
   }
