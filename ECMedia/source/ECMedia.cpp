@@ -3693,7 +3693,6 @@ int ECMedia_get_send_codec_audio(int channelid, CodecInst& audioCodec)
 
 int ECMedia_set_send_codec_audio(int channelid, CodecInst& audioCodec)
 {
-	audioCodec.rate = 80000;
     WEBRTC_TRACE(kTraceApiCall, kTraceMediaApi, 0,
                  "%s:%d begins... and channelid: %d audioCodec(pltype: %d plname: %s plfreq: %d pacsize: %d channels: %d rate: %d\
                   fecEnabled: %d  packetLossRate: %d)",
