@@ -23,7 +23,7 @@ namespace yuntongxunwebrtc {
 class EventWrapper;
 class ThreadWrapper;
 
-const uint32_t N_PLAY_SAMPLES_PER_SEC = 16000; // Default is 16 kHz
+const uint32_t N_PLAY_SAMPLES_PER_SEC = 48000; // Default is 48 kHz
 const uint32_t N_PLAY_CHANNELS = 1; // default is mono playout
 
 class AudioTrackJni : public PlayoutDelayProvider {

@@ -69,7 +69,7 @@ class NetEq {
 
   struct Config {
     Config()
-        : sample_rate_hz(16000), //For MOS test
+        : sample_rate_hz(48000), //For MOS test
           enable_audio_classifier(false),
           max_packets_in_buffer(240), //For mos test original 50
           // |max_delay_ms| has the same effect as calling SetMaximumDelay().

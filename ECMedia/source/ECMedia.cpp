@@ -81,7 +81,7 @@ CurlPost *g_curlpost = nullptr;
 #endif
 
 
-#define ECMEDIA_VERSION "ecmedia_version: v2.3.3.22"
+#define ECMEDIA_VERSION "ecmedia_version: v2.3.3.23"
 
 enum {
     ERR_SDK_ALREADY_INIT = -1000,
@@ -3693,6 +3693,7 @@ int ECMedia_get_send_codec_audio(int channelid, CodecInst& audioCodec)
 
 int ECMedia_set_send_codec_audio(int channelid, CodecInst& audioCodec)
 {
+	audioCodec.rate = 80000;
     WEBRTC_TRACE(kTraceApiCall, kTraceMediaApi, 0,
                  "%s:%d begins... and channelid: %d audioCodec(pltype: %d plname: %s plfreq: %d pacsize: %d channels: %d rate: %d\
                   fecEnabled: %d  packetLossRate: %d)",
@@ -3707,7 +3708,6 @@ int ECMedia_set_send_codec_audio(int channelid, CodecInst& audioCodec)
                  audioCodec.rate,
 				 audioCodec.fecEnabled,
 		         audioCodec.packetLossRate);
-    
     AUDIO_ENGINE_UN_INITIAL_ERROR(ERR_ENGINE_UN_INIT);
     VoECodec *codec = VoECodec::GetInterface(m_voe);
     if (codec) {
