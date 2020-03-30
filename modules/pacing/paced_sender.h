@@ -186,6 +186,9 @@ class PacedSender : public Pacer {
   const bool pace_audio_;
   FieldTrialParameter<int> min_packet_limit_ms_;
 
+  int64_t last_calu_bitrates_time_;
+  int32_t send_bitrates_count_;
+
   rtc::CriticalSection critsect_;
   // TODO(webrtc:9716): Remove this when we are certain clocks are monotonic.
   // The last millisecond timestamp returned by |clock_|.

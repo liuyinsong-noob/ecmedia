@@ -212,6 +212,9 @@ bool MediaClient::SetTrace(const char* path, int min_sev) {
    	}
     rtc::LoggingSeverity ls = (rtc::LoggingSeverity)min_sev;
     if (bfirst) {
+      rtc::LogMessage::LogToDebug(rtc::LS_ERROR);
+      rtc::LogMessage::LogTimestamps();
+     // rtc::LogMessage::LogThreads();
       rtc::LogMessage::AddLogToStream(ec_log_, ls);
       bfirst = false;
 	}
@@ -795,6 +798,7 @@ bool MediaClient::CreateVoiceChannel(const std::string& settings,
   audio_options_.experimental_agc = true;
   audio_options_.experimental_ns = true;
   audio_options_.delay_agnostic_aec = true;
+
   webrtc::CryptoOptions option;
   bool bOk = false;
   bool bSrtpRequired = false;
@@ -851,7 +855,7 @@ bool MediaClient::CreateVoiceChannel(const std::string& settings,
   }
 
     // add bu yukening
-  const int kMaxBandwidthBps = 2000000;
+  const int kMaxBandwidthBps = 1000000;
   sendParams.max_bandwidth_bps = kMaxBandwidthBps;
   //
 
@@ -1054,10 +1058,22 @@ bool MediaClient::SelectVideoSource(
     std::vector<uint32_t>::iterator itr = ssrcsRemote.begin();
     if (transceiverVideo->internal()) {
       transceiverVideo->internal()->set_created_by_addtrack(true);
-      transceiverVideo->internal()->set_direction(webrtc::RtpTransceiverDirection::kSendRecv);
-        
+
+
+      if (!video_track) {
+        RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__
+                      << " video_track is null kRecvOnly";
+
+        transceiverVideo->internal()->set_direction(
+            webrtc::RtpTransceiverDirection::kRecvOnly);
+      } else {
+        RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__ << " video_track kSendRecv";
+        transceiverVideo->internal()->set_direction(
+            webrtc::RtpTransceiverDirection::kSendOnly);
+	  }
+
       transceiverVideo->internal()->SetChannel(mVideoChannels_[channelid]);
-      if (transceiverVideo->internal()->sender_internal()) {
+          if (transceiverVideo->internal()->sender_internal() && video_track ) {
         while (it != ssrcsLocal.end()) {
           transceiverVideo->internal()->sender_internal()->SetSsrc(*it);
           it++;

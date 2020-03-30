@@ -489,8 +489,8 @@ bool RTPSender::SendPacketToNetwork(const RtpPacketToSend& packet,
   if (transport_) {
     UpdateRtpOverhead(packet);
     bytes_sent = transport_->SendRtp(packet.data(), packet.size(), options)
-                     ? static_cast<int>(packet.size())
-                     : -1;
+                    ? static_cast<int>(packet.size())
+                    : -1;
     if (event_log_ && bytes_sent > 0) {
       event_log_->Log(absl::make_unique<RtcEventRtpPacketOutgoing>(
           packet, pacing_info.probe_cluster_id));
@@ -499,6 +499,7 @@ bool RTPSender::SendPacketToNetwork(const RtpPacketToSend& packet,
   // TODO(pwestin): Add a separate bitrate for sent bitrate after pacer.
   if (bytes_sent <= 0) {
     RTC_LOG(LS_WARNING) << "Transport failed to send packet.";
+	
     return false;
   }
   return true;
@@ -510,9 +511,6 @@ void RTPSender::OnReceivedNack(
   packet_history_.SetRtt(5 + avg_rtt);
   for (uint16_t seq_no : nack_sequence_numbers) {
     const int32_t bytes_sent = ReSendPacket(seq_no);
-
-	RTC_LOG(LS_WARNING) << "hubin OnReceivedNack " << seq_no;
-
     if (bytes_sent < 0) {
       // Failed to send one Sequence number. Give up the rest in this nack.
       RTC_LOG(LS_WARNING) << "Failed resending RTP packet " << seq_no

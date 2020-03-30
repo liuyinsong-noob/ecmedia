@@ -139,10 +139,7 @@ std::unique_ptr<RtpPacketToSend> RtpPacketHistory::GetPacketAndSetSendTime(
 
   StoredPacket& packet = rtp_it->second;
   if (!VerifyRtt(rtp_it->second, now_ms)) {
-    RTC_LOG(LS_WARNING) << "hubin GetPacketAndSetSendTime not found "
-                        << sequence_number;
-
-    //return nullptr;
+    return nullptr;
   }
 
   if (packet.send_time_ms) {

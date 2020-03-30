@@ -10,7 +10,7 @@ ECLog::ECLog(const char* log_path) {
     if (log_path) {
       fstream_.open(log_path);
     }else{
-    fstream_.open(".\ecmediaAPI.txt");
+    fstream_.open(".\ecmediaAPI.txt"); 
     }
   }
 }

@@ -10,7 +10,6 @@
 webrtc::ECBaseManager* g_ECMedia = nullptr;
 
 ECMEDIA_API bool ECMedia_set_trace(const char* path, const int level) {
-	//hubintest
 	//g_ECMedia->SetTrace(path, level);
 	g_ECMedia->SetTrace(path, 0);
 	//end

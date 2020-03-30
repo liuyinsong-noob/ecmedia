@@ -606,7 +606,7 @@ void RtpVideoSender::ConfigureSsrcs(const RtpConfig& rtp_config) {
     stream.rtp_rtcp->SetRtxSendPayloadType(rtp_config.rtx.payload_type,
                                            rtp_config.payload_type);
     stream.rtp_rtcp->SetRtxSendStatus(kRtxRetransmitted |
-                                      kRtxRedundantPayloads);
+                                      kRtxRedundantPayloads);	
   }
   if (rtp_config.ulpfec.red_payload_type != -1 &&
       rtp_config.ulpfec.red_rtx_payload_type != -1) {

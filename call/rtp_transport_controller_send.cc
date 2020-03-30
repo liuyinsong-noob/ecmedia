@@ -527,9 +527,11 @@ void RtpTransportControllerSend::PostUpdates(NetworkControlUpdate update) {
   }
   if (update.target_rate) {
     float loss = update.target_rate ? update.target_rate->network_estimate.loss_rate_ratio : 0.0;
-    printf("yukening loss is %f \n",loss);
-    (*update.target_rate).target_rate = (*update.target_rate).target_rate * (0.9 - loss);
-     printf("yukening encode bps is %lld \n",(*update.target_rate).target_rate.bps());
+    if (loss > 0.8) {
+      loss = 0.6;
+	}
+    (*update.target_rate).target_rate = (*update.target_rate).target_rate * (0.8 - loss);
+     RTC_LOG(LS_ERROR) << "yukening encode bps is  "<<(*update.target_rate).target_rate.bps();
     control_handler_->SetTargetRate(*update.target_rate);
     UpdateControlState();
   }
