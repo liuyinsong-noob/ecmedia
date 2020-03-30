@@ -14,10 +14,16 @@
 
 #include <memory>
 #include <vector>
+#include <fstream>
+
 
 #include "media/base/codec.h"
 #include "modules/video_coding/include/video_codec_interface.h"
 #include "rtc_base/system/rtc_export.h"
+
+#define WEBRTC_USE_X264
+//#define SAVE_ENCODEDE_FILE
+//#define SAVE_DECODING_FILE
 
 namespace webrtc {
 
@@ -40,6 +46,10 @@ class RTC_EXPORT H264Encoder : public VideoEncoder {
   static bool IsSupported();
 
   ~H264Encoder() override {}
+#ifdef SAVE_ENCODEDE_FILE
+  std::vector<std::ofstream> output_files_;
+  std::vector<std::ofstream> output_temporal_files_;
+#endif
 };
 
 class RTC_EXPORT H264Decoder : public VideoDecoder {
@@ -48,6 +58,9 @@ class RTC_EXPORT H264Decoder : public VideoDecoder {
   static bool IsSupported();
 
   ~H264Decoder() override {}
+#ifdef SAVE_DECODING_FILE
+  std::ofstream input_file_;
+#endif
 };
 
 }  // namespace webrtc
