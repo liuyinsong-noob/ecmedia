@@ -3,12 +3,17 @@
 
 #include "api/video/i420_buffer.h"
 #include "api/video_codecs/video_encoder.h"
+#include "common_video/h264/h264_bitstream_parser.h"
 #include "modules/video_coding/codecs/h264/include/h264.h"
 
 // before using x264-svc, must define macro RLCLOUD
 #define RLCLOUD 1
-#include "third_party/libx264svc_win/x86/include/x264.h"
 
+#ifdef RLCLOUD
+#include "third_party/libx264svc_win/x86/include/x264.h"
+#else
+#include "third_party/libx264_win/x86/include/x264.h"
+#endif
 namespace webrtc {
 
 class X264EncoderImpl : public H264Encoder {
@@ -57,7 +62,9 @@ class X264EncoderImpl : public H264Encoder {
   EncoderInfo GetEncoderInfo() const override;
 
  private:
+  static void X264Log(void* handle, int i_level, const char* fmt, va_list vars);
   x264_param_t CreateEncoderParams(size_t i) const;
+  webrtc::H264BitstreamParser h264_bitstream_parser_;
 
   // Reports statistics with histograms.
   void ReportInit();
@@ -70,7 +77,6 @@ class X264EncoderImpl : public H264Encoder {
   std::vector<LayerConfig> configurations_;
   std::vector<EncodedImage> encoded_images_;
 
-
   VideoCodec codec_;
   H264PacketizationMode packetization_mode_;
   size_t max_payload_size_;
@@ -82,6 +88,8 @@ class X264EncoderImpl : public H264Encoder {
 
   int num_temporal_layers_;
   uint8_t tl0sync_limit_;
+
+  int count_;
 };
 
 }  // namespace webrtc

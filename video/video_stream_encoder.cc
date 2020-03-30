@@ -1465,6 +1465,8 @@ EncodedImageCallback::Result VideoStreamEncoder::OnEncodedImage(
       temporal_index = codec_specific_info->codecSpecific.VP9.temporal_idx;
     } else if (codec_specific_info->codecType == kVideoCodecVP8) {
       temporal_index = codec_specific_info->codecSpecific.VP8.temporalIdx;
+    } else if (codec_specific_info->codecType == kVideoCodecH264) {
+      temporal_index = codec_specific_info->codecSpecific.H264.temporal_idx;
     }
   }
   if (temporal_index == kNoTemporalIdx) {

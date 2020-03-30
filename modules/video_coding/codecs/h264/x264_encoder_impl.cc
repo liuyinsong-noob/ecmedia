@@ -1,5 +1,6 @@
 #include "modules/video_coding/codecs/h264/x264_encoder_impl.h"
 
+#include <cstdio>
 #include <cstdlib>
 #include "absl/strings/match.h"
 #include "common_video/libyuv/include/webrtc_libyuv.h"
@@ -8,6 +9,8 @@
 #include "rtc_base/checks.h"
 #include "rtc_base/logging.h"
 #include "third_party/libyuv/include/libyuv/scale.h"
+
+#include "rtc_base/time_utils.h"
 
 namespace webrtc {
 namespace {
@@ -131,7 +134,8 @@ X264EncoderImpl::X264EncoderImpl(const cricket::VideoCodec& codec)
       has_reported_init_(false),
       has_reported_error_(false),
       num_temporal_layers_(1),
-      tl0sync_limit_(0) {
+      tl0sync_limit_(0),
+		count_(0) {
   RTC_CHECK(absl::EqualsIgnoreCase(codec.name, cricket::kH264CodecName));
   std::string packetization_mode_string;
   if (codec.GetParam(cricket::kH264FmtpPacketizationMode,
@@ -198,6 +202,19 @@ int32_t X264EncoderImpl::InitEncode(const VideoCodec* inst,
   }
 
   num_temporal_layers_ = codec_.H264()->numberOfTemporalLayers;
+
+#ifdef SAVE_ENCODEDE_FILE
+  for (int tid = 0; tid < num_temporal_layers_; tid++) {
+    std::string file_name("x264svc_t");
+    file_name += std::to_string(tid) + std::string(".264");
+    std::ofstream ofile(file_name, std::ios::binary | std::ios::out);
+    if (!ofile) {
+      RTC_LOG(LS_INFO) << "failed to open file: " << file_name;
+    } else
+      output_temporal_files_.push_back(std::move(ofile));
+  }
+
+#endif
 
   for (int i = 0, idx = number_of_streams - 1; i < number_of_streams;
        ++i, --idx) {
@@ -323,9 +340,11 @@ int32_t X264EncoderImpl::SetRateAllocation(
         x264_encoder_parameters(encoders_[i], &curparms);
         curparms.i_fps_num = configurations_[i].max_frame_rate;
         curparms.i_fps_den = 1;
-        curparms.rc.i_bitrate = configurations_[i].target_bps/1000;
-        curparms.rc.i_vbv_max_bitrate = configurations_[i].target_bps/1000;
-        curparms.rc.i_vbv_buffer_size = configurations_[i].target_bps/1000;
+
+          curparms.rc.i_bitrate = configurations_[i].target_bps / 1000;
+          curparms.rc.i_vbv_max_bitrate = configurations_[i].target_bps/1000;
+          curparms.rc.i_vbv_buffer_size = configurations_[i].target_bps/1000;
+
         int retval = x264_encoder_reconfig(encoders_[i], &curparms);
         if (retval < 0)
           return WEBRTC_VIDEO_CODEC_ERROR;
@@ -341,7 +360,9 @@ int32_t X264EncoderImpl::SetRateAllocation(
 int32_t X264EncoderImpl::Encode(
     const VideoFrame& input_frame,
     const std::vector<VideoFrameType>* frame_types) {
-  if (encoders_.empty()) {
+
+	count_++;
+	if (encoders_.empty()) {
     ReportError();
     return WEBRTC_VIDEO_CODEC_UNINITIALIZED;
   }
@@ -453,6 +474,23 @@ int32_t X264EncoderImpl::Encode(
       return WEBRTC_VIDEO_CODEC_ERROR;
     }
 
+  /*  RTC_LOG(LS_INFO) << "encoder id: " << i
+                     << " encoders size: " << encoders_.size()
+                     << " temporal_layers: " << num_temporal_layers_
+                     << " time ms: " << rtc::TimeMillis()
+                     << " count_: " << count_;*/
+
+    int temporal_id = -1;
+    for (int idx = 0; idx < num_nals; idx++) {
+      int nal_unit_type = pnals_out[idx].i_type;
+      int offset = pnals_out[idx].b_long_startcode ? 4 : 3;
+      if (nal_unit_type == 14) {
+        temporal_id = (pnals_out[idx].p_payload[offset + 1 + 2] & 0xE0) >> 5;
+       /* RTC_LOG(LS_INFO) << "NAL type: " << pnals_out[idx + 1].i_type
+                         << " temporal_id: " << temporal_id;*/
+      }
+    }
+
 #ifdef SAVE_ENCODEDE_FILE
     if (output_files_[i]) {
       for (int idx = 0; idx < num_nals; idx++) {
@@ -461,20 +499,17 @@ int32_t X264EncoderImpl::Encode(
             pnals_out[idx].i_payload);
       }
     }
-#endif
-    RTC_LOG(LS_INFO) << "encoder id: " << i
-                     << " encoders size: " << encoders_.size();
-
-    int temporal_id = -1;
-    for (int idx = 0; idx < num_nals; idx++) {
-      int nal_unit_type = pnals_out[idx].i_type;
-      int offset = pnals_out[idx].b_long_startcode ? 4 : 3;
-      if (nal_unit_type == 14 && i == 1) {
-        temporal_id = (pnals_out[idx].p_payload[offset + 1 + 2] & 0xE0) >> 5;
-        RTC_LOG(LS_INFO) << "NAL type: " << pnals_out[idx + 1].i_type
-                         << " temporal_id: " << temporal_id;
+    if (temporal_id != -1) {
+      for (int tid = 0; tid < 4 - temporal_id; tid++) {
+        for (int idx = 0; idx < num_nals; idx++) {
+          output_temporal_files_[3 - tid].write(
+              reinterpret_cast<char*>(pnals_out[idx].p_payload),
+              pnals_out[idx].i_payload);
+        }
       }
     }
+
+#endif
     //  RTC_DCHECK_NE(temporal_id, -1);
     encoded_images_[i]._encodedWidth = configurations_[i].width;
     encoded_images_[i]._encodedHeight = configurations_[i].height;
@@ -517,7 +552,15 @@ int32_t X264EncoderImpl::Encode(
       if (tid == 0) {
         tl0sync_limit_ = num_temporal_layers_;
       }
+
+     /* RTC_LOG(LS_INFO) << "---ylr x264 tid: " << tid << " base_layer_sync: "
+                       << codec_specific.codecSpecific.H264.base_layer_sync;*/
     }
+
+    // Parse QP.
+    h264_bitstream_parser_.ParseBitstream(encoded_images_[i].data(),
+                                          encoded_images_[i].size());
+    h264_bitstream_parser_.GetLastSliceQp(&encoded_images_[i].qp_);
 
     encoded_image_callback_->OnEncodedImage(encoded_images_[i], &codec_specific,
                                             &frag_header);
@@ -536,6 +579,15 @@ VideoEncoder::EncoderInfo X264EncoderImpl::GetEncoderInfo() const {
   info.has_internal_source = false;
   return info;
 }
+void X264EncoderImpl::X264Log(void* handle,
+                              int i_level,
+                              const char* fmt,
+                              va_list vars) {
+  char buffer[1000];
+  int size = vsprintf(buffer, fmt, vars);
+  RTC_LOG(LS_INFO) << "i_level: " << i_level << " info size: " << size
+                   << " info: " << buffer << " time ms: " << rtc::TimeMillis();
+}
 x264_param_t X264EncoderImpl::CreateEncoderParams(size_t i) const {
   x264_param_t param;
   x264_param_t* p_params = &param;
@@ -552,7 +604,12 @@ x264_param_t X264EncoderImpl::CreateEncoderParams(size_t i) const {
     p_params->rc.i_rc_method = X264_RC_ABR;
     p_params->rc.i_bitrate = codec_.simulcastStream[idx].targetBitrate;
     p_params->rc.i_vbv_buffer_size = codec_.simulcastStream[idx].targetBitrate;
-    p_params->rc.i_vbv_max_bitrate = codec_.simulcastStream[idx].targetBitrate;
+	p_params->rc.i_vbv_max_bitrate = codec_.simulcastStream[idx].targetBitrate;
+
+    //p_params->rc.b_filler = 1;
+    //p_params->b_vfr_input = 0;
+    //p_params->pf_log = X264Log;
+    //p_params->i_log_level = X264_LOG_DEBUG;
 #ifdef RLCLOUD
     p_params->iTemporalLayers = num_temporal_layers_;
 #endif

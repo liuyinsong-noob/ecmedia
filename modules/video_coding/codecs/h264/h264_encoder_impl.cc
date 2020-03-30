@@ -247,7 +247,7 @@ int32_t H264EncoderImpl::InitEncode(const VideoCodec* inst,
       return WEBRTC_VIDEO_CODEC_ERROR;
     }
 #ifdef SAVE_ENCODEDE_FILE
-    std::string file_name("h264svc_");
+    std::string file_name("h264svc_enc_");
     file_name += std::to_string(i) + std::string(".264");
     std::ofstream ofile(file_name, std::ios::binary | std::ios::out);
     if (!ofile) {

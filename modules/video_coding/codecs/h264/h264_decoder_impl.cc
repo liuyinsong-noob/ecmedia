@@ -211,6 +211,14 @@ int32_t H264DecoderImpl::InitDecode(const VideoCodec* codec_settings,
   }
 
   av_frame_.reset(av_frame_alloc());
+
+#ifdef SAVE_DECODING_FILE
+  std::string file_name("x264svc_dec.264");
+  input_file_.open(file_name, std::ios::binary | std::ios::out);
+  if (!input_file_) {
+    RTC_LOG(LS_INFO) << "failed to open file: " << file_name;
+  }
+#endif
   return WEBRTC_VIDEO_CODEC_OK;
 }
 
@@ -244,6 +252,12 @@ int32_t H264DecoderImpl::Decode(const EncodedImage& input_image,
     ReportError();
     return WEBRTC_VIDEO_CODEC_ERR_PARAMETER;
   }
+
+#ifdef SAVE_DECODING_FILE
+  if (input_file_)
+    input_file_.write(reinterpret_cast<char*>(input_image.mutable_data()),
+                      static_cast<int>(input_image.size()));
+#endif
 
   AVPacket packet;
   av_init_packet(&packet);
