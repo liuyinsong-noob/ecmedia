@@ -9,12 +9,15 @@
 
 webrtc::ECBaseManager* g_ECMedia = nullptr;
 
+#define ECMEDIA_VERSION "ecmedia_version: v3.0.0.0.1"
+
 ECMEDIA_API bool ECMedia_set_trace(const char* path, const int level) {
 	//g_ECMedia->SetTrace(path, level);
 	g_ECMedia->SetTrace(path, 0);
 	//end
     return true;
 }
+
 /******************init**********************************************************/
 ECMEDIA_API int ECMedia_init() {
   if (g_ECMedia == nullptr) {
@@ -22,7 +25,10 @@ ECMEDIA_API int ECMedia_init() {
 
     g_ECMedia->Init();
    //ECMedia_set_trace(".\ecmediaAPI.txt", 1);
-    RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__  << "(),"<< " end... return 0";
+
+    RTC_LOG(INFO) << "[ECMEDIA3.0]"  << __FUNCTION__ << ECMEDIA_VERSION;
+
+    RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__  << "() "<< " end... return 0";
     return 0;
   }
   RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__  << "(),"<< " end... return -1";
