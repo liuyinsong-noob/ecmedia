@@ -153,10 +153,10 @@ int16_t WebRtcOpus_DisableFec(OpusEncInst* inst) {
     return -1;
   }
 }
-
+//dtx default as false;
 int16_t WebRtcOpus_EnableDtx(OpusEncInst* inst) {
   if (inst) {
-    return opus_encoder_ctl(inst->encoder, OPUS_SET_DTX(1));
+    return opus_encoder_ctl(inst->encoder, OPUS_SET_DTX(0));
   } else {
     return -1;
   }
