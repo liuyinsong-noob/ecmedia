@@ -5,6 +5,13 @@
 #include "rtc_base/win32_socket_server.h"
 #endif
 
+#if defined(WEBRTC_ANDROID)
+#include <jni.h>
+#include "../../modules/utility/include/jvm_android.h"
+#include "../../sdk/android/native_api/video/wrapper.h"
+#include "../../sdk/android/src/jni/video_sink.h"
+#endif
+
 #include "../../api/audio/audio_mixer.h"
 #include "../../api/audio_codecs/audio_decoder_factory.h"
 #include "../../api/audio_codecs/audio_encoder_factory.h"
@@ -225,6 +232,11 @@ bool MediaClient::SetTrace(const char* path, int min_sev) {
 bool MediaClient::Initialize() {
   //RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__  << "(),"<< " begin... ";
   bool bOk = true;
+#if defined(WEBRTC_ANDROID)
+  //RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__ << "() " << " ANDROID InitializeJVM begin...";
+  InitializeJVM();
+  //RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__ << "() " << " ANDROID InitializeJVM end...";
+#endif
   if (!m_bInitialized) {
     bOk &= CreateThreads();
     EC_CHECK_VALUE(signaling_thread_, false);
@@ -1040,6 +1052,19 @@ bool MediaClient::SelectVideoSource(
           channelid, static_cast<webrtc::VideoTrackInterface*>(
                          receiverVideo->track().get()));
     }
+#elif defined(WEBRTC_ANDROID)
+	rtc::VideoSinkInterface<webrtc::VideoFrame>* sink =
+		GetRemoteVideoSink(channelid);
+	RTC_LOG(INFO) << "GetRemoteVideoSink() sink: " << sink;
+	if (sink && receiverVideo->track()) {
+		webrtc::VideoTrackInterface* track_android =
+			static_cast<webrtc::VideoTrackInterface*>(
+				receiverVideo->track().get());
+		if (track_android) {
+			track_android->AddOrUpdateSink(sink, rtc::VideoSinkWants());
+			RTC_LOG(INFO) << "track_android->AddOrUpdateSink track_android: " << track_android;
+		}
+	}
 #endif
 
     auto transceiverVideo =
@@ -2340,6 +2365,153 @@ bool MediaClient::SetAudioPlayoutDevice(int i) {
   }else
     return false;
 }
+
+// android interface
+#if defined(WEBRTC_ANDROID)
+bool MediaClient::SaveLocalVideoTrack(int channelId,
+	webrtc::VideoTrackInterface* track) {
+	if (!signaling_thread_->IsCurrent()) {
+		return signaling_thread_->Invoke<bool>(
+			RTC_FROM_HERE, [&]() { return SaveLocalVideoTrack(channelId, track); });
+	}
+	bool bOk = false;
+	RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__ << "() " << " begin..."
+		<< " channelId:" << channelId << " track: " << track;
+	if (channelId >= 0 && track) {
+		mapLocalVideoTracks[channelId] = track;
+		bOk = true;
+	}
+	RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__ << "() " << " end..." << " bOk: " << bOk;
+	return bOk;
+}
+
+webrtc::VideoTrackInterface* MediaClient::GetLocalVideoTrack(int channelId) {
+	if (!signaling_thread_->IsCurrent()) {
+		return signaling_thread_->Invoke<webrtc::VideoTrackInterface*>(
+			RTC_FROM_HERE, [&]() { return  GetLocalVideoTrack(channelId); });
+	}
+	RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__ << "() " << " begin..."
+		<< " channelId:" << channelId;
+	webrtc::VideoTrackInterface* track = nullptr;
+	if (mapLocalVideoTracks.size() > 0)
+		track = mapLocalVideoTracks.begin()->second;
+
+	if (channelId >= 0) {
+		std::map<int, webrtc::VideoTrackInterface*>::iterator it =
+			mapLocalVideoTracks.find(channelId);
+		if (it != mapLocalVideoTracks.end()) {
+			track = it->second;
+		}
+	}
+	RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__ << "() " << " end..." << " track: " << track;
+	return track;
+}
+
+bool MediaClient::SaveLocalVideoTrack(int channelId, void* track) {
+	if (!signaling_thread_->IsCurrent()) {
+		return signaling_thread_->Invoke<bool>(
+			RTC_FROM_HERE, [&]() { return SaveLocalVideoTrack(channelId, track); });
+	}
+	bool bOk = false;
+	webrtc::VideoTrackInterface* local_track =
+		reinterpret_cast<webrtc::VideoTrackInterface*>(track);
+	if (local_track) {
+		bOk = SaveLocalVideoTrack(channelId, local_track);
+	}
+	return bOk;
+}
+
+void* MediaClient::GetLocalVideoTrackPtr(int channelId) {
+	return reinterpret_cast<void*>(GetLocalVideoTrack(channelId));
+}
+
+bool MediaClient::RemoveLocalVideoTrack(int channelId) {
+	if (!signaling_thread_->IsCurrent()) {
+		return signaling_thread_->Invoke<bool>(
+			RTC_FROM_HERE, [&]() { return RemoveLocalVideoTrack(channelId); });
+	}
+	bool bOk = false;
+	if (channelId >= 0) {
+		std::map<int, webrtc::VideoTrackInterface*>::iterator it =
+			mapLocalVideoTracks.find(channelId);
+		if (it != mapLocalVideoTracks.end()) {
+			mapLocalVideoTracks.erase(it);
+			bOk = true;
+		}
+	}
+	RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__ << "() " << " end..." << " bOk: " << bOk;
+	return bOk;
+}
+
+bool MediaClient::SaveRemoteVideoSink(int channelId,
+	JNIEnv* env,
+	jobject javaSink) {
+	RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__ << "() " << " begin..."
+		<< " channelId:" << channelId << " env: " << env << " javaSink: " << javaSink;
+
+	bool bOk = false;
+	RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__ << "() " << " static_cast env: " << env << " javaSink: " << javaSink;
+	if (env && javaSink && channelId >= 0) {
+		RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__ << "() " << " JavaToNativeVideoSink before.";
+		std::unique_ptr<rtc::VideoSinkInterface<VideoFrame>> sink =
+			webrtc::JavaToNativeVideoSink(env, javaSink);
+		RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__ << "() " << " JavaToNativeVideoSink after. sink: " << sink;
+		if (sink) {
+			mapRemoteVideoSinks[channelId] = std::move(sink);
+			bOk = true;
+		}
+	}
+	RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__ << "() " << " end..." << " bOk: " << bOk;
+
+	return bOk;
+}
+
+rtc::VideoSinkInterface<webrtc::VideoFrame>* MediaClient::GetRemoteVideoSink(int channelId) {
+	RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__ << "() " << " begin..."
+		<< " channelId:" << channelId;
+
+	rtc::VideoSinkInterface<webrtc::VideoFrame>* sink = nullptr;
+	if (mapRemoteVideoSinks.size() > 0) {
+		sink = mapRemoteVideoSinks.begin()->second.get();
+	}
+	else if (channelId >= 0) {
+		VideoSinkIterator it = mapRemoteVideoSinks.find(channelId);
+		if (it != mapRemoteVideoSinks.end()) {
+			sink = it->second.get();
+		}
+	}
+	RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__ << "() " << " end..." << " sink: " << sink;
+
+	return sink;
+}
+
+bool MediaClient::RemoveRemoteVideoSink(int channelId) {
+	RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__ << "() " << " begin..."
+		<< " channelId:" << channelId;
+
+	bool bOk = false;
+	if (channelId >= 0) {
+		VideoSinkIterator it = mapRemoteVideoSinks.find(channelId);
+		if (it != mapRemoteVideoSinks.end()) {
+			mapRemoteVideoSinks.erase(it);
+			bOk = true;
+		}
+	}
+	RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__ << "() " << " end..." << " bOk: " << bOk;
+
+	return bOk;
+}
+
+int MediaClient::InitializeJVM() {
+	RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__ << "() " << " begin...";
+	int ret = 0;
+	webrtc::JVM::Initialize(webrtc::jni::GetJVM());
+	RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__ << "() " << " end..."
+		<< " ret:" << ret;
+	return ret;
+}
+#endif
+
 ///////////////////////////////////TransportControllerObserve/////////////////////////////////
 TransportControllerObserve::TransportControllerObserve(
     rtc::Thread* network_thread,

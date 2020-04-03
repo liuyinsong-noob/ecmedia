@@ -741,3 +741,73 @@ ECMEDIA_API int ECMedia_set_video_protect_mode(int mode) {
                 << ", mode: " << mode;
   return 0;
 }
+
+#if defined(WEBRTC_ANDROID)
+ECMEDIA_API bool ECMedia_SaveLocalVideoTrack(int channelId, void* track) {
+	RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__ << "() "
+		<< " begin..."
+		<< " channelId: " << channelId << " track: " << track;
+	bool bOk = g_ECMedia->SaveLocalVideoTrack(channelId, track);
+	RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__ << "() "
+		<< " end..."
+		<< " bOk: " << bOk;
+	return bOk;
+}
+
+ECMEDIA_API void* ECMedia_GetLocalVideoTrackPtr(int channelId) {
+	RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__ << "() "
+		<< " begin..."
+		<< " channelId: " << channelId;
+	void* track = g_ECMedia->GetLocalVideoTrackPtr(channelId);
+	RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__ << "() "
+		<< " end..."
+		<< " track: " << track;
+	return track;
+}
+
+ECMEDIA_API bool ECMedia_RemoveLocalVideoTrack(int channelId) {
+	RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__ << "() "
+		<< " begin..."
+		<< " channelId: " << channelId;
+	bool bOk = g_ECMedia->RemoveLocalVideoTrack(channelId);
+	RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__ << "() "
+		<< " end..."
+		<< " bOk: " << bOk;
+	return bOk;
+}
+
+ECMEDIA_API bool ECMedia_SaveRemoteVideoSink(int channelId,
+	JNIEnv* env,
+	jobject javaSink) {
+	RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__ << "() "
+		<< " begin..."
+		<< " channelId: " << channelId << " env: " << env
+		<< " javaSink: " << javaSink;
+	bool bOk = g_ECMedia->SaveRemoteVideoSink(channelId, env, javaSink);
+	RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__ << "() "
+		<< " end..."
+		<< " bOk: " << bOk;
+	return bOk;
+}
+
+ECMEDIA_API bool ECMedia_RemoveRemoteVideoSink(int channelId) {
+	RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__ << "() "
+		<< " begin..." << " channelId: " << channelId;
+	bool bOk = g_ECMedia->RemoveRemoteVideoSink(channelId);
+	RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__ << "() "
+		<< " end..."
+		<< " bOk: " << bOk;
+	return bOk;
+}
+
+ECMEDIA_API int ECMedia_InitializeJVM() {
+	RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__ << "() "
+		<< " begin...";
+	int ret = webrtc::ECBaseManager::GetInstance()->InitializeJVM();
+	RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__ << "() "
+		<< " end..."
+		<< " ret: " << ret;
+	return ret;
+}
+
+#endif

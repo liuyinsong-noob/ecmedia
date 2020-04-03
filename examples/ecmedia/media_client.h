@@ -43,7 +43,9 @@
 
 
 #include "../../media/engine/webrtc_video_engine.h"
-
+#ifdef WEBRTC_ANDROID
+#include <jni.h>
+#endif
 
 namespace win_render {
 #if defined(WEBRTC_WIN)
@@ -629,6 +631,23 @@ class MediaClient : public sigslot::has_slots<> {
   /*****************************************************************************/
   bool SetAudioPlayoutDevice(int index);
  ///////////////////////// zjy interface end//////////////////////////////////
+
+#if defined(WEBRTC_ANDROID)
+  bool SaveLocalVideoTrack(int channelId, webrtc::VideoTrackInterface* track);
+  webrtc::VideoTrackInterface* GetLocalVideoTrack(int channelId);
+  bool SaveLocalVideoTrack(int channelId, void* track);
+  void* GetLocalVideoTrackPtr(int channelId);
+  bool RemoveLocalVideoTrack(int channelId);
+
+  bool SaveRemoteVideoSink(int channelId,
+	  JNIEnv* env,
+	  jobject javaSink);
+  rtc::VideoSinkInterface<webrtc::VideoFrame>* GetRemoteVideoSink(
+	  int channelId);
+  bool RemoveRemoteVideoSink(int channelId);
+
+  int InitializeJVM();
+#endif
 
  private:
     MediaClient();

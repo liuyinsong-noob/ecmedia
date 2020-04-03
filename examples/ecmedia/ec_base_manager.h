@@ -23,6 +23,9 @@
 #ifdef WIN32
 #include "rtc_base/win32_socket_init.h"
 #endif
+#ifdef WEBRTC_ANDROID
+#include <jni.h>
+#endif
 
 namespace webrtc {
 
@@ -205,7 +208,18 @@ class ECBaseManager : public sigslot::has_slots<> {
                           const char* l_addr,
                           int vrtp_port);
 
-  
+#if defined(WEBRTC_ANDROID)
+  bool SaveLocalVideoTrack(int channelId, void* track);
+  void* GetLocalVideoTrackPtr(int channelId);
+  bool RemoveLocalVideoTrack(int channelId);
+
+  bool SaveRemoteVideoSink(int channelId, JNIEnv* env, jobject javaSink);
+  bool RemoveRemoteVideoSink(int channelId);
+
+  int InitializeJVM();
+
+#endif
+
  private:
   typedef std::pair<std::string, VideoCapturer*> UniqueIdVideoCapturerPair;
   class FindUniqueId {

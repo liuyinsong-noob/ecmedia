@@ -758,4 +758,36 @@ void ECBaseManager::SetSendDestination(int peer_id,
   }
 }*/
 
+#if defined(WEBRTC_ANDROID)
+bool ECBaseManager::SaveLocalVideoTrack(int channelId, void* track) {
+	return MediaClient::GetInstance()->SaveLocalVideoTrack(channelId, track);
+}
+
+void* ECBaseManager::GetLocalVideoTrackPtr(int channelId) {
+	return MediaClient::GetInstance()->GetLocalVideoTrackPtr(channelId);
+}
+
+bool ECBaseManager::RemoveLocalVideoTrack(int channelId) {
+	return MediaClient::GetInstance()->RemoveLocalVideoTrack(channelId);
+}
+
+bool ECBaseManager::SaveRemoteVideoSink(int channelId,
+	JNIEnv* env,
+	jobject javaSink) {
+	return MediaClient::GetInstance()->SaveRemoteVideoSink(channelId, env,
+		javaSink);
+}
+
+bool ECBaseManager::RemoveRemoteVideoSink(int channelId) {
+	return MediaClient::GetInstance()->RemoveRemoteVideoSink(channelId);
+}
+
+int ECBaseManager::InitializeJVM() {
+	RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__ << "() " << " begin...";
+	int ret = MediaClient::GetInstance()->InitializeJVM();
+	RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__ << "() " << " end...";
+	return ret;
+}
+#endif
+
 }  // namespace webrtc

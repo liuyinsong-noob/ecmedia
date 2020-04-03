@@ -3,7 +3,8 @@
 
 #ifdef WEBRTC_ANDROID
 #include "jni.h"
-#define ECMEDIA_API JNIEXPORT
+//#define ECMEDIA_API JNIEXPORT
+#define ECMEDIA_API __attribute__((visibility("default")))
 #elif defined(WIN32)
 #define ECMEDIA_API _declspec(dllexport)
 #else
@@ -762,6 +763,19 @@ ECMEDIA_API int ECMedia_audio_set_send_destination(int peer_id,
 /****************************************************************************/
 /*Œ¥ µœ÷*/
 ECMEDIA_API int ECMedia_set_video_protect_mode(int mode);
+
+#if defined(WEBRTC_ANDROID)
+ECMEDIA_API bool ECMedia_SaveLocalVideoTrack(int channelId, void* track);
+ECMEDIA_API void* ECMedia_GetLocalVideoTrackPtr(int channelId);
+ECMEDIA_API bool ECMedia_RemoveLocalVideoTrack(int channelId);
+
+ECMEDIA_API bool ECMedia_SaveRemoteVideoSink(int channelId,
+	JNIEnv* env,
+	jobject javaSink);
+ECMEDIA_API bool ECMedia_RemoveRemoteVideoSink(int channelId);
+
+ECMEDIA_API int ECMedia_InitializeJVM();
+#endif
 
 //ECMEDIA_API void ECMedia_add_tracks();
 #ifdef __cplusplus
