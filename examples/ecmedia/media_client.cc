@@ -137,13 +137,13 @@ MediaClient* MediaClient::m_pInstance = NULL;
 rtc::CriticalSection MediaClient::m_critical;
 
 MediaClient* MediaClient::GetInstance() {
-  RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__  << "(),"<< " begin... ";
+  //RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__  << "(),"<< " begin... ";
   rtc::CritScope lock(&m_critical);
   if (m_pInstance == NULL) {
     m_pInstance = new MediaClient();
     RTC_CHECK(m_pInstance);
   }
-  RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__  << "(),"<< " end... ";
+  //RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__  << "(),"<< " end... ";
   return m_pInstance;
 
 }
@@ -223,7 +223,7 @@ bool MediaClient::SetTrace(const char* path, int min_sev) {
 }
 
 bool MediaClient::Initialize() {
-  RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__  << "(),"<< " begin... ";
+  //RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__  << "(),"<< " begin... ";
   bool bOk = true;
   if (!m_bInitialized) {
     bOk &= CreateThreads();
@@ -237,15 +237,15 @@ bool MediaClient::Initialize() {
                                         [&] { return CreateRtcEventLog(); });
    
     m_bInitialized = bOk;
+
+	SetTrace("ecmediaAPI.txt", 1);
   }
-  //wwx
-  SetTrace("ecmediaAPI.txt", 1);
-  RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__  << "(),"<< "wwx end...";
+  RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__  << "(),"<< "end...";
   return bOk;
 }
 
 void MediaClient::UnInitialize() {
-  RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__  << "(),"<< " begin... ";
+  //RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__  << "(),"<< " begin... ";
   transceivers_.clear();
   mapChannelSsrcs_.clear();
   TrackChannels_.clear();
@@ -275,7 +275,7 @@ void MediaClient::UnInitialize() {
       asum_ = 0;
     });
   }
-  RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__  << "(),"<< " end... ";
+  //RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__  << "(),"<< " end... ";
 }
 
 void MediaClient::DestroyTransport() {
@@ -632,7 +632,7 @@ bool MediaClient::CreateVideoChannel(const std::string& settings,
     return CreateCall(event_log_ptr_);
   });
   isCreateCall = false;
-}
+  }
   
   cricket::VideoChannel* video_channel_ = channel_manager_->CreateVideoChannel(
       call_ptr_, media_config_, rtp_transport, media_transport,
@@ -1715,9 +1715,7 @@ bool MediaClient::GetVideoDevices(char* jsonDeviceInfos, int* length) {
 }
 
 bool MediaClient::GetVideoCodecs(char* jsonVideoCodecInfos, int* length) {
-  RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__  << "(),"<< " begin... "
-                << ", jsonVideoCodecInfos: " << jsonVideoCodecInfos
-                << ", length: " << length;
+  RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__  << "(),"<< " begin... ";
   if (channel_manager_ && length) {
     cricket::VideoSendParameters codecParams;
     Json::Value codecs(Json::objectValue);
@@ -1744,9 +1742,7 @@ bool MediaClient::GetVideoCodecs(char* jsonVideoCodecInfos, int* length) {
 }
 
 bool MediaClient::GetAudioCodecs(char* jsonAudioCodecInfos, int* length) {
-  RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__  << "(),"<< " begin... "
-                << ", jsonAudioCodecInfos: " << jsonAudioCodecInfos
-                << ", length: " << length;
+  RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__  << "(),"<< " begin... ";
   if (channel_manager_ && length) {
     Json::Value codecs(Json::objectValue);
     cricket::AudioSendParameters sendParams;

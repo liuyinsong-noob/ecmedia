@@ -24,7 +24,6 @@ ECMEDIA_API int ECMedia_init() {
     g_ECMedia = webrtc::ECBaseManager::GetInstance();
 
     g_ECMedia->Init();
-   //ECMedia_set_trace(".\ecmediaAPI.txt", 1);
 
     RTC_LOG(INFO) << "[ECMEDIA3.0]"  << __FUNCTION__ << ECMEDIA_VERSION;
 
@@ -124,18 +123,25 @@ ECMEDIA_API bool ECMedia_request_remote_ssrc(int channel_id, int ssrc) {
 
 ECMEDIA_API bool ECMedia_get_video_codecs(char* jsonVideoCodecInfos,
                                           int* length) {
-  RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__  << "(),"<< " begins... "
+  RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__  << "(),"<< " begins... ";
+  bool ret = g_ECMedia->GetVideoCodecs(jsonVideoCodecInfos, length);
+
+    RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__ << "(),"
+                << " begins... "
                 << ", jsonVideoCodecInfos: " << jsonVideoCodecInfos
                 << ", length: " << length;
-  return g_ECMedia->GetVideoCodecs(jsonVideoCodecInfos, length);
+  return ret;
 }
 
 ECMEDIA_API bool ECMedia_get_audio_codecs(char* jsonAudioCodecInfos,
                                           int* length) {
-  RTC_LOG(INFO) << "[ECMEDIA3.0]"<< __FUNCTION__ << " begins... "
+  RTC_LOG(INFO) << "[ECMEDIA3.0]"<< __FUNCTION__ << " begins... ";
+  bool ret = g_ECMedia->GetAudioCodecs(jsonAudioCodecInfos, length);
+
+	RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__ << " end... "
                 << ", jsonAudioCodecInfos: " << jsonAudioCodecInfos
                 << ", length: " << length;
-  return g_ECMedia->GetAudioCodecs(jsonAudioCodecInfos, length);
+  return ret;
 }
 /**********************************render********************************************/
 ECMEDIA_API bool ECMedia_add_local_render(int channel_id, void* video_window) {
