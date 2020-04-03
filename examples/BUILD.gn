@@ -814,7 +814,25 @@ if (is_win || is_android) {
       "ecmedia/media_client.h",
       "ecmedia/media_client.cc",
       ]
-    configs += [ "//build/config/win:windowed" ]
+    #configs += [ "//build/config/win:windowed" ]
+	if (is_android) {
+      sources += [
+        "unityplugin/simple_peer_connection.cc",
+        "unityplugin/simple_peer_connection.h",
+        "unityplugin/unity_plugin_apis.cc",
+        "unityplugin/unity_plugin_apis.h",
+        "unityplugin/video_observer.cc",
+        "unityplugin/video_observer.h",
+        "unityplugin/class_reference_holder.cc",
+        "unityplugin/class_reference_holder.h",
+        "unityplugin/jni_onload.h",
+        "unityplugin/jni_onload.cc",
+      ]
+      suppressed_configs += [ "//build/config/android:hide_all_but_jni_onload" ]
+    }
+    if (is_win) {
+      configs += [ "//build/config/win:windowed" ]
+    }
     deps = [
       "../api:create_peerconnection_factory",
       "../api:libjingle_peerconnection_api",
@@ -841,6 +859,19 @@ if (is_win || is_android) {
       "../test:video_test_common",
       "//third_party/abseil-cpp/absl/memory",
     ]
+	if (is_android) {
+      deps += [
+        "../modules/utility",
+        "../sdk/android:native_api_video",
+        "../sdk/android:native_api_jni",
+        "../sdk/android:videoframe_jni",
+        "../sdk/android:base_jni",
+        "../sdk/android:generated_video_jni",
+        "../sdk/android:generated_native_api_jni",
+        "../sdk/android:hwcodecs_java__lint",
+        "../sdk/android:libjingle_peerconnection_jni",
+      ]
+    }
       libs = [ "libx264.dll.lib" ]
       lib_dirs = [ "../third_party/libx264svc_win/x86/lib" ]
   }
