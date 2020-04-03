@@ -3877,15 +3877,46 @@ static void ECMedia_reset_send_codecinfo(VideoCodec& videoCodec)
 			videoCodec.minBitrate = 100;
 			videoCodec.startBitrate = 400;
 		}
-		if (videoCodec.width*videoCodec.height == 1280 * 720 && videoCodec.mode == 1)//fixed bitrate and maxframerate when use screenSharing;
+		unsigned wideth = 0;
+		unsigned height = 0;
+		//fixed bitrate and maxframerate when use screenSharing;
+#ifdef WIN32
+		int nScreenWidth, nScreenHeight;
+		nScreenWidth = GetSystemMetrics(SM_CXSCREEN);
+		nScreenHeight = GetSystemMetrics(SM_CYSCREEN);
+		WEBRTC_TRACE(kTraceApiCall, kTraceMediaApi, 0, "%s:%d nScreenWidth:%d nScreenHeight:%d", __FUNCTION__, __LINE__, nScreenWidth, nScreenHeight);
+		if (nScreenHeight <= 0 || nScreenHeight <= 0)
+		{
+			WEBRTC_TRACE(kTraceApiCall, kTraceMediaApi, 0, "%s:%d Reset Codec_video FALSE!", __FUNCTION__, __LINE__);
+			return;
+		}
+		if (videoCodec.mode==1)
 		{
 			videoCodec.maxFramerate = 5;
 			videoCodec.startBitrate = 800;
-			videoCodec.minBitrate = 400;
-			videoCodec.maxBitrate = 1500;
-		}
-	}
-  
+			videoCodec.minBitrate = 200;
+			videoCodec.maxBitrate = 1200;
+			if (nScreenWidth / 4.0 == nScreenHeight / 3.0)
+			{
+				videoCodec.width = 1280;
+				videoCodec.height = 960;
+			}
+			else if (nScreenWidth/8.0==nScreenHeight/5.0)
+			{
+				videoCodec.width = 1280;
+				videoCodec.height = 800;
+			}else if (nScreenWidth/5.0==nScreenHeight/4.0)
+			{
+				videoCodec.width = 1280;
+				videoCodec.height = 1024;
+			}
+			else {
+				videoCodec.width = 1280;
+				videoCodec.height = 720;
+			}
+		}		
+#endif
+}
   WEBRTC_TRACE(kTraceApiCall, kTraceMediaApi, 0, "%s:%d ends...", __FUNCTION__, __LINE__);//add by wx
 }
 int ECMedia_set_send_codec_video(int channelid, VideoCodec& videoCodec)
@@ -5677,6 +5708,7 @@ int ECMedia_get_desktop_capture_size(int desktop_captureid, int &width, int &hei
     ViEDesktopShare *desktopshare = ViEDesktopShare::GetInterface(m_vie);
     if (desktopshare) {
         bool ret = desktopshare->GetDesktopShareCaptureRect(desktop_captureid, width, height);
+		WEBRTC_TRACE(kTraceApiCall, kTraceMediaApi, 0, "%s:%d ends..., width: %d  height: %d", __FUNCTION__, __LINE__, width,height);
         desktopshare->Release();
         if (ret == false) {
             WEBRTC_TRACE(kTraceError, kTraceMediaApi, 0, "%s:%d failed to get desktop capture size", __FUNCTION__, __LINE__);

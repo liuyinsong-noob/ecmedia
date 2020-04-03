@@ -248,8 +248,10 @@ namespace yuntongxunwebrtc {
                              "Setting initial playback rate failed for Opus");
                 return ret;
             }
-            int  initial_loss_rate = 5; //sean test audio mixer, original 5
+            int  initial_loss_rate = 30; //sean test audio mixer, original 5
             ret = WebRtcOpus_SetPacketLossRate(encoder_inst_ptr_, initial_loss_rate);
+			WEBRTC_TRACE(yuntongxunwebrtc::kTraceInfo, yuntongxunwebrtc::kTraceAudioCoding, unique_id_,
+				"Setting playback loss rate loss_rate:%d for Opus,ret:%d", initial_loss_rate,ret);
             if (ret < 0) {
                 WEBRTC_TRACE(yuntongxunwebrtc::kTraceError, yuntongxunwebrtc::kTraceAudioCoding, unique_id_,
                              "Setting initial playback loss rate failed for Opus");
@@ -429,9 +431,13 @@ namespace yuntongxunwebrtc {
             if (packet_loss_rate_ == opt_loss_rate) {
                 return 0;
             }
-
+			WEBRTC_TRACE(yuntongxunwebrtc::kTraceInfo, yuntongxunwebrtc::kTraceAudioCoding, unique_id_,
+				"Setting playback loss rate opt_loss_rate:%d for Opus",opt_loss_rate);
             // Ask the encoder to change the target packet loss rate.
             if (WebRtcOpus_SetPacketLossRate(encoder_inst_ptr_, opt_loss_rate) == 0) {
+
+				WEBRTC_TRACE(yuntongxunwebrtc::kTraceInfo, yuntongxunwebrtc::kTraceAudioCoding, unique_id_,
+					"after Setting playback loss rate opt_loss_rate:%d for Opus", opt_loss_rate);
                 packet_loss_rate_ = opt_loss_rate;
                 return 0;
             }
