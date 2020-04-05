@@ -248,7 +248,7 @@ namespace yuntongxunwebrtc {
                              "Setting initial playback rate failed for Opus");
                 return ret;
             }
-            int  initial_loss_rate = 30; //sean test audio mixer, original 5
+            int  initial_loss_rate = 20; //sean test audio mixer, original 5
             ret = WebRtcOpus_SetPacketLossRate(encoder_inst_ptr_, initial_loss_rate);
 			WEBRTC_TRACE(yuntongxunwebrtc::kTraceInfo, yuntongxunwebrtc::kTraceAudioCoding, unique_id_,
 				"Setting playback loss rate loss_rate:%d for Opus,ret:%d", initial_loss_rate,ret);
