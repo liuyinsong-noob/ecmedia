@@ -226,7 +226,7 @@ int32_t X264EncoderImpl::InitEncode(const VideoCodec* inst,
     configurations_[i].max_frame_rate = static_cast<float>(codec_.maxFramerate);
     configurations_[i].frame_dropping_on = codec_.H264()->frameDroppingOn;
     configurations_[i].key_frame_interval = codec_.H264()->keyFrameInterval;
-
+	 
     x264_param_t x264_param = CreateEncoderParams(i);
     x264_t* x264_encoder = x264_encoder_open(&x264_param);
     if (x264_encoder == nullptr) {
@@ -594,7 +594,8 @@ x264_param_t X264EncoderImpl::CreateEncoderParams(size_t i) const {
   x264_param_default_preset(p_params, x264_preset_names[2], "zerolatency");
   int idx = (codec_.numberOfSimulcastStreams - 1) - i;
   RTC_DCHECK_GE(idx, 0);
-  if (codec_.mode == VideoCodecMode::kRealtimeVideo) {
+  if (codec_.mode == VideoCodecMode::kRealtimeVideo ||
+      codec_.mode == VideoCodecMode::kScreensharing) {
     p_params->i_width = configurations_[i].width;
     p_params->i_height = configurations_[i].height;
     p_params->i_fps_num = configurations_[i].max_frame_rate;

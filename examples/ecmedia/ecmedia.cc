@@ -115,10 +115,10 @@ ECMEDIA_API bool ECMedia_set_remote_audio_mute(int channel_id, bool bMute) {
   return g_ECMedia->SetRemoteMute(channel_id, bMute);
 }
 
-ECMEDIA_API bool ECMedia_request_remote_ssrc(int channel_id, int ssrc) {
+ECMEDIA_API bool ECMedia_request_remote_ssrc(int channel_id, int flag, int ssrc) {
   RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__  << "(),"<< " begins... "
                 << ", channel_id: " << channel_id << ", ssrc: " << ssrc;
-  return g_ECMedia->RequestRemoteSsrc(channel_id, ssrc);
+  return g_ECMedia->RequestRemoteSsrc(channel_id, flag, ssrc);
 }
 
 ECMEDIA_API bool ECMedia_get_video_codecs(char* jsonVideoCodecInfos,
@@ -811,3 +811,64 @@ ECMEDIA_API int ECMedia_InitializeJVM() {
 }
 
 #endif
+
+ECMEDIA_API int ECMedia_set_desktop_capture_source(int type,int id) {
+  return 0;
+  //  return g_ECMedia->SetDesktopSourceID(type,id);
+}
+
+ECMEDIA_API int ECMedia_create_desktop_capture(int type) {
+  return g_ECMedia->CreateDesktopCapture(type);
+
+}
+
+ECMEDIA_API int ECMedia_get_screen_list(int type, ScreenID** screenList)
+{
+  if (!screenList) {
+    return -1;
+  }else {
+  return g_ECMedia->GetScreenList(type,screenList);
+  }
+}
+ECMEDIA_API bool ECMedia_select_screen(int type,
+	ScreenID screeninfo) {
+   int ret = g_ECMedia->SetDesktopSourceID(type,screeninfo);
+  if (ret == 0) {
+     return true;
+  } else {
+    return false;
+  }
+}
+
+ECMEDIA_API int ECMedia_release_window_list(WindowShare** windowList) {
+  if ((*windowList) == NULL) {
+    return -1;
+  } else {
+    return g_ECMedia->ReleaseWindowsList(windowList);
+  }
+}
+
+ECMEDIA_API int ECMedia_get_window_list(int type,WindowShare** windowList) {
+  if (!windowList) {  
+    return -1;
+  }else {
+  return g_ECMedia->GetWindowsList(type,windowList);
+  }
+  
+}
+
+ECMEDIA_API int ECMedia_release_screen_list(ScreenID** screen) {
+  if ((*screen) == NULL) {
+    return - 1;
+  } else {
+    return g_ECMedia->ReleaseScreenList(screen);
+  }
+}
+
+ECMEDIA_API void ECMedia_get_audio_channel_volume_level(int audioid,int level) {
+
+}
+
+ECMEDIA_API void ECMedia_set_video_show_window_mode(int mode) {
+
+}

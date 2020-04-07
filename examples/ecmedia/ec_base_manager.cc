@@ -272,7 +272,7 @@ bool ECBaseManager::SetRemoteMute(int channel_id, bool bMute) {
   return MediaClient::GetInstance()->SetRemoteMute(channel_id, bMute);
 }
 
-bool ECBaseManager::RequestRemoteSsrc(int channel_id, int32_t ssrc) {
+bool ECBaseManager::RequestRemoteSsrc(int channel_id,int flag, int32_t ssrc) {
   RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__  << "(),"<< " begin... "
                 << ", channel_id: " << channel_id << ", ssrc: " << ssrc;
   return MediaClient::GetInstance()->RequestRemoteSsrc(channel_id, ssrc);
@@ -391,6 +391,72 @@ bool ECBaseManager::GetVideoDevices(char* devices, int* len) {
                 << ", devices: " << devices << ", len: " << len;
   return MediaClient::GetInstance()->GetVideoDevices(devices, len);
 }
+
+bool ECBaseManager::RenderCallback(int channelid,void* callback) {
+  return true;
+//MediaClient::GetInstance()->SetRenderCallback(cha nnelid,callback);
+ }
+
+int ECBaseManager::CreateDesktopCapture(int type) {
+   return MediaClient::GetInstance()->CreateDesktopCapture(type);
+}
+
+int ECBaseManager::SetDesktopSourceID(int type,int id) {
+  return MediaClient::GetInstance()->SetDesktopSourceID(type,id);
+}
+
+int ECBaseManager::GetWindowsList(int type,WindowShare** windowsList) {
+	webrtc::DesktopCapturer::SourceList sources;
+	MediaClient::GetInstance()->GetWindowsList(type,sources);
+    int num = sources.size();
+	WindowShare* m_pWindowlist = new WindowShare[num];
+	WindowShare* temp = m_pWindowlist;
+    for(auto it = sources.begin();  it != sources.end();	++it)
+	{
+		(*temp).id = it->id;
+        (*temp).type = 0;
+		memcpy((*temp).title, it->title.c_str(), kTitleLength);
+		temp++;
+     }
+    *windowsList = m_pWindowlist;
+     return num;
+  }
+
+int ECBaseManager::ReleaseWindowsList(WindowShare** windowsList){
+   if(*windowsList) {
+	 delete[] (*windowsList);
+	 (*windowsList) = NULL;
+	 return 0;
+   }else {
+	 return -1;
+  }
+}
+
+int ECBaseManager::ReleaseScreenList(ScreenID** screen) {
+    if (*screen) {
+    delete[] (*screen);
+      (*screen) = NULL;
+      return 0;
+    } else {
+      return -1;
+    }
+  }
+
+int ECBaseManager::GetScreenList(int type, ScreenID** screen) {
+    webrtc::DesktopCapturer::SourceList sources;
+    MediaClient::GetInstance()->GetWindowsList(type,sources);
+    int num =  sources.size();
+    ScreenID* m_pScreenlist = new ScreenID[num];
+    ScreenID* temp = m_pScreenlist;
+    
+    for (auto it = sources.begin(); it != sources.end(); ++it) {
+      (*temp) = it->id;
+       temp++;
+    }
+    *screen = m_pScreenlist;
+
+    return num;
+  }
     /***************************************************************************************/
 //////////////////////////////////////////////////////////////////////////////////////////
 

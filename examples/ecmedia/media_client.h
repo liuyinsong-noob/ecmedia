@@ -5,7 +5,7 @@
 #include <map>
 #include <memory>
 #include <string>
-
+#include <vector>
 #include "ec_log.h"
 #include "../../api/media_stream_interface.h"
 #include "../../api/media_transport_interface.h"
@@ -46,6 +46,66 @@
 #ifdef WEBRTC_ANDROID
 #include <jni.h>
 #endif
+
+#include "../../media/base/adapted_video_track_source.h"
+//#include "../../third_party/protobuf/src/google/protobuf/message_lite.h"
+
+//class myclass : public ::google::protobuf::MessageLite {
+
+//};
+#ifdef __cplusplus
+extern "C" {
+#endif
+typedef void (*OnDetroyChannel)(int channel_id);
+#ifdef __cplusplus
+}
+#endif
+namespace win_desk {
+#if defined(WEBRTC_WIN)
+class ECDesktopCapture : public rtc::AdaptedVideoTrackSource,
+                         public rtc::MessageHandler,
+                         public webrtc::DesktopCapturer::Callback {
+ public:
+  ~ECDesktopCapture();
+  static rtc::scoped_refptr<ECDesktopCapture> Create(
+      int type);  // type=0 screen  type=1 window
+
+  const char* GetCaptureSources(webrtc::DesktopCapturer::SourceList& source);
+
+  int SetDesktopSourceID(int index);
+
+  void OnCaptureResult(
+      webrtc::DesktopCapturer::Result result,
+      std::unique_ptr<webrtc::DesktopFrame> desktopframe) override;
+
+  bool is_screencast() const override;
+
+  absl::optional<bool> needs_denoising() const override;
+
+  webrtc::MediaSourceInterface::SourceState state() const override;
+  void OnMessage(rtc::Message* msg) override;
+
+  bool remote() const override;
+  void Start();
+
+  void CaptureFrame();
+
+ public:
+  bool isStartCapture;
+
+ protected:
+  explicit ECDesktopCapture(std::unique_ptr<webrtc::DesktopCapturer> capturer);
+
+  webrtc::DesktopCapturer::SourceList sources;
+
+ protected:
+ std::vector<int> sources_id_;
+
+ private:
+  std::unique_ptr<webrtc::DesktopCapturer> capturer_;
+};
+#endif
+}//namespace win_desk
 
 namespace win_render {
 #if defined(WEBRTC_WIN)
@@ -631,6 +691,15 @@ class MediaClient : public sigslot::has_slots<> {
   /*****************************************************************************/
   bool SetAudioPlayoutDevice(int index);
  ///////////////////////// zjy interface end//////////////////////////////////
+   int CreateDesktopCapture(int type);
+
+  int SetDesktopSourceID(int type, int id);
+
+
+
+  int GetWindowsList(int type, webrtc::DesktopCapturer::SourceList& source);
+
+  
 
 #if defined(WEBRTC_ANDROID)
   bool SaveLocalVideoTrack(int channelId, webrtc::VideoTrackInterface* track);
@@ -792,6 +861,10 @@ class MediaClient : public sigslot::has_slots<> {
     webrtc::AudioDeviceModule::AudioLayer audio_layer_ =
             webrtc::AudioDeviceModule::kPlatformDefaultAudio;  // zjy
 
+    rtc::scoped_refptr<win_desk::ECDesktopCapture> desktop_device_;
+
+    std::map<int, rtc::scoped_refptr<win_desk::ECDesktopCapture>> desktop_devices_
+		;
 #if defined WEBRTC_WIN
 	std::unique_ptr<win_render::RenderWndsManager>
 		renderWndsManager_;

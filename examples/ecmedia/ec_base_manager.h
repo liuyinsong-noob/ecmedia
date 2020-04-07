@@ -4,6 +4,7 @@
 #include <map>
 #include <memory>
 #include <thread>
+#include "sdk_common.h"
 
 #include "modules/video_capture/video_capture.h"
 #include "pc/session_description.h"
@@ -100,7 +101,7 @@ class ECBaseManager : public sigslot::has_slots<> {
 
   bool SetRemoteMute(int channel_id, bool bMute);
 
-  bool RequestRemoteSsrc(int channel_id, int32_t ssrc);
+  bool RequestRemoteSsrc(int channel_id,int flag, int32_t ssrc);
 
   bool GetVideoCodecs(char* jsonVideoCodecInfos, int* length);
 
@@ -133,6 +134,20 @@ class ECBaseManager : public sigslot::has_slots<> {
   bool SetAudioPlayoutDevice(int index);
 
   bool GetVideoDevices(char* devices, int* len);
+
+  bool RenderCallback(int channelid,void* callback);
+
+  int CreateDesktopCapture(int type);
+
+  int GetWindowsList(int type,WindowShare** windowsList);
+
+  int ReleaseWindowsList(WindowShare** windowsList);
+
+  int GetScreenList(int type,ScreenID** screen);
+
+  int ReleaseScreenList(ScreenID** screen); 
+
+  int SetDesktopSourceID(int type,int id);
  ////////////////////////////////////////////////////////////////////////////////////////
   /*************************************************************************************/
 

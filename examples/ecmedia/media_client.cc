@@ -172,6 +172,7 @@ MediaClient::MediaClient() {
   isCreateCall = true;
   pAudioDevice = nullptr;
   own_adm = nullptr;
+  desktop_device_ = nullptr;
   m_nConnected = SC_UNCONNECTED;
   mVideoChannels_.clear();
   mVoiceChannels_.clear();
@@ -258,6 +259,12 @@ bool MediaClient::Initialize() {
 
 void MediaClient::UnInitialize() {
   //RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__  << "(),"<< " begin... ";
+  for (auto it = desktop_devices_.begin(); it != desktop_devices_.end(); it++) {
+    if (it->second) {
+      while(it->second.release()!=NULL);
+	}
+  }
+  desktop_devices_.clear();
   transceivers_.clear();
   mapChannelSsrcs_.clear();
   TrackChannels_.clear();
@@ -533,7 +540,8 @@ void MediaClient::DestroyChannel(int channel_id, bool is_video) {
         renderWndsManager_->StartLocalRenderer(t.first,nullptr);
         RtpSenders_.erase(RtpSenders_.find(channel_id));
         TrackChannels_.erase(TrackChannels_.find(channel_id));
-	  }
+        break;
+      }
     }
     it = mVideoChannels_.begin();
     while (it != mVideoChannels_.end()) {
@@ -727,6 +735,7 @@ bool MediaClient::CreateVideoChannel(const std::string& settings,
   cricket::VideoRecvParameters video_recv_params;
   signaling_thread_->Invoke<void>(RTC_FROM_HERE, [&] {
     channel_manager_->GetSupportedVideoCodecs(&video_recv_params.codecs);
+    FilterVideoCodec(config, video_recv_params.codecs);
     channel_manager_->GetSupportedVideoRtpHeaderExtensions(
         &video_recv_params.extensions);
   });
@@ -1202,7 +1211,40 @@ void MediaClient::DestroyLocalVideoTrack(
   }
   RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__  << "(),"<< " end... ";
 }
+int MediaClient::GetWindowsList(int type,
+                                webrtc::DesktopCapturer::SourceList& source) {
+  auto it = desktop_devices_.find(type);
+  if (it != desktop_devices_.end()) {
+    it->second->GetCaptureSources(source);
+    return 0;
+  } else {
+    return -1;
+  }
+  
+}
 
+int MediaClient::CreateDesktopCapture(int type) {
+  auto it = desktop_devices_.find(type);
+  if (it != desktop_devices_.end()) {
+    return 0;
+  }
+  desktop_device_ = win_desk::ECDesktopCapture::Create(type);
+  if (desktop_device_) {
+    desktop_devices_[type] = desktop_device_;
+    return 0;
+  } else {
+    return -1;
+  }
+}
+int MediaClient::SetDesktopSourceID(int type, int id) {
+  auto it = desktop_devices_.find(type);
+  if (it != desktop_devices_.end()) {
+    it->second->SetDesktopSourceID(id);
+    return 0;
+  } else {
+    return -1;
+  }
+}
 rtc::scoped_refptr<webrtc::VideoTrackInterface>
 MediaClient::CreateLocalVideoTrack(const std::string& track_params) {
   RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__  << "(),"<< " begin... "
@@ -1251,12 +1293,17 @@ MediaClient::CreateLocalVideoTrack(const std::string& track_params) {
                       return video_track;
                       break;
                     case VIDEO_SCREEN:
-
-                      /* video_track =
-                         webrtc::VideoTrackProxy::Create(signaling_thread_,
-                         worker_thread_,webrtc::VideoTrack::Create( track_id,
-                               webrtc::FakeVideoTrackSource::Create(true),
-                               worker_thread_));*/
+               desktop_device_ = desktop_devices_.find(camera_index)->second;
+              if (desktop_device_) {
+                worker_thread_->Invoke<void>(RTC_FROM_HERE, [this] {
+                  desktop_device_->Start();
+				});
+                    
+                video_track = webrtc::VideoTrackProxy::Create(
+                    signaling_thread_, worker_thread_,
+                    webrtc::VideoTrack::Create(track_id, desktop_device_,
+                                               worker_thread_));
+              }
                       return video_track;
 
                       break;
@@ -2826,3 +2873,119 @@ std::vector<int> RenderWndsManager::GetAllRemoteChanelIds() {
 #endif
 
 }  // namespace win_render
+namespace win_desk {
+#if defined(WEBRTC_WIN)
+ECDesktopCapture::ECDesktopCapture(
+    std::unique_ptr<webrtc::DesktopCapturer> capturer)
+    : capturer_(std::move(capturer)) {
+  isStartCapture = false;
+}
+
+ECDesktopCapture::~ECDesktopCapture() {
+  if (capturer_) {
+    capturer_.release();
+  }
+  isStartCapture = false;
+}
+
+rtc::scoped_refptr<ECDesktopCapture> ECDesktopCapture::Create(int type) {
+  std::unique_ptr<webrtc::DesktopCapturer> capturer = nullptr;
+  switch (type) {
+    case 0:
+      capturer = webrtc::DesktopCapturer::CreateScreenCapturer(
+          webrtc::DesktopCaptureOptions::CreateDefault());
+      return new rtc::RefCountedObject<ECDesktopCapture>(std::move(capturer));
+      break;
+    case 1:
+      capturer = webrtc::DesktopCapturer::CreateWindowCapturer(
+          webrtc::DesktopCaptureOptions::CreateDefault());
+      return new rtc::RefCountedObject<ECDesktopCapture>(std::move(capturer));
+      break;
+    default:
+      return nullptr;
+      break;
+  }
+}
+
+bool ECDesktopCapture::is_screencast() const {
+  return true;
+}
+absl::optional<bool> ECDesktopCapture::needs_denoising() const {
+  return true;
+}
+
+webrtc::MediaSourceInterface::SourceState ECDesktopCapture::state() const {
+  return kInitializing;
+}
+
+bool ECDesktopCapture::remote() const {
+  /*int len = 0;
+  const char* ss = NULL;
+  ss = GetCaptureSources(len);
+  SetSourceID(2);*/
+  return true;
+}
+
+void ECDesktopCapture::OnCaptureResult(
+    webrtc::DesktopCapturer::Result result,
+    std::unique_ptr<webrtc::DesktopFrame> desktopframe) {
+  if (result != webrtc::DesktopCapturer::Result::SUCCESS)
+    return;
+  int width = desktopframe->size().width();
+  int height = desktopframe->size().height();
+
+  rtc::scoped_refptr<webrtc::I420Buffer> buffer =
+      webrtc::I420Buffer::Create(width, height);
+  int stride = width;
+  uint8_t* yplane = buffer->MutableDataY();
+  uint8_t* uplane = buffer->MutableDataU();
+  uint8_t* vplane = buffer->MutableDataV();
+  libyuv::ConvertToI420(desktopframe->data(), 0, yplane, stride, uplane,
+                        (stride + 1) / 2, vplane, (stride + 1) / 2, 0, 0, width,
+                        height, width, height, libyuv::kRotate0,
+                        libyuv::FOURCC_ARGB);
+  webrtc::VideoFrame frame =
+      webrtc::VideoFrame(buffer, 0, 0, webrtc::kVideoRotation_0);
+  this->OnFrame(frame);
+}
+
+const char* ECDesktopCapture::GetCaptureSources(
+    webrtc::DesktopCapturer::SourceList& source) {
+  capturer_->GetSourceList(&source);
+  for(auto it =source.begin();it != source.end();it++){
+	
+  sources_id_.push_back(it->id);
+  }
+  return nullptr;
+}
+
+int ECDesktopCapture::SetDesktopSourceID(int index) {
+
+  for (auto it = sources_id_.begin(); it != sources_id_.end(); it++) {
+    if ((*it) == index) {
+     capturer_->SelectSource(*it);
+     return 0;
+    }
+   }
+  return -1;
+   }
+
+void ECDesktopCapture::Start() {
+  if (!isStartCapture) {
+    isStartCapture = true;
+    capturer_->Start(this);
+    CaptureFrame();
+  }
+}
+
+void ECDesktopCapture::OnMessage(rtc::Message* msg) {
+  if (msg->message_id == 0)
+    CaptureFrame();
+}
+void ECDesktopCapture::CaptureFrame() {
+  capturer_->CaptureFrame();
+  rtc::Location loc(__FUNCTION__, __FILE__);
+  rtc::Thread::Current()->PostDelayed(loc, 30, this, 0);
+}
+#endif
+}//namespace win_desk

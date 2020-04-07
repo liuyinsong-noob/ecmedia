@@ -297,7 +297,7 @@ ECMEDIA_API bool ECMedia_set_remote_audio_mute(int channel_id, bool bMute);
 /*** 函数参数1: 类型  int       channel_id                                ***/
 /*** 函数参数2: 类型  int       ssrc                                      ***/
 /****************************************************************************/
-ECMEDIA_API bool ECMedia_request_remote_ssrc(int channel_id, int ssrc);
+ECMEDIA_API bool ECMedia_request_remote_ssrc(int channel_id,int flag, int ssrc);
 
 /****************************************************************************/
 /*** 函数名: 获取视频编码                                                 ***/
@@ -776,6 +776,26 @@ ECMEDIA_API bool ECMedia_RemoveRemoteVideoSink(int channelId);
 
 ECMEDIA_API int ECMedia_InitializeJVM();
 #endif
+
+ECMEDIA_API bool ECMedia_set_remote_video_resolute_callback(int channelid,void* callback);
+
+ECMEDIA_API int ECMedia_create_desktop_capture(int type);
+
+ECMEDIA_API int ECMedia_set_desktop_capture_source(int type,int id);
+
+ECMEDIA_API int ECMedia_get_screen_list(int type,ScreenID** screen);
+
+ECMEDIA_API int ECMedia_release_screen_list(ScreenID** screen);
+
+ECMEDIA_API int ECMedia_get_window_list(int type,WindowShare** windowList);
+
+ECMEDIA_API int ECMedia_release_window_list(WindowShare** windowList);
+
+ECMEDIA_API bool ECMedia_select_screen(int desktop_captureid, ScreenID screeninfo);
+
+ECMEDIA_API void ECMedia_get_audio_channel_volume_level(int audioid, int level);
+
+ECMEDIA_API void ECMedia_set_video_show_window_mode(int mode);
 
 //ECMEDIA_API void ECMedia_add_tracks();
 #ifdef __cplusplus
