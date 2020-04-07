@@ -815,7 +815,7 @@ if (is_win || is_android) {
       "ecmedia/media_client.cc",
       ]
     #configs += [ "//build/config/win:windowed" ]
-	if (is_android) {
+    if (is_android) {
       sources += [
         "unityplugin/simple_peer_connection.cc",
         "unityplugin/simple_peer_connection.h",
@@ -859,7 +859,7 @@ if (is_win || is_android) {
       "../test:video_test_common",
       "//third_party/abseil-cpp/absl/memory",
     ]
-	if (is_android) {
+    if (is_android) {
       deps += [
         "../modules/utility",
         "../sdk/android:native_api_video",
