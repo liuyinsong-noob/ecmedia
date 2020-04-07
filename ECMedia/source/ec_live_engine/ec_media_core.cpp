@@ -682,7 +682,9 @@ namespace yuntongxunwebrtc {
         VoEBase *base = VoEBase::GetInterface(voe_);
         ret = base->StartPlayout(audio_channel_);
         base->Release();
-        
+#ifdef WIN32
+		ret = 0;
+#else
         // enable audio speaker.
         VoEHardware *hardware = VoEHardware::GetInterface(voe_);
         ret = hardware->SetLoudspeakerStatus(true);
@@ -690,6 +692,7 @@ namespace yuntongxunwebrtc {
         if(ret != 0) {
             WriteLogToFile("[ECMEDIA CORE ERROR] %s  set loudspeaker status failed\n", __FUNCTION__);
         }
+#endif
         return ret;
     }
 

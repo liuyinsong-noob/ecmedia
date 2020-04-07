@@ -109,7 +109,7 @@ namespace yuntongxunwebrtc {
     bool EC_RtmpPuller::run() {
         while(running_) {
             usleep(10*1000);
-            if (rtmp_ != NULL)
+            if (rtmp_ != NULL && running_)
             {
                 switch (rtmp_status_) {
                     case RS_PLY_Init:
