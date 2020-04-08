@@ -31,7 +31,6 @@
 #include "rtc_base/race_checker.h"
 #include "rtc_base/task_queue.h"
 #include "rtc_base/task_utils/repeating_task.h"
-#include "modules/congestion_controller/bbr/bbr_factory.h"
 
 namespace webrtc {
 class Clock;
@@ -168,6 +167,10 @@ class RtpTransportControllerSend final
   const bool reset_feedback_on_route_change_;
   const bool send_side_bwe_with_overhead_;
   const bool add_pacing_to_cwin_;
+  
+  //add by yukening
+  int64_t last_congested_time;
+  int64_t last_low_band_time;
   // Transport overhead is written by OnNetworkRouteChanged and read by
   // AddPacket.
   // TODO(srte): Remove atomic when feedback adapter runs on task queue.

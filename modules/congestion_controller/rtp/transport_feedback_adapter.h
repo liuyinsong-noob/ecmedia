@@ -55,6 +55,9 @@ class TransportFeedbackAdapter {
   void SetNetworkIds(uint16_t local_id, uint16_t remote_id);
 
   DataSize GetOutstandingData() const;
+  
+  bool MaybeCleanOutstandingData(int64_t current_ms, uint32_t delay_ms);
+  DataSize GetOutstandingDataByTime(int64_t current_ms, uint32_t delay_ms  ) const;
 
  private:
   void OnTransportFeedback(const rtcp::TransportFeedback& feedback);

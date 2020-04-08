@@ -41,7 +41,7 @@ PacketResult NetworkPacketFeedbackFromRtpPacketFeedback(
 }
 }  // namespace
 const int64_t kNoTimestamp = -1;
-const int64_t kSendTimeHistoryWindowMs = 60000;
+const int64_t kSendTimeHistoryWindowMs = 20000;
 const int64_t kBaseTimestampScaleFactor =
     rtcp::TransportFeedback::kDeltaScaleFactor * (1 << 8);
 const int64_t kBaseTimestampRangeSizeUs = kBaseTimestampScaleFactor * (1 << 24);
@@ -255,5 +255,13 @@ std::vector<PacketFeedback>
 TransportFeedbackAdapter::GetTransportFeedbackVector() const {
   return last_packet_feedback_vector_;
 }
+bool TransportFeedbackAdapter::MaybeCleanOutstandingData(int64_t current_ms, uint32_t delay_ms){
+  rtc::CritScope cs(&lock_);
+  return send_time_history_.MaybeCleanOutstandingData(current_ms, delay_ms);
+}
 
+DataSize TransportFeedbackAdapter::GetOutstandingDataByTime(int64_t current_ms, uint32_t delay_ms ) const{
+  rtc::CritScope cs(&lock_);
+   return send_time_history_.GetOutstandingDataByTime(local_net_id_, remote_net_id_,current_ms,delay_ms);
+}
 }  // namespace webrtc

@@ -53,10 +53,10 @@ constexpr char kFrameDropperFieldTrial[] = "WebRTC-FrameDropper";
 
 // The maximum number of frames to drop at beginning of stream
 // to try and achieve desired bitrate.
-const int kMaxInitialFramedrop = 4;
+const int kMaxInitialFramedrop = 5;
 // When the first change in BWE above this threshold occurs,
 // enable DropFrameDueToSize logic.
-const float kFramedropThreshold = 0.3;
+const float kFramedropThreshold = 0.2;
 
 // Averaging window spanning 90 frames at default 30fps, matching old media
 // optimization module defaults.

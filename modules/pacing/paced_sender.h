@@ -148,6 +148,11 @@ class PacedSender : public Pacer {
   // Deprecated, SetPacingRates should be used instead.
   void SetPacingFactor(float pacing_factor);
   void SetQueueTimeLimit(int limit_ms);
+  
+  //add by yukening
+  bool IsCongested();
+  void SetPaddingPacingRates(uint32_t padding_rate_bps);
+  uint32_t GetNackbps();
 
  private:
   PacedSender(Clock* clock,
@@ -186,9 +191,6 @@ class PacedSender : public Pacer {
   const bool pace_audio_;
   FieldTrialParameter<int> min_packet_limit_ms_;
 
-  int64_t last_calu_bitrates_time_;
-  int32_t send_bitrates_count_;
-
   rtc::CriticalSection critsect_;
   // TODO(webrtc:9716): Remove this when we are certain clocks are monotonic.
   // The last millisecond timestamp returned by |clock_|.
@@ -210,6 +212,27 @@ class PacedSender : public Pacer {
   uint32_t min_send_bitrate_kbps_ RTC_GUARDED_BY(critsect_);
   uint32_t max_padding_bitrate_kbps_ RTC_GUARDED_BY(critsect_);
   uint32_t pacing_bitrate_kbps_ RTC_GUARDED_BY(critsect_);
+  
+  // add by yukening 
+  uint32_t last_valid_padding_bps_ RTC_GUARDED_BY(critsect_);
+  int64_t  last_valid_padding_time_ RTC_GUARDED_BY(critsect_);
+  int64_t last_nack_send_time RTC_GUARDED_BY(critsect_);
+  uint32_t last_nack_size RTC_GUARDED_BY(critsect_);
+  //uint16_t last_video_send_seq_ RTC_GUARDED_BY(critsect_);
+  //uint16_t now_video_send_seq_ RTC_GUARDED_BY(critsect_);
+  std::set<uint16_t> nack_list RTC_GUARDED_BY(critsect_);
+  //uint64_t sum_send_package_ RTC_GUARDED_BY(critsect_);
+  //uint64_t sum_send_retain_package_ RTC_GUARDED_BY(critsect_);
+  std::map<int64_t, int64_t> ssrc_seq;
+  std::map<uint16_t,int64_t> nack_time_ RTC_GUARDED_BY(critsect_);
+  using NackTime = std::map<uint16_t, int64_t>;
+  std::map<uint32_t, NackTime> ssrc_time_ RTC_GUARDED_BY(critsect_);
+  
+  std::map<uint32_t, uint16_t> ssrc_send_start_ RTC_GUARDED_BY(critsect_);
+  std::map<uint32_t, uint16_t> ssrc_send_end_ RTC_GUARDED_BY(critsect_);
+  std::map<uint32_t, uint16_t> ssrc_send_retran_ RTC_GUARDED_BY(critsect_);
+  int64_t last_nack_time RTC_GUARDED_BY(critsect_);
+  
 
   int64_t time_last_process_us_ RTC_GUARDED_BY(critsect_);
   int64_t last_send_time_us_ RTC_GUARDED_BY(critsect_);
@@ -232,6 +255,8 @@ class PacedSender : public Pacer {
 
   int64_t queue_time_limit RTC_GUARDED_BY(critsect_);
   bool account_for_audio_ RTC_GUARDED_BY(critsect_);
+    
+  
 };
 }  // namespace webrtc
 #endif  // MODULES_PACING_PACED_SENDER_H_

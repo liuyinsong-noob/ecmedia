@@ -461,7 +461,7 @@ int32_t RTPSender::ReSendPacket(uint16_t packet_id) {
     int64_t corrected_capture_tims_ms =
         stored_packet->capture_time_ms + clock_delta_ms_;
     paced_sender_->InsertPacket(
-        RtpPacketSender::kHighPriority, stored_packet->ssrc,
+        RtpPacketSender::kNormalPriority, stored_packet->ssrc,
         stored_packet->rtp_sequence_number, corrected_capture_tims_ms,
         stored_packet->packet_size, true);
 

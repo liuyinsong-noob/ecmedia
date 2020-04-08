@@ -168,4 +168,40 @@ void SendTimeHistory::UpdateAckedSeqNum(int64_t acked_seq_num) {
   }
   last_ack_seq_num_.emplace(acked_seq_num);
 }
+
+bool SendTimeHistory::MaybeCleanOutstandingData(int64_t current_ms,
+                                                uint32_t delay_ms){
+  if(history_.empty())
+    return true;
+  auto it = history_.begin();
+  while (it != history_.end() &&
+         current_ms - it->second.creation_time_ms >
+             delay_ms) {
+    // TODO(sprang): Warn if erasing (too many) old items?
+    RemovePacketBytes(history_.begin()->second);
+    //history_.erase(history_.begin());
+    it++;
+  }
+  return true;
+}
+
+DataSize SendTimeHistory::GetOutstandingDataByTime(uint16_t local_net_id,uint16_t remote_net_id,
+                                                   int64_t current_ms, uint32_t delay_ms ) const{
+  if(history_.empty())
+    return DataSize::Zero();
+  uint32_t flight_size = 0;
+  auto it = history_.begin();
+  while (it != history_.end() &&
+         current_ms - it->second.creation_time_ms <
+             delay_ms) {
+    // TODO(sprang): Warn if erasing (too many) old items?
+    flight_size = flight_size + (it->second).payload_size;
+    it++;
+  }
+  DataSize data = GetOutstandingData(local_net_id, remote_net_id);
+  if(data.bytes() > flight_size)
+    return DataSize::bytes(flight_size);
+  return DataSize::Zero();
+}
+
 }  // namespace webrtc

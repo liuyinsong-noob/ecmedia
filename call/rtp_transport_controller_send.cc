@@ -25,9 +25,12 @@
 #include "rtc_base/rate_limiter.h"
 #include "system_wrappers/include/field_trial.h"
 
+#include "modules/congestion_controller/bbr/bbr_factory.h"
+
 namespace webrtc {
 namespace {
 static const int64_t kRetransmitWindowSizeMs = 500;
+static const int64_t kUnAckDataWindowSizeMs = 2000;
 static const size_t kMaxOverheadBytes = 500;
 
 constexpr TimeDelta kPacerQueueUpdateInterval = TimeDelta::Millis<25>();
@@ -70,9 +73,10 @@ RtpTransportControllerSend::RtpTransportControllerSend(
       observer_(nullptr),
       controller_factory_override_(controller_factory),
       controller_factory_fallback_(
-          // absl::make_unique<GoogCcNetworkControllerFactory>(event_log,
-          //                                                  predictor_factory)),
-          absl::make_unique<BbrNetworkControllerFactory>()),
+         //absl::make_unique<GoogCcNetworkControllerFactory>(event_log,
+           //                                             predictor_factory)
+                            absl::make_unique<BbrNetworkControllerFactory>()
+                                   ),
       process_interval_(controller_factory_fallback_->GetProcessInterval()),
       last_report_block_time_(Timestamp::ms(clock_->TimeInMilliseconds())),
       reset_feedback_on_route_change_(
@@ -136,6 +140,24 @@ void RtpTransportControllerSend::DestroyRtpVideoSender(
 }
 
 void RtpTransportControllerSend::UpdateControlState() {
+  int64_t now_ms = clock_->TimeInMilliseconds();
+  if(pacer_.IsCongested()){
+    if(last_congested_time == 0)
+      last_congested_time = now_ms;
+    else if(now_ms - last_congested_time > 3000){
+      transport_feedback_adapter_.MaybeCleanOutstandingData(now_ms, 0);
+      pacer_.UpdateOutstandingData(0);
+    }
+  }else
+    last_congested_time = 0;
+  
+  if(last_low_band_time != 0 && now_ms - last_low_band_time > 3000 ){
+    transport_feedback_adapter_.MaybeCleanOutstandingData(now_ms, 0);
+    pacer_.UpdateOutstandingData(0);
+    pacer_.SetPacingRates(300000,0);
+  }
+  last_low_band_time = 0;
+  
   absl::optional<TargetTransferRate> update = control_handler_->GetUpdate();
   if (!update)
     return;
@@ -307,6 +329,17 @@ void RtpTransportControllerSend::EnablePeriodicAlrProbing(bool enable) {
 }
 void RtpTransportControllerSend::OnSentPacket(
     const rtc::SentPacket& sent_packet) {
+  int64_t now_ms = clock_->TimeInMilliseconds();
+  if(pacer_.IsCongested()){
+    if(last_congested_time == 0)
+      last_congested_time = now_ms;
+    else if(now_ms - last_congested_time > 3000){
+      transport_feedback_adapter_.MaybeCleanOutstandingData(now_ms, 0);
+      pacer_.UpdateOutstandingData(0);
+    }
+  }else
+    last_congested_time = 0;
+  
   absl::optional<SentPacket> packet_msg =
       transport_feedback_adapter_.ProcessSentPacket(sent_packet);
   if (packet_msg) {
@@ -316,8 +349,10 @@ void RtpTransportControllerSend::OnSentPacket(
         PostUpdates(controller_->OnSentPacket(*packet_msg));
     });
   }
+  //pacer_.UpdateOutstandingData(
+    //  transport_feedback_adapter_.GetOutstandingData().bytes());
   pacer_.UpdateOutstandingData(
-      transport_feedback_adapter_.GetOutstandingData().bytes());
+       transport_feedback_adapter_.GetOutstandingDataByTime(now_ms,kUnAckDataWindowSizeMs).bytes());
 }
 
 void RtpTransportControllerSend::SetSdpBitrateParameters(
@@ -424,6 +459,7 @@ void RtpTransportControllerSend::OnTransportFeedback(
     const rtcp::TransportFeedback& feedback) {
   RTC_DCHECK_RUNS_SERIALIZED(&worker_race_);
 
+   int64_t now_ms = clock_->TimeInMilliseconds();
   absl::optional<TransportPacketsFeedback> feedback_msg =
       transport_feedback_adapter_.ProcessTransportFeedback(
           feedback, Timestamp::ms(clock_->TimeInMilliseconds()));
@@ -434,8 +470,21 @@ void RtpTransportControllerSend::OnTransportFeedback(
         PostUpdates(controller_->OnTransportPacketsFeedback(*feedback_msg));
     });
   }
+  //pacer_.UpdateOutstandingData(
+     //  transport_feedback_adapter_.GetOutstandingData().bytes());
   pacer_.UpdateOutstandingData(
-      transport_feedback_adapter_.GetOutstandingData().bytes());
+      transport_feedback_adapter_.GetOutstandingDataByTime(now_ms,kUnAckDataWindowSizeMs).bytes());
+  
+  if(pacer_.IsCongested()){
+    if(last_congested_time == 0)
+      last_congested_time = now_ms;
+    else if(now_ms - last_congested_time > 3000){
+      transport_feedback_adapter_.MaybeCleanOutstandingData(now_ms, 0);
+      pacer_.UpdateOutstandingData(0);
+    }
+  }else
+    last_congested_time = 0;
+  
 }
 
 void RtpTransportControllerSend::MaybeCreateControllers() {
@@ -518,7 +567,7 @@ void RtpTransportControllerSend::PostUpdates(NetworkControlUpdate update) {
       pacer_.SetCongestionWindow(PacedSender::kNoCongestionWindow);
   }
   if (update.pacer_config) {
-    pacer_.SetPacingRates(update.pacer_config->data_rate().bps() + 100000,
+    pacer_.SetPacingRates(update.pacer_config->data_rate().bps() +  100000,
                           update.pacer_config->pad_rate().bps());
   }
   for (const auto& probe : update.probe_cluster_configs) {
@@ -526,13 +575,48 @@ void RtpTransportControllerSend::PostUpdates(NetworkControlUpdate update) {
     pacer_.CreateProbeCluster(bitrate_bps, probe.id);
   }
   if (update.target_rate) {
-    float loss = update.target_rate ? update.target_rate->network_estimate.loss_rate_ratio : 0.0;
-    if (loss > 0.8) {
-      loss = 0.6;
-	}
-    (*update.target_rate).target_rate = (*update.target_rate).target_rate * (0.8 - loss);
-     RTC_LOG(LS_ERROR) << "yukening encode bps is  "<<(*update.target_rate).target_rate.bps();
+    float lost = update.target_rate ? update.target_rate->network_estimate.loss_rate_ratio : 0.0;
+    if(lost > 0){
+      transport_feedback_adapter_.MaybeCleanOutstandingData(clock_->TimeInMilliseconds(), lost > 0.5 ? 0 : (0.5 - lost) * 10 * 1000);
+    }
+    if(lost > 0.8){
+      lost = 0.6;
+    }
+    uint32_t nack_bps = pacer_.GetNackbps();
+    RTC_LOG(INFO) << "yukening2 before target bps is :"
+                  << (*update.target_rate).target_rate.bps()
+                  << "nack bps : " << nack_bps;
+    (*update.target_rate).target_rate = (*update.target_rate).target_rate.bps() > 100000 ?
+    DataRate::bps((*update.target_rate).target_rate.bps()) : DataRate::Zero();
+    if( (*update.target_rate).target_rate.bps() <= 1 ){
+      //pacer_.SetPaddingPacingRates(1000 * rand()%20);
+      int64_t now_ms = clock_->TimeInMilliseconds();
+      if(last_low_band_time == 0){
+        last_low_band_time = now_ms;
+      }else {
+        if(now_ms - last_low_band_time > 3000 && !pacer_.IsCongested()){
+          pacer_.SetPacingRates(300000,0);
+        }
+        last_low_band_time = 0;
+      }
+    }else
+      last_low_band_time = 0;
+    
+    if(nack_bps < 40)
+      nack_bps = 0;
+    else if(nack_bps <= 70 ){
+      nack_bps = (nack_bps) * 0.3 ;
+    }else if(nack_bps > 70 && nack_bps <= 80)
+      nack_bps = (nack_bps) * 0.5;
+    else if( nack_bps > 80 && nack_bps < 90)
+      nack_bps  = nack_bps * 0.7;
+    else if(nack_bps >=  90 )
+      nack_bps = 80;
+    (*update.target_rate).target_rate = (*update.target_rate).target_rate*((float)nack_bps/100 + 0.01) ;
     control_handler_->SetTargetRate(*update.target_rate);
+    RTC_LOG(INFO)<<"yukening2 target bps is :"<<(*update.target_rate).target_rate.bps()  
+		<<"nack bps : "<<nack_bps;
+    
     UpdateControlState();
   }
 }
