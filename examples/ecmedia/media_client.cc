@@ -200,7 +200,14 @@ MediaClient::~MediaClient() {
  
     });
   }
- if(own_adm != nullptr){
+  for (auto it = desktop_devices_.begin(); it != desktop_devices_.end(); it++) {
+    if (it->second) {
+      while (it->second.release() != NULL)
+        ;
+    }
+  }
+  desktop_devices_.clear();
+  if (own_adm != nullptr) {
     own_adm->Release();
 	
  }
@@ -258,13 +265,12 @@ bool MediaClient::Initialize() {
 }
 
 void MediaClient::UnInitialize() {
-  //RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__  << "(),"<< " begin... ";
-  for (auto it = desktop_devices_.begin(); it != desktop_devices_.end(); it++) {
-    if (it->second) {
-      while(it->second.release()!=NULL);
-	}
-  }
-  desktop_devices_.clear();
+  // RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__  << "(),"<< " begin... ";
+  /* for (auto it = desktop_devices_.begin(); it != desktop_devices_.end();
+   it++) { if (it->second) { while(it->second.release()!=NULL);
+         }
+   }
+   desktop_devices_.clear();*/
   transceivers_.clear();
   mapChannelSsrcs_.clear();
   TrackChannels_.clear();
@@ -1211,6 +1217,24 @@ void MediaClient::DestroyLocalVideoTrack(
   }
   RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__  << "(),"<< " end... ";
 }
+
+int MediaClient::StartScreenShare() {
+  if (desktop_device_) {
+    worker_thread_->Invoke<void>(RTC_FROM_HERE,
+                                 [this] { desktop_device_->Start(); });
+    return 0;
+  } else {
+    return -1;
+  }
+}
+
+int MediaClient::StopScreenShare() {
+  if (desktop_device_) {
+    desktop_device_->Stop();
+    // while(desktop_device_.release() != NULL);
+  }
+  return 0;
+}
 int MediaClient::GetWindowsList(int type,
                                 webrtc::DesktopCapturer::SourceList& source) {
   auto it = desktop_devices_.find(type);
@@ -1237,6 +1261,9 @@ int MediaClient::CreateDesktopCapture(int type) {
   }
 }
 int MediaClient::SetDesktopSourceID(int type, int id) {
+  if (id < 0 || type < 0) {
+    return -1;
+  }
   auto it = desktop_devices_.find(type);
   if (it != desktop_devices_.end()) {
     it->second->SetDesktopSourceID(id);
@@ -1293,19 +1320,17 @@ MediaClient::CreateLocalVideoTrack(const std::string& track_params) {
                       return video_track;
                       break;
                     case VIDEO_SCREEN:
-               desktop_device_ = desktop_devices_.find(camera_index)->second;
-              if (desktop_device_) {
-                worker_thread_->Invoke<void>(RTC_FROM_HERE, [this] {
-                  desktop_device_->Start();
-				});
-                    
-                video_track = webrtc::VideoTrackProxy::Create(
-                    signaling_thread_, worker_thread_,
-                    webrtc::VideoTrack::Create(track_id, desktop_device_,
-                                               worker_thread_));
-              }
-                      return video_track;
+                      desktop_device_ =
+                          desktop_devices_.find(camera_index)->second;
+                      // if (desktop_device_ == nullptr) {
 
+                      //  }
+                      video_track = webrtc::VideoTrackProxy::Create(
+                          signaling_thread_, worker_thread_,
+                          webrtc::VideoTrack::Create(track_id, desktop_device_,
+                                                     worker_thread_));
+
+                      return video_track;
                       break;
                     default:
                       return video_track;
@@ -2966,9 +2991,15 @@ int ECDesktopCapture::SetDesktopSourceID(int index) {
      capturer_->SelectSource(*it);
      return 0;
     }
-   }
+  }
   return -1;
-   }
+}
+
+void ECDesktopCapture::Stop() {
+  if (isStartCapture) {
+    isStartCapture = false;
+  }
+}
 
 void ECDesktopCapture::Start() {
   if (!isStartCapture) {
@@ -2979,7 +3010,7 @@ void ECDesktopCapture::Start() {
 }
 
 void ECDesktopCapture::OnMessage(rtc::Message* msg) {
-  if (msg->message_id == 0)
+  if (msg->message_id == 0 && isStartCapture)
     CaptureFrame();
 }
 void ECDesktopCapture::CaptureFrame() {

@@ -87,7 +87,7 @@ class ECDesktopCapture : public rtc::AdaptedVideoTrackSource,
 
   bool remote() const override;
   void Start();
-
+  void Stop();
   void CaptureFrame();
 
  public:
@@ -699,7 +699,9 @@ class MediaClient : public sigslot::has_slots<> {
 
   int GetWindowsList(int type, webrtc::DesktopCapturer::SourceList& source);
 
-  
+    int StartScreenShare();
+
+  int StopScreenShare();
 
 #if defined(WEBRTC_ANDROID)
   bool SaveLocalVideoTrack(int channelId, webrtc::VideoTrackInterface* track);

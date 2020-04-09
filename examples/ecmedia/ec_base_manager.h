@@ -148,6 +148,10 @@ class ECBaseManager : public sigslot::has_slots<> {
   int ReleaseScreenList(ScreenID** screen); 
 
   int SetDesktopSourceID(int type,int id);
+
+  int StartScreenShare();
+
+  int StopScreenShare();
  ////////////////////////////////////////////////////////////////////////////////////////
   /*************************************************************************************/
 

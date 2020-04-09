@@ -457,6 +457,13 @@ int ECBaseManager::GetScreenList(int type, ScreenID** screen) {
 
     return num;
   }
+int ECBaseManager::StartScreenShare() {
+    return MediaClient::GetInstance()->StartScreenShare();
+  }
+
+int ECBaseManager::StopScreenShare() {
+    return MediaClient::GetInstance()->StopScreenShare();
+  }
     /***************************************************************************************/
 //////////////////////////////////////////////////////////////////////////////////////////
 
