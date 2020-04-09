@@ -2543,10 +2543,11 @@ rtc::VideoSinkInterface<webrtc::VideoFrame>* MediaClient::GetRemoteVideoSink(int
 		<< " channelId:" << channelId;
 
 	rtc::VideoSinkInterface<webrtc::VideoFrame>* sink = nullptr;
-	if (mapRemoteVideoSinks.size() > 0) {
+	/*if (mapRemoteVideoSinks.size() > 0) {
 		sink = mapRemoteVideoSinks.begin()->second.get();
 	}
-	else if (channelId >= 0) {
+	else*/ 
+	if (channelId >= 0) {
 		VideoSinkIterator it = mapRemoteVideoSinks.find(channelId);
 		if (it != mapRemoteVideoSinks.end()) {
 			sink = it->second.get();
