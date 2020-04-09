@@ -7,48 +7,48 @@
 #include <string>
 #include <vector>
 #include "ec_log.h"
-#include "../../api/media_stream_interface.h"
-#include "../../api/media_transport_interface.h"
-#include "../../api/peer_connection_interface.h"
-#include "../../api/rtp_parameters.h"
-#include "../../api/scoped_refptr.h"
+#include "api/media_stream_interface.h"
+#include "api/media_transport_interface.h"
+#include "api/peer_connection_interface.h"
+#include "api/rtp_parameters.h"
+#include "api/scoped_refptr.h"
 
-#include "../../logging/rtc_event_log/rtc_event_log.h"
+#include "logging/rtc_event_log/rtc_event_log.h"
 
-#include "../../pc/audio_rtp_receiver.h"
-#include "../../pc/channel_manager.h"
-#include "../../pc/dtls_srtp_transport.h"
-#include "../../pc/general_transport_controller.h"
-#include "../../pc/media_session.h"
-#include "../../pc/rtc_stats_collector.h"
-#include "../../pc/rtc_stats_traversal.h"
-#include "../../pc/rtp_receiver.h"
-#include "../../pc/rtp_transceiver.h"
-#include "../../pc/rtp_transport.h"
-#include "../../pc/stats_collector.h"
-#include "../../pc/stream_collection.h"
-#include "../../pc/video_rtp_receiver.h"
+#include "pc/audio_rtp_receiver.h"
+#include "pc/channel_manager.h"
+#include "pc/dtls_srtp_transport.h"
+#include "pc/general_transport_controller.h"
+#include "pc/media_session.h"
+#include "pc/rtc_stats_collector.h"
+#include "pc/rtc_stats_traversal.h"
+#include "pc/rtp_receiver.h"
+#include "pc/rtp_transceiver.h"
+#include "pc/rtp_transport.h"
+#include "pc/stats_collector.h"
+#include "pc/stream_collection.h"
+#include "pc/video_rtp_receiver.h"
 
-#include "../../rtc_base/rtc_certificate_generator.h"
-#include "../../rtc_base/thread.h"
+#include "rtc_base/rtc_certificate_generator.h"
+#include "rtc_base/thread.h"
 
-#include "../../media/base/stream_params.h"
-#include "../../media/sctp/sctp_transport_internal.h"
-#include "../../media/base/stream_params.h"
+#include "media/base/stream_params.h"
+#include "media/sctp/sctp_transport_internal.h"
+#include "media/base/stream_params.h"
 
-#include "../../media/base/video_common.h"
-#include "../../modules/desktop_capture/desktop_capturer.h"
-#include "../../modules/desktop_capture/desktop_frame.h"
-#include "../../modules/video_capture/video_capture.h"
+#include "media/base/video_common.h"
+#include "modules/desktop_capture/desktop_capturer.h"
+#include "modules/desktop_capture/desktop_frame.h"
+#include "modules/video_capture/video_capture.h"
 
 
-#include "../../media/engine/webrtc_video_engine.h"
+#include "media/engine/webrtc_video_engine.h"
 #ifdef WEBRTC_ANDROID
 #include <jni.h>
 #endif
 
-#include "../../media/base/adapted_video_track_source.h"
-//#include "../../third_party/protobuf/src/google/protobuf/message_lite.h"
+#include "media/base/adapted_video_track_source.h"
+//#include "third_party/protobuf/src/google/protobuf/message_lite.h"
 
 //class myclass : public ::google::protobuf::MessageLite {
 
