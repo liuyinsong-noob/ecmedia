@@ -884,6 +884,7 @@ bool MediaClient::SetLoudSpeakerStatus(bool enabled) {
 #if defined(WEBRTC_IOS)
   return ObjCCallClient::GetInstance()->SetSpeakerStatus(enabled);
 #endif
+return true;
 }
 
 bool MediaClient::GetLoudSpeakerStatus(bool &enabled) {
@@ -892,6 +893,7 @@ bool MediaClient::GetLoudSpeakerStatus(bool &enabled) {
 #if defined(WEBRTC_IOS)
   return ObjCCallClient::GetInstance()->GetSpeakerStatus(enabled);
 #endif
+return true;
 }
 
 bool MediaClient::SetRemoteMute(int channel_id, bool bMute) {
@@ -1420,7 +1422,7 @@ MediaClient::CreateLocalVideoTrack(const std::string& track_params) {
                                                           webrtc::VideoTrack::Create(track_id,
                                                                             ObjCCallClient::GetInstance()->getLocalVideoSource(signaling_thread_,worker_thread_),
                                                                                      worker_thread_));
- #elif
+ #elif defined(WEBRTC_WIN)
                       if (video_device) {
                         video_track = webrtc::VideoTrackProxy::Create(
                                                                     signaling_thread_, worker_thread_,
