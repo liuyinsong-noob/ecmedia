@@ -502,7 +502,7 @@ bool MediaClient::CreateCall(webrtc::RtcEventLog* event_log) {
   RTC_DCHECK_RUN_ON(worker_thread_);
 
   const int kMinBandwidthBps = 30000;
-  const int kStartBandwidthBps = 300000;
+  const int kStartBandwidthBps = 800000;
   const int kMaxBandwidthBps = 1000000;
 
   EC_CHECK_VALUE(channel_manager_, false);
