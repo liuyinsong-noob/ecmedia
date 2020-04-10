@@ -601,10 +601,11 @@ int ECBaseManager::StartCameraCapturer(int deviceid,
   RTC_DCHECK_GE(deviceid, 0);
 #if defined(WEBRTC_IOS)
   ObjCCallClient::GetInstance()->StartCapture(deviceid,cap);
-#elif
-  return camera_devices_[deviceid].second->StartCapture(cap);
+ return 0;
 #endif
-return 0;
+  return camera_devices_[deviceid].second->StartCapture(cap);
+
+
 }
 
 // note: must call from ui thread
