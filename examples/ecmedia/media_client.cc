@@ -450,13 +450,13 @@ bool MediaClient::CreateChannelManager() {
     std::unique_ptr<webrtc::VideoEncoderFactory> video_encoder_factory =
 #if defined(WEBRTC_IOS)
          ObjCCallClient::GetInstance()->getVideoEncoderFactory();
-#elif
+#elif defined(WEBRTC_WIN)
          webrtc::CreateBuiltinVideoEncoderFactory();
 #endif
     std::unique_ptr<webrtc::VideoDecoderFactory> video_decoder_factory =
 #if defined(WEBRTC_IOS)
       ObjCCallClient::GetInstance()->getVideoDecoderFactory();
-#elif
+#elif defined(WEBRTC_WIN)
       webrtc::CreateBuiltinVideoDecoderFactory();
 #endif
 
@@ -881,20 +881,26 @@ bool MediaClient::SetLocalMute(int channel_id, bool bMute) {
 bool MediaClient::SetLoudSpeakerStatus(bool enabled) {
   RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__  << "() "<< " begin..."
                 << "enabled:" << enabled;
+#if defined(WEBRTC_IOS)
   return ObjCCallClient::GetInstance()->SetSpeakerStatus(enabled);
+#endif
 }
 
 bool MediaClient::GetLoudSpeakerStatus(bool &enabled) {
   RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__  << "() "<< " begin..."
                 << "enabled:" << enabled;
+#if defined(WEBRTC_IOS)
   return ObjCCallClient::GetInstance()->GetSpeakerStatus(enabled);
+#endif
 }
 
 bool MediaClient::SetRemoteMute(int channel_id, bool bMute) {
   RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__ << "() "
                 << " begin... "
                 << ", channel_id: " << channel_id << ", bMute: " << bMute;
+#if defined(WEBRTC_IOS)
  return ObjCCallClient::GetInstance()->SetSpeakerStatus(!bMute);
+#endif
   RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__ << "(),"
                 << " end... ";
   return false;
