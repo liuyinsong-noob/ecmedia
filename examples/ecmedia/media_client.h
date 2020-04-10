@@ -710,6 +710,7 @@ class MediaClient : public sigslot::has_slots<> {
   /*****************************************************************************/
   bool SetAudioPlayoutDevice(int index);
  ///////////////////////// zjy interface end//////////////////////////////////
+  #if defined(WEBRTC_WIN)
    int CreateDesktopCapture(int type);
 
   int SetDesktopSourceID(int type, int id);
@@ -721,7 +722,7 @@ class MediaClient : public sigslot::has_slots<> {
     int StartScreenShare();
 
   int StopScreenShare();
-
+#endif
 #if defined(WEBRTC_ANDROID)
   bool SaveLocalVideoTrack(int channelId, webrtc::VideoTrackInterface* track);
   webrtc::VideoTrackInterface* GetLocalVideoTrack(int channelId);
@@ -881,12 +882,12 @@ class MediaClient : public sigslot::has_slots<> {
 
     webrtc::AudioDeviceModule::AudioLayer audio_layer_ =
             webrtc::AudioDeviceModule::kPlatformDefaultAudio;  // zjy
-
+#if defined WEBRTC_WIN
     rtc::scoped_refptr<win_desk::ECDesktopCapture> desktop_device_;
 
     std::map<int, rtc::scoped_refptr<win_desk::ECDesktopCapture>> desktop_devices_
 		;
-#if defined WEBRTC_WIN
+
 	std::unique_ptr<win_render::RenderWndsManager>
 		renderWndsManager_;
 #endif

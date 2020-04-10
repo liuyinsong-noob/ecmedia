@@ -46,6 +46,7 @@ public:
     void SetCaptureTargetSize(int width, int height);
     int GetNumberOfVideoDevices();
     int NumberOfCapabilities(int deviceId);
+    void SetCameraIndex(int index);
     int32_t GetCapability(const char* deviceUniqueIdUTF8,
                           const uint32_t deviceCapabilityNumber,
                            webrtc::VideoCaptureCapability& capability);

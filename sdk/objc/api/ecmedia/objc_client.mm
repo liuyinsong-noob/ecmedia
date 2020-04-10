@@ -31,15 +31,13 @@
 #include "sdk/objc/native/api/video_renderer.h"
 #include "video_capture_iOS_device_info.h"
 
-
-#import "sdk/objc/api/peerconnection/media_client.h"
 #import "sdk/objc/components/capturer/RTCCameraVideoCapturer.h"
 #if defined(RTC_SUPPORTS_METAL)
 #import "sdk/objc/components/renderer/metal/RTCMTLVideoView.h"  // nogncheck
 #endif
 #import "sdk/objc/components/renderer/opengl/RTCEAGLVideoView.h"
 #import "sdk/objc/helpers/RTCCameraPreviewView.h"
-#import "sdk/objc/api/peerconnection/RenderManager.h"
+#import "RenderManager.h"
 
 RTCCameraVideoCapturer *capturer_;
 RTCCameraPreviewView *localVideoView;
@@ -341,6 +339,9 @@ int32_t  ObjCCallClient::GetCapability(const char* deviceUniqueIdUTF8,
 }
 webrtc::VideoCaptureModule::DeviceInfo* ObjCCallClient::getVideoCaptureDeviceInfo(){
     return new VideoCaptureiOSDeviceInfo(0);
+}
+void ObjCCallClient::SetCameraIndex(int index){
+  
 }
 //}  // namespace webrtc_examples
 

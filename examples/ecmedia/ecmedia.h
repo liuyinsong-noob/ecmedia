@@ -3,21 +3,23 @@
 
 #ifdef WEBRTC_ANDROID
 #include "jni.h"
-//#define ECMEDIA_API JNIEXPORT
-#define ECMEDIA_API __attribute__((visibility("default")))
+#define ECMEDIA_API JNIEXPORT
 #elif defined(WIN32)
 #define ECMEDIA_API _declspec(dllexport)
 #else
-#define ECMEDIA_API
+#import "RTCMacros.h"
+#define ECMEDIA_API RTC_OBJC_EXPORT
 #endif
 
 #include "ec_common_types.h"
 #include "sdk_common.h"
 
 // TODO£º for test, remove later
+#if defined(WIN32)
 #include <windows.h>
 #include <wingdi.h>
 #include <sstream>
+#endif
 #include <string>
 #include <vector>
 

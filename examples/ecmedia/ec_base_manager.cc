@@ -15,6 +15,9 @@
 #include "rtc_base/helpers.h"
 #include "rtc_base/logging.h"
 #include "video_capturer/capturer_track_source.h"
+#if defined(WEBRTC_IOS)
+#include "sdk/objc/api/ecmedia/objc_client.h"
+#endif
 
 namespace webrtc {
 
@@ -410,14 +413,22 @@ bool ECBaseManager::RenderCallback(int channelid,void* callback) {
  }
 
 int ECBaseManager::CreateDesktopCapture(int type) {
+#if defined(WEBRTC_WIN)
    return MediaClient::GetInstance()->CreateDesktopCapture(type);
+#endif
+  return 0;
 }
 
 int ECBaseManager::SetDesktopSourceID(int type,int id) {
+  #if defined(WEBRTC_WIN)
   return MediaClient::GetInstance()->SetDesktopSourceID(type,id);
+#endif
+  return 0;
 }
 
+  #if defined(WEBRTC_WIN)
 int ECBaseManager::GetWindowsList(int type,WindowShare** windowsList) {
+ 
 	webrtc::DesktopCapturer::SourceList sources;
 	MediaClient::GetInstance()->GetWindowsList(type,sources);
     int num = sources.size();
@@ -476,6 +487,7 @@ int ECBaseManager::StartScreenShare() {
 int ECBaseManager::StopScreenShare() {
     return MediaClient::GetInstance()->StopScreenShare();
   }
+#endif
     /***************************************************************************************/
 //////////////////////////////////////////////////////////////////////////////////////////
 
@@ -537,6 +549,7 @@ int ECBaseManager::AllocateCaptureDevice(const char* id,
                                          int& deviceid) {
   RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__  << "(),"<< " begin... "
                 << ", id: " << id << ", len: " << len << ", deviceid: " << deviceid;
+  #if defined(WEBRTC_WIN)
   auto it = std::find_if(camera_devices_.begin(), camera_devices_.end(),
                          FindUniqueId(std::string(id)));
 
@@ -552,6 +565,7 @@ int ECBaseManager::AllocateCaptureDevice(const char* id,
     camera_devices_[deviceid] = std::make_pair(std::string(id), video_device);
   }
   RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__  << "(),"<< " end... ";
+#endif
   return 0;
 }
 
@@ -560,6 +574,9 @@ int ECBaseManager::ConnectCaptureDevice(int deviceid, int peer_id) {
   RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__  << "(),"<< " begin... "
                 << ", deviceid: " << deviceid << ", peer_id: " << peer_id;
   RTC_DCHECK_GE(deviceid, 0);
+  
+  #if defined(WEBRTC_WIN)
+  
   auto it = camera_devices_.find(deviceid);
   if (it != camera_devices_.end()) {
     VideoCapturer* video_device = it->second.second;
@@ -588,6 +605,8 @@ int ECBaseManager::ConnectCaptureDevice(int deviceid, int peer_id) {
     RTC_LOG(LS_ERROR) << "Can't find deviceid.";
     return -1;
   }
+  #endif
+  return 0;
 }
 
 // note: must call from ui thread
@@ -616,19 +635,25 @@ int ECBaseManager::StopCapturer(int deviceid) {
 #if defined(WEBRTC_IOS)
 ObjCCallClient::GetInstance()->StopCapture();
   return 0;
-  #endif
+#endif
+#if defined(WEBRTC_WIN)
 
   if (camera_devices_.empty()) {
     return 0;
   }
   RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__  << "(),"<< " end... ";
   return camera_devices_[deviceid].second->StopCapture();
+#endif
 }
 
 int ECBaseManager::StopAllCapturer() {
   RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__  << "(),"<< " begin... ";
   int ret = 0;
-
+  #if defined(WEBRTC_IOS)
+  ObjCCallClient::GetInstance()->StopCapture();
+    return 0;
+  #endif
+  #if defined(WEBRTC_WIN)
   if (camera_devices_.empty()) {
     return 0;
   }
@@ -638,6 +663,7 @@ int ECBaseManager::StopAllCapturer() {
   }
 
   RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__  << "(),"<< " end... ";
+#endif
   return ret;
 }
 

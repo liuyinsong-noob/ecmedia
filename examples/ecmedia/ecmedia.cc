@@ -931,20 +931,24 @@ ECMEDIA_API int ECMedia_create_desktop_capture(int type) {
     return 0;
 
 	  }
+    #if defined(WEBRTC_WIN)
 int ret = g_ECMedia->CreateDesktopCapture(type);
+
 
 RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__ << "() "
               << " end..."
               << " ret: " << ret;
 
 return ret;
+  #endif
+  return 0;
 }
 
 ECMEDIA_API int ECMedia_get_screen_list(int type, ScreenID** screenList) {
   RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__ << "() "
                 << " begin..."
                 << " type: " << type;
-
+  #if defined(WEBRTC_WIN)
   if (!screenList) {
     RTC_LOG(LS_ERROR) << "[ECMEDIA3.0]" << __FUNCTION__ << "() "
                       << " end ..."
@@ -956,13 +960,17 @@ ECMEDIA_API int ECMedia_get_screen_list(int type, ScreenID** screenList) {
                   << " end..."
                   << " ret: " << ret;
     return ret;
+
+    return 0;
   }
+  #endif
+  return 0;
 }
 ECMEDIA_API bool ECMedia_select_screen(int type, ScreenID screeninfo) {
   RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__ << "() "
                 << " begin..."
                 << " type: " << type;
-
+  #if defined(WEBRTC_WIN)
   int ret = g_ECMedia->SetDesktopSourceID(type, screeninfo);
   if (ret == 0) {
     RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__ << "() "
@@ -975,13 +983,18 @@ ECMEDIA_API bool ECMedia_select_screen(int type, ScreenID screeninfo) {
                       << " ret: " << ret;
     return false;
   }
+#endif
+  return true;
 }
 
 ECMEDIA_API int ECMedia_release_window_list(WindowShare** windowList) {
   if ((*windowList) == NULL) {
     return -1;
   } else {
+      #if defined(WEBRTC_WIN)
     return g_ECMedia->ReleaseWindowsList(windowList);
+#endif
+    return -1;
   }
 }
 
@@ -989,7 +1002,10 @@ ECMEDIA_API int ECMedia_get_window_list(int type, WindowShare** windowList) {
   if (!windowList) {
     return -1;
   } else {
+      #if defined(WEBRTC_WIN)
     return g_ECMedia->GetWindowsList(type, windowList);
+#endif
+    return -1;
   }
 }
 
@@ -997,27 +1013,34 @@ ECMEDIA_API int ECMedia_release_screen_list(ScreenID** screen) {
   if ((*screen) == NULL) {
     return -1;
   } else {
+      #if defined(WEBRTC_WIN)
     return g_ECMedia->ReleaseScreenList(screen);
+#endif
+    return -1;
   }
 }
 
 ECMEDIA_API int ECMedia_start_screen_share() {
   RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__ << "() "
                 << " begin...";
-
+  #if defined(WEBRTC_WIN)
   int ret = g_ECMedia->StartScreenShare();
+
+  
 
   RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__ << "() "
                 << " end..."
                 << " ret:" << ret;
 
   return ret;
+  #endif
+  return 0;
 }
 
 ECMEDIA_API int ECMedia_stop_screen_share() {
   RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__ << "() "
                 << " begin...";
-
+  #if defined(WEBRTC_WIN)
   int ret = g_ECMedia->StopScreenShare();
 
   RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__ << "() "
@@ -1025,6 +1048,8 @@ ECMEDIA_API int ECMedia_stop_screen_share() {
                 << " ret:" << ret;
 
   return ret;
+#endif
+  return 0;
 }
 ECMEDIA_API void ECMedia_get_audio_channel_volume_level(int audioid,
                                                         int level) {}

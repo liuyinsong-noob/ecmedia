@@ -93,6 +93,7 @@ ECPeerManager::~ECPeerManager() {
 bool ECPeerManager::Initialize() {
   RTC_DCHECK(!peer_connection_factory_);
   RTC_DCHECK(!peer_connection_);
+  #if defined(WEBRTC_WIN)
 
   peer_connection_factory_ = webrtc::CreatePeerConnectionFactory(
       network_thread_ /* network_thread */, worker_thread_ /* worker_thread */,
@@ -109,7 +110,7 @@ bool ECPeerManager::Initialize() {
   if (!CreatePeerConnection(/*dtls=*/false)) {
     DeletePeerConnection();
   }
-
+  #endif
   return peer_connection_ != nullptr;
 }
 
@@ -206,6 +207,7 @@ void ECPeerManager::OnAddTrack(
 
 void ECPeerManager::OnReceiveVideoRemoteTrack(
     webrtc::VideoTrackInterface* remote_video_track) {
+    #if defined(WEBRTC_WIN)
   remote_video_track_ = remote_video_track;
 
   if (remote_window_ && remote_video_track_) {
@@ -214,9 +216,11 @@ void ECPeerManager::OnReceiveVideoRemoteTrack(
 
     remote_renderer_->StartRender(0);
   }
+#endif
 }
 
 int ECPeerManager::AddRemoteRender(void* video_window) {
+  #if defined(WEBRTC_WIN)
   remote_window_ = video_window;
 
   if (remote_window_ && remote_video_track_) {
@@ -225,7 +229,7 @@ int ECPeerManager::AddRemoteRender(void* video_window) {
 
     return remote_renderer_->StartRender(0);
   }
-
+#endif
   return 0;
 }
 

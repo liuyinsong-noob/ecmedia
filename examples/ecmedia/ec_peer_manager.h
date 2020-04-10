@@ -125,8 +125,9 @@ class ECPeerManager : public webrtc::PeerConnectionObserver,
   bool sendrcv_video_;	// true: sendrcv; false: rcv only
   std::unique_ptr<SessionDescriptionInterface> local_description_;
   std::unique_ptr<SessionDescriptionInterface> remote_description_;
-
-  void* remote_window_;                             // TODO: modify to vector
+  #if defined(WEBRTC_WIN)
+  void* remote_window_;
+#endif// TODO: modify to vector
   std::unique_ptr<VideoRenderer> remote_renderer_;  // TODO: modify to vector
   rtc::scoped_refptr<webrtc::VideoTrackInterface> remote_video_track_;
 
