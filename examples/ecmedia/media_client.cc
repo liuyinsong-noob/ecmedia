@@ -404,7 +404,9 @@ bool MediaClient::CreateThreads() {
     owned_signaling_thread_->Start();
     signaling_thread_ = owned_signaling_thread_.get();
   }
+  #if defined(WEBRTC_IOS)
   ObjCCallClient::GetInstance()->InitDevice(signaling_thread_,worker_thread_);
+  #endif
   EC_CHECK_VALUE(signaling_thread_, false);
   RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__ << "(),"
                 << " end... ";
