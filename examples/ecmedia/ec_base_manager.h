@@ -99,6 +99,10 @@ class ECBaseManager : public sigslot::has_slots<> {
 
   bool SetLocalMute(int channel_id, bool bMute);
 
+  bool SetLoudSpeakerStatus(bool enabled);
+    
+  bool GetLoudSpeakerStatus(bool& enabled);
+
   bool SetRemoteMute(int channel_id, bool bMute);
 
   bool RequestRemoteSsrc(int channel_id,int flag, int32_t ssrc);

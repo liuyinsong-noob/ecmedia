@@ -266,6 +266,18 @@ bool ECBaseManager::SetLocalMute(int channel_id, bool bMute) {
   return MediaClient::GetInstance()->SetLocalMute(channel_id, bMute);
 }
 
+bool ECBaseManager::SetLoudSpeakerStatus(bool enabled) {
+  RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__  << "() "<< " begin..."
+                << "enabled:" << enabled;
+  return MediaClient::GetInstance()->SetLoudSpeakerStatus(enabled);
+}
+
+bool ECBaseManager::GetLoudSpeakerStatus(bool& enabled) {
+  RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__  << "() "<< " begin..."
+                << "enabled:" << enabled;
+  return MediaClient::GetInstance()->GetLoudSpeakerStatus(enabled);
+}
+
 bool ECBaseManager::SetRemoteMute(int channel_id, bool bMute) {
   RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__  << "(),"<< " begin... "
                 << ", channel_id: " << channel_id << ", bMute: " << bMute;
@@ -587,8 +599,12 @@ int ECBaseManager::StartCameraCapturer(int deviceid,
                 << ", cap maxFPS: " << cap.maxFPS;
   // RTC_DCHECK(signaling_thread_->IsCurrent());
   RTC_DCHECK_GE(deviceid, 0);
-
+#if defined(WEBRTC_IOS)
+  ObjCCallClient::GetInstance()->StartCapture(deviceid,cap);
+#elif
   return camera_devices_[deviceid].second->StartCapture(cap);
+#endif
+return 0;
 }
 
 // note: must call from ui thread
@@ -596,6 +612,10 @@ int ECBaseManager::StopCapturer(int deviceid) {
   RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__  << "(),"<< " begin... "
                 << ", deviceid: " << deviceid;
   // RTC_DCHECK_GE(deviceid, 0);
+#if defined(WEBRTC_IOS)
+ObjCCallClient::GetInstance()->StopCapture();
+  return 0;
+  #endif
 
   if (camera_devices_.empty()) {
     return 0;

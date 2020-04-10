@@ -121,6 +121,19 @@ ECMEDIA_API bool ECMedia_set_local_audio_mute(int channel_id, bool bMute) {
   return g_ECMedia->SetLocalMute(channel_id, bMute);
 }
 
+ECMEDIA_API int ECMedia_set_loudspeaker_status(bool enabled){
+    RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__  << "() "<< " begins..."
+                  << "enabled:" << enabled;
+    return g_ECMedia->SetLoudSpeakerStatus(enabled);
+}
+
+ECMEDIA_API int ECMedia_get_loudpeaker_status(bool& enabled){
+    RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__  << "() "<< " begins..."
+                  << "enabled:" << enabled;
+    return g_ECMedia->GetLoudSpeakerStatus(enabled);
+}
+
+
 ECMEDIA_API bool ECMedia_set_remote_audio_mute(int channel_id, bool bMute) {
   RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__ << "(),"
                 << " begins... "

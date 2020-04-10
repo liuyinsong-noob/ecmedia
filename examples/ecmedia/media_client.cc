@@ -74,6 +74,10 @@
 #include "system_wrappers/include/field_trial.h"
 #include "third_party/libyuv/include/libyuv.h"
 
+#if defined(WEBRTC_IOS)
+#include "objc_client.h"
+#endif
+
 namespace ecmedia_sdk {
 
 static const char ksAudioLabel[] = "audio_label";
@@ -400,6 +404,7 @@ bool MediaClient::CreateThreads() {
     owned_signaling_thread_->Start();
     signaling_thread_ = owned_signaling_thread_.get();
   }
+  ObjCCallClient::GetInstance()->InitDevice(signaling_thread_,worker_thread_);
   EC_CHECK_VALUE(signaling_thread_, false);
   RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__ << "(),"
                 << " end... ";
@@ -440,10 +445,18 @@ bool MediaClient::CreateChannelManager() {
       webrtc::CreateBuiltinAudioEncoderFactory();
   rtc::scoped_refptr<webrtc::AudioDecoderFactory> audio_decoder_factory =
       webrtc::CreateBuiltinAudioDecoderFactory();
-  std::unique_ptr<webrtc::VideoEncoderFactory> video_encoder_factory =
-      webrtc::CreateBuiltinVideoEncoderFactory();
-  std::unique_ptr<webrtc::VideoDecoderFactory> video_decoder_factory =
+    std::unique_ptr<webrtc::VideoEncoderFactory> video_encoder_factory =
+#if defined(WEBRTC_IOS)
+         ObjCCallClient::GetInstance()->getVideoEncoderFactory();
+#elif
+         webrtc::CreateBuiltinVideoEncoderFactory();
+#endif
+    std::unique_ptr<webrtc::VideoDecoderFactory> video_decoder_factory =
+#if defined(WEBRTC_IOS)
+      ObjCCallClient::GetInstance()->getVideoDecoderFactory();
+#elif
       webrtc::CreateBuiltinVideoDecoderFactory();
+#endif
 
   rtc::scoped_refptr<webrtc::AudioProcessing> audio_processing =
       webrtc::AudioProcessingBuilder().Create();
@@ -863,17 +876,23 @@ bool MediaClient::SetLocalMute(int channel_id, bool bMute) {
   return false;
 }
 
+bool MediaClient::SetLoudSpeakerStatus(bool enabled) {
+  RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__  << "() "<< " begin..."
+                << "enabled:" << enabled;
+  return ObjCCallClient::GetInstance()->SetSpeakerStatus(enabled);
+}
+
+bool MediaClient::GetLoudSpeakerStatus(bool &enabled) {
+  RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__  << "() "<< " begin..."
+                << "enabled:" << enabled;
+  return ObjCCallClient::GetInstance()->GetSpeakerStatus(enabled);
+}
+
 bool MediaClient::SetRemoteMute(int channel_id, bool bMute) {
   RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__ << "() "
                 << " begin... "
                 << ", channel_id: " << channel_id << ", bMute: " << bMute;
-  for (const auto& transceiver : transceivers_) {
-    std::string mid = GetMidFromChannelId(channel_id);
-    if (transceiver.get()->mid() == mid) {
-      return transceiver.get()->receiver()->track()->set_enabled(bMute);
-      break;
-    }
-  }
+ return ObjCCallClient::GetInstance()->SetSpeakerStatus(!bMute);
   RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__ << "(),"
                 << " end... ";
   return false;
@@ -1348,11 +1367,11 @@ int MediaClient::SetDesktopSourceID(int type, int id) {
     return -1;
   }
 }
+
 rtc::scoped_refptr<webrtc::VideoTrackInterface>
 MediaClient::CreateLocalVideoTrack(const std::string& track_params) {
-  RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__ << "(),"
-                << " begin... "
-                << ", track_params: " << track_params;
+  RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__  << "() "<< " begin..."
+                << "track_params:" << track_params;
   Json::Reader reader;
   Json::Value jmessage;
   if (!reader.parse(track_params, jmessage)) {
@@ -1385,29 +1404,37 @@ MediaClient::CreateLocalVideoTrack(const std::string& track_params) {
 
                   switch (type) {
                     case VIDEO_CAMPER:
-                      video_device = CapturerTrackSource::Create(camera_index);
-
+                     video_device = CapturerTrackSource::Create(camera_index);
+                          
+  #if defined(WEBRTC_IOS)
+                          video_track =  webrtc::VideoTrackProxy::Create(
+                                                          signaling_thread_, worker_thread_,
+                                                          webrtc::VideoTrack::Create(track_id,
+                                                                            ObjCCallClient::GetInstance()->getLocalVideoSource(signaling_thread_,worker_thread_),
+                                                                                     worker_thread_));
+ #elif
                       if (video_device) {
                         video_track = webrtc::VideoTrackProxy::Create(
-                            signaling_thread_, worker_thread_,
-                            webrtc::VideoTrack::Create(track_id, video_device,
-                                                       worker_thread_));
+                                                                    signaling_thread_, worker_thread_,
+                                                                    webrtc::VideoTrack::Create(track_id,
+                                                                                               video_device,
+                                                                                               worker_thread_));
+
+                      
                       }
+  #endif
 
                       return video_track;
                       break;
                     case VIDEO_SCREEN:
-                      desktop_device_ =
-                          desktop_devices_.find(camera_index)->second;
-                      // if (desktop_device_ == nullptr) {
 
-                      //  }
-                      video_track = webrtc::VideoTrackProxy::Create(
-                          signaling_thread_, worker_thread_,
-                          webrtc::VideoTrack::Create(track_id, desktop_device_,
-                                                     worker_thread_));
-
+                      /* video_track =
+                         webrtc::VideoTrackProxy::Create(signaling_thread_,
+                         worker_thread_,webrtc::VideoTrack::Create( track_id,
+                               webrtc::FakeVideoTrackSource::Create(true),
+                               worker_thread_));*/
                       return video_track;
+
                       break;
                     default:
                       return video_track;
@@ -1417,9 +1444,9 @@ MediaClient::CreateLocalVideoTrack(const std::string& track_params) {
 
     vsum_++;
     return video_tracks_[vsum_ - 1];
+    
   }
-  RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__ << "(),"
-                << " end... ";
+  RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__  << "() "<< " end...";
   return NULL;
 }
 
@@ -1652,9 +1679,8 @@ bool MediaClient::InitRenderWndsManager() {
 }
 
 bool MediaClient::SetLocalVideoRenderWindow(int window_id, void* view) {
-  RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__ << "() "
-                << " begin... "
-                << ", window_id: " << window_id << ", view: " << view;
+  RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__  << "() "<< " begin..."
+                << "window_id:" << window_id << "view:" << view;
 #if defined WEBRTC_WIN
   EC_CHECK_VALUE(view, false);
   EC_CHECK_VALUE((window_id >= 0), false);
@@ -1663,31 +1689,32 @@ bool MediaClient::SetLocalVideoRenderWindow(int window_id, void* view) {
   }
 
   renderWndsManager_->SetLocalRenderWnd(window_id, view, nullptr);
+#elif defined(WEBRTC_IOS)
+    ObjCCallClient::GetInstance()->SetLocalWindowView(view);
 #endif
-  RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__ << "(),"
-                << " end... ";
+  RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__  << "() "<< " end...";
   return true;
 }
 
 bool MediaClient::PreviewTrack(int window_id, void* video_track) {
-  RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__ << "(),"
-                << " begin... "
-                << ", window_id: " << window_id;
+  RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__  << "() "<< " begin..."
+                << "window_id:" << window_id;
   webrtc::VideoTrackInterface* track =
       (webrtc::VideoTrackInterface*)(video_track);
 #if defined WEBRTC_WIN
   EC_CHECK_VALUE(renderWndsManager_, false);
   return renderWndsManager_->StartLocalRenderer(window_id, track);
+#elif defined(WEBRTC_IOS)
+    ObjCCallClient::GetInstance()->SetLocalWindowView(video_track);
 #endif
-  RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__ << "(),"
-                << " end... ";
+    track = NULL;
+  RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__  << "() "<< " end...";
   return true;
 }
 
 bool MediaClient::SetRemoteVideoRenderWindow(int channel_Id, void* view) {
-  RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__ << "(),"
-                << " begin... "
-                << ", channel_Id: " << channel_Id << ", view: " << view;
+  RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__  << "() "<< " begin..."
+                << "channel_Id:" << channel_Id << "view:" << view;
   EC_CHECK_VALUE((channel_Id >= 0), false);
 #if defined WEBRTC_WIN
   EC_CHECK_VALUE(view, false);
@@ -1697,9 +1724,10 @@ bool MediaClient::SetRemoteVideoRenderWindow(int channel_Id, void* view) {
   }
 
   renderWndsManager_->AddRemoteRenderWnd(channel_Id, view, nullptr);
+#elif defined(WEBRTC_IOS)
+    ObjCCallClient::GetInstance()->SetRemoteWindowView(channel_Id,view);
 #endif
-  RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__ << "(),"
-                << " end... ";
+  RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__  << "() "<< " end...";
   return true;
 }
 
@@ -1851,29 +1879,31 @@ bool MediaClient::FilterVideoCodec(const VideoCodecConfig& config,
 }
 
 uint32_t MediaClient::GetNumberOfVideoDevices() {
-  RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__ << "(),"
-                << " begin... ";
+  RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__  << "() "<< " begin...";
+#if defined(WEBRTC_IOS)
+    return ObjCCallClient::GetInstance()->GetNumberOfVideoDevices();
+#endif
   std::unique_ptr<webrtc::VideoCaptureModule::DeviceInfo> info(
       webrtc::VideoCaptureFactory::CreateDeviceInfo());
   if (info) {
-    RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__ << "(),"
-                  << " end..."
-                  << ", info->NumberOfDevices(): " << info->NumberOfDevices();
+    RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__  << "() "<< " end..."
+                  << " info->NumberOfDevices():" << info->NumberOfDevices();
     return info->NumberOfDevices();
   }
-  RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__ << "(),"
-                << " end... ";
+  RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__  << "() "<< " end...";
   return 0;
 }
 
 bool MediaClient::GetVideoDevices(char* jsonDeviceInfos, int* length) {
-  RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__ << "(),"
-                << " begin... "
-                << ", jsonDeviceInfos: " << jsonDeviceInfos
-                << ", length: " << length;
+  RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__  << "() "<< " begin..."
+                << " jsonDeviceInfos:" << jsonDeviceInfos
+                << "length:" << length;
   if (length) {
     std::unique_ptr<webrtc::VideoCaptureModule::DeviceInfo> info(
         webrtc::VideoCaptureFactory::CreateDeviceInfo());
+#if defined(WEBRTC_IOS)
+      info.reset(ObjCCallClient::GetInstance()->getVideoCaptureDeviceInfo());
+#endif
     if (info) {
       uint32_t num_devices = info->NumberOfDevices();
       const int bufLen = 300;
