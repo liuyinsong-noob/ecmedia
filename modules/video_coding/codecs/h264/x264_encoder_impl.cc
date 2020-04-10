@@ -11,6 +11,15 @@
 #include "third_party/libyuv/include/libyuv/scale.h"
 
 #include "rtc_base/time_utils.h"
+// before using x264-svc, must define macro RLCLOUD
+
+#define RLCLOUD 1
+
+#ifdef RLCLOUD
+#include "third_party/libx264svc_win/x86/include/x264.h"
+#else
+#include "third_party/libx264_win/x86/include/x264.h"
+#endif
 
 namespace webrtc {
 namespace {

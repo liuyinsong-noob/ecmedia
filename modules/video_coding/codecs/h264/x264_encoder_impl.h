@@ -6,14 +6,11 @@
 #include "common_video/h264/h264_bitstream_parser.h"
 #include "modules/video_coding/codecs/h264/include/h264.h"
 
-// before using x264-svc, must define macro RLCLOUD
-#define RLCLOUD 1
+struct x264_t;
+struct x264_picture_t;
+struct x264_param_t;
 
-#ifdef RLCLOUD
-#include "third_party/libx264svc_win/x86/include/x264.h"
-#else
-#include "third_party/libx264_win/x86/include/x264.h"
-#endif
+
 namespace webrtc {
 
 class X264EncoderImpl : public H264Encoder {

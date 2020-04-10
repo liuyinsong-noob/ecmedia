@@ -1163,7 +1163,8 @@ void VideoStreamEncoder::MaybeEncodeVideoFrame(const VideoFrame& video_frame,
   }
 
   if (DropDueToSize(video_frame.size())) {
-    RTC_LOG(LS_INFO) << "Dropping frame. Too large for target bitrate.";
+    RTC_LOG(LS_INFO) << "Dropping frame. Too large for target bitrate:"
+                     << encoder_start_bitrate_bps_;
     int count = GetConstAdaptCounter().ResolutionCount(kQuality);
     AdaptDown(kQuality);
     if (GetConstAdaptCounter().ResolutionCount(kQuality) > count) {

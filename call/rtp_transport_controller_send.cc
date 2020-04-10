@@ -73,10 +73,11 @@ RtpTransportControllerSend::RtpTransportControllerSend(
       observer_(nullptr),
       controller_factory_override_(controller_factory),
       controller_factory_fallback_(
-         //absl::make_unique<GoogCcNetworkControllerFactory>(event_log,
-           //                                             predictor_factory)
-                            absl::make_unique<BbrNetworkControllerFactory>()
-                                   ),
+         field_trial::FindFullName("EC-Congestion-Control-Mode") == "gcc" ?
+         std::unique_ptr<NetworkControllerFactoryInterface>(
+			 absl::make_unique<GoogCcNetworkControllerFactory>(event_log, predictor_factory)) : 
+		 std::unique_ptr<NetworkControllerFactoryInterface>(
+             absl::make_unique<BbrNetworkControllerFactory>())),
       process_interval_(controller_factory_fallback_->GetProcessInterval()),
       last_report_block_time_(Timestamp::ms(clock_->TimeInMilliseconds())),
       reset_feedback_on_route_change_(
@@ -583,9 +584,9 @@ void RtpTransportControllerSend::PostUpdates(NetworkControlUpdate update) {
       lost = 0.6;
     }
     uint32_t nack_bps = pacer_.GetNackbps();
-    RTC_LOG(INFO) << "yukening2 before target bps is :"
+    RTC_LOG(INFO) << "ytx before target bps is :"
                   << (*update.target_rate).target_rate.bps()
-                  << "nack bps : " << nack_bps;
+                  << " nack bps : " << nack_bps;
     (*update.target_rate).target_rate = (*update.target_rate).target_rate.bps() > 100000 ?
     DataRate::bps((*update.target_rate).target_rate.bps()) : DataRate::Zero();
     if( (*update.target_rate).target_rate.bps() <= 1 ){
@@ -614,8 +615,8 @@ void RtpTransportControllerSend::PostUpdates(NetworkControlUpdate update) {
       nack_bps = 80;
     (*update.target_rate).target_rate = (*update.target_rate).target_rate*((float)nack_bps/100 + 0.01) ;
     control_handler_->SetTargetRate(*update.target_rate);
-    RTC_LOG(INFO)<<"yukening2 target bps is :"<<(*update.target_rate).target_rate.bps()  
-		<<"nack bps : "<<nack_bps;
+    RTC_LOG(INFO)<<"ytx target bps is :"<<(*update.target_rate).target_rate.bps()  
+		<<" nack bps : "<<nack_bps;
     
     UpdateControlState();
   }
