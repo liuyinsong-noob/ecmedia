@@ -2,8 +2,8 @@
 #include "media_client.h"
 
 #ifdef WIN32
-#include "rtc_base/win32_socket_server.h"
 #include "pc/test/fake_video_track_source.h "
+#include "rtc_base/win32_socket_server.h"
 #endif
 
 #if defined(WEBRTC_ANDROID)
@@ -207,16 +207,16 @@ void MediaClient::DestroyInstance() {
 MediaClient::MediaClient() {
   RTC_LOG(INFO) << __FUNCTION__ << "(),"
                 << " begin... ";
- 
+
   m_bInitialized = false;
   m_bControll = false;
   isCreateCall = true;
   pAudioDevice = nullptr;
   own_adm = nullptr;
-  #if defined(WEBRTC_WIN)
+#if defined(WEBRTC_WIN)
   desktop_device_ = nullptr;
   ReadMediaConfig("ecmedia.cfg");
-  #endif
+#endif
   m_nConnected = SC_UNCONNECTED;
   mVideoChannels_.clear();
   mVoiceChannels_.clear();
@@ -245,7 +245,7 @@ MediaClient::~MediaClient() {
       }
     });
   }
- #if defined(WEBRTC_WIN)
+#if defined(WEBRTC_WIN)
   for (auto it = desktop_devices_.begin(); it != desktop_devices_.end(); it++) {
     if (it->second) {
       while (it->second.release() != NULL)
@@ -266,8 +266,7 @@ MediaClient::~MediaClient() {
 }
 // wwx
 bool MediaClient::SetTrace(const char* path, int min_sev) {
-  RTC_LOG(INFO) << __FUNCTION__ 
-                << ", path: " << path << "min_sev:" << min_sev;
+  RTC_LOG(INFO) << __FUNCTION__ << ", path: " << path << "min_sev:" << min_sev;
 
   if (!ec_log_) {
     ec_log_ = new ECLog(path);
@@ -347,7 +346,7 @@ void MediaClient::UnInitialize() {
 }
 
 void MediaClient::DestroyTransport() {
-  RTC_LOG(INFO) << __FUNCTION__ ;
+  RTC_LOG(INFO) << __FUNCTION__;
   if (m_nConnected == SC_CONNECTED) {
     m_nConnected = SC_DISCONNECTING;
     signaling_thread_->Invoke<bool>(RTC_FROM_HERE,
@@ -598,9 +597,9 @@ void MediaClient::DestroyChannel(int channel_id, bool is_video) {
       if (t.first == channel_id) {
         RtpSenders_[t.first].get()->SetTrack(nullptr);
 
-         #if defined(WEBRTC_WIN)
+#if defined(WEBRTC_WIN)
         renderWndsManager_->StartLocalRenderer(t.first, nullptr);
-      #endif
+#endif
         RtpSenders_.erase(RtpSenders_.find(channel_id));
         TrackChannels_.erase(TrackChannels_.find(channel_id));
         break;
@@ -679,8 +678,8 @@ bool MediaClient::CreateChannel(const std::string& settings,
       }
     });
   }
-  API_LOG(INFO) << "channel_id: " << channel_id
-                << ", is_video: " << is_video << ",tid: " << settings;
+  API_LOG(INFO) << "channel_id: " << channel_id << ", is_video: " << is_video
+                << ",tid: " << settings;
   return bOk;
 }
 
@@ -1152,14 +1151,12 @@ bool MediaClient::SelectVideoSource(
         transceiverVideo->internal()->set_created_by_addtrack(true);
 
         if (!video_track) {
-          RTC_LOG(INFO) << __FUNCTION__
-                        << " video_track is null kRecvOnly";
+          RTC_LOG(INFO) << __FUNCTION__ << " video_track is null kRecvOnly";
 
           transceiverVideo->internal()->set_direction(
               webrtc::RtpTransceiverDirection::kRecvOnly);
         } else {
-          RTC_LOG(INFO) << __FUNCTION__
-                        << " video_track kSendRecv";
+          RTC_LOG(INFO) << __FUNCTION__ << " video_track kSendRecv";
           transceiverVideo->internal()->set_direction(
               webrtc::RtpTransceiverDirection::kSendOnly);
         }
@@ -1249,7 +1246,7 @@ void MediaClient::DestroyLocalVideoTrack(
     for (auto t : TrackChannels_) {
       if (t.second == track) {
         RtpSenders_[t.first].get()->SetTrack(nullptr);
- #if defined(WEBRTC_WIN)
+#if defined(WEBRTC_WIN)
         renderWndsManager_->StartLocalRenderer(t.first, nullptr);
 #endif
       }
@@ -1288,12 +1285,12 @@ int MediaClient::StopScreenShare() {
     desktop_device_->Stop();
     // while(desktop_device_.release() != NULL);
   }
-  #endif
+#endif
   return 0;
 }
 int MediaClient::GetWindowsList(int type,
                                 webrtc::DesktopCapturer::SourceList& source) {
-  #if defined(WEBRTC_WIN)
+#if defined(WEBRTC_WIN)
   auto it = desktop_devices_.find(type);
   if (it != desktop_devices_.end()) {
     it->second->GetCaptureSources(source);
@@ -1301,13 +1298,13 @@ int MediaClient::GetWindowsList(int type,
   } else {
     return -1;
   }
-  #endif
+#endif
   return 0;
 }
 
 int MediaClient::CreateDesktopCapture(int type) {
   API_LOG(INFO) << "type: " << type;
-  #if defined(WEBRTC_WIN)
+#if defined(WEBRTC_WIN)
   auto it = desktop_devices_.find(type);
   if (it != desktop_devices_.end()) {
     return 0;
@@ -1319,11 +1316,11 @@ int MediaClient::CreateDesktopCapture(int type) {
   } else {
     return -1;
   }
-  #endif
+#endif
   return 0;
 }
 int MediaClient::SetDesktopSourceID(int type, int id) {
-  #if defined(WEBRTC_WIN)
+#if defined(WEBRTC_WIN)
   if (id < 0 || type < 0) {
     return -1;
   }
@@ -1334,10 +1331,9 @@ int MediaClient::SetDesktopSourceID(int type, int id) {
   } else {
     return -1;
   }
-  #endif
+#endif
   return 0;
 }
-
 
 rtc::scoped_refptr<webrtc::VideoTrackInterface>
 MediaClient::CreateLocalVideoTrack(const std::string& track_params) {
@@ -1360,26 +1356,30 @@ MediaClient::CreateLocalVideoTrack(const std::string& track_params) {
   // rtc::GetStringFromJsonObject(jmessage, "track_id", &track_id);
 
   if (signaling_thread_) {
-    video_tracks_[vsum_] = signaling_thread_->Invoke<
-        rtc::scoped_refptr<webrtc::VideoTrackInterface>>(
-        RTC_FROM_HERE, [this, type, track_id, camera_index] {
-          RTC_DCHECK_RUN_ON(signaling_thread_);
-          //  EC_CHECK_VALUE((channelId >= 0), false);
-          rtc::scoped_refptr<webrtc::VideoTrackInterface> video_track = nullptr;
-         
-          webrtc::DesktopCapturer::SourceList sources;
+    video_tracks_[vsum_] =
+        signaling_thread_
+            ->Invoke<rtc::scoped_refptr<webrtc::VideoTrackInterface>>(
+                RTC_FROM_HERE, [this, type, track_id, camera_index] {
+                  RTC_DCHECK_RUN_ON(signaling_thread_);
+                  //  EC_CHECK_VALUE((channelId >= 0), false);
+                  rtc::scoped_refptr<webrtc::VideoTrackInterface> video_track =
+                      nullptr;
 
-          switch (type) {
-            case VIDEO_CAMPER:
+                  webrtc::DesktopCapturer::SourceList sources;
+#ifdef WEBRTC_WIN
+                  rtc::scoped_refptr<CapturerTrackSource> video_device =
+                      nullptr;
+#endif
+                  switch (type) {
+                    case VIDEO_CAMPER:
 #if defined(WEBRTC_WIN)
-            rtc::scoped_refptr<CapturerTrackSource> video_device = nullptr;
-             video_device = CapturerTrackSource::Create(camera_index);
-              if (video_device) {
-                video_track = webrtc::VideoTrackProxy::Create(
-                    signaling_thread_, worker_thread_,
-                    webrtc::VideoTrack::Create(track_id, video_device,
-                                               worker_thread_));
-              }
+                      video_device = CapturerTrackSource::Create(camera_index);
+                      if (video_device) {
+                        video_track = webrtc::VideoTrackProxy::Create(
+                            signaling_thread_, worker_thread_,
+                            webrtc::VideoTrack::Create(track_id, video_device,
+                                                       worker_thread_));
+                      }
 
 #elif defined(WEBRTC_IOS)
              ObjCCallClient::GetInstance()->SetCameraIndex(camera_index);
@@ -1391,22 +1391,22 @@ MediaClient::CreateLocalVideoTrack(const std::string& track_params) {
                           signaling_thread_, worker_thread_),
                       worker_thread_));
 #endif
-              return video_track;
-            case VIDEO_SCREEN:
+                      return video_track;
+                    case VIDEO_SCREEN:
 
-              /* video_track =
-                 webrtc::VideoTrackProxy::Create(signaling_thread_,
-                 worker_thread_,webrtc::VideoTrack::Create( track_id,
-                       webrtc::FakeVideoTrackSource::Create(true),
-                       worker_thread_));*/
-              return video_track;
+                      /* video_track =
+                         webrtc::VideoTrackProxy::Create(signaling_thread_,
+                         worker_thread_,webrtc::VideoTrack::Create( track_id,
+                               webrtc::FakeVideoTrackSource::Create(true),
+                               worker_thread_));*/
+                      return video_track;
 
-              break;
-            default:
-              return video_track;
-              break;
-          }
-        });
+                      break;
+                    default:
+                      return video_track;
+                      break;
+                  }
+                });
 
     vsum_++;
     return video_tracks_[vsum_ - 1];
@@ -1447,7 +1447,7 @@ bool MediaClient::StartChannel(int channel_id) {
 }
 
 bool MediaClient::StopChannel(int channel_id) {
-  API_LOG(INFO) << "channel_id: " << channel_id ;
+  API_LOG(INFO) << "channel_id: " << channel_id;
   bool bOk = false;
 
   if (mVideoChannels_[channel_id] &&
@@ -1827,12 +1827,12 @@ bool MediaClient::FilterVideoCodec(const VideoCodecConfig& config,
 uint32_t MediaClient::GetNumberOfVideoDevices() {
   int num = 0;
 #if defined(WEBRTC_IOS)
-  num =  ObjCCallClient::GetInstance()->GetNumberOfVideoDevices();
+  num = ObjCCallClient::GetInstance()->GetNumberOfVideoDevices();
 #endif
   std::unique_ptr<webrtc::VideoCaptureModule::DeviceInfo> info(
       webrtc::VideoCaptureFactory::CreateDeviceInfo());
   if (info) {
-    num =  info->NumberOfDevices();
+    num = info->NumberOfDevices();
   }
   API_LOG(INFO) << "camera_nums: " << num;
   return num;
@@ -2362,8 +2362,8 @@ bool MediaClient::CreateAudioDevice() {
   RTC_LOG(INFO) << __FUNCTION__ << "(),"
                 << " begin... ";
   bool bOk = true;
-   #if defined(WEBRTC_WIN)
-   bOk = signaling_thread_->Invoke<bool>(RTC_FROM_HERE, [this] {
+#if defined(WEBRTC_WIN)
+  bOk = signaling_thread_->Invoke<bool>(RTC_FROM_HERE, [this] {
     if (own_adm == nullptr) {
       own_adm = webrtc::AudioDeviceModule::Create(
           webrtc::AudioDeviceModule::kPlatformDefaultAudio);
@@ -2470,8 +2470,7 @@ char* MediaClient::GetAudioDeviceList(int* length) {
   std::memcpy(pAudioDevice, strDevice.c_str(), len);
   // json =pAudioDevice;
   *length = len + 1;
-  RTC_LOG(INFO) << __FUNCTION__ << pAudioDevice
-                << ", length: " << *length;
+  RTC_LOG(INFO) << __FUNCTION__ << pAudioDevice << ", length: " << *length;
   return pAudioDevice;
   //   int len2 = strDevice2.length();
 
@@ -2545,9 +2544,9 @@ int MediaClient::GetCaptureDevice(int index,
 
 int MediaClient::NumOfCapabilities(const char* id) {
   RTC_DCHECK(vcm_device_info_);
-   
-  int num =  vcm_device_info_->NumberOfCapabilities(id);
-  API_LOG(INFO) << "id: " << id ;
+
+  int num = vcm_device_info_->NumberOfCapabilities(id);
+  API_LOG(INFO) << "id: " << id;
   return num;
 }
 
@@ -2561,14 +2560,13 @@ int MediaClient::GetCaptureCapabilities(const char* id,
 int MediaClient::AllocateCaptureDevice(const char* id, int len, int& deviceid) {
   API_LOG(INFO) << "id: " << id << ", len: " << len
                 << ", deviceid: " << deviceid;
-  #ifdef WEBRTC_WIN
+#ifdef WEBRTC_WIN
   auto it = std::find_if(camera_devices_.begin(), camera_devices_.end(),
                          FindUniqueId(std::string(id)));
 
   if (it != camera_devices_.end()) {
     deviceid = it->first;
   } else {
-
     VideoCapturer* video_device = VideoCapturer::CreateCaptureDevice(id, len);
     if (!video_device) {
       deviceid = -1;
@@ -2579,7 +2577,7 @@ int MediaClient::AllocateCaptureDevice(const char* id, int len, int& deviceid) {
   }
   RTC_LOG(INFO) << __FUNCTION__ << "(),"
                 << " end... ";
-  #endif
+#endif
   return 0;
 }
 
@@ -2610,14 +2608,14 @@ int MediaClient::StopCapturer(int deviceid) {
 #if defined(WEBRTC_IOS)
   ObjCCallClient::GetInstance()->StopCapture();
   return 0;
-#elif
+#elif defined(WEBRTC_WIN)
   if (camera_devices_.empty()) {
     return 0;
   }
   RTC_LOG(INFO) << __FUNCTION__ << "(),"
                 << " end... ";
   return camera_devices_[deviceid].second->StopCapture();
-  #endif
+#endif
 }
 
 int MediaClient::StopAllCapturer() {
@@ -2632,7 +2630,7 @@ int MediaClient::StopAllCapturer() {
   for (auto camera : camera_devices_) {
     ret = camera.second.second->StopCapture();
   }
-  #endif
+#endif
 
   RTC_LOG(INFO) << __FUNCTION__ << "(),"
                 << " end... ";
