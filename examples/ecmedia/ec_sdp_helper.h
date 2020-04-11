@@ -6,47 +6,45 @@
 #include "pc/webrtc_sdp.h"
 #include<vector>
 
-namespace webrtc {
+namespace ecmedia_sdk {
 
 class ECSDPHelper {
 public:
   ECSDPHelper();
   ~ECSDPHelper();
 
-  std::unique_ptr<SessionDescriptionInterface> CreateSessionDescription(
-      SdpType type,
+  std::unique_ptr<webrtc::SessionDescriptionInterface> CreateSessionDescription(
+      webrtc::SdpType type,
       const std::string& sdp);
 
-  std::unique_ptr<SessionDescriptionInterface> CreateSessionDescription(
-      SdpType type,
+  std::unique_ptr<webrtc::SessionDescriptionInterface> CreateSessionDescription(
+      webrtc::SdpType type,
       const std::string& sdp,
-      SdpParseError* error_out);
+      webrtc::SdpParseError* error_out);
 
   
   void GetAudioCodecs(cricket::AudioCodecs* audio_codecs,
-                      SessionDescriptionInterface* desc) ;
+                      webrtc::SessionDescriptionInterface* desc);
   void GetVideoCodecs(cricket::VideoCodecs* video_codecs,
-                      SessionDescriptionInterface* desc) ;
+                      webrtc::SessionDescriptionInterface* desc);
 
   void SetSDPAVCodec(
 	  cricket::AudioCodec* audio_codec,
 	  cricket::VideoCodec* video_codec,             
-                   SessionDescriptionInterface* desc);
+                   webrtc::SessionDescriptionInterface* desc);
 
 
   void SetSDPCname(const std::string& audio,
                                        const std::string& video,
-                                       SessionDescriptionInterface* desc);
+                   webrtc::SessionDescriptionInterface* desc);
 
   void SetSDPSsrcs(uint32_t audio,
                    uint32_t video,
-                   SessionDescriptionInterface* desc);
+                   webrtc::SessionDescriptionInterface* desc);
   
   void SetSDPSsrcs(uint32_t audio,
                           std::vector<uint32_t> video,
-                          SessionDescriptionInterface* desc);
-
-  
+                   webrtc::SessionDescriptionInterface* desc);
 
 private:
 

@@ -1,21 +1,22 @@
 #include "ec_sdp_helper.h"
 
-namespace webrtc {
+namespace ecmedia_sdk {
 
 ECSDPHelper::ECSDPHelper() {}
 
 ECSDPHelper::~ECSDPHelper() {}
 
-std::unique_ptr<SessionDescriptionInterface>
-ECSDPHelper::CreateSessionDescription(SdpType type, const std::string& sdp) {
+std::unique_ptr<webrtc::SessionDescriptionInterface>
+ECSDPHelper::CreateSessionDescription(webrtc::SdpType type,
+                                      const std::string& sdp) {
   return CreateSessionDescription(type, sdp, nullptr);
 }
 
-std::unique_ptr<SessionDescriptionInterface>
-ECSDPHelper::CreateSessionDescription(SdpType type,
+std::unique_ptr<webrtc::SessionDescriptionInterface>
+ECSDPHelper::CreateSessionDescription(webrtc::SdpType type,
                                       const std::string& sdp,
-                                      SdpParseError* error_out) {
-  auto jsep_desc = absl::make_unique<JsepSessionDescription>(type);
+                                      webrtc::SdpParseError* error_out) {
+  auto jsep_desc = absl::make_unique<webrtc::JsepSessionDescription>(type);
   if (!SdpDeserialize(sdp, jsep_desc.get(), error_out)) {
     return nullptr;
   }
@@ -24,7 +25,7 @@ ECSDPHelper::CreateSessionDescription(SdpType type,
 
 void ECSDPHelper::SetSDPCname(const std::string& audio,
                               const std::string& video,
-                              SessionDescriptionInterface* desc) {
+                              webrtc::SessionDescriptionInterface* desc) {
   for (cricket::ContentInfos::iterator content =
            desc->description()->contents().begin();
        content != desc->description()->contents().end(); ++content) {
@@ -49,7 +50,7 @@ void ECSDPHelper::SetSDPCname(const std::string& audio,
 }
 
 void ECSDPHelper::GetAudioCodecs(cricket::AudioCodecs* audio_codecs,
-                                 SessionDescriptionInterface* desc){
+                                 webrtc::SessionDescriptionInterface* desc) {
   for (cricket::ContentInfos::iterator content =
            desc->description()->contents().begin();
        content != desc->description()->contents().end(); ++content) {
@@ -68,7 +69,7 @@ void ECSDPHelper::GetAudioCodecs(cricket::AudioCodecs* audio_codecs,
 }
 
 void ECSDPHelper::GetVideoCodecs(cricket::VideoCodecs* video_codecs,
-                                 SessionDescriptionInterface* desc) {
+                                 webrtc::SessionDescriptionInterface* desc) {
   for (cricket::ContentInfos::iterator content =
            desc->description()->contents().begin();
        content != desc->description()->contents().end(); ++content) {
@@ -88,7 +89,7 @@ void ECSDPHelper::GetVideoCodecs(cricket::VideoCodecs* video_codecs,
 
 void ECSDPHelper::SetSDPAVCodec(cricket::AudioCodec* audio_codec,
                                 cricket::VideoCodec* video_codec,
-                                SessionDescriptionInterface* desc) {
+                                webrtc::SessionDescriptionInterface* desc) {
   for (cricket::ContentInfos::iterator content =
            desc->description()->contents().begin();
        content != desc->description()->contents().end(); ++content) {
@@ -131,7 +132,7 @@ void ECSDPHelper::SetSDPAVCodec(cricket::AudioCodec* audio_codec,
 
 void ECSDPHelper::SetSDPSsrcs(uint32_t audio,
                               uint32_t video,
-                              SessionDescriptionInterface* desc) {
+                              webrtc::SessionDescriptionInterface* desc) {
   for (cricket::ContentInfos::iterator content =
            desc->description()->contents().begin();
        content != desc->description()->contents().end(); ++content) {
@@ -188,7 +189,7 @@ void ECSDPHelper::SetSDPSsrcs(uint32_t audio,
 
 void ECSDPHelper::SetSDPSsrcs(uint32_t audio,
                               std::vector<uint32_t> video,
-                              SessionDescriptionInterface* desc) {
+                              webrtc::SessionDescriptionInterface* desc) {
   for (cricket::ContentInfos::iterator content =
            desc->description()->contents().begin();
        content != desc->description()->contents().end(); ++content) {

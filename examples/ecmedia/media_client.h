@@ -6,7 +6,6 @@
 #include <memory>
 #include <string>
 #include <vector>
-#include "ec_log.h"
 #include "api/media_stream_interface.h"
 #include "api/media_transport_interface.h"
 #include "api/peer_connection_interface.h"
@@ -40,9 +39,12 @@
 #include "modules/desktop_capture/desktop_capturer.h"
 #include "modules/desktop_capture/desktop_frame.h"
 #include "modules/video_capture/video_capture.h"
-
-
 #include "media/engine/webrtc_video_engine.h"
+
+#include "ec_log.h"
+#include "ec_peer_manager.h"
+
+
 #ifdef WEBRTC_ANDROID
 #include <jni.h>
 #endif
@@ -308,7 +310,7 @@ class MediaClient : public sigslot::has_slots<> {
   /*** 返回值: 类型    bool   true  成功      false  失败                   ***/
   /*** 函数参数: 名称  channel_id    类型   int                             ***/
   /****************************************************************************/
-  bool GenerateChannelId(int* channelId);
+  bool GenerateChannelId(int& channelId);
 
 
   /****************************************************************************/
@@ -711,18 +713,47 @@ class MediaClient : public sigslot::has_slots<> {
   bool SetAudioPlayoutDevice(int index);
  ///////////////////////// zjy interface end//////////////////////////////////
   #if defined(WEBRTC_WIN)
-   int CreateDesktopCapture(int type);
-
+  int CreateDesktopCapture(int type);
   int SetDesktopSourceID(int type, int id);
-
-
-
   int GetWindowsList(int type, webrtc::DesktopCapturer::SourceList& source);
-
-    int StartScreenShare();
-
+  int StartScreenShare();
   int StopScreenShare();
+  int GetCaptureDevice(int index,
+                   char* device_name,
+                   int name_len,
+                   char* unique_name,
+                   int id_len);
+  int AllocateCaptureDevice(const char* id, int len, int& deviceid);
+  int ConnectCaptureDevice(int deviceid, int peer_id);
+  int NumOfCapabilities(const char* id);
+  int GetCaptureCapabilities(const char* id,
+                             int index,
+                             webrtc::VideoCaptureCapability& cap);
+  int StartCameraCapturer(int deviceid, webrtc::VideoCaptureCapability& cap);
+  int StopCapturer(int deviceid);
+  int StopAllCapturer();
+  int StopLocalRender(int peer_id, int deviceid);
+  int StopRemoteRender(int peer_id, int deviceid);
+
+  bool StartConnectChannel(int audio_channel_id, int video_channel_id);
+
+  
+  int StartMicCapture(int peer_id);
+
+  int StartSendRecv(int peer_id);
+
+  int AudioStartReceive(int peer_id);
+  int AudioStartSend(int peer_id);
+  int VideoStartReceive(int peer_id);
+  int VideoStartSend(int peer_id);
 #endif
+  void GetAudioCodecs(cricket::AudioCodecs* audio_codecs) const;
+  void GetVideoCodecs(cricket::VideoCodecs* video_codecs) const;
+  void SetSendCodecVideo(cricket::VideoCodec* video_codec);
+  void SetReceiveCodecVideo(int peer_id, cricket::VideoCodec* video_codec);
+  void SetSendCodecAudio(cricket::AudioCodec* audio_codec);
+  void SetReceiveCodecAudio(int peer_id, cricket::AudioCodec* audio_codec);
+
 #if defined(WEBRTC_ANDROID)
   bool SaveLocalVideoTrack(int channelId, webrtc::VideoTrackInterface* track);
   webrtc::VideoTrackInterface* GetLocalVideoTrack(int channelId);
@@ -744,28 +775,16 @@ class MediaClient : public sigslot::has_slots<> {
     MediaClient();
 
 	bool CreateThreads();
-
 	bool CreateRtcEventLog();
-
 	bool CreateChannelManager();
-
 	bool CreateCall(webrtc::RtcEventLog* event_log);
-
 	bool CreateTransportController(bool disable_encryp = true);
-    
     bool CreateVideoChannel(const std::string& settings, int channel_id);
-
     bool CreateVoiceChannel(const std::string& settingsvvv, int channel_id);
-
 	bool DisposeConnect();
-
 	bool InitRenderWndsManager();
-
 	void DestroyAllChannels();
-
-    bool GetMediaSsrc(bool is_local,
-                          int channelId,
-                          std::vector<uint32_t>& ssrcs);
+    bool GetMediaSsrc(bool is_local,int channelId,std::vector<uint32_t>& ssrcs);
 
 	void DestroyTransceiverChannel(
 		rtc::scoped_refptr<
@@ -787,28 +806,18 @@ class MediaClient : public sigslot::has_slots<> {
 
     bool FilterVideoCodec(const VideoCodecConfig& config,
                             std::vector<cricket::VideoCodec>& vec);
-
-  bool ParseVideoDeviceSetting(const char* videoDeviceSettings, VideoDeviceConfig* config);
-
-  bool ParseAudioCodecSetting(const char* audioCodecSettings, AudioCodecConfig* config);
-
-  bool ParseVideoCodecSetting(const char* videoCodecSettings, VideoCodecConfig* config);
-
-  bool GetStringJsonString(const char* json, const std::string& key, std::string* value);
-
-  bool GetIntJsonString(const char* json, const std::string& key, int* value);
-
-  cricket::WebRtcVideoChannel* GetInternalVideoChannel(const int channelId);
-
-  bool InsertVideoCodec(cricket::VideoCodecs& input_codecs,
+    bool ParseVideoDeviceSetting(const char* videoDeviceSettings, VideoDeviceConfig* config);
+    bool ParseAudioCodecSetting(const char* audioCodecSettings, AudioCodecConfig* config);
+    bool ParseVideoCodecSetting(const char* videoCodecSettings, VideoCodecConfig* config);
+    bool GetStringJsonString(const char* json, const std::string& key, std::string* value);
+    bool GetIntJsonString(const char* json, const std::string& key, int* value);
+    cricket::WebRtcVideoChannel* GetInternalVideoChannel(const int channelId);
+    bool InsertVideoCodec(cricket::VideoCodecs& input_codecs,
                         const std::string& codec_name,
                         uint8_t payload_type);
-
-  bool RemoveVideoCodec(cricket::VideoCodecs& input_codecs,
+    bool RemoveVideoCodec(cricket::VideoCodecs& input_codecs,
                         const std::string& codec_name);
-
-
-	private:
+private:
     static MediaClient* m_pInstance;
 
     static rtc::CriticalSection m_critical;
@@ -887,11 +896,25 @@ class MediaClient : public sigslot::has_slots<> {
 
     std::map<int, rtc::scoped_refptr<win_desk::ECDesktopCapture>> desktop_devices_
 		;
+    std::unique_ptr<webrtc::VideoCaptureModule::DeviceInfo> vcm_device_info_;
 
+	typedef std::pair<std::string, VideoCapturer*> UniqueIdVideoCapturerPair;
+    class FindUniqueId {
+     public:
+      FindUniqueId(std::string unique_id) : unique_id_(unique_id) {}
+      bool operator()(
+          std::map<int, UniqueIdVideoCapturerPair>::value_type& pair) {
+        return pair.second.first == unique_id_;
+      }
+
+     private:
+      std::string unique_id_;
+    };
+    std::map<int, UniqueIdVideoCapturerPair> camera_devices_;
 	std::unique_ptr<win_render::RenderWndsManager>
 		renderWndsManager_;
 #endif
-
+    std::unique_ptr<VideoRenderer> local_renderer_;
     bool     m_bInitialized;
     bool     m_bControll;
     uint32_t m_nConnected;

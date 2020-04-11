@@ -40,7 +40,7 @@
 #include "ec_peer_manager.h"
 #include "video_capturer/capturer_track_source.h"
 
-namespace webrtc {
+namespace ecmedia_sdk {
 const char kAudioLabel[] = "audio_label";
 const char kVideoLabel[] = "video_label";
 const char kStreamId[] = "stream_id";
@@ -98,8 +98,10 @@ bool ECPeerManager::Initialize() {
   peer_connection_factory_ = webrtc::CreatePeerConnectionFactory(
       network_thread_ /* network_thread */, worker_thread_ /* worker_thread */,
       signaling_thread_ /* signaling_thread */, nullptr /* default_adm */,
-      CreateBuiltinAudioEncoderFactory(), CreateBuiltinAudioDecoderFactory(),
-      CreateBuiltinVideoEncoderFactory(), CreateBuiltinVideoDecoderFactory(),
+      webrtc::CreateBuiltinAudioEncoderFactory(),
+      webrtc::CreateBuiltinAudioDecoderFactory(),
+      webrtc::CreateBuiltinVideoEncoderFactory(),
+      webrtc::CreateBuiltinVideoDecoderFactory(),
       nullptr /* audio_mixer */, nullptr /* audio_processing */);
 
   if (!peer_connection_factory_) {
@@ -129,7 +131,7 @@ void ECPeerManager::AddAudioTrack() {
 }
 
 rtc::scoped_refptr<webrtc::VideoTrackInterface> ECPeerManager::AddVideoTrack(
-    VideoTrackSourceInterface* video_device) {
+    webrtc::VideoTrackSourceInterface* video_device) {
   sendrcv_video_ = true;
 
 
@@ -277,7 +279,7 @@ void ECPeerManager::OnIceCandidate(
 void ECPeerManager::OnSuccess(webrtc::SessionDescriptionInterface* desc_ptr) {
   RTC_DCHECK_RUN_ON(signaling_thread());
 
-  std::unique_ptr<SessionDescriptionInterface> desc(desc_ptr);
+  std::unique_ptr<webrtc::SessionDescriptionInterface> desc(desc_ptr);
   local_description_ = std::move(desc);
 
   std::string sdp;

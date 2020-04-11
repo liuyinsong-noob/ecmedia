@@ -3,7 +3,7 @@
 
 #include "rtc_base/thread.h"
 
-namespace webrtc {
+namespace ecmedia_sdk {
 
 class ECPeerConfig {
  public:
