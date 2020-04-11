@@ -1268,9 +1268,9 @@ void MediaClient::DestroyLocalVideoTrack(
   RTC_LOG(INFO) << __FUNCTION__ << "(),"
                 << " end... ";
 }
-#if defined(WEBRTC_WIN)
-int MediaClient::StartScreenShare() {
 
+int MediaClient::StartScreenShare() {
+#if defined(WEBRTC_WIN)
   if (desktop_device_) {
     worker_thread_->Invoke<void>(RTC_FROM_HERE,
                                  [this] { desktop_device_->Start(); });
@@ -1278,20 +1278,22 @@ int MediaClient::StartScreenShare() {
   } else {
     return -1;
   }
-
+#endif
   return 0;
 }
 
 int MediaClient::StopScreenShare() {
-
+#if defined(WEBRTC_WIN)
   if (desktop_device_) {
     desktop_device_->Stop();
     // while(desktop_device_.release() != NULL);
   }
+  #endif
   return 0;
 }
 int MediaClient::GetWindowsList(int type,
                                 webrtc::DesktopCapturer::SourceList& source) {
+  #if defined(WEBRTC_WIN)
   auto it = desktop_devices_.find(type);
   if (it != desktop_devices_.end()) {
     it->second->GetCaptureSources(source);
@@ -1299,10 +1301,13 @@ int MediaClient::GetWindowsList(int type,
   } else {
     return -1;
   }
+  #endif
+  return 0;
 }
 
 int MediaClient::CreateDesktopCapture(int type) {
   API_LOG(INFO) << "type: " << type;
+  #if defined(WEBRTC_WIN)
   auto it = desktop_devices_.find(type);
   if (it != desktop_devices_.end()) {
     return 0;
@@ -1314,8 +1319,11 @@ int MediaClient::CreateDesktopCapture(int type) {
   } else {
     return -1;
   }
+  #endif
+  return 0;
 }
 int MediaClient::SetDesktopSourceID(int type, int id) {
+  #if defined(WEBRTC_WIN)
   if (id < 0 || type < 0) {
     return -1;
   }
@@ -1326,8 +1334,10 @@ int MediaClient::SetDesktopSourceID(int type, int id) {
   } else {
     return -1;
   }
+  #endif
+  return 0;
 }
-#endif
+
 
 rtc::scoped_refptr<webrtc::VideoTrackInterface>
 MediaClient::CreateLocalVideoTrack(const std::string& track_params) {
@@ -1356,12 +1366,13 @@ MediaClient::CreateLocalVideoTrack(const std::string& track_params) {
           RTC_DCHECK_RUN_ON(signaling_thread_);
           //  EC_CHECK_VALUE((channelId >= 0), false);
           rtc::scoped_refptr<webrtc::VideoTrackInterface> video_track = nullptr;
-          rtc::scoped_refptr<CapturerTrackSource> video_device = nullptr;
+         
           webrtc::DesktopCapturer::SourceList sources;
 
           switch (type) {
             case VIDEO_CAMPER:
 #if defined(WEBRTC_WIN)
+            rtc::scoped_refptr<CapturerTrackSource> video_device = nullptr;
              video_device = CapturerTrackSource::Create(camera_index);
               if (video_device) {
                 video_track = webrtc::VideoTrackProxy::Create(
@@ -2550,12 +2561,14 @@ int MediaClient::GetCaptureCapabilities(const char* id,
 int MediaClient::AllocateCaptureDevice(const char* id, int len, int& deviceid) {
   API_LOG(INFO) << "id: " << id << ", len: " << len
                 << ", deviceid: " << deviceid;
+  #ifdef WEBRTC_WIN
   auto it = std::find_if(camera_devices_.begin(), camera_devices_.end(),
                          FindUniqueId(std::string(id)));
 
   if (it != camera_devices_.end()) {
     deviceid = it->first;
   } else {
+
     VideoCapturer* video_device = VideoCapturer::CreateCaptureDevice(id, len);
     if (!video_device) {
       deviceid = -1;
@@ -2566,6 +2579,7 @@ int MediaClient::AllocateCaptureDevice(const char* id, int len, int& deviceid) {
   }
   RTC_LOG(INFO) << __FUNCTION__ << "(),"
                 << " end... ";
+  #endif
   return 0;
 }
 
@@ -2596,21 +2610,21 @@ int MediaClient::StopCapturer(int deviceid) {
 #if defined(WEBRTC_IOS)
   ObjCCallClient::GetInstance()->StopCapture();
   return 0;
-#endif
-
+#elif
   if (camera_devices_.empty()) {
     return 0;
   }
   RTC_LOG(INFO) << __FUNCTION__ << "(),"
                 << " end... ";
   return camera_devices_[deviceid].second->StopCapture();
+  #endif
 }
 
 int MediaClient::StopAllCapturer() {
   RTC_LOG(INFO) << __FUNCTION__ << "(),"
                 << " begin... ";
   int ret = 0;
-
+#if defined(WEBRTC_WIN)
   if (camera_devices_.empty()) {
     return 0;
   }
@@ -2618,6 +2632,7 @@ int MediaClient::StopAllCapturer() {
   for (auto camera : camera_devices_) {
     ret = camera.second.second->StopCapture();
   }
+  #endif
 
   RTC_LOG(INFO) << __FUNCTION__ << "(),"
                 << " end... ";

@@ -712,7 +712,7 @@ class MediaClient : public sigslot::has_slots<> {
   /*****************************************************************************/
   bool SetAudioPlayoutDevice(int index);
  ///////////////////////// zjy interface end//////////////////////////////////
-  #if defined(WEBRTC_WIN)
+  //#if defined(WEBRTC_WIN)
   int CreateDesktopCapture(int type);
   int SetDesktopSourceID(int type, int id);
   int GetWindowsList(int type, webrtc::DesktopCapturer::SourceList& source);
@@ -746,7 +746,7 @@ class MediaClient : public sigslot::has_slots<> {
   int AudioStartSend(int peer_id);
   int VideoStartReceive(int peer_id);
   int VideoStartSend(int peer_id);
-#endif
+//#endif
   void GetAudioCodecs(cricket::AudioCodecs* audio_codecs) const;
   void GetVideoCodecs(cricket::VideoCodecs* video_codecs) const;
   void SetSendCodecVideo(cricket::VideoCodec* video_codec);
@@ -891,14 +891,8 @@ private:
 
     webrtc::AudioDeviceModule::AudioLayer audio_layer_ =
             webrtc::AudioDeviceModule::kPlatformDefaultAudio;  // zjy
-#if defined WEBRTC_WIN
-    rtc::scoped_refptr<win_desk::ECDesktopCapture> desktop_device_;
-
-    std::map<int, rtc::scoped_refptr<win_desk::ECDesktopCapture>> desktop_devices_
-		;
-    std::unique_ptr<webrtc::VideoCaptureModule::DeviceInfo> vcm_device_info_;
-
-	typedef std::pair<std::string, VideoCapturer*> UniqueIdVideoCapturerPair;
+  std::unique_ptr<webrtc::VideoCaptureModule::DeviceInfo> vcm_device_info_;
+  typedef std::pair<std::string, VideoCapturer*> UniqueIdVideoCapturerPair;
     class FindUniqueId {
      public:
       FindUniqueId(std::string unique_id) : unique_id_(unique_id) {}
@@ -911,6 +905,13 @@ private:
       std::string unique_id_;
     };
     std::map<int, UniqueIdVideoCapturerPair> camera_devices_;
+#if defined WEBRTC_WIN
+    rtc::scoped_refptr<win_desk::ECDesktopCapture> desktop_device_;
+
+    std::map<int, rtc::scoped_refptr<win_desk::ECDesktopCapture>> desktop_devices_
+		;
+   
+
 	std::unique_ptr<win_render::RenderWndsManager>
 		renderWndsManager_;
 #endif
