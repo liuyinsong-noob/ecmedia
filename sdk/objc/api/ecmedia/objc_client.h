@@ -56,6 +56,7 @@ public:
     void Connect() RTC_RUN_ON(thread_checker_);
     bool SetSpeakerStatus(bool enable);
     bool GetSpeakerStatus(bool& enable);
+    bool PreviewTrack(int window_id, void* video_track);
     rtc::ThreadChecker thread_checker_;
     
     bool call_started_ RTC_GUARDED_BY(thread_checker_);

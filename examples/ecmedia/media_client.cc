@@ -1656,7 +1656,7 @@ bool MediaClient::PreviewTrack(int window_id, void* video_track) {
   EC_CHECK_VALUE(renderWndsManager_, false);
   return renderWndsManager_->StartLocalRenderer(window_id, track);
 #elif defined(WEBRTC_IOS)
-  ObjCCallClient::GetInstance()->SetLocalWindowView(video_track);
+  ObjCCallClient::GetInstance()->PreviewTrack(window_id,video_track);
 #endif
   track = NULL;
   return true;

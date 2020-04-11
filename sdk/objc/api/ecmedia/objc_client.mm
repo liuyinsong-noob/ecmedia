@@ -343,6 +343,10 @@ webrtc::VideoCaptureModule::DeviceInfo* ObjCCallClient::getVideoCaptureDeviceInf
 void ObjCCallClient::SetCameraIndex(int index){
   
 }
+bool ObjCCallClient::PreviewTrack(int window_id, void* video_track){
+  // iOS ignore ;
+  return true;
+}
 //}  // namespace webrtc_examples
 
 
