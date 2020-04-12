@@ -101,7 +101,7 @@ ECMEDIA_API bool ECMedia_set_remote_audio_mute(int channel_id, bool bMute) {
 }
 
 ECMEDIA_API bool ECMedia_request_remote_ssrc(int channel_id,
-                    
+                                             int flag,
                                              int ssrc) {
   return g_ECMedia->RequestRemoteSsrc(channel_id, ssrc);
 }

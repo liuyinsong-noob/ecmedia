@@ -316,8 +316,7 @@ ECMEDIA_API bool ECMedia_set_remote_audio_mute(int channel_id, bool bMute);
 /*** 函数参数1: 类型  int       channel_id                                ***/
 /*** 函数参数2: 类型  int       ssrc                                      ***/
 /****************************************************************************/
-//ECMEDIA_API bool ECMedia_request_remote_ssrc(int channel_id,int flag, int ssrc);
-ECMEDIA_API bool ECMedia_request_remote_ssrc(int channel_id, int ssrc);
+ECMEDIA_API bool ECMedia_request_remote_ssrc(int channel_id,int flag, int ssrc);
 
 /****************************************************************************/
 /*** 函数名: 获取视频编码                                                 ***/
