@@ -732,7 +732,8 @@ bool MediaClient::CreateVideoChannel(const std::string& settings,
   const int kMaxBandwidthBps = 1000000;
   vidoe_send_params.max_bandwidth_bps = kMaxBandwidthBps;
   //
-
+  //config.codecName = "h264";
+  //config.payloadType = 104;
   channel_manager_->GetSupportedVideoCodecs(&vidoe_send_params.codecs);
   FilterVideoCodec(config, vidoe_send_params.codecs);
   channel_manager_->GetSupportedVideoRtpHeaderExtensions(
@@ -1117,6 +1118,14 @@ bool MediaClient::SelectVideoSource(
         renderWndsManager_->StartRemoteRenderer(
             channelid, static_cast<webrtc::VideoTrackInterface*>(
                            receiverVideo->track().get()));
+      }
+#elif defined(WEBRTC_IOS)
+      rtc::VideoSinkInterface<webrtc::VideoFrame>* sink =
+      ObjCCallClient:: GetInstance()->getRemoteVideoSilkByChannelID(channelid);
+      if(sink){
+          static_cast<webrtc::VideoTrackInterface*>(
+            receiverVideo->track().get())->AddOrUpdateSink(sink,
+                                                           rtc::VideoSinkWants());
       }
 #elif defined(WEBRTC_ANDROID)
 	rtc::VideoSinkInterface<webrtc::VideoFrame>* sink =
@@ -1802,6 +1811,8 @@ bool MediaClient::FilterVideoCodec(const VideoCodecConfig& config,
   std::string cname = config.codecName;
   absl::AsciiStrToLower(&cname);
   std::vector<cricket::VideoCodec>::iterator it = vec.begin();
+  cricket::VideoCodec vc;
+  bool find_codec = false;
   while (it != vec.end()) {
     name = it->name;
     absl::AsciiStrToLower(&name);
@@ -1811,13 +1822,21 @@ bool MediaClient::FilterVideoCodec(const VideoCodecConfig& config,
                    webrtc::FecMechanism::RED_AND_ULPFEC &&
                name.compare(cricket::kUlpfecCodecName) == 0) {
       it++;
-    } else if (name.compare(cname) == 0 && config.payloadType == it->id) {
+    } else if (name.compare(cname) == 0 ) {
+      if(it->id == config.payloadType)
+        find_codec = true;
+      else
+        vc = *it;
       it++;
     } else if (name.compare("rtx") == 0 && it->id == config.payloadType + 1) {
       it++;
     } else {
       it = vec.erase(it);
     }
+  }
+  if(!find_codec){
+    vc.id = config.payloadType;
+    vec.insert(vec.begin(),vc);
   }
   RTC_LOG(INFO) << __FUNCTION__ << "(),"
                 << " end... ";

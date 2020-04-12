@@ -886,8 +886,8 @@ if (is_ios || is_mac) {
         
         "../examples/ecmedia/media_client.cc",
         "../examples/ecmedia/media_client.h",
-        "../examples/ecmedia/ECMedia.cc",
-        "../examples/ecmedia/ECMedia.h",
+        "../examples/ecmedia/ecmedia.cc",
+        "../examples/ecmedia/ecmedia.h",
         "objc/api/ecmedia/objc_client.mm",
         "objc/api/ecmedia/objc_client.h",
         "objc/api/ecmedia/RenderManager.mm",
@@ -1071,7 +1071,7 @@ if (is_ios || is_mac) {
         "objc/Framework/Native/src/objc_video_decoder_factory.h",
         "objc/Framework/Native/src/objc_video_encoder_factory.h",
         "../examples/ecmedia/ec_common_types.h",
-        "../examples/ecmedia/ECMedia.h",
+        "../examples/ecmedia/ecmedia.h",
         "../examples/ecmedia/sdk_common.h",
       ]
     }
@@ -1349,7 +1349,7 @@ if (is_ios || is_mac) {
           #"objc/api/video_codec/RTCVideoEncoderVP9.h",
           #"objc/api/video_frame_buffer/RTCNativeI420Buffer.h",
           #"objc/api/video_frame_buffer/RTCNativeMutableI420Buffer.h",
-          "../examples/ecmedia/ECMedia.h",
+          "../examples/ecmedia/ecmedia.h",
           "../examples/ecmedia/ec_common_types.h",
           "../examples/ecmedia/sdk_common.h",
         ]
