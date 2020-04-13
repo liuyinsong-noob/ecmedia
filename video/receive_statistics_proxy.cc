@@ -706,7 +706,7 @@ void ReceiveStatisticsProxy::DataCountersUpdated(
       total_bytes = counters.transmitted.TotalBytes();
       it->second = counters;
     } else {
-    //  RTC_NOTREACHED() << "Unexpected stream ssrc: " << ssrc;
+      RTC_NOTREACHED() << "Unexpected stream ssrc: " << ssrc;
     }
   }
   if (total_bytes > last_total_bytes)

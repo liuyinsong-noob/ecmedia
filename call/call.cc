@@ -865,7 +865,7 @@ webrtc::VideoSendStream* Call::CreateVideoSendStream(
   {
     WriteLockScoped write_lock(*send_crit_);
     for (uint32_t ssrc : ssrcs) {
-    //  RTC_DCHECK(video_send_ssrcs_.find(ssrc) == video_send_ssrcs_.end());
+      RTC_DCHECK(video_send_ssrcs_.find(ssrc) == video_send_ssrcs_.end());
       video_send_ssrcs_[ssrc] = send_stream;
     }
     video_send_streams_.insert(send_stream);
