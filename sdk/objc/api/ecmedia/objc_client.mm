@@ -120,7 +120,7 @@ bool ObjCCallClient::InitDevice(rtc::Thread* signaling_thread,rtc::Thread* worke
  //[this performSelectorOnMainThread:@selector(StartCapture:) withObject:nil waitUntilDone:NO];
   //StartCapture();
     
-    _captureInfo = new VideoCaptureiOSDeviceInfo(0);
+   // _captureInfo = new VideoCaptureiOSDeviceInfo(0);
      
   NSLog(@"init device success....");
   return true;
@@ -290,10 +290,7 @@ void ObjCCallClient::SwitchCamera(){
 }
 
 int ObjCCallClient::GetNumberOfVideoDevices(){
-    if(_captureInfo)
-        return  _captureInfo->NumberOfDevices();
-     NSArray<AVCaptureDevice *> *captureDevices = [RTCCameraVideoCapturer captureDevices];
-    return captureDevices.count;
+  return  VideoCaptureiOSDeviceInfo::GetInstance()->NumberOfDevices();
 }
 rtc::VideoSinkInterface<webrtc::VideoFrame>*  ObjCCallClient::getRemoteVideoSilkByChannelID(int channelID){
   //     std::map<int,std::unique_ptr<rtc::VideoSinkInterface<webrtc::VideoFrame>>>::iterator it = remote_sinks.find(channelID);
@@ -326,25 +323,23 @@ void ObjCCallClient::SetCaptureTargetSize(int width, int height){
 }
 
 int ObjCCallClient::NumberOfCapabilities(int deviceId){
-    if(_captureInfo)
-        return _captureInfo->NumberOfCapabilities(nullptr);
-    return 4;
+  return VideoCaptureiOSDeviceInfo::GetInstance()->NumberOfCapabilities(nullptr);
 }
 
 int32_t  ObjCCallClient::GetCapability(const char* deviceUniqueIdUTF8,
                       const uint32_t deviceCapabilityNumber,
                       webrtc::VideoCaptureCapability& capability){
-    return _captureInfo->GetCapability(nullptr,deviceCapabilityNumber,capability);
+    return VideoCaptureiOSDeviceInfo::GetInstance()->GetCapability(nullptr,deviceCapabilityNumber,capability);
     
 }
 webrtc::VideoCaptureModule::DeviceInfo* ObjCCallClient::getVideoCaptureDeviceInfo(){
-    return new VideoCaptureiOSDeviceInfo(0);
+    return VideoCaptureiOSDeviceInfo::GetInstance();
 }
 void ObjCCallClient::SetCameraIndex(int index){
   
 }
 bool ObjCCallClient::PreviewTrack(int window_id, void* video_track){
-  // iOS ignore ;
+  
   return true;
 }
 //}  // namespace webrtc_examples

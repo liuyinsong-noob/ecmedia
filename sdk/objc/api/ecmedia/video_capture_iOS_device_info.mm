@@ -9,7 +9,14 @@
 #import "video_capture_iOS_device_info.h"
 #import "video_capture_iOS_device_info_objc.h"
 
-
+VideoCaptureiOSDeviceInfo* VideoCaptureiOSDeviceInfo::m_pInstance = NULL;
+VideoCaptureiOSDeviceInfo* VideoCaptureiOSDeviceInfo::GetInstance(){
+  m_pInstance = NULL;
+    if (m_pInstance == NULL) {
+       m_pInstance = new VideoCaptureiOSDeviceInfo(0);
+     }
+     return m_pInstance;
+}
 VideoCaptureiOSDeviceInfo::VideoCaptureiOSDeviceInfo(const int32_t id) 
 {
     _captureInfo = [[ECVideoCaptureiOSDeviceInfoObjC alloc] init];
@@ -17,7 +24,7 @@ VideoCaptureiOSDeviceInfo::VideoCaptureiOSDeviceInfo(const int32_t id)
 
 VideoCaptureiOSDeviceInfo::~VideoCaptureiOSDeviceInfo()
 {
-    //[_captureInfo release];
+   // [_captureInfo release];
 }
 
 int32_t VideoCaptureiOSDeviceInfo::Init()
@@ -135,3 +142,8 @@ int32_t VideoCaptureiOSDeviceInfo::CreateCapabilityMap(
     // you ask for.
     return -1;
 }
+
+ int32_t VideoCaptureiOSDeviceInfo::GetOrientation(const char* deviceUniqueIdUTF8,
+                                                   webrtc::VideoRotation& orientation){
+   return 0;
+ }
