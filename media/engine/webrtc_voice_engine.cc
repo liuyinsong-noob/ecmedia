@@ -266,7 +266,7 @@ void WebRtcVoiceEngine::Init() {
 
   // Set default engine options.
   {
-    CConfigFile cfgfile("..\\..\\apmconfig.ini");  //AVRONG_DEBUG_DUMP
+    CConfigFile cfgfile("apmconfig.ini");  //AVRONG_DEBUG_DUMP
     char opt_echo_cancellation[10];
     char opt_auto_gain_control[10];
     char opt_noise_suppression[10];
@@ -568,7 +568,7 @@ bool WebRtcVoiceEngine::ApplyOptions(const AudioOptions& options_in) {
         new webrtc::ExperimentalNs(*experimental_ns_));
   }
 
-  CConfigFile cfgfile("..\\..\\apmconfig.ini");     //AVRONG_DEBUG_DUMP
+  CConfigFile cfgfile("apmconfig.ini");     //AVRONG_DEBUG_DUMP
   char aec_mobile_mode[10];
   char aec_legacy_moderate_suppression_level[10];
   char aec_use_legacy_aec[10];
