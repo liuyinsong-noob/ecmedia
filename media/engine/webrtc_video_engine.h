@@ -157,7 +157,7 @@ class WebRtcVideoChannel : public VideoMediaChannel, public webrtc::Transport {
   void SetInterface(NetworkInterface* iface,
                     webrtc::MediaTransportInterface* media_transport) override;
   
-  bool RequestRemoteSsrc(const int channelId, int32_t ssrc) ;
+  bool RequestRemoteSsrc(const int channelId, int flag,int32_t ssrc) ;
   // E2E Encrypted Video Frame API
   // Set a frame decryptor to a particular ssrc that will intercept all
   // incoming video frames and attempt to decrypt them before forwarding the
@@ -318,7 +318,7 @@ class WebRtcVideoChannel : public VideoMediaChannel, public webrtc::Transport {
     VideoSenderInfo GetVideoSenderInfo(bool log_stats);
     void FillBitrateInfo(BandwidthEstimationInfo* bwe_info);
     bool SendKeyframe();
-    void RequestRemoteSsrc(int32_t ssrc);
+    void RequestRemoteSsrc(int flag,int32_t ssrc);
    private:
     // Parameters needed to reconstruct the underlying stream.
     // webrtc::VideoSendStream doesn't support setting a lot of options on the
@@ -430,7 +430,7 @@ class WebRtcVideoChannel : public VideoMediaChannel, public webrtc::Transport {
 
     void SetRequestKeyframeCallback(const int channelId,
                                OnRequestKeyFrameCallback cb);
-    void RequestRemoteSsrc(int32_t ssrc);
+    void RequestRemoteSsrc(int flag,int32_t ssrc);
 
     private :
     void RecreateWebRtcVideoStream();

@@ -152,15 +152,17 @@ void ReadMediaConfig(const char* filename) {
   
   fr.Read(buf, sizeof(buf) - 1);
 
-  Json::Reader reader;
+ /* Json::Reader reader;
   Json::Value config;
   if (!reader.parse(buf, config)) {
     return;
   }
   std::string ccmode, h264_encoder;
   rtc::GetStringFromJsonObject(config, "Congestion-Control-Mode", &ccmode);
-  rtc::GetStringFromJsonObject(config, "H264-Encoder", &h264_encoder);
-
+  rtc::GetStringFromJsonObject(config, "H264-Encoder", &h264_encoder);*/
+  std::string ccmode, h264_encoder;
+  ccmode = "bbr";
+  h264_encoder = "x264";
   static std::string trail_string;
   trail_string.append("EC-Congestion-Control-Mode");
   if (ccmode == "gcc") {
@@ -496,7 +498,7 @@ bool MediaClient::CreateCall(webrtc::RtcEventLog* event_log) {
   RTC_DCHECK_RUN_ON(worker_thread_);
 
   const int kMinBandwidthBps = 30000;
-  const int kStartBandwidthBps = 300000;
+  const int kStartBandwidthBps = 800000;
   const int kMaxBandwidthBps = 1000000;
 
   EC_CHECK_VALUE(channel_manager_, false);
@@ -763,8 +765,20 @@ bool MediaClient::CreateVideoChannel(const std::string& settings,
 
   channel_manager_->GetSupportedVideoCodecs(&vidoe_send_params.codecs);
   FilterVideoCodec(config, vidoe_send_params.codecs);
-  channel_manager_->GetSupportedVideoRtpHeaderExtensions(
-      &vidoe_send_params.extensions);
+  if (vidoe_send_params.codecs.size() > 0) {
+    if (config.isScreenShare) {
+	  vidoe_send_params.codecs[0].params["codec_width"] =  getStrFromInt(config.width);
+      vidoe_send_params.codecs[0].params["codec_height"] = getStrFromInt(config.height);
+	  vidoe_send_params.codecs[0].params["max_frame_rate"] = getStrFromInt(config.maxFramerate);
+      vidoe_send_params.codecs[0].params["isScreenShare"] = "true";
+     
+    } else {
+      vidoe_send_params.codecs[0].params["isScreenShare"] = "false";
+    }
+     
+  }
+  // channel_manager_->GetSupportedVideoRtpHeaderExtensions(
+  //    &vidoe_send_params.extensions);
 
   /* if (vidoe_send_params.codecs.size() > 0) {
      vidoe_send_params.codecs.at(0).params[cricket::kCodecParamMinBitrate] =
@@ -817,8 +831,8 @@ bool MediaClient::CreateVideoChannel(const std::string& settings,
   signaling_thread_->Invoke<void>(RTC_FROM_HERE, [&] {
     channel_manager_->GetSupportedVideoCodecs(&video_recv_params.codecs);
     FilterVideoCodec(config, video_recv_params.codecs);
-    channel_manager_->GetSupportedVideoRtpHeaderExtensions(
-        &video_recv_params.extensions);
+  //  channel_manager_->GetSupportedVideoRtpHeaderExtensions(
+  //      &video_recv_params.extensions);
   });
 
   bOk = worker_thread_->Invoke<bool>(RTC_FROM_HERE, [&] {
@@ -847,7 +861,7 @@ bool MediaClient::CreateVideoChannel(const std::string& settings,
   return bOk;
 }
 
-bool MediaClient::RequestRemoteSsrc(int channel_id, int32_t ssrc) {
+bool MediaClient::RequestRemoteSsrc(int channel_id, int flag, int32_t ssrc) {
   RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__ << "() "
                 << " begin... "
                 << ", channel_id: " << channel_id << ", ssrc: " << ssrc;
@@ -855,7 +869,7 @@ bool MediaClient::RequestRemoteSsrc(int channel_id, int32_t ssrc) {
       GetInternalVideoChannel(channel_id);
   bool bOk = false;
   bOk = worker_thread_->Invoke<bool>(RTC_FROM_HERE, [&] {
-    return internal_video_channel->RequestRemoteSsrc(channel_id, ssrc);
+    return internal_video_channel->RequestRemoteSsrc(channel_id, flag, ssrc);
   });
   RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__ << "(),"
                 << " end... ";
@@ -1437,12 +1451,14 @@ MediaClient::CreateLocalVideoTrack(const std::string& track_params) {
                       return video_track;
                       break;
                     case VIDEO_SCREEN:
+                      desktop_device_ =
+                          desktop_devices_.find(camera_index)->second;
+                     
+                      video_track = webrtc::VideoTrackProxy::Create(
+                          signaling_thread_, worker_thread_,
+                          webrtc::VideoTrack::Create(track_id, desktop_device_,
+                                                     worker_thread_));
 
-                      /* video_track =
-                         webrtc::VideoTrackProxy::Create(signaling_thread_,
-                         worker_thread_,webrtc::VideoTrack::Create( track_id,
-                               webrtc::FakeVideoTrackSource::Create(true),
-                               worker_thread_));*/
                       return video_track;
 
                       break;
@@ -2142,8 +2158,17 @@ bool MediaClient::ParseVideoCodecSetting(const char* videoCodecSettings,
         if (rtc::GetBoolFromJsonObject(settings, "red", &enable)) {
           config->red = enable;
         }
+        if (rtc::GetBoolFromJsonObject(settings, "isScreenShare", &enable)) {
+          config->isScreenShare = enable;
+        }
         if (rtc::GetIntFromJsonObject(settings, "payloadType", &value)) {
           config->payloadType = value;
+        }
+        if (rtc::GetIntFromJsonObject(settings, "width", &value)) {
+          config->width = value;
+        }
+        if (rtc::GetIntFromJsonObject(settings, "height", &value)) {
+          config->height = value;
         }
         if (rtc::GetIntFromJsonObject(settings, "minBitrateKps", &value)) {
           config->minBitrateKps = value;

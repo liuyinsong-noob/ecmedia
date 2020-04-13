@@ -262,8 +262,11 @@ class MediaClient : public sigslot::has_slots<> {
   struct VideoCodecConfig {
     bool red = true;
     bool nack = true;
+    bool isScreenShare = false;
     int fecType = 1;  // red and ulp fec
     int payloadType = 96;
+    int width = 640;
+    int height = 480;
     int minBitrateKps = 300;
     int startBitrateKps = 600;
     int maxBitrateKps = 1700;
@@ -557,7 +560,7 @@ class MediaClient : public sigslot::has_slots<> {
   /*** 函数参数1: 类型  int       channel_id                                ***/
   /*** 函数参数2: 类型  int32_t       ssrc                                  ***/
   /****************************************************************************/
-  bool RequestRemoteSsrc(int channel_id, int32_t ssrc);
+  bool RequestRemoteSsrc(int channel_id, int flag,int32_t ssrc);
   /****************************************************************************/
   /*** 函数名: GetNumberOfVideoDevices                                      ***/
   /*** 功能:   获取当前系统所有视频设备                                     ***/

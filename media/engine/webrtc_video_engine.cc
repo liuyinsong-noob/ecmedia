@@ -1533,10 +1533,10 @@ bool WebRtcVideoChannel::SetRequestKeyframeCallback(
     it.second->SetRequestKeyframeCallback(channelId, cb);
   return true;
 }
-bool WebRtcVideoChannel::RequestRemoteSsrc( const int channelId,int32_t ssrc) {
+bool WebRtcVideoChannel::RequestRemoteSsrc( const int channelId,int flag,int32_t ssrc) {
   RTC_DCHECK_RUN_ON(&thread_checker_);
   for (auto it : receive_streams_)
-    it.second->RequestRemoteSsrc(ssrc);
+    it.second->RequestRemoteSsrc(flag,ssrc);
 
   return true;
 }
@@ -2774,9 +2774,9 @@ void WebRtcVideoChannel::WebRtcVideoReceiveStream::SetRequestKeyframeCallback(
   stream_->SetRequestKeyFramCallback(channelId, cb);
   
 }
-void WebRtcVideoChannel::WebRtcVideoReceiveStream::RequestRemoteSsrc(
+void WebRtcVideoChannel::WebRtcVideoReceiveStream::RequestRemoteSsrc(int flag,
     int32_t ssrc) {
-  stream_->RequestRemoteSsrc(ssrc);
+  stream_->RequestRemoteSsrc(flag,ssrc);
 }
 
 WebRtcVideoChannel::VideoCodecSettings::VideoCodecSettings()
