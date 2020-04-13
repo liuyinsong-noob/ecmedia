@@ -244,6 +244,14 @@ config("common_config") {
   if (rtc_use_h264) {
     defines += [ "WEBRTC_USE_H264" ]
   }
+  
+  if (agc_debug_dump) {
+    defines += [ "WEBRTC_AGC_DEBUG_DUMP" ]
+  }
+  
+  if (avrong_debug_dump) {
+    defines += [ "AVRONG_DEBUG_DUMP" ]
+  }
 
   if (build_with_chromium) {
     defines += [
