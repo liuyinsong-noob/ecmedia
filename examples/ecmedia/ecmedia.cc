@@ -267,8 +267,8 @@ ECMEDIA_API bool ECMedia_set_audio_recording_device(int index) {
 }
 
 ECMEDIA_API bool ECMedia_set_audio_playout_device(int index) {
-  //return g_ECMedia->SetAudioPlayoutDevice(index);
-  #define TEST_SELECT_CAMERA
+  return g_ECMedia->SetAudioPlayoutDevice(index);
+//  #define TEST_SELECT_CAMERA
 #ifdef TEST_SELECT_CAMERA
   {
     std::string track_params0 =
