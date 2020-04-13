@@ -171,6 +171,8 @@ class RenderWndsManager : public sigslot::has_slots<> {
                           webrtc::VideoTrackInterface* track_to_render);
   bool UpdateVideoTrack(int channelId,
                         webrtc::VideoTrackInterface* track_to_render);
+  bool UpdateLocalVideoTrack(int channelId,
+                             webrtc::VideoTrackInterface* track_to_render);
   void* GetRemoteWnd(int channelId);
   bool RemoveRemoteRenderWnd(int channelId);
   void SetLocalRenderWnd(int channelId,
@@ -425,6 +427,11 @@ class MediaClient : public sigslot::has_slots<> {
       int channelid,
       const std::string& track_id,
       rtc::scoped_refptr<webrtc::VideoTrackInterface> videotrack);
+
+
+ bool SelectVideoSourceOnFlight(int channelid,
+                                 int device_index,
+                                 const std::string& track_params);
 
 
   /****************************************************************************/
@@ -932,6 +939,9 @@ private:
       std::string mid;  // the media stream id of channelId
     };
     std::map<int, ChannelSsrcs> mapChannelSsrcs_;
+
+	std::map<int, rtc::scoped_refptr<webrtc::VideoTrackInterface>>
+        cameraId_videoTrack_pairs_;
 };
 
 class TransportControllerObserve

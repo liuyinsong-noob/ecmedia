@@ -1148,6 +1148,8 @@ bool MediaClient::SelectVideoSource(
                                               senderVideo, receiverVideo));
       // transceiverVideo->internal()->AddSender
       EC_CHECK_VALUE(transceiverVideo, false);
+      std::string mid = GetMidFromChannelId(channelid);
+      transceiverVideo->internal()->set_mid(mid);
       transceivers_.push_back(transceiverVideo);
       EC_CHECK_VALUE(mVideoChannels_[channelid], false);
       std::vector<uint32_t> ssrcsRemote;
@@ -1197,9 +1199,50 @@ bool MediaClient::SelectVideoSource(
   return bResult;
 }
 
+bool MediaClient::SelectVideoSourceOnFlight(int channelid,
+                                            int device_index,
+                                            const std::string& track_params) {
+  bool bResult = false;
+  bResult = signaling_thread_->Invoke<bool>(RTC_FROM_HERE, [this, channelid,
+                                                            device_index,
+                                                            track_params] {
+    rtc::scoped_refptr<webrtc::VideoTrackInterface> video_track;
+
+    auto it = cameraId_videoTrack_pairs_.find(device_index);
+    if (it != cameraId_videoTrack_pairs_.end()) {
+      video_track = it->second;
+    } else {
+      video_track = CreateLocalVideoTrack(track_params);
+      EC_CHECK_VALUE(video_track, false);
+    }
+
+    std::string mid = GetMidFromChannelId(channelid);
+    RTC_LOG(LS_INFO) << "---ylr channelid: " << channelid << " mid: " << mid;
+    for (auto transceiver : transceivers_) {
+      RTC_LOG(LS_INFO) << "---ylr transceiver mid: "
+                       << transceiver->internal()->mid().value_or("not set");
+      if (transceiver->internal()->mid().value_or("not set") == mid &&
+          transceiver->internal()->sender_internal()->SetTrack(video_track)) {
+        EC_CHECK_VALUE(renderWndsManager_, false);
+        return renderWndsManager_->UpdateLocalVideoTrack(channelid,
+                                                         video_track);
+      }
+    }
+    return false;
+  });
+  if (bResult)
+    RTC_LOG(INFO) << "---ylr SelectVideoSourceOnFlight on flight ok.";
+  else
+    RTC_LOG(INFO) << "---ylr SelectVideoSourceOnFlight on flight fail!";
+  return bResult;
+  return false;
+}
+
 void MediaClient::DestroyLocalAudioTrack(
     rtc::scoped_refptr<webrtc::AudioTrackInterface> track) {
   API_LOG(INFO) << "track: " << track;
+
+  cameraId_videoTrack_pairs_.clear();
   if (track) {
     for (int i = 0; i < 5; i++) {
       if (track == audio_tracks_[i]) {
@@ -3189,6 +3232,20 @@ bool RenderWndsManager::UpdateVideoTrack(
                 << ", track_to_render: " << track_to_render;
   std::map<int, ptr_render>::iterator it = mapRemoteRenderWnds.find(channelId);
   if (it != mapRemoteRenderWnds.end()) {
+    return it->second->UpdateVideoTrack(track_to_render);
+  }
+  return false;
+}
+
+bool RenderWndsManager::UpdateLocalVideoTrack(
+    int channelId,
+    webrtc::VideoTrackInterface* track_to_render) {
+  RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__ << "(), "
+                << " begin... "
+                << ", channelId: " << channelId
+                << ", track_to_render: " << track_to_render;
+  std::map<int, ptr_render>::iterator it = mapLocalRenderWnds.find(channelId);
+  if (it != mapLocalRenderWnds.end()) {
     return it->second->UpdateVideoTrack(track_to_render);
   }
   return false;

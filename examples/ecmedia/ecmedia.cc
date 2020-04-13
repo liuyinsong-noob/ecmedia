@@ -267,7 +267,25 @@ ECMEDIA_API bool ECMedia_set_audio_recording_device(int index) {
 }
 
 ECMEDIA_API bool ECMedia_set_audio_playout_device(int index) {
-  return g_ECMedia->SetAudioPlayoutDevice(index);
+  //return g_ECMedia->SetAudioPlayoutDevice(index);
+  #define TEST_SELECT_CAMERA
+#ifdef TEST_SELECT_CAMERA
+  {
+    std::string track_params0 =
+        "{\n\t\"trackId\":\t\"kVedioLabel1\",\n\t\"videoSourceType\":\t0,"
+        "\n\t\"deviceIndex\":\t0,\n\t\"width\":\t640,\n\t\"height\":\t480\n}";
+
+    std::string track_params1 =
+        "{\n\t\"trackId\":\t\"kVedioLabel1\",\n\t\"videoSourceType\":\t0,"
+        "\n\t\"deviceIndex\":\t1,\n\t\"width\":\t640,\n\t\"height\":\t480\n}";
+
+    if (index == 0)
+      ECMedia_select_camera_on_flight(1, 0, track_params0);
+    else
+      ECMedia_select_camera_on_flight(1, 1, track_params1);
+  }
+  return true;
+#endif
 }
 
 
@@ -334,6 +352,18 @@ ECMEDIA_API int ECMedia_allocate_capture_device(const char* id,
 ECMEDIA_API int ECMedia_connect_capture_device(int deviceid, int peer_id) {
   RTC_DCHECK(g_ECMedia);
   return g_ECMedia->ConnectCaptureDevice(deviceid, peer_id);
+}
+
+
+ECMEDIA_API bool ECMedia_select_camera_on_flight(
+    int channelid,
+    int device_idx,
+    const std::string& track_params) {
+  RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__ << "(),"
+                << " begins..."
+                << ", index: " << device_idx;
+  return g_ECMedia->SelectVideoSourceOnFlight(channelid, device_idx,
+                                              track_params);
 }
 
 // ECMEDIA_API int ECMedia_set_local_video_window(int deviceid,

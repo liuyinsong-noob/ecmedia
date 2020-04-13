@@ -542,6 +542,11 @@ ECMEDIA_API int ECMedia_allocate_capture_device(const char* id,
 /****************************************************************************/
 ECMEDIA_API int ECMedia_connect_capture_device(int deviceid, int peer_id);
 
+ECMEDIA_API bool ECMedia_select_camera_on_flight(
+    int channelid,
+    int device_idx,
+    const std::string& track_params);
+
 /****************************************************************************/
 /*** 函数名: ECMedia_start_capture                                        ***/
 /*** 功能:   开启摄像头                                                   ***/
