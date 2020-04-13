@@ -140,9 +140,9 @@ class ECBaseManager : public sigslot::has_slots<> {
   bool GetVideoDevices(char* devices, int* len);
 
   bool RenderCallback(int channelid,void* callback);
-
+  
   int CreateDesktopCapture(int type);
-
+//#if defined(WEBRTC_WIN)
   int GetWindowsList(int type,WindowShare** windowsList);
 
   int ReleaseWindowsList(WindowShare** windowsList);
@@ -156,6 +156,7 @@ class ECBaseManager : public sigslot::has_slots<> {
   int StartScreenShare();
 
   int StopScreenShare();
+//#endif
  ////////////////////////////////////////////////////////////////////////////////////////
   /*************************************************************************************/
 
@@ -256,9 +257,6 @@ class ECBaseManager : public sigslot::has_slots<> {
    private:
     std::string unique_id_;
   };
-
-  rtc::scoped_refptr<ECPeerManager> GetPeerManagerById(int id);
-  rtc::scoped_refptr<ECPeerManager> GetFirstPeerManager() const;
 
   // Internal implementation for AddTransceiver family of methods. If
   // |fire_callback| is set, fires OnRenegotiationNeeded callback if

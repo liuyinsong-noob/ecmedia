@@ -275,7 +275,6 @@ void PacedSender::InsertPacket(RtpPacketSender::Priority priority,
     capture_time_ms = now_ms;
     ssrc_seq[ssrc] = sequence_number;
     
-  printf("nack ssrc is %d seq is %d\n",ssrc,sequence_number);
   packets_.Push(RoundRobinPacketQueue::Packet(
       priority, ssrc, sequence_number, capture_time_ms, now_ms, bytes,
       retransmission, packet_counter_++));

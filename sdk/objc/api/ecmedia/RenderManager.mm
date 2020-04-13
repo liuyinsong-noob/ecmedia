@@ -30,8 +30,6 @@
 #include "sdk/objc/native/api/video_encoder_factory.h"
 #include "sdk/objc/native/api/video_renderer.h"
 
-
-#import "sdk/objc/api/peerconnection/media_client.h"
 #import "sdk/objc/components/capturer/RTCCameraVideoCapturer.h"
 #if defined(RTC_SUPPORTS_METAL)
 #import "sdk/objc/components/renderer/metal/RTCMTLVideoView.h"  // nogncheck

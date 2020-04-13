@@ -29,12 +29,13 @@
 #include "video_render/video_renderer.h"
 #include "ec_sdp_helper.h"
 
-namespace webrtc {
+namespace ecmedia_sdk {
+
+	
 class ECPeerManager : public webrtc::PeerConnectionObserver,
-                      public webrtc::CreateSessionDescriptionObserver
-{
+                      public webrtc::CreateSessionDescriptionObserver {
  public:
-	 // generate both local_description & remote_description
+  // generate both local_description & remote_description
   ECPeerManager(ECPeerConfig* config);
   ~ECPeerManager();
   bool Initialize();
@@ -43,9 +44,9 @@ class ECPeerManager : public webrtc::PeerConnectionObserver,
 
   void AddAudioTrack();
   rtc::scoped_refptr<webrtc::VideoTrackInterface> AddVideoTrack(
-      VideoTrackSourceInterface* video_device);
+      webrtc::VideoTrackSourceInterface* video_device);
 
-  const SessionDescriptionInterface* local_description() { return local_description_.get(); }
+  const webrtc::SessionDescriptionInterface* local_description() { return local_description_.get(); }
 
   bool SetLocalAndRemoteDescription();
   bool GenerateRemoteDescription();
@@ -73,12 +74,9 @@ class ECPeerManager : public webrtc::PeerConnectionObserver,
  protected:
   bool CreatePeerConnection(bool dtls);
   void DeletePeerConnection();
-
-
   //
   // PeerConnectionObserver implementation.
   //
-
   void OnSignalingChange(
       webrtc::PeerConnectionInterface::SignalingState new_state) override {}
   void OnAddTrack(
@@ -119,22 +117,24 @@ class ECPeerManager : public webrtc::PeerConnectionObserver,
   rtc::Thread* worker_thread_;
   rtc::Thread* network_thread_;
   rtc::scoped_refptr<webrtc::PeerConnectionInterface> peer_connection_;
-  rtc::scoped_refptr<PeerConnectionFactoryInterface> peer_connection_factory_;
+  rtc::scoped_refptr<webrtc::PeerConnectionFactoryInterface>
+      peer_connection_factory_;
 
   bool sendrcv_audio_;  // true: sendrcv; false: rcv only
   bool sendrcv_video_;	// true: sendrcv; false: rcv only
-  std::unique_ptr<SessionDescriptionInterface> local_description_;
-  std::unique_ptr<SessionDescriptionInterface> remote_description_;
-
-  void* remote_window_;                             // TODO: modify to vector
+  std::unique_ptr<webrtc::SessionDescriptionInterface> local_description_;
+  std::unique_ptr<webrtc::SessionDescriptionInterface> remote_description_;
+  #if defined(WEBRTC_WIN)
+  void* remote_window_;
+#endif// TODO: modify to vector
   std::unique_ptr<VideoRenderer> remote_renderer_;  // TODO: modify to vector
   rtc::scoped_refptr<webrtc::VideoTrackInterface> remote_video_track_;
 
   std::unique_ptr<webrtc::IceCandidateInterface> candidate_;
   
   // have not been used
-  std::vector<
-      rtc::scoped_refptr<RtpTransceiverProxyWithInternal<RtpTransceiver>>>
+  std::vector<rtc::scoped_refptr<
+      webrtc::RtpTransceiverProxyWithInternal<webrtc::RtpTransceiver>>>
       transceivers_;  // TODO(bugs.webrtc.org/9987): Accessed on both signaling
                       // and network thread.
 };

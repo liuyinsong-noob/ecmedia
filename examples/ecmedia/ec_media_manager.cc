@@ -34,6 +34,7 @@ ECMediaManager::ECMediaManager(rtc::Thread* worker_thread,
     : worker_thread_(worker_thread),
       network_thread_(network_thread),
       signaling_thread_(signal_thread) {
+          #if defined(WEBRTC_WIN)
 
     media_engine_ = cricket::WebRtcMediaEngineFactory::Create(nullptr /* default_adm */,
       webrtc::CreateBuiltinAudioEncoderFactory(),
@@ -41,6 +42,8 @@ ECMediaManager::ECMediaManager(rtc::Thread* worker_thread,
       webrtc::CreateBuiltinVideoEncoderFactory(),
       webrtc::CreateBuiltinVideoDecoderFactory(), nullptr /* audio_mixer */,
       nullptr /* audio_processing */);
+        
+#endif
 }
 
 ECMediaManager::~ECMediaManager(){

@@ -1,7 +1,7 @@
 #include "ec_peer_config.h"
 
 
-namespace webrtc {
+namespace ecmedia_sdk {
 
 ECPeerConfig::ECPeerConfig() {
 }

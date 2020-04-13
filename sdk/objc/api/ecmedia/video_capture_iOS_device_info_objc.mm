@@ -144,7 +144,8 @@
         return [NSNumber numberWithInt:0];
     }
    
-    
+    if(_captureDeviceCountInfo > 0 )
+      return [NSNumber numberWithInt:_captureDeviceCountInfo];
     #if defined(WEBRTC_IOS) && defined(__IPHONE_10_0) && \
         __IPHONE_OS_VERSION_MIN_REQUIRED >= __IPHONE_10_0
       AVCaptureDeviceDiscoverySession *session = [AVCaptureDeviceDiscoverySession
