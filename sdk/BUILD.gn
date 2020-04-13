@@ -1272,7 +1272,7 @@ if (is_ios || is_mac) {
           #"objc/base/RTCEncodedImage.h",
           #"objc/base/RTCI420Buffer.h",
           #"objc/base/RTCLogging.h",
-          #"objc/base/RTCMacros.h",
+          "objc/base/RTCMacros.h",
           #"objc/base/RTCMutableI420Buffer.h",
           #"objc/base/RTCMutableYUVPlanarBuffer.h",
           #"objc/base/RTCRtpFragmentationHeader.h",

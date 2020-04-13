@@ -10,13 +10,14 @@
 #define WEBRTC_MODULES_VIDEO_CAPTURE_MAIN_SOURCE_iOS_VIDEO_CAPTURE_iOS_INFO_H_
 #import "video_capture_iOS_device_info_objc.h"
 #include "modules/video_capture/device_info_impl.h"
+#include "modules/video_capture/video_capture.h"
 
-class VideoCaptureiOSDeviceInfo: public webrtc::videocapturemodule::DeviceInfoImpl
+class VideoCaptureiOSDeviceInfo:  public webrtc::VideoCaptureModule::DeviceInfo
 {
 public:
     
-    VideoCaptureiOSDeviceInfo(const int32_t id);
-    virtual ~VideoCaptureiOSDeviceInfo();
+  static VideoCaptureiOSDeviceInfo* GetInstance();
+ virtual ~VideoCaptureiOSDeviceInfo();
     
     int32_t Init();
     
@@ -67,10 +68,15 @@ public:
                                                     const char* deviceUniqueIdUTF8,
                                                     const char* dialogTitleUTF8, void* parentWindow,
                                                     uint32_t positionX, uint32_t positionY);
-    
+    // Gets clockwise angle the captured frames should be rotated in order
+     // to be displayed correctly on a normally rotated display.
+     virtual int32_t GetOrientation(const char* deviceUniqueIdUTF8,
+                                    webrtc::VideoRotation& orientation);
 protected:
     virtual int32_t CreateCapabilityMap(
                                         const char* deviceUniqueIdUTF8);
+   VideoCaptureiOSDeviceInfo(const int32_t id);
+   static VideoCaptureiOSDeviceInfo* m_pInstance;
     
     ECVideoCaptureiOSDeviceInfoObjC*    _captureInfo;
 };
