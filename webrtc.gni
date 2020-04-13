@@ -95,6 +95,10 @@ declare_args() {
   # Selects whether debug dumps for the audio processing module
   # should be generated.
   apm_debug_dump = false
+  
+  agc_debug_dump = false
+  
+  avrong_debug_dump = false
 
   # Set this to true to enable BWE test logging.
   rtc_enable_bwe_test_logging = false

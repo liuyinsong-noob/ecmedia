@@ -104,6 +104,8 @@ rtc_source_set("rtc_base_approved") {
     "byte_order.h",
     "copy_on_write_buffer.cc",
     "copy_on_write_buffer.h",
+    "configfile.cc",
+    "configfile.h",
     "event_tracer.cc",
     "event_tracer.h",
     "flags.cc",

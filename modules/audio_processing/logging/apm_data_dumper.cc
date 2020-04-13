@@ -60,8 +60,8 @@ ApmDataDumper::ApmDataDumper(int instance_index) {}
 ApmDataDumper::~ApmDataDumper() = default;
 
 #if WEBRTC_APM_DEBUG_DUMP == 1
-bool ApmDataDumper::recording_activated_ = false;
-char ApmDataDumper::output_dir_[] = "";
+bool ApmDataDumper::recording_activated_ = true; //false; //AVRONG_DEBUG_DUMP
+char ApmDataDumper::output_dir_[] = ".";  //AVRONG_DEBUG_DUMP
 
 FILE* ApmDataDumper::GetRawFile(const char* name) {
   std::string filename = FormFileName(output_dir_, name, instance_index_,
