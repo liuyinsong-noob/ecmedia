@@ -22089,10 +22089,11 @@ int SrsProtocol::read_basic_header(char& fmt, int& cid)
         }
         return ret;
     }
-    
-    fmt = in_buffer->read_1byte();
-    cid = fmt & 0x3f;
-    fmt = (fmt >> 6) & 0x03;
+	if (in_buffer) {
+		fmt = in_buffer->read_1byte();
+		cid = fmt & 0x3f;
+		fmt = (fmt >> 6) & 0x03;
+	}
     
     // 2-63, 1B chunk header
     if (cid > 1) {
@@ -22108,10 +22109,11 @@ int SrsProtocol::read_basic_header(char& fmt, int& cid)
             }
             return ret;
         }
-        
-        cid = 64;
-        cid += (u_int8_t)in_buffer->read_1byte();
-        srs_verbose("2bytes basic header parsed. fmt=%d, cid=%d", fmt, cid);
+		if (in_buffer) {
+			cid = 64;
+			cid += (u_int8_t)in_buffer->read_1byte();
+			srs_verbose("2bytes basic header parsed. fmt=%d, cid=%d", fmt, cid);
+		}
     // 64-65599, 3B chunk header
     } else if (cid == 1) {
         if ((ret = in_buffer->grow(skt, 2)) != ERROR_SUCCESS) {
@@ -22120,11 +22122,12 @@ int SrsProtocol::read_basic_header(char& fmt, int& cid)
             }
             return ret;
         }
-        
-        cid = 64;
-        cid += (u_int8_t)in_buffer->read_1byte();
-        cid += ((u_int8_t)in_buffer->read_1byte()) * 256;
-        srs_verbose("3bytes basic header parsed. fmt=%d, cid=%d", fmt, cid);
+		if (in_buffer) {
+			cid = 64;
+			cid += (u_int8_t)in_buffer->read_1byte();
+			cid += ((u_int8_t)in_buffer->read_1byte()) * 256;
+			srs_verbose("3bytes basic header parsed. fmt=%d, cid=%d", fmt, cid);
+		}
     } else {
         srs_error("invalid path, impossible basic header.");
         srs_assert(false);
