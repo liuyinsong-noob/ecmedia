@@ -290,7 +290,7 @@ bool ECBaseManager::SetRemoteMute(int channel_id, bool bMute) {
 bool ECBaseManager::RequestRemoteSsrc(int channel_id,int flag, int32_t ssrc) {
   RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__  << "(),"<< " begin... "
                 << ", channel_id: " << channel_id << ", ssrc: " << ssrc;
-  return MediaClient::GetInstance()->RequestRemoteSsrc(channel_id, ssrc);
+  return MediaClient::GetInstance()->RequestRemoteSsrc(channel_id, flag,ssrc);
 }
 
 bool ECBaseManager::GetVideoCodecs(char* jsonVideoCodecInfos, int* length) {

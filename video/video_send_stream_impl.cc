@@ -356,10 +356,10 @@ void VideoSendStreamImpl::DeliverRtcp(const uint8_t* packet, size_t length) {
   RTC_DCHECK(!worker_queue_->IsCurrent());
   rtp_video_sender_->DeliverRtcp(packet, length);
 }
-void VideoSendStreamImpl::RequestRemoteSsrc(int32_t ssrc) {
+void VideoSendStreamImpl::RequestRemoteSsrc(int flag,int32_t ssrc) {
   bool bActive = false;
   bActive = rtp_video_sender_->IsActive();
-  rtp_video_sender_->RequestRemoteSsrc(ssrc);
+  rtp_video_sender_->RequestRemoteSsrc(flag,ssrc);
 }
 void VideoSendStreamImpl::UpdateActiveSimulcastLayers(
     const std::vector<bool> active_layers) {

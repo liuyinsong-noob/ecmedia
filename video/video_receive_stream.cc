@@ -749,8 +749,8 @@ void VideoReceiveStream::SetRequestKeyFramCallback(
   request_key_frame_callback_ = cb;
 }
 
-void VideoReceiveStream::RequestRemoteSsrc(int32_t ssrc) {
-  uint32_t bandwidth = 1;
+void VideoReceiveStream::RequestRemoteSsrc(int flag,int32_t ssrc) {
+  uint32_t bandwidth = flag;
   uint32_t localssrc = 0;
   rtp_video_stream_receiver_.GetMoudleRtcp()->SendSingleTMMBR(bandwidth,localssrc, (uint32_t)ssrc);
       

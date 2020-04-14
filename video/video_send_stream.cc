@@ -216,8 +216,8 @@ void VideoSendStream::DeliverRtcp(const uint8_t* packet, size_t length) {
   // Called on a network thread.
   send_stream_->DeliverRtcp(packet, length);
 }
-void VideoSendStream::RequestRemoteSsrc(int32_t ssrc) {
-  send_stream_->RequestRemoteSsrc(ssrc);
+void VideoSendStream::RequestRemoteSsrc(int flag,int32_t ssrc) {
+  send_stream_->RequestRemoteSsrc(flag,ssrc);
 }
 }  // namespace internal
 }  // namespace webrtc

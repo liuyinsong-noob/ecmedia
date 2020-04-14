@@ -656,9 +656,18 @@ void VideoStreamEncoder::ConfigureEncoderOnTaskQueue(
 // "soft" reconfiguration.
 void VideoStreamEncoder::ReconfigureEncoder() {
   RTC_DCHECK(pending_encoder_reconfiguration_);
-  std::vector<VideoStream> streams =
-      encoder_config_.video_stream_factory->CreateEncoderStreams(
-          last_frame_info_->width, last_frame_info_->height, encoder_config_);
+  bool isScreen = false;
+  std::string sScreen =
+      encoder_config_.video_format.parameters.find("isScreenShare")->second;
+  rtc::FromString(sScreen, &isScreen);
+   std::vector<VideoStream> streams;
+  if (isScreen) {
+   streams=   encoder_config_.video_stream_factory->CreateEncoderStreams(
+       1280, 720, encoder_config_);
+  } else {
+    streams= encoder_config_.video_stream_factory->CreateEncoderStreams(
+     last_frame_info_->width, last_frame_info_->height, encoder_config_);
+  }
 
   // TODO(ilnik): If configured resolution is significantly less than provided,
   // e.g. because there are not enough SSRCs for all simulcast streams,
@@ -751,6 +760,18 @@ void VideoStreamEncoder::ReconfigureEncoder() {
       RTC_CHECK(encoder_);
       codec_info_ = settings_.encoder_factory->QueryVideoEncoder(
           encoder_config_.video_format);
+    }
+    if (isScreen) {
+      std::string swidth =
+          encoder_config_.video_format.parameters.find("codec_width")->second;
+      rtc::FromString(swidth, &send_codec_.width);
+      std::string sheight =
+          encoder_config_.video_format.parameters.find("codec_height")->second;
+      rtc::FromString(sheight, &send_codec_.height);
+      std::string smaxFramerate =
+          encoder_config_.video_format.parameters.find("max_frame_rate")
+              ->second;
+      rtc::FromString(smaxFramerate, &send_codec_.maxFramerate);
     }
 
     if (encoder_->InitEncode(&send_codec_, number_of_cores_,

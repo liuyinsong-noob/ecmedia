@@ -111,7 +111,8 @@ const char kH264FmtpPacketizationMode[] = "packetization-mode";
 const char kH264FmtpSpropParameterSets[] = "sprop-parameter-sets";
 const char kH264ProfileLevelConstrainedBaseline[] = "42e01f";
 
-const int kDefaultVideoMaxFramerate = 60;
+const int kDefaultVideoMaxFramerate = 30;
+//60;
 
 const size_t kConferenceMaxNumSpatialLayers = 3;
 const size_t kConferenceMaxNumTemporalLayers = 3;
