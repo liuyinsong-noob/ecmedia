@@ -60,7 +60,7 @@ short  CConfigFile::Open(const char *ConfigFileName)
 		m_IsOpen = -1;
 	}
 	//打开指定的配置文件，失败返回-1
-	m_CfgFile.open(ConfigFileName, ios::in);
+	m_CfgFile.open(ConfigFileName, std::ios::in);
 	if (!m_CfgFile.is_open())
 		return -1;
 
@@ -99,7 +99,7 @@ short  CConfigFile::GetValue(const char *Session, const char *ValueName, char *R
 	short          Flag;
 	short         Ret;
 
-	m_CfgFile.seekg(0, ios::beg);
+	m_CfgFile.seekg(0, std::ios::beg);
 	//找到对应的节
 	Flag = -1;
 	while (!m_CfgFile.eof())

@@ -1221,7 +1221,7 @@ bool MediaClient::SelectVideoSourceOnFlight(int channelid,
     //RTC_LOG(LS_INFO) << "---ylr channelid: " << channelid << " mid: " << mid;
     for (auto transceiver : transceivers_) {
      // RTC_LOG(LS_INFO) << "---ylr transceiver mid: "
-                       << transceiver->internal()->mid().value_or("not set");
+     //                  << transceiver->internal()->mid().value_or("not set");
       if (transceiver->internal()->mid().value_or("not set") == mid &&
           transceiver->internal()->sender_internal()->SetTrack(video_track)) {
         EC_CHECK_VALUE(renderWndsManager_, false);

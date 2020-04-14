@@ -10,7 +10,7 @@
 #include <fstream>
 #include <iostream>
 #ifdef WIN32
-using namespace std;
+//using namespace std;
 
 #define MAX_LINE_LENGTH 300
 
@@ -32,7 +32,7 @@ public:     //公有
 
 	//属性
 private:    //私有
-	fstream m_CfgFile;
+	std::fstream m_CfgFile;
 	short     m_IsOpen;  //文件打开状态
 	enum
 	{
