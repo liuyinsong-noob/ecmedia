@@ -1464,6 +1464,7 @@ MediaClient::CreateLocalVideoTrack(const std::string& track_params) {
 #endif
                       return video_track;
                     case VIDEO_SCREEN:
+					#ifdef WEBRTC_WIN
                       desktop_device_ =
                           desktop_devices_.find(camera_index)->second;
                      
@@ -1471,7 +1472,7 @@ MediaClient::CreateLocalVideoTrack(const std::string& track_params) {
                           signaling_thread_, worker_thread_,
                           webrtc::VideoTrack::Create(track_id, desktop_device_,
                                                      worker_thread_));
-
+					  #endif
                       return video_track;
 
                       break;
