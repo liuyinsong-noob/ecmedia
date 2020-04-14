@@ -2348,7 +2348,24 @@ bool MediaClient::SetAudioRecordingDevice(int i) {
   else
     return false;
 }
-bool MediaClient::SetAudioPlayoutDevice(int i) {
+
+
+bool MediaClient::SetAudioRecordingDeviceOnFlight(int i) {
+  rtc::scoped_refptr<webrtc::AudioState> audio_state = channel_manager_->media_engine()->voice().GetAudioState();
+  if (audio_state->SetRecordingDevice(i) == -1)
+    return false;
+  return true;
+}
+
+bool MediaClient::SetAudioPlayoutDeviceOnFlight(int i) {
+  rtc::scoped_refptr<webrtc::AudioState> audio_state =
+      channel_manager_->media_engine()->voice().GetAudioState();
+  if (audio_state->SetPlayoutDevice(i) == -1)
+    return false;
+  return true;
+}
+
+  bool MediaClient::SetAudioPlayoutDevice(int i) {
   CreateAudioDevice();
   EC_CHECK_VALUE((own_adm != nullptr), false);
   int num_devices = own_adm->PlayoutDevices();

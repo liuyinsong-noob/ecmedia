@@ -374,7 +374,19 @@ bool ECBaseManager::SetAudioRecordingDevice(int index) {
                 << ", index: " << index;
   return MediaClient::GetInstance()->SetAudioRecordingDevice(index);
 }
+bool ECBaseManager::SetAudioRecordingDeviceOnFlight(int index) {
+  RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__ << "(),"
+                << " begin... "
+                << ", index: " << index;
+  return MediaClient::GetInstance()->SetAudioRecordingDeviceOnFlight(index);
+}
 
+bool ECBaseManager::SetAudioPlayoutDeviceOnFlight(int index) {
+  RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__ << "(),"
+                << " begin... "
+                << ", index: " << index;
+  return MediaClient::GetInstance()->SetAudioPlayoutDeviceOnFlight(index);
+}
 bool ECBaseManager::SetAudioPlayoutDevice(int index) {
   RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__ << "(),"
                 << " begin... "
