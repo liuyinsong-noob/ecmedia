@@ -2620,7 +2620,8 @@ bool MediaClient::SetAudioPlayoutDeviceOnFlight(int i) {
   return true;
 }
 
-  bool MediaClient::SetAudioPlayoutDevice(int i) {
+  bool MediaClient::SetAudioPlayoutDevice(int index) {
+#ifdef WEBRTC_WIN
   API_LOG(INFO) << "index: " << index;
   CreateAudioDevice();
   EC_CHECK_VALUE((own_adm != nullptr), false);
@@ -2637,6 +2638,9 @@ bool MediaClient::SetAudioPlayoutDeviceOnFlight(int i) {
     return true;
   } else
     return false;
+#else 
+     return true;
+#endif
 }
 
 int MediaClient::GetCaptureDevice(int index,
