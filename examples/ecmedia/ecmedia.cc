@@ -263,11 +263,15 @@ ECMEDIA_API char* ECMedia_get_audio_device_list(int* len) {
 }
 
 ECMEDIA_API bool ECMedia_set_audio_recording_device(int index) {
-  return g_ECMedia->SetAudioRecordingDevice(index);
+  RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__  << "(),"<< " begins... "
+                << ", index: " << index ;
+  return g_ECMedia->SetAudioRecordingDeviceOnFlight(index);
 }
 
 ECMEDIA_API bool ECMedia_set_audio_playout_device(int index) {
-  return g_ECMedia->SetAudioPlayoutDevice(index);
+  RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__  << "(),"<< " begins... "
+                << ", index: " << index ;
+  return g_ECMedia->SetAudioPlayoutDeviceOnFlight(index);
 //  #define TEST_SELECT_CAMERA
 #ifdef TEST_SELECT_CAMERA
   {

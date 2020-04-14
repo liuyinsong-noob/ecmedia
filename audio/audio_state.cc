@@ -151,6 +151,37 @@ void AudioState::SetRecording(bool enabled) {
   }
 }
 
+int32_t AudioState::SetRecordingDevice(uint16_t index) {
+  RTC_LOG(INFO) << "SetRecordingDevice(" << index << ")";
+  RTC_DCHECK(thread_checker_.IsCurrent());
+  if (config_.audio_device_module->StopRecording() == -1)
+    return -1;
+  if (config_.audio_device_module->SetRecordingDevice(index) == -1)
+    return -1;
+  if (config_.audio_device_module->InitRecording() == -1)
+    return -1;
+  if (config_.audio_device_module->StartRecording() == -1)
+    return -1;
+
+  return 0;
+}
+
+int32_t AudioState::SetPlayoutDevice(uint16_t index) {
+  RTC_LOG(INFO) << "SetPlayoutDevice(" << index << ")";
+  RTC_DCHECK(thread_checker_.IsCurrent());
+  if (config_.audio_device_module->StopPlayout() == -1)
+    return -1;
+  if (config_.audio_device_module->SetPlayoutDevice(index) == -1)
+    return -1;
+  if (config_.audio_device_module->InitPlayout() == -1)
+    return -1;
+  if(config_.audio_device_module->StartPlayout() == -1)
+	  return -1;
+
+  return 0;
+}
+
+
 AudioState::Stats AudioState::GetAudioInputStats() const {
   RTC_DCHECK(thread_checker_.IsCurrent());
   const voe::AudioLevel& audio_level = audio_transport_.audio_level();

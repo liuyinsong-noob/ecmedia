@@ -714,6 +714,9 @@ class MediaClient : public sigslot::has_slots<> {
 /*****************************************************************************/
   bool SetAudioRecordingDevice(int index);
 
+  bool SetAudioRecordingDeviceOnFlight(int index);
+  bool SetAudioPlayoutDeviceOnFlight(int index);
+
  /****************************************************************************/
  /*** 函数名: 设置播放设备                                                 ***/
  /*** 功能:   根据索引选择需要使用播放设备                                 ***/
