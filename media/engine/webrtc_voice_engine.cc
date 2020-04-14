@@ -35,7 +35,9 @@
 #include "modules/audio_processing/include/audio_processing.h"
 #include "rtc_base/arraysize.h"
 #include "rtc_base/byte_order.h"
+#ifdef WIN32
 #include "rtc_base/configfile.h"
+#endif
 #include "rtc_base/constructor_magic.h"
 #include "rtc_base/experiments/field_trial_parser.h"
 #include "rtc_base/experiments/field_trial_units.h"
@@ -264,8 +266,10 @@ void WebRtcVoiceEngine::Init() {
   // Connect the ADM to our audio path.
   adm()->RegisterAudioCallback(audio_state()->audio_transport());
 
+  #ifdef WIN32
   // Set default engine options.
   {
+
     CConfigFile cfgfile("apmconfig.ini");  //AVRONG_DEBUG_DUMP
     char opt_echo_cancellation[10];
     char opt_auto_gain_control[10];
@@ -310,6 +314,7 @@ void WebRtcVoiceEngine::Init() {
                      opt_tx_agc_digital_compression_gain);
     cfgfile.GetValue("OPTIONS", "tx_agc_limiter", opt_tx_agc_limiter);
 
+
     AudioOptions options;
     options.echo_cancellation =
         strcmp(opt_echo_cancellation, "true") ? false : true;
@@ -349,7 +354,7 @@ void WebRtcVoiceEngine::Init() {
     bool error = ApplyOptions(options);
     RTC_DCHECK(error);
   }
-
+#endif
   initialized_ = true;
 }
 
@@ -568,6 +573,7 @@ bool WebRtcVoiceEngine::ApplyOptions(const AudioOptions& options_in) {
         new webrtc::ExperimentalNs(*experimental_ns_));
   }
 
+#ifdef WIN32
   CConfigFile cfgfile("apmconfig.ini");     //AVRONG_DEBUG_DUMP
   char aec_mobile_mode[10];
   char aec_legacy_moderate_suppression_level[10];
@@ -678,6 +684,7 @@ bool WebRtcVoiceEngine::ApplyOptions(const AudioOptions& options_in) {
 
   apm()->SetExtraOptions(config);
   apm()->ApplyConfig(apm_config);
+ #endif
   return true;
 }
 

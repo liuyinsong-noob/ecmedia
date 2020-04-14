@@ -1203,6 +1203,7 @@ bool MediaClient::SelectVideoSourceOnFlight(int channelid,
                                             int device_index,
                                             const std::string& track_params) {
   bool bResult = false;
+  #if defined WEBRTC_WIN
   bResult = signaling_thread_->Invoke<bool>(RTC_FROM_HERE, [this, channelid,
                                                             device_index,
                                                             track_params] {
@@ -1234,6 +1235,7 @@ bool MediaClient::SelectVideoSourceOnFlight(int channelid,
     RTC_LOG(INFO) << "---ylr SelectVideoSourceOnFlight on flight ok.";
   else
     RTC_LOG(INFO) << "---ylr SelectVideoSourceOnFlight on flight fail!";
+#endif
   return bResult;
   return false;
 }

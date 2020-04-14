@@ -9,7 +9,7 @@
 
 #include <fstream>
 #include <iostream>
-
+#ifdef WIN32
 using namespace std;
 
 #define MAX_LINE_LENGTH 300
@@ -67,5 +67,6 @@ public:     //ЙЋга
 	short  IsOpen() { return m_IsOpen; }
 
 };
+#endif
 
 #endif //__CONFIGFILE_H__

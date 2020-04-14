@@ -1,6 +1,6 @@
-#include "ConfigFile.h"
+#include "configfile.h"
 #include <string.h>
-
+#ifdef WIN32
 //----------------------------------------------------------------------------
 // 函数原型： CConfigFile::CConfigFile()
 // 函数功能： CConfigFile 构造函数
@@ -230,3 +230,4 @@ short CConfigFile::GetContent(const char *pStr, const char *ValueName, char *Ret
 
 	return IS_VALUE;
 }
+#endif

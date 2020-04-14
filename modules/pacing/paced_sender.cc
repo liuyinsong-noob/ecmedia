@@ -254,22 +254,21 @@ void PacedSender::InsertPacket(RtpPacketSender::Priority priority,
   int64_t now_ms = TimeMilliseconds();
   prober_.OnIncomingPacket(bytes);
   
-  auto it = ssrc_time_.find(ssrc);
-  if(it != ssrc_time_.end()){
-    if(retransmission){
-      auto it_seq = nack_time_.find(sequence_number);
-        if(it_seq != nack_time_.end()){
-          if(now_ms - it_seq->second < 100)
-            return;
-          else
-            it_seq->second = now_ms;
-        }
-       (it->second)[sequence_number] = now_ms;
-    }else {
-       (it->second)[sequence_number] = now_ms;
+    auto it = ssrc_time_.find(ssrc);
+  if (it != ssrc_time_.end()) {
+    auto it_seq = (it->second).find(sequence_number);
+    if (it_seq != (it->second).end()) {
+      if (retransmission) {
+        if (now_ms - it_seq->second < 100)
+          return;
+      }
+      it_seq->second = now_ms;
+    } else {
+      (it->second).insert(std::make_pair(sequence_number, now_ms));
     }
-  }else
-    ssrc_time_[ssrc][sequence_number] = now_ms ;
+  } else {
+    ssrc_time_[ssrc][sequence_number] = now_ms;
+  }
   
   if (capture_time_ms < 0)
     capture_time_ms = now_ms;
