@@ -1887,11 +1887,13 @@ bool MediaClient::FilterVideoCodec(const VideoCodecConfig& config,
                name.compare(cricket::kUlpfecCodecName) == 0) {
       it++;
     } else if (name.compare(cname) == 0 ) {
-      if(it->id == config.payloadType)
-        find_codec = true;
-      else
-        vc = *it;
-      it++;
+		  if (it->id == config.payloadType) {
+			find_codec = true;
+			it++;
+		  }else {
+			vc = *it;
+			it = vec.erase(it);
+		  }
     } else if (name.compare("rtx") == 0 && it->id == config.payloadType + 1) {
       it++;
     } else {
