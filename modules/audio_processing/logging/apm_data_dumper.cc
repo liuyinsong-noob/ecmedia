@@ -12,6 +12,10 @@
 
 #include "rtc_base/strings/string_builder.h"
 
+#ifdef WIN32
+#include "rtc_base/configfile.h"
+#endif
+
 // Check to verify that the define is properly set.
 #if !defined(WEBRTC_APM_DEBUG_DUMP) || \
     (WEBRTC_APM_DEBUG_DUMP != 0 && WEBRTC_APM_DEBUG_DUMP != 1)
@@ -51,8 +55,20 @@ std::string FormFileName(const char* output_dir,
 }  // namespace
 
 #if WEBRTC_APM_DEBUG_DUMP == 1
+bool ApmDataDumper::recording_activated_ = false; //AVRONG_DEBUG_DUMP
+char ApmDataDumper::output_dir_[] = ".";          // AVRONG_DEBUG_DUMP
+
 ApmDataDumper::ApmDataDumper(int instance_index)
-    : instance_index_(instance_index) {}
+    : instance_index_(instance_index) {
+#ifdef WIN32
+  CConfigFile cfgfile("apmconfig.ini");  // AVRONG_DEBUG_DUMP
+  char apm_dump_enable[10];
+  cfgfile.GetValue("OPTIONS", "apm_dump_enable", apm_dump_enable);
+  recording_activated_ = strcmp(apm_dump_enable, "true") ? false : true;
+#else
+  recording_activated_ = false;
+#endif
+}
 #else
 ApmDataDumper::ApmDataDumper(int instance_index) {}
 #endif
@@ -60,8 +76,6 @@ ApmDataDumper::ApmDataDumper(int instance_index) {}
 ApmDataDumper::~ApmDataDumper() = default;
 
 #if WEBRTC_APM_DEBUG_DUMP == 1
-bool ApmDataDumper::recording_activated_ = true; //false; //AVRONG_DEBUG_DUMP
-char ApmDataDumper::output_dir_[] = ".";  //AVRONG_DEBUG_DUMP
 
 FILE* ApmDataDumper::GetRawFile(const char* name) {
   std::string filename = FormFileName(output_dir_, name, instance_index_,

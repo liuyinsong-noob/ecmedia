@@ -94,9 +94,9 @@ declare_args() {
 
   # Selects whether debug dumps for the audio processing module
   # should be generated.
-  apm_debug_dump = false
+  apm_debug_dump = true
   
-  agc_debug_dump = false
+  agc_debug_dump = true
   
   avrong_debug_dump = false
 
