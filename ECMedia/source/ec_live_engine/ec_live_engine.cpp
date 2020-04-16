@@ -94,6 +94,7 @@ namespace yuntongxunwebrtc {
 
     int ECLiveEngine::stopPublish() {
         WriteLogToFile("[ECLiveEngine INFO] %s: start", __FUNCTION__);
+		yuntongxunwebrtc::CritScope lock(&rtmp_lock);
         if(publiser_running_ && !puller_runnig_) {
             int ret = -1;
             ret = ec_media_core_->stopCapture();
@@ -140,6 +141,7 @@ namespace yuntongxunwebrtc {
 
     int ECLiveEngine::stopPlay() {
         WriteLogToFile("[ECLiveEngine INFO] %s: start", __FUNCTION__);
+		yuntongxunwebrtc::CritScope lock(&rtmp_lock);
         int ret = -1;
         if(puller_runnig_ && !publiser_running_) {
             if(media_puller_) {

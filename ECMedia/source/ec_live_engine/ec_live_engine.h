@@ -52,6 +52,7 @@ namespace yuntongxunwebrtc {
         ECRtmpPublisher*            rtmp_publisher_;
         EC_MediaPullerBase*         media_puller_;
         EC_RTMP_BitrateController*  bitrate_controller_;
+		CriticalSection rtmp_lock;
 
         bool publiser_running_;
         bool puller_runnig_;

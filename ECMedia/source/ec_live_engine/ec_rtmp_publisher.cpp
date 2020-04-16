@@ -66,6 +66,7 @@ namespace yuntongxunwebrtc {
     
     void ECRtmpPublisher::stop() {
         WriteLogToFile("[ECRtmpPublisher INFO] %s: begin", __FUNCTION__);
+		yuntongxunwebrtc::CritScope lock(&rtmp_lock);
         if(running_) {
             running_ = false;
             srs_rtmp_disconnect_server(rtmp_);
@@ -162,6 +163,7 @@ namespace yuntongxunwebrtc {
     }
     
     void ECRtmpPublisher::GotH264Nal(uint8_t* pData, int nLen, bool isKeyFrame, uint32_t ts) {
+		yuntongxunwebrtc::CritScope lock(&rtmp_lock);
         static int a = 0;
         if( a >= 3) {
             return;
@@ -209,7 +211,7 @@ namespace yuntongxunwebrtc {
 
 	bool ECRtmpPublisher::run() {
 		while (running_) {
-			if (rtmp_ != NULL)
+			if (rtmp_ != NULL && running_)
 			{
 				switch (rtmp_status_) {
 				case RS_STM_Init:
@@ -292,6 +294,7 @@ namespace yuntongxunwebrtc {
 	}
 
     int ECRtmpPublisher::doPushRtmpPacket() {
+		yuntongxunwebrtc::CritScope lock(&rtmp_lock);
         if(lst_enc_data_.size() <= 0) {
             cacher_update_event_->Wait(10);
             return 0;

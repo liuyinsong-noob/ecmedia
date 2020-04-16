@@ -58,6 +58,7 @@ namespace yuntongxunwebrtc {
         EventTimerWrapper* cacher_update_event_;
         bool running_;
         void* rtmp_;
+		CriticalSection rtmp_lock;
 
         RTMP_STATUS rtmp_status_;
         bool need_keyframe_;

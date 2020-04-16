@@ -78,6 +78,7 @@ namespace yuntongxunwebrtc {
     }
     
     void EC_RtmpPuller::stop() {
+		yuntongxunwebrtc::CritScope lock(&rtmp_lock);
         if(running_) {
             running_ = false;
             srs_rtmp_disconnect_server(rtmp_);
@@ -114,7 +115,8 @@ namespace yuntongxunwebrtc {
                 switch (rtmp_status_) {
                     case RS_PLY_Init:
                     {
-                        if(callback_){
+						//yuntongxunwebrtc::CritScope lock(&rtmp_lock);
+                        if(callback_ && running_){
                             callback_(EC_LIVE_CONNECTING);
                         }
                         if (srs_rtmp_handshake(rtmp_) == 0) {
@@ -132,6 +134,7 @@ namespace yuntongxunwebrtc {
                         break;
                     case RS_PLY_Handshaked:
                     {
+						yuntongxunwebrtc::CritScope lock(&rtmp_lock);
                         if (srs_rtmp_connect_app(rtmp_) == 0) {
                             WriteLogToFile("SRS: connect vhost/app ok.");
                             rtmp_status_ = RS_PLY_Connected;
@@ -147,6 +150,7 @@ namespace yuntongxunwebrtc {
                         break;
                     case RS_PLY_Connected:
                     {
+						//yuntongxunwebrtc::CritScope lock(&rtmp_lock);
                         if (srs_rtmp_play_stream(rtmp_) == 0) {
                             WriteLogToFile("SRS: play stream ok.");
                             rtmp_status_ = RS_PLY_Played;
@@ -165,6 +169,7 @@ namespace yuntongxunwebrtc {
                         break;
                     case RS_PLY_Played:
                     {
+						yuntongxunwebrtc::CritScope lock(&rtmp_lock);
 						int ret = doReadRtmpData();
                         // todo: 根据 ret 返回值，判断错误类型，决定是否停止读取流
                         // bugfix: #128169
@@ -299,6 +304,7 @@ namespace yuntongxunwebrtc {
         unsigned char *payloadData;
         unsigned int payloadLen = 0;
         
+		yuntongxunwebrtc::CritScope lock(&rtmp_lock);
         if(codecId == 7 ) {
             std::vector<uint8_t> sps;
             std::vector<uint8_t> pps;

@@ -82,6 +82,7 @@ namespace yuntongxunwebrtc {
         ThreadWrapper* rtmpPullingThread_;
         bool running_;
         void* rtmp_;
+		CriticalSection rtmp_lock;
 
         RTMPLAYER_STATUS rtmp_status_;
         EC_AVCacher* av_packet_cacher;
