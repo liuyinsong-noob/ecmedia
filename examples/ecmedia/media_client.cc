@@ -484,7 +484,7 @@ bool MediaClient::CreateCall(webrtc::RtcEventLog* event_log) {
 
   const int kMinBandwidthBps = 30000;
   const int kStartBandwidthBps = 800000;
-  const int kMaxBandwidthBps = 1000000;
+  const int kMaxBandwidthBps = 3000000;
 
   EC_CHECK_VALUE(channel_manager_, false);
   EC_CHECK_VALUE(channel_manager_->media_engine(), false);
@@ -731,17 +731,18 @@ bool MediaClient::CreateVideoChannel(const std::string& settings,
   vidoe_send_params.mid = mid;
 
   // add bu yukening
-  const int kMaxBandwidthBps = 1000000;
+  const int kMaxBandwidthBps = 3000000;
   vidoe_send_params.max_bandwidth_bps = kMaxBandwidthBps;
   //
   //config.codecName = "h264";
   //config.payloadType = 104;
   channel_manager_->GetSupportedVideoCodecs(&vidoe_send_params.codecs);
   FilterVideoCodec(config, vidoe_send_params.codecs);
-  if (vidoe_send_params.codecs.size() > 0) {
+  /*if (vidoe_send_params.codecs.size() > 0) {
     if (config.isScreenShare) {
-	  vidoe_send_params.codecs[0].params["codec_width"] =  getStrFromInt(config.width);
-      vidoe_send_params.codecs[0].params["codec_height"] = getStrFromInt(config.height);
+     // vidoe_send_params.max_bandwidth_bps = 2000000;
+	  vidoe_send_params.codecs[0].params["codec_width"] =  getStrFromInt(1920);
+      vidoe_send_params.codecs[0].params["codec_height"] = getStrFromInt(1080);
 	  vidoe_send_params.codecs[0].params["max_frame_rate"] = getStrFromInt(config.maxFramerate);
       vidoe_send_params.codecs[0].params["isScreenShare"] = "true";
      
@@ -749,9 +750,9 @@ bool MediaClient::CreateVideoChannel(const std::string& settings,
       vidoe_send_params.codecs[0].params["isScreenShare"] = "false";
     }
      
-  }
-  // channel_manager_->GetSupportedVideoRtpHeaderExtensions(
-  //    &vidoe_send_params.extensions);
+  }*/
+   channel_manager_->GetSupportedVideoRtpHeaderExtensions(
+     &vidoe_send_params.extensions);
 
   /* if (vidoe_send_params.codecs.size() > 0) {
      vidoe_send_params.codecs.at(0).params[cricket::kCodecParamMinBitrate] =
@@ -804,8 +805,8 @@ bool MediaClient::CreateVideoChannel(const std::string& settings,
   signaling_thread_->Invoke<void>(RTC_FROM_HERE, [&] {
     channel_manager_->GetSupportedVideoCodecs(&video_recv_params.codecs);
     FilterVideoCodec(config, video_recv_params.codecs);
-  //  channel_manager_->GetSupportedVideoRtpHeaderExtensions(
-  //      &video_recv_params.extensions);
+    channel_manager_->GetSupportedVideoRtpHeaderExtensions(
+        &video_recv_params.extensions);
   });
 
   bOk = worker_thread_->Invoke<bool>(RTC_FROM_HERE, [&] {
@@ -830,7 +831,11 @@ bool MediaClient::CreateVideoChannel(const std::string& settings,
                                                   video_channel_);
   }
   mVideoChannels_[channelId] = video_channel_;
-
+  if (config.isScreenShare)
+ {
+     
+   SetVideoDegradationMode(channelId, webrtc::DegradationPreference::MAINTAIN_RESOLUTION);
+   }
   return bOk;
 }
 
@@ -951,7 +956,7 @@ bool MediaClient::CreateVoiceChannel(const std::string& settings,
   }
 
   // add bu yukening
-  const int kMaxBandwidthBps = 1000000;
+  const int kMaxBandwidthBps = 3000000;
   sendParams.max_bandwidth_bps = kMaxBandwidthBps;
   //
 
@@ -3457,7 +3462,7 @@ void ECDesktopCapture::OnMessage(rtc::Message* msg) {
 void ECDesktopCapture::CaptureFrame() {
   capturer_->CaptureFrame();
   rtc::Location loc(__FUNCTION__, __FILE__);
-  rtc::Thread::Current()->PostDelayed(loc, 30, this, 0);
+  rtc::Thread::Current()->PostDelayed(loc, 60, this, 0);
 }
 #endif
 }  // namespace win_desk

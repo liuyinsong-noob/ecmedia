@@ -30,7 +30,9 @@ class X264EncoderImpl : public H264Encoder {
 
     void SetStreamState(bool send_stream);
   };
-
+#ifdef SAVE_ENCODEDE_FILE
+  static int encoder_seq_;
+#endif
   explicit X264EncoderImpl(const cricket::VideoCodec& codec);
   ~X264EncoderImpl() override;
 

@@ -22,6 +22,9 @@
 #endif
 
 namespace webrtc {
+#ifdef SAVE_ENCODEDE_FILE
+	int X264EncoderImpl::encoder_seq_ = 0;
+#endif
 namespace {
 // QP scaling thresholds.
 static const int kLowH264QpThreshold = 24;
@@ -145,6 +148,9 @@ X264EncoderImpl::X264EncoderImpl(const cricket::VideoCodec& codec)
       num_temporal_layers_(1),
       tl0sync_limit_(0),
 		count_(0) {
+#ifdef SAVE_ENCODEDE_FILE
+	encoder_seq_++;
+#endif
   RTC_CHECK(absl::EqualsIgnoreCase(codec.name, cricket::kH264CodecName));
   std::string packetization_mode_string;
   if (codec.GetParam(cricket::kH264FmtpPacketizationMode,
@@ -215,7 +221,7 @@ int32_t X264EncoderImpl::InitEncode(const VideoCodec* inst,
 #ifdef SAVE_ENCODEDE_FILE
   for (int tid = 0; tid < num_temporal_layers_; tid++) {
     std::string file_name("x264svc_t");
-    file_name += std::to_string(tid) + std::string(".264");
+    file_name += std::to_string(encoder_seq_)+ " "+std::to_string(i) + std::string(".264");
     std::ofstream ofile(file_name, std::ios::binary | std::ios::out);
     if (!ofile) {
       RTC_LOG(LS_INFO) << "failed to open file: " << file_name;

@@ -269,12 +269,12 @@ class MediaClient : public sigslot::has_slots<> {
     bool isScreenShare = false;
     int fecType = 1;  // red and ulp fec
     int payloadType = 96;
-    int width = 640;
-    int height = 480;
+    int width = 1280;
+    int height = 720;
     int minBitrateKps = 300;
     int startBitrateKps = 600;
     int maxBitrateKps = 1700;
-    int maxFramerate = 30;
+    int maxFramerate =  15;
     int codecType = 1;  // kVideoCodecVP8;
     int maxQp = 56;
     std::string codecName = "VP8";

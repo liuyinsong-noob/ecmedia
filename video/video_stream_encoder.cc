@@ -660,10 +660,10 @@ void VideoStreamEncoder::ReconfigureEncoder() {
   std::string sScreen =
       encoder_config_.video_format.parameters.find("isScreenShare")->second;
   rtc::FromString(sScreen, &isScreen);
-   std::vector<VideoStream> streams;
+  std::vector<VideoStream> streams;
   if (isScreen) {
    streams=   encoder_config_.video_stream_factory->CreateEncoderStreams(
-       1280, 720, encoder_config_);
+     1280,720, encoder_config_);
   } else {
     streams= encoder_config_.video_stream_factory->CreateEncoderStreams(
      last_frame_info_->width, last_frame_info_->height, encoder_config_);
@@ -761,7 +761,7 @@ void VideoStreamEncoder::ReconfigureEncoder() {
       codec_info_ = settings_.encoder_factory->QueryVideoEncoder(
           encoder_config_.video_format);
     }
-    if (isScreen) {
+   if (isScreen) {
       std::string swidth =
           encoder_config_.video_format.parameters.find("codec_width")->second;
       rtc::FromString(swidth, &send_codec_.width);
