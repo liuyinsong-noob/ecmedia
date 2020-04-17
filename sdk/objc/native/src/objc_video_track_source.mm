@@ -56,6 +56,10 @@ bool ObjCVideoTrackSource::remote() const {
   return false;
 }
 
+bool ObjCVideoTrackSource::apply_rotation(){
+  return true;
+}
+
 void ObjCVideoTrackSource::OnOutputFormatRequest(int width, int height, int fps) {
   cricket::VideoFormat format(width, height, cricket::VideoFormat::FpsToInterval(fps), 0);
   video_adapter()->OnOutputFormatRequest(format);
@@ -115,7 +119,6 @@ void ObjCVideoTrackSource::OnCapturedFrame(RTCVideoFrame *frame) {
     buffer = I420Buffer::Rotate(*buffer->ToI420(), rotation);
     rotation = kVideoRotation_0;
   }
-
   OnFrame(VideoFrame::Builder()
               .set_video_frame_buffer(buffer)
               .set_rotation(rotation)
