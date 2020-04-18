@@ -147,33 +147,37 @@ std::string getStrFromInt(int n) {
 }
 
 void ReadMediaConfig(const char* filename) {
-  char buf[16 * 1024] = {0};
+ /* char buf[16 * 1024] = {0};
   webrtc::FileWrapper fr = webrtc::FileWrapper::OpenReadOnly(filename);
   if (!fr.is_open())
     return;
 
   fr.Read(buf, sizeof(buf) - 1);
-
- /* Json::Reader reader;
+  std::string ccmode, h264_encoder = "openh264";*/
+  /*Json::Reader reader;
   Json::Value config;
   if (!reader.parse(buf, config)) {
     return;
   }
-  std::string ccmode, h264_encoder;
+
   rtc::GetStringFromJsonObject(config, "Congestion-Control-Mode", &ccmode);
-  rtc::GetStringFromJsonObject(config, "H264-Encoder", &h264_encoder);*/
-  std::string ccmode, h264_encoder;
-  ccmode = "bbr";
-  h264_encoder = "x264";
-  static std::string trail_string;
+  rtc::GetStringFromJsonObject(config, "H264-Encoder", &h264_encoder);
+  */
+ char ccmode[20] = {0};
+ char h264_encoder[20] = {0};
+  GetPrivateProfileStringA("video", "ccmode", "",ccmode, sizeof(ccmode), ".\\ecmedia.cfg");
+  GetPrivateProfileStringA("video", "h264_encoder", "",h264_encoder, sizeof(h264_encoder), ".\\ecmedia.cfg");
+   static std::string trail_string;
   trail_string.append("EC-Congestion-Control-Mode");
-  if (ccmode == "gcc") {
+//  if (ccmode == "gcc") {
+    if (!strcmp(ccmode,"gcc")) {
     trail_string.append("/gcc/");
   } else
     trail_string.append("/bbr/");
 
   trail_string.append("EC-H264-Encoder");
-  if (ccmode == "openh264") {
+ // if (h264_encoder == "openh264") {
+    if (!strcmp(h264_encoder,"openh264")) {
     trail_string.append("/openh264/");
   } else
     trail_string.append("/x264/");
@@ -731,26 +735,14 @@ bool MediaClient::CreateVideoChannel(const std::string& settings,
   vidoe_send_params.mid = mid;
 
   // add bu yukening
-  const int kMaxBandwidthBps = 3000000;
+  const int kMaxBandwidthBps = 2000000;
   vidoe_send_params.max_bandwidth_bps = kMaxBandwidthBps;
   //
   //config.codecName = "h264";
   //config.payloadType = 104;
   channel_manager_->GetSupportedVideoCodecs(&vidoe_send_params.codecs);
   FilterVideoCodec(config, vidoe_send_params.codecs);
-  /*if (vidoe_send_params.codecs.size() > 0) {
-    if (config.isScreenShare) {
-     // vidoe_send_params.max_bandwidth_bps = 2000000;
-	  vidoe_send_params.codecs[0].params["codec_width"] =  getStrFromInt(1920);
-      vidoe_send_params.codecs[0].params["codec_height"] = getStrFromInt(1080);
-	  vidoe_send_params.codecs[0].params["max_frame_rate"] = getStrFromInt(config.maxFramerate);
-      vidoe_send_params.codecs[0].params["isScreenShare"] = "true";
-     
-    } else {
-      vidoe_send_params.codecs[0].params["isScreenShare"] = "false";
-    }
-     
-  }*/
+
    channel_manager_->GetSupportedVideoRtpHeaderExtensions(
      &vidoe_send_params.extensions);
 
@@ -831,11 +823,7 @@ bool MediaClient::CreateVideoChannel(const std::string& settings,
                                                   video_channel_);
   }
   mVideoChannels_[channelId] = video_channel_;
-  if (config.isScreenShare)
- {
-     
-   SetVideoDegradationMode(channelId, webrtc::DegradationPreference::MAINTAIN_RESOLUTION);
-   }
+
   return bOk;
 }
 
@@ -1872,7 +1860,7 @@ bool MediaClient::FilterAudioCodec(const AudioCodecConfig& config,
                 << " end... ";
   return vec.size() > 0;
 }
-
+bool isFirst = true;
 bool MediaClient::FilterVideoCodec(const VideoCodecConfig& config,
                                    std::vector<cricket::VideoCodec>& vec) {
   RTC_LOG(INFO) << __FUNCTION__ << "(),"
@@ -1897,7 +1885,10 @@ bool MediaClient::FilterVideoCodec(const VideoCodecConfig& config,
 			find_codec = true;
 			it++;
 		  }else {
+           if (isFirst){
 			vc = *it;
+            isFirst = false;
+			}
 			it = vec.erase(it);
 		  }
     } else if (name.compare("rtx") == 0 && it->id == config.payloadType + 1) {
@@ -3169,6 +3160,54 @@ void VideoRenderer::OnFrame(const webrtc::VideoFrame& video_frame) {
 }
 
 void VideoRenderer::Paint() {
+  if (image_ != nullptr && handle() != nullptr && hDC_ != nullptr) {
+    int height = abs(bmi_.bmiHeader.biHeight);
+    int width = bmi_.bmiHeader.biWidth;
+
+    RECT rc;
+    ::GetClientRect(handle(), &rc);
+
+    HDC dc_mem = ::CreateCompatibleDC(hDC_);
+    ::SetStretchBltMode(dc_mem, HALFTONE);
+
+    // Set the map mode so that the ratio will be maintained for us.
+    HDC all_dc[] = {hDC_, dc_mem};
+    for (size_t i = 0; i < arraysize(all_dc); ++i) {
+      SetMapMode(all_dc[i], MM_ISOTROPIC);
+      SetWindowExtEx(all_dc[i], width, height, NULL);
+      SetViewportExtEx(all_dc[i], rc.right, rc.bottom, NULL);
+    }
+
+    HBITMAP bmp_mem = ::CreateCompatibleBitmap(hDC_, rc.right, rc.bottom);
+    HGDIOBJ bmp_old = ::SelectObject(dc_mem, bmp_mem);
+
+    POINT logical_area = {rc.right, rc.bottom};
+    DPtoLP(hDC_, &logical_area, 1);
+
+    HBRUSH brush = ::CreateSolidBrush(RGB(0, 0, 0));
+    RECT logical_rect = {0, 0, logical_area.x, logical_area.y};
+    ::FillRect(dc_mem, &logical_rect, brush);
+    ::DeleteObject(brush);
+
+    int x = (logical_area.x / 2) - (width / 2);
+    int y = (logical_area.y / 2) - (height / 2);
+    x = x > 0 ? x : 0;
+    y = y > 0 ? y : 0;
+
+    StretchDIBits(dc_mem, x, y, width, height, 0, 0, width, height,
+                  image_.get(), &bmi_, DIB_RGB_COLORS, SRCCOPY);
+
+    BitBlt(hDC_, 0, 0, logical_area.x, logical_area.y, dc_mem, 0, 0, SRCCOPY);
+   /* RTC_LOG(INFO) << __FUNCTION__ << "()"
+                  << "x:" << x << " y:" << y << "  width:" << width
+                  << " height:" << height<<"logica_y;*/
+    ::SelectObject(dc_mem, bmp_old);
+    ::DeleteObject(bmp_mem);
+    ::DeleteDC(dc_mem);
+  }
+}
+
+/*void VideoRenderer::Paint() {
   // RTC_LOG(INFO) << __FUNCTION__  << "() "<< " begin...";
   if (image_ != nullptr && handle() != nullptr && hDC_ != nullptr) {
     int srcWidth = bmi_.bmiHeader.biWidth;
@@ -3184,8 +3223,11 @@ void VideoRenderer::Paint() {
 
       int dstWidth = rectWnd.right - rectWnd.left;
       int dstHeight = rectWnd.bottom - rectWnd.top;
-
-      SetStretchBltMode(hDC_, COLORONCOLOR);
+      RTC_LOG(INFO) << __FUNCTION__ << "() "<< " dstWidth..." << dstWidth << " dstHeight:" << dstHeight<<"srcWidth"<<srcWidth<<"srcHeight"<<srcHeight;
+      SetStretchBltMode(hDC_, WHITEONBLACK);
+      if (dstWidth == srcWidth)
+        ::StretchBlt(hDC_, 0, 0, dstWidth, srcHeight, hMemDC, 0, 0, srcWidth,
+                   srcHeight, SRCCOPY);
       ::StretchBlt(hDC_, 0, 0, dstWidth, dstHeight, hMemDC, 0, 0, srcWidth,
                    srcHeight, SRCCOPY);
 
@@ -3194,7 +3236,7 @@ void VideoRenderer::Paint() {
       DeleteObject(hBitmap);
     }
   }
-}
+}*/
 
 ///////////////////////////////////RenderWndsManager/////////////////////////////////
 

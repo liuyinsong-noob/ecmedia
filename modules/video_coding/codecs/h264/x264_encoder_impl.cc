@@ -13,9 +13,10 @@
 #include "rtc_base/time_utils.h"
 // before using x264-svc, must define macro RLCLOUD
 
-#define RLCLOUD 1
-
-#ifdef RLCLOUD
+//#define RLCLOUD 1
+#define _RLCLOUD 1
+#ifdef _RLCLOUD
+//#ifdef RLCLOUD
 #include "third_party/libx264svc_win/x86/include/x264.h"
 #else
 #include "third_party/libx264_win/x86/include/x264.h"
@@ -221,7 +222,7 @@ int32_t X264EncoderImpl::InitEncode(const VideoCodec* inst,
 #ifdef SAVE_ENCODEDE_FILE
   for (int tid = 0; tid < num_temporal_layers_; tid++) {
     std::string file_name("x264svc_t");
-    file_name += std::to_string(encoder_seq_)+ " "+std::to_string(i) + std::string(".264");
+    file_name += std::to_string(tid) + std::string(".264");
     std::ofstream ofile(file_name, std::ios::binary | std::ios::out);
     if (!ofile) {
       RTC_LOG(LS_INFO) << "failed to open file: " << file_name;
@@ -254,7 +255,7 @@ int32_t X264EncoderImpl::InitEncode(const VideoCodec* inst,
     }
 #ifdef SAVE_ENCODEDE_FILE
     std::string file_name("x264svc_");
-    file_name += std::to_string(i) + std::string(".264");
+    file_name += std::to_string(encoder_seq_) + " " + std::to_string(i) + std::string(".264");
     std::ofstream ofile(file_name, std::ios::binary | std::ios::out);
     if (!ofile) {
       RTC_LOG(LS_INFO) << "failed to open file: " << file_name;
@@ -480,8 +481,15 @@ int32_t X264EncoderImpl::Encode(
     x264_nal_t* pnals_out = nullptr;
     x264_picture_t pic_out;
     int num_nals = 0;
-    int enc_ret = x264_encoder_encode(encoders_[i], &pnals_out, &num_nals,
+    int enc_ret = -1; 
+    if (frame_buffer->width() == 1920) {
+      enc_ret = x264_encoder_encode(encoders_[i], &pnals_out, &num_nals,
+                                        &pictures_[i], &pic_out);
+    } else {
+    
+     enc_ret = x264_encoder_encode(encoders_[i], &pnals_out, &num_nals,
                                       &pictures_[i], &pic_out);
+	}
     if (enc_ret <= 0) {
       RTC_LOG(LS_ERROR) << "X264 frame encoding failed, EncodeFrame returned "
                         << enc_ret << ".";
@@ -619,15 +627,26 @@ x264_param_t X264EncoderImpl::CreateEncoderParams(size_t i) const {
     p_params->b_annexb = 1;
     p_params->rc.i_rc_method = X264_RC_ABR;
     p_params->rc.i_bitrate = codec_.simulcastStream[idx].targetBitrate;
-    p_params->rc.i_vbv_buffer_size = codec_.simulcastStream[idx].targetBitrate;
+    p_params->rc.i_vbv_buffer_size = 20000;
+    //codec_.simulcastStream[idx].targetBitrate;  // 8000
 	p_params->rc.i_vbv_max_bitrate = codec_.simulcastStream[idx].targetBitrate;
 
     //p_params->rc.b_filler = 1;
     //p_params->b_vfr_input = 0;
     //p_params->pf_log = X264Log;
     //p_params->i_log_level = X264_LOG_DEBUG;
-#ifdef RLCLOUD
-    p_params->iTemporalLayers = num_temporal_layers_;
+//#ifdef RLCLOUD
+#ifdef _RLCLOUD
+  //  p_params->iTemporalLayers = num_temporal_layers_;
+	//LZM------------
+    if (codec_.mode == VideoCodecMode::kScreensharing) {
+      p_params->iTemporalLayers = 1;
+      p_params->bScreenMode = true;
+    } else {
+      p_params->bScreenMode = false;
+      p_params->iTemporalLayers = 1;
+	}
+    
 #endif
   }
 

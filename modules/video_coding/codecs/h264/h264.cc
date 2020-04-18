@@ -92,7 +92,7 @@ std::unique_ptr<H264Encoder> H264Encoder::Create(
   RTC_DCHECK(H264Encoder::IsSupported());
 #if defined(WEBRTC_USE_H264)
   RTC_CHECK(g_rtc_use_h264);
-  if (webrtc::field_trial::FindFullName("EC-H264-Encoder") == "openh264 ") {
+  if (webrtc::field_trial::FindFullName("EC-H264-Encoder") == "openh264") {
     RTC_LOG(LS_INFO) << "Creating OpenH264EncoderImpl.";
     return absl::make_unique<H264EncoderImpl>(codec);
   } else {
