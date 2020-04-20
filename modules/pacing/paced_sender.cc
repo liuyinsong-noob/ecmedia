@@ -212,7 +212,7 @@ void PacedSender::SetPacingRates(uint32_t pacing_rate_bps,
                                  uint32_t padding_rate_bps) {
   rtc::CritScope cs(&critsect_);
   RTC_DCHECK(pacing_rate_bps > 0);
-
+  
   if(last_valid_padding_bps_ == 0){
     padding_rate_bps = padding_rate_bps / 2;
     last_valid_padding_bps_ = padding_rate_bps;
@@ -229,8 +229,16 @@ void PacedSender::SetPacingRates(uint32_t pacing_rate_bps,
     }
     last_valid_padding_time_ = clock_->TimeInMilliseconds();
     padding_rate_bps = last_valid_padding_bps_;
-  }
-  
+  }else
+    padding_rate_bps == 0 ? padding_rate_bps = 0
+                          : padding_rate_bps = last_valid_padding_bps_;
+						  
+  last_valid_padding_bps_ = padding_rate_bps;
+  last_valid_padding_time_ = 0;
+  if (GetNackbps() > 80)
+    padding_rate_bps = GetNackbps() * padding_rate_bps;
+  else
+    padding_rate_bps = 0;
   pacing_bitrate_kbps_ = pacing_rate_bps / 1000;
   padding_budget_.set_target_rate_kbps(padding_rate_bps / 1000);
   //RTC_LOG(LS_INFO) << "ykn.SetPacingRates pacing_rate_bps / padding_rate_bps is :" << pacing_rate_bps << " @@ "<<padding_rate_bps;
@@ -367,10 +375,10 @@ int64_t PacedSender::UpdateTimeAndGetElapsedMs(int64_t now_us) {
 }
 
 bool PacedSender::ShouldSendKeepalive(int64_t now_us) const {
-  if (send_padding_if_silent_ || paused_ || Congested()) {
+  int64_t elapsed_since_last_send_us = now_us - last_send_time_us_;
+  if (send_padding_if_silent_ || paused_ || Congested() || elapsed_since_last_send_us >= kCongestedPacketIntervalMs* 4 * 1000) {
     // We send a padding packet every 500 ms to ensure we won't get stuck in
     // congested state due to no feedback being received.
-    int64_t elapsed_since_last_send_us = now_us - last_send_time_us_;
     if (elapsed_since_last_send_us >= kCongestedPacketIntervalMs * 1000) {
       // We can not send padding unless a normal packet has first been sent. If
       // we do, timestamps get messed up.
@@ -386,7 +394,7 @@ void PacedSender::Process() {
   rtc::CritScope cs(&critsect_);
   int64_t now_us = clock_->TimeInMicroseconds();
   int64_t elapsed_time_ms = UpdateTimeAndGetElapsedMs(now_us);
-  if (ShouldSendKeepalive(now_us) || true ) {
+  if (ShouldSendKeepalive(now_us) ) {
     critsect_.Leave();
     size_t bytes_sent = packet_sender_->TimeToSendPadding(1, PacedPacketInfo());
     critsect_.Enter();

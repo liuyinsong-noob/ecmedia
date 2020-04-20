@@ -580,17 +580,12 @@ void RtpTransportControllerSend::PostUpdates(NetworkControlUpdate update) {
     if(lost > 0){
       transport_feedback_adapter_.MaybeCleanOutstandingData(clock_->TimeInMilliseconds(), lost > 0.5 ? 0 : (0.5 - lost) * 10 * 1000);
     }
-    if(lost > 0.8){
-      lost = 0.6;
-    }
     uint32_t nack_bps = pacer_.GetNackbps();
     RTC_LOG(INFO) << "ytx before target bps is :"
                   << (*update.target_rate).target_rate.bps()
                   << " nack bps : " << nack_bps;
-    (*update.target_rate).target_rate = (*update.target_rate).target_rate.bps() > 100000 ?
-    DataRate::bps((*update.target_rate).target_rate.bps()) : DataRate::Zero();
-    if( (*update.target_rate).target_rate.bps() <= 1 ){
-      //pacer_.SetPaddingPacingRates(1000 * rand()%20);
+    if( (*update.target_rate).target_rate.bps() <= 150000 ){
+      nack_bps <80 ? nack_bps = 0 : 0;
       int64_t now_ms = clock_->TimeInMilliseconds();
       if(last_low_band_time == 0){
         last_low_band_time = now_ms;
@@ -617,6 +612,7 @@ void RtpTransportControllerSend::PostUpdates(NetworkControlUpdate update) {
     control_handler_->SetTargetRate(*update.target_rate);
     RTC_LOG(INFO)<<"ytx target bps is :"<<(*update.target_rate).target_rate.bps()  
 		<<" nack bps : "<<nack_bps;
+    printf(" encode  bps %lld \n ",(*update.target_rate).target_rate.bps() );
     
     UpdateControlState();
   }

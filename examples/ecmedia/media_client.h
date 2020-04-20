@@ -814,8 +814,8 @@ class MediaClient : public sigslot::has_slots<> {
 
 	cricket::RtpDataChannel* rtp_data_channel() const;
 
-	void OnSentPacket_w(const rtc::SentPacket& sent_packet);
-
+	void OnSentPacket_Voice(const rtc::SentPacket& sent_packet);
+    void OnSentPacket_Video(const rtc::SentPacket& sent_packet);
 	std::string GetMidFromChannelId(int channelId);
 
     bool FilterAudioCodec(const AudioCodecConfig& config,
