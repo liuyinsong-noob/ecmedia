@@ -147,14 +147,14 @@ std::string getStrFromInt(int n) {
 }
 
 void ReadMediaConfig(const char* filename) {
- /* char buf[16 * 1024] = {0};
+  char buf[16 * 1024] = {0};
   webrtc::FileWrapper fr = webrtc::FileWrapper::OpenReadOnly(filename);
   if (!fr.is_open())
     return;
 
   fr.Read(buf, sizeof(buf) - 1);
-  std::string ccmode, h264_encoder = "openh264";*/
-  /*Json::Reader reader;
+  std::string ccmode, h264_encoder = "openh264";
+  Json::Reader reader;
   Json::Value config;
   if (!reader.parse(buf, config)) {
     return;
@@ -162,22 +162,22 @@ void ReadMediaConfig(const char* filename) {
 
   rtc::GetStringFromJsonObject(config, "Congestion-Control-Mode", &ccmode);
   rtc::GetStringFromJsonObject(config, "H264-Encoder", &h264_encoder);
-  */
- char ccmode[20] = {0};
+  
+ /*char ccmode[20] = {0};
  char h264_encoder[20] = {0};
   GetPrivateProfileStringA("video", "ccmode", "",ccmode, sizeof(ccmode), ".\\ecmedia.cfg");
-  GetPrivateProfileStringA("video", "h264_encoder", "",h264_encoder, sizeof(h264_encoder), ".\\ecmedia.cfg");
+  GetPrivateProfileStringA("video", "h264_encoder", "",h264_encoder, sizeof(h264_encoder), ".\\ecmedia.cfg");*/
    static std::string trail_string;
   trail_string.append("EC-Congestion-Control-Mode");
-//  if (ccmode == "gcc") {
-    if (!strcmp(ccmode,"gcc")) {
+  if (ccmode == "gcc") {
+  //  if (!strcmp(ccmode,"gcc")) {
     trail_string.append("/gcc/");
   } else
     trail_string.append("/bbr/");
 
   trail_string.append("EC-H264-Encoder");
- // if (h264_encoder == "openh264") {
-    if (!strcmp(h264_encoder,"openh264")) {
+ if (h264_encoder == "openh264") {
+  //  if (!strcmp(h264_encoder,"openh264")) {
     trail_string.append("/openh264/");
   } else
     trail_string.append("/x264/");
@@ -823,7 +823,7 @@ bool MediaClient::CreateVideoChannel(const std::string& settings,
                                                   video_channel_);
   }
   mVideoChannels_[channelId] = video_channel_;
-
+  
   return bOk;
 }
 
@@ -1332,6 +1332,7 @@ void MediaClient::DestroyLocalVideoTrack(
 
 int MediaClient::StartScreenShare() {
 #if defined(WEBRTC_WIN)
+  RTC_LOG(INFO) << __FUNCTION__ << "()";
   if (desktop_device_) {
     worker_thread_->Invoke<void>(RTC_FROM_HERE,
                                  [this] { desktop_device_->Start(); });
@@ -1345,6 +1346,7 @@ int MediaClient::StartScreenShare() {
 
 int MediaClient::StopScreenShare() {
 #if defined(WEBRTC_WIN)
+  RTC_LOG(INFO) << __FUNCTION__ << "()";
   if (desktop_device_) {
     desktop_device_->Stop();
     // while(desktop_device_.release() != NULL);
@@ -1698,7 +1700,7 @@ bool MediaClient::InitRenderWndsManager() {
   return true;
 }
 
-bool MediaClient::SetLocalVideoRenderWindow(int channel_id, void* view) {
+bool MediaClient::SetLocalVideoRenderWindow(int channel_id, int render_mode,void* view) {
   API_LOG(INFO) << "channel_id: " << channel_id << ", video_window: " << view;
   EC_CHECK_VALUE(view, false);
   EC_CHECK_VALUE((channel_id >= 0), false);
@@ -1708,7 +1710,7 @@ bool MediaClient::SetLocalVideoRenderWindow(int channel_id, void* view) {
     InitRenderWndsManager();
   }
 
-  renderWndsManager_->SetLocalRenderWnd(channel_id, view, nullptr);
+  renderWndsManager_->SetLocalRenderWnd(channel_id,render_mode, view, nullptr);
 #elif defined(WEBRTC_IOS)
   ObjCCallClient::GetInstance()->SetLocalWindowView(view);
 #endif
@@ -1729,7 +1731,7 @@ bool MediaClient::PreviewTrack(int window_id, void* video_track) {
   return true;
 }
 
-bool MediaClient::SetRemoteVideoRenderWindow(int channel_Id, void* view) {
+bool MediaClient::SetRemoteVideoRenderWindow(int channel_Id, int render_mode,void* view) {
   API_LOG(INFO) << "channel_id: " << channel_Id << ", video_window: " << view;
   EC_CHECK_VALUE((channel_Id >= 0), false);
 #if defined WEBRTC_WIN
@@ -1739,7 +1741,7 @@ bool MediaClient::SetRemoteVideoRenderWindow(int channel_Id, void* view) {
     InitRenderWndsManager();
   }
 
-  renderWndsManager_->AddRemoteRenderWnd(channel_Id, view, nullptr);
+  renderWndsManager_->AddRemoteRenderWnd(channel_Id,render_mode, view, nullptr);
 #elif defined(WEBRTC_IOS)
   ObjCCallClient::GetInstance()->SetRemoteWindowView(channel_Id, view);
 #endif
@@ -3068,6 +3070,7 @@ namespace win_render {
 
 #if defined(WEBRTC_WIN)
 VideoRenderer::VideoRenderer(HWND wnd,
+	                         int mode,
                              int width,
                              int height,
                              webrtc::VideoTrackInterface* track_to_render)
@@ -3076,6 +3079,7 @@ VideoRenderer::VideoRenderer(HWND wnd,
                 << ", wnd: " << wnd << ", width: " << width
                 << ", height: " << height
                 << ", track_to_render: " << track_to_render;
+  mode_ = mode;
   ::InitializeCriticalSection(&buffer_lock_);
   ZeroMemory(&bmi_, sizeof(bmi_));
   bmi_.bmiHeader.biSize = sizeof(BITMAPINFOHEADER);
@@ -3296,21 +3300,23 @@ bool RenderWndsManager::StartRemoteRenderer(
 }
 
 void RenderWndsManager::SetLocalRenderWnd(
-    int window_id,
+    int channelId,
+	int render_mode,
     void* winLocal,
     webrtc::VideoTrackInterface* track_to_render) {
   RTC_LOG(INFO) << __FUNCTION__ << "(),"
                 << " begin... "
-                << ", window_id: " << window_id << ", winLocal: " << winLocal
+                << ", window_id: " << channelId << ", winLocal: " << winLocal
                 << ", track_to_render: " << track_to_render;
   ptr_render it;
   it.reset(
-      new win_render::VideoRenderer((HWND)winLocal, 1, 1, track_to_render));
-  mapLocalRenderWnds[window_id] = std::move(it);
+      new win_render::VideoRenderer((HWND)winLocal,render_mode, 1, 1, track_to_render));
+  mapLocalRenderWnds[channelId] = std::move(it);
 }
 
 void RenderWndsManager::AddRemoteRenderWnd(
     int channelId,
+	int render_mode,
     void* winRemote,
     webrtc::VideoTrackInterface* track_to_render) {
   RTC_LOG(INFO) << __FUNCTION__ << "(),"
@@ -3319,7 +3325,7 @@ void RenderWndsManager::AddRemoteRenderWnd(
                 << ", track_to_render: " << track_to_render;
   ptr_render it;
   it.reset(
-      new win_render::VideoRenderer((HWND)winRemote, 1, 1, track_to_render));
+      new win_render::VideoRenderer((HWND)winRemote,render_mode, 1, 1, track_to_render));
   mapRemoteRenderWnds[channelId] = std::move(it);
 }
 

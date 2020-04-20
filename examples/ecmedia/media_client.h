@@ -114,6 +114,7 @@ namespace win_render {
 class VideoRenderer : public rtc::VideoSinkInterface<webrtc::VideoFrame> {
  public:
   VideoRenderer(HWND wnd,
+	            int mode,
                 int width,
                 int height,
                 webrtc::VideoTrackInterface* track_to_render);
@@ -147,6 +148,7 @@ class VideoRenderer : public rtc::VideoSinkInterface<webrtc::VideoFrame> {
   std::unique_ptr<uint8_t[]> image_;
   CRITICAL_SECTION buffer_lock_;
   rtc::scoped_refptr<webrtc::VideoTrackInterface> rendered_track_;
+  int mode_;
 };
 
 // A little helper class to make sure we always to proper locking and
@@ -167,6 +169,7 @@ class RenderWndsManager : public sigslot::has_slots<> {
   ~RenderWndsManager();
 
   void AddRemoteRenderWnd(int channelId,
+	                      int render_mode,
                           void* winRemote,
                           webrtc::VideoTrackInterface* track_to_render);
   bool UpdateVideoTrack(int channelId,
@@ -176,6 +179,7 @@ class RenderWndsManager : public sigslot::has_slots<> {
   void* GetRemoteWnd(int channelId);
   bool RemoveRemoteRenderWnd(int channelId);
   void SetLocalRenderWnd(int channelId,
+	                     int render_mode,
                          void* winLocal,
                          webrtc::VideoTrackInterface* track_to_render);
   bool StartLocalRenderer(int window_id, webrtc::VideoTrackInterface* local_video);
@@ -504,7 +508,7 @@ class MediaClient : public sigslot::has_slots<> {
   /*** 函数参数1: 名称    window_id           类型   int                    ***/
   /*** 函数参数2: 名称    view                类型   void*                  ***/
   /****************************************************************************/
-  bool SetLocalVideoRenderWindow(int window_id, void* view);
+  bool SetLocalVideoRenderWindow(int window_id,int render_mode, void* view);
 
 
   /****************************************************************************/
@@ -514,7 +518,7 @@ class MediaClient : public sigslot::has_slots<> {
   /*** 函数参数1: 名称    channel_id           类型   int                   ***/
   /*** 函数参数2: 名称    video_window         类型   void*                 ***/
   /****************************************************************************/  
-  bool SetRemoteVideoRenderWindow(int channelId, void* view);
+  bool SetRemoteVideoRenderWindow(int channelId, int render_mode,void* view);
 
   /****************************************************************************/
   /*** 函数名: 设置本地静音                                                 ***/
