@@ -85,6 +85,16 @@ namespace ecmedia_sdk {
 static const char ksAudioLabel[] = "audio_label";
 static const char ksVideoLabel[] = "video_label";
 static const char ksStreamId[] = "stream_id";
+
+// add bu yukening
+const int kMinBandwidthBps = 30000;
+#if defined(WEBRTC_WIN)
+const int kStartBandwidthBps = 800000;
+const int kMaxBandwidthBps = 2000000;
+#elif defined(WEBRTC_IOS)
+const int kStartBandwidthBps = 500000;
+const int kMaxBandwidthBps = 1000000;
+#endif
 // static const char kAudioTracks[][32] = {"audiotrack0", "audiotrack1"};
 // static const char kVideoTracks[][32] = {"videotrack0", "videotrack1"};
 namespace {
@@ -480,10 +490,6 @@ bool MediaClient::CreateCall(webrtc::RtcEventLog* event_log) {
                 << ", event_log: " << event_log;
   RTC_DCHECK_RUN_ON(worker_thread_);
 
-  const int kMinBandwidthBps = 30000;
-  const int kStartBandwidthBps = 800000;
-  const int kMaxBandwidthBps = 3000000;
-
   EC_CHECK_VALUE(channel_manager_, false);
   EC_CHECK_VALUE(channel_manager_->media_engine(), false);
 
@@ -687,6 +693,18 @@ bool MediaClient::CreateVideoChannel(const std::string& settings,
                                      int channelId) {
   EC_CHECK_VALUE(channel_manager_, false);
   EC_CHECK_VALUE(transport_controller_, false);
+  
+#if defined(WEBRTC_IOS)
+  std::string setting =
+     "{\n   \"transportId\" : \"tran_1\",\n  \"red\" : 1,  \n  \"fecType\" : 1, \n  \"nack\" : 1,\n   \"codecs\" : [\n      {\n         \"codecName\" : \"H264\",\n         \"payloadType\" : 98,\n         \"new_payloadType\" : 104\n      },\n      {\n         \"codecName\" : \"rtx\",\n         \"payloadType\" : 101,\n      \"new_payloadType\" : 105,\n  \"associated_payloadType\" : 104\n   },\n      {\n         \"codecName\" : \"red\",\n         \"payloadType\" : 104,\n      \"new_payloadType\" : 110\n  },\n      {\n         \"codecName\" : \"rtx\",\n         \"payloadType\" : 105,\n    \"new_payloadType\" : 111,\n   \"associated_payloadType\" : 110\n  },\n      {\n         \"codecName\" : \"ulpfec\",\n         \"payloadType\" : 106,\n      \"new_payloadType\" : 112\n  }\n   ]\n}\n";
+    
+
+//  "{\n   \"transportId\" : \"tran_1\",\n  \"red\" : 1,  \n  \"fecType\" : 1, \n  \"nack\" : 1,\n   \"codecs\" : [\n      {\n         \"codecName\" : \"H264\",\n         \"payloadType\" : 98,\n         \"new_payloadType\" : 104\n      },\n      {\n         \"codecName\" : \"rtx\",\n         \"payloadType\" : 101,\n      \"new_payloadType\" : 105,\n  \"associated_payloadType\" : 104\n   }\n    ]\n}\n";
+#elif defined(WEBRTC_WIN)
+  std::string setting =
+        "{\n   \"transportId\" : \"tran_1\",\n  \"red\" : 1,  \n  \"fecType\" : 1, \n  \"nack\" : 1,\n   \"codecs\" : [\n      {\n         \"codecName\" : \"H264\",\n         \"payloadType\" : 102,\n         \"new_payloadType\" : 104\n      },\n      {\n         \"codecName\" : \"rtx\",\n         \"payloadType\" : 103,\n      \"new_payloadType\" : 105,\n  \"associated_payloadType\" : 104\n   },\n      {\n         \"codecName\" : \"red\",\n         \"payloadType\" : 110,\n      \"new_payloadType\" : 110\n  },\n      {\n         \"codecName\" : \"rtx\",\n         \"payloadType\" : 111,\n    \"new_payloadType\" : 111,\n   \"associated_payloadType\" : 110\n  },\n      {\n         \"codecName\" : \"ulpfec\",\n         \"payloadType\" : 112,\n      \"new_payloadType\" : 112\n  }\n   ]\n}\n";
+#endif
+  
   bool bOk = false;
   webrtc::CryptoOptions option;
   bool bSrtpRequired = false;
@@ -695,7 +713,7 @@ bool MediaClient::CreateVideoChannel(const std::string& settings,
 
   std::string mid = GetMidFromChannelId(channelId);
   VideoCodecConfig config;
-  if (!ParseVideoCodecSetting(settings.c_str(), &config)) {
+  if (!ParseVideoCodecSetting(setting.c_str(), &config)) {
     RTC_LOG(LS_ERROR) << " ParseVideoCodecSetting false...";
     return false;
   }
@@ -729,14 +747,12 @@ bool MediaClient::CreateVideoChannel(const std::string& settings,
   cricket::VideoSendParameters vidoe_send_params;
   vidoe_send_params.mid = mid;
 
-  // add bu yukening
-  const int kMaxBandwidthBps = 2000000;
   vidoe_send_params.max_bandwidth_bps = kMaxBandwidthBps;
   //
   // config.codecName = "h264";
   // config.payloadType = 104;
   channel_manager_->GetSupportedVideoCodecs(&vidoe_send_params.codecs);
-  FilterVideoCodec(config, vidoe_send_params.codecs);
+  FilterVideoCodec(&config.video_stream_configs, vidoe_send_params.codecs);
 
   channel_manager_->GetSupportedVideoRtpHeaderExtensions(
       &vidoe_send_params.extensions);
@@ -791,7 +807,7 @@ bool MediaClient::CreateVideoChannel(const std::string& settings,
   cricket::VideoRecvParameters video_recv_params;
   signaling_thread_->Invoke<void>(RTC_FROM_HERE, [&] {
     channel_manager_->GetSupportedVideoCodecs(&video_recv_params.codecs);
-    FilterVideoCodec(config, video_recv_params.codecs);
+    FilterVideoCodec(&config.video_stream_configs, video_recv_params.codecs);
     channel_manager_->GetSupportedVideoRtpHeaderExtensions(
         &video_recv_params.extensions);
   });
@@ -938,8 +954,6 @@ bool MediaClient::CreateVoiceChannel(const std::string& settings,
     it++;
   }
 
-  // add bu yukening
-  const int kMaxBandwidthBps = 3000000;
   sendParams.max_bandwidth_bps = kMaxBandwidthBps;
   //
 
@@ -1909,6 +1923,36 @@ bool MediaClient::FilterVideoCodec(const VideoCodecConfig& config,
   return vec.size() > 0;
 }
 
+bool MediaClient::FilterVideoCodec(std::vector<VideoStreamConfig>* configs,
+                      std::vector<cricket::VideoCodec>& vec){
+  RTC_LOG(INFO) << __FUNCTION__ << "(),"
+                 << " begin... ";
+  if(!configs || configs->size() == 0)
+    return false;
+  auto it_vec = vec.begin();
+  while(it_vec != vec.end()){
+    auto it = configs->begin();
+    while(it != configs->end()){
+      if(it->name.compare(it_vec->name)==0  && it->payloadType == it_vec->id)
+        break;
+      it++;
+    }
+    if(it == configs->end())
+       it_vec = vec.erase(it_vec);
+    else{
+       it_vec->id = it->new_payloadType;
+      if(it_vec->GetCodecType() == cricket::VideoCodec::CODEC_RTX){
+        it_vec->SetParam(cricket::kCodecParamAssociatedPayloadType,it->associated_payloadType);
+      }
+      it_vec++;
+    }
+  }
+  return vec.size() > 0;
+  RTC_LOG(INFO) << __FUNCTION__ << "(),"
+                 << " end... ";
+  return true;
+}
+
 uint32_t MediaClient::GetNumberOfVideoDevices() {
   int num = 0;
 #if defined(WEBRTC_IOS)
@@ -2198,12 +2242,49 @@ bool MediaClient::ParseVideoCodecSetting(const char* videoCodecSettings,
         if (rtc::GetStringFromJsonObject(settings, "transportId", &token)) {
           config->transportId = token;
         }
+        
+        const Json::Value arrayObj = settings["codecs"];
+        for (unsigned int i = 0; i < arrayObj.size(); i++)
+        {
+          VideoStreamConfig stream_config;
+          int value = 0;
+          std::string name;
+          if (rtc::GetStringFromJsonObject(arrayObj[i], "codecName", &name)) {
+            stream_config.name = name;
+          }
+          if (rtc::GetIntFromJsonObject(arrayObj[i], "payloadType", &value)) {
+            stream_config.payloadType = value;
+          }
+          if (rtc::GetIntFromJsonObject(arrayObj[i], "new_payloadType", &value)) {
+             stream_config.new_payloadType = value;
+          }
+          if (rtc::GetIntFromJsonObject(arrayObj[i], "associated_payloadType", &value)) {
+             stream_config.associated_payloadType = value;
+          }
+          config->video_stream_configs.push_back(stream_config);
+        }
 
         return true;
       }
     }
   }
   return false;
+}
+
+bool MediaClient::ParseVideoCodecSetting(const char* videoCodecSettings, std::vector<VideoStreamConfig>* configs){
+  
+  RTC_LOG(INFO) << __FUNCTION__ << "(),"
+                 << " begin... "
+                 << ", videoCodecSettings: " << videoCodecSettings
+                 << ", config: " << configs;
+  
+  Json::Reader reader;
+  Json::Value root;
+  if(!reader.parse(videoCodecSettings,root)){
+    return -1;
+  }
+  
+  return true;
 }
 
 bool MediaClient::GetStringJsonString(const char* json,

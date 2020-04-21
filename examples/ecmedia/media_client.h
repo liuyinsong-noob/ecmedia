@@ -263,6 +263,13 @@ class MediaClient : public sigslot::has_slots<> {
     std::string transportId;
   };
 
+  struct VideoStreamConfig {
+    std::string name = "H264";
+    int payloadType = 96;
+    int new_payloadType = 104;
+    int associated_payloadType = new_payloadType -1;
+  };
+  
   struct VideoCodecConfig {
     bool red = true;
     bool nack = true;
@@ -277,11 +284,12 @@ class MediaClient : public sigslot::has_slots<> {
     int maxFramerate =  15;
     int codecType = 1;  // kVideoCodecVP8;
     int maxQp = 56;
+    std::vector<VideoStreamConfig> video_stream_configs;
     std::string codecName = "VP8";
     std::string trackId;
     std::string transportId;
   };
-  
+
  friend class TransportControllerObserve;
 
  public:
@@ -819,9 +827,12 @@ class MediaClient : public sigslot::has_slots<> {
 
     bool FilterVideoCodec(const VideoCodecConfig& config,
                             std::vector<cricket::VideoCodec>& vec);
+    bool FilterVideoCodec(std::vector<VideoStreamConfig>* configs,
+                                       std::vector<cricket::VideoCodec>& vec);
     bool ParseVideoDeviceSetting(const char* videoDeviceSettings, VideoDeviceConfig* config);
     bool ParseAudioCodecSetting(const char* audioCodecSettings, AudioCodecConfig* config);
     bool ParseVideoCodecSetting(const char* videoCodecSettings, VideoCodecConfig* config);
+  bool ParseVideoCodecSetting(const char* videoCodecSettings, std::vector<VideoStreamConfig>* configs);
     bool GetStringJsonString(const char* json, const std::string& key, std::string* value);
     bool GetIntJsonString(const char* json, const std::string& key, int* value);
     cricket::WebRtcVideoChannel* GetInternalVideoChannel(const int channelId);

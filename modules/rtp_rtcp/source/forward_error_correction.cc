@@ -415,11 +415,24 @@ void ForwardErrorCorrection::InsertFecPacket(
     return;
   }
 
+  if (fec_packet->protected_ssrc != protected_media_ssrc_) {
+  /*-------zjy cause real protected_ssrc is differ from setting-----*/
+  /*-------zjy set last four number to 0-----*/
+  uint8_t buf[4] = {0};
+  uint32_t temp = fec_packet->protected_ssrc;
+  buf[0] = temp & 0xF0;
+  buf[1] = temp >> 8;
+  buf[2] = temp >> 16;
+  buf[3] = temp >> 24;
+  fec_packet->protected_ssrc =
+      buf[0] + buf[1] * 256 + buf[2] * 256 * 256 + buf[3] * 256 * 256 * 256;
+
   // TODO(brandtr): Update here when we support multistream protection.
   if (fec_packet->protected_ssrc != protected_media_ssrc_) {
     RTC_LOG(LS_INFO)
         << "Received FEC packet is protecting an unknown media SSRC; dropping.";
     return;
+  }
   }
 
   // Parse packet mask from header and represent as protected packets.

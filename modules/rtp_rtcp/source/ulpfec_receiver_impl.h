@@ -41,6 +41,7 @@ class UlpfecReceiverImpl : public UlpfecReceiver {
  private:
   const uint32_t ssrc_;
 
+  uint32_t ssrc_1;
   rtc::CriticalSection crit_sect_;
   RecoveredPacketReceiver* recovered_packet_callback_;
   std::unique_ptr<ForwardErrorCorrection> fec_;

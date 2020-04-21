@@ -112,6 +112,7 @@ absl::optional<SentPacket> TransportFeedbackAdapter::ProcessSentPacket(
       msg.prior_unacked_data = DataSize::bytes(packet->unacknowledged_data);
       msg.data_in_flight =
           send_time_history_.GetOutstandingData(local_net_id_, remote_net_id_);
+     // RTC_LOG_F(LS_ERROR) << "BandwidthSampler ProcessSentPacket to insert the packet  is "<<sent_packet.packet_id<<"sent_time"<<msg.send_time;
       return msg;
     }
   } else if (sent_packet.info.included_in_allocation) {

@@ -69,6 +69,7 @@
 namespace webrtc {
 
 namespace {
+int loss_default = 25;
 bool SendPeriodicFeedback(const std::vector<RtpExtension>& extensions) {
   for (const auto& extension : extensions) {
     if (extension.uri == RtpExtension::kTransportSequenceNumberV2Uri)
@@ -1206,9 +1207,15 @@ void Call::OnTargetTransferRate(TargetTransferRate msg) {
   }
 
   uint32_t target_bitrate_bps = msg.target_rate.bps();
-  int loss_ratio_255 = msg.network_estimate.loss_rate_ratio * 255;
-  uint8_t fraction_loss =
-      rtc::dchecked_cast<uint8_t>(rtc::SafeClamp(loss_ratio_255, 0, 255));
+  //int loss_ratio_255 = msg.network_estimate.loss_rate_ratio * 255;
+  //uint8_t fraction_loss =
+    //  rtc::dchecked_cast<uint8_t>(rtc::SafeClamp(loss_ratio_255, 0, 255));
+  
+  if (msg.network_estimate.loss_rate_ratio != 0) {
+    loss_default = msg.network_estimate.loss_rate_ratio * 255;
+  }
+  uint8_t fraction_loss = loss_default;
+  
   int64_t rtt_ms = msg.network_estimate.round_trip_time.ms();
   int64_t probing_interval_ms = msg.network_estimate.bwe_period.ms();
   uint32_t bandwidth_bps = msg.network_estimate.bandwidth.bps();

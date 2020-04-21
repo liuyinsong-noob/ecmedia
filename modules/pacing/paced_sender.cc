@@ -589,14 +589,12 @@ void PacedSender::SetPaddingPacingRates(uint32_t padding_rate_bps){
 }
 
 uint32_t PacedSender::GetNackbps(){
-   rtc::CritScope cs(&critsect_);
-//  int64_t now_ms = TimeMilliseconds();
-//  uint32_t bps = (last_nack_size * 8 /(now_ms - last_nack_send_time)) * 1000;
-//  last_nack_send_time = 0;
+  rtc::CritScope cs(&critsect_);
   static uint32_t bps = 100;
   int64_t now_ms = clock_->TimeInMilliseconds();
   if(now_ms - last_nack_time < 500)
     return bps;
+  
   bps = 100;
   last_nack_time = now_ms;
   auto it = ssrc_send_retran_.begin();
@@ -631,10 +629,8 @@ uint32_t PacedSender::GetNackbps(){
     }
       
     int16_t delay = abs(send_end - send_start);
-   
-   // int16_t delay = abs(send_end - send_start);
     uint32_t bps_  = ((float)delay / (float)sum_send_package_) * 100;
-     printf("nack bps pace_send sssrc: %u  sum_page %d strt_seq: %u start_end %u  delay : %u  bps %u   \n",ssrc,sum_send_package_,send_start,send_end,abs(send_end - send_start),bps_);
+     //printf("nack bps pace_send sssrc: %u  sum_page %d strt_seq: %u start_end %u  delay : %u  bps %u   \n",ssrc,sum_send_package_,send_start,send_end,abs(send_end - send_start),bps_);
     if(ssrc_send_end_[ssrc] > sum_send_package_)
       ssrc_send_end_[ssrc] = sum_send_package_;
     bps_ = (float)ssrc_send_end_[ssrc] / sum_send_package_ * 100;

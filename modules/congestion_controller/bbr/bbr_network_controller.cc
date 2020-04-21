@@ -24,6 +24,12 @@ namespace webrtc {
 namespace bbr {
 namespace {
 
+/*zjy added*/
+int i = 0;
+double loss_count = 0;
+double last_lost = 0;
+
+
 // If greater than zero, mean RTT variation is multiplied by the specified
 // factor and added to the congestion window limit.
 const double kBbrRttVariationWeight = 0.0f;
@@ -271,7 +277,20 @@ NetworkControlUpdate BbrNetworkController::CreateRateUpdate(
   target_rate_msg.network_estimate.round_trip_time = rtt;
 
   // TODO(srte): Fill in field below with proper value.
-  target_rate_msg.network_estimate.loss_rate_ratio = 0;
+ // target_rate_msg.network_estimate.loss_rate_ratio = 0;
+  /*----------------------zjy changed --------------*/
+  if ((i == 20) && (loss_count / (i - 1)) <= 0.2) {
+    loss_count += loss_rate_.GetLossRate();
+    target_rate_msg.network_estimate.loss_rate_ratio = loss_count / i;
+    last_lost = target_rate_msg.network_estimate.loss_rate_ratio;
+  } else if (i == 20) {
+    target_rate_msg.network_estimate.loss_rate_ratio = 0.2;
+  } else if (last_lost != 0) {
+    target_rate_msg.network_estimate.loss_rate_ratio = last_lost;
+  } else {
+    target_rate_msg.network_estimate.loss_rate_ratio = 0.1;
+  }
+
   // In in PROBE_BW, target bandwidth is expected to vary over the cycle period.
   // In other modes the is no given period, therefore the same value as in
   // PROBE_BW is used for consistency.
@@ -401,6 +420,12 @@ NetworkControlUpdate BbrNetworkController::OnTransportPacketsFeedback(
     TransportPacketsFeedback msg) {
   if (msg.packet_feedbacks.empty())
     return NetworkControlUpdate();
+
+  if (i < 20)
+    i++;
+  else {
+    i = 0;
+  }
 
   Timestamp feedback_recv_time = msg.feedback_time;
   SentPacket last_sent_packet = msg.PacketsWithFeedback().back().sent_packet;

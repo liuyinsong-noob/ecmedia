@@ -75,10 +75,21 @@ int32_t UlpfecReceiverImpl::AddReceivedRedPacket(
     const uint8_t* incoming_rtp_packet,
     size_t packet_length,
     uint8_t ulpfec_payload_type) {
+  
   if (header.ssrc != ssrc_) {
+  uint32_t temp = header.ssrc;
+   uint8_t buf[4] = {0};
+   buf[0] = temp & 0xF0;
+   buf[1] = temp >> 8;
+   buf[2] = temp >> 16;
+   buf[3] = temp >> 24;
+   ssrc_1 =
+       buf[0] + buf[1] * 256 + buf[2] * 256 * 256 + buf[3] * 256 * 256 * 256;
+   if (ssrc_ != ssrc_1) {
     RTC_LOG(LS_WARNING)
         << "Received RED packet with different SSRC than expected; dropping.";
     return -1;
+  }
   }
   if (packet_length > IP_PACKET_SIZE) {
     RTC_LOG(LS_WARNING) << "Received RED packet with length exceeds maximum IP "

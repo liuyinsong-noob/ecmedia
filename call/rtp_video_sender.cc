@@ -517,7 +517,7 @@ void RtpVideoSender::ConfigureProtection(const RtpConfig& rtp_config) {
         << "Transmitting payload type without picture ID using "
            "NACK+ULPFEC is a waste of bandwidth since ULPFEC packets "
            "also have to be retransmitted. Disabling ULPFEC.";
-    DisableRedAndUlpfec();
+    //DisableRedAndUlpfec();
   }
 
   // Verify payload types.

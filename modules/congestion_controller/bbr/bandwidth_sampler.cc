@@ -65,12 +65,18 @@ void BandwidthSampler::OnPacketSent(Timestamp sent_time,
            "of tracked packets.";
   }
 
+   //RTC_LOG_F(LS_ERROR) << "yukening insert failed to insert the packet  is "<<packet_number<<"sent_time"<<sent_time;
   bool success =
       connection_state_map_.Emplace(packet_number, sent_time, data_size, *this);
-  if (!success)
+   //printf(" yukening id is %lld ,sent time is %lld \n ", packet_number,sent_time);
+  if (!success){
     RTC_LOG(LS_WARNING) << "BandwidthSampler failed to insert the packet "
                            "into the map, most likely because it's already "
                            "in it.";
+     //RTC_LOG_F(LS_ERROR) << "yukening failed s "<<packet_number<<"sent_time"<<sent_time;
+                            
+    // printf(" yukening !success is %lld ,sent time is %lld \n ", packet_number,sent_time);
+  }
 }
 
 BandwidthSample BandwidthSampler::OnPacketAcknowledged(Timestamp ack_time,

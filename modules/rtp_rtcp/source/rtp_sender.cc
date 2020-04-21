@@ -558,10 +558,19 @@ bool RTPSender::PrepareAndSendPacket(std::unique_ptr<RtpPacketToSend> packet,
   RTC_DCHECK(packet);
   int64_t capture_time_ms = packet->capture_time_ms();
   RtpPacketToSend* packet_to_send = packet.get();
+  int chongchuan = 0;
+  int rtx = 0;
+  if(is_retransmit)
+    chongchuan = 1;
+  if(send_over_rtx)
+    rtx = 1;
+  //printf(" payloadtype PrepareAndSendPacket  is %d chongchuan : %d rtx : %d \n ",packet->PayloadType(),chongchuan,rtx);
 
   std::unique_ptr<RtpPacketToSend> packet_rtx;
   if (send_over_rtx) {
     packet_rtx = BuildRtxPacket(*packet);
+    //printf(" payloadtype PrepareAndSendPacket BuildRtxPacket  is %d chongchuan : %d rtx : %d \n ",packet_rtx->PayloadType(),chongchuan,rtx);
+
     if (!packet_rtx)
       return false;
     packet_to_send = packet_rtx.get();

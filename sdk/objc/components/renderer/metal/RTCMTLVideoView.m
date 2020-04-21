@@ -114,7 +114,7 @@
 
   self.metalView = [RTCMTLVideoView createMetalView:self.bounds];
   self.metalView.delegate = self;
-  self.metalView.contentMode = UIViewContentModeScaleAspectFill;
+  self.metalView.contentMode = UIViewContentModeScaleToFill;
   [self addSubview:self.metalView];
   self.videoFrameSize = CGSizeZero;
 }

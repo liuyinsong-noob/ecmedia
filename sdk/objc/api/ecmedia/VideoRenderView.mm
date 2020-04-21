@@ -118,8 +118,16 @@
       // Scale by width.
       scale = bounds.size.width / remoteVideoFrame.size.width;
     }
+    //CGFloat scale_widht = bounds.size.width / remoteVideoFrame.size.width;
+    //CGFloat scale_height = bounds.size.height / remoteVideoFrame.size.height;
+    //scale = scale_widht > scale_height ? scale_height : scale_widht;
     remoteVideoFrame.size.height *= scale;
     remoteVideoFrame.size.width *= scale;
+    if(remoteVideoFrame.size.height >   bounds.size.height)
+      remoteVideoFrame.size.height =  bounds.size.height;
+    if(remoteVideoFrame.size.width > bounds.size.width)
+      remoteVideoFrame.size.width =  bounds.size.width;
+      
     _remoteVideoView.frame = remoteVideoFrame;
     _remoteVideoView.center =
         CGPointMake(CGRectGetMidX(bounds), CGRectGetMidY(bounds));
