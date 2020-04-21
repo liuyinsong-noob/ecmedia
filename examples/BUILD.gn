@@ -672,7 +672,7 @@ if (is_linux || is_win) {
       configs += [ "//build/config/win:windowed" ]
       deps += [ "../media:rtc_media_base" ]
       libs = [ "libx264.dll.lib" ]
-      lib_dirs = [ "../third_party/libx264svc_win/x64/lib" ]
+      lib_dirs = [ "../third_party/libx264svc_win/x86/lib" ]
     }
     if (is_linux) {
       sources += [
@@ -917,6 +917,10 @@ if (is_win || is_android) {
         "../modules/utility",
         "../sdk/android:libjingle_peerconnection_jni",
       ]
+    }
+    if (is_win) {
+      libs = [ "libx264.dll.lib" ]
+      lib_dirs = [ "../third_party/libx264svc_win/x86/lib" ]
     }
   }
 }

@@ -26,5 +26,9 @@ if (rtc_include_tests) {
       "../../../rtc_base/experiments:field_trial_parser",
       "//testing/gtest",
     ]
+   if (is_win) {
+     libs = [ "libx264.dll.lib" ]
+     lib_dirs = [ "../../../third_party/libx264svc_win/x86/lib" ]
+    }
   }
 }

@@ -270,6 +270,8 @@ if (rtc_include_tests) {
 
     if (is_win) {
       libs = [ "strmiids.lib" ]
+      libs += [ "libx264.dll.lib" ]
+      lib_dirs = [ "../third_party/libx264svc_win/x86/lib" ]
     }
 
     deps = [
@@ -312,7 +314,7 @@ if (rtc_include_tests) {
 
     if (is_android) {
       deps += [ "//testing/android/native_test:native_test_support" ]
-    }
+    } 
   }
 
   rtc_source_set("peerconnection_perf_tests") {
@@ -572,6 +574,10 @@ if (rtc_include_tests) {
       ]
 
       shard_timeout = 900
+    }
+    if (is_win){
+      libs = [ "libx264.dll.lib" ]
+      lib_dirs = [ "../third_party/libx264svc_win/x86/lib" ]
     }
   }
 
