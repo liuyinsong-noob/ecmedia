@@ -79,7 +79,7 @@ enum nal_unit_type_e
     NAL_PPS         = 8,
     NAL_AUD         = 9,
     NAL_FILLER      = 12,
-#if RLCLOUD
+#if _RLCLOUD
     NAL_PREFIX      = 14
 #endif
     /* ref_idc == 0 for 6,9,10,11,12 */
@@ -305,8 +305,9 @@ typedef struct x264_param_t
     int         i_bitdepth;
     int         i_level_idc;
     int         i_frame_total; /* number of frames to encode if known, else 0 */
-#if RLCLOUD
+#if _RLCLOUD
     int         iTemporalLayers;
+    int         bScreenMode;        /* screen content coding mode */
 #endif
 
     /* NAL HRD
