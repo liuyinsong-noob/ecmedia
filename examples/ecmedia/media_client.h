@@ -11,6 +11,7 @@
 #include "api/peer_connection_interface.h"
 #include "api/rtp_parameters.h"
 #include "api/scoped_refptr.h"
+#include "api/media_stream_interface.h"
 
 #include "logging/rtc_event_log/rtc_event_log.h"
 
@@ -311,7 +312,11 @@ class MediaClient : public sigslot::has_slots<> {
   /*** 返回值: 类型  bool                                                   ***/
   /*** 函数参数: 无                                                        ***/
   /***************************************************************************/
+#if defined(WEBRTC_ANDROID)
+  bool Initialize(JNIEnv* env, jobject jencoder_factory, jobject jdecoder_factory);
+#else
   bool Initialize();
+#endif
 
 
  /****************************************************************************/
@@ -797,7 +802,23 @@ class MediaClient : public sigslot::has_slots<> {
 	  int channelId);
   bool RemoveRemoteVideoSink(int channelId);
 
-  int InitializeJVM();
+  int InitializeJVM(); 
+
+
+  void* CreateVideoTrack(
+    const char* id,
+    webrtc::VideoTrackSourceInterface* source);
+
+  void* CreateAudioTrack(
+    const char* id,
+    webrtc::AudioSourceInterface* source);
+
+  void* CreateAudioSource();
+
+void* CreateVideoSource(JNIEnv* env,
+                        bool is_screencast,
+                        bool align_timestamps);
+
 #endif
 
  private:
@@ -805,7 +826,12 @@ class MediaClient : public sigslot::has_slots<> {
 
 	bool CreateThreads();
 	bool CreateRtcEventLog();
-	bool CreateChannelManager();
+#if defined(WEBRTC_ANDROID)
+	bool CreateChannelManager(std::unique_ptr<webrtc::VideoEncoderFactory> encoderFactory, std::unique_ptr<webrtc::VideoDecoderFactory> decoderFactory);
+        bool AndroidInitialize(JNIEnv* env, jobject jencoder_factory, jobject jdecoder_factory);
+#else
+        bool CreateChannelManager();
+#endif
 	bool CreateCall(webrtc::RtcEventLog* event_log);
 	bool CreateTransportController(bool disable_encryp = true);
     bool CreateVideoChannel(const std::string& settings, int channel_id);
@@ -967,6 +993,13 @@ private:
 
 	std::map<int, rtc::scoped_refptr<webrtc::VideoTrackInterface>>
         cameraId_videoTrack_pairs_;
+#if defined(WEBRTC_ANDROID)
+    std::map<int, webrtc::VideoTrackInterface*> mapLocalVideoTracks;
+    std::map<int, std::unique_ptr<rtc::VideoSinkInterface<webrtc::VideoFrame>>>
+        mapRemoteVideoSinks;
+    using VideoSinkIterator = std::map<int,
+          std::unique_ptr<rtc::VideoSinkInterface<webrtc::VideoFrame>>>::iterator;
+#endif
 };
 
 class TransportControllerObserve

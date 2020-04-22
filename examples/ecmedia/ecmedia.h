@@ -3,7 +3,7 @@
 
 #ifdef WEBRTC_ANDROID
 #include "jni.h"
-#define ECMEDIA_API JNIEXPORT
+#define ECMEDIA_API __attribute__((visibility("default")))
 #elif defined(WIN32)
 #define ECMEDIA_API _declspec(dllexport)
 #else
@@ -40,7 +40,11 @@ ECMEDIA_API bool ECMedia_set_trace(const char* path ,const int level);
 /*** 返回值: 类型  int                                                   ***/
 /*** 函数参数: 无                                                        ***/
 /***************************************************************************/
+#if defined(WEBRTC_ANDROID)
+ECMEDIA_API int ECMedia_init(void* env, void* jencoder_factory, void* jdecoder_factory);
+#else
 ECMEDIA_API int ECMedia_init();
+#endif
 
 /****************************************************************************/
 /*** 函数名: 反初始化                                                     ***/
@@ -799,6 +803,20 @@ ECMEDIA_API bool ECMedia_SaveRemoteVideoSink(int channelId,
 ECMEDIA_API bool ECMedia_RemoveRemoteVideoSink(int channelId);
 
 ECMEDIA_API int ECMedia_InitializeJVM();
+ECMEDIA_API void* CreateAudioSource();
+
+ECMEDIA_API void* CreateVideoSource(JNIEnv* env,
+                        bool is_screencast,
+                        bool align_timestamps);
+
+ECMEDIA_API void* CreateVideoTrack(
+    const char* id,
+    void* source);
+
+ECMEDIA_API void* CreateAudioTrack(
+    const char* id,
+    void* source);
+
 #endif
 
 ECMEDIA_API bool ECMedia_set_remote_video_resolute_callback(int channelid,void* callback);

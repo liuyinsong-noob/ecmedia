@@ -17,11 +17,19 @@ ECMEDIA_API bool ECMedia_set_trace(const char* path, const int level) {
 }
 
 /******************init**********************************************************/
+#if defined(WEBRTC_ANDROID)
+ECMEDIA_API int ECMedia_init(void* env, void* jencoder_factory, void* jdecoder_factory) {
+#else
 ECMEDIA_API int ECMedia_init() {
+#endif
   RTC_LOG(INFO) << "ECMedia SDK " << ECMEDIA_VERSION;
   if (g_ECMedia == nullptr) {
     g_ECMedia = ecmedia_sdk::MediaClient::GetInstance();
+#if defined(WEBRTC_ANDROID)
+    g_ECMedia->Initialize((JNIEnv*)env, (jobject)jencoder_factory, (jobject)jdecoder_factory);
+#else
     g_ECMedia->Initialize();
+#endif
     return 0;
   }
   return -1;
@@ -612,9 +620,43 @@ ECMEDIA_API bool ECMedia_RemoveRemoteVideoSink(int channelId) {
 }
 
 ECMEDIA_API int ECMedia_InitializeJVM() {
-  int ret = webrtc::ECBaseManager::GetInstance()->InitializeJVM();
+  int ret = g_ECMedia->InitializeJVM();
   RTC_LOG(INFO) << " ret: " << ret;
   return ret;
+}
+
+ECMEDIA_API void* CreateAudioSource() {
+  RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__ << "() "
+                << " begin...";
+
+  return g_ECMedia->CreateAudioSource();
+}
+
+ECMEDIA_API void* CreateVideoSource(JNIEnv* env,
+        bool is_screencast,
+        bool align_timestamps) {
+  RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__ << "() "
+                << " begin...";
+
+  return g_ECMedia->CreateVideoSource(env, is_screencast, align_timestamps);
+}
+
+ECMEDIA_API void* CreateVideoTrack(
+    const char* id,
+    void* source) {
+  RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__ << "() "
+                << " begin...";
+
+  return g_ECMedia->CreateVideoTrack(id, (webrtc::VideoTrackSourceInterface *)source);
+
+}
+
+ECMEDIA_API void* CreateAudioTrack(
+    const char* id,
+    void* source) {
+  RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__ << "() "
+                << " begin...";
+    return g_ECMedia->CreateAudioTrack(id, (webrtc::AudioSourceInterface *)source);
 }
 
 #endif

@@ -11,6 +11,10 @@
 #include "modules/utility/include/jvm_android.h"
 #include "sdk/android/native_api/video/wrapper.h"
 #include "sdk/android/src/jni/video_sink.h"
+#include "sdk/android/src/jni/android_video_track_source.h"
+#include "sdk/android/src/jni/pc/video.h"
+#include "api/video_codecs/video_decoder_factory.h"
+#include "api/video_codecs/video_encoder_factory.h"
 #endif
 
 #include "api/audio/audio_mixer.h"
@@ -292,11 +296,15 @@ bool MediaClient::SetTrace(const char* path, int min_sev) {
   return true;
 }
 
-bool MediaClient::Initialize() {
-  bool bOk = true;
 #if defined(WEBRTC_ANDROID)
-  InitializeJVM();
+  bool MediaClient::Initialize(JNIEnv* env, jobject jencoder_factory, jobject jdecoder_factory) {
+#else
+  bool MediaClient::Initialize() {
 #endif
+#if defined(WEBRTC_ANDROID)
+  return AndroidInitialize(env, jencoder_factory, jdecoder_factory);
+#else
+  bool bOk = true;
   if (!m_bInitialized) {
     vcm_device_info_.reset(webrtc::VideoCaptureFactory::CreateDeviceInfo());
     bOk &= CreateThreads();
@@ -314,7 +322,46 @@ bool MediaClient::Initialize() {
     SetTrace("ecmediaAPI.txt", 1);
   }
   return bOk;
+#endif
 }
+
+#if defined(WEBRTC_ANDROID)
+bool MediaClient::AndroidInitialize(JNIEnv* env, jobject jencoder_factory, jobject jdecoder_factory) {
+  bool bOk = true;
+  InitializeJVM();
+  RTC_LOG(INFO) << __FUNCTION__ << " env: " << env << " jencoder_factory:" << jdecoder_factory << " jdecoder_factory: " << jdecoder_factory;
+
+  if (!m_bInitialized) {
+    vcm_device_info_.reset(webrtc::VideoCaptureFactory::CreateDeviceInfo());
+    bOk &= CreateThreads();
+    EC_CHECK_VALUE(signaling_thread_, false);
+    channelGenerator_.reset(new ChannelGenerator);
+
+    std::unique_ptr<webrtc::VideoEncoderFactory> encoderFactory;
+    std::unique_ptr<webrtc::VideoDecoderFactory> decoderFactory;
+    if(env && jencoder_factory && jdecoder_factory) {
+      encoderFactory = std::unique_ptr<webrtc::VideoEncoderFactory>(webrtc::jni::CreateVideoEncoderFactory(env, webrtc::JavaParamRef<jobject>(env, jencoder_factory)));
+      decoderFactory = std::unique_ptr<webrtc::VideoDecoderFactory>(webrtc::jni::CreateVideoDecoderFactory(env, webrtc::JavaParamRef<jobject>(env, jdecoder_factory)));
+    }
+
+    bOk &= signaling_thread_->Invoke<bool>(
+        RTC_FROM_HERE, [&] { 
+        RTC_LOG(INFO) << __FUNCTION__ << " env: " << env << " encoderFactory:" << encoderFactory << " decoderFactory: " << decoderFactory;
+        bool success = CreateChannelManager(std::move(encoderFactory), std::move(decoderFactory)); 
+        RTC_LOG(INFO) << __FUNCTION__ << " env: " << env << " encoderFactory:" << encoderFactory << " decoderFactory: " << decoderFactory << " success: " << success;
+        return success;
+    });
+
+    bOk &= worker_thread_->Invoke<bool>(RTC_FROM_HERE,
+                                        [&] { return CreateRtcEventLog(); });
+
+    m_bInitialized = bOk;
+
+    SetTrace("ecmediaAPI.txt", 1);
+  }
+  return bOk;
+}
+#endif
 
 void MediaClient::UnInitialize() {
   // RTC_LOG(INFO) << __FUNCTION__  << "(),"<< " begin... ";
@@ -431,7 +478,11 @@ bool MediaClient::CreateRtcEventLog() {
   return true;
 }
 
+#if defined(WEBRTC_ANDROID)
+bool MediaClient::CreateChannelManager(std::unique_ptr<webrtc::VideoEncoderFactory> encoderFactory, std::unique_ptr<webrtc::VideoDecoderFactory> decoderFactory) {
+#else
 bool MediaClient::CreateChannelManager() {
+#endif
   RTC_LOG(INFO) << __FUNCTION__ << "(),"
                 << " begin... ";
   RTC_DCHECK_RUN_ON(signaling_thread_);
@@ -444,15 +495,20 @@ bool MediaClient::CreateChannelManager() {
       webrtc::CreateBuiltinAudioDecoderFactory();
   std::unique_ptr<webrtc::VideoEncoderFactory> video_encoder_factory =
 #if defined(WEBRTC_IOS)
-      ObjCCallClient::GetInstance()->getVideoEncoderFactory();
+    ObjCCallClient::GetInstance()->getVideoEncoderFactory();
+#elif defined(WEBRTC_ANDROID)
+    encoderFactory != nullptr ? std::move(encoderFactory) : webrtc::CreateBuiltinVideoEncoderFactory();    
 #elif defined(WEBRTC_WIN)
-      webrtc::CreateBuiltinVideoEncoderFactory();
+    webrtc::CreateBuiltinVideoEncoderFactory();
 #endif
+
   std::unique_ptr<webrtc::VideoDecoderFactory> video_decoder_factory =
 #if defined(WEBRTC_IOS)
-      ObjCCallClient::GetInstance()->getVideoDecoderFactory();
+    ObjCCallClient::GetInstance()->getVideoDecoderFactory();
+#elif defined(WEBRTC_ANDROID)
+    decoderFactory != nullptr ? std::move(decoderFactory) : webrtc::CreateBuiltinVideoDecoderFactory();    
 #elif defined(WEBRTC_WIN)
-      webrtc::CreateBuiltinVideoDecoderFactory();
+    webrtc::CreateBuiltinVideoDecoderFactory();
 #endif
 
   rtc::scoped_refptr<webrtc::AudioProcessing> audio_processing =
@@ -1927,6 +1983,7 @@ bool MediaClient::FilterVideoCodec(const VideoCodecConfig& config,
   }
   if (!find_codec) {
     vc.id = config.payloadType;
+	vc.name = config.codecName;
     vec.insert(vec.begin(), vc);
   }
   RTC_LOG(INFO) << __FUNCTION__ << "(),"
@@ -2804,8 +2861,10 @@ int MediaClient::StartCameraCapturer(int deviceid,
 #if defined(WEBRTC_IOS)
   ObjCCallClient::GetInstance()->StartCapture(deviceid, cap);
   return 0;
-#endif
+#elif defined(WEBRTC_WIN)
   return camera_devices_[deviceid].second->StartCapture(cap);
+#endif
+return 0;
 }
 
 // note: must call from ui thread
@@ -2823,6 +2882,7 @@ int MediaClient::StopCapturer(int deviceid) {
                 << " end... ";
   return camera_devices_[deviceid].second->StopCapture();
 #endif
+  return 0;
 }
 
 int MediaClient::StopAllCapturer() {
@@ -3122,6 +3182,68 @@ int MediaClient::InitializeJVM() {
                 << " ret:" << ret;
   return ret;
 }
+
+void* MediaClient::CreateVideoTrack(
+    const char* id,
+    webrtc::VideoTrackSourceInterface* source) {
+
+  if (!signaling_thread_->IsCurrent()) {
+    return signaling_thread_->Invoke<void*>(
+        RTC_FROM_HERE, [&]() { return CreateVideoTrack(id, source); });
+  }
+
+  RTC_DCHECK(signaling_thread_->IsCurrent());
+  
+  rtc::scoped_refptr<webrtc::VideoTrackInterface> track(
+      webrtc::VideoTrack::Create(id, source, worker_thread_));
+
+  return track.release();
+}
+
+void* MediaClient::CreateAudioTrack(
+    const char* id,
+    webrtc::AudioSourceInterface* source) {
+
+  if (!signaling_thread_->IsCurrent()) {
+    return signaling_thread_->Invoke<void*>(
+        RTC_FROM_HERE, [&]() { return CreateAudioTrack(id, source); });
+  }
+
+  RTC_DCHECK(signaling_thread_->IsCurrent());
+  rtc::scoped_refptr<webrtc::AudioTrackInterface> track(webrtc::AudioTrack::Create(id, source));
+  return track.release();
+}
+
+void* MediaClient::CreateAudioSource() {
+
+  if (!signaling_thread_->IsCurrent()) {
+    return signaling_thread_->Invoke<void*>(
+        RTC_FROM_HERE, [&]() { return CreateAudioSource(); });
+  }
+  
+  RTC_DCHECK(signaling_thread_->IsCurrent());
+
+  cricket::AudioOptions options;
+  rtc::scoped_refptr<webrtc::LocalAudioSource> source(
+      webrtc::LocalAudioSource::Create(&options));
+  return source.release();
+}
+
+void* MediaClient::CreateVideoSource(JNIEnv* env,
+                        bool is_screencast,
+                        bool align_timestamps) {
+
+  if (!signaling_thread_->IsCurrent()) {
+    return signaling_thread_->Invoke<void*>(
+        RTC_FROM_HERE, [&]() { return CreateVideoSource(env, is_screencast, align_timestamps); });
+  }
+                      
+    rtc::scoped_refptr<webrtc::jni::AndroidVideoTrackSource> source(
+      new rtc::RefCountedObject<webrtc::jni::AndroidVideoTrackSource>(
+       signaling_thread_ , env, is_screencast, align_timestamps));
+  return source.release();
+}
+
 #endif
 
 ///////////////////////////////////TransportControllerObserve/////////////////////////////////
