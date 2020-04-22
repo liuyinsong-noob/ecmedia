@@ -207,7 +207,7 @@ class MediaChannel : public sigslot::has_slots<> {
   virtual void OnNetworkRouteChanged(
       const std::string& transport_name,
       const rtc::NetworkRoute& network_route) = 0;
-  
+
   virtual bool MuteStream(uint32_t ssrc, bool mute) = 0;
 
   // Creates a new outgoing media stream with SSRCs and CNAME as described
@@ -731,7 +731,9 @@ struct AudioSendParameters : RtpSendParameters<AudioCodec> {
 };
 
 struct AudioRecvParameters : RtpParameters<AudioCodec> {};
-
+// add by wx
+typedef void(ECMedia_ConferenceParticipantCallback)(uint32_t arrOfCSRCs[],
+                                                    int count);
 class VoiceMediaChannel : public MediaChannel, public Delayable {
  public:
   VoiceMediaChannel() {}
@@ -778,6 +780,15 @@ class VoiceMediaChannel : public MediaChannel, public Delayable {
       std::unique_ptr<webrtc::AudioSinkInterface> sink) = 0;
 
   virtual std::vector<webrtc::RtpSource> GetSources(uint32_t ssrc) const = 0;
+  // add by wx
+  virtual int Register_ECMedia_ConferenceParticipantCallback(
+      ECMedia_ConferenceParticipantCallback* callback) {
+    return 0;
+  }
+  virtual int SetConferenceParticipantCallbackTimeInterVal(
+      int32_t timeInterVal) {
+    return 0;
+  }
 };
 
 // TODO(deadbeef): Rename to VideoSenderParameters, since they're intended to

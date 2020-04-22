@@ -2990,14 +2990,14 @@ int MediaClient::RegisterConferenceParticipantCallback(
     ECMedia_ConferenceParticipantCallback* callback) {
   API_LOG(INFO) << "begin...";
   int ret = -1;
-  /*if (mVoiceChannels_[channel_id] &&
+  if (mVoiceChannels_[channel_id] &&
       mVoiceChannels_[channel_id]->media_channel()) {
     ret = mVoiceChannels_[channel_id]
               ->media_channel()
               ->Register_ECMedia_ConferenceParticipantCallback(callback);
   } else {
     API_LOG(LS_ERROR) << "Can't find media_voice_channel!";
-  }*/
+  }
   return ret;
 }
 
@@ -3005,12 +3005,12 @@ int MediaClient::SetConferenceParticipantCallbackTimeInterVal(
     int channel_id,
     int timeInterVal) {
   int ret = -1;
-  /*if (mVoiceChannels_[channel_id] &&
+  if (mVoiceChannels_[channel_id] &&
       mVoiceChannels_[channel_id]->media_channel()) {
     ret = mVoiceChannels_[channel_id]
               ->media_channel()
               ->SetConferenceParticipantCallbackTimeInterVal(timeInterVal);
-  }*/
+  }
   return ret;
 }
 // android interface
