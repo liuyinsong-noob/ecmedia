@@ -12,13 +12,11 @@
 
 #include "api/rtp_parameters.h"
 #include "modules/rtp_rtcp/include/rtp_rtcp_defines.h"
-#include "rtc_base/logging.h"
+
 namespace webrtc {
 
 struct RTPHeader;
 
-//add by wx
-typedef void(ECMedia_ConferenceParticipantCallback)(uint32_t arrOfCSRCs[], int count);
 class RtpHeaderParser {
  public:
   static RtpHeaderParser* Create();
@@ -34,11 +32,7 @@ class RtpHeaderParser {
   // at once.
   virtual bool Parse(const uint8_t* packet,
                      size_t length,
-                     RTPHeader* header) = 0;
-  //modify by wx;
-  /* virtual bool Parse(const uint8_t* packet,
-                      size_t length,
-                      RTPHeader* header) const= 0;*/
+                     RTPHeader* header) const = 0;
 
   // Registers an RTP header extension and binds it to |id|.
   virtual bool RegisterRtpHeaderExtension(RTPExtensionType type,
@@ -52,11 +46,6 @@ class RtpHeaderParser {
 
   // De-registers an RTP header extension.
   virtual bool DeregisterRtpHeaderExtension(RtpExtension extension) = 0;
-
-  //add by wx Voice excitation
-  virtual int setECMediaConferenceParticipantCallback(ECMedia_ConferenceParticipantCallback* cb) = 0;
-
-  virtual void setECMediaConferenceParticipantCallbackTimeInterVal(int timeInterVal) = 0;
 };
 }  // namespace webrtc
 #endif  // MODULES_RTP_RTCP_INCLUDE_RTP_HEADER_PARSER_H_

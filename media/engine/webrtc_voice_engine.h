@@ -32,8 +32,7 @@
 #include "rtc_base/network_route.h"
 #include "rtc_base/task_queue.h"
 #include "rtc_base/thread_checker.h"
-//add by wx
-#include "modules/rtp_rtcp/include/rtp_header_parser.h"
+
 namespace cricket {
 
 class AudioDeviceModule;
@@ -96,7 +95,7 @@ class WebRtcVoiceEngine final : public VoiceEngineInterface {
 
   webrtc::TaskQueueFactory* const task_queue_factory_;
   std::unique_ptr<rtc::TaskQueue> low_priority_worker_queue_;
-  
+
 
   webrtc::AudioProcessing* apm() const;
   webrtc::AudioState* audio_state();
@@ -243,21 +242,18 @@ class WebRtcVoiceMediaChannel final : public VoiceMediaChannel,
 
     return VoiceMediaChannel::SendRtcp(&packet, rtc_options);
   }
-
+ 
  public:
   bool MuteStream(uint32_t ssrc, bool mute) override;
   WebRtcVoiceEngine* engine() { return engine_; }
-  // add by wx
-  int Register_ECMedia_ConferenceParticipantCallback(ECMedia_ConferenceParticipantCallback* callback)override;
-  int SetConferenceParticipantCallbackTimeInterVal(int32_t timeInterVal)override;
  private:
   bool SetOptions(const AudioOptions& options);
   bool SetRecvCodecs(const std::vector<AudioCodec>& codecs);
   bool SetSendCodecs(const std::vector<AudioCodec>& codecs);
   bool SetLocalSource(uint32_t ssrc, AudioSource* source);
+  
 
-
-  // WebRtcVoiceEngine* engine() { return engine_; }
+  //WebRtcVoiceEngine* engine() { return engine_; }
   void ChangePlayout(bool playout);
   int CreateVoEChannel();
   bool DeleteVoEChannel(int channel);
@@ -335,8 +331,6 @@ class WebRtcVoiceMediaChannel final : public VoiceMediaChannel,
   rtc::scoped_refptr<webrtc::FrameDecryptorInterface>
       unsignaled_frame_decryptor_;
 
-  //add by wx;
-  std::unique_ptr<webrtc::RtpHeaderParser> rtp_header_praser_;
   RTC_DISALLOW_IMPLICIT_CONSTRUCTORS(WebRtcVoiceMediaChannel);
 };
 }  // namespace cricket
