@@ -35,7 +35,8 @@ git clone http://git.yuntongxun.com/platform_sdk/ecmedia3.0
 - Git的管理遵循公司的规范: [Git管理规范](http://wiki.yuntongxun.com/pages/viewpage.action?pageId=89948180) 
 - 尽量不修改webrtc的底层代码，以便于合并webrtc的最新修改。
 - 修改了webrtc底层代码的分别在代码的开头端通过注释 **"//ytx_begin  name"** ,结束处用 **//"ytx_end"**, **name** 是指修改者的名字,用英文
-- 单行修改可以用 **"//ytx_change name"**
+- 单行修改可以用 **"//ytx_change name 或者  ytx_add name"** 
+- 临时修改，后面需要调整的可以用  **"//ytx_to name"** 
 
 
 ## 3. 资源
