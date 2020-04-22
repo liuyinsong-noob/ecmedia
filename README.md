@@ -13,8 +13,8 @@ git clone http://git.yuntongxun.com/platform_sdk/ecmedia3.0
 
 #### 下载依赖的第三方库和编译工具
 [windows下载地址](http://192.168.178.218:9090/shared//webrtc/webrtc_win_base_env.rar)    
-[ios 下载地址](http://192.168.178.218:9090/shared//webrtc/webrtc_win_base_env.rar)           
-[linux 下载地址](http://192.168.178.218:9090/shared//webrtc/webrtc_win_base_env.rar)
+[ios 下载地址](http://192.168.178.218:9090/shared//webrtc/webrtc_win_base_env.rar)暂时未提供           
+[linux 下载地址](http://192.168.178.218:9090/shared//webrtc/webrtc_win_base_env.rar)暂时未提供
 
 将下载的包里面的东西，解压在repo的目录下。其中gn.exe 拷贝到path的路径中的任一目录即可
 
@@ -34,7 +34,7 @@ git clone http://git.yuntongxun.com/platform_sdk/ecmedia3.0
 ## 2. 代码修改要求
 - Git的管理遵循公司的规范: [Git管理规范](http://wiki.yuntongxun.com/pages/viewpage.action?pageId=89948180) 
 - 尽量不修改webrtc的底层代码，以便于合并webrtc的最新修改。
-- 修改了webrtc底层代码的分布在代码的开头端通过注释 **"//ytx_begin  name"** ,结束处用 **//"ytx_end"**, **name** 是指修改者的名字,用英文
+- 修改了webrtc底层代码的分别在代码的开头端通过注释 **"//ytx_begin  name"** ,结束处用 **//"ytx_end"**, **name** 是指修改者的名字,用英文
 - 单行修改可以用 **"//ytx_change name"**
 
 
