@@ -1220,45 +1220,52 @@ bool MediaClient::SelectVideoSource(
   return bResult;
 }
 
-bool MediaClient::SelectVideoSourceOnFlight(int channelid,
-                                            int device_index,
-                                            const std::string& track_params) {
+rtc::scoped_refptr<webrtc::VideoTrackInterface>
+MediaClient::SelectVideoSourceOnFlight(int channelid,
+                                       int device_index,
+                                       const std::string& track_params) {
   bool bResult = false;
 #if defined WEBRTC_WIN
-  bResult = signaling_thread_->Invoke<bool>(RTC_FROM_HERE, [this, channelid,
-                                                            device_index,
-                                                            track_params] {
-    rtc::scoped_refptr<webrtc::VideoTrackInterface> video_track;
+  rtc::scoped_refptr<webrtc::VideoTrackInterface> video_track1 =
+      signaling_thread_
+          ->Invoke<rtc::scoped_refptr<webrtc::VideoTrackInterface>>(
+              RTC_FROM_HERE, [&] {
+                rtc::scoped_refptr<webrtc::VideoTrackInterface> video_track;
+                auto it = cameraId_videoTrack_pairs_.find(device_index);
+                if (it != cameraId_videoTrack_pairs_.end()) {
+                  video_track = it->second;
+                } else {
+                  video_track = CreateLocalVideoTrack(track_params);
+                  // EC_CHECK_VALUE(video_track, false);
+                }
 
-    auto it = cameraId_videoTrack_pairs_.find(device_index);
-    if (it != cameraId_videoTrack_pairs_.end()) {
-      video_track = it->second;
-    } else {
-      video_track = CreateLocalVideoTrack(track_params);
-      EC_CHECK_VALUE(video_track, false);
-    }
+                std::string mid = GetMidFromChannelId(channelid);
+                // RTC_LOG(LS_INFO) << "---ylr channelid: " << channelid << "
+                // mid: " << mid;
+                for (auto transceiver : transceivers_) {
+                  // RTC_LOG(LS_INFO) << "---ylr transceiver mid: "
+                  //                  <<
+                  //                  transceiver->internal()->mid().value_or("not
+                  //                  set");
+                  if (transceiver->internal()->mid().value_or("not set") ==
+                          mid &&
+                      transceiver->internal()->sender_internal()->SetTrack(
+                          video_track)) {
+                    // EC_CHECK_VALUE(renderWndsManager_, false);
+                    renderWndsManager_->UpdateLocalVideoTrack(channelid,
+                                                              video_track);
+                  }
+                }
 
-    std::string mid = GetMidFromChannelId(channelid);
-    // RTC_LOG(LS_INFO) << "---ylr channelid: " << channelid << " mid: " << mid;
-    for (auto transceiver : transceivers_) {
-      // RTC_LOG(LS_INFO) << "---ylr transceiver mid: "
-      //                  << transceiver->internal()->mid().value_or("not set");
-      if (transceiver->internal()->mid().value_or("not set") == mid &&
-          transceiver->internal()->sender_internal()->SetTrack(video_track)) {
-        EC_CHECK_VALUE(renderWndsManager_, false);
-        return renderWndsManager_->UpdateLocalVideoTrack(channelid,
-                                                         video_track);
-      }
-    }
-    return false;
-  });
+                return video_track;
+              });
   if (bResult)
     RTC_LOG(INFO) << "---ylr SelectVideoSourceOnFlight on flight ok.";
   else
     RTC_LOG(INFO) << "---ylr SelectVideoSourceOnFlight on flight fail!";
+  return video_track1;
 #endif
-  return bResult;
-  return false;
+  return nullptr;
 }
 
 void MediaClient::DestroyLocalAudioTrack(

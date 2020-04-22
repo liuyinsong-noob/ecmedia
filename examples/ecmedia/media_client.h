@@ -446,7 +446,7 @@ class MediaClient : public sigslot::has_slots<> {
       rtc::scoped_refptr<webrtc::VideoTrackInterface> videotrack);
 
 
- bool SelectVideoSourceOnFlight(int channelid,
+ rtc::scoped_refptr<webrtc::VideoTrackInterface> SelectVideoSourceOnFlight(int channelid,
                                  int device_index,
                                  const std::string& track_params);
 
