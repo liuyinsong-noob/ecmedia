@@ -266,7 +266,7 @@ void WebRtcVoiceEngine::Init() {
   // Connect the ADM to our audio path.
   adm()->RegisterAudioCallback(audio_state()->audio_transport());
 
-  #ifdef WIN32
+#ifdef WIN32
   // Set default engine options.
   {
 
@@ -672,19 +672,23 @@ bool WebRtcVoiceEngine::ApplyOptions(const AudioOptions& options_in) {
     apm_config.voice_detection.enabled = *options.typing_detection;
   }
 
-  if(!strcmp(ns_level, "kLow")) {
-    apm_config.noise_suppression.level = webrtc::AudioProcessing::Config::NoiseSuppression::Level::kLow;
+  if (!strcmp(ns_level, "kLow")) {
+    apm_config.noise_suppression.level =
+        webrtc::AudioProcessing::Config::NoiseSuppression::Level::kLow;
   } else if (!strcmp(ns_level, "kModerate")) {
-    apm_config.noise_suppression.level = webrtc::AudioProcessing::Config::NoiseSuppression::Level::kModerate;
+    apm_config.noise_suppression.level =
+        webrtc::AudioProcessing::Config::NoiseSuppression::Level::kModerate;
   } else if (!strcmp(ns_level, "kHigh")) {
-    apm_config.noise_suppression.level = webrtc::AudioProcessing::Config::NoiseSuppression::Level::kHigh;
+    apm_config.noise_suppression.level =
+        webrtc::AudioProcessing::Config::NoiseSuppression::Level::kHigh;
   } else if (!strcmp(ns_level, "kVeryHigh")) {
-    apm_config.noise_suppression.level = webrtc::AudioProcessing::Config::NoiseSuppression::Level::kVeryHigh;
-  } 
+    apm_config.noise_suppression.level =
+        webrtc::AudioProcessing::Config::NoiseSuppression::Level::kVeryHigh;
+  }
 
   apm()->SetExtraOptions(config);
   apm()->ApplyConfig(apm_config);
- #endif
+#endif
   return true;
 }
 
@@ -1398,7 +1402,9 @@ WebRtcVoiceMediaChannel::WebRtcVoiceMediaChannel(
       engine_(engine),
       call_(call),
       audio_config_(config.audio),
-      crypto_options_(crypto_options) {
+      crypto_options_(crypto_options),
+	//add by wx
+      rtp_header_praser_(webrtc::RtpHeaderParser::Create()){
   RTC_LOG(LS_VERBOSE) << "WebRtcVoiceMediaChannel::WebRtcVoiceMediaChannel";
   RTC_DCHECK(call);
   engine->RegisterChannel(this);
@@ -1842,7 +1848,8 @@ bool WebRtcVoiceMediaChannel::SetSendCodecs(
     bitrate_config.start_bitrate_bps = -1;
   }
 
-  //hubintest call_->GetTransportControllerSend()->SetSdpBitrateParameters(bitrate_config);
+  // hubintest
+  // call_->GetTransportControllerSend()->SetSdpBitrateParameters(bitrate_config);
 
   // Check if the transport cc feedback or NACK status has changed on the
   // preferred send codec, and in that case reconfigure all receive streams.
@@ -2213,9 +2220,13 @@ void WebRtcVoiceMediaChannel::OnPacketReceived(rtc::CopyOnWriteBuffer packet,
                                        packet_time_us);
 
   if (delivery_result != webrtc::PacketReceiver::DELIVERY_UNKNOWN_SSRC) {
+    // add by wx
+    webrtc::RTPHeader* header = new webrtc::RTPHeader();
+    rtp_header_praser_->Parse(packet.cdata(), packet.size(), header);
+    delete header;
+    header = nullptr;
     return;
   }
-
   // Create an unsignaled receive stream for this previously not received ssrc.
   // If there already is N unsignaled receive streams, delete the oldest.
   // See: https://bugs.chromium.org/p/webrtc/issues/detail?id=5208
@@ -2481,5 +2492,30 @@ bool WebRtcVoiceMediaChannel::MaybeDeregisterUnsignaledRecvStream(
     return true;
   }
   return false;
+}
+
+// add by 
+int WebRtcVoiceMediaChannel::Register_ECMedia_ConferenceParticipantCallback(
+	ECMedia_ConferenceParticipantCallback* callback){
+	if (callback==nullptr)
+	{
+    return -1;
+	}
+    rtp_header_praser_->setECMediaConferenceParticipantCallback(callback);
+    return 0;
+}
+int WebRtcVoiceMediaChannel::SetConferenceParticipantCallbackTimeInterVal(
+	int32_t timeInterVal) {
+    int ret = -1;
+	if (timeInterVal<=0)
+	{
+      return ret;
+    } else {
+      rtp_header_praser_
+              ->setECMediaConferenceParticipantCallbackTimeInterVal(timeInterVal);
+      ret = 0;
+      return ret;
+    }
+    
 }
 }  // namespace cricket

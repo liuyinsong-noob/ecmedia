@@ -713,3 +713,12 @@ ECMEDIA_API void ECMedia_get_audio_channel_volume_level(int audioid,
 ECMEDIA_API void ECMedia_set_video_show_window_mode(int mode) {
   return;
 }
+/**************************************************Voice excitation**************************************************************/
+//wx begin
+int ECMedia_setECMedia_ConferenceParticipantCallback(int channelid, ECMedia_ConferenceParticipantCallback* callback) {
+  return g_ECMedia->RegisterConferenceParticipantCallback(channelid,callback);
+}
+
+int ECMedia_setECMedia_ConferenceParticipantCallbackTimeInterVal( int channelid, int timeInterVal) {
+  return g_ECMedia->SetConferenceParticipantCallbackTimeInterVal(channelid,timeInterVal);
+}

@@ -318,6 +318,10 @@ enum EC_LIVE_STATUS_CODE {
 typedef int(*ECLiveStreamNetworkStatusCallBack)(EC_LIVE_STATUS_CODE code);
 typedef int(*ECLiveStreamVideoResolution)(int width, int height);
 
+//wx begin
+
+typedef void(ECMedia_ConferenceParticipantCallback)(uint32_t arrOfCSRCs[],
+                                                    int count);
 
 #ifdef __cplusplus
 extern "C" {

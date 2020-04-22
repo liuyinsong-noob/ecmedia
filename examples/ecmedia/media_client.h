@@ -207,6 +207,8 @@ namespace ecmedia_sdk {
 class TransportControllerObserve;
 class ChannelGenerator;
 enum VIDEO_SOURCE_TYPE { VIDEO_CAMPER = 0, VIDEO_SCREEN, VIDEO_EXTERNAL };
+typedef void(ECMedia_ConferenceParticipantCallback)(uint32_t arrOfCSRCs[],
+                                                    int count);
 
 class MediaClient : public sigslot::has_slots<> {
  public:
@@ -778,8 +780,10 @@ class MediaClient : public sigslot::has_slots<> {
   void SetReceiveCodecVideo(int peer_id, cricket::VideoCodec* video_codec);
   void SetSendCodecAudio(cricket::AudioCodec* audio_codec);
   void SetReceiveCodecAudio(int peer_id, cricket::AudioCodec* audio_codec);
-
-#if defined(WEBRTC_ANDROID)
+  //wx begin
+  int RegisterConferenceParticipantCallback(int channelid, ECMedia_ConferenceParticipantCallback* callback);
+  int SetConferenceParticipantCallbackTimeInterVal(int channelid, int timeInterVal);
+  #if defined(WEBRTC_ANDROID)
   bool SaveLocalVideoTrack(int channelId, webrtc::VideoTrackInterface* track);
   webrtc::VideoTrackInterface* GetLocalVideoTrack(int channelId);
   bool SaveLocalVideoTrack(int channelId, void* track);

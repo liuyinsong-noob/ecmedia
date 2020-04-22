@@ -825,6 +825,22 @@ ECMEDIA_API void ECMedia_get_audio_channel_volume_level(int audioid, int level);
 
 ECMEDIA_API void ECMedia_set_video_show_window_mode(int mode);
 
+//wx begin
+/**
+ * conference csrc callback
+ * @param channelid: channel id
+ * @param callback : callback @see ECMedia_ConferenceParticipantCallback
+ * @return success return 0, eles return -1;
+ */
+ECMEDIA_API int ECMedia_setECMedia_ConferenceParticipantCallback(int channelid,ECMedia_ConferenceParticipantCallback* callback);
+
+/**
+ * @param channelid: channel id
+ * @param timeInterVal: Conference Participant Callback time interval, Unit
+ * seconds.
+ * @return success return 0, eles return -1;
+ */
+ECMEDIA_API int ECMedia_setECMedia_ConferenceParticipantCallbackTimeInterVal(int channelid,int timeInterVal);
 //ECMEDIA_API void ECMedia_add_tracks();
 #ifdef __cplusplus
 }
