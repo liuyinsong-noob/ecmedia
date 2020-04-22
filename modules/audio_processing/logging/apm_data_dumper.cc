@@ -12,6 +12,7 @@
 
 #include "rtc_base/strings/string_builder.h"
 
+//ytx_add
 #ifdef WIN32
 #include "rtc_base/configfile.h"
 #endif
@@ -60,6 +61,7 @@ char ApmDataDumper::output_dir_[] = ".";          // AVRONG_DEBUG_DUMP
 
 ApmDataDumper::ApmDataDumper(int instance_index)
     : instance_index_(instance_index) {
+//ytx_begin
 #ifdef WIN32
   CConfigFile cfgfile("apmconfig.ini");  // AVRONG_DEBUG_DUMP
   char apm_dump_enable[10];
@@ -69,6 +71,7 @@ ApmDataDumper::ApmDataDumper(int instance_index)
   recording_activated_ = false;
 #endif
 }
+//yt_end
 #else
 ApmDataDumper::ApmDataDumper(int instance_index) {}
 #endif

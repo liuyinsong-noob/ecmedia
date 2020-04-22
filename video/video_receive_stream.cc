@@ -748,12 +748,13 @@ void VideoReceiveStream::SetRequestKeyFramCallback(
   channelId_ = channelId;
   request_key_frame_callback_ = cb;
 }
-
+//ytx_begin 
 void VideoReceiveStream::RequestRemoteSsrc(int flag,int32_t ssrc) {
   uint32_t bandwidth = flag;
   uint32_t localssrc = 0;
   rtp_video_stream_receiver_.GetMoudleRtcp()->SendSingleTMMBR(bandwidth,localssrc, (uint32_t)ssrc);
       
  }
+//ytx_end
 }  // namespace internal
 }  // namespace webrtc

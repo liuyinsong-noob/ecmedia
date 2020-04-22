@@ -72,7 +72,7 @@ PayloadTypeMapper::PayloadTypeMapper()
              48000,
              2,
              {{"minptime", "10"}, {"useinbandfec", "1"}}},
-            124},
+            111},
            // TODO(solenberg): Remove the hard coded 16k,32k,48k DTMF once we
            // assign payload types dynamically for send side as well.
            {{kDtmfCodecName, 48000, 1}, 110},

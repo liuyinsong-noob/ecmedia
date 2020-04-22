@@ -133,7 +133,7 @@ class VideoReceiveStream : public webrtc::VideoReceiveStream,
   std::vector<webrtc::RtpSource> GetSources() const override;
 
   void SetRequestKeyFramCallback(const int channelId, OnRequestKeyFrameCallback cb) override;
-
+  //ytx_add
   void RequestRemoteSsrc(int flag,int32_t ssrc) override;
 
 

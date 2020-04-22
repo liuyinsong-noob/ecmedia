@@ -73,6 +73,7 @@ class MockRtpVideoSender : public RtpVideoSenderInterface {
                      std::vector<RtpSequenceNumberMap::Info>(
                          uint32_t ssrc,
                          rtc::ArrayView<const uint16_t> sequence_numbers));
+  //ytx_add
   MOCK_METHOD2(RequestRemoteSsrc, void(int,int32_t));
 };
 

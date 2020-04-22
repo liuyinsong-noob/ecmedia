@@ -150,7 +150,7 @@ void AudioState::SetRecording(bool enabled) {
     }
   }
 }
-
+//ytx_begin
 int32_t AudioState::SetRecordingDevice(uint16_t index) {
   RTC_LOG(INFO) << "SetRecordingDevice(" << index << ")";
   RTC_DCHECK(thread_checker_.IsCurrent());
@@ -180,7 +180,7 @@ int32_t AudioState::SetPlayoutDevice(uint16_t index) {
 
   return 0;
 }
-
+//ytx_end
 
 AudioState::Stats AudioState::GetAudioInputStats() const {
   RTC_DCHECK(thread_checker_.IsCurrent());

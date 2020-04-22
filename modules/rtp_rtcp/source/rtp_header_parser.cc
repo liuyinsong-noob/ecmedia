@@ -34,31 +34,32 @@ class RtpHeaderParserImpl : public RtpHeaderParser {
   bool DeregisterRtpHeaderExtension(RTPExtensionType type) override;
   bool DeregisterRtpHeaderExtension(RtpExtension extension) override;
 
-   // add by wx ÓïÒô¼¤Àø»Øµ÷º¯Êý
+   //ytx_begin by wx ÓïÒô¼¤Àø»Øµ÷º¯Êý
    int setECMediaConferenceParticipantCallback(ECMedia_ConferenceParticipantCallback* cb) override;
-
    void setECMediaConferenceParticipantCallbackTimeInterVal(int timeInterVal) override;
+   //ytx_end
  private:
   rtc::CriticalSection critical_section_;
   RtpHeaderExtensionMap rtp_header_extension_map_
       RTC_GUARDED_BY(critical_section_);
-  // added by wx.
+  //ytx_begin added by wx.
   ECMedia_ConferenceParticipantCallback* _participantCallback;  
   int callConferenceParticipantCallbacktimeInterVal_;
   mutable uint8_t last_arr_csrc_count_;
   mutable uint32_t last_arrOfCSRCs_[kRtpCsrcSize];
   mutable int64_t base_time;
-  //end
+  //ytx_end
 };
 
 RtpHeaderParser* RtpHeaderParser::Create() {
   return new RtpHeaderParserImpl;
 }
-//modify by wx
+//ytx_begin by wx
 RtpHeaderParserImpl::RtpHeaderParserImpl():_participantCallback(nullptr),\
 callConferenceParticipantCallbacktimeInterVal_(1),last_arr_csrc_count_(0),base_time(0){
   memset(last_arrOfCSRCs_, 0, sizeof(uint32_t) * kRtpCsrcSize);
 }
+//ytx_end
 
 bool RtpHeaderParser::IsRtcp(const uint8_t* packet, size_t length) {
   RtpUtility::RtpHeaderParser rtp_parser(packet, length);
@@ -92,6 +93,7 @@ bool RtpHeaderParserImpl::Parse(const uint8_t* packet,
     return false;
   }
   /****  callback conference csrc array when csrc array changed, added by wx ******/
+  //ytx_begin
   bool should_send = false;
   {
     int64_t current_time = Clock::GetRealTimeClock()->TimeInMilliseconds();
@@ -134,7 +136,7 @@ bool RtpHeaderParserImpl::Parse(const uint8_t* packet,
       last_arr_csrc_count_ = header->numCSRCs;
     }
   }
-  //end
+  //ytx_end
   return true;
 }
 bool RtpHeaderParserImpl::RegisterRtpHeaderExtension(RtpExtension extension) {
@@ -158,7 +160,7 @@ bool RtpHeaderParserImpl::DeregisterRtpHeaderExtension(RTPExtensionType type) {
   rtc::CritScope cs(&critical_section_);
   return rtp_header_extension_map_.Deregister(type) == 0;
 }
-//add by wx
+//ytx_begin by wx
 int RtpHeaderParserImpl::setECMediaConferenceParticipantCallback(ECMedia_ConferenceParticipantCallback* cb) {
   if (cb == nullptr) {
     RTC_LOG(LS_ERROR) << "setECMediaConferenceParticipantCallback is null.";
@@ -182,5 +184,5 @@ void RtpHeaderParserImpl::setECMediaConferenceParticipantCallbackTimeInterVal(in
 
   callConferenceParticipantCallbacktimeInterVal_ = timeInterVal;
 }
-
+//ytx_end
 }  // namespace webrtc

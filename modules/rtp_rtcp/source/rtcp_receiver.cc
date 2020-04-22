@@ -196,6 +196,7 @@ void RTCPReceiver::SetSsrcs(uint32_t main_ssrc,
   rtc::CritScope lock(&rtcp_receiver_lock_);
   main_ssrc_ = main_ssrc;
   registered_ssrcs_ = registered_ssrcs;
+  //ytx_add
   general_main_ssrc_ = GetGeneralSsrc(main_ssrc);
 }
 
@@ -212,6 +213,7 @@ int32_t RTCPReceiver::RTT(uint32_t remote_ssrc,
 
   auto it_info = it->second.find(remote_ssrc);
   if (it_info == it->second.end()){
+   //ytx_add
     it_info = it->second.find(GetGeneralSsrc(remote_ssrc));
     if(it_info == it->second.end())
       return -1;
@@ -431,12 +433,13 @@ void RTCPReceiver::HandleSenderReport(const CommonHeader& rtcp_block,
 
   UpdateTmmbrRemoteIsAlive(remote_ssrc);
 
-  //modfiy by  yukening
+  //ytx_begin by  yukening
   // Have I received RTP packets from this party?
   // if (remote_ssrc_ == remote_ssrc) {
   uint32_t general_remote_ssrc_ = GetGeneralSsrc(remote_ssrc);
   // Have I received RTP packets from this party?
   if (remote_ssrc_ == remote_ssrc || general_remote_ssrc_ == remote_ssrc_) {
+  //ytx_end
     // Only signal that we have received a SR when we accept one.
     packet_information->packet_type_flags |= kRtcpSr;
 
@@ -677,11 +680,13 @@ void RTCPReceiver::HandleNack(const CommonHeader& rtcp_block,
     ++num_skipped_packets_;
     return;
   }
-//modify by yukening
+
+//ytx_begin  by yukening
  // if (receiver_only_ || main_ssrc_ != nack.media_ssrc())  // Not to us.
   uint32_t general_media_ssrc = GetGeneralSsrc(nack.media_ssrc());
   if (receiver_only_ ||  general_main_ssrc_ != general_media_ssrc)  // Not to us.
     return;
+//ytx_end
 
   packet_information->nack_sequence_numbers.insert(
       packet_information->nack_sequence_numbers.end(),
@@ -818,10 +823,11 @@ void RTCPReceiver::HandlePli(const CommonHeader& rtcp_block,
     return;
   }
 
-  //modify by yukening
+  //ytx_begin by yukening
    //if (main_ssrc_ == pli.media_ssrc())
     uint32_t pli_media_ssrc = GetGeneralSsrc(pli.media_ssrc());
   if ( general_main_ssrc_ == pli_media_ssrc ){
+ //ytx_begi
     ++packet_type_counter_.pli_packets;
     // Received a signal that we need to send a new key frame.
     packet_information->packet_type_flags |= kRtcpPli;
@@ -844,12 +850,12 @@ void RTCPReceiver::HandleTmmbr(const CommonHeader& rtcp_block,
   }
 
   for (const rtcp::TmmbItem& request : tmmbr.requests()) {
-    //modify by yukening
+    //ytx_begin by yukening
     //  if (main_ssrc_ != request.ssrc() || request.bitrate_bps() == 0)
      uint32_t general_request_ssrc = GetGeneralSsrc(request.ssrc());
     if (general_main_ssrc_ != general_request_ssrc || request.bitrate_bps() == 0)
       continue;
-
+    //ytx_end
     TmmbrInformation* tmmbr_info = FindOrCreateTmmbrInfo(tmmbr.sender_ssrc());
     auto* entry = &tmmbr_info->tmmbr[sender_ssrc];
     entry->tmmbr_item = rtcp::TmmbItem(sender_ssrc, request.bitrate_bps(),
@@ -923,12 +929,13 @@ void RTCPReceiver::HandleFir(const CommonHeader& rtcp_block,
 
   for (const rtcp::Fir::Request& fir_request : fir.requests()) {
     // Is it our sender that is requested to generate a new keyframe.
+    //ytx_begin
     //if (main_ssrc_ != fir_request.ssrc)
      // continue;
     uint32_t tepSsrc = GetGeneralSsrc(fir_request.ssrc);
     if(tepSsrc != general_main_ssrc_)
       continue;
-
+   //ytx_end
     ++packet_type_counter_.fir_packets;
 
     int64_t now_ms = clock_->TimeInMilliseconds();
@@ -1145,6 +1152,7 @@ std::vector<rtcp::TmmbItem> RTCPReceiver::TmmbrReceived() {
   }
   return candidates;
 }
+//ytx_begin
 uint32_t RTCPReceiver::GetGeneralSsrc(uint32_t ssrc) const {
   uint32_t temp = ssrc;
   uint8_t buf[4] = {0};
@@ -1155,5 +1163,5 @@ uint32_t RTCPReceiver::GetGeneralSsrc(uint32_t ssrc) const {
   temp = buf[0] + buf[1] * 256 + buf[2] * 256 * 256 + buf[3] * 256 * 256 * 256;
   return temp;
 }
-
+//ytx_end
 }  // namespace webrtc

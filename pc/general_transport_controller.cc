@@ -1144,7 +1144,7 @@ void GeneralTransportController::MaybeDestroyGeneralTransport(
   }
 
   general_transports_by_name_.erase(mid);
-  //lzm------------
+  //ytx_change lzm------------
  // UpdateAggregateStates_n();
 }
 
@@ -1158,6 +1158,7 @@ void GeneralTransportController::DestroyAllGeneralTransports_n() {
   }
 
   general_transports_by_name_.clear();
+  //ytx_add
   mid_to_transport_.clear();
 }
 // lzm-------------
@@ -1599,6 +1600,7 @@ bool GeneralTransportController::ReleaseUdpConnection(const std::string& mid) {
   cricket::GeneralTransportChannel* general_channel =GetGeneralTransportChannelByMid(mid);
   if (general_channel) {
     general_channel->ReleaseUdpConnection();
+    //ytx_begin
     std::map<std::string, cricket::GeneralTransportChannel*>::iterator it =
         general_transport_channels_by_mid_.begin();
 	while (it != general_transport_channels_by_mid_.end())
@@ -1609,6 +1611,7 @@ bool GeneralTransportController::ReleaseUdpConnection(const std::string& mid) {
 	  }
       it++;
 	}
+   //ytx_end
   }
   return true;
 }

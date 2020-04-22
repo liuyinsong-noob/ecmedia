@@ -59,7 +59,7 @@ group("examples") {
   if (is_android || is_win) {
     deps += [ 
       ":webrtc_unity_plugin",
-      ":ecmedia",
+      "//sdk:ecmedia",
       ]
   }
 }
@@ -671,6 +671,7 @@ if (is_linux || is_win) {
       ]
       configs += [ "//build/config/win:windowed" ]
       deps += [ "../media:rtc_media_base" ]
+      #ytx_add
       libs = [ "libx264.dll.lib" ]
       lib_dirs = [ "../third_party/libx264svc_win/x86/lib" ]
     }
@@ -777,97 +778,6 @@ if (is_linux || is_win) {
 }
 
 if (is_win || is_android) {
-  rtc_shared_library("ecmedia") {
-#   rtc_static_library("ecmedia") {
-    testonly = true
-    sources = [
-      "ecmedia/ecmedia.cc",
-      "ecmedia/ecmedia.h",
-      "ecmedia/sdk_common.h",
-      "ecmedia/ec_log.cc",
-      "ecmedia/ec_log.h",
-      "ecmedia/video_render/i_video_render.h",
-      "ecmedia/video_render/win_d3d9_render.h",
-      "ecmedia/video_render/win_d3d9_render.cc",
-      "ecmedia/video_render/video_render_frames.cc",
-      "ecmedia/video_render/video_render_frames.h",
-      "ecmedia/video_render/video_renderer.cc",
-      "ecmedia/video_render/video_renderer.h",
-      "ecmedia/video_render/video_render_defines.h",
-      "ecmedia/video_capturer/i_video_capturer.h",
-      "ecmedia/video_capturer/video_capturer.cc",
-      "ecmedia/video_capturer/video_capturer.h",
-      "ecmedia/video_capturer/capturer_track_source.h",
-      "ecmedia/video_capturer/capturer_track_source.cc",
-      "ecmedia/ec_common_types.h",
-      "ecmedia/ec_common_types.cc",
-      "ecmedia/media_client.h",
-      "ecmedia/media_client.cc",
-    ]
-    #configs += [ "//build/config/win:windowed" ]
-    if (is_android) {
-      sources += [
-        "unityplugin/simple_peer_connection.cc",
-        "unityplugin/simple_peer_connection.h",
-        "unityplugin/unity_plugin_apis.cc",
-        "unityplugin/unity_plugin_apis.h",
-        "unityplugin/video_observer.cc",
-        "unityplugin/video_observer.h",
-        "unityplugin/class_reference_holder.cc",
-        "unityplugin/class_reference_holder.h",
-        "unityplugin/jni_onload.h",
-        "unityplugin/jni_onload.cc",
-      ]
-      suppressed_configs += [ "//build/config/android:hide_all_but_jni_onload" ]
-    }
-    if (is_win) {
-      configs += [ "//build/config/win:windowed" ]
-    }
-    deps = [
-      "../api:create_peerconnection_factory",
-      "../api:libjingle_peerconnection_api",
-      "../api/audio_codecs:builtin_audio_decoder_factory",
-      "../api/audio_codecs:builtin_audio_encoder_factory",
-      "../api/video_codecs:builtin_video_encoder_factory",
-      "../api/video_codecs:builtin_video_decoder_factory",
-      "../api/video:video_frame",
-     # "../api/video:video_rtp_headers",
-      "../media:rtc_audio_video",
-      "../media:rtc_internal_video_codecs",
-      "../media:rtc_media",
-      "../media:rtc_media_base",
-      "../modules/audio_device",
-      "../modules/audio_processing",
-      "../modules/audio_processing:api",
-      "../modules/desktop_capture",
-      "../modules/video_capture:video_capture_module",
-      "../pc:libjingle_peerconnection",
-      "../pc:peerconnection",
-      "../rtc_base",
-      "../rtc_base:rtc_json",
-      "../test:platform_video_capturer",
-      "../test:video_test_common",
-      "//third_party/abseil-cpp/absl/memory",
-    ]
-    if (is_android) {
-      deps += [
-        "../modules/utility",
-        "../sdk/android:native_api_video",
-        "../sdk/android:native_api_jni",
-        "../sdk/android:videoframe_jni",
-        "../sdk/android:base_jni",
-        "../sdk/android:generated_video_jni",
-        "../sdk/android:generated_native_api_jni",
-        "../sdk/android:hwcodecs_java__lint",
-        "../sdk/android:libjingle_peerconnection_jni",
-      ]
-    }
-    libs = [ "libx264.dll.lib" ]
-    lib_dirs = [ "../third_party/libx264svc_win/x86/lib" ]
-  }
- }
-
-if (is_win || is_android) {
   rtc_shared_library("webrtc_unity_plugin") {
     testonly = true
     sources = [
@@ -918,6 +828,7 @@ if (is_win || is_android) {
         "../sdk/android:libjingle_peerconnection_jni",
       ]
     }
+    #ytx_add
     if (is_win) {
       libs = [ "libx264.dll.lib" ]
       lib_dirs = [ "../third_party/libx264svc_win/x86/lib" ]

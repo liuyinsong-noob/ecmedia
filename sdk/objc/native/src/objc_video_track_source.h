@@ -46,7 +46,7 @@ class ObjCVideoTrackSource : public rtc::AdaptedVideoTrackSource {
 
   // Called by RTCVideoSource.
   void OnOutputFormatRequest(int width, int height, int fps);
-  
+  //ytx_add
   bool apply_rotation();
 
  private:

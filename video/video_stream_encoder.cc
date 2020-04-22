@@ -53,9 +53,11 @@ constexpr char kFrameDropperFieldTrial[] = "WebRTC-FrameDropper";
 
 // The maximum number of frames to drop at beginning of stream
 // to try and achieve desired bitrate.
+//ytx_change kMaxInitialFramedrop from 4 to 5 for bbr
 const int kMaxInitialFramedrop = 5;
 // When the first change in BWE above this threshold occurs,
 // enable DropFrameDueToSize logic.
+//ytx_change kFramedropThreshold from 0.3 to 0.2 for bbr
 const float kFramedropThreshold = 0.2;
 
 // Averaging window spanning 90 frames at default 30fps, matching old media
@@ -1467,8 +1469,10 @@ EncodedImageCallback::Result VideoStreamEncoder::OnEncodedImage(
       temporal_index = codec_specific_info->codecSpecific.VP9.temporal_idx;
     } else if (codec_specific_info->codecType == kVideoCodecVP8) {
       temporal_index = codec_specific_info->codecSpecific.VP8.temporalIdx;
+    //ytx_begin
     } else if (codec_specific_info->codecType == kVideoCodecH264) {
       temporal_index = codec_specific_info->codecSpecific.H264.temporal_idx;
+    //ytx_end
     }
   }
   if (temporal_index == kNoTemporalIdx) {

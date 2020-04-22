@@ -304,8 +304,10 @@ rtc_static_library("webrtc_h264") {
       "codecs/h264/h264_decoder_impl.h",
       "codecs/h264/h264_encoder_impl.cc",
       "codecs/h264/h264_encoder_impl.h",
+      #ytx_begin 
       "codecs/h264/x264_encoder_impl.cc",
       "codecs/h264/x264_encoder_impl.h",
+      #ytx_end
     ]
     deps += [
       "../../common_video",

@@ -75,7 +75,7 @@ int32_t UlpfecReceiverImpl::AddReceivedRedPacket(
     const uint8_t* incoming_rtp_packet,
     size_t packet_length,
     uint8_t ulpfec_payload_type) {
-  
+  //ytx_begin
   if (header.ssrc != ssrc_) {
   uint32_t temp = header.ssrc;
    uint8_t buf[4] = {0};
@@ -91,6 +91,7 @@ int32_t UlpfecReceiverImpl::AddReceivedRedPacket(
     return -1;
   }
   }
+  //ytx_end
   if (packet_length > IP_PACKET_SIZE) {
     RTC_LOG(LS_WARNING) << "Received RED packet with length exceeds maximum IP "
                            "packet size; dropping.";

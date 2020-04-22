@@ -62,8 +62,10 @@ class AudioState : public rtc::RefCountInterface {
   // packets will be encoded or transmitted.
   virtual void SetRecording(bool enabled) = 0;
 
+  //ytx_begin
   virtual int32_t SetRecordingDevice(uint16_t index) = 0;
   virtual int32_t SetPlayoutDevice(uint16_t index) = 0;
+  //ytx_end
 
   virtual Stats GetAudioInputStats() const = 0;
   virtual void SetStereoChannelSwapping(bool enable) = 0;

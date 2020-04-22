@@ -270,8 +270,10 @@ if (rtc_include_tests) {
 
     if (is_win) {
       libs = [ "strmiids.lib" ]
+      #ytx_begin
       libs += [ "libx264.dll.lib" ]
       lib_dirs = [ "../third_party/libx264svc_win/x86/lib" ]
+      #ytx_end
     }
 
     deps = [

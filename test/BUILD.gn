@@ -423,10 +423,12 @@ if (rtc_include_tests) {
       # undefined symbol: webrtc::videocapturemodule::VideoCaptureImpl::Create
       deps += [ "../modules/video_capture:video_capture_internal_impl" ]
     }
+    #ytx_begin
     if (is_win) {
      libs = [ "libx264.dll.lib" ]
      lib_dirs = [ "../third_party/libx264svc_win/x86/lib" ]
-    } 
+    }
+    #ytx_end
   }
 }
 

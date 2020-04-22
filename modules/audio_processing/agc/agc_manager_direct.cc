@@ -25,6 +25,7 @@
 #include "rtc_base/numerics/safe_minmax.h"
 #include "system_wrappers/include/metrics.h"
 
+//ytx_add
 #ifdef WIN32
 #include "rtc_base/configfile.h"
 #endif
@@ -123,6 +124,7 @@ class DebugFile {
  public:
   explicit DebugFile(const char* filename) : file_(fopen(filename, "wb")) {
     RTC_DCHECK(file_);
+//ytx_begin
 #ifdef WIN32
     CConfigFile cfgfile("apmconfig.ini");  // AVRONG_DEBUG_DUMP
     char apm_dump_enable[10];
@@ -131,15 +133,17 @@ class DebugFile {
 #else
     recording_activated_ = false;
 #endif
+//ytx_end
   }
   ~DebugFile() { fclose(file_); }
   void Write(const int16_t* data, size_t length_samples) {
-    if (recording_activated_)
+    if (recording_activated_) //ytx_add
       fwrite(data, 1, length_samples * sizeof(int16_t), file_);
   }
 
  private:
   FILE* file_;
+  //ytx_add
   static bool recording_activated_;
 #else
  public:
@@ -148,7 +152,7 @@ class DebugFile {
   void Write(const int16_t* data, size_t length_samples) {}
 #endif  // WEBRTC_AGC_DEBUG_DUMP
 };
-
+ //ytx_add
 bool DebugFile::recording_activated_ = false;
 
 AgcManagerDirect::AgcManagerDirect(GainControl* gctrl,

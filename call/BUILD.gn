@@ -130,7 +130,8 @@ rtc_source_set("rtp_sender") {
     "../api:transport_api",
     "../api/transport:field_trial_based_config",
     "../api/transport:goog_cc",
-    "../api/transport:bbr",
+    #ytx_add
+    "../modules/congestion_controller/bbr:bbr",
     "../api/transport:network_control",
     "../api/units:data_rate",
     "../api/units:time_delta",

@@ -267,6 +267,7 @@ class VideoReceiveStream {
 
   virtual void SetRequestKeyFramCallback(const int channelId,
                                               OnRequestKeyFrameCallback cb) = 0;
+  //ytx_add
   virtual void RequestRemoteSsrc(int flag,int32_t ssrc) = 0;
  protected:
   virtual ~VideoReceiveStream() {}

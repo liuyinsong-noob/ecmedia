@@ -265,7 +265,7 @@ void WebRtcVoiceEngine::Init() {
 
   // Connect the ADM to our audio path.
   adm()->RegisterAudioCallback(audio_state()->audio_transport());
-
+//ytx_begin
 #ifdef WIN32
   // Set default engine options.
   {
@@ -355,6 +355,7 @@ void WebRtcVoiceEngine::Init() {
     RTC_DCHECK(error);
   }
 #endif
+//ytx_end
   initialized_ = true;
 }
 
@@ -572,7 +573,7 @@ bool WebRtcVoiceEngine::ApplyOptions(const AudioOptions& options_in) {
     config.Set<webrtc::ExperimentalNs>(
         new webrtc::ExperimentalNs(*experimental_ns_));
   }
-
+//ytx_begin
 #ifdef WIN32
   CConfigFile cfgfile("apmconfig.ini");  // AVRONG_DEBUG_DUMP
   char aec_mobile_mode[10];
@@ -614,12 +615,13 @@ bool WebRtcVoiceEngine::ApplyOptions(const AudioOptions& options_in) {
   cfgfile.GetValue("AGC", "extra_saturation_margin_db",
                    agc_extra_saturation_margin_db);
   cfgfile.GetValue("NS", "ns_level", ns_level);
-
+ //ytx_end
   webrtc::AudioProcessing::Config apm_config = apm()->GetConfig();
 
   if (options.auto_gain_control) {
     const bool enabled = *options.auto_gain_control;
     apm_config.gain_controller1.enabled = enabled;
+    //ytx_begin
     apm_config.gain_controller1.mode =
         strcmp(agc_mode, "kAdaptiveAnalog")
             ? (strcmp(agc_mode, "kAdaptiveDigital")
@@ -645,6 +647,7 @@ bool WebRtcVoiceEngine::ApplyOptions(const AudioOptions& options_in) {
         strcmp(agc_use_saturation_protector, "true") ? false : true;
     apm_config.gain_controller2.adaptive_digital.extra_saturation_margin_db =
         atof(agc_extra_saturation_margin_db);
+    //ytx_end
     RTC_LOG(LS_INFO) << "Setting AGC to " << enabled;
   }
   if (options.tx_agc_target_dbov) {
@@ -671,7 +674,7 @@ bool WebRtcVoiceEngine::ApplyOptions(const AudioOptions& options_in) {
                      << *options.typing_detection;
     apm_config.voice_detection.enabled = *options.typing_detection;
   }
-
+  //ytx_begin
   if (!strcmp(ns_level, "kLow")) {
     apm_config.noise_suppression.level =
         webrtc::AudioProcessing::Config::NoiseSuppression::Level::kLow;
@@ -685,7 +688,7 @@ bool WebRtcVoiceEngine::ApplyOptions(const AudioOptions& options_in) {
     apm_config.noise_suppression.level =
         webrtc::AudioProcessing::Config::NoiseSuppression::Level::kVeryHigh;
   }
-
+  //ytx_end
   apm()->SetExtraOptions(config);
   apm()->ApplyConfig(apm_config);
 #endif
@@ -1403,7 +1406,7 @@ WebRtcVoiceMediaChannel::WebRtcVoiceMediaChannel(
       call_(call),
       audio_config_(config.audio),
       crypto_options_(crypto_options),
-	//add by wx
+	//ytx_add by wx
       rtp_header_praser_(webrtc::RtpHeaderParser::Create()){
   RTC_LOG(LS_VERBOSE) << "WebRtcVoiceMediaChannel::WebRtcVoiceMediaChannel";
   RTC_DCHECK(call);
@@ -1847,8 +1850,7 @@ bool WebRtcVoiceMediaChannel::SetSendCodecs(
     // "unchanged" so that BWE isn't affected.
     bitrate_config.start_bitrate_bps = -1;
   }
-
-  // hubintest
+  // ytx_change hubintest
   // call_->GetTransportControllerSend()->SetSdpBitrateParameters(bitrate_config);
 
   // Check if the transport cc feedback or NACK status has changed on the
@@ -2219,11 +2221,12 @@ void WebRtcVoiceMediaChannel::OnPacketReceived(rtc::CopyOnWriteBuffer packet,
                                        packet_time_us);
 
   if (delivery_result != webrtc::PacketReceiver::DELIVERY_UNKNOWN_SSRC) {
-    // add by wx
+    //ytx_begin by wx
     webrtc::RTPHeader* header = new webrtc::RTPHeader();
     rtp_header_praser_->Parse(packet.cdata(), packet.size(), header);
     delete header;
     header = nullptr;
+    //ytx_end
     return;
   }
   // Create an unsignaled receive stream for this previously not received ssrc.
@@ -2493,7 +2496,7 @@ bool WebRtcVoiceMediaChannel::MaybeDeregisterUnsignaledRecvStream(
   return false;
 }
 
-// add by 
+//ytx_begin add by 
 int WebRtcVoiceMediaChannel::Register_ECMedia_ConferenceParticipantCallback(
 	ECMedia_ConferenceParticipantCallback* callback){
 	if (callback==nullptr)
@@ -2517,4 +2520,5 @@ int WebRtcVoiceMediaChannel::SetConferenceParticipantCallbackTimeInterVal(
     }
     
 }
+//ytx_end
 }  // namespace cricket

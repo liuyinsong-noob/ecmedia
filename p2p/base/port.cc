@@ -3008,9 +3008,6 @@ int GeneralConnection::Send(const void* data,
   stats_.sent_total_packets++;
   int sent = 0;
   if (udpSocket_) {
-//       RTC_LOG(LS_WARNING) << "ykn : GeneralConnection::Send address is : "
-//                           << inet_ntoa(addrRemote_.ipaddr().ipv4_address())
-//           <<" and size is : " << size;
     sent = udpSocket_->SendTo(data, size, addrRemote_, options);
   }
   if (sent <= 0) {
@@ -3072,11 +3069,12 @@ void GeneralConnection::OnReadPacket(rtc::AsyncPacketSocket* socket,
   //  }
   //}
 }
+//ytx_begin
 void GeneralConnection::OnSentPacket(rtc::AsyncPacketSocket* socket,
                            const rtc::SentPacket& sent_packet) {
   SignalSentPacket(this,sent_packet);
 }
-
+//ytx_end
 ///////////////////////////////////////////////////////////////////////////////
 
 }  // namespace cricket

@@ -327,7 +327,7 @@ class RTC_EXPORT GeneralTransportChannel : public IceTransportInternal {
   void OnNominated(GeneralConnection* conn);
   // add by dxf end
   
-  //add by yukening
+  //ytx_add
   void OnSentPacket(GeneralConnection* connection,
                     const rtc::SentPacket& sent_packet);
 

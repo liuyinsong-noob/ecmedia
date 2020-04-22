@@ -232,6 +232,7 @@ static int GetMaxDefaultVideoBitrateKbps(int width,
                                          int height,
                                          bool is_screenshare) {
   int max_bitrate;
+//ytx_change 600->500 1700->800 2000->1500
   if (width * height <= 320 * 240) {
     max_bitrate = 500;
   } else if (width * height <= 640 * 480) {
@@ -1533,6 +1534,7 @@ bool WebRtcVideoChannel::SetRequestKeyframeCallback(
     it.second->SetRequestKeyframeCallback(channelId, cb);
   return true;
 }
+//ytx_begin
 bool WebRtcVideoChannel::RequestRemoteSsrc( const int channelId,int flag,int32_t ssrc) {
   RTC_DCHECK_RUN_ON(&thread_checker_);
   for (auto it : receive_streams_)
@@ -1540,6 +1542,7 @@ bool WebRtcVideoChannel::RequestRemoteSsrc( const int channelId,int flag,int32_t
 
   return true;
 }
+//ytx_end
 
 
 void WebRtcVideoChannel::OnRtcpReceived(rtc::CopyOnWriteBuffer packet,

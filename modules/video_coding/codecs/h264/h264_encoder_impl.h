@@ -61,6 +61,7 @@ class H264EncoderImpl : public H264Encoder {
 
   int32_t RegisterEncodeCompleteCallback(
       EncodedImageCallback* callback) override;
+  //ytx_change 
   int32_t SetRateAllocation(const VideoBitrateAllocation& bitrate_allocation,
                             uint32_t framerate) override;
 

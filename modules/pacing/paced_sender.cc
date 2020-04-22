@@ -47,10 +47,11 @@ bool IsEnabled(const WebRtcKeyValueConfig& field_trials,
 
 }  // namespace
 
-//const int64_t PacedSender::kMaxQueueLengthMs = 2000;
+//ytx_change kMaxQueueLengthMs from 2000 to 1500
 const int64_t PacedSender::kMaxQueueLengthMs = 1500;
 const float PacedSender::kDefaultPaceMultiplier = 2.5f;
 
+//ytx_add
 int64_t pretime = 0;
 
 PacedSender::PacedSender(Clock* clock,
@@ -102,7 +103,8 @@ PacedSender::PacedSender(Clock* clock,
   ParseFieldTrial({&min_packet_limit_ms_},
                   field_trials.Lookup("WebRTC-Pacer-MinPacketLimitMs"));
   UpdateBudgetWithElapsedTime(min_packet_limit_ms_);
-        last_nack_time = 0;
+  //ytx_add
+  last_nack_time = 0;
 }
 
 PacedSender::~PacedSender() {}
@@ -145,7 +147,8 @@ void PacedSender::Resume() {
 void PacedSender::SetCongestionWindow(int64_t congestion_window_bytes) {
   rtc::CritScope cs(&critsect_);
   congestion_window_bytes_ = congestion_window_bytes;
-      RTC_LOG(LS_INFO) << "ykn.SetCongestionWindow value is :" << congestion_window_bytes;
+  //ytx_add
+  RTC_LOG(LS_INFO) << "ykn.SetCongestionWindow value is :" << congestion_window_bytes;
 }
 
 void PacedSender::UpdateOutstandingData(int64_t outstanding_bytes) {
@@ -156,6 +159,7 @@ void PacedSender::UpdateOutstandingData(int64_t outstanding_bytes) {
 bool PacedSender::Congested() const {
   if (congestion_window_bytes_ == kNoCongestionWindow)
     return false;
+  //ytx_add
   if(outstanding_bytes_ >= congestion_window_bytes_){
     printf("yukening Congested...\n");
   }
@@ -213,6 +217,7 @@ void PacedSender::SetPacingRates(uint32_t pacing_rate_bps,
   rtc::CritScope cs(&critsect_);
   RTC_DCHECK(pacing_rate_bps > 0);
   
+  //ytx_begin
   if(last_valid_padding_bps_ == 0){
     padding_rate_bps = padding_rate_bps / 2;
     last_valid_padding_bps_ = padding_rate_bps;
@@ -239,9 +244,9 @@ void PacedSender::SetPacingRates(uint32_t pacing_rate_bps,
     padding_rate_bps = GetNackbps() * padding_rate_bps;
   else
     padding_rate_bps = 0;
+  //ytx_end
   pacing_bitrate_kbps_ = pacing_rate_bps / 1000;
   padding_budget_.set_target_rate_kbps(padding_rate_bps / 1000);
-  //RTC_LOG(LS_INFO) << "ykn.SetPacingRates pacing_rate_bps / padding_rate_bps is :" << pacing_rate_bps << " @@ "<<padding_rate_bps;
 
   RTC_LOG(LS_VERBOSE) << "bwe:pacer_updated pacing_kbps="
                       << pacing_bitrate_kbps_
@@ -257,12 +262,12 @@ void PacedSender::InsertPacket(RtpPacketSender::Priority priority,
   rtc::CritScope cs(&critsect_);
   RTC_DCHECK(pacing_bitrate_kbps_ > 0)
       << "SetPacingRate must be called before InsertPacket.";
-    //RTC_LOG(LS_INFO) << "yukening110 delay time is :" << (capture_time_ms -pretime) << " and byte is "<<bytes;
-  pretime = capture_time_ms;
+
   int64_t now_ms = TimeMilliseconds();
   prober_.OnIncomingPacket(bytes);
-  
-    auto it = ssrc_time_.find(ssrc);
+  //ytx_begin
+  pretime = capture_time_ms;
+  auto it = ssrc_time_.find(ssrc);
   if (it != ssrc_time_.end()) {
     auto it_seq = (it->second).find(sequence_number);
     if (it_seq != (it->second).end()) {
@@ -277,16 +282,15 @@ void PacedSender::InsertPacket(RtpPacketSender::Priority priority,
   } else {
     ssrc_time_[ssrc][sequence_number] = now_ms;
   }
-  
+  //ytx_end
   if (capture_time_ms < 0)
     capture_time_ms = now_ms;
+    //ytx_begin
     ssrc_seq[ssrc] = sequence_number;
     
   packets_.Push(RoundRobinPacketQueue::Packet(
       priority, ssrc, sequence_number, capture_time_ms, now_ms, bytes,
       retransmission, packet_counter_++));
-  //if(retransmission)
-    //nack_list.insert(sequence_number);
 }
 
 void PacedSender::SetAccountForAudioPackets(bool account_for_audio) {
@@ -297,17 +301,6 @@ void PacedSender::SetAccountForAudioPackets(bool account_for_audio) {
 int64_t PacedSender::ExpectedQueueTimeMs() const {
   rtc::CritScope cs(&critsect_);
   RTC_DCHECK_GT(pacing_bitrate_kbps_, 0);
-    
-//    if(static_cast<int64_t>(packets_.SizeInBytes() * 8 /
-//    pacing_bitrate_kbps_) > 1500)
-//    {
-//        if(Congested()){
-//            RTC_LOG(LS_INFO) << "yukening246 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ ";
-//        }else {
-//            RTC_LOG(LS_INFO) << "yukening246 ----------------------------------------------------------------------- ";
-//        }
-//    }
-    
   return static_cast<int64_t>(packets_.SizeInBytes() * 8 /
                               pacing_bitrate_kbps_);
 }
@@ -375,8 +368,11 @@ int64_t PacedSender::UpdateTimeAndGetElapsedMs(int64_t now_us) {
 }
 
 bool PacedSender::ShouldSendKeepalive(int64_t now_us) const {
+  //ytx_begin
   int64_t elapsed_since_last_send_us = now_us - last_send_time_us_;
-  if (send_padding_if_silent_ || paused_ || Congested() || elapsed_since_last_send_us >= kCongestedPacketIntervalMs* 4 * 1000) {
+  if (send_padding_if_silent_ || paused_ || Congested() 
+             || elapsed_since_last_send_us >= kCongestedPacketIntervalMs* 4 * 1000) {
+   //ytx_end
     // We send a padding packet every 500 ms to ensure we won't get stuck in
     // congested state due to no feedback being received.
     if (elapsed_since_last_send_us >= kCongestedPacketIntervalMs * 1000) {
@@ -445,9 +441,7 @@ void PacedSender::Process() {
     const auto* packet = GetPendingPacket(pacing_info);
     if (packet == nullptr)
       break;
-       //bool audio_packet = packet->priority == kHighPriority;
-     // if(!audio_packet)
-       //   RTC_LOG(LS_INFO) << "yukening135 …………………… video media ssrc :" <<packet->ssrc <<" size is " << ssrc_seq[packet->ssrc] - packet->sequence_number << " seq is :" << packet->sequence_number ;
+    //ytx_begin
     if(packet->retransmission){
       if(last_nack_send_time == 0)
         last_nack_send_time = now_us /1000;
@@ -456,11 +450,9 @@ void PacedSender::Process() {
     
     if(!packet->retransmission){
       ssrc_send_end_[packet->ssrc] = ssrc_send_end_[packet->ssrc] + 1;
-      //ssrc_send_end_[packet->ssrc] = packet->sequence_number;
     }
-    //sum_send_package_++;
     ssrc_send_retran_[packet->ssrc] = ssrc_send_retran_[packet->ssrc] + 1;
-    
+    //ytx_end
     critsect_.Leave();
     bool success = packet_sender_->TimeToSendPacket(
         packet->ssrc, packet->sequence_number, packet->capture_time_ms,
@@ -488,7 +480,8 @@ void PacedSender::Process() {
                                       : padding_budget_.bytes_remaining());
       if (padding_needed > 0 ) {
         critsect_.Leave();
-        size_t padding_sent = packet_sender_->TimeToSendPadding(padding_needed, pacing_info);
+        size_t padding_sent =
+            packet_sender_->TimeToSendPadding(padding_needed, pacing_info);
         critsect_.Enter();
         bytes_sent += padding_sent;
         OnPaddingSent(padding_sent);
@@ -531,7 +524,9 @@ void PacedSender::OnPacketSent(const RoundRobinPacketQueue::Packet* packet) {
   if (first_sent_packet_ms_ == -1)
     first_sent_packet_ms_ = TimeMilliseconds();
   bool audio_packet = packet->priority == kHighPriority;
-  if (!audio_packet || account_for_audio_ || !packet->retransmission) {
+    //ytx_change
+    //if (!audio_packet || account_for_audio_) {
+    if (!audio_packet || account_for_audio_ || !packet->retransmission) {
     // Update media bytes sent.
     // TODO(eladalon): TimeToSendPacket() can also return |true| in some
     // situations where nothing actually ended up being sent to the network,
@@ -576,6 +571,7 @@ void PacedSender::SetQueueTimeLimit(int limit_ms) {
   queue_time_limit = limit_ms;
 }
 
+//ytx_begin
 bool PacedSender::IsCongested(){
   rtc::CritScope cs(&critsect_);
   return Congested();
@@ -640,5 +636,6 @@ uint32_t PacedSender::GetNackbps(){
   }
   return bps;
 }
+//ytx_end
 
 }  // namespace webrtc

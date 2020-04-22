@@ -104,8 +104,10 @@ rtc_source_set("rtc_base_approved") {
     "byte_order.h",
     "copy_on_write_buffer.cc",
     "copy_on_write_buffer.h",
+    #ytx_begin
     "configfile.cc",
     "configfile.h",
+    #ytx_end
     "event_tracer.cc",
     "event_tracer.h",
     "flags.cc",

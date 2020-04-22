@@ -11,7 +11,6 @@
 #include "api/peer_connection_interface.h"
 #include "api/rtp_parameters.h"
 #include "api/scoped_refptr.h"
-#include "api/media_stream_interface.h"
 
 #include "logging/rtc_event_log/rtc_event_log.h"
 
@@ -34,17 +33,16 @@
 
 #include "media/base/stream_params.h"
 #include "media/sctp/sctp_transport_internal.h"
-#include "media/base/stream_params.h"
 
+#include "video_capturer/video_capturer.h"
 #include "media/base/video_common.h"
+#include "media/engine/webrtc_video_engine.h"
 #include "modules/desktop_capture/desktop_capturer.h"
 #include "modules/desktop_capture/desktop_frame.h"
 #include "modules/video_capture/video_capture.h"
-#include "media/engine/webrtc_video_engine.h"
+#include "video_render/video_renderer.h"
 
 #include "ec_log.h"
-#include "ec_peer_manager.h"
-
 
 #ifdef WEBRTC_ANDROID
 #include <jni.h>
@@ -53,7 +51,7 @@
 #include "media/base/adapted_video_track_source.h"
 //#include "third_party/protobuf/src/google/protobuf/message_lite.h"
 
-//class myclass : public ::google::protobuf::MessageLite {
+// class myclass : public ::google::protobuf::MessageLite {
 
 //};
 #ifdef __cplusplus
@@ -102,20 +100,20 @@ class ECDesktopCapture : public rtc::AdaptedVideoTrackSource,
   webrtc::DesktopCapturer::SourceList sources;
 
  protected:
- std::vector<int> sources_id_;
+  std::vector<int> sources_id_;
 
  private:
   std::unique_ptr<webrtc::DesktopCapturer> capturer_;
 };
 #endif
-}//namespace win_desk
+}  // namespace win_desk
 
 namespace win_render {
 #if defined(WEBRTC_WIN)
 class VideoRenderer : public rtc::VideoSinkInterface<webrtc::VideoFrame> {
  public:
   VideoRenderer(HWND wnd,
-	            int mode,
+                int mode,
                 int width,
                 int height,
                 webrtc::VideoTrackInterface* track_to_render);
@@ -170,7 +168,7 @@ class RenderWndsManager : public sigslot::has_slots<> {
   ~RenderWndsManager();
 
   void AddRemoteRenderWnd(int channelId,
-	                      int render_mode,
+                          int render_mode,
                           void* winRemote,
                           webrtc::VideoTrackInterface* track_to_render);
   bool UpdateVideoTrack(int channelId,
@@ -180,10 +178,11 @@ class RenderWndsManager : public sigslot::has_slots<> {
   void* GetRemoteWnd(int channelId);
   bool RemoveRemoteRenderWnd(int channelId);
   void SetLocalRenderWnd(int channelId,
-	                     int render_mode,
+                         int render_mode,
                          void* winLocal,
                          webrtc::VideoTrackInterface* track_to_render);
-  bool StartLocalRenderer(int window_id, webrtc::VideoTrackInterface* local_video);
+  bool StartLocalRenderer(int window_id,
+                          webrtc::VideoTrackInterface* local_video);
   bool StartRemoteRenderer(int channelId,
                            webrtc::VideoTrackInterface* remote_video);
 
@@ -191,7 +190,7 @@ class RenderWndsManager : public sigslot::has_slots<> {
 
  private:
   using ptr_render = std::unique_ptr<win_render::VideoRenderer>;
- // ptr_render localRender_ = nullptr;
+  // ptr_render localRender_ = nullptr;
   std::map<int, ptr_render> mapRemoteRenderWnds;
   std::map<int, ptr_render> mapLocalRenderWnds;
 };
@@ -274,9 +273,9 @@ class MediaClient : public sigslot::has_slots<> {
     std::string name = "H264";
     int payloadType = 96;
     int new_payloadType = 104;
-    int associated_payloadType = new_payloadType -1;
+    int associated_payloadType = new_payloadType - 1;
   };
-  
+
   struct VideoCodecConfig {
     bool red = true;
     bool nack = true;
@@ -288,7 +287,7 @@ class MediaClient : public sigslot::has_slots<> {
     int minBitrateKps = 300;
     int startBitrateKps = 600;
     int maxBitrateKps = 1700;
-    int maxFramerate =  15;
+    int maxFramerate = 15;
     int codecType = 1;  // kVideoCodecVP8;
     int maxQp = 56;
     std::vector<VideoStreamConfig> video_stream_configs;
@@ -297,15 +296,15 @@ class MediaClient : public sigslot::has_slots<> {
     std::string transportId;
   };
 
- friend class TransportControllerObserve;
+  friend class TransportControllerObserve;
 
  public:
   static MediaClient* GetInstance();
-  static void  DestroyInstance();
+  static void DestroyInstance();
 
- virtual ~MediaClient();
+  virtual ~MediaClient();
 
- bool SetTrace(const char* path, int min_sev);
+  bool SetTrace(const char* path, int min_sev);
   /***************************************************************************/
   /*** 函数名: 初始化                                                      ***/
   /*** 功能:   获取媒体库实例                                              ***/
@@ -313,20 +312,20 @@ class MediaClient : public sigslot::has_slots<> {
   /*** 函数参数: 无                                                        ***/
   /***************************************************************************/
 #if defined(WEBRTC_ANDROID)
-  bool Initialize(JNIEnv* env, jobject jencoder_factory, jobject jdecoder_factory);
+  bool Initialize(JNIEnv* env,
+                  jobject jencoder_factory,
+                  jobject jdecoder_factory);
 #else
   bool Initialize();
 #endif
 
-
- /****************************************************************************/
- /*** 函数名: 反初始化                                                     ***/
- /*** 功能:   释放媒体库实例                                               ***/
- /*** 返回值: 类型  bool                                                   ***/
- /*** 函数参数: 无                                                         ***/
- /****************************************************************************/
+  /****************************************************************************/
+  /*** 函数名: 反初始化                                                     ***/
+  /*** 功能:   释放媒体库实例                                               ***/
+  /*** 返回值: 类型  bool                                                   ***/
+  /*** 函数参数: 无                                                         ***/
+  /****************************************************************************/
   void UnInitialize();
-
 
   /****************************************************************************/
   /*** 函数名: 生成媒体通道id                                               ***/
@@ -336,7 +335,6 @@ class MediaClient : public sigslot::has_slots<> {
   /****************************************************************************/
   bool GenerateChannelId(int& channelId);
 
-
   /****************************************************************************/
   /*** 函数名: 释放媒体通道id                                               ***/
   /*** 功能:   释放通道ID                                                   ***/
@@ -344,7 +342,6 @@ class MediaClient : public sigslot::has_slots<> {
   /*** 函数参数: 名称  channel_id    类型   int                             ***/
   /****************************************************************************/
   bool ReleaseChannelId(int channelId);
-
 
   /****************************************************************************/
   /*** 函数名: 创建传输                                                     ***/
@@ -356,8 +353,12 @@ class MediaClient : public sigslot::has_slots<> {
   /*** 函数参数4: 名称    r_port远端端口       类型   int                   ***/
   /*** 函数参数5: 名称    tid 传输ID            类型   const char*          ***/
   /****************************************************************************/
-  bool CreateTransport(const char* local_addr, int local_port, const char* remote_addr, int remote_port, const std::string& tid, bool bUdp=true);
-
+  bool CreateTransport(const char* local_addr,
+                       int local_port,
+                       const char* remote_addr,
+                       int remote_port,
+                       const std::string& tid,
+                       bool bUdp = true);
 
   /****************************************************************************/
   /*** 函数名: 释放传输                                                     ***/
@@ -365,7 +366,6 @@ class MediaClient : public sigslot::has_slots<> {
   /*** 返回值: 类型  void                                                   ***/
   /****************************************************************************/
   void DestroyTransport();
-
 
   /****************************************************************************/
   /*** 函数名: 创建通道                                                     ***/
@@ -375,8 +375,9 @@ class MediaClient : public sigslot::has_slots<> {
   /*** 函数参数2: 名称    channel_id           类型   int                   ***/
   /*** 函数参数3: 名称    is_video             类型   bool                  ***/
   /****************************************************************************/
-  bool CreateChannel(const std::string& settings, int channel_id, bool is_video=true);
-
+  bool CreateChannel(const std::string& settings,
+                     int channel_id,
+                     bool is_video = true);
 
   /****************************************************************************/
   /*** 函数名: 释放通道                                                     ***/
@@ -385,8 +386,7 @@ class MediaClient : public sigslot::has_slots<> {
   /*** 函数参数1: 名称    channel_id           类型   int                   ***/
   /*** 函数参数2: 名称    is_video             类型   bool                  ***/
   /****************************************************************************/
-  void DestroyChannel(int channel_id,bool is_video=true);
-
+  void DestroyChannel(int channel_id, bool is_video = true);
 
   /****************************************************************************/
   /*** 函数名: 创建本地音频track                                            ***/
@@ -395,8 +395,8 @@ class MediaClient : public sigslot::has_slots<> {
   /*** 函数参数1: 名称    track_id             类型   const char            ***/
   /*** 函数参数2: 名称    voice_index          类型   int                   ***/
   /****************************************************************************/
-  rtc::scoped_refptr<webrtc::AudioTrackInterface> CreateLocalVoiceTrack(const std::string& trace_id);
-
+  rtc::scoped_refptr<webrtc::AudioTrackInterface> CreateLocalVoiceTrack(
+      const std::string& trace_id);
 
   /****************************************************************************/
   /*** 函数名: 释放本地音频track                                            ***/
@@ -404,8 +404,8 @@ class MediaClient : public sigslot::has_slots<> {
   /*** 返回值: 类型  void                                                   ***/
   /*** 函数参数1: 名称    track               类型   void*                  ***/
   /****************************************************************************/
-  void DestroyLocalAudioTrack(rtc::scoped_refptr<webrtc::AudioTrackInterface> track);
-
+  void DestroyLocalAudioTrack(
+      rtc::scoped_refptr<webrtc::AudioTrackInterface> track);
 
   /****************************************************************************/
   /*** 函数名: 创建本地视频track                                            ***/
@@ -415,8 +415,8 @@ class MediaClient : public sigslot::has_slots<> {
   /*** 函数参数2: 名称    track_id             类型   const char            ***/
   /*** 函数参数3: 名称    camera_index         类型   int                   ***/
   /****************************************************************************/
-  rtc::scoped_refptr<webrtc::VideoTrackInterface> CreateLocalVideoTrack( const std::string& track_params);//------modify
-
+  rtc::scoped_refptr<webrtc::VideoTrackInterface> CreateLocalVideoTrack(
+      const std::string& track_params);  //------modify
 
   /****************************************************************************/
   /*** 函数名: 释放本地视频track                                            ***/
@@ -424,9 +424,10 @@ class MediaClient : public sigslot::has_slots<> {
   /*** 返回值: 类型  void                                                   ***/
   /*** 函数参数1: 名称    track               类型   void*                  ***/
   /****************************************************************************/
-  void DestroyLocalVideoTrack(rtc::scoped_refptr<webrtc::VideoTrackInterface> track);
+  void DestroyLocalVideoTrack(
+      rtc::scoped_refptr<webrtc::VideoTrackInterface> track);
 
- /****************************************************************************/
+  /****************************************************************************/
   /*** 函数名: 预览本地视频track                                            ***/
   /*** 功能:   开启预览本地视频源track                                      ***/
   /*** 返回值: 类型  bool    true  成功      false  失败                    ***/
@@ -450,11 +451,10 @@ class MediaClient : public sigslot::has_slots<> {
       const std::string& track_id,
       rtc::scoped_refptr<webrtc::VideoTrackInterface> videotrack);
 
-
- rtc::scoped_refptr<webrtc::VideoTrackInterface> SelectVideoSourceOnFlight(int channelid,
-                                 int device_index,
-                                 const std::string& track_params);
-
+  rtc::scoped_refptr<webrtc::VideoTrackInterface> SelectVideoSourceOnFlight(
+      int channelid,
+      int device_index,
+      const std::string& track_params);
 
   /****************************************************************************/
   /*** 函数名: 选择音频源                                                   ***/
@@ -471,7 +471,6 @@ class MediaClient : public sigslot::has_slots<> {
       const std::string& track_id,
       rtc::scoped_refptr<webrtc::AudioTrackInterface> audiotrack);
 
-
   /****************************************************************************/
   /*** 函数名: 开始通道                                                     ***/
   /*** 功能:   开始channel_id逻辑                                           ***/
@@ -479,8 +478,7 @@ class MediaClient : public sigslot::has_slots<> {
   /*** 函数参数1: 名称    channel_id           类型   int                   ***/
   /*** 函数参数2: 名称    is_video             类型   bool                  ***/
   /****************************************************************************/
-  bool StartChannel(int channel_id);//------modify
-
+  bool StartChannel(int channel_id);  //------modify
 
   /****************************************************************************/
   /*** 函数名: 停止通道                                                     ***/
@@ -491,22 +489,22 @@ class MediaClient : public sigslot::has_slots<> {
   /****************************************************************************/
   bool StopChannel(int channel_id);
 
+  /* SetTrackCodec(trackid, codec_cofnig);
 
- /* SetTrackCodec(trackid, codec_cofnig);
+   videoTrack = CreateLocalVideoTrack(channelid,   transportid, string
+   videosourceId,  ssrc);
 
-  videoTrack = CreateLocalVideoTrack(channelid,   transportid, string videosourceId,  ssrc);
+   
+   remotetrackid = AddRemoteTrack(transportid, ssrc, payload, is_video)
 
-  
-  remotetrackid = AddRemoteTrack(transportid, ssrc, payload, is_video)
+   SelectVideoSource(videotrack, videosourceId)
+   SelectAudioSource(audiotrack, audiosourceid);
 
-  SelectVideoSource(videotrack, videosourceId)
-  SelectAudioSource(audiotrack, audiosourceid);
+   StartChannel(channelid)
 
-  StartChannel(channelid)
+   bool AddMediaSsrc(bool is_local, int channelId, uint32_t ssrc);*/
 
-  bool AddMediaSsrc(bool is_local, int channelId, uint32_t ssrc);*/
-
-/****************************************************************************/
+  /****************************************************************************/
   /*** 函数名: 设置本地视频流ssrc                                           ***/
   /*** 功能:   设置通道channel_id本地媒体流ssrc                             ***/
   /*** 返回值: 类型  bool    true  成功      false  失败                    ***/
@@ -514,7 +512,6 @@ class MediaClient : public sigslot::has_slots<> {
   /*** 函数参数2: 名称    ssrc                 类型   unsigned int          ***/
   /****************************************************************************/
   bool AddMediaSsrc(bool is_local, int channelId, uint32_t ssrc);
-  
 
   /****************************************************************************/
   /*** 函数名: 增加本地渲染窗口                                             ***/
@@ -523,8 +520,7 @@ class MediaClient : public sigslot::has_slots<> {
   /*** 函数参数1: 名称    window_id           类型   int                    ***/
   /*** 函数参数2: 名称    view                类型   void*                  ***/
   /****************************************************************************/
-  bool SetLocalVideoRenderWindow(int window_id,int render_mode, void* view);
-
+  bool SetLocalVideoRenderWindow(int window_id, int render_mode, void* view);
 
   /****************************************************************************/
   /*** 函数名: 增加远端渲染窗口                                             ***/
@@ -532,8 +528,8 @@ class MediaClient : public sigslot::has_slots<> {
   /*** 返回值: 类型  bool    true  成功      false  失败                    ***/
   /*** 函数参数1: 名称    channel_id           类型   int                   ***/
   /*** 函数参数2: 名称    video_window         类型   void*                 ***/
-  /****************************************************************************/  
-  bool SetRemoteVideoRenderWindow(int channelId, int render_mode,void* view);
+  /****************************************************************************/
+  bool SetRemoteVideoRenderWindow(int channelId, int render_mode, void* view);
 
   /****************************************************************************/
   /*** 函数名: 设置本地静音                                                 ***/
@@ -541,27 +537,26 @@ class MediaClient : public sigslot::has_slots<> {
   /*** 返回值: 类型  bool    true  成功      false  失败                    ***/
   /*** 函数参数1: 名称    channel_id           类型   int                   ***/
   /*** 函数参数2: 名称    bMute                类型   bool                  ***/
-  /****************************************************************************/ 
-  bool SetLocalMute(int channel_id,bool bMute);//------add
+  /****************************************************************************/
+  bool SetLocalMute(int channel_id, bool bMute);  //------add
 
-   /****************************************************************************/
-    /*** ∫???√?: …?÷√±????≤“?                                                 ***/
-    /*** π???:   ±????≤“?                                                     ***/
-    /*** ∑???÷?: ??–?  bool    true  ≥…π?      false  ??∞?                    ***/
-    /*** ∫???≤???1: √?≥?    channel_id           ??–?   int                   ***/
-    /*** ∫???≤???2: √?≥?    bMute                ??–?   bool                  ***/
-    /****************************************************************************/
-    bool SetLoudSpeakerStatus(bool enabled);//------add
+  /****************************************************************************/
+  /*** ∫???√?: …?÷√±????≤“?                                                 ***/
+  /*** π???:   ±????≤“?                                                     ***/
+  /*** ∑???÷?: ??–?  bool    true  ≥…π?      false  ??∞?                    ***/
+  /*** ∫???≤???1: √?≥?    channel_id           ??–?   int                   ***/
+  /*** ∫???≤???2: √?≥?    bMute                ??–?   bool                  ***/
+  /****************************************************************************/
+  bool SetLoudSpeakerStatus(bool enabled);  //------add
 
-    /****************************************************************************/
-    /*** ∫???√?: …?÷√±????≤“?                                                 ***/
-    /*** π???:   ±????≤“?                                                     ***/
-    /*** ∑???÷?: ??–?  bool    true  ≥…π?      false  ??∞?                    ***/
-    /*** ∫???≤???1: √?≥?    channel_id           ??–?   int                   ***/
-    /*** ∫???≤???2: √?≥?    bMute                ??–?   bool                  ***/
-    /****************************************************************************/
-    bool GetLoudSpeakerStatus(bool& enabled);//------add
-    
+  /****************************************************************************/
+  /*** ∫???√?: …?÷√±????≤“?                                                 ***/
+  /*** π???:   ±????≤“?                                                     ***/
+  /*** ∑???÷?: ??–?  bool    true  ≥…π?      false  ??∞?                    ***/
+  /*** ∫???≤???1: √?≥?    channel_id           ??–?   int                   ***/
+  /*** ∫???≤???2: √?≥?    bMute                ??–?   bool                  ***/
+  /****************************************************************************/
+  bool GetLoudSpeakerStatus(bool& enabled);  //------add
 
   /****************************************************************************/
   /*** 函数名: 设置远端静音                                                 ***/
@@ -569,7 +564,7 @@ class MediaClient : public sigslot::has_slots<> {
   /*** 返回值: 类型  bool    true  成功      false  失败                    ***/
   /*** 函数参数1: 名称    channel_id           类型   int                   ***/
   /*** 函数参数2: 名称    bMute                类型   bool                  ***/
-  /****************************************************************************/ 
+  /****************************************************************************/
   bool SetRemoteMute(int channel_id, bool bMute);  //------add
 
   /****************************************************************************/
@@ -578,7 +573,7 @@ class MediaClient : public sigslot::has_slots<> {
   /*** 返回值: 类型  bool    true  成功      false  失败                    ***/
   /*** 函数参数1: 名称    channel_id           类型   int                   ***/
   /*** 函数参数2: 名称    remote_ssrc          类型   int_32_t              ***/
-  /****************************************************************************/ 
+  /****************************************************************************/
   bool RequestRemoteVideo(int channel_id, int32_t remote_ssrc);
 
   /****************************************************************************/
@@ -588,7 +583,7 @@ class MediaClient : public sigslot::has_slots<> {
   /*** 函数参数1: 类型  int       channel_id                                ***/
   /*** 函数参数2: 类型  int32_t       ssrc                                  ***/
   /****************************************************************************/
-  bool RequestRemoteSsrc(int channel_id, int flag,int32_t ssrc);
+  bool RequestRemoteSsrc(int channel_id, int flag, int32_t ssrc);
   /****************************************************************************/
   /*** 函数名: GetNumberOfVideoDevices                                      ***/
   /*** 功能:   获取当前系统所有视频设备                                     ***/
@@ -626,7 +621,7 @@ class MediaClient : public sigslot::has_slots<> {
   //////////////////////////ylr interface start////////////////////////////////
   /****************************************************************************/
   /*** 函数名: 设置视频的Nack功能                                           ***/
-  /*** 功能:   开启或关闭Nack功能                   						***/
+  /*** 功能:   开启或关闭Nack功能 ***/
   /*** 返回值: 类型  bool    true  成功      false  失败                    ***/
   /*** 函数参数1: 名称    channel_id       类型   int                       ***/
   /*** 函数参数2: 名称    enable_nack	   类型   bool                      ***/
@@ -670,11 +665,12 @@ class MediaClient : public sigslot::has_slots<> {
   /*** 函数参数1: 名称    channel_id       类型   int                       ***/
   /*** 函数参数1: 名称    cb        类型  OnRequestKeyFrameCallback函数指针 ***/
   /****************************************************************************/
-  bool SetKeyFrameRequestCallback(const int channelId, OnRequestKeyFrameCallback cb);
+  bool SetKeyFrameRequestCallback(const int channelId,
+                                  OnRequestKeyFrameCallback cb);
   //////////////////////////ylr interface end////////////////////////////////
 
- //////////////////////////zjy interface start///////////////////////////////
-  
+  //////////////////////////zjy interface start///////////////////////////////
+
   /****************************************************************************/
   /*** 函数名: 设置回声消除                                                 ***/
   /*** 功能:   音频通话回音消除                                             ***/
@@ -705,7 +701,7 @@ class MediaClient : public sigslot::has_slots<> {
   /*** 功能:   获取底层AudioDeviceModule对象                                ***/
   /*** 返回值: 类型  scoped_refptr<webrtc::AudioDeviceModule>               ***/
   /****************************************************************************/
- bool CreateAudioDevice();
+  bool CreateAudioDevice();
 
   // int GetAudioRecordingDevice(const int a);
 
@@ -716,34 +712,34 @@ class MediaClient : public sigslot::has_slots<> {
   /*** 函数参数1: 名称   vol                类型    uint32_t                ***/
   /****************************************************************************/
   bool SetAudioRecordingVolume(uint32_t vol);
- 
-/****************************************************************************/
-/*** 函数名: 获取录音设备列表                                              ***/
-/*** 功能:   获取录音设备列表字符串                                        ***/
-/*** 返回值: 类型  char*                                                   ***/
-/*** 函数参数1: 名称   length                 类型    int*                 ***/
-/*****************************************************************************/
+
+  /****************************************************************************/
+  /*** 函数名: 获取录音设备列表 ***/
+  /*** 功能:   获取录音设备列表字符串 ***/
+  /*** 返回值: 类型  char* ***/
+  /*** 函数参数1: 名称   length                 类型    int* ***/
+  /*****************************************************************************/
   char* GetAudioDeviceList(int* length);
 
-/****************************************************************************/
-/*** 函数名: 设置录音设备                                                  ***/
-/*** 功能:   根据索引选择需要使用的录音设备                                ***/
-/*** 返回值: 类型  bool        true  成功      false   失败                ***/
-/*** 函数参数1: 名称   index                   类型    int                 ***/
-/*****************************************************************************/
+  /****************************************************************************/
+  /*** 函数名: 设置录音设备 ***/
+  /*** 功能:   根据索引选择需要使用的录音设备 ***/
+  /*** 返回值: 类型  bool        true  成功      false   失败 ***/
+  /*** 函数参数1: 名称   index                   类型    int ***/
+  /*****************************************************************************/
   bool SetAudioRecordingDevice(int index);
 
   bool SetAudioRecordingDeviceOnFlight(int index);
   bool SetAudioPlayoutDeviceOnFlight(int index);
 
- /****************************************************************************/
- /*** 函数名: 设置播放设备                                                 ***/
- /*** 功能:   根据索引选择需要使用播放设备                                 ***/
- /*** 返回值: 类型  bool        true  成功      false   失败               ***/
- /*** 函数参数1: 名称   index                   类型    int                ***/
+  /****************************************************************************/
+  /*** 函数名: 设置播放设备                                                 ***/
+  /*** 功能:   根据索引选择需要使用播放设备                                 ***/
+  /*** 返回值: 类型  bool        true  成功      false   失败               ***/
+  /*** 函数参数1: 名称   index                   类型    int                ***/
   /*****************************************************************************/
   bool SetAudioPlayoutDevice(int index);
- ///////////////////////// zjy interface end//////////////////////////////////
+  ///////////////////////// zjy interface end//////////////////////////////////
   //#if defined(WEBRTC_WIN)
   int CreateDesktopCapture(int type);
   int SetDesktopSourceID(int type, int id);
@@ -751,10 +747,10 @@ class MediaClient : public sigslot::has_slots<> {
   int StartScreenShare();
   int StopScreenShare();
   int GetCaptureDevice(int index,
-                   char* device_name,
-                   int name_len,
-                   char* unique_name,
-                   int id_len);
+                       char* device_name,
+                       int name_len,
+                       char* unique_name,
+                       int id_len);
   int AllocateCaptureDevice(const char* id, int len, int& deviceid);
   int ConnectCaptureDevice(int deviceid, int peer_id);
   int NumOfCapabilities(const char* id);
@@ -769,7 +765,6 @@ class MediaClient : public sigslot::has_slots<> {
 
   bool StartConnectChannel(int audio_channel_id, int video_channel_id);
 
-  
   int StartMicCapture(int peer_id);
 
   int StartSendRecv(int peer_id);
@@ -778,227 +773,235 @@ class MediaClient : public sigslot::has_slots<> {
   int AudioStartSend(int peer_id);
   int VideoStartReceive(int peer_id);
   int VideoStartSend(int peer_id);
-//#endif
+  //#endif
   void GetAudioCodecs(cricket::AudioCodecs* audio_codecs) const;
   void GetVideoCodecs(cricket::VideoCodecs* video_codecs) const;
   void SetSendCodecVideo(cricket::VideoCodec* video_codec);
   void SetReceiveCodecVideo(int peer_id, cricket::VideoCodec* video_codec);
   void SetSendCodecAudio(cricket::AudioCodec* audio_codec);
   void SetReceiveCodecAudio(int peer_id, cricket::AudioCodec* audio_codec);
-  //wx begin
-  int RegisterConferenceParticipantCallback(int channelid, ECMedia_ConferenceParticipantCallback* callback);
-  int SetConferenceParticipantCallbackTimeInterVal(int channelid, int timeInterVal);
-  #if defined(WEBRTC_ANDROID)
+  // wx begin
+  int RegisterConferenceParticipantCallback(
+      int channelid,
+      ECMedia_ConferenceParticipantCallback* callback);
+  int SetConferenceParticipantCallbackTimeInterVal(int channelid,
+                                                   int timeInterVal);
+#if defined(WEBRTC_ANDROID)
   bool SaveLocalVideoTrack(int channelId, webrtc::VideoTrackInterface* track);
   webrtc::VideoTrackInterface* GetLocalVideoTrack(int channelId);
   bool SaveLocalVideoTrack(int channelId, void* track);
   void* GetLocalVideoTrackPtr(int channelId);
   bool RemoveLocalVideoTrack(int channelId);
 
-  bool SaveRemoteVideoSink(int channelId,
-	  JNIEnv* env,
-	  jobject javaSink);
+  bool SaveRemoteVideoSink(int channelId, JNIEnv* env, jobject javaSink);
   rtc::VideoSinkInterface<webrtc::VideoFrame>* GetRemoteVideoSink(
-	  int channelId);
+      int channelId);
   bool RemoveRemoteVideoSink(int channelId);
 
-  int InitializeJVM(); 
+  int InitializeJVM();
 
+  void* CreateVideoTrack(const char* id,
+                         webrtc::VideoTrackSourceInterface* source);
 
-  void* CreateVideoTrack(
-    const char* id,
-    webrtc::VideoTrackSourceInterface* source);
-
-  void* CreateAudioTrack(
-    const char* id,
-    webrtc::AudioSourceInterface* source);
+  void* CreateAudioTrack(const char* id, webrtc::AudioSourceInterface* source);
 
   void* CreateAudioSource();
 
-void* CreateVideoSource(JNIEnv* env,
-                        bool is_screencast,
-                        bool align_timestamps);
+  void* CreateVideoSource(JNIEnv* env,
+                          bool is_screencast,
+                          bool align_timestamps);
 
 #endif
 
  private:
-    MediaClient();
+  MediaClient();
 
-	bool CreateThreads();
-	bool CreateRtcEventLog();
+  bool CreateThreads();
+  bool CreateRtcEventLog();
 #if defined(WEBRTC_ANDROID)
-	bool CreateChannelManager(std::unique_ptr<webrtc::VideoEncoderFactory> encoderFactory, std::unique_ptr<webrtc::VideoDecoderFactory> decoderFactory);
-        bool AndroidInitialize(JNIEnv* env, jobject jencoder_factory, jobject jdecoder_factory);
+  bool CreateChannelManager(
+      std::unique_ptr<webrtc::VideoEncoderFactory> encoderFactory,
+      std::unique_ptr<webrtc::VideoDecoderFactory> decoderFactory);
+  bool AndroidInitialize(JNIEnv* env,
+                         jobject jencoder_factory,
+                         jobject jdecoder_factory);
 #else
-        bool CreateChannelManager();
+  bool CreateChannelManager();
 #endif
-	bool CreateCall(webrtc::RtcEventLog* event_log);
-	bool CreateTransportController(bool disable_encryp = true);
-    bool CreateVideoChannel(const std::string& settings, int channel_id);
-    bool CreateVoiceChannel(const std::string& settingsvvv, int channel_id);
-	bool DisposeConnect();
-	bool InitRenderWndsManager();
-	void DestroyAllChannels();
-    bool GetMediaSsrc(bool is_local,int channelId,std::vector<uint32_t>& ssrcs);
+  bool CreateCall(webrtc::RtcEventLog* event_log);
+  bool CreateTransportController(bool disable_encryp = true);
+  bool CreateVideoChannel(const std::string& settings, int channel_id);
+  bool CreateVoiceChannel(const std::string& settingsvvv, int channel_id);
+  bool DisposeConnect();
+  bool InitRenderWndsManager();
+  void DestroyAllChannels();
+  bool GetMediaSsrc(bool is_local, int channelId, std::vector<uint32_t>& ssrcs);
 
-	void DestroyTransceiverChannel(
-		rtc::scoped_refptr<
-			webrtc::RtpTransceiverProxyWithInternal<
-				webrtc::RtpTransceiver>> transceiver);
+  void DestroyTransceiverChannel(
+      rtc::scoped_refptr<
+          webrtc::RtpTransceiverProxyWithInternal<webrtc::RtpTransceiver>>
+          transceiver);
 
-	void DestroyChannelInterface(cricket::ChannelInterface* channel);
-	
-	cricket::ChannelInterface* GetChannel(const std::string& mid);
+  void DestroyChannelInterface(cricket::ChannelInterface* channel);
 
-	cricket::RtpDataChannel* rtp_data_channel() const;
+  cricket::ChannelInterface* GetChannel(const std::string& mid);
 
-	void OnSentPacket_Voice(const rtc::SentPacket& sent_packet);
-    void OnSentPacket_Video(const rtc::SentPacket& sent_packet);
-	std::string GetMidFromChannelId(int channelId);
+  cricket::RtpDataChannel* rtp_data_channel() const;
 
-    bool FilterAudioCodec(const AudioCodecConfig& config,
-                            std::vector<cricket::AudioCodec>& vec);
+  void OnSentPacket_Voice(const rtc::SentPacket& sent_packet);
+  void OnSentPacket_Video(const rtc::SentPacket& sent_packet);
+  std::string GetMidFromChannelId(int channelId);
 
-    bool FilterVideoCodec(const VideoCodecConfig& config,
-                            std::vector<cricket::VideoCodec>& vec);
-    bool FilterVideoCodec(std::vector<VideoStreamConfig>* configs,
-                                       std::vector<cricket::VideoCodec>& vec);
-    bool ParseVideoDeviceSetting(const char* videoDeviceSettings, VideoDeviceConfig* config);
-    bool ParseAudioCodecSetting(const char* audioCodecSettings, AudioCodecConfig* config);
-    bool ParseVideoCodecSetting(const char* videoCodecSettings, VideoCodecConfig* config);
-  bool ParseVideoCodecSetting(const char* videoCodecSettings, std::vector<VideoStreamConfig>* configs);
-    bool GetStringJsonString(const char* json, const std::string& key, std::string* value);
-    bool GetIntJsonString(const char* json, const std::string& key, int* value);
-    cricket::WebRtcVideoChannel* GetInternalVideoChannel(const int channelId);
-    bool InsertVideoCodec(cricket::VideoCodecs& input_codecs,
+  bool FilterAudioCodec(const AudioCodecConfig& config,
+                        std::vector<cricket::AudioCodec>& vec);
+
+  bool FilterVideoCodec(const VideoCodecConfig& config,
+                        std::vector<cricket::VideoCodec>& vec);
+  bool FilterVideoCodec(std::vector<VideoStreamConfig>* configs,
+                        std::vector<cricket::VideoCodec>& vec);
+  bool ParseVideoDeviceSetting(const char* videoDeviceSettings,
+                               VideoDeviceConfig* config);
+  bool ParseAudioCodecSetting(const char* audioCodecSettings,
+                              AudioCodecConfig* config);
+  bool ParseVideoCodecSetting(const char* videoCodecSettings,
+                              VideoCodecConfig* config);
+  bool ParseVideoCodecSetting(const char* videoCodecSettings,
+                              std::vector<VideoStreamConfig>* configs);
+  bool GetStringJsonString(const char* json,
+                           const std::string& key,
+                           std::string* value);
+  bool GetIntJsonString(const char* json, const std::string& key, int* value);
+  cricket::WebRtcVideoChannel* GetInternalVideoChannel(const int channelId);
+  bool InsertVideoCodec(cricket::VideoCodecs& input_codecs,
                         const std::string& codec_name,
                         uint8_t payload_type);
-    bool RemoveVideoCodec(cricket::VideoCodecs& input_codecs,
+  bool RemoveVideoCodec(cricket::VideoCodecs& input_codecs,
                         const std::string& codec_name);
-private:
-    static MediaClient* m_pInstance;
 
-    static rtc::CriticalSection m_critical;
-    bool isCreateCall;
-    char* pAudioDevice;
-	//std::unique_ptr<rtc::LogSink*> ec_log_ = nullptr;
-    rtc::LogSink* ec_log_ = nullptr;
-    bool bfirst = true;
-    rtc::scoped_refptr<webrtc::AudioTrackInterface> audio_tracks_[5];
+ private:
+  static MediaClient* m_pInstance;
 
-    rtc::scoped_refptr<webrtc::VideoTrackInterface> video_tracks_[20];
+  static rtc::CriticalSection m_critical;
+  bool isCreateCall;
+  char* pAudioDevice;
+  // std::unique_ptr<rtc::LogSink*> ec_log_ = nullptr;
+  rtc::LogSink* ec_log_ = nullptr;
+  bool bfirst = true;
+  rtc::scoped_refptr<webrtc::AudioTrackInterface> audio_tracks_[5];
 
-    int vsum_;
-    int asum_;
+  rtc::scoped_refptr<webrtc::VideoTrackInterface> video_tracks_[20];
 
-	webrtc::RtcEventLog* event_log_ptr_ = nullptr;
+  int vsum_;
+  int asum_;
 
-	std::unique_ptr<webrtc::RtcEventLog> event_log_;
+  webrtc::RtcEventLog* event_log_ptr_ = nullptr;
 
-	webrtc::Call* call_ptr_ = nullptr;
+  std::unique_ptr<webrtc::RtcEventLog> event_log_;
 
-	std::unique_ptr<webrtc::Call> call_;
+  webrtc::Call* call_ptr_ = nullptr;
 
-	cricket::RtpDataChannel* rtp_data_channel_ = nullptr;
+  std::unique_ptr<webrtc::Call> call_;
 
-	std::unique_ptr<rtc::BasicPacketSocketFactory> default_socket_factory_;
+  cricket::RtpDataChannel* rtp_data_channel_ = nullptr;
 
-	std::unique_ptr<cricket::ChannelManager> channel_manager_;
+  std::unique_ptr<rtc::BasicPacketSocketFactory> default_socket_factory_;
 
-	rtc::Thread* network_thread_ = nullptr;
-	rtc::Thread* worker_thread_ = nullptr;
-	rtc::Thread* signaling_thread_ = nullptr;
-    std::unique_ptr<rtc::Thread> owned_network_thread_; 
-    std::unique_ptr<rtc::Thread> owned_worker_thread_;
-    std::unique_ptr<rtc::Thread> owned_signaling_thread_;
+  std::unique_ptr<cricket::ChannelManager> channel_manager_;
 
-	const std::unique_ptr<webrtc::TaskQueueFactory> task_queue_factory_;
+  rtc::Thread* network_thread_ = nullptr;
+  rtc::Thread* worker_thread_ = nullptr;
+  rtc::Thread* signaling_thread_ = nullptr;
+  std::unique_ptr<rtc::Thread> owned_network_thread_;
+  std::unique_ptr<rtc::Thread> owned_worker_thread_;
+  std::unique_ptr<rtc::Thread> owned_signaling_thread_;
 
-    std::map<std::string, std::vector<int>> transports_;
+  const std::unique_ptr<webrtc::TaskQueueFactory> task_queue_factory_;
 
-	std::map<int, cricket::VideoChannel*> mVideoChannels_;
+  std::map<std::string, std::vector<int>> transports_;
 
-	std::map<int, cricket::VoiceChannel*> mVoiceChannels_;
-   
-	std::vector<rtc::scoped_refptr<webrtc::RtpTransceiverProxyWithInternal<webrtc::RtpTransceiver>>> transceivers_;
+  std::map<int, cricket::VideoChannel*> mVideoChannels_;
 
-    std::map<int, rtc::scoped_refptr<webrtc::RtpSenderInterface>> RtpSenders_;
-    std::map<int, rtc::scoped_refptr<webrtc::VideoTrackInterface>>TrackChannels_;
+  std::map<int, cricket::VoiceChannel*> mVoiceChannels_;
 
-	struct cricket::MediaConfig media_config_;
+  std::vector<rtc::scoped_refptr<
+      webrtc::RtpTransceiverProxyWithInternal<webrtc::RtpTransceiver>>>
+      transceivers_;
 
-	cricket::AudioOptions audio_options_;
+  std::map<int, rtc::scoped_refptr<webrtc::RtpSenderInterface>> RtpSenders_;
+  std::map<int, rtc::scoped_refptr<webrtc::VideoTrackInterface>> TrackChannels_;
 
-	cricket::VideoOptions video_options_;
+  struct cricket::MediaConfig media_config_;
 
-	rtc::UniqueRandomIdGenerator ssrc_generator_;
+  cricket::AudioOptions audio_options_;
 
-	std::unique_ptr<webrtc::GeneralTransportController> transport_controller_;
+  cricket::VideoOptions video_options_;
 
-	std::unique_ptr<TransportControllerObserve> transportControllerObserve_;
+  rtc::UniqueRandomIdGenerator ssrc_generator_;
 
-	std::unique_ptr<ChannelGenerator> channelGenerator_;
+  std::unique_ptr<webrtc::GeneralTransportController> transport_controller_;
 
+  std::unique_ptr<TransportControllerObserve> transportControllerObserve_;
 
-	std::unique_ptr<webrtc::DesktopCapturer> capturer_;
-    //rtc::scoped_refptr<webrtc::I420Buffer> i420_buffer_;
+  std::unique_ptr<ChannelGenerator> channelGenerator_;
 
-    std::unique_ptr<webrtc::DesktopFrame> frame_;
+  std::unique_ptr<webrtc::DesktopCapturer> capturer_;
+  // rtc::scoped_refptr<webrtc::I420Buffer> i420_buffer_;
 
-	rtc::scoped_refptr<webrtc::AudioDeviceModule> own_adm;  // zjy
+  std::unique_ptr<webrtc::DesktopFrame> frame_;
 
-    webrtc::AudioDeviceModule::AudioLayer audio_layer_ =
-            webrtc::AudioDeviceModule::kPlatformDefaultAudio;  // zjy
+  rtc::scoped_refptr<webrtc::AudioDeviceModule> own_adm;  // zjy
+
+  webrtc::AudioDeviceModule::AudioLayer audio_layer_ =
+      webrtc::AudioDeviceModule::kPlatformDefaultAudio;  // zjy
   std::unique_ptr<webrtc::VideoCaptureModule::DeviceInfo> vcm_device_info_;
   typedef std::pair<std::string, VideoCapturer*> UniqueIdVideoCapturerPair;
-    class FindUniqueId {
-     public:
-      FindUniqueId(std::string unique_id) : unique_id_(unique_id) {}
-      bool operator()(
-          std::map<int, UniqueIdVideoCapturerPair>::value_type& pair) {
-        return pair.second.first == unique_id_;
-      }
+  class FindUniqueId {
+   public:
+    FindUniqueId(std::string unique_id) : unique_id_(unique_id) {}
+    bool operator()(
+        std::map<int, UniqueIdVideoCapturerPair>::value_type& pair) {
+      return pair.second.first == unique_id_;
+    }
 
-     private:
-      std::string unique_id_;
-    };
-    std::map<int, UniqueIdVideoCapturerPair> camera_devices_;
+   private:
+    std::string unique_id_;
+  };
+  std::map<int, UniqueIdVideoCapturerPair> camera_devices_;
 #if defined WEBRTC_WIN
-    rtc::scoped_refptr<win_desk::ECDesktopCapture> desktop_device_;
+  rtc::scoped_refptr<win_desk::ECDesktopCapture> desktop_device_;
 
-    std::map<int, rtc::scoped_refptr<win_desk::ECDesktopCapture>> desktop_devices_
-		;
-   
+  std::map<int, rtc::scoped_refptr<win_desk::ECDesktopCapture>>
+      desktop_devices_;
 
-	std::unique_ptr<win_render::RenderWndsManager>
-		renderWndsManager_;
+  std::unique_ptr<win_render::RenderWndsManager> renderWndsManager_;
 #endif
-    std::unique_ptr<VideoRenderer> local_renderer_;
-    bool     m_bInitialized;
-    bool     m_bControll;
-    uint32_t m_nConnected;
+  std::unique_ptr<VideoRenderer> local_renderer_;
+  bool m_bInitialized;
+  bool m_bControll;
+  uint32_t m_nConnected;
 
-   /* struct ChannelSsrc {
-        uint32_t ssrcLocal = 0;
-        uint32_t ssrcRemote = 0;
-        std::string mid;  // the media stream id of channelId
-      
-    };*/
-    struct ChannelSsrcs {
-      std::vector<uint32_t> ssrcLocal;
-      std::vector<uint32_t> ssrcRemote;
-      std::string mid;  // the media stream id of channelId
-    };
-    std::map<int, ChannelSsrcs> mapChannelSsrcs_;
+  /* struct ChannelSsrc {
+       uint32_t ssrcLocal = 0;
+       uint32_t ssrcRemote = 0;
+       std::string mid;  // the media stream id of channelId
+     
+   };*/
+  struct ChannelSsrcs {
+    std::vector<uint32_t> ssrcLocal;
+    std::vector<uint32_t> ssrcRemote;
+    std::string mid;  // the media stream id of channelId
+  };
+  std::map<int, ChannelSsrcs> mapChannelSsrcs_;
 
-	std::map<int, rtc::scoped_refptr<webrtc::VideoTrackInterface>>
-        cameraId_videoTrack_pairs_;
+  std::map<int, rtc::scoped_refptr<webrtc::VideoTrackInterface>>
+      cameraId_videoTrack_pairs_;
 #if defined(WEBRTC_ANDROID)
-    std::map<int, webrtc::VideoTrackInterface*> mapLocalVideoTracks;
-    std::map<int, std::unique_ptr<rtc::VideoSinkInterface<webrtc::VideoFrame>>>
-        mapRemoteVideoSinks;
-    using VideoSinkIterator = std::map<int,
-          std::unique_ptr<rtc::VideoSinkInterface<webrtc::VideoFrame>>>::iterator;
+  std::map<int, webrtc::VideoTrackInterface*> mapLocalVideoTracks;
+  std::map<int, std::unique_ptr<rtc::VideoSinkInterface<webrtc::VideoFrame>>>
+      mapRemoteVideoSinks;
+  using VideoSinkIterator = std::map<
+      int,
+      std::unique_ptr<rtc::VideoSinkInterface<webrtc::VideoFrame>>>::iterator;
 #endif
 };
 
@@ -1030,7 +1033,7 @@ class ChannelGenerator {
   bool GeneratorId(int& id);
   bool ReturnId(int id);
 
- //private:
+  // private:
   void ResetGenerator();
 
  private:

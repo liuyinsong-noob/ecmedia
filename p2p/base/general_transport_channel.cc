@@ -2578,6 +2578,7 @@ bool GeneralTransportChannel::setUdpConnection(
         this, &GeneralTransportChannel::OnConnectionDestroyed);
     general_connection_->SignalNominated.connect(
         this, &GeneralTransportChannel::OnNominated);
+    //ytx_add
     general_connection_->SignalSentPacket.connect(
           this, &GeneralTransportChannel::OnSentPacket);
 
@@ -2591,6 +2592,7 @@ bool GeneralTransportChannel::setUdpConnection(
       general_connection_->setUdpSocket(udpSocket_, addrRemote);
       udpSocket_->SignalReadPacket.connect(general_connection_,
                                             &GeneralConnection::OnReadPacket);
+      //ytx_add
       udpSocket_->SignalSentPacket.connect(general_connection_, &GeneralConnection::OnSentPacket);
 
       //writable_ = true;
@@ -2689,12 +2691,14 @@ void GeneralTransportChannel::OnReadPacket(GeneralConnection* connection,
   //}
 }
 
+//ytx_begin
 void GeneralTransportChannel::OnSentPacket(GeneralConnection* connection,
                   const rtc::SentPacket& sent_packet){
    RTC_DCHECK(network_thread_ == rtc::Thread::Current());
   
   SignalSentPacket(this,sent_packet);
 }
+//ytx_end
 
 void GeneralTransportChannel::OnReadyToSend(GeneralConnection* connection) {
   if (connection && writable()) {

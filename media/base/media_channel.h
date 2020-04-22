@@ -731,7 +731,7 @@ struct AudioSendParameters : RtpSendParameters<AudioCodec> {
 };
 
 struct AudioRecvParameters : RtpParameters<AudioCodec> {};
-// add by wx
+//ytx_add by wx
 typedef void(ECMedia_ConferenceParticipantCallback)(uint32_t arrOfCSRCs[],
                                                     int count);
 class VoiceMediaChannel : public MediaChannel, public Delayable {
@@ -780,15 +780,12 @@ class VoiceMediaChannel : public MediaChannel, public Delayable {
       std::unique_ptr<webrtc::AudioSinkInterface> sink) = 0;
 
   virtual std::vector<webrtc::RtpSource> GetSources(uint32_t ssrc) const = 0;
-  // add by wx
+  //ytx_begin  by wx
   virtual int Register_ECMedia_ConferenceParticipantCallback(
-      ECMedia_ConferenceParticipantCallback* callback) {
-    return 0;
-  }
+      ECMedia_ConferenceParticipantCallback* callback) { return 0; }
   virtual int SetConferenceParticipantCallbackTimeInterVal(
-      int32_t timeInterVal) {
-    return 0;
-  }
+      int32_t timeInterVal) { return 0; }
+  //ytx_end
 };
 
 // TODO(deadbeef): Rename to VideoSenderParameters, since they're intended to

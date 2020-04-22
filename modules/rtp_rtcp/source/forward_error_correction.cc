@@ -415,6 +415,7 @@ void ForwardErrorCorrection::InsertFecPacket(
     return;
   }
 
+  //ytx_begin
   if (fec_packet->protected_ssrc != protected_media_ssrc_) {
   /*-------zjy cause real protected_ssrc is differ from setting-----*/
   /*-------zjy set last four number to 0-----*/
@@ -434,6 +435,7 @@ void ForwardErrorCorrection::InsertFecPacket(
     return;
   }
   }
+  //ytx_end
 
   // Parse packet mask from header and represent as protected packets.
   for (uint16_t byte_idx = 0; byte_idx < fec_packet->packet_mask_size;

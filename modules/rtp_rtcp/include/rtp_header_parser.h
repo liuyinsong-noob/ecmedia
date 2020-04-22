@@ -17,7 +17,7 @@ namespace webrtc {
 
 struct RTPHeader;
 
-//add by wx
+//ytx_add by wx
 typedef void(ECMedia_ConferenceParticipantCallback)(uint32_t arrOfCSRCs[], int count);
 class RtpHeaderParser {
  public:
@@ -49,10 +49,10 @@ class RtpHeaderParser {
   // De-registers an RTP header extension.
   virtual bool DeregisterRtpHeaderExtension(RtpExtension extension) = 0;
 
-  //add by wx 语音激励回调函数
+  //yxt_begin wx 语音激励回调函数
   virtual int setECMediaConferenceParticipantCallback(ECMedia_ConferenceParticipantCallback* cb) = 0;
-
   virtual void setECMediaConferenceParticipantCallbackTimeInterVal(int timeInterVal) = 0;
+  //ytx_end
 };
 }  // namespace webrtc
 #endif  // MODULES_RTP_RTCP_INCLUDE_RTP_HEADER_PARSER_H_

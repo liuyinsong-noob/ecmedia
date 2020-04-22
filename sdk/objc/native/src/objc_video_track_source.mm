@@ -55,10 +55,11 @@ MediaSourceInterface::SourceState ObjCVideoTrackSource::state() const {
 bool ObjCVideoTrackSource::remote() const {
   return false;
 }
-
+//ytx_begin
 bool ObjCVideoTrackSource::apply_rotation(){
   return true;
 }
+//ytx_end
 
 void ObjCVideoTrackSource::OnOutputFormatRequest(int width, int height, int fps) {
   cricket::VideoFormat format(width, height, cricket::VideoFormat::FpsToInterval(fps), 0);

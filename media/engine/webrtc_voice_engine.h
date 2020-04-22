@@ -32,7 +32,7 @@
 #include "rtc_base/network_route.h"
 #include "rtc_base/task_queue.h"
 #include "rtc_base/thread_checker.h"
-//add by wx
+//ytx_add by wx
 #include "modules/rtp_rtcp/include/rtp_header_parser.h"
 namespace cricket {
 
@@ -247,9 +247,10 @@ class WebRtcVoiceMediaChannel final : public VoiceMediaChannel,
  public:
   bool MuteStream(uint32_t ssrc, bool mute) override;
   WebRtcVoiceEngine* engine() { return engine_; }
-  // add by wx
+  //ytx_begin by wx
   int Register_ECMedia_ConferenceParticipantCallback(ECMedia_ConferenceParticipantCallback* callback)override;
   int SetConferenceParticipantCallbackTimeInterVal(int32_t timeInterVal)override;
+  //ytx_end
  private:
   bool SetOptions(const AudioOptions& options);
   bool SetRecvCodecs(const std::vector<AudioCodec>& codecs);

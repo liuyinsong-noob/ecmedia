@@ -157,6 +157,7 @@ class WebRtcVideoChannel : public VideoMediaChannel, public webrtc::Transport {
   void SetInterface(NetworkInterface* iface,
                     webrtc::MediaTransportInterface* media_transport) override;
   
+  //ytx_add
   bool RequestRemoteSsrc(const int channelId, int flag,int32_t ssrc) ;
   // E2E Encrypted Video Frame API
   // Set a frame decryptor to a particular ssrc that will intercept all
@@ -318,6 +319,7 @@ class WebRtcVideoChannel : public VideoMediaChannel, public webrtc::Transport {
     VideoSenderInfo GetVideoSenderInfo(bool log_stats);
     void FillBitrateInfo(BandwidthEstimationInfo* bwe_info);
     bool SendKeyframe();
+    //ytx_add
     void RequestRemoteSsrc(int flag,int32_t ssrc);
    private:
     // Parameters needed to reconstruct the underlying stream.

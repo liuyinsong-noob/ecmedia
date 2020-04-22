@@ -10,10 +10,8 @@ import("../../../webrtc.gni")
 
 rtc_static_library("bbr") {
   sources = [
-  #  "bbr_factory.cc",
-  # "bbr_factory.h",
-    "bbr_network_controller.cc",
-    "bbr_network_controller.h",
+    "bbr_factory.cc",
+    "bbr_factory.h",
   ]
   deps = [
     ":bbr_controller",
@@ -27,8 +25,8 @@ rtc_static_library("bbr") {
 rtc_source_set("bbr_controller") {
   visibility = [ ":*" ]
   sources = [
-  #  "bbr_network_controller.cc",
-  #  "bbr_network_controller.h",
+    "bbr_network_controller.cc",
+    "bbr_network_controller.h",
   ]
   deps = [
     ":bandwidth_sampler",

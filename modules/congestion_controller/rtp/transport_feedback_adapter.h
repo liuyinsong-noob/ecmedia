@@ -56,8 +56,10 @@ class TransportFeedbackAdapter {
 
   DataSize GetOutstandingData() const;
   
+  //ytx_begin
   bool MaybeCleanOutstandingData(int64_t current_ms, uint32_t delay_ms);
   DataSize GetOutstandingDataByTime(int64_t current_ms, uint32_t delay_ms  ) const;
+  //ytx_end
 
  private:
   void OnTransportFeedback(const rtcp::TransportFeedback& feedback);

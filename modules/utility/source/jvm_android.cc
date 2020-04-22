@@ -217,10 +217,12 @@ std::string JNIEnvironment::JavaToStdString(const jstring& j_string) {
 // static
 void JVM::Initialize(JavaVM* jvm) {
   RTC_LOG(INFO) << "JVM::Initialize";
+  //ytx_begin add 
   if (g_jvm && g_jvm->jvm() == jvm) {
     RTC_LOG(INFO) << "JVM::Initialize was inited";
     return;
   }
+  //ytx_end
   RTC_CHECK(!g_jvm);
   g_jvm = new JVM(jvm);
 }

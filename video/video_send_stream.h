@@ -85,7 +85,7 @@ class VideoSendStream : public webrtc::VideoSendStream {
   void ReconfigureVideoEncoder(VideoEncoderConfig) override;
   Stats GetStats() override;
   void SendKeyframe() override;
-
+  //ytx_add
   void RequestRemoteSsrc(int flag,int32_t ssrc) override;
 
   void StopPermanentlyAndGetRtpStates(RtpStateMap* rtp_state_map,

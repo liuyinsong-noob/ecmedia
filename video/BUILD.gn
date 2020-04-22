@@ -369,11 +369,12 @@ if (rtc_include_tests) {
       deps = [
         ":video_loopback_lib",
       ]
-
+     #ytx_begin
      if (is_win) {
-     libs = [ "libx264.dll.lib" ]
-     lib_dirs = [ "../third_party/libx264svc_win/x86/lib" ]
+       libs = [ "libx264.dll.lib" ]
+       lib_dirs = [ "../third_party/libx264svc_win/x86/lib" ]
      } 
+     #ytx_end
 
     }
   }
@@ -403,10 +404,12 @@ if (rtc_include_tests) {
       "//third_party/abseil-cpp/absl/memory",
       "//third_party/abseil-cpp/absl/types:optional",
     ]
+    #ytx_begin
     if (is_win) {
      libs = [ "libx264.dll.lib" ]
      lib_dirs = [ "../third_party/libx264svc_win/x86/lib" ]
     } 
+    #ytx_end
   }
 
   rtc_executable("sv_loopback") {
@@ -433,10 +436,12 @@ if (rtc_include_tests) {
       "//testing/gtest",
       "//third_party/abseil-cpp/absl/memory",
     ]
+    #ytx_begin
     if (is_win) {
      libs = [ "libx264.dll.lib" ]
      lib_dirs = [ "../third_party/libx264svc_win/x86/lib" ]
     }
+    #ytx_end
   }
 
   rtc_executable("video_replay") {

@@ -24,6 +24,7 @@
 namespace webrtc {
 
 const int64_t kNoTimestamp = -1;
+//ytx_change kSendTimeHistoryWindowMs from 60000 to 2000
 const int64_t kSendTimeHistoryWindowMs = 2000;
 const int64_t kBaseTimestampScaleFactor =
     rtcp::TransportFeedback::kDeltaScaleFactor * (1 << 8);

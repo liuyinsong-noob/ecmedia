@@ -188,6 +188,7 @@ int32_t VideoCaptureImpl::IncomingFrame(uint8_t* videoFrame,
     return -1;
   }
 
+//ytx_begin
 #ifdef AVRONG_DEBUG_DUMP
   // if (encoded != NULL && encoded_len > 0)
   {
@@ -212,7 +213,7 @@ int32_t VideoCaptureImpl::IncomingFrame(uint8_t* videoFrame,
     fclose(fp);
   }
 #endif  
-
+//ytx_end
   VideoFrame captureFrame =
       VideoFrame::Builder()
           .set_video_frame_buffer(buffer)

@@ -112,7 +112,6 @@ absl::optional<SentPacket> TransportFeedbackAdapter::ProcessSentPacket(
       msg.prior_unacked_data = DataSize::bytes(packet->unacknowledged_data);
       msg.data_in_flight =
           send_time_history_.GetOutstandingData(local_net_id_, remote_net_id_);
-     // RTC_LOG_F(LS_ERROR) << "BandwidthSampler ProcessSentPacket to insert the packet  is "<<sent_packet.packet_id<<"sent_time"<<msg.send_time;
       return msg;
     }
   } else if (sent_packet.info.included_in_allocation) {
@@ -256,6 +255,8 @@ std::vector<PacketFeedback>
 TransportFeedbackAdapter::GetTransportFeedbackVector() const {
   return last_packet_feedback_vector_;
 }
+
+//ytx_begin
 bool TransportFeedbackAdapter::MaybeCleanOutstandingData(int64_t current_ms, uint32_t delay_ms){
   rtc::CritScope cs(&lock_);
   return send_time_history_.MaybeCleanOutstandingData(current_ms, delay_ms);
@@ -265,4 +266,6 @@ DataSize TransportFeedbackAdapter::GetOutstandingDataByTime(int64_t current_ms, 
   rtc::CritScope cs(&lock_);
    return send_time_history_.GetOutstandingDataByTime(local_net_id_, remote_net_id_,current_ms,delay_ms);
 }
+//ytx_end
+
 }  // namespace webrtc

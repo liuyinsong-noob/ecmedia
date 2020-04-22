@@ -191,6 +191,7 @@ int WebRtcOpus_Encode(OpusEncInst* inst,
 
 int16_t WebRtcOpus_SetBitRate(OpusEncInst* inst, int32_t rate) {
   if (inst) {
+    //ytx_todo
     rate = 48000;
     return ENCODER_CTL(inst, OPUS_SET_BITRATE(rate));
   } else {
@@ -200,6 +201,7 @@ int16_t WebRtcOpus_SetBitRate(OpusEncInst* inst, int32_t rate) {
 
 int16_t WebRtcOpus_SetPacketLossRate(OpusEncInst* inst, int32_t loss_rate) {
   if (inst) {
+    //ytx_todo
     loss_rate = 20;
     return ENCODER_CTL(inst, OPUS_SET_PACKET_LOSS_PERC(loss_rate));
   } else {

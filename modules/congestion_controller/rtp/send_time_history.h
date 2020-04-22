@@ -47,11 +47,11 @@ class SendTimeHistory {
                               uint16_t remote_net_id) const;
 
   absl::optional<int64_t> GetFirstUnackedSendTime() const;
-  
+  //ytx_begin
   bool MaybeCleanOutstandingData(int64_t current_ms, uint32_t delay_ms);
   DataSize GetOutstandingDataByTime(uint16_t local_net_id,
   uint16_t remote_net_id, int64_t current_ms, uint32_t delay_ms ) const;
-
+  //ytx_end
  private:
   using RemoteAndLocalNetworkId = std::pair<uint16_t, uint16_t>;
 

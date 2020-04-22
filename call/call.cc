@@ -1207,6 +1207,8 @@ void Call::OnTargetTransferRate(TargetTransferRate msg) {
   }
 
   uint32_t target_bitrate_bps = msg.target_rate.bps();
+
+  //ytx_begin
   //int loss_ratio_255 = msg.network_estimate.loss_rate_ratio * 255;
   //uint8_t fraction_loss =
     //  rtc::dchecked_cast<uint8_t>(rtc::SafeClamp(loss_ratio_255, 0, 255));
@@ -1215,7 +1217,8 @@ void Call::OnTargetTransferRate(TargetTransferRate msg) {
     loss_default = msg.network_estimate.loss_rate_ratio * 255;
   }
   uint8_t fraction_loss = loss_default;
-  
+  //ytx_end
+
   int64_t rtt_ms = msg.network_estimate.round_trip_time.ms();
   int64_t probing_interval_ms = msg.network_estimate.bwe_period.ms();
   uint32_t bandwidth_bps = msg.network_estimate.bandwidth.bps();
@@ -1409,6 +1412,7 @@ PacketReceiver::DeliveryStatus Call::DeliverRtp(MediaType media_type,
              is_keep_alive_packet);
 
   ReadLockScoped read_lock(*receive_crit_);
+  //ytx_begin
   uint32_t packetSsrc = 0;
   if (media_type == MediaType::VIDEO) {
     uint32_t temp = parsed_packet.Ssrc();
@@ -1424,6 +1428,7 @@ PacketReceiver::DeliveryStatus Call::DeliverRtp(MediaType media_type,
   }
   auto it = receive_rtp_config_.find(packetSsrc);
   // auto it = receive_rtp_config_.find(parsed_packet.Ssrc());
+  //ytx_end
   if (it == receive_rtp_config_.end()) {
     RTC_LOG(LS_ERROR) << "receive_rtp_config_ lookup failed for ssrc "
                       << parsed_packet.Ssrc();

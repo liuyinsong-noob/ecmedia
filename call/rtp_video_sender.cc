@@ -517,6 +517,7 @@ void RtpVideoSender::ConfigureProtection(const RtpConfig& rtp_config) {
         << "Transmitting payload type without picture ID using "
            "NACK+ULPFEC is a waste of bandwidth since ULPFEC packets "
            "also have to be retransmitted. Disabling ULPFEC.";
+    //ytx_todo
     //DisableRedAndUlpfec();
   }
 
@@ -547,6 +548,8 @@ bool RtpVideoSender::NackEnabled() const {
   const bool nack_enabled = rtp_config_.nack.rtp_history_ms > 0;
   return nack_enabled;
 }
+
+//ytx_begin
 void RtpVideoSender::RequestRemoteSsrc(int flag,int32_t ssrc) {
   for (size_t i = 0; i < rtp_streams_.size(); ++i) {
     uint32_t bandwidth = flag;
@@ -555,6 +558,8 @@ void RtpVideoSender::RequestRemoteSsrc(int flag,int32_t ssrc) {
     rtp_streams_[i].rtp_rtcp->SendSingleTMMBR(bandwidth,localssrc,remote_ssrc);
   }
 }
+//ytx_end
+
 uint32_t RtpVideoSender::GetPacketizationOverheadRate() const {
   uint32_t packetization_overhead_bps = 0;
   for (size_t i = 0; i < rtp_streams_.size(); ++i) {

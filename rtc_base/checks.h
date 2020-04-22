@@ -15,7 +15,7 @@
 // RTC_DCHECK_IS_ON. (Test its value, not if it's defined; it'll always be
 // defined, to either a true or a false value.)
 #if !defined(NDEBUG) || defined(DCHECK_ALWAYS_ON)
-#define RTC_DCHECK_IS_ON 0 //1    //AVRONG_DEBUG_DUMP disable it for debug ok.
+#define RTC_DCHECK_IS_ON 1
 #else
 #define RTC_DCHECK_IS_ON 0
 #endif

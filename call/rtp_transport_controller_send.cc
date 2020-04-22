@@ -30,6 +30,7 @@
 namespace webrtc {
 namespace {
 static const int64_t kRetransmitWindowSizeMs = 500;
+//ytx_add
 static const int64_t kUnAckDataWindowSizeMs = 2000;
 static const size_t kMaxOverheadBytes = 500;
 
@@ -73,11 +74,13 @@ RtpTransportControllerSend::RtpTransportControllerSend(
       observer_(nullptr),
       controller_factory_override_(controller_factory),
       controller_factory_fallback_(
+         //ytx_begin
          field_trial::FindFullName("EC-Congestion-Control-Mode") == "gcc" ?
          std::unique_ptr<NetworkControllerFactoryInterface>(
 			 absl::make_unique<GoogCcNetworkControllerFactory>(event_log, predictor_factory)) : 
 		 std::unique_ptr<NetworkControllerFactoryInterface>(
              absl::make_unique<BbrNetworkControllerFactory>())),
+          //ytx_end
       process_interval_(controller_factory_fallback_->GetProcessInterval()),
       last_report_block_time_(Timestamp::ms(clock_->TimeInMilliseconds())),
       reset_feedback_on_route_change_(
@@ -141,6 +144,7 @@ void RtpTransportControllerSend::DestroyRtpVideoSender(
 }
 
 void RtpTransportControllerSend::UpdateControlState() {
+  //ytx_begin
   int64_t now_ms = clock_->TimeInMilliseconds();
   if(pacer_.IsCongested()){
     if(last_congested_time == 0)
@@ -158,7 +162,7 @@ void RtpTransportControllerSend::UpdateControlState() {
     pacer_.SetPacingRates(300000,0);
   }
   last_low_band_time = 0;
-  
+  //ytx_end
   absl::optional<TargetTransferRate> update = control_handler_->GetUpdate();
   if (!update)
     return;
@@ -330,6 +334,7 @@ void RtpTransportControllerSend::EnablePeriodicAlrProbing(bool enable) {
 }
 void RtpTransportControllerSend::OnSentPacket(
     const rtc::SentPacket& sent_packet) {
+   //ytx_begin
   int64_t now_ms = clock_->TimeInMilliseconds();
   if(pacer_.IsCongested()){
     if(last_congested_time == 0)
@@ -340,7 +345,7 @@ void RtpTransportControllerSend::OnSentPacket(
     }
   }else
     last_congested_time = 0;
-  
+  //ytx_end
   absl::optional<SentPacket> packet_msg =
       transport_feedback_adapter_.ProcessSentPacket(sent_packet);
   if (packet_msg) {
@@ -459,8 +464,9 @@ void RtpTransportControllerSend::AddPacket(uint32_t ssrc,
 void RtpTransportControllerSend::OnTransportFeedback(
     const rtcp::TransportFeedback& feedback) {
   RTC_DCHECK_RUNS_SERIALIZED(&worker_race_);
-
-   int64_t now_ms = clock_->TimeInMilliseconds();
+  
+  //ytx_add
+  int64_t now_ms = clock_->TimeInMilliseconds();
   absl::optional<TransportPacketsFeedback> feedback_msg =
       transport_feedback_adapter_.ProcessTransportFeedback(
           feedback, Timestamp::ms(clock_->TimeInMilliseconds()));
@@ -471,6 +477,7 @@ void RtpTransportControllerSend::OnTransportFeedback(
         PostUpdates(controller_->OnTransportPacketsFeedback(*feedback_msg));
     });
   }
+  //ytx_begin
   //pacer_.UpdateOutstandingData(
      //  transport_feedback_adapter_.GetOutstandingData().bytes());
   pacer_.UpdateOutstandingData(
@@ -487,6 +494,7 @@ void RtpTransportControllerSend::OnTransportFeedback(
     last_congested_time = 0;
   
 }
+//ytx_end
 
 void RtpTransportControllerSend::MaybeCreateControllers() {
   RTC_DCHECK(!controller_);
@@ -576,6 +584,7 @@ void RtpTransportControllerSend::PostUpdates(NetworkControlUpdate update) {
     pacer_.CreateProbeCluster(bitrate_bps, probe.id);
   }
   if (update.target_rate) {
+    //ytx_begin
     float lost = update.target_rate ? update.target_rate->network_estimate.loss_rate_ratio : 0.0;
     if(lost > 0){
       transport_feedback_adapter_.MaybeCleanOutstandingData(clock_->TimeInMilliseconds(), lost > 0.5 ? 0 : (0.5 - lost) * 10 * 1000);
@@ -609,11 +618,13 @@ void RtpTransportControllerSend::PostUpdates(NetworkControlUpdate update) {
     else if(nack_bps >=  90 )
       nack_bps = 80;
     (*update.target_rate).target_rate = (*update.target_rate).target_rate*((float)nack_bps/100 + 0.01) ;
+    //ytx_end
     control_handler_->SetTargetRate(*update.target_rate);
+    //ytx_begin
     RTC_LOG(INFO)<<"ytx target bps is :"<<(*update.target_rate).target_rate.bps()  
 		<<" nack bps : "<<nack_bps;
     printf(" encode  bps %lld \n ",(*update.target_rate).target_rate.bps() );
-    
+    //ytx_end
     UpdateControlState();
   }
 }

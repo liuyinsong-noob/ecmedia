@@ -46,6 +46,7 @@ class RTC_EXPORT H264Encoder : public VideoEncoder {
   static bool IsSupported();
 
   ~H264Encoder() override {}
+//ytx_add
 #ifdef SAVE_ENCODEDE_FILE
   std::vector<std::ofstream> output_files_;
   std::vector<std::ofstream> output_temporal_files_;
@@ -58,6 +59,7 @@ class RTC_EXPORT H264Decoder : public VideoDecoder {
   static bool IsSupported();
 
   ~H264Decoder() override {}
+//ytx_add
 #ifdef SAVE_DECODING_FILE
   std::ofstream input_file_;
 #endif

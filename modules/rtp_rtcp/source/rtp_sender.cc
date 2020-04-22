@@ -499,7 +499,6 @@ bool RTPSender::SendPacketToNetwork(const RtpPacketToSend& packet,
   // TODO(pwestin): Add a separate bitrate for sent bitrate after pacer.
   if (bytes_sent <= 0) {
     RTC_LOG(LS_WARNING) << "Transport failed to send packet.";
-	
     return false;
   }
   return true;
@@ -537,6 +536,7 @@ bool RTPSender::TimeToSendPacket(uint32_t ssrc,
   }
 
   if (!packet) {
+    //ytx_add hubin
     RTC_LOG(LS_WARNING) << "hubin TimeToSendPacket not found "
                         << sequence_number
                         << " retransmission:" << retransmission;
@@ -558,18 +558,18 @@ bool RTPSender::PrepareAndSendPacket(std::unique_ptr<RtpPacketToSend> packet,
   RTC_DCHECK(packet);
   int64_t capture_time_ms = packet->capture_time_ms();
   RtpPacketToSend* packet_to_send = packet.get();
+  //ytx_begin
   int chongchuan = 0;
   int rtx = 0;
   if(is_retransmit)
     chongchuan = 1;
   if(send_over_rtx)
     rtx = 1;
-  //printf(" payloadtype PrepareAndSendPacket  is %d chongchuan : %d rtx : %d \n ",packet->PayloadType(),chongchuan,rtx);
+   //ytx_end
 
   std::unique_ptr<RtpPacketToSend> packet_rtx;
   if (send_over_rtx) {
     packet_rtx = BuildRtxPacket(*packet);
-    //printf(" payloadtype PrepareAndSendPacket BuildRtxPacket  is %d chongchuan : %d rtx : %d \n ",packet_rtx->PayloadType(),chongchuan,rtx);
 
     if (!packet_rtx)
       return false;
