@@ -125,7 +125,7 @@ namespace yuntongxunwebrtc {
                         }
                         else {
 							rtmp_status_ = RS_PLY_Connect_Faild;
-							if (callback_) {
+							if (callback_ && running_) {
 								callback_(EC_LIVE_CONNECT_FAILED);
 							}
                             return false;
@@ -135,13 +135,13 @@ namespace yuntongxunwebrtc {
                     case RS_PLY_Handshaked:
                     {
 						yuntongxunwebrtc::CritScope lock(&rtmp_lock);
-                        if (srs_rtmp_connect_app(rtmp_) == 0) {
+                        if ((srs_rtmp_connect_app(rtmp_) == 0) && running_) {
                             WriteLogToFile("SRS: connect vhost/app ok.");
                             rtmp_status_ = RS_PLY_Connected;
                         }
                         else {
 							rtmp_status_ = RS_PLY_Connect_Faild;
-							if (callback_) {
+							if (callback_ && running_) {
 								callback_(EC_LIVE_CONNECT_FAILED);
 							}
 							return false;
@@ -151,16 +151,16 @@ namespace yuntongxunwebrtc {
                     case RS_PLY_Connected:
                     {
 						//yuntongxunwebrtc::CritScope lock(&rtmp_lock);
-                        if (srs_rtmp_play_stream(rtmp_) == 0) {
+                        if ((srs_rtmp_play_stream(rtmp_) == 0) && running_) {
                             WriteLogToFile("SRS: play stream ok.");
                             rtmp_status_ = RS_PLY_Played;
-                            if(callback_) {
+                            if(callback_ && running_) {
                                 callback_(EC_LIVE_CONNECT_SUCCESS);
                             }
                         }
                         else {
 							rtmp_status_ = RS_PLY_Connect_Faild; 
-							if (callback_) {
+							if (callback_ && running_) {
 								callback_(EC_LIVE_CONNECT_FAILED);
 							}
                             return false;
@@ -174,10 +174,10 @@ namespace yuntongxunwebrtc {
                         // todo: 根据 ret 返回值，判断错误类型，决定是否停止读取流
                         // bugfix: #128169
                         // @see http://redmine.yuntongxun.com/redmine/issues/128169?issue_count=82&issue_position=1&next_issue_id=131511
-                        if(ret == 0) {
-                            if(!hasStreaming_) {
+                        if((ret == 0) && running_) {
+                            if((!hasStreaming_) && running_) {
                                 hasStreaming_ = true;
-                                if(callback_) {
+                                if(callback_ && running_) {
                                     callback_(EC_LIVE_PLAY_SUCCESS);
                                 }
                             }
@@ -223,6 +223,7 @@ namespace yuntongxunwebrtc {
 
     bool EC_RtmpPuller::unPackNAL(const char *data, int data_size, std::vector<uint8_t> & nal)
     {
+		yuntongxunwebrtc::CritScope lock(&rtmp_lock);
         int index =0 ;
         int count = 0;
         do {
@@ -247,6 +248,7 @@ namespace yuntongxunwebrtc {
     
     bool EC_RtmpPuller::unpackSpsPps(char *data , std::vector<uint8_t> &sps, std::vector<uint8_t> &pps)
     {
+		yuntongxunwebrtc::CritScope lock(&rtmp_lock);
         //sps
         if(data[0]!= 1) {
             // PrintConsole("[RTMP ERROR] %s SPS PPS version not correct\n", __FUNCTION__);
@@ -278,7 +280,7 @@ namespace yuntongxunwebrtc {
         char *data;
         u_int32_t timestamp;
 
- 
+		yuntongxunwebrtc::CritScope lock(&rtmp_lock);
         if (srs_rtmp_read_packet(rtmp_, &type, &timestamp, &data, &size) != 0) {
             return -1;
         }
@@ -330,7 +332,7 @@ namespace yuntongxunwebrtc {
                     }
                     payloadData = &nal[0];
                     payloadLen = nal.size();
-                    if(av_packet_cacher){
+                    if(av_packet_cacher && running_){
                         av_packet_cacher->onAvcDataComing((uint8_t *) payloadData, payloadLen, timestamp);
                     }
                     break;
@@ -345,6 +347,7 @@ namespace yuntongxunwebrtc {
     
     void EC_RtmpPuller::handleAuidoPacket(char* data, int size, u_int32_t timestamp)
     {
+		yuntongxunwebrtc::CritScope lock(&rtmp_lock);
         SrsCodecSample sample;
         if (srs_codec_->audio_aac_demux(data, size, &sample) != ERROR_SUCCESS) {
             if (sample.acodec == SrsCodecAudioMP3 && srs_codec_->audio_mp3_demux(data, size, &sample) != ERROR_SUCCESS) {
@@ -368,6 +371,7 @@ namespace yuntongxunwebrtc {
     
     int EC_RtmpPuller::GotAudioSample(u_int32_t timestamp, SrsCodecSample *sample)
     {
+		yuntongxunwebrtc::CritScope lock(&rtmp_lock);
         int ret = ERROR_SUCCESS;
         for (int i = 0; i < sample->nb_sample_units; i++) {
             SrsCodecSampleUnit* sample_unit = &sample->sample_units[i];
