@@ -25,6 +25,9 @@ VideoCapturer* VideoCapturer::CreateCaptureDevice(
   std::unique_ptr<webrtc::VideoCaptureModule::DeviceInfo> device_info(
       webrtc::VideoCaptureFactory::CreateDeviceInfo());
 
+  index = index >= device_info->NumberOfDevices()
+              ? device_info->NumberOfDevices()-1
+                 : index;
   char device_name[256];
   char unique_name[256];
   if (device_info->GetDeviceName(static_cast<uint32_t>(index),
