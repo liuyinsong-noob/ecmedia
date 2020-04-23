@@ -1489,7 +1489,9 @@ MediaClient::CreateLocalVideoTrack(const std::string& track_params) {
 
   int type = config.videoSourceType;
   std::string track_id = config.trackId;
-  int camera_index = config.deviceIndex;
+
+  int camera_index = 0;
+  camera_index = config.deviceIndex;
 
   // rtc::GetIntFromJsonObject(jmessage, "video_mode", &type);
   // rtc::GetIntFromJsonObject(jmessage, "camera_index", &camera_index);

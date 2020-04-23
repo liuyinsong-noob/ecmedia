@@ -34,13 +34,14 @@
 #include "media/base/stream_params.h"
 #include "media/sctp/sctp_transport_internal.h"
 
+#include "video_render/video_renderer.h"
 #include "video_capturer/video_capturer.h"
 #include "media/base/video_common.h"
 #include "media/engine/webrtc_video_engine.h"
 #include "modules/desktop_capture/desktop_capturer.h"
 #include "modules/desktop_capture/desktop_frame.h"
 #include "modules/video_capture/video_capture.h"
-#include "video_render/video_renderer.h"
+
 
 #include "ec_log.h"
 
@@ -494,7 +495,8 @@ class MediaClient : public sigslot::has_slots<> {
    videoTrack = CreateLocalVideoTrack(channelid,   transportid, string
    videosourceId,  ssrc);
 
-   
+   
+
    remotetrackid = AddRemoteTrack(transportid, ssrc, payload, is_video)
 
    SelectVideoSource(videotrack, videosourceId)
@@ -984,7 +986,8 @@ class MediaClient : public sigslot::has_slots<> {
        uint32_t ssrcLocal = 0;
        uint32_t ssrcRemote = 0;
        std::string mid;  // the media stream id of channelId
-     
+     
+
    };*/
   struct ChannelSsrcs {
     std::vector<uint32_t> ssrcLocal;
