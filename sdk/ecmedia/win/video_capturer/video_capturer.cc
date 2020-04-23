@@ -17,6 +17,29 @@ VideoCapturer* VideoCapturer::CreateCaptureDevice(
   return video_capturer.release();
 }
 
+VideoCapturer* VideoCapturer::CreateCaptureDevice(
+	 int width,int height, int  fps,int index)  {
+  std::unique_ptr<VideoCapturer> video_capturer(new VideoCapturer());
+
+
+  std::unique_ptr<webrtc::VideoCaptureModule::DeviceInfo> device_info(
+      webrtc::VideoCaptureFactory::CreateDeviceInfo());
+
+  char device_name[256];
+  char unique_name[256];
+  if (device_info->GetDeviceName(static_cast<uint32_t>(index),
+                                 device_name, sizeof(device_name), unique_name,
+                                 sizeof(unique_name)) != 0) {
+    return nullptr;
+  }
+
+  if (!video_capturer->Init(unique_name, sizeof(unique_name))) {
+    RTC_LOG(LS_WARNING) << "Failed to create VcmCapturer";
+    return nullptr;
+  }
+  return video_capturer.release();
+}
+
 VideoCapturer::VideoCapturer() : vcm_(nullptr) {
   capability_.width = 640;
   capability_.height = 480;
@@ -49,7 +72,17 @@ void VideoCapturer::Destroy() {
   // Release reference to VCM.
   vcm_ = nullptr;
 }
-
+bool VideoCapturer::Init(int width,
+	int height,
+	int fps,
+	const char* device_unique_idUTF8,
+	const uint32_t device_unique_idUTF8Length) {
+  capability_.width = width;
+  capability_.height = height;
+  capability_.maxFPS = fps;
+  capability_.videoType = webrtc::VideoType::kI420;
+  return Init(device_unique_idUTF8, device_unique_idUTF8Length);
+}
 int VideoCapturer::StartCapture(webrtc::VideoCaptureCapability& capability) {
   capability_ = capability;
   if (vcm_->StartCapture(capability_) != 0) {

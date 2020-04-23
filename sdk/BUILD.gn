@@ -50,6 +50,7 @@ rtc_source_set("sdk_tests") {
   ]
 }
 
+
 if (is_ios || is_mac) {
   config("common_config_objc") {
     include_dirs = [
@@ -1669,8 +1670,11 @@ if (is_ios || is_mac) {
     }
   }
 
-  if (is_win || is_android || is_ios) {
-  rtc_static_library("ecmedia") {
+
+}
+
+if (is_win || is_android || is_ios) {
+  rtc_static_library("ecmedia_static") {
     testonly = false
     visibility = [ "*" ]
     allow_poison = [ "audio_codecs", "software_video_codecs", ]
@@ -1722,19 +1726,19 @@ if (is_ios || is_mac) {
     if (is_win) {
       configs += [ "//build/config/win:windowed" ]
       sources += [
-      "ecmedia/video_render/i_video_render.h",
-      "ecmedia/video_render/win_d3d9_render.h",
-      "ecmedia/video_render/win_d3d9_render.cc",
-      "ecmedia/video_render/video_render_frames.cc",
-      "ecmedia/video_render/video_render_frames.h",
-      "ecmedia/video_render/video_renderer.cc",
-      "ecmedia/video_render/video_renderer.h",
-      "ecmedia/video_render/video_render_defines.h",
-      "ecmedia/video_capturer/i_video_capturer.h",
-      "ecmedia/video_capturer/video_capturer.cc",
-      "ecmedia/video_capturer/video_capturer.h",
-      "ecmedia/video_capturer/capturer_track_source.h",
-      "ecmedia/video_capturer/capturer_track_source.cc",
+      "ecmedia/win/video_render/i_video_render.h",
+      "ecmedia/win/video_render/win_d3d9_render.h",
+      "ecmedia/win/video_render/win_d3d9_render.cc",
+      "ecmedia/win/video_render/video_render_frames.cc",
+      "ecmedia/win/video_render/video_render_frames.h",
+      "ecmedia/win/video_render/video_renderer.cc",
+      "ecmedia/win/video_render/video_renderer.h",
+      "ecmedia/win/video_render/video_render_defines.h",
+      "ecmedia/win/video_capturer/i_video_capturer.h",
+      "ecmedia/win/video_capturer/video_capturer.cc",
+      "ecmedia/win/video_capturer/video_capturer.h",
+      "ecmedia/win/video_capturer/capturer_track_source.h",
+      "ecmedia/win/video_capturer/capturer_track_source.cc",
       ]
       include_dirs = ["ecmedia/win",]
     }
@@ -1799,9 +1803,13 @@ if (is_ios || is_mac) {
     }
   }
  }
+ rtc_shared_library("ecmedia") {
+    deps = [
+     ":ecmedia_static",
+    ]
+ }
 
-
-if (is_ios) {
+  if (is_ios) {
       ios_framework_bundle_with_umbrella_header("framework_ecmedia") {
         info_plist = "ecmedia/ios/Info.plist"
         output_name = "ECMediaSDK"
@@ -1824,7 +1832,7 @@ if (is_ios) {
         ]
 
         deps = [
-          ":ecmedia",
+          ":ecmedia_static",
         ]
         if (rtc_use_metal_rendering) {
           deps += [ ":metal_objc" ]
@@ -1863,9 +1871,4 @@ if (is_ios) {
         ]
       }
     }
-
-
-}
-
-
 

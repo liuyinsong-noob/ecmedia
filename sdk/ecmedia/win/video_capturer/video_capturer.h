@@ -18,7 +18,11 @@ class VideoCapturer : public rtc::VideoSourceInterface<webrtc::VideoFrame>,
   static VideoCapturer* CreateCaptureDevice(
       const char* device_unique_idUTF8,
       const uint32_t device_unique_idUTF8Length);
-
+  
+  static VideoCapturer* CreateCaptureDevice(int width,
+                                                           int height,
+                                                           int fps,
+                                                           int index);
   ~VideoCapturer();
 
   int StartCapture(webrtc::VideoCaptureCapability &capability);
@@ -35,6 +39,11 @@ class VideoCapturer : public rtc::VideoSourceInterface<webrtc::VideoFrame>,
  protected:
   VideoCapturer();
   bool Init(const char* device_unique_idUTF8,
+            const uint32_t device_unique_idUTF8Length);
+  bool Init(int width,
+            int height,
+            int fps,
+            const char* device_unique_idUTF8,
             const uint32_t device_unique_idUTF8Length);
 
  private:

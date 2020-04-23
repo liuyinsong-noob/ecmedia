@@ -1,11 +1,6 @@
 
 #include "media_client.h"
 
-#ifdef WIN32
-#include "pc/test/fake_video_track_source.h "
-#include "rtc_base/win32_socket_server.h"
-#endif
-
 #if defined(WEBRTC_ANDROID)
 #include <jni.h>
 #include "modules/utility/include/jvm_android.h"
@@ -41,25 +36,25 @@
 #include "media/engine/webrtc_media_engine.h"
 #include "media/engine/webrtc_voice_engine.h"
 #include "media/sctp/sctp_transport.h"
-// lzm-----------------
 #include "media/base/codec.h"
 
 #include "modules/audio_device/include/audio_device.h"
 #include "modules/audio_processing/include/audio_processing.h"
 #include "modules/video_capture/video_capture.h"
 #include "modules/video_capture/video_capture_factory.h"
+#include "modules/desktop_capture/desktop_capture_options.h"
 
 #include "rtc_base/bind.h"
 #include "rtc_base/checks.h"
 #include "rtc_base/logging.h"
 #include "rtc_base/ref_counted_object.h"
 #include "rtc_base/strings/json.h"
-// LZM------------
+#include "rtc_base/system/file_wrapper.h"
+
 #include "pc/audio_track.h"
 #include "pc/local_audio_source.h"
 #include "pc/media_stream.h"
 #include "pc/rtp_parameters_conversion.h"
-
 #include "pc/video_track.h"
 #include "pc/video_track_source.h"
 
@@ -67,17 +62,11 @@
 #include "third_party/abseil-cpp/absl/strings/ascii.h"
 #include "third_party/abseil-cpp/absl/types/optional.h"
 #include "third_party/libyuv/include/libyuv/convert_argb.h"
+#include "third_party/libyuv/include/libyuv.h"
 
 #include "logging/rtc_event_log/rtc_event_log_factory.h"
-
-#include "test/vcm_capturer.h"
-
 #include "system_wrappers/include/field_trial.h"
-
-#include "modules/desktop_capture/desktop_capture_options.h"
-#include "rtc_base/system/file_wrapper.h"
-#include "system_wrappers/include/field_trial.h"
-#include "third_party/libyuv/include/libyuv.h"
+#include "video_capturer/capturer_track_source.h"
 
 #define API_LOG(sev) RTC_LOG(sev) << "[API] " << __FUNCTION__ << " "
 #if defined(WEBRTC_IOS)
@@ -99,57 +88,7 @@ const int kMaxBandwidthBps = 2000000;
 const int kStartBandwidthBps = 500000;
 const int kMaxBandwidthBps = 1000000;
 #endif
-// static const char kAudioTracks[][32] = {"audiotrack0", "audiotrack1"};
-// static const char kVideoTracks[][32] = {"videotrack0", "videotrack1"};
-namespace {
-#if defined(WEBRTC_WIN)
-class CapturerTrackSource : public webrtc::VideoTrackSource {
- public:
-  static rtc::scoped_refptr<CapturerTrackSource> Create(int index = 1) {
-    const size_t kWidth = 1280;
-    const size_t kHeight = 960;
-    const size_t kFps = 15;
-    std::unique_ptr<webrtc::test::VcmCapturer> capturer;
-    std::unique_ptr<webrtc::VideoCaptureModule::DeviceInfo> info(
-        webrtc::VideoCaptureFactory::CreateDeviceInfo());
-    if (!info) {
-      return nullptr;
-    }
-    int num_devices = info->NumberOfDevices();
-    if (index >= num_devices) {
-      capturer = absl::WrapUnique(webrtc::test::VcmCapturer::Create(
-          kWidth, kHeight, kFps, (num_devices - 1)));
-      if (capturer) {
-        return new rtc::RefCountedObject<CapturerTrackSource>(
-            std::move(capturer));
-      }
-    } else {
-      capturer = absl::WrapUnique(
-          webrtc::test::VcmCapturer::Create(kWidth, kHeight, kFps, index));
-      if (capturer) {
-        return new rtc::RefCountedObject<CapturerTrackSource>(
-            std::move(capturer));
-      }
-    }
 
-    return nullptr;
-  }
-
- protected:
-  explicit CapturerTrackSource(
-      std::unique_ptr<webrtc::test::VcmCapturer> capturer)
-      : VideoTrackSource(/*remote=*/false), capturer_(std::move(capturer)) {}
-
- private:
-  rtc::VideoSourceInterface<webrtc::VideoFrame>* source() override {
-    return capturer_.get();
-  }
-  std::unique_ptr<webrtc::test::VcmCapturer> capturer_;
-};
-#endif
-}  // namespace
-
-/////////////////////////////////////////////
 
 std::string getStrFromInt(int n) {
   std::string ret;
@@ -159,7 +98,6 @@ std::string getStrFromInt(int n) {
 
   return ret;
 }
-
 void ReadMediaConfig(const char* filename) {
   char buf[16 * 1024] = {0};
   webrtc::FileWrapper fr = webrtc::FileWrapper::OpenReadOnly(filename);
@@ -761,7 +699,7 @@ bool MediaClient::CreateVideoChannel(const std::string& settings,
 
   "{\n   \"transportId\" : \"tran_1\",\n  \"red\" : 0,  \n  \"fecType\" : 0, \n  \"nack\" : 1,\n   \"codecs\" : [\n      {\n         \"codecName\" : \"H264\",\n         \"payloadType\" : 98,\n         \"new_payloadType\" : 104\n      },\n      {\n         \"codecName\" : \"rtx\",\n         \"payloadType\" : 101,\n      \"new_payloadType\" : 105,\n  \"associated_payloadType\" : 104\n   }\n    ]\n}\n";
 #elif defined(WEBRTC_WIN)
-  std::string setting =
+  settings =
 //        "{\n   \"transportId\" : \"tran_1\",\n  \"red\" : 1,  \n  \"fecType\" : 1, \n  \"nack\" : 1,\n   \"codecs\" : [\n      {\n         \"codecName\" : \"H264\",\n         \"payloadType\" : 102,\n         \"new_payloadType\" : 104\n      },\n      {\n         \"codecName\" : \"rtx\",\n         \"payloadType\" : 103,\n      \"new_payloadType\" : 105,\n  \"associated_payloadType\" : 104\n   },\n      {\n         \"codecName\" : \"red\",\n         \"payloadType\" : 110,\n      \"new_payloadType\" : 110\n  },\n      {\n         \"codecName\" : \"rtx\",\n         \"payloadType\" : 111,\n    \"new_payloadType\" : 111,\n   \"associated_payloadType\" : 110\n  },\n      {\n         \"codecName\" : \"ulpfec\",\n         \"payloadType\" : 112,\n      \"new_payloadType\" : 112\n  }\n   ]\n}\n";
   
   "{\n   \"transportId\" : \"tran_1\",\n  \"red\" : 0,  \n  \"fecType\" : 0, \n  \"nack\" : 1,\n   \"codecs\" : [\n      {\n         \"codecName\" : \"H264\",\n         \"payloadType\" : 102,\n         \"new_payloadType\" : 104\n      },\n      {\n         \"codecName\" : \"rtx\",\n         \"payloadType\" : 103,\n      \"new_payloadType\" : 105,\n  \"associated_payloadType\" : 104\n   }\n    ]\n}\n";
@@ -1284,8 +1222,8 @@ rtc::scoped_refptr<webrtc::VideoTrackInterface>
 MediaClient::SelectVideoSourceOnFlight(int channelid,
                                        int device_index,
                                        const std::string& track_params) {
-  bool bResult = false;
 #if defined WEBRTC_WIN
+  bool bResult = false;
   rtc::scoped_refptr<webrtc::VideoTrackInterface> video_track1 =
       signaling_thread_
           ->Invoke<rtc::scoped_refptr<webrtc::VideoTrackInterface>>(
