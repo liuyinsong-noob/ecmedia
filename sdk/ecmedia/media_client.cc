@@ -304,6 +304,10 @@ bool MediaClient::SetTrace(const char* path, int min_sev) {
 #if defined(WEBRTC_ANDROID)
   return AndroidInitialize(env, jencoder_factory, jdecoder_factory);
 #else
+    
+    //Set Field Trials String
+    //webrtc::field_trial::IsEnabled("WebRTC-DisableUlpFecExperiment");
+    //webrtc::FLAG_force_fieldtrials ="WebRTC-FlexFEC-03-Advertised/Enabled/";
   bool bOk = true;
   if (!m_bInitialized) {
     vcm_device_info_.reset(webrtc::VideoCaptureFactory::CreateDeviceInfo());
@@ -771,7 +775,7 @@ bool MediaClient::CreateVideoChannel(const std::string& settings,
 
   std::string mid = GetMidFromChannelId(channelId);
   VideoCodecConfig config;
-  if (!ParseVideoCodecSetting(setting.c_str(), &config)) {
+  if (!ParseVideoCodecSetting(settings.c_str(), &config)) {
     RTC_LOG(LS_ERROR) << " ParseVideoCodecSetting false...";
     return false;
   }

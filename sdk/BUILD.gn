@@ -1670,8 +1670,10 @@ if (is_ios || is_mac) {
   }
 
   if (is_win || is_android || is_ios) {
-  rtc_shared_library("ecmedia") {
+  rtc_static_library("ecmedia") {
     testonly = false
+    visibility = [ "*" ]
+    allow_poison = [ "audio_codecs", "software_video_codecs", ]
     configs += [
         "..:no_exit_time_destructors",
         "..:no_global_constructors",
@@ -1787,6 +1789,7 @@ if (is_ios || is_mac) {
           ":videocodec_objc",
           ":videotoolbox_objc",
           "../rtc_base:rtc_base_approved",
+          
         ]
     }
     #ytx_add
