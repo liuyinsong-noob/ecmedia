@@ -78,7 +78,6 @@
 /third_party/*
 !third_party/libx264svc_win/
 !third_party/libx264svc_win/**/*.lib
-
-
+/build/linux/*
 /tools
 /buildtools
