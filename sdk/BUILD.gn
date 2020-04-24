@@ -1804,6 +1804,13 @@ if (is_win || is_android || is_ios) {
   }
  }
  rtc_shared_library("ecmedia") {
+    sources = [ 
+      "ecmedia/ecmedia.h",
+      "ecmedia/ecmedia.cc"
+     ]
+    if(is_win) {
+      include_dirs = ["ecmedia/win",]
+    }
     deps = [
      ":ecmedia_static",
     ]
