@@ -2558,6 +2558,7 @@ void GeneralTransportChannel::LogCandidatePairConfig(
                                         conn->ToLogDescription());
 }
 bool GeneralTransportChannel::ReleaseUdpConnection() {
+  if(udpSocket_)
   udpSocket_->Close();
   return true;
 }

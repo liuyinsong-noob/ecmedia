@@ -146,7 +146,7 @@ ECMEDIA_API int ECMedia_delete_channel(int peer_id);
 /*** 函数参数1: 名称    channel_id           类型   int                   ***/
 /*** 函数参数2: 名称    video_window         类型   void*                 ***/
 /****************************************************************************/
-ECMEDIA_API bool ECMedia_add_local_render(int chanel_id, void* video_window);
+ECMEDIA_API bool ECMedia_add_local_render(int chanel_id,int mode, void* video_window);
 
 /****************************************************************************/
 /*** 函数名: 增加远端渲染窗口                                             ***/
@@ -155,7 +155,7 @@ ECMEDIA_API bool ECMedia_add_local_render(int chanel_id, void* video_window);
 /*** 函数参数1: 名称    channel_id           类型   int                   ***/
 /*** 函数参数2: 名称    video_window         类型   void*                 ***/
 /****************************************************************************/
-ECMEDIA_API bool ECMedia_add_remote_render(int peer_id, void* video_window);
+ECMEDIA_API bool ECMedia_add_remote_render(int peer_id,int mode, void* video_window);
 
 /****************************************************************************/
 /*** 函数名: 设置本地视频流ssrc                                           ***/

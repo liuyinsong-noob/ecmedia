@@ -125,15 +125,15 @@ ECMEDIA_API bool ECMedia_get_audio_codecs(char* jsonAudioCodecInfos,
 
 }
 /**********************************render********************************************/
-ECMEDIA_API bool ECMedia_add_local_render(int channel_id, void* video_window) {
+ECMEDIA_API bool ECMedia_add_local_render(int channel_id,int mode, void* video_window) {
   RTC_DCHECK(g_ECMedia);
-  int mode = 1;
+
   return g_ECMedia->SetLocalVideoRenderWindow(channel_id, mode,video_window);
 }
 
-ECMEDIA_API bool ECMedia_add_remote_render(int channel_id, void* video_window) {
+ECMEDIA_API bool ECMedia_add_remote_render(int channel_id,int mode, void* video_window) {
   RTC_DCHECK(g_ECMedia);
-  int mode = 1;
+  
   return g_ECMedia->SetRemoteVideoRenderWindow(channel_id,mode, video_window);
 }
 

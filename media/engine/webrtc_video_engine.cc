@@ -2023,7 +2023,7 @@ webrtc::RTCError WebRtcVideoChannel::WebRtcVideoSendStream::SetRtpParameters(
   }
   rtp_parameters_ = new_parameters;
   // Codecs are currently handled at the WebRtcVideoChannel level.
-  rtp_parameters_.codecs.clear();
+  rtp_parameters_.codecs.clear(); 
   if (reconfigure_encoder || new_send_state) {
     ReconfigureEncoder();
   }
@@ -2031,6 +2031,7 @@ webrtc::RTCError WebRtcVideoChannel::WebRtcVideoSendStream::SetRtpParameters(
     UpdateSendState();
   }
   if (new_degradation_preference) {
+    if (stream_)
     stream_->SetSource(this, GetDegradationPreference());
   }
   return webrtc::RTCError::OK();
@@ -2225,6 +2226,7 @@ void WebRtcVideoChannel::WebRtcVideoSendStream::RemoveSink(
   RTC_DCHECK_RUN_ON(&thread_checker_);
   RTC_DCHECK(encoder_sink_ == sink);
   encoder_sink_ = nullptr;
+  if (source_)
   source_->RemoveSink(sink);
 }
 
