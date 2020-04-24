@@ -546,11 +546,13 @@ int32_t AudioTrackJni::StartPlayout() {
                      "  Could not detach thread from JVM");
       }
     }
-
+	SetLoudspeakerStatus(_loudSpeakerOn);//modify by ytx_wx 
     return 0;
 }
 
 int32_t AudioTrackJni::StopPlayout() {
+  
+  SetLoudspeakerStatus(false);//modify by ytx_wx 
   CriticalSectionScoped lock(&_critSect);
 
   if (!_playIsInitialized)
