@@ -585,7 +585,7 @@ ECMEDIA_API bool ECMedia_SaveLocalVideoTrack(int channelId, void* track) {
 
 ECMEDIA_API void* ECMedia_GetLocalVideoTrackPtr(int channelId) {
   void* track = g_ECMedia->GetLocalVideoTrackPtr(channelId);
-  RTC_LOG(INFO) << " channelId: " << channelId;
+  RTC_LOG(INFO) << " channelId: " << channelId
 				<< " track: " << track;
   return track;
 }
@@ -593,7 +593,7 @@ ECMEDIA_API void* ECMedia_GetLocalVideoTrackPtr(int channelId) {
 ECMEDIA_API bool ECMedia_RemoveLocalVideoTrack(int channelId) {
 
   bool bOk = g_ECMedia->RemoveLocalVideoTrack(channelId);
-  RTC_LOG(INFO) << " channelId: " << channelId;
+  RTC_LOG(INFO) << " channelId: " << channelId
                 << " bOk: " << bOk;
   return bOk;
 }
@@ -603,7 +603,7 @@ ECMEDIA_API bool ECMedia_SaveRemoteVideoSink(int channelId,
                                              jobject javaSink) {
   bool bOk = g_ECMedia->SaveRemoteVideoSink(channelId, env, javaSink);
   RTC_LOG(INFO) << " channelId: " << channelId << " env: " << env
-                << " javaSink: " << javaSink;
+                << " javaSink: " << javaSink
                 << " bOk: " << bOk;
   return bOk;
 }
@@ -614,7 +614,7 @@ ECMEDIA_API bool ECMedia_RemoveRemoteVideoSink(int channelId) {
                 << " channelId: " << channelId;
   
   bool bOk = g_ECMedia->RemoveRemoteVideoSink(channelId);
-  RTC_LOG(INFO) << " channelId: " << channelId;
+  RTC_LOG(INFO) << " channelId: " << channelId
 				<< " bOk: " << bOk;
   return bOk;
 }

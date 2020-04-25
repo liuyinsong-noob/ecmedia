@@ -526,8 +526,10 @@ if (rtc_include_tests) {
       deps += [ "sdk:rtc_unittests_objc" ]
     }
     #ytx_add
-    libs = [ "libx264.dll.lib" ]
-    lib_dirs = [ "third_party/libx264svc_win/x86/lib" ]
+    if(is_win) {
+      libs = [ "libx264.dll.lib" ]
+      lib_dirs = [ "third_party/libx264svc_win/x86/lib" ]
+    }
   }
 
   # This runs tests that must run in real time and therefore can take some

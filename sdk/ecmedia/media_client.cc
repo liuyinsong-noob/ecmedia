@@ -84,7 +84,7 @@ const int kMinBandwidthBps = 30000;
 #if defined(WEBRTC_WIN)
 const int kStartBandwidthBps = 800000;
 const int kMaxBandwidthBps = 2000000;
-#elif defined(WEBRTC_IOS)
+#else
 const int kStartBandwidthBps = 500000;
 const int kMaxBandwidthBps = 1000000;
 #endif
@@ -1529,7 +1529,12 @@ MediaClient::CreateLocalVideoTrack(const std::string& track_params) {
                       ObjCCallClient::GetInstance()->getLocalVideoSource(
                           signaling_thread_, worker_thread_),
                       worker_thread_));
-#endif
+#else
+	        //ytx_todo 
+		 RTC_LOG(INFO) <<"andorid camer id"<< camera_index ;
+
+#endif 
+		     
                       return video_track;
                     case VIDEO_SCREEN:
 #ifdef WEBRTC_WIN
@@ -3127,7 +3132,7 @@ bool MediaClient::SaveRemoteVideoSink(int channelId,
   if (env && javaSink && channelId >= 0) {
     RTC_LOG(INFO) << __FUNCTION__ << "() "
                   << " JavaToNativeVideoSink before.";
-    std::unique_ptr<rtc::VideoSinkInterface<VideoFrame>> sink =
+    std::unique_ptr<rtc::VideoSinkInterface<webrtc::VideoFrame>> sink =
         webrtc::JavaToNativeVideoSink(env, javaSink);
     RTC_LOG(INFO) << __FUNCTION__ << "() "
                   << " JavaToNativeVideoSink after. sink: " << sink;

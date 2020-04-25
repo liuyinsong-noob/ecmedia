@@ -34,8 +34,8 @@
 #include "media/base/stream_params.h"
 #include "media/sctp/sctp_transport_internal.h"
 
-#include "video_render/video_renderer.h"
-#include "video_capturer/video_capturer.h"
+#include "sdk/ecmedia/win/video_render/video_renderer.h"
+#include "sdk/ecmedia/win/video_capturer/video_capturer.h"
 #include "media/base/video_common.h"
 #include "media/engine/webrtc_video_engine.h"
 #include "modules/desktop_capture/desktop_capturer.h"

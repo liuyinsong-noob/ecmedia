@@ -1706,7 +1706,8 @@ if (is_win || is_android || is_ios) {
         "../examples/unityplugin/jni_onload.h",
         "../examples/unityplugin/jni_onload.cc",
       ]
-      suppressed_configs += [ "//build/config/android:hide_all_but_jni_onload" ]
+      include_dirs = ["ecmedia/win",]
+      #suppressed_configs += [ "//build/config/android:hide_all_but_jni_onload" ]
     }
     if(is_ios){
       sources +=[
@@ -1806,9 +1807,11 @@ if (is_win || is_android || is_ios) {
  rtc_shared_library("ecmedia") {
     sources = [ 
       "ecmedia/ecmedia.h",
-      "ecmedia/ecmedia.cc"
      ]
     if(is_win) {
+       sources += [ 
+         "ecmedia/ecmedia.cc",
+       ]
       include_dirs = ["ecmedia/win",]
     }
     deps = [

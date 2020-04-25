@@ -3,40 +3,32 @@
 
 ###  编译步骤
 1. clone这个代码仓库
-2. 下载对应平台的第三方库和编译工具
-3. 安装python环境，需要安装2.x的python，如已经有,可以忽略。
+2. 安装python环境，需要安装2.x的python，如已经有,可以忽略。
+3. Android 编译需要安装pkg-config,jre,zip
 4. 执行对应的脚本进行编译
 
 
 #### Clone代码
 git clone http://git.yuntongxun.com/platform_sdk/ecmedia3.0
 
-#### 下载依赖的第三方库和编译工具
-[windows下载地址](http://192.168.178.218:9090/shared//webrtc/webrtc_win_base_env.rar)    
-[ios 下载地址](http://192.168.178.218:9090/shared//webrtc/webrtc_win_base_env.rar)暂时未提供           
-[linux 下载地址](http://192.168.178.218:9090/shared//webrtc/webrtc_win_base_env.rar)暂时未提供
-
-将下载的包里面的东西，解压在repo的目录下。其中gn.exe 拷贝到path的路径中的任一目录即可
-
-
-#### 执行对应的脚本进行生成编译工程
+#### 环境设置
 - **Windows**      
 如果Visual Studio和windows sdk不是在C盘的话, 需要设置Windows的环境变量：    
 &nbsp;&nbsp; Set vs2017_install=D:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise    
 &nbsp;&nbsp; Set WindowsSdkDir=D:\Windows Kits\10\
-执行run.bat, 会产生对应的vc工程,打开可以编译ecmedia工程, 或者直接ninja -C out/default 编译。     
 
-- **Linux**   
- //todo
-- **IOS**   
- //todo
+- **Windows**      
+安装XCode
+
+#### 执行对应的脚本进行生成编译工程
+python build.py
 
 ## 2. 代码修改要求
 - Git的管理遵循公司的规范: [Git管理规范](http://wiki.yuntongxun.com/pages/viewpage.action?pageId=89948180) 
 - 尽量不修改webrtc的底层代码，以便于合并webrtc的最新修改。
 - 修改了webrtc底层代码的分别在代码的开头端通过注释 **"//ytx_begin  name"** ,结束处用 **//"ytx_end"**, **name** 是指修改者的名字,用英文
 - 单行修改可以用 **"//ytx_change name 或者  ytx_add name"** 
-- 临时修改，后面需要调整的可以用  **"//ytx_to name"** 
+- 临时修改，后面需要调整的可以用  **"//ytx_todo name"** 
 
 
 ## 3. 资源

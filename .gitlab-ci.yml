@@ -1,0 +1,41 @@
+stages:
+  - build
+  - deploy
+   
+cache:
+  key: ${CI_COMMIT_REF_SLUG}
+  paths:
+  - third_party/
+  - resources/
+  - buildtools/
+  - tools/
+## -------> build
+build_android:
+    stage: build
+    script:    
+      - "python build.py"
+    allow_failure: true
+    only:
+      - develop
+    tags:
+      - ecmedia-ubuntu
+
+build_ios:
+    stage: build
+    script: "python build.py"
+    allow_failure: true
+    only:
+      - develop
+    tags:
+      - ecmedia-mac
+
+build_win:
+    stage: build
+    allow_failure: true
+    script: 
+      - chcp 65001
+      - "python build.py"
+    only:
+      - develop
+    tags:
+      - ecmedia-win

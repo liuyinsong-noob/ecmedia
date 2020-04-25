@@ -623,7 +623,6 @@ void RtpTransportControllerSend::PostUpdates(NetworkControlUpdate update) {
     //ytx_begin
     RTC_LOG(INFO)<<"ytx target bps is :"<<(*update.target_rate).target_rate.bps()  
 		<<" nack bps : "<<nack_bps;
-    printf(" encode  bps %lld \n ",(*update.target_rate).target_rate.bps() );
     //ytx_end
     UpdateControlState();
   }
