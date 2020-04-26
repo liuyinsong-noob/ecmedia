@@ -77,6 +77,10 @@ float OptimizePacketLossRate(float new_loss_rate, float old_loss_rate) {
   RTC_DCHECK_LE(new_loss_rate, 1.0f);
   RTC_DCHECK_GE(old_loss_rate, 0.0f);
   RTC_DCHECK_LE(old_loss_rate, 1.0f);
+  /*add by ytx for packetlossrate between 20%-25% and maybe over 25%*/
+  constexpr float kPacketLossRate25 = 0.25f;  
+  constexpr float kLossRate25Margin = 0.02f;
+  /*add by ytx */
   constexpr float kPacketLossRate20 = 0.20f;
   constexpr float kPacketLossRate10 = 0.10f;
   constexpr float kPacketLossRate5 = 0.05f;
@@ -84,6 +88,14 @@ float OptimizePacketLossRate(float new_loss_rate, float old_loss_rate) {
   constexpr float kLossRate20Margin = 0.02f;
   constexpr float kLossRate10Margin = 0.01f;
   constexpr float kLossRate5Margin = 0.01f;
+  /*add by ytx for packetlossrate between 20%-25% and maybe over 25%*/
+  if (new_loss_rate >=
+      kPacketLossRate25 +
+          kLossRate25Margin *
+              (kPacketLossRate25 - old_loss_rate > 0 ? 1 : -1)) {
+    return kPacketLossRate25;
+  else
+	/* add by ytx*/  
   if (new_loss_rate >=
       kPacketLossRate20 +
           kLossRate20Margin *
@@ -811,6 +823,8 @@ void AudioEncoderOpusImpl::SetProjectedPacketLossRate(float fraction) {
   }
   if (packet_loss_rate_ != fraction) {
     packet_loss_rate_ = fraction;
+	/* ytx add over 5%redundant for protecting Opus*/
+	packet_loss_rate_ +=0.05;
     RTC_CHECK_EQ(
         0, WebRtcOpus_SetPacketLossRate(
                inst_, static_cast<int32_t>(packet_loss_rate_ * 100 + .5)));
