@@ -22457,7 +22457,8 @@ int SrsProtocol::read_message_payload(SrsChunkStream* chunk, SrsCommonMessage** 
 
     // create msg payload if not initialized
     if (!chunk->msg->payload) {
-        chunk->msg->create_payload(chunk->header.payload_length);
+		if(chunk->header.payload_length > 0)
+			chunk->msg->create_payload(chunk->header.payload_length);
     }
     
     // read payload to buffer
