@@ -282,6 +282,9 @@ class MediaClient : public sigslot::has_slots<> {
     bool nack = true;
     bool isScreenShare = false;
     int fecType = 1;  // red and ulp fec
+    int fecPayload = 97;
+    int rtx = 1;
+    int rtxPayload = 97;
     int payloadType = 96;
     int width = 1280;
     int height = 720;

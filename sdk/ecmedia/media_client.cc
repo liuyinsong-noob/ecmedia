@@ -3,13 +3,13 @@
 
 #if defined(WEBRTC_ANDROID)
 #include <jni.h>
-#include "modules/utility/include/jvm_android.h"
-#include "sdk/android/native_api/video/wrapper.h"
-#include "sdk/android/src/jni/video_sink.h"
-#include "sdk/android/src/jni/android_video_track_source.h"
-#include "sdk/android/src/jni/pc/video.h"
 #include "api/video_codecs/video_decoder_factory.h"
 #include "api/video_codecs/video_encoder_factory.h"
+#include "modules/utility/include/jvm_android.h"
+#include "sdk/android/native_api/video/wrapper.h"
+#include "sdk/android/src/jni/android_video_track_source.h"
+#include "sdk/android/src/jni/pc/video.h"
+#include "sdk/android/src/jni/video_sink.h"
 #endif
 
 #include "api/audio/audio_mixer.h"
@@ -31,18 +31,18 @@
 #include "api/video_codecs/video_encoder_factory.h"
 #include "api/video_track_source_proxy.h"
 
+#include "media/base/codec.h"
 #include "media/base/media_engine.h"
 #include "media/base/rtp_data_engine.h"
 #include "media/engine/webrtc_media_engine.h"
 #include "media/engine/webrtc_voice_engine.h"
 #include "media/sctp/sctp_transport.h"
-#include "media/base/codec.h"
 
 #include "modules/audio_device/include/audio_device.h"
 #include "modules/audio_processing/include/audio_processing.h"
+#include "modules/desktop_capture/desktop_capture_options.h"
 #include "modules/video_capture/video_capture.h"
 #include "modules/video_capture/video_capture_factory.h"
-#include "modules/desktop_capture/desktop_capture_options.h"
 
 #include "rtc_base/bind.h"
 #include "rtc_base/checks.h"
@@ -61,8 +61,8 @@
 #include "third_party/abseil-cpp/absl/memory/memory.h"
 #include "third_party/abseil-cpp/absl/strings/ascii.h"
 #include "third_party/abseil-cpp/absl/types/optional.h"
-#include "third_party/libyuv/include/libyuv/convert_argb.h"
 #include "third_party/libyuv/include/libyuv.h"
+#include "third_party/libyuv/include/libyuv/convert_argb.h"
 
 #include "logging/rtc_event_log/rtc_event_log_factory.h"
 #include "system_wrappers/include/field_trial.h"
@@ -79,7 +79,6 @@ static const char ksAudioLabel[] = "audio_label";
 static const char ksVideoLabel[] = "video_label";
 static const char ksStreamId[] = "stream_id";
 
-
 // add bu yukening
 const int kMinBandwidthBps = 30000;
 #if defined(WEBRTC_WIN)
@@ -89,7 +88,6 @@ const int kMaxBandwidthBps = 2000000;
 const int kStartBandwidthBps = 500000;
 const int kMaxBandwidthBps = 1000000;
 #endif
-
 
 std::string getStrFromInt(int n) {
   std::string ret;
@@ -236,17 +234,19 @@ bool MediaClient::SetTrace(const char* path, int min_sev) {
 }
 
 #if defined(WEBRTC_ANDROID)
-  bool MediaClient::Initialize(JNIEnv* env, jobject jencoder_factory, jobject jdecoder_factory) {
+bool MediaClient::Initialize(JNIEnv* env,
+                             jobject jencoder_factory,
+                             jobject jdecoder_factory) {
 #else
-  bool MediaClient::Initialize() {
+bool MediaClient::Initialize() {
 #endif
 #if defined(WEBRTC_ANDROID)
   return AndroidInitialize(env, jencoder_factory, jdecoder_factory);
 #else
-    
-    //Set Field Trials String
-    //webrtc::field_trial::IsEnabled("WebRTC-DisableUlpFecExperiment");
-    //webrtc::FLAG_force_fieldtrials ="WebRTC-FlexFEC-03-Advertised/Enabled/";
+
+  // Set Field Trials String
+  // webrtc::field_trial::IsEnabled("WebRTC-DisableUlpFecExperiment");
+  // webrtc::FLAG_force_fieldtrials ="WebRTC-FlexFEC-03-Advertised/Enabled/";
   bool bOk = true;
   if (!m_bInitialized) {
     vcm_device_info_.reset(webrtc::VideoCaptureFactory::CreateDeviceInfo());
@@ -266,13 +266,17 @@ bool MediaClient::SetTrace(const char* path, int min_sev) {
   }
   return bOk;
 #endif
-}
+}  // namespace ecmedia_sdk
 
 #if defined(WEBRTC_ANDROID)
-bool MediaClient::AndroidInitialize(JNIEnv* env, jobject jencoder_factory, jobject jdecoder_factory) {
+bool MediaClient::AndroidInitialize(JNIEnv* env,
+                                    jobject jencoder_factory,
+                                    jobject jdecoder_factory) {
   bool bOk = true;
   InitializeJVM();
-  RTC_LOG(INFO) << __FUNCTION__ << " env: " << env << " jencoder_factory:" << jdecoder_factory << " jdecoder_factory: " << jdecoder_factory;
+  RTC_LOG(INFO) << __FUNCTION__ << " env: " << env
+                << " jencoder_factory:" << jdecoder_factory
+                << " jdecoder_factory: " << jdecoder_factory;
 
   if (!m_bInitialized) {
     vcm_device_info_.reset(webrtc::VideoCaptureFactory::CreateDeviceInfo());
@@ -282,17 +286,26 @@ bool MediaClient::AndroidInitialize(JNIEnv* env, jobject jencoder_factory, jobje
 
     std::unique_ptr<webrtc::VideoEncoderFactory> encoderFactory;
     std::unique_ptr<webrtc::VideoDecoderFactory> decoderFactory;
-    if(env && jencoder_factory && jdecoder_factory) {
-      encoderFactory = std::unique_ptr<webrtc::VideoEncoderFactory>(webrtc::jni::CreateVideoEncoderFactory(env, webrtc::JavaParamRef<jobject>(env, jencoder_factory)));
-      decoderFactory = std::unique_ptr<webrtc::VideoDecoderFactory>(webrtc::jni::CreateVideoDecoderFactory(env, webrtc::JavaParamRef<jobject>(env, jdecoder_factory)));
+    if (env && jencoder_factory && jdecoder_factory) {
+      encoderFactory = std::unique_ptr<webrtc::VideoEncoderFactory>(
+          webrtc::jni::CreateVideoEncoderFactory(
+              env, webrtc::JavaParamRef<jobject>(env, jencoder_factory)));
+      decoderFactory = std::unique_ptr<webrtc::VideoDecoderFactory>(
+          webrtc::jni::CreateVideoDecoderFactory(
+              env, webrtc::JavaParamRef<jobject>(env, jdecoder_factory)));
     }
 
-    bOk &= signaling_thread_->Invoke<bool>(
-        RTC_FROM_HERE, [&] { 
-        RTC_LOG(INFO) << __FUNCTION__ << " env: " << env << " encoderFactory:" << encoderFactory << " decoderFactory: " << decoderFactory;
-        bool success = CreateChannelManager(std::move(encoderFactory), std::move(decoderFactory)); 
-        RTC_LOG(INFO) << __FUNCTION__ << " env: " << env << " encoderFactory:" << encoderFactory << " decoderFactory: " << decoderFactory << " success: " << success;
-        return success;
+    bOk &= signaling_thread_->Invoke<bool>(RTC_FROM_HERE, [&] {
+      RTC_LOG(INFO) << __FUNCTION__ << " env: " << env
+                    << " encoderFactory:" << encoderFactory
+                    << " decoderFactory: " << decoderFactory;
+      bool success = CreateChannelManager(std::move(encoderFactory),
+                                          std::move(decoderFactory));
+      RTC_LOG(INFO) << __FUNCTION__ << " env: " << env
+                    << " encoderFactory:" << encoderFactory
+                    << " decoderFactory: " << decoderFactory
+                    << " success: " << success;
+      return success;
     });
 
     bOk &= worker_thread_->Invoke<bool>(RTC_FROM_HERE,
@@ -422,7 +435,9 @@ bool MediaClient::CreateRtcEventLog() {
 }
 
 #if defined(WEBRTC_ANDROID)
-bool MediaClient::CreateChannelManager(std::unique_ptr<webrtc::VideoEncoderFactory> encoderFactory, std::unique_ptr<webrtc::VideoDecoderFactory> decoderFactory) {
+bool MediaClient::CreateChannelManager(
+    std::unique_ptr<webrtc::VideoEncoderFactory> encoderFactory,
+    std::unique_ptr<webrtc::VideoDecoderFactory> decoderFactory) {
 #else
 bool MediaClient::CreateChannelManager() {
 #endif
@@ -438,18 +453,20 @@ bool MediaClient::CreateChannelManager() {
       webrtc::CreateBuiltinAudioDecoderFactory();
   std::unique_ptr<webrtc::VideoEncoderFactory> video_encoder_factory =
 #if defined(WEBRTC_IOS)
-    ObjCCallClient::GetInstance()->getVideoEncoderFactory();
+      ObjCCallClient::GetInstance()->getVideoEncoderFactory();
 #elif defined(WEBRTC_ANDROID)
-    encoderFactory != nullptr ? std::move(encoderFactory) : webrtc::CreateBuiltinVideoEncoderFactory();    
+      encoderFactory != nullptr ? std::move(encoderFactory)
+                                : webrtc::CreateBuiltinVideoEncoderFactory();
 #elif defined(WEBRTC_WIN)
     webrtc::CreateBuiltinVideoEncoderFactory();
 #endif
 
   std::unique_ptr<webrtc::VideoDecoderFactory> video_decoder_factory =
 #if defined(WEBRTC_IOS)
-    ObjCCallClient::GetInstance()->getVideoDecoderFactory();
+      ObjCCallClient::GetInstance()->getVideoDecoderFactory();
 #elif defined(WEBRTC_ANDROID)
-    decoderFactory != nullptr ? std::move(decoderFactory) : webrtc::CreateBuiltinVideoDecoderFactory();    
+      decoderFactory != nullptr ? std::move(decoderFactory)
+                                : webrtc::CreateBuiltinVideoDecoderFactory();
 #elif defined(WEBRTC_WIN)
     webrtc::CreateBuiltinVideoDecoderFactory();
 #endif
@@ -695,17 +712,49 @@ bool MediaClient::CreateVideoChannel(const std::string& settings,
   std::string setting = settings;
 #if defined(WEBRTC_IOS)
   setting =
-//     "{\n   \"transportId\" : \"tran_1\",\n  \"red\" : 1,  \n  \"fecType\" : 1, \n  \"nack\" : 1,\n   \"codecs\" : [\n      {\n         \"codecName\" : \"H264\",\n         \"payloadType\" : 98,\n         \"new_payloadType\" : 104\n      },\n      {\n         \"codecName\" : \"rtx\",\n         \"payloadType\" : 101,\n      \"new_payloadType\" : 105,\n  \"associated_payloadType\" : 104\n   },\n      {\n         \"codecName\" : \"red\",\n         \"payloadType\" : 104,\n      \"new_payloadType\" : 110\n  },\n      {\n         \"codecName\" : \"rtx\",\n         \"payloadType\" : 105,\n    \"new_payloadType\" : 111,\n   \"associated_payloadType\" : 110\n  },\n      {\n         \"codecName\" : \"ulpfec\",\n         \"payloadType\" : 106,\n      \"new_payloadType\" : 112\n  }\n   ]\n}\n";
-    
+      //     "{\n   \"transportId\" : \"tran_1\",\n  \"red\" : 1,  \n
+      //     \"fecType\" : 1, \n  \"nack\" : 1,\n   \"codecs\" : [\n      {\n
+      //     \"codecName\" : \"H264\",\n         \"payloadType\" : 98,\n
+      //     \"new_payloadType\" : 104\n      },\n      {\n \"codecName\" :
+      //     \"rtx\",\n         \"payloadType\" : 101,\n \"new_payloadType\" :
+      //     105,\n  \"associated_payloadType\" : 104\n   },\n      {\n
+      //     \"codecName\" : \"red\",\n         \"payloadType\" : 104,\n
+      //     \"new_payloadType\" : 110\n  },\n      {\n         \"codecName\" :
+      //     \"rtx\",\n         \"payloadType\" : 105,\n    \"new_payloadType\"
+      //     : 111,\n   \"associated_payloadType\" : 110\n  },\n      {\n
+      //     \"codecName\" : \"ulpfec\",\n         \"payloadType\" : 106,\n
+      //     \"new_payloadType\" : 112\n  }\n   ]\n}\n";
 
-  "{\n   \"transportId\" : \"tran_1\",\n  \"red\" : 0,  \n  \"fecType\" : 0, \n  \"nack\" : 1,\n   \"codecs\" : [\n      {\n         \"codecName\" : \"H264\",\n         \"payloadType\" : 98,\n         \"new_payloadType\" : 104\n      },\n      {\n         \"codecName\" : \"rtx\",\n         \"payloadType\" : 101,\n      \"new_payloadType\" : 105,\n  \"associated_payloadType\" : 104\n   }\n    ]\n}\n";
+      "{\n   \"transportId\" : \"tran_1\",\n  \"red\" : 0,  \n  \"fecType\" : "
+      "0, \n  \"nack\" : 1,\n   \"codecs\" : [\n      {\n         "
+      "\"codecName\" : \"H264\",\n         \"payloadType\" : 98,\n         "
+      "\"new_payloadType\" : 104\n      },\n      {\n         \"codecName\" : "
+      "\"rtx\",\n         \"payloadType\" : 101,\n      \"new_payloadType\" : "
+      "105,\n  \"associated_payloadType\" : 104\n   }\n    ]\n}\n";
 #elif defined(WEBRTC_WIN)
-  setting =
-//        "{\n   \"transportId\" : \"tran_1\",\n  \"red\" : 1,  \n  \"fecType\" : 1, \n  \"nack\" : 1,\n   \"codecs\" : [\n      {\n         \"codecName\" : \"H264\",\n         \"payloadType\" : 102,\n         \"new_payloadType\" : 104\n      },\n      {\n         \"codecName\" : \"rtx\",\n         \"payloadType\" : 103,\n      \"new_payloadType\" : 105,\n  \"associated_payloadType\" : 104\n   },\n      {\n         \"codecName\" : \"red\",\n         \"payloadType\" : 110,\n      \"new_payloadType\" : 110\n  },\n      {\n         \"codecName\" : \"rtx\",\n         \"payloadType\" : 111,\n    \"new_payloadType\" : 111,\n   \"associated_payloadType\" : 110\n  },\n      {\n         \"codecName\" : \"ulpfec\",\n         \"payloadType\" : 112,\n      \"new_payloadType\" : 112\n  }\n   ]\n}\n";
-  
-  "{\n   \"transportId\" : \"tran_1\",\n  \"red\" : 0,  \n  \"fecType\" : 0, \n  \"nack\" : 1,\n   \"codecs\" : [\n      {\n         \"codecName\" : \"H264\",\n         \"payloadType\" : 102,\n         \"new_payloadType\" : 104\n      },\n      {\n         \"codecName\" : \"rtx\",\n         \"payloadType\" : 103,\n      \"new_payloadType\" : 105,\n  \"associated_payloadType\" : 104\n   }\n    ]\n}\n";
+ //setting =
+      //        "{\n   \"transportId\" : \"tran_1\",\n  \"red\" : 1,  \n
+      //        \"fecType\" : 1, \n  \"nack\" : 1,\n   \"codecs\" : [\n      {\n
+      //        \"codecName\" : \"H264\",\n         \"payloadType\" : 102,\n
+      //        \"new_payloadType\" : 104\n      },\n      {\n \"codecName\" :
+      //        \"rtx\",\n         \"payloadType\" : 103,\n \"new_payloadType\"
+      //        : 105,\n  \"associated_payloadType\" : 104\n   },\n      {\n
+      //        \"codecName\" : \"red\",\n         \"payloadType\" : 110,\n
+      //        \"new_payloadType\" : 110\n  },\n      {\n         \"codecName\"
+      //        : \"rtx\",\n         \"payloadType\" : 111,\n
+      //        \"new_payloadType\" : 111,\n   \"associated_payloadType\" :
+      //        110\n  },\n      {\n         \"codecName\" : \"ulpfec\",\n
+      //        \"payloadType\" : 112,\n      \"new_payloadType\" : 112\n  }\n
+      //        ]\n}\n";
+
+   /*   "{\n   \"transportId\" : \"tran_1\",\n  \"red\" : 0,  \n  \"fecType\" : "
+      "0, \n  \"nack\" : 1,\n   \"codecs\" : [\n      {\n         "
+      "\"codecName\" : \"H264\",\n         \"payloadType\" : 102,\n         "
+      "\"new_payloadType\" : 104\n      },\n      {\n         \"codecName\" : "
+      "\"rtx\",\n         \"payloadType\" : 103,\n      \"new_payloadType\" : "
+      "105,\n  \"associated_payloadType\" : 104\n   }\n    ]\n}\n";*/
 #endif
-  
+
   bool bOk = false;
   webrtc::CryptoOptions option;
   bool bSrtpRequired = false;
@@ -753,8 +802,8 @@ bool MediaClient::CreateVideoChannel(const std::string& settings,
   // config.codecName = "h264";
   // config.payloadType = 104;
   channel_manager_->GetSupportedVideoCodecs(&vidoe_send_params.codecs);
-  FilterVideoCodec(&config.video_stream_configs, vidoe_send_params.codecs);
-
+ // FilterVideoCodec(&config.video_stream_configs, vidoe_send_params.codecs);
+  FilterVideoCodec(config, vidoe_send_params.codecs);
   channel_manager_->GetSupportedVideoRtpHeaderExtensions(
       &vidoe_send_params.extensions);
 
@@ -808,7 +857,8 @@ bool MediaClient::CreateVideoChannel(const std::string& settings,
   cricket::VideoRecvParameters video_recv_params;
   signaling_thread_->Invoke<void>(RTC_FROM_HERE, [&] {
     channel_manager_->GetSupportedVideoCodecs(&video_recv_params.codecs);
-    FilterVideoCodec(&config.video_stream_configs, video_recv_params.codecs);
+  //  FilterVideoCodec(&config.video_stream_configs, video_recv_params.codecs);
+    FilterVideoCodec(config, video_recv_params.codecs);
     channel_manager_->GetSupportedVideoRtpHeaderExtensions(
         &video_recv_params.extensions);
   });
@@ -1446,7 +1496,7 @@ MediaClient::CreateLocalVideoTrack(const std::string& track_params) {
     video_tracks_[vsum_] =
         signaling_thread_
             ->Invoke<rtc::scoped_refptr<webrtc::VideoTrackInterface>>(
-                RTC_FROM_HERE, [this, type, track_id,config, camera_index] {
+                RTC_FROM_HERE, [this, type, track_id, config, camera_index] {
                   RTC_DCHECK_RUN_ON(signaling_thread_);
                   //  EC_CHECK_VALUE((channelId >= 0), false);
                   rtc::scoped_refptr<webrtc::VideoTrackInterface> video_track =
@@ -1460,7 +1510,9 @@ MediaClient::CreateLocalVideoTrack(const std::string& track_params) {
                   switch (type) {
                     case VIDEO_CAMPER:
 #if defined(WEBRTC_WIN)
-                      video_device = CapturerTrackSource::Create(config.width,config.height,config.maxFramerate,camera_index);
+                      video_device = CapturerTrackSource::Create(
+                          config.width, config.height, config.maxFramerate,
+                          camera_index);
                       if (video_device) {
                         video_track = webrtc::VideoTrackProxy::Create(
                             signaling_thread_, worker_thread_,
@@ -1594,7 +1646,7 @@ void MediaClient::OnSentPacket_Voice(const rtc::SentPacket& sent_packet) {
 }
 
 void MediaClient::OnSentPacket_Video(const rtc::SentPacket& sent_packet) {
-  RTC_LOG(INFO) << __FUNCTION__ << "() packet number:" << sent_packet.packet_id;
+ // RTC_LOG(INFO) << __FUNCTION__ << "() packet number:" << sent_packet.packet_id;
   RTC_DCHECK_RUN_ON(worker_thread_);
   EC_CHECK_VALUE(call_, void());
   call_->OnSentPacket(sent_packet);
@@ -1885,8 +1937,8 @@ bool MediaClient::FilterAudioCodec(const AudioCodecConfig& config,
   while (it != vec.end()) {
     name = it->name;
     absl::AsciiStrToUpper(&name);
-    if (name.compare(cname) == 0 && it->clockrate == config.clockRate &&
-        it->id == config.payloadType) {
+    if (name.compare(cname) == 0 && it->clockrate == config.clockRate) {
+      it->id = 111;  // config.payloadType;
       it++;
     } else {
       it = vec.erase(it);
@@ -1908,6 +1960,7 @@ bool MediaClient::FilterVideoCodec(const VideoCodecConfig& config,
   std::vector<cricket::VideoCodec>::iterator it = vec.begin();
   cricket::VideoCodec vc;
   bool find_codec = false;
+  int out = -1;
   while (it != vec.end()) {
     name = it->name;
     absl::AsciiStrToLower(&name);
@@ -1917,60 +1970,61 @@ bool MediaClient::FilterVideoCodec(const VideoCodecConfig& config,
                    webrtc::FecMechanism::RED_AND_ULPFEC &&
                name.compare(cricket::kUlpfecCodecName) == 0) {
       it++;
-    } else if (name.compare(cname) == 0) {
-      if (it->id == config.payloadType) {
+    } else if (name.compare(cname) == 0 && !find_codec) { 
+      it->GetParam("packetization-mode", &out);
+      if (out == 1) {
+       it->id = config.payloadType;
         find_codec = true;
         it++;
       } else {
-        if (isFirst) {
-          vc = *it;
-          isFirst = false;
-        }
+       
         it = vec.erase(it);
       }
-    } else if (name.compare("rtx") == 0 && it->id == config.payloadType + 1) {
+    } else if (name.compare("rtx") == 0 && it->id == config.rtxPayload) {
+       it->SetParam(cricket::kCodecParamAssociatedPayloadType,config.payloadType);
       it++;
     } else {
       it = vec.erase(it);
     }
   }
-  if (!find_codec) {
+ /* if (!find_codec) {
     vc.id = config.payloadType;
-	vc.name = config.codecName;
+    vc.name = config.codecName;
     vec.insert(vec.begin(), vc);
-  }
+  }*/
   RTC_LOG(INFO) << __FUNCTION__ << "(),"
                 << " end... ";
   return vec.size() > 0;
 }
 
 bool MediaClient::FilterVideoCodec(std::vector<VideoStreamConfig>* configs,
-                      std::vector<cricket::VideoCodec>& vec){
+                                   std::vector<cricket::VideoCodec>& vec) {
   RTC_LOG(INFO) << __FUNCTION__ << "(),"
-                 << " begin... ";
-  if(!configs || configs->size() == 0)
+                << " begin... ";
+  if (!configs || configs->size() == 0)
     return false;
   auto it_vec = vec.begin();
-  while(it_vec != vec.end()){
+  while (it_vec != vec.end()) {
     auto it = configs->begin();
-    while(it != configs->end()){
-      if(it->name.compare(it_vec->name)==0  && it->payloadType == it_vec->id)
+    while (it != configs->end()) {
+      if (it->name.compare(it_vec->name) == 0 && it->payloadType == it_vec->id)
         break;
       it++;
     }
-    if(it == configs->end())
-       it_vec = vec.erase(it_vec);
-    else{
-       it_vec->id = it->new_payloadType;
-      if(it_vec->GetCodecType() == cricket::VideoCodec::CODEC_RTX){
-        it_vec->SetParam(cricket::kCodecParamAssociatedPayloadType,it->associated_payloadType);
+    if (it == configs->end())
+      it_vec = vec.erase(it_vec);
+    else {
+      it_vec->id = it->new_payloadType;
+      if (it_vec->GetCodecType() == cricket::VideoCodec::CODEC_RTX) {
+        it_vec->SetParam(cricket::kCodecParamAssociatedPayloadType,
+                         it->associated_payloadType);
       }
       it_vec++;
     }
   }
   return vec.size() > 0;
   RTC_LOG(INFO) << __FUNCTION__ << "(),"
-                 << " end... ";
+                << " end... ";
   return true;
 }
 
@@ -2230,6 +2284,12 @@ bool MediaClient::ParseVideoCodecSetting(const char* videoCodecSettings,
         if (rtc::GetIntFromJsonObject(settings, "payloadType", &value)) {
           config->payloadType = value;
         }
+        if (rtc::GetIntFromJsonObject(settings, "rtxPayload", &value)) {
+          config->rtxPayload = value;
+        }
+        if (rtc::GetIntFromJsonObject(settings, "fecPayload", &value)) {
+          config->fecPayload = value;
+        }
         if (rtc::GetIntFromJsonObject(settings, "width", &value)) {
           config->width = value;
         }
@@ -2263,10 +2323,9 @@ bool MediaClient::ParseVideoCodecSetting(const char* videoCodecSettings,
         if (rtc::GetStringFromJsonObject(settings, "transportId", &token)) {
           config->transportId = token;
         }
-        
+
         const Json::Value arrayObj = settings["codecs"];
-        for (unsigned int i = 0; i < arrayObj.size(); i++)
-        {
+        for (unsigned int i = 0; i < arrayObj.size(); i++) {
           VideoStreamConfig stream_config;
           int value = 0;
           std::string name;
@@ -2276,11 +2335,13 @@ bool MediaClient::ParseVideoCodecSetting(const char* videoCodecSettings,
           if (rtc::GetIntFromJsonObject(arrayObj[i], "payloadType", &value)) {
             stream_config.payloadType = value;
           }
-          if (rtc::GetIntFromJsonObject(arrayObj[i], "new_payloadType", &value)) {
-             stream_config.new_payloadType = value;
+          if (rtc::GetIntFromJsonObject(arrayObj[i], "new_payloadType",
+                                        &value)) {
+            stream_config.new_payloadType = value;
           }
-          if (rtc::GetIntFromJsonObject(arrayObj[i], "associated_payloadType", &value)) {
-             stream_config.associated_payloadType = value;
+          if (rtc::GetIntFromJsonObject(arrayObj[i], "associated_payloadType",
+                                        &value)) {
+            stream_config.associated_payloadType = value;
           }
           config->video_stream_configs.push_back(stream_config);
         }
@@ -2292,19 +2353,20 @@ bool MediaClient::ParseVideoCodecSetting(const char* videoCodecSettings,
   return false;
 }
 
-bool MediaClient::ParseVideoCodecSetting(const char* videoCodecSettings, std::vector<VideoStreamConfig>* configs){
-  
+bool MediaClient::ParseVideoCodecSetting(
+    const char* videoCodecSettings,
+    std::vector<VideoStreamConfig>* configs) {
   RTC_LOG(INFO) << __FUNCTION__ << "(),"
-                 << " begin... "
-                 << ", videoCodecSettings: " << videoCodecSettings
-                 << ", config: " << configs;
-  
+                << " begin... "
+                << ", videoCodecSettings: " << videoCodecSettings
+                << ", config: " << configs;
+
   Json::Reader reader;
   Json::Value root;
-  if(!reader.parse(videoCodecSettings,root)){
+  if (!reader.parse(videoCodecSettings, root)) {
     return -1;
   }
-  
+
   return true;
 }
 
@@ -2817,7 +2879,7 @@ int MediaClient::StartCameraCapturer(int deviceid,
 #elif defined(WEBRTC_WIN)
   return camera_devices_[deviceid].second->StartCapture(cap);
 #endif
-return 0;
+  return 0;
 }
 
 // note: must call from ui thread
@@ -3136,44 +3198,40 @@ int MediaClient::InitializeJVM() {
   return ret;
 }
 
-void* MediaClient::CreateVideoTrack(
-    const char* id,
-    webrtc::VideoTrackSourceInterface* source) {
-
+void* MediaClient::CreateVideoTrack(const char* id,
+                                    webrtc::VideoTrackSourceInterface* source) {
   if (!signaling_thread_->IsCurrent()) {
     return signaling_thread_->Invoke<void*>(
         RTC_FROM_HERE, [&]() { return CreateVideoTrack(id, source); });
   }
 
   RTC_DCHECK(signaling_thread_->IsCurrent());
-  
+
   rtc::scoped_refptr<webrtc::VideoTrackInterface> track(
       webrtc::VideoTrack::Create(id, source, worker_thread_));
 
   return track.release();
 }
 
-void* MediaClient::CreateAudioTrack(
-    const char* id,
-    webrtc::AudioSourceInterface* source) {
-
+void* MediaClient::CreateAudioTrack(const char* id,
+                                    webrtc::AudioSourceInterface* source) {
   if (!signaling_thread_->IsCurrent()) {
     return signaling_thread_->Invoke<void*>(
         RTC_FROM_HERE, [&]() { return CreateAudioTrack(id, source); });
   }
 
   RTC_DCHECK(signaling_thread_->IsCurrent());
-  rtc::scoped_refptr<webrtc::AudioTrackInterface> track(webrtc::AudioTrack::Create(id, source));
+  rtc::scoped_refptr<webrtc::AudioTrackInterface> track(
+      webrtc::AudioTrack::Create(id, source));
   return track.release();
 }
 
 void* MediaClient::CreateAudioSource() {
-
   if (!signaling_thread_->IsCurrent()) {
     return signaling_thread_->Invoke<void*>(
         RTC_FROM_HERE, [&]() { return CreateAudioSource(); });
   }
-  
+
   RTC_DCHECK(signaling_thread_->IsCurrent());
 
   cricket::AudioOptions options;
@@ -3183,17 +3241,17 @@ void* MediaClient::CreateAudioSource() {
 }
 
 void* MediaClient::CreateVideoSource(JNIEnv* env,
-                        bool is_screencast,
-                        bool align_timestamps) {
-
+                                     bool is_screencast,
+                                     bool align_timestamps) {
   if (!signaling_thread_->IsCurrent()) {
-    return signaling_thread_->Invoke<void*>(
-        RTC_FROM_HERE, [&]() { return CreateVideoSource(env, is_screencast, align_timestamps); });
+    return signaling_thread_->Invoke<void*>(RTC_FROM_HERE, [&]() {
+      return CreateVideoSource(env, is_screencast, align_timestamps);
+    });
   }
-                      
-    rtc::scoped_refptr<webrtc::jni::AndroidVideoTrackSource> source(
+
+  rtc::scoped_refptr<webrtc::jni::AndroidVideoTrackSource> source(
       new rtc::RefCountedObject<webrtc::jni::AndroidVideoTrackSource>(
-       signaling_thread_ , env, is_screencast, align_timestamps));
+          signaling_thread_, env, is_screencast, align_timestamps));
   return source.release();
 }
 
@@ -3356,7 +3414,6 @@ void VideoRenderer::OnFrame(const webrtc::VideoFrame& video_frame) {
                        image_.get(),
                        bmi_.bmiHeader.biWidth * bmi_.bmiHeader.biBitCount / 8,
                        buffer->width(), buffer->height());
-
   }
 
   Paint();
@@ -3679,7 +3736,7 @@ void ECDesktopCapture::OnCaptureResult(
                         (stride + 1) / 2, vplane, (stride + 1) / 2, 0, 0, width,
                         height, width, height, libyuv::kRotate0,
                         libyuv::FOURCC_ARGB);
- 
+
   webrtc::VideoFrame frame =
       webrtc::VideoFrame(buffer, 0, 0, webrtc::kVideoRotation_0);
   this->OnFrame(frame);
