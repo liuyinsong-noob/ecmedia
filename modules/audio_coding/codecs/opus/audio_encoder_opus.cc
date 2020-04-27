@@ -94,7 +94,7 @@ float OptimizePacketLossRate(float new_loss_rate, float old_loss_rate) {
           kLossRate25Margin *
               (kPacketLossRate25 - old_loss_rate > 0 ? 1 : -1)) {
     return kPacketLossRate25;
-  else
+ }else
 	/* add by ytx*/  
   if (new_loss_rate >=
       kPacketLossRate20 +
