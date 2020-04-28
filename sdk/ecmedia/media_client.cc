@@ -1938,7 +1938,7 @@ bool MediaClient::FilterAudioCodec(const AudioCodecConfig& config,
     name = it->name;
     absl::AsciiStrToUpper(&name);
     if (name.compare(cname) == 0 && it->clockrate == config.clockRate) {
-      it->id = 111;  // config.payloadType;
+      it->id = config.payloadType;
       it++;
     } else {
       it = vec.erase(it);

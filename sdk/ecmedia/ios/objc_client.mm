@@ -130,10 +130,6 @@ void ObjCCallClient::SetLocalWindowView(void* local)
 {
   if(local )
   {
-     if(m_localView == local)
-         return;
-      m_localView = local;
-      NSLog(@"setLocal view...");
     UIView *parentView = (__bridge UIView *)local;
     dispatch_async(dispatch_get_main_queue(), ^{
       localVideoView.bounds = CGRectMake(0, 0, parentView.frame.size.width, parentView.frame.size.height);

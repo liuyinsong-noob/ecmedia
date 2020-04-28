@@ -85,7 +85,6 @@ public:
     bool _usingFrontCamera;
     int targetWidth ;
     int targetHeight ;
-    void* m_localView;
     webrtc::VideoCaptureModule::DeviceInfo* _captureInfo;
 };
 
