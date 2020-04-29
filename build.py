@@ -119,7 +119,7 @@ def build_src():
     os.system(gn_cmd)
     #ninja 编译工程
     print "Excute ninjia compile source "
-    os.system(os.path.normpath('third_party/depot_tools/ninja') +' -C out/default')
+    os.system(os.path.normpath('third_party/depot_tools/ninja') +' -C out/default ecmedia')
                
 if __name__=='__main__' :
     build_src()

@@ -1673,27 +1673,24 @@ if (is_ios || is_mac) {
 
 }
 
-if (is_win || is_android || is_ios) {
-  rtc_static_library("ecmedia_static") {
-    testonly = false
-    visibility = [ "*" ]
-    allow_poison = [ "audio_codecs", "software_video_codecs", ]
+
+rtc_source_set("ecmedia_obj") {
+  sources = [
+   "ecmedia/ecmedia.cc",
+   "ecmedia/ecmedia.h",
+   "ecmedia/sdk_common.h",
+   "ecmedia/ec_log.cc",
+   "ecmedia/ec_log.h",
+   "ecmedia/ec_common_types.h",
+   "ecmedia/ec_common_types.cc",
+   "ecmedia/media_client.h",
+   "ecmedia/media_client.cc",
+  ]
     configs += [
         "..:no_exit_time_destructors",
         "..:no_global_constructors",
-      ]
-    sources = [
-      "ecmedia/ecmedia.cc",
-      "ecmedia/ecmedia.h",
-      "ecmedia/sdk_common.h",
-      "ecmedia/ec_log.cc",
-      "ecmedia/ec_log.h",
-      "ecmedia/ec_common_types.h",
-      "ecmedia/ec_common_types.cc",
-      "ecmedia/media_client.h",
-      "ecmedia/media_client.cc",
     ]
-    if (is_android) {
+  if (is_android) {
       sources += [
         "../examples/unityplugin/simple_peer_connection.cc",
         "../examples/unityplugin/simple_peer_connection.h",
@@ -1707,7 +1704,6 @@ if (is_win || is_android || is_ios) {
         "../examples/unityplugin/jni_onload.cc",
       ]
       include_dirs = ["ecmedia/win",]
-      #suppressed_configs += [ "//build/config/android:hide_all_but_jni_onload" ]
     }
     if(is_ios){
       sources +=[
@@ -1764,8 +1760,6 @@ if (is_win || is_android || is_ios) {
       "../pc:peerconnection",
       "../rtc_base",
       "../rtc_base:rtc_json",
-      #ytx_todo "../test:platform_video_capturer",
-      #ytx_todo"../test:video_test_common",
       "//third_party/abseil-cpp/absl/memory",
     ]
     if (is_android) {
@@ -1802,21 +1796,21 @@ if (is_win || is_android || is_ios) {
       libs = [ "libx264.dll.lib" ]
       lib_dirs = [ "../third_party/libx264svc_win/x86/lib" ]
     }
-  }
- }
- rtc_shared_library("ecmedia") {
+}
+
+
+rtc_shared_library("ecmedia") {
+    visibility = [ "*" ]
+    allow_poison = [ "audio_codecs", "software_video_codecs", ]
     sources = [ 
-      "ecmedia/ecmedia.h",
-     ]
-    if(is_win) {
-       sources += [ 
-         "ecmedia/ecmedia.cc",
-       ]
-      include_dirs = ["ecmedia/win",]
-    }
-    deps = [
-     ":ecmedia_static",
+      #"ecmedia/ecmedia.h",
     ]
+    deps = [
+     ":ecmedia_obj",
+    ]
+    if(is_android) {
+      suppressed_configs += [ "//build/config/android:hide_all_but_jni_onload" ]
+    }
  }
 
   if (is_ios) {
@@ -1842,7 +1836,7 @@ if (is_win || is_android || is_ios) {
         ]
 
         deps = [
-          ":ecmedia_static",
+          ":ecmedia_obj",
         ]
         if (rtc_use_metal_rendering) {
           deps += [ ":metal_objc" ]
