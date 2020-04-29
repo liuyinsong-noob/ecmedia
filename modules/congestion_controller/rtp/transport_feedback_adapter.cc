@@ -259,7 +259,7 @@ TransportFeedbackAdapter::GetTransportFeedbackVector() const {
 //ytx_begin
 bool TransportFeedbackAdapter::MaybeCleanOutstandingData(int64_t current_ms, uint32_t delay_ms){
   rtc::CritScope cs(&lock_);
-  return send_time_history_.MaybeCleanOutstandingData(current_ms, delay_ms);
+  return send_time_history_.MaybeCleanOutstandingData(local_net_id_, remote_net_id_,current_ms, delay_ms);
 }
 
 DataSize TransportFeedbackAdapter::GetOutstandingDataByTime(int64_t current_ms, uint32_t delay_ms ) const{

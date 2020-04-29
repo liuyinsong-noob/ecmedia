@@ -169,8 +169,8 @@ void SendTimeHistory::UpdateAckedSeqNum(int64_t acked_seq_num) {
   last_ack_seq_num_.emplace(acked_seq_num);
 }
 //ytx_begin
-bool SendTimeHistory::MaybeCleanOutstandingData(int64_t current_ms,
-                                                uint32_t delay_ms){
+bool SendTimeHistory::MaybeCleanOutstandingData(uint16_t local_net_id, uint16_t remote_net_id,
+                                                int64_t current_ms, uint32_t delay_ms){
   if(history_.empty())
     return true;
   auto it = history_.begin();
@@ -178,7 +178,9 @@ bool SendTimeHistory::MaybeCleanOutstandingData(int64_t current_ms,
          current_ms - it->second.creation_time_ms >
              delay_ms) {
     // TODO(sprang): Warn if erasing (too many) old items?
-    RemovePacketBytes(history_.begin()->second);
+    DataSize data = GetOutstandingData(local_net_id, remote_net_id);
+    if(data.bytes() > (int)it->second.payload_size)
+      RemovePacketBytes(it->second);
     //history_.erase(history_.begin());
     it++;
   }

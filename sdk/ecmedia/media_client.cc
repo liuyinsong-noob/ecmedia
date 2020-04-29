@@ -711,7 +711,7 @@ bool MediaClient::CreateVideoChannel(const std::string& settings,
   EC_CHECK_VALUE(transport_controller_, false);
   std::string setting = settings;
 #if defined(WEBRTC_IOS)
-  setting =
+  //setting =
       //     "{\n   \"transportId\" : \"tran_1\",\n  \"red\" : 1,  \n
       //     \"fecType\" : 1, \n  \"nack\" : 1,\n   \"codecs\" : [\n      {\n
       //     \"codecName\" : \"H264\",\n         \"payloadType\" : 98,\n
@@ -725,12 +725,12 @@ bool MediaClient::CreateVideoChannel(const std::string& settings,
       //     \"codecName\" : \"ulpfec\",\n         \"payloadType\" : 106,\n
       //     \"new_payloadType\" : 112\n  }\n   ]\n}\n";
 
-      "{\n   \"transportId\" : \"tran_1\",\n  \"red\" : 0,  \n  \"fecType\" : "
-      "0, \n  \"nack\" : 1,\n   \"codecs\" : [\n      {\n         "
-      "\"codecName\" : \"H264\",\n         \"payloadType\" : 98,\n         "
-      "\"new_payloadType\" : 104\n      },\n      {\n         \"codecName\" : "
-      "\"rtx\",\n         \"payloadType\" : 101,\n      \"new_payloadType\" : "
-      "105,\n  \"associated_payloadType\" : 104\n   }\n    ]\n}\n";
+//      "{\n   \"transportId\" : \"tran_1\",\n  \"red\" : 0,  \n  \"fecType\" : "
+//      "0, \n  \"nack\" : 1,\n   \"codecs\" : [\n      {\n         "
+//      "\"codecName\" : \"H264\",\n         \"payloadType\" : 98,\n         "
+//      "\"new_payloadType\" : 104\n      },\n      {\n         \"codecName\" : "
+//      "\"rtx\",\n         \"payloadType\" : 101,\n      \"new_payloadType\" : "
+//      "105,\n  \"associated_payloadType\" : 104\n   }\n    ]\n}\n";
 #elif defined(WEBRTC_WIN)
  //setting =
       //        "{\n   \"transportId\" : \"tran_1\",\n  \"red\" : 1,  \n

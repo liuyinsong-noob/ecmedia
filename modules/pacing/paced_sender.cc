@@ -219,12 +219,15 @@ void PacedSender::SetPacingRates(uint32_t pacing_rate_bps,
   
   //ytx_begin
   if(last_valid_padding_bps_ == 0){
-    padding_rate_bps = padding_rate_bps / 2;
     last_valid_padding_bps_ = padding_rate_bps;
     last_valid_padding_time_ = clock_->TimeInMilliseconds();
-  }else if(padding_rate_bps < last_valid_padding_bps_ && padding_rate_bps != 0){
-    last_valid_padding_bps_ = padding_rate_bps;
-    last_valid_padding_time_ = clock_->TimeInMilliseconds();
+  }else if(padding_rate_bps < last_valid_padding_bps_ ){
+    if(padding_rate_bps <= 0)
+      last_valid_padding_time_ = 0;
+    else{
+      last_valid_padding_bps_ = padding_rate_bps;
+      last_valid_padding_time_ = clock_->TimeInMilliseconds();
+    }
   }else if(padding_rate_bps > last_valid_padding_bps_ &&
            (clock_->TimeInMilliseconds() - last_valid_padding_time_ ) < 3000 ){
     if(padding_rate_bps - last_valid_padding_bps_ > last_valid_padding_bps_){
@@ -238,12 +241,9 @@ void PacedSender::SetPacingRates(uint32_t pacing_rate_bps,
     padding_rate_bps == 0 ? padding_rate_bps = 0
                           : padding_rate_bps = last_valid_padding_bps_;
 						  
-  last_valid_padding_bps_ = padding_rate_bps;
-  last_valid_padding_time_ = 0;
-  if (GetNackbps() > 80)
-    padding_rate_bps = GetNackbps() * padding_rate_bps;
-  else
-    padding_rate_bps = 0;
+  
+  if (GetNackbps() <= 60)
+    padding_rate_bps = (float)GetNackbps()/100 * padding_rate_bps;
   //ytx_end
   pacing_bitrate_kbps_ = pacing_rate_bps / 1000;
   padding_budget_.set_target_rate_kbps(padding_rate_bps / 1000);
@@ -272,7 +272,7 @@ void PacedSender::InsertPacket(RtpPacketSender::Priority priority,
     auto it_seq = (it->second).find(sequence_number);
     if (it_seq != (it->second).end()) {
       if (retransmission) {
-        if (now_ms - it_seq->second < 100)
+        if (now_ms - it_seq->second < 5)
           return;
       }
       it_seq->second = now_ms;
