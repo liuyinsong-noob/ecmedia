@@ -38,12 +38,12 @@
 #import "sdk/objc/components/renderer/opengl/RTCEAGLVideoView.h"
 #import "sdk/objc/helpers/RTCCameraPreviewView.h"
 #import "RenderManager.h"
+#import "sdk/objc/components/audio/RTCAudioSessionConfiguration.h"
 
 RTCCameraVideoCapturer *capturer_;
 RTCCameraPreviewView *localVideoView;
 __kindof UIView<RTCVideoRenderer> *remoteVideoView;
 const Float64 kFramerateLimit = 30.0;
-bool kLoudSpeakerStatus = false;
 RenderManager* rm_;
 
 //namespace  {
@@ -104,6 +104,7 @@ void ObjCCallClient::CreatePeerConnection() {
 }
 
 bool ObjCCallClient::InitDevice(rtc::Thread* signaling_thread,rtc::Thread* worker_thread){
+  
   capturer_ = [[RTCCameraVideoCapturer alloc] init];
   
   video_source_ =  webrtc::ObjCToNativeVideoCapturer(capturer_, signaling_thread, worker_thread);
@@ -113,16 +114,13 @@ bool ObjCCallClient::InitDevice(rtc::Thread* signaling_thread,rtc::Thread* worke
   if(capturer_ && localVideoView){
     localVideoView.captureSession = capturer_.captureSession;
   }
-  //remoteVideoView = [[RTCEAGLVideoView alloc] init];
-  //id<RTCVideoRenderer> remote_renderer = remoteVideoView;
-  //remote_sink_ =  webrtc::ObjCToNativeVideoRenderer(remote_renderer);
- 
- //[this performSelectorOnMainThread:@selector(StartCapture:) withObject:nil waitUntilDone:NO];
-  //StartCapture();
-    
-   // _captureInfo = new VideoCaptureiOSDeviceInfo(0);
-     
-  NSLog(@"init device success....");
+  
+RTCAudioSessionConfiguration *webRTCConfig =
+    [RTCAudioSessionConfiguration webRTCConfiguration];
+webRTCConfig.categoryOptions = webRTCConfig.categoryOptions |
+    AVAudioSessionCategoryOptionDefaultToSpeaker;
+[RTCAudioSessionConfiguration setWebRTCConfiguration:webRTCConfig];
+
   return true;
 }
 
@@ -236,19 +234,20 @@ bool ObjCCallClient::SetSpeakerStatus(bool enable) {
 //     might not be valid for this category.
     if ([category isEqualToString:AVAudioSessionCategoryPlayAndRecord]) {
       if (enable) {
-        options |= AVAudioSessionCategoryOptionDefaultToSpeaker;
+          options |= AVAudioSessionCategoryOptionDefaultToSpeaker;
       } else {
         options &= ~AVAudioSessionCategoryOptionDefaultToSpeaker;
       }
     } else {
         if (enable) {
-            options = AVAudioSessionCategoryOptionDefaultToSpeaker;
+            options =  AVAudioSessionCategoryOptionAllowBluetooth;
+            options |= AVAudioSessionCategoryOptionDefaultToSpeaker;
         } else {
             [session setCategory:AVAudioSessionCategoryPlayAndRecord error:&error];
-//            if (error != nil) {
-//                NSLog(@"Error changing default output route");
-//                return -1;
-//            }
+            if (error != nil) {
+                NSLog(@"Error changing default output route");
+                return -1;
+            }
 
         }
     }
@@ -256,23 +255,27 @@ bool ObjCCallClient::SetSpeakerStatus(bool enable) {
     [session setCategory:AVAudioSessionCategoryPlayAndRecord
              withOptions:options
                    error:&error];
-    if (enable) {
-        //设置外放
-        [session overrideOutputAudioPort:AVAudioSessionPortOverrideSpeaker error:&error];
-    }else{
-        //设置听筒
-        [session overrideOutputAudioPort:AVAudioSessionPortOverrideNone error:&error];
-    }
-    [session setActive:YES error:nil];
+ // AudioSessionSetProperty(kAudioSessionProperty_OverrideAudioRoute,
+   //                       sizeof(audioRouteOverride), &audioRouteOverride);
+//    if (enable) {
+//        //设置外放
+//        [session overrideOutputAudioPort:AVAudioSessionPortOverrideSpeaker error:&error];
+//    }else{
+//        //设置听筒
+//        [session overrideOutputAudioPort:AVAudioSessionPortOverrideNone error:&error];
+//    }
+//    [session setActive:YES error:nil];
     if (error) {
         return -1;
     }
-    kLoudSpeakerStatus = enable;
+    //kLoudSpeakerStatus = enable;
     return 0;
 }
 
 bool ObjCCallClient::GetSpeakerStatus(bool& enable) {
-    enable = kLoudSpeakerStatus;
+    AVAudioSession* session = [AVAudioSession sharedInstance];
+    AVAudioSessionCategoryOptions options = session.categoryOptions;
+    enable = options & AVAudioSessionCategoryOptionDefaultToSpeaker;
     return 0;
 }
 
