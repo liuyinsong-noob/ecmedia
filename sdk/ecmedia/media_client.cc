@@ -1965,33 +1965,48 @@ bool MediaClient::FilterVideoCodec(const VideoCodecConfig& config,
   std::vector<cricket::VideoCodec>::iterator it = vec.begin();
   cricket::VideoCodec vc;
   bool find_codec = false;
+  bool found_rtx = false;
   int out = -1;
   while (it != vec.end()) {
     name = it->name;
     absl::AsciiStrToLower(&name);
     if (config.red && name.compare(cricket::kRedCodecName) == 0) {
+      RTC_LOG(INFO) << __FUNCTION__ << " red name: " << it->name << " id: " << it->id;
       it++;
     } else if ((webrtc::FecMechanism)config.fecType ==
                    webrtc::FecMechanism::RED_AND_ULPFEC &&
                name.compare(cricket::kUlpfecCodecName) == 0) {
+      RTC_LOG(INFO) << __FUNCTION__ << " fec name: " << it->name << " id: " << it->id;
       it++;
     } else if (name.compare(cname) == 0 && !find_codec) { 
       it->GetParam("packetization-mode", &out);
       if (out == 1) {
+       RTC_LOG(INFO) << __FUNCTION__ << " found codec. name: " << it->name << " id: " << it->id << " payloadTYpe: " << config.payloadType;
        it->id = config.payloadType;
         find_codec = true;
         it++;
       } else {
-       
+        RTC_LOG(INFO) << __FUNCTION__ << " deleted found. name: " << it->name << " id: " << it->id;
         it = vec.erase(it);
       }
-    } else if (name.compare("rtx") == 0 && it->id == config.rtxPayload) {
+    } else if (name.compare("rtx") == 0 && /*it->id == config.rtxPayload*/config.rtx == 1 && !found_rtx) {
        it->SetParam(cricket::kCodecParamAssociatedPayloadType,config.payloadType);
+      RTC_LOG(INFO) << __FUNCTION__ << " rtx name: " << it->name << " id: " << it->id << " payloadTYpe: " << config.payloadType;
+      it->id = config.rtxPayload;
+      found_rtx = true;
       it++;
     } else {
+      RTC_LOG(INFO) << __FUNCTION__ << " delete name: " << it->name << " id: " << it->id;
       it = vec.erase(it);
     }
   }
+  RTC_LOG(INFO) << __FUNCTION__ << " print selected item begin ";
+  it = vec.begin();
+  while(it != vec.end()) {
+    RTC_LOG(INFO) << __FUNCTION__ << " selected item. name: " << it->name << " id: " << it->id;
+    it++;
+  }
+  RTC_LOG(INFO) << __FUNCTION__ << " print selected item end";
  /* if (!find_codec) {
     vc.id = config.payloadType;
     vc.name = config.codecName;
