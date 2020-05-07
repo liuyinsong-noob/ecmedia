@@ -27,7 +27,7 @@ typedef struct{
 	CameraCapability *capability;
 }  CameraInfo ;
 
-#define  kTitleLength 32
+#define  kTitleLength  512 // 32
 typedef intptr_t ScreenID;
 typedef intptr_t WindowID;
 struct WindowShare {

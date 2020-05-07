@@ -667,10 +667,7 @@ ECMEDIA_API int ECMedia_set_desktop_capture_source(int type, int id) {
 }
 
 ECMEDIA_API int ECMedia_create_desktop_capture(int type) {
-  if (type == 1) {
-    RTC_LOG(LS_ERROR) << " not support wiandows share";
-    return 0;
-  }
+
   return g_ECMedia->CreateDesktopCapture(type);
  
 }
@@ -738,13 +735,13 @@ ECMEDIA_API int ECMedia_release_screen_list(ScreenID** screen) {
   return 0;
 }
 
-ECMEDIA_API int ECMedia_start_screen_share() {
-  return g_ECMedia->StartScreenShare();
+ECMEDIA_API int ECMedia_start_screen_share(int type) {
+  return g_ECMedia->StartScreenShare(type);
   
 }
 
-ECMEDIA_API int ECMedia_stop_screen_share() {
-  return g_ECMedia->StopScreenShare();
+ECMEDIA_API int ECMedia_stop_screen_share(int type) {
+  return g_ECMedia->StopScreenShare(type);
 
 }
 ECMEDIA_API void ECMedia_get_audio_channel_volume_level(int audioid,

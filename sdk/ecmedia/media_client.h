@@ -749,8 +749,9 @@ class MediaClient : public sigslot::has_slots<> {
   int CreateDesktopCapture(int type);
   int SetDesktopSourceID(int type, int id);
   int GetWindowsList(int type, webrtc::DesktopCapturer::SourceList& source);
-  int StartScreenShare();
-  int StopScreenShare();
+  int StartScreenShare(int type);
+  int StopScreenShare(int type);
+
   int GetCaptureDevice(int index,
                        char* device_name,
                        int name_len,

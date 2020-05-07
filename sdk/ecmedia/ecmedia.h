@@ -833,9 +833,10 @@ ECMEDIA_API int ECMedia_get_window_list(int type,WindowShare** windowList);
 
 ECMEDIA_API int ECMedia_release_window_list(WindowShare** windowList);
 
-ECMEDIA_API int ECMedia_start_screen_share();
+ECMEDIA_API int ECMedia_start_screen_share(int type);
 
-ECMEDIA_API int ECMedia_stop_screen_share(); 
+ECMEDIA_API int ECMedia_stop_screen_share(int type); 
+
 
 ECMEDIA_API bool ECMedia_select_screen(int desktop_captureid, ScreenID screeninfo);
 

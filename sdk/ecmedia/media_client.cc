@@ -1399,9 +1399,10 @@ void MediaClient::DestroyLocalVideoTrack(
                 << " end... ";
 }
 
-int MediaClient::StartScreenShare() {
+int MediaClient::StartScreenShare(int type) {
 #if defined(WEBRTC_WIN)
   RTC_LOG(INFO) << __FUNCTION__ << "()";
+  desktop_device_ = desktop_devices_.find(type)->second;
   if (desktop_device_) {
     worker_thread_->Invoke<void>(RTC_FROM_HERE,
                                  [this] { desktop_device_->Start(); });
@@ -1413,12 +1414,12 @@ int MediaClient::StartScreenShare() {
   return 0;
 }
 
-int MediaClient::StopScreenShare() {
+int MediaClient::StopScreenShare(int type) {
 #if defined(WEBRTC_WIN)
   RTC_LOG(INFO) << __FUNCTION__ << "()";
+  desktop_device_ = desktop_devices_.find(type)->second;
   if (desktop_device_) {
     desktop_device_->Stop();
-    // while(desktop_device_.release() != NULL);
   }
 #endif
   return 0;
@@ -3473,10 +3474,10 @@ void VideoRenderer::Paint() {
     int y = (logical_area.y - height) / 2;
     x = x > 0 ? x : 0;
     y = y > 0 ? y : 0;
-    RTC_LOG(INFO) << __FUNCTION__ << "()"
+  /*  RTC_LOG(INFO) << __FUNCTION__ << "()"
                   << "x:" << x << " y:" << y << "  width:" << width
                   << " height:" << height << "logica_x:" << logical_area.x
-                  << " logical_area.y: " << logical_area.y;
+                  << " logical_area.y: " << logical_area.y;*/
     if (mode_ == 1) {
       StretchDIBits(dc_mem, x, y, width, height, 0, 0, width, height,
                     image_.get(), &bmi_, DIB_RGB_COLORS, SRCCOPY);
@@ -3782,9 +3783,9 @@ int ECDesktopCapture::SetDesktopSourceID(int index) {
 }
 
 void ECDesktopCapture::Stop() {
-  if (isStartCapture) {
+ // if (isStartCapture) {
     isStartCapture = false;
-  }
+ // }
 }
 
 void ECDesktopCapture::Start() {
