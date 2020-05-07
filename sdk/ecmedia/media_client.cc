@@ -589,6 +589,10 @@ bool MediaClient::CreateTransport(const char* local_addr,
       transport_controller_->setUdpConnection(
           tid, default_socket_factory_.get(), local, remote);
   });
+  webrtc::RtpTransportInternal *
+      rtp_transport = transport_controller_->GetRtpTransport(tid);
+  if (rtp_transport)
+    rtp_transport->SignalSentPacket.connect(this, &MediaClient::OnSentPacket);
   RTC_LOG(INFO) << __FUNCTION__ << "(),"
                 << " end... ";
   return true;
@@ -784,9 +788,11 @@ bool MediaClient::CreateVideoChannel(const std::string& settings,
 
   EC_CHECK_VALUE(video_channel_, false);
 
-  video_channel_->SignalSentPacket.connect(this,
-                                           &MediaClient::OnSentPacket_Video);
-  video_channel_->SetRtpTransport(rtp_transport);
+  //video_channel_->SignalSentPacket.connect(this,
+  //                                         &MediaClient::OnSentPacket_Video);
+
+
+  //video_channel_->SetRtpTransport(rtp_transport);
 
   network_thread_->Invoke<void>(RTC_FROM_HERE, [=] {
     rtp_transport->SignalWritableState(rtp_transport);
@@ -972,9 +978,9 @@ bool MediaClient::CreateVoiceChannel(const std::string& settings,
       audio_options_);
   EC_CHECK_VALUE(voice_channel_, false);
 
-  voice_channel_->SignalSentPacket.connect(this,
-                                           &MediaClient::OnSentPacket_Voice);
-  voice_channel_->SetRtpTransport(rtp_transport);
+  //voice_channel_->SignalSentPacket.connect(this,
+  //                                         &MediaClient::OnSentPacket_Voice);
+  //voice_channel_->SetRtpTransport(rtp_transport);
 
   network_thread_->Invoke<void>(RTC_FROM_HERE, [=] {
     return rtp_transport->SignalWritableState(rtp_transport);
@@ -1643,20 +1649,11 @@ bool MediaClient::CreateTransportController(bool disable_encryp) {
   return true;
 }
 
-void MediaClient::OnSentPacket_Voice(const rtc::SentPacket& sent_packet) {
-  RTC_LOG(INFO) << __FUNCTION__ << "() packet number:" << sent_packet.packet_id;
+void MediaClient::OnSentPacket(const rtc::SentPacket& sent_packet) {
+  //RTC_LOG(INFO) << __FUNCTION__ << "() packet number:" << sent_packet.packet_id;
   RTC_DCHECK_RUN_ON(worker_thread_);
   EC_CHECK_VALUE(call_, void());
   call_->OnSentPacket(sent_packet);
-  // RTC_LOG(INFO) << __FUNCTION__  << "() "<< " end...";
-}
-
-void MediaClient::OnSentPacket_Video(const rtc::SentPacket& sent_packet) {
- // RTC_LOG(INFO) << __FUNCTION__ << "() packet number:" << sent_packet.packet_id;
-  RTC_DCHECK_RUN_ON(worker_thread_);
-  EC_CHECK_VALUE(call_, void());
-  call_->OnSentPacket(sent_packet);
-  // RTC_LOG(INFO) << __FUNCTION__  << "() "<< " end...";
 }
 
 bool MediaClient::DisposeConnect() {
