@@ -172,7 +172,7 @@ MediaClient::MediaClient() {
   m_nConnected = SC_UNCONNECTED;
   mVideoChannels_.clear();
   mVoiceChannels_.clear();
-  vsum_ = 0;
+  video_track_ = nullptr;
   asum_ = 0;
   // Initialize();
   RTC_LOG(INFO) << __FUNCTION__ << "(),"
@@ -188,13 +188,14 @@ MediaClient::~MediaClient() {
       channel_manager_.reset(nullptr);
       default_socket_factory_ = nullptr;
       channelGenerator_.reset(nullptr);
-      for (int i = 0; i < vsum_ + 1; i++) {
-        if (video_tracks_[i]) {
-          video_tracks_[i].get()->GetSource()->Release();
-          while (video_tracks_[i].release() != nullptr)
-            ;
-        }
+      std::vector<rtc::scoped_refptr<webrtc::VideoTrackInterface>>::iterator it = video_tracks_.begin();
+      while (it != video_tracks_.end()) {
+        (*it).get()->GetSource()->Release();
+        while ((*it).release() != nullptr); 
+        it++;
       }
+      video_tracks_.clear();
+      video_track_.release();
     });
   }
 #if defined(WEBRTC_WIN)
@@ -354,16 +355,13 @@ void MediaClient::UnInitialize() {
   if (signaling_thread_) {
     signaling_thread_->Invoke<void>(RTC_FROM_HERE, [this] {
       RTC_DCHECK_RUN_ON(signaling_thread_);
-
-      for (int i = 0; i < vsum_ + 1; i++) {
-        if (video_tracks_[i]) {
-          video_tracks_[i].get()->GetSource()->Release();
-          while (video_tracks_[i].release() != nullptr)
-            ;
-        }
+      std::vector<rtc::scoped_refptr<webrtc::VideoTrackInterface>>::iterator it = video_tracks_.begin();
+      while (it != video_tracks_.end()) {
+        (*it).get()->GetSource()->Release();
+        while ((*it).release() != nullptr);
+        it++;
       }
-      vsum_ = 0;
-
+      video_tracks_.clear();
       asum_ = 0;
     });
   }
@@ -727,48 +725,49 @@ bool MediaClient::CreateVideoChannel(const std::string& settings,
   EC_CHECK_VALUE(transport_controller_, false);
   std::string setting = settings;
 #if defined(WEBRTC_IOS)
-  //setting =
-      //     "{\n   \"transportId\" : \"tran_1\",\n  \"red\" : 1,  \n
-      //     \"fecType\" : 1, \n  \"nack\" : 1,\n   \"codecs\" : [\n      {\n
-      //     \"codecName\" : \"H264\",\n         \"payloadType\" : 98,\n
-      //     \"new_payloadType\" : 104\n      },\n      {\n \"codecName\" :
-      //     \"rtx\",\n         \"payloadType\" : 101,\n \"new_payloadType\" :
-      //     105,\n  \"associated_payloadType\" : 104\n   },\n      {\n
-      //     \"codecName\" : \"red\",\n         \"payloadType\" : 104,\n
-      //     \"new_payloadType\" : 110\n  },\n      {\n         \"codecName\" :
-      //     \"rtx\",\n         \"payloadType\" : 105,\n    \"new_payloadType\"
-      //     : 111,\n   \"associated_payloadType\" : 110\n  },\n      {\n
-      //     \"codecName\" : \"ulpfec\",\n         \"payloadType\" : 106,\n
-      //     \"new_payloadType\" : 112\n  }\n   ]\n}\n";
+  // setting =
+  //     "{\n   \"transportId\" : \"tran_1\",\n  \"red\" : 1,  \n
+  //     \"fecType\" : 1, \n  \"nack\" : 1,\n   \"codecs\" : [\n      {\n
+  //     \"codecName\" : \"H264\",\n         \"payloadType\" : 98,\n
+  //     \"new_payloadType\" : 104\n      },\n      {\n \"codecName\" :
+  //     \"rtx\",\n         \"payloadType\" : 101,\n \"new_payloadType\" :
+  //     105,\n  \"associated_payloadType\" : 104\n   },\n      {\n
+  //     \"codecName\" : \"red\",\n         \"payloadType\" : 104,\n
+  //     \"new_payloadType\" : 110\n  },\n      {\n         \"codecName\" :
+  //     \"rtx\",\n         \"payloadType\" : 105,\n    \"new_payloadType\"
+  //     : 111,\n   \"associated_payloadType\" : 110\n  },\n      {\n
+  //     \"codecName\" : \"ulpfec\",\n         \"payloadType\" : 106,\n
+  //     \"new_payloadType\" : 112\n  }\n   ]\n}\n";
 
-//      "{\n   \"transportId\" : \"tran_1\",\n  \"red\" : 0,  \n  \"fecType\" : "
-//      "0, \n  \"nack\" : 1,\n   \"codecs\" : [\n      {\n         "
+//      "{\n   \"transportId\" : \"tran_1\",\n  \"red\" : 0,  \n  \"fecType\" :
+//      " "0, \n  \"nack\" : 1,\n   \"codecs\" : [\n      {\n         "
 //      "\"codecName\" : \"H264\",\n         \"payloadType\" : 98,\n         "
-//      "\"new_payloadType\" : 104\n      },\n      {\n         \"codecName\" : "
-//      "\"rtx\",\n         \"payloadType\" : 101,\n      \"new_payloadType\" : "
-//      "105,\n  \"associated_payloadType\" : 104\n   }\n    ]\n}\n";
+//      "\"new_payloadType\" : 104\n      },\n      {\n         \"codecName\" :
+//      "
+//      "\"rtx\",\n         \"payloadType\" : 101,\n      \"new_payloadType\" :
+//      " "105,\n  \"associated_payloadType\" : 104\n   }\n    ]\n}\n";
 #elif defined(WEBRTC_WIN)
- //setting =
-      //        "{\n   \"transportId\" : \"tran_1\",\n  \"red\" : 1,  \n
-      //        \"fecType\" : 1, \n  \"nack\" : 1,\n   \"codecs\" : [\n      {\n
-      //        \"codecName\" : \"H264\",\n         \"payloadType\" : 102,\n
-      //        \"new_payloadType\" : 104\n      },\n      {\n \"codecName\" :
-      //        \"rtx\",\n         \"payloadType\" : 103,\n \"new_payloadType\"
-      //        : 105,\n  \"associated_payloadType\" : 104\n   },\n      {\n
-      //        \"codecName\" : \"red\",\n         \"payloadType\" : 110,\n
-      //        \"new_payloadType\" : 110\n  },\n      {\n         \"codecName\"
-      //        : \"rtx\",\n         \"payloadType\" : 111,\n
-      //        \"new_payloadType\" : 111,\n   \"associated_payloadType\" :
-      //        110\n  },\n      {\n         \"codecName\" : \"ulpfec\",\n
-      //        \"payloadType\" : 112,\n      \"new_payloadType\" : 112\n  }\n
-      //        ]\n}\n";
+  // setting =
+  //        "{\n   \"transportId\" : \"tran_1\",\n  \"red\" : 1,  \n
+  //        \"fecType\" : 1, \n  \"nack\" : 1,\n   \"codecs\" : [\n      {\n
+  //        \"codecName\" : \"H264\",\n         \"payloadType\" : 102,\n
+  //        \"new_payloadType\" : 104\n      },\n      {\n \"codecName\" :
+  //        \"rtx\",\n         \"payloadType\" : 103,\n \"new_payloadType\"
+  //        : 105,\n  \"associated_payloadType\" : 104\n   },\n      {\n
+  //        \"codecName\" : \"red\",\n         \"payloadType\" : 110,\n
+  //        \"new_payloadType\" : 110\n  },\n      {\n         \"codecName\"
+  //        : \"rtx\",\n         \"payloadType\" : 111,\n
+  //        \"new_payloadType\" : 111,\n   \"associated_payloadType\" :
+  //        110\n  },\n      {\n         \"codecName\" : \"ulpfec\",\n
+  //        \"payloadType\" : 112,\n      \"new_payloadType\" : 112\n  }\n
+  //        ]\n}\n";
 
-   /*   "{\n   \"transportId\" : \"tran_1\",\n  \"red\" : 0,  \n  \"fecType\" : "
-      "0, \n  \"nack\" : 1,\n   \"codecs\" : [\n      {\n         "
-      "\"codecName\" : \"H264\",\n         \"payloadType\" : 102,\n         "
-      "\"new_payloadType\" : 104\n      },\n      {\n         \"codecName\" : "
-      "\"rtx\",\n         \"payloadType\" : 103,\n      \"new_payloadType\" : "
-      "105,\n  \"associated_payloadType\" : 104\n   }\n    ]\n}\n";*/
+  /*   "{\n   \"transportId\" : \"tran_1\",\n  \"red\" : 0,  \n  \"fecType\" : "
+     "0, \n  \"nack\" : 1,\n   \"codecs\" : [\n      {\n         "
+     "\"codecName\" : \"H264\",\n         \"payloadType\" : 102,\n         "
+     "\"new_payloadType\" : 104\n      },\n      {\n         \"codecName\" : "
+     "\"rtx\",\n         \"payloadType\" : 103,\n      \"new_payloadType\" : "
+     "105,\n  \"associated_payloadType\" : 104\n   }\n    ]\n}\n";*/
 #endif
 
   bool bOk = false;
@@ -820,7 +819,7 @@ bool MediaClient::CreateVideoChannel(const std::string& settings,
   // config.codecName = "h264";
   // config.payloadType = 104;
   channel_manager_->GetSupportedVideoCodecs(&vidoe_send_params.codecs);
- // FilterVideoCodec(&config.video_stream_configs, vidoe_send_params.codecs);
+  // FilterVideoCodec(&config.video_stream_configs, vidoe_send_params.codecs);
   FilterVideoCodec(config, vidoe_send_params.codecs);
   channel_manager_->GetSupportedVideoRtpHeaderExtensions(
       &vidoe_send_params.extensions);
@@ -875,7 +874,8 @@ bool MediaClient::CreateVideoChannel(const std::string& settings,
   cricket::VideoRecvParameters video_recv_params;
   signaling_thread_->Invoke<void>(RTC_FROM_HERE, [&] {
     channel_manager_->GetSupportedVideoCodecs(&video_recv_params.codecs);
-  //  FilterVideoCodec(&config.video_stream_configs, video_recv_params.codecs);
+    //  FilterVideoCodec(&config.video_stream_configs,
+    //  video_recv_params.codecs);
     FilterVideoCodec(config, video_recv_params.codecs);
     channel_manager_->GetSupportedVideoRtpHeaderExtensions(
         &video_recv_params.extensions);
@@ -1402,15 +1402,17 @@ void MediaClient::DestroyLocalVideoTrack(
 #endif
       }
     }
-    for (int i = 0; i < 20; i++) {
-      if (track == video_tracks_[i]) {
-        video_tracks_[i] = NULL;
+    std::vector<rtc::scoped_refptr<webrtc::VideoTrackInterface>>::iterator it = video_tracks_.begin();
+    while(it != video_tracks_.end()) {
+      if (track == *it) {
         signaling_thread_->Invoke<void>(
             RTC_FROM_HERE, [track] { track.get()->GetSource()->Release(); });
-        while (track.release() != nullptr)
-          ;
+        while (track.release() != nullptr);
+        video_tracks_.erase(it);
         break;
-      }
+      } else {
+        it++;
+	  }
     }
   }
   RTC_LOG(INFO) << __FUNCTION__ << "(),"
@@ -1512,7 +1514,7 @@ MediaClient::CreateLocalVideoTrack(const std::string& track_params) {
   // rtc::GetStringFromJsonObject(jmessage, "track_id", &track_id);
 
   if (signaling_thread_) {
-    video_tracks_[vsum_] =
+    video_track_ =
         signaling_thread_
             ->Invoke<rtc::scoped_refptr<webrtc::VideoTrackInterface>>(
                 RTC_FROM_HERE, [this, type, track_id, config, camera_index] {
@@ -1552,8 +1554,8 @@ MediaClient::CreateLocalVideoTrack(const std::string& track_params) {
 	        //ytx_todo 
 		 RTC_LOG(INFO) <<"andorid camer id"<< camera_index ;
 
-#endif 
-		     
+#endif
+
                       return video_track;
                     case VIDEO_SCREEN:
 #ifdef WEBRTC_WIN
@@ -1574,8 +1576,8 @@ MediaClient::CreateLocalVideoTrack(const std::string& track_params) {
                   }
                 });
 
-    vsum_++;
-    return video_tracks_[vsum_ - 1];
+    video_tracks_.push_back(video_track_);
+    return video_track_;
   }
   RTC_LOG(INFO) << __FUNCTION__ << "() "
                 << " end...";
@@ -1661,11 +1663,13 @@ bool MediaClient::CreateTransportController(bool disable_encryp) {
   return true;
 }
 
-void MediaClient::OnSentPacket(const rtc::SentPacket& sent_packet) {
-  //RTC_LOG(INFO) << __FUNCTION__ << "() packet number:" << sent_packet.packet_id;
+ void MediaClient::OnSentPacket(const rtc::SentPacket& sent_packet) {
+    // RTC_LOG(INFO) << __FUNCTION__ << "() packet number:" <<
+     // sent_packet.packet_id;
   RTC_DCHECK_RUN_ON(worker_thread_);
   EC_CHECK_VALUE(call_, void());
   call_->OnSentPacket(sent_packet);
+  
 }
 
 bool MediaClient::DisposeConnect() {
@@ -1981,47 +1985,58 @@ bool MediaClient::FilterVideoCodec(const VideoCodecConfig& config,
     name = it->name;
     absl::AsciiStrToLower(&name);
     if (config.red && name.compare(cricket::kRedCodecName) == 0) {
-      RTC_LOG(INFO) << __FUNCTION__ << " red name: " << it->name << " id: " << it->id;
+      RTC_LOG(INFO) << __FUNCTION__ << " red name: " << it->name
+                    << " id: " << it->id;
       it++;
     } else if ((webrtc::FecMechanism)config.fecType ==
                    webrtc::FecMechanism::RED_AND_ULPFEC &&
                name.compare(cricket::kUlpfecCodecName) == 0) {
-      RTC_LOG(INFO) << __FUNCTION__ << " fec name: " << it->name << " id: " << it->id;
+      RTC_LOG(INFO) << __FUNCTION__ << " fec name: " << it->name
+                    << " id: " << it->id;
       it++;
-    } else if (name.compare(cname) == 0 && !find_codec) { 
+    } else if (name.compare(cname) == 0 && !find_codec) {
       it->GetParam("packetization-mode", &out);
       if (out == 1) {
-       RTC_LOG(INFO) << __FUNCTION__ << " found codec. name: " << it->name << " id: " << it->id << " payloadTYpe: " << config.payloadType;
-       it->id = config.payloadType;
+        RTC_LOG(INFO) << __FUNCTION__ << " found codec. name: " << it->name
+                      << " id: " << it->id
+                      << " payloadTYpe: " << config.payloadType;
+        it->id = config.payloadType;
         find_codec = true;
         it++;
       } else {
-        RTC_LOG(INFO) << __FUNCTION__ << " deleted found. name: " << it->name << " id: " << it->id;
+        RTC_LOG(INFO) << __FUNCTION__ << " deleted found. name: " << it->name
+                      << " id: " << it->id;
         it = vec.erase(it);
       }
-    } else if (name.compare("rtx") == 0 && /*it->id == config.rtxPayload*/config.rtx == 1 && !found_rtx) {
-       it->SetParam(cricket::kCodecParamAssociatedPayloadType,config.payloadType);
-      RTC_LOG(INFO) << __FUNCTION__ << " rtx name: " << it->name << " id: " << it->id << " payloadTYpe: " << config.payloadType;
+    } else if (name.compare("rtx") == 0 &&
+               /*it->id == config.rtxPayload*/ config.rtx == 1 && !found_rtx) {
+      it->SetParam(cricket::kCodecParamAssociatedPayloadType,
+                   config.payloadType);
+      RTC_LOG(INFO) << __FUNCTION__ << " rtx name: " << it->name
+                    << " id: " << it->id
+                    << " payloadTYpe: " << config.payloadType;
       it->id = config.rtxPayload;
       found_rtx = true;
       it++;
     } else {
-      RTC_LOG(INFO) << __FUNCTION__ << " delete name: " << it->name << " id: " << it->id;
+      RTC_LOG(INFO) << __FUNCTION__ << " delete name: " << it->name
+                    << " id: " << it->id;
       it = vec.erase(it);
     }
   }
   RTC_LOG(INFO) << __FUNCTION__ << " print selected item begin ";
   it = vec.begin();
-  while(it != vec.end()) {
-    RTC_LOG(INFO) << __FUNCTION__ << " selected item. name: " << it->name << " id: " << it->id;
+  while (it != vec.end()) {
+    RTC_LOG(INFO) << __FUNCTION__ << " selected item. name: " << it->name
+                  << " id: " << it->id;
     it++;
   }
   RTC_LOG(INFO) << __FUNCTION__ << " print selected item end";
- /* if (!find_codec) {
-    vc.id = config.payloadType;
-    vc.name = config.codecName;
-    vec.insert(vec.begin(), vc);
-  }*/
+  /* if (!find_codec) {
+     vc.id = config.payloadType;
+     vc.name = config.codecName;
+     vec.insert(vec.begin(), vc);
+   }*/
   RTC_LOG(INFO) << __FUNCTION__ << "(),"
                 << " end... ";
   return vec.size() > 0;
@@ -3502,10 +3517,10 @@ void VideoRenderer::Paint() {
     int y = (logical_area.y - height) / 2;
     x = x > 0 ? x : 0;
     y = y > 0 ? y : 0;
-  /*  RTC_LOG(INFO) << __FUNCTION__ << "()"
-                  << "x:" << x << " y:" << y << "  width:" << width
-                  << " height:" << height << "logica_x:" << logical_area.x
-                  << " logical_area.y: " << logical_area.y;*/
+    /*  RTC_LOG(INFO) << __FUNCTION__ << "()"
+                    << "x:" << x << " y:" << y << "  width:" << width
+                    << " height:" << height << "logica_x:" << logical_area.x
+                    << " logical_area.y: " << logical_area.y;*/
     if (mode_ == 1) {
       StretchDIBits(dc_mem, x, y, width, height, 0, 0, width, height,
                     image_.get(), &bmi_, DIB_RGB_COLORS, SRCCOPY);
@@ -3812,9 +3827,9 @@ int ECDesktopCapture::SetDesktopSourceID(int index) {
 }
 
 void ECDesktopCapture::Stop() {
- // if (isStartCapture) {
-    isStartCapture = false;
- // }
+  // if (isStartCapture) {
+  isStartCapture = false;
+  // }
 }
 
 void ECDesktopCapture::Start() {
