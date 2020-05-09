@@ -132,7 +132,10 @@ class VideoRenderer : public rtc::VideoSinkInterface<webrtc::VideoFrame> {
   const BITMAPINFO& bmi() const { return bmi_; }
   const uint8_t* image() const { return image_.get(); }
   HWND handle() const { return wnd_; }
-
+  //add by ytx_wx begin...
+  bool GetisLocal (){ return isLocal_;}
+  void SetLocal(bool islocal) { isLocal_ = islocal; }
+  //add by ytx_wx_end ...
  protected:
   void SetSize(int width, int height);
 
@@ -143,6 +146,7 @@ class VideoRenderer : public rtc::VideoSinkInterface<webrtc::VideoFrame> {
 
  private:
   HWND wnd_;
+  bool isLocal_ = false;  // add by ytx_wx
   HDC hDC_;
   BITMAPINFO bmi_;
   std::unique_ptr<uint8_t[]> image_;

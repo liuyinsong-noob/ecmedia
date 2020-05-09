@@ -3427,11 +3427,30 @@ void VideoRenderer::OnFrame(const webrtc::VideoFrame& video_frame) {
     SetSize(buffer->width(), buffer->height());
 
     RTC_DCHECK(image_.get() != NULL);
-    libyuv::I420ToARGB(buffer->DataY(), buffer->StrideY(), buffer->DataU(),
-                       buffer->StrideU(), buffer->DataV(), buffer->StrideV(),
-                       image_.get(),
-                       bmi_.bmiHeader.biWidth * bmi_.bmiHeader.biBitCount / 8,
-                       buffer->width(), buffer->height());
+    //add by ytx_wx begin...
+    bool flag = GetisLocal();
+    if (flag) {
+	  std::unique_ptr<uint8_t[]> mirror_image_;
+      mirror_image_.reset(new uint8_t[bmi_.bmiHeader.biSizeImage]);
+      RTC_DCHECK(image_.get() != NULL);
+      libyuv::I420ToARGB(buffer->DataY(), buffer->StrideY(), buffer->DataU(),
+                         buffer->StrideU(), buffer->DataV(), buffer->StrideV(),
+                         mirror_image_.get(),
+                         bmi_.bmiHeader.biWidth * bmi_.bmiHeader.biBitCount / 8,
+                         buffer->width(), buffer->height());
+      libyuv::ARGBMirror(mirror_image_.get(),
+                         bmi_.bmiHeader.biWidth * bmi_.bmiHeader.biBitCount / 8,
+                         image_.get(),
+                         bmi_.bmiHeader.biWidth * bmi_.bmiHeader.biBitCount / 8,
+                         buffer->width(), buffer->height());    
+    }else{
+      libyuv::I420ToARGB(buffer->DataY(), buffer->StrideY(), buffer->DataU(),
+                         buffer->StrideU(), buffer->DataV(), buffer->StrideV(),
+                         image_.get(),
+                         bmi_.bmiHeader.biWidth * bmi_.bmiHeader.biBitCount / 8,
+                         buffer->width(), buffer->height());
+	}     
+	//add by ytx_wx end...
   }
 
   Paint();
@@ -3587,6 +3606,7 @@ void RenderWndsManager::SetLocalRenderWnd(
   ptr_render it;
   it.reset(new win_render::VideoRenderer((HWND)winLocal, render_mode, 1, 1,
                                          track_to_render));
+  it->SetLocal(true);  // add by ytx_wx
   mapLocalRenderWnds[channelId] = std::move(it);
 }
 
