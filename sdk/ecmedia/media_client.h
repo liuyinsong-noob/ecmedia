@@ -312,7 +312,7 @@ class MediaClient : public sigslot::has_slots<> {
 
   virtual ~MediaClient();
 
-  bool SetTrace(const char* path, int min_sev);
+  static bool SetTrace(const char* path, int min_sev);
   /***************************************************************************/
   /*** 函数名: 初始化                                                      ***/
   /*** 功能:   获取媒体库实例                                              ***/
@@ -894,8 +894,9 @@ class MediaClient : public sigslot::has_slots<> {
   bool isCreateCall;
   char* pAudioDevice;
   // std::unique_ptr<rtc::LogSink*> ec_log_ = nullptr;
-  rtc::LogSink* ec_log_ = nullptr;
-  bool bfirst = true;
+  //rtc::LogSink* ec_log_ = nullptr;
+  //bool bfirst = true;
+  static rtc::LogSink* ec_log_;
   rtc::scoped_refptr<webrtc::AudioTrackInterface> audio_tracks_[5];
 
   rtc::scoped_refptr<webrtc::VideoTrackInterface> video_tracks_[20];

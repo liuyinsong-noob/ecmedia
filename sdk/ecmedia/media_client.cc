@@ -131,6 +131,7 @@ void ReadMediaConfig(const char* filename) {
 }
 
 ///////////////////////MediaClient//////////////////////
+rtc::LogSink* MediaClient::ec_log_ = nullptr;
 MediaClient* MediaClient::m_pInstance = NULL;
 rtc::CriticalSection MediaClient::m_critical;
 
@@ -218,19 +219,30 @@ MediaClient::~MediaClient() {
 // wwx
 bool MediaClient::SetTrace(const char* path, int min_sev) {
   RTC_LOG(INFO) << __FUNCTION__ << ", path: " << path << "min_sev:" << min_sev;
-
-  if (!ec_log_) {
-    ec_log_ = new ECLog(path);
+  if (path) {
+    rtc::LoggingSeverity ls = (rtc::LoggingSeverity)min_sev;
+    if (!ec_log_) {
+      ec_log_ = new ECLog(path);
+      rtc::LogMessage::LogToDebug(rtc::LS_ERROR);
+      rtc::LogMessage::LogTimestamps();
+      // rtc::LogMessage::LogThreads();
+      rtc::LogMessage::AddLogToStream(ec_log_, ls);
+    }
+    return true;
   }
-  rtc::LoggingSeverity ls = (rtc::LoggingSeverity)min_sev;
-  if (bfirst) {
-    rtc::LogMessage::LogToDebug(rtc::LS_ERROR);
-    rtc::LogMessage::LogTimestamps();
-    // rtc::LogMessage::LogThreads();
-    rtc::LogMessage::AddLogToStream(ec_log_, ls);
-    bfirst = false;
-  }
-  return true;
+  return false;
+  //if (!ec_log_) {
+  //  ec_log_ = new ECLog(path);
+  //}
+  //rtc::LoggingSeverity ls = (rtc::LoggingSeverity)min_sev;
+  //if (bfirst) {
+  //  rtc::LogMessage::LogToDebug(rtc::LS_ERROR);
+  //  rtc::LogMessage::LogTimestamps();
+  //  // rtc::LogMessage::LogThreads();
+  //  rtc::LogMessage::AddLogToStream(ec_log_, ls);
+  //  bfirst = false;
+  //}
+  //return true;
 }
 
 #if defined(WEBRTC_ANDROID)

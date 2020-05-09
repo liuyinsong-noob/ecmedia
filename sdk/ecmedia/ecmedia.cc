@@ -12,7 +12,7 @@ ecmedia_sdk::MediaClient* g_ECMedia = nullptr;
 #define ECMEDIA_VERSION "v3.0.0.0.1"
 
 ECMEDIA_API bool ECMedia_set_trace(const char* path, const int level) {
-  g_ECMedia->SetTrace(path, 0);
+  ecmedia_sdk::MediaClient::SetTrace(path, level);
   return true;
 }
 
