@@ -95,9 +95,9 @@ declare_args() {
   # Selects whether debug dumps for the audio processing module
   # should be generated.
   #ytx_begin 
-  apm_debug_dump = true
+  apm_debug_dump = false
   
-  agc_debug_dump = true
+  agc_debug_dump = false
   
   avrong_debug_dump = false
   #ytx_end
