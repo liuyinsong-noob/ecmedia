@@ -275,7 +275,7 @@ bool MediaClient::Initialize() {
 
     m_bInitialized = bOk;
 
-    SetTrace("ecmediaAPI.txt", 1);
+    //SetTrace("ecmediaAPI.txt", 1);
   }
   return bOk;
 #endif
