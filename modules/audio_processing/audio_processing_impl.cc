@@ -49,6 +49,7 @@
 #include "rtc_base/time_utils.h"
 #include "rtc_base/trace_event.h"
 #include "system_wrappers/include/metrics.h"
+#include "rtc_base/configfile.h"
 
 #define RETURN_ON_ERR(expr) \
   do {                      \
@@ -565,12 +566,45 @@ int AudioProcessingImpl::InitializeLocked() {
                                                proc_sample_rate_hz());
   if (constants_.use_experimental_agc) {
     if (!private_submodules_->agc_manager.get()) {
+//ytx_add
+#ifdef WIN32
+      CConfigFile cfgfile("apmconfig.ini");     //AVRONG
+      if (cfgfile.IsOpen() == 0) {           //return 0 if apmconfig.ini is ok.
+        char agc_startup_min_volume[10];
+        char agc_clipped_level_min[10];
+        char agc_enabled_agc2_level_estimator[10];
+        char agc_digital_adaptive_disabled[10];
+
+        cfgfile.GetValue("AGC", "startup_min_volume", agc_startup_min_volume);
+        cfgfile.GetValue("AGC", "clipped_level_min", agc_clipped_level_min);
+        cfgfile.GetValue("AGC", "enabled_agc2_level_estimator",
+            agc_enabled_agc2_level_estimator);
+        cfgfile.GetValue("AGC", "digital_adaptive_disabled",
+            agc_digital_adaptive_disabled);
+
+        private_submodules_->agc_manager.reset(new AgcManagerDirect(
+            public_submodules_->gain_control.get(),
+            public_submodules_->gain_control_for_experimental_agc.get(),
+            atoi(agc_startup_min_volume), atoi(agc_clipped_level_min),
+            (strcmp(agc_enabled_agc2_level_estimator, "true") ? false : true),
+            (strcmp(agc_digital_adaptive_disabled, "true") ? false : true)));
+      }
+      else{
+        private_submodules_->agc_manager.reset(new AgcManagerDirect(
+            public_submodules_->gain_control.get(),
+            public_submodules_->gain_control_for_experimental_agc.get(),
+            constants_.agc_startup_min_volume, constants_.agc_clipped_level_min,
+            constants_.use_experimental_agc_agc2_level_estimation,
+            constants_.use_experimental_agc_agc2_digital_adaptive));      
+      }
+#else
       private_submodules_->agc_manager.reset(new AgcManagerDirect(
           public_submodules_->gain_control.get(),
           public_submodules_->gain_control_for_experimental_agc.get(),
           constants_.agc_startup_min_volume, constants_.agc_clipped_level_min,
           constants_.use_experimental_agc_agc2_level_estimation,
           constants_.use_experimental_agc_agc2_digital_adaptive));
+#endif
     }
     private_submodules_->agc_manager->Initialize();
     private_submodules_->agc_manager->SetCaptureMuted(
@@ -1867,8 +1901,73 @@ void AudioProcessingImpl::InitializeEchoController() {
       private_submodules_->echo_controller =
           echo_control_factory_->Create(proc_sample_rate_hz());
     } else {
+//ytx_add
+#ifdef WIN32
+      CConfigFile cfgfile("apmconfig.ini");  //AVRONG
+      if (cfgfile.IsOpen() == 0) {           //return 0 if apmconfig.ini is ok.
+        char ec3_delay_default[10];
+        char ec3_delay_estimate_smoothing[10];
+        char ec3_delay_candidate_detection_threshold[10];
+        char ec3_delay_selection_thresholds_init[10];
+        char ec3_delay_selection_thresholds_converged[10];
+        char ec3_filter_enable_shadow_filter[10];
+        char ec3_filter_use_linear_filter[10];
+        char ec3_ep_strength_gain[10];
+        char ec3_ep_strength_reverb_decay[10];
+        char ec3_ep_strength_reverb_based_on_render[10];
+        char ec3_ep_strength_echo_can_saturate[10];
+        char ec3_ep_strength_bounded_erl[10];
+        char ec3_echo_model_stationary_gate_slope[10];
+        char ec3_echo_model_noise_gate_slope[10];
+        char ec3_suppressor_enforce_transparent[10];
+        char ec3_suppressor_enforce_empty_higher_bands[10];
+
+        cfgfile.GetValue("EC3", "delay_default", ec3_delay_default);
+        cfgfile.GetValue("EC3", "delay_estimate_smoothing", ec3_delay_estimate_smoothing);
+        cfgfile.GetValue("EC3", "delay_candidate_detection_threshold", ec3_delay_candidate_detection_threshold);
+        cfgfile.GetValue("EC3", "delay_selection_thresholds_init", ec3_delay_selection_thresholds_init);
+        cfgfile.GetValue("EC3", "delay_selection_thresholds_converged", ec3_delay_selection_thresholds_converged);
+        cfgfile.GetValue("EC3", "filter_enable_shadow_filter", ec3_filter_enable_shadow_filter);
+        cfgfile.GetValue("EC3", "filter_use_linear_filter", ec3_filter_use_linear_filter);
+        cfgfile.GetValue("EC3", "ep_strength_gain", ec3_ep_strength_gain);
+        cfgfile.GetValue("EC3", "ep_strength_reverb_decay", ec3_ep_strength_reverb_decay);
+        cfgfile.GetValue("EC3", "ep_strength_reverb_based_on_render", ec3_ep_strength_reverb_based_on_render);
+        cfgfile.GetValue("EC3", "ep_strength_echo_can_saturate", ec3_ep_strength_echo_can_saturate);
+        cfgfile.GetValue("EC3", "ep_strength_bounded_erl", ec3_ep_strength_bounded_erl);
+        cfgfile.GetValue("EC3", "echo_model_stationary_gate_slope", ec3_echo_model_stationary_gate_slope);
+        cfgfile.GetValue("EC3", "echo_model_noise_gate_slope", ec3_echo_model_noise_gate_slope);
+        cfgfile.GetValue("EC3", "suppressor_enforce_transparent", ec3_suppressor_enforce_transparent);
+        cfgfile.GetValue("EC3", "suppressor_enforce_empty_higher_bands", ec3_suppressor_enforce_empty_higher_bands);
+
+        EchoCanceller3Config config;
+        config.delay.default_delay = atoi(ec3_delay_default);
+        config.delay.delay_estimate_smoothing = (float)atof(ec3_delay_estimate_smoothing);
+        config.delay.delay_candidate_detection_threshold = (float)atof(ec3_delay_candidate_detection_threshold);
+        config.delay.delay_selection_thresholds.initial = atoi(ec3_delay_selection_thresholds_init);
+        config.delay.delay_selection_thresholds.converged = atoi(ec3_delay_selection_thresholds_converged);
+        config.filter.enable_shadow_filter_output_usage = strcmp(ec3_filter_enable_shadow_filter, "true") ? false : true;
+        config.filter.use_linear_filter = strcmp(ec3_filter_use_linear_filter, "true") ? false : true;
+        config.ep_strength.default_gain = (float)atof(ec3_ep_strength_gain);
+        config.ep_strength.default_len = (float)atof(ec3_ep_strength_reverb_decay);
+        config.ep_strength.reverb_based_on_render = strcmp(ec3_ep_strength_reverb_based_on_render, "true") ? false : true;
+        config.ep_strength.echo_can_saturate = strcmp(ec3_ep_strength_echo_can_saturate, "true") ? false : true;
+        config.ep_strength.bounded_erl = strcmp(ec3_ep_strength_bounded_erl, "true") ? false : true;
+        config.echo_model.stationary_gate_slope = (float)atof(ec3_echo_model_stationary_gate_slope);
+        config.echo_model.noise_gate_slope = (float)atof(ec3_echo_model_noise_gate_slope);
+        config.suppressor.enforce_transparent = strcmp(ec3_suppressor_enforce_transparent, "true") ? false : true;
+        config.suppressor.enforce_empty_higher_bands = strcmp(ec3_suppressor_enforce_empty_higher_bands, "true") ? false : true;
+
+        private_submodules_->echo_controller = absl::make_unique<EchoCanceller3>(
+          config, proc_sample_rate_hz(), true);
+      }
+      else{
+        private_submodules_->echo_controller = absl::make_unique<EchoCanceller3>(
+            EchoCanceller3Config(), proc_sample_rate_hz(), true);      
+      }
+#else
       private_submodules_->echo_controller = absl::make_unique<EchoCanceller3>(
           EchoCanceller3Config(), proc_sample_rate_hz(), true);
+#endif
     }
 
     capture_nonlocked_.echo_controller_enabled = true;

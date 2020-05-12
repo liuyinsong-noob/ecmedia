@@ -265,97 +265,133 @@ void WebRtcVoiceEngine::Init() {
 
   // Connect the ADM to our audio path.
   adm()->RegisterAudioCallback(audio_state()->audio_transport());
-//ytx_begin
-#ifdef WIN32
+
   // Set default engine options.
   {
-
-    CConfigFile cfgfile("apmconfig.ini");  //AVRONG_DEBUG_DUMP
-    char opt_echo_cancellation[10];
-    char opt_auto_gain_control[10];
-    char opt_noise_suppression[10];
-    char opt_highpass_filter[10];
-    char opt_stereo_swapping[10];
-    char opt_audio_jitter_buffer_max_packets[10];
-    char opt_audio_jitter_buffer_fast_accelerate[10];
-    char opt_audio_jitter_buffer_min_delay_ms[10];
-    char opt_audio_jitter_buffer_enable_rtx_handling[10];
-    char opt_typing_detection[10];
-    char opt_experimental_agc[10];
-    char opt_extended_filter_aec[10];
-    char opt_delay_agnostic_aec[10];
-    char opt_experimental_ns[10];
-    char opt_residual_echo_detector[10];
-    char opt_tx_agc_target_dbov[10];
-    char opt_tx_agc_digital_compression_gain[10];
-    char opt_tx_agc_limiter[10];
-    cfgfile.GetValue("OPTIONS", "echo_cancellation", opt_echo_cancellation);
-    cfgfile.GetValue("OPTIONS", "auto_gain_control", opt_auto_gain_control);
-    cfgfile.GetValue("OPTIONS", "noise_suppression", opt_noise_suppression);
-    cfgfile.GetValue("OPTIONS", "highpass_filter", opt_highpass_filter);
-    cfgfile.GetValue("OPTIONS", "stereo_swapping", opt_stereo_swapping);
-    cfgfile.GetValue("OPTIONS", "audio_jitter_buffer_max_packets",
-                     opt_audio_jitter_buffer_max_packets);
-    cfgfile.GetValue("OPTIONS", "audio_jitter_buffer_fast_accelerate",
-                     opt_audio_jitter_buffer_fast_accelerate);
-    cfgfile.GetValue("OPTIONS", "audio_jitter_buffer_min_delay_ms",
-                     opt_audio_jitter_buffer_min_delay_ms);
-    cfgfile.GetValue("OPTIONS", "audio_jitter_buffer_enable_rtx_handling",
-                     opt_audio_jitter_buffer_enable_rtx_handling);
-    cfgfile.GetValue("OPTIONS", "typing_detection", opt_typing_detection);
-    cfgfile.GetValue("OPTIONS", "experimental_agc", opt_experimental_agc);
-    cfgfile.GetValue("OPTIONS", "extended_filter_aec", opt_extended_filter_aec);
-    cfgfile.GetValue("OPTIONS", "delay_agnostic_aec", opt_delay_agnostic_aec);
-    cfgfile.GetValue("OPTIONS", "experimental_ns", opt_experimental_ns);
-    cfgfile.GetValue("OPTIONS", "residual_echo_detector",
-                     opt_residual_echo_detector);
-    cfgfile.GetValue("OPTIONS", "tx_agc_target_dbov", opt_tx_agc_target_dbov);
-    cfgfile.GetValue("OPTIONS", "tx_agc_digital_compression_gain",
-                     opt_tx_agc_digital_compression_gain);
-    cfgfile.GetValue("OPTIONS", "tx_agc_limiter", opt_tx_agc_limiter);
-
-
+//ytx_begin
+#ifdef WIN32
     AudioOptions options;
-    options.echo_cancellation =
+    CConfigFile cfgfile("apmconfig.ini");     //AVRONG
+    if (cfgfile.IsOpen() == 0) {              //return 0 if apmconfig.ini is ok.
+      char opt_echo_cancellation[10];
+      char opt_auto_gain_control[10];
+      char opt_noise_suppression[10];
+      char opt_highpass_filter[10];
+      char opt_stereo_swapping[10];
+      char opt_audio_jitter_buffer_max_packets[10];
+      char opt_audio_jitter_buffer_fast_accelerate[10];
+      char opt_audio_jitter_buffer_min_delay_ms[10];
+      char opt_audio_jitter_buffer_enable_rtx_handling[10];
+      char opt_typing_detection[10];
+      char opt_experimental_agc[10];
+      char opt_extended_filter_aec[10];
+      char opt_delay_agnostic_aec[10];
+      char opt_experimental_ns[10];
+      char opt_residual_echo_detector[10];
+      char opt_tx_agc_target_dbov[10];
+      char opt_tx_agc_digital_compression_gain[10];
+      char opt_tx_agc_limiter[10];
+      cfgfile.GetValue("OPTIONS", "echo_cancellation", opt_echo_cancellation);
+      cfgfile.GetValue("OPTIONS", "auto_gain_control", opt_auto_gain_control);
+      cfgfile.GetValue("OPTIONS", "noise_suppression", opt_noise_suppression);
+      cfgfile.GetValue("OPTIONS", "highpass_filter", opt_highpass_filter);
+      cfgfile.GetValue("OPTIONS", "stereo_swapping", opt_stereo_swapping);
+      cfgfile.GetValue("OPTIONS", "audio_jitter_buffer_max_packets",
+        opt_audio_jitter_buffer_max_packets);
+      cfgfile.GetValue("OPTIONS", "audio_jitter_buffer_fast_accelerate",
+        opt_audio_jitter_buffer_fast_accelerate);
+      cfgfile.GetValue("OPTIONS", "audio_jitter_buffer_min_delay_ms",
+        opt_audio_jitter_buffer_min_delay_ms);
+      cfgfile.GetValue("OPTIONS", "audio_jitter_buffer_enable_rtx_handling",
+        opt_audio_jitter_buffer_enable_rtx_handling);
+      cfgfile.GetValue("OPTIONS", "typing_detection", opt_typing_detection);
+      cfgfile.GetValue("OPTIONS", "experimental_agc", opt_experimental_agc);
+      cfgfile.GetValue("OPTIONS", "extended_filter_aec", opt_extended_filter_aec);
+      cfgfile.GetValue("OPTIONS", "delay_agnostic_aec", opt_delay_agnostic_aec);
+      cfgfile.GetValue("OPTIONS", "experimental_ns", opt_experimental_ns);
+      cfgfile.GetValue("OPTIONS", "residual_echo_detector",
+        opt_residual_echo_detector);
+      cfgfile.GetValue("OPTIONS", "tx_agc_target_dbov", opt_tx_agc_target_dbov);
+      cfgfile.GetValue("OPTIONS", "tx_agc_digital_compression_gain",
+        opt_tx_agc_digital_compression_gain);
+      cfgfile.GetValue("OPTIONS", "tx_agc_limiter", opt_tx_agc_limiter);
+
+      options.echo_cancellation =
         strcmp(opt_echo_cancellation, "true") ? false : true;
-    options.auto_gain_control =
+      options.auto_gain_control =
         strcmp(opt_auto_gain_control, "true") ? false : true;
-    options.noise_suppression =
+      options.noise_suppression =
         strcmp(opt_noise_suppression, "true") ? false : true;
-    options.highpass_filter =
+      options.highpass_filter =
         strcmp(opt_highpass_filter, "true") ? false : true;
-    options.stereo_swapping =
+      options.stereo_swapping =
         strcmp(opt_stereo_swapping, "true") ? false : true;
-    options.audio_jitter_buffer_max_packets =
+      options.audio_jitter_buffer_max_packets =
         atoi(opt_audio_jitter_buffer_max_packets);
-    options.audio_jitter_buffer_fast_accelerate =
+      options.audio_jitter_buffer_fast_accelerate =
         strcmp(opt_audio_jitter_buffer_fast_accelerate, "true") ? false : true;
-    options.audio_jitter_buffer_min_delay_ms =
+      options.audio_jitter_buffer_min_delay_ms =
         atoi(opt_audio_jitter_buffer_min_delay_ms);
-    options.audio_jitter_buffer_enable_rtx_handling =
+      options.audio_jitter_buffer_enable_rtx_handling =
         strcmp(opt_audio_jitter_buffer_enable_rtx_handling, "true") ? false
-                                                                    : true;
-    options.typing_detection =
+        : true;
+      options.typing_detection =
         strcmp(opt_typing_detection, "true") ? false : true;
-    options.experimental_agc =
+      options.experimental_agc =
         strcmp(opt_experimental_agc, "true") ? false : true;
-    options.extended_filter_aec =
+      options.extended_filter_aec =
         strcmp(opt_extended_filter_aec, "true") ? false : true;
-    options.delay_agnostic_aec =
+      options.delay_agnostic_aec =
         strcmp(opt_delay_agnostic_aec, "true") ? false : true;
-    options.experimental_ns =
+      options.experimental_ns =
         strcmp(opt_experimental_ns, "true") ? false : true;
-    options.residual_echo_detector =
+      options.residual_echo_detector =
         strcmp(opt_residual_echo_detector, "true") ? false : true;
-    options.tx_agc_target_dbov = atoi(opt_tx_agc_target_dbov);
-    options.tx_agc_digital_compression_gain =
+      options.tx_agc_target_dbov = atoi(opt_tx_agc_target_dbov);
+      options.tx_agc_digital_compression_gain =
         atoi(opt_tx_agc_digital_compression_gain);
-    options.tx_agc_limiter = strcmp(opt_tx_agc_limiter, "true") ? false : true;
+      options.tx_agc_limiter = strcmp(opt_tx_agc_limiter, "true") ? false : true;
+    }
+    else {
+      options.echo_cancellation = true;
+      options.auto_gain_control = true;
+      options.noise_suppression = true;
+      options.highpass_filter = true;
+      options.stereo_swapping = false;
+      options.audio_jitter_buffer_max_packets = 200;
+      options.audio_jitter_buffer_fast_accelerate = false;
+      options.audio_jitter_buffer_min_delay_ms = 0;
+      options.audio_jitter_buffer_enable_rtx_handling = false;
+      options.typing_detection = true;
+      options.experimental_agc = false;
+      options.extended_filter_aec = false;
+      options.delay_agnostic_aec = false;
+      options.experimental_ns = false;
+      options.residual_echo_detector = true;
+    }
+#else
+    AudioOptions options;
+    options.echo_cancellation = true;
+    options.auto_gain_control = true;
+    options.noise_suppression = true;
+    options.highpass_filter = true;
+    options.stereo_swapping = false;
+    options.audio_jitter_buffer_max_packets = 200;
+    options.audio_jitter_buffer_fast_accelerate = false;
+    options.audio_jitter_buffer_min_delay_ms = 0;
+    options.audio_jitter_buffer_enable_rtx_handling = false;
+    options.typing_detection = true;
+    options.experimental_agc = false;
+    options.extended_filter_aec = false;
+    options.delay_agnostic_aec = false;
+    options.experimental_ns = false;
+    options.residual_echo_detector = true;
+#endif
+//ytx_end
     bool error = ApplyOptions(options);
     RTC_DCHECK(error);
   }
-#endif
-//ytx_end
+
   initialized_ = true;
 }
 
@@ -573,9 +609,9 @@ bool WebRtcVoiceEngine::ApplyOptions(const AudioOptions& options_in) {
     config.Set<webrtc::ExperimentalNs>(
         new webrtc::ExperimentalNs(*experimental_ns_));
   }
-//ytx_begin
+//ytx_begin  
 #ifdef WIN32
-  CConfigFile cfgfile("apmconfig.ini");  // AVRONG_DEBUG_DUMP
+  CConfigFile cfgfile("apmconfig.ini");  //AVRONG
   char aec_mobile_mode[10];
   char aec_legacy_moderate_suppression_level[10];
   char aec_use_legacy_aec[10];
@@ -592,62 +628,68 @@ bool WebRtcVoiceEngine::ApplyOptions(const AudioOptions& options_in) {
   char agc_use_saturation_protector[10];
   char agc_extra_saturation_margin_db[10];
   char ns_level[15];
-
-  cfgfile.GetValue("AEC", "mobile_mode", aec_mobile_mode);
-  cfgfile.GetValue("AEC", "legacy_moderate_suppression_level",
-                   aec_legacy_moderate_suppression_level);
-  cfgfile.GetValue("AEC", "use_legacy_aec", aec_use_legacy_aec);
-  cfgfile.GetValue("AGC", "gc1enable", agc_gc1enable);
-  cfgfile.GetValue("AGC", "agc_mode", agc_mode);
-  cfgfile.GetValue("AGC", "startup_min_volume", agc_startup_min_volume);
-  cfgfile.GetValue("AGC", "clipped_level_min", agc_clipped_level_min);
-  cfgfile.GetValue("AGC", "enabled_agc2_level_estimator",
-                   agc_enabled_agc2_level_estimator);
-  cfgfile.GetValue("AGC", "digital_adaptive_disabled",
-                   agc_digital_adaptive_disabled);
-  cfgfile.GetValue("AGC", "gc2enable", agc_gc2enable);
-  cfgfile.GetValue("AGC", "fixed_digital", agc_fixed_digital);
-  cfgfile.GetValue("AGC", "adaptive_digital_enable",
-                   agc_adaptive_digital_enable);
-  cfgfile.GetValue("AGC", "level_estimator", agc_level_estimator);
-  cfgfile.GetValue("AGC", "use_saturation_protector",
-                   agc_use_saturation_protector);
-  cfgfile.GetValue("AGC", "extra_saturation_margin_db",
-                   agc_extra_saturation_margin_db);
-  cfgfile.GetValue("NS", "ns_level", ns_level);
- //ytx_end
+  if (cfgfile.IsOpen() == 0) {           //return 0 if apmconfig.ini is ok.
+    cfgfile.GetValue("AEC", "mobile_mode", aec_mobile_mode);
+    cfgfile.GetValue("AEC", "legacy_moderate_suppression_level",
+      aec_legacy_moderate_suppression_level);
+    cfgfile.GetValue("AEC", "use_legacy_aec", aec_use_legacy_aec);
+    cfgfile.GetValue("AGC", "gc1enable", agc_gc1enable);
+    cfgfile.GetValue("AGC", "agc_mode", agc_mode);
+    cfgfile.GetValue("AGC", "startup_min_volume", agc_startup_min_volume);
+    cfgfile.GetValue("AGC", "clipped_level_min", agc_clipped_level_min);
+    cfgfile.GetValue("AGC", "enabled_agc2_level_estimator",
+      agc_enabled_agc2_level_estimator);
+    cfgfile.GetValue("AGC", "digital_adaptive_disabled",
+      agc_digital_adaptive_disabled);
+    cfgfile.GetValue("AGC", "gc2enable", agc_gc2enable);
+    cfgfile.GetValue("AGC", "fixed_digital", agc_fixed_digital);
+    cfgfile.GetValue("AGC", "adaptive_digital_enable",
+      agc_adaptive_digital_enable);
+    cfgfile.GetValue("AGC", "level_estimator", agc_level_estimator);
+    cfgfile.GetValue("AGC", "use_saturation_protector",
+      agc_use_saturation_protector);
+    cfgfile.GetValue("AGC", "extra_saturation_margin_db",
+      agc_extra_saturation_margin_db);
+    cfgfile.GetValue("NS", "ns_level", ns_level);
+  }
+#endif
+//ytx_end
   webrtc::AudioProcessing::Config apm_config = apm()->GetConfig();
 
   if (options.auto_gain_control) {
     const bool enabled = *options.auto_gain_control;
     apm_config.gain_controller1.enabled = enabled;
-    //ytx_begin
-    apm_config.gain_controller1.mode =
-        strcmp(agc_mode, "kAdaptiveAnalog")
-            ? (strcmp(agc_mode, "kAdaptiveDigital")
-                   ? webrtc::AudioProcessing::Config::GainController1::Mode::
-                         kFixedDigital
-                   : webrtc::AudioProcessing::Config::GainController1::Mode::
-                         kAdaptiveDigital)
-            : webrtc::AudioProcessing::Config::GainController1::Mode::
-                  kAdaptiveAnalog;
+//ytx_begin
+#ifdef WIN32	
+    if (cfgfile.IsOpen() == 0) {           //return 0 if apmconfig.ini is ok.
+      apm_config.gain_controller1.mode =
+          strcmp(agc_mode, "kAdaptiveAnalog")
+              ? (strcmp(agc_mode, "kAdaptiveDigital")
+                     ? webrtc::AudioProcessing::Config::GainController1::Mode::
+                           kFixedDigital
+                     : webrtc::AudioProcessing::Config::GainController1::Mode::
+                           kAdaptiveDigital)
+              : webrtc::AudioProcessing::Config::GainController1::Mode::
+                    kAdaptiveAnalog;
 
-    apm_config.gain_controller2.enabled =
-        strcmp(agc_gc2enable, "true") ? false : true;
-    apm_config.gain_controller2.fixed_digital.gain_db = atof(agc_fixed_digital);
-    apm_config.gain_controller2.adaptive_digital.enabled =
-        strcmp(agc_adaptive_digital_enable, "true") ? false : true;
-    apm_config.gain_controller2.adaptive_digital.level_estimator =
-        strcmp(agc_level_estimator, "kRms")
-            ? webrtc::AudioProcessing::Config::GainController2::LevelEstimator::
-                  kPeak
-            : webrtc::AudioProcessing::Config::GainController2::LevelEstimator::
-                  kRms;
-    apm_config.gain_controller2.adaptive_digital.use_saturation_protector =
-        strcmp(agc_use_saturation_protector, "true") ? false : true;
-    apm_config.gain_controller2.adaptive_digital.extra_saturation_margin_db =
-        atof(agc_extra_saturation_margin_db);
-    //ytx_end
+      apm_config.gain_controller2.enabled =
+          strcmp(agc_gc2enable, "true") ? false : true;
+      apm_config.gain_controller2.fixed_digital.gain_db = atof(agc_fixed_digital);
+      apm_config.gain_controller2.adaptive_digital.enabled =
+          strcmp(agc_adaptive_digital_enable, "true") ? false : true;
+      apm_config.gain_controller2.adaptive_digital.level_estimator =
+          strcmp(agc_level_estimator, "kRms")
+              ? webrtc::AudioProcessing::Config::GainController2::LevelEstimator::
+                    kPeak
+              : webrtc::AudioProcessing::Config::GainController2::LevelEstimator::
+                    kRms;
+      apm_config.gain_controller2.adaptive_digital.use_saturation_protector =
+          strcmp(agc_use_saturation_protector, "true") ? false : true;
+      apm_config.gain_controller2.adaptive_digital.extra_saturation_margin_db =
+          atof(agc_extra_saturation_margin_db);
+    }
+#endif		
+//ytx_end
     RTC_LOG(LS_INFO) << "Setting AGC to " << enabled;
   }
   if (options.tx_agc_target_dbov) {
@@ -674,24 +716,23 @@ bool WebRtcVoiceEngine::ApplyOptions(const AudioOptions& options_in) {
                      << *options.typing_detection;
     apm_config.voice_detection.enabled = *options.typing_detection;
   }
-  //ytx_begin
-  if (!strcmp(ns_level, "kLow")) {
-    apm_config.noise_suppression.level =
-        webrtc::AudioProcessing::Config::NoiseSuppression::Level::kLow;
-  } else if (!strcmp(ns_level, "kModerate")) {
-    apm_config.noise_suppression.level =
-        webrtc::AudioProcessing::Config::NoiseSuppression::Level::kModerate;
-  } else if (!strcmp(ns_level, "kHigh")) {
-    apm_config.noise_suppression.level =
-        webrtc::AudioProcessing::Config::NoiseSuppression::Level::kHigh;
-  } else if (!strcmp(ns_level, "kVeryHigh")) {
-    apm_config.noise_suppression.level =
-        webrtc::AudioProcessing::Config::NoiseSuppression::Level::kVeryHigh;
+//ytx_begin
+#ifdef WIN32
+  if (cfgfile.IsOpen() == 0) {           //return 0 if apmconfig.ini is ok.
+    if(!strcmp(ns_level, "kLow")) {
+      apm_config.noise_suppression.level = webrtc::AudioProcessing::Config::NoiseSuppression::Level::kLow;
+    } else if (!strcmp(ns_level, "kModerate")) {
+      apm_config.noise_suppression.level = webrtc::AudioProcessing::Config::NoiseSuppression::Level::kModerate;
+    } else if (!strcmp(ns_level, "kHigh")) {
+      apm_config.noise_suppression.level = webrtc::AudioProcessing::Config::NoiseSuppression::Level::kHigh;
+    } else if (!strcmp(ns_level, "kVeryHigh")) {
+      apm_config.noise_suppression.level = webrtc::AudioProcessing::Config::NoiseSuppression::Level::kVeryHigh;
+    } 
   }
-  //ytx_end
+#endif
+//ytx_end
   apm()->SetExtraOptions(config);
   apm()->ApplyConfig(apm_config);
-#endif
   return true;
 }
 
