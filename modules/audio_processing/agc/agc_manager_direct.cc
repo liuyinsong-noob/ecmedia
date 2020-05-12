@@ -231,7 +231,9 @@ class DebugFile {
 #endif  // WEBRTC_AGC_DEBUG_DUMP
 };
  //ytx_add
+#ifdef WEBRTC_AGC_DEBUG_DUMP
 bool DebugFile::recording_activated_ = false;
+#endif
 
 AgcManagerDirect::AgcManagerDirect(GainControl* gctrl,
                                    VolumeCallbacks* volume_callbacks,
