@@ -13,7 +13,8 @@ class WinD3d9Render : public IVideoRender {
  public:
   WinD3d9Render(
                 void* window,
-                const bool fullscreen);
+                const int render_mode,
+				bool mirror);
   ~WinD3d9Render();
 
   int Init() override;
@@ -41,15 +42,17 @@ class WinD3d9Render : public IVideoRender {
   int UpdateRenderSurface();
   int ResetDevice();
   int FrameSizeChange(int width, int height);
-  int DeliverFrame(webrtc::VideoFrame* video_frame);
+  int DeliverFrame(const webrtc::VideoFrame* video_frame);
 
 
   HWND _hWnd;
-  bool _fullScreen;
+  //bool _fullScreen;
+  int _renderMode;
   RECT _originalHwndRect;
   std::unique_ptr<rtc::PlatformThread> _screenUpdateThread;
   bool _running;
   // EventTimerWrapper* _screenUpdateEvent;
+  bool _mirrorRender;
 
   // Window size
   // or screen size ??

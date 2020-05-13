@@ -4,7 +4,9 @@
 #include <map>
 
 #include "rtc_base/logging.h"
+#include "third_party/libyuv/include/libyuv.h"
 #include "third_party/libyuv/include/libyuv/convert_argb.h"
+#include "system_wrappers/include/sleep.h"
 
 #pragma comment(lib, "d3d9.lib")
 
@@ -20,14 +22,16 @@ struct CUSTOMVERTEX {
 
 WinD3d9Render::WinD3d9Render(
                              void* window,
-                             const bool fullscreen)
+                             const int render_mode,
+							 bool mirror)
     : _hWnd((HWND)window),
-      _fullScreen(fullscreen),
+      _renderMode(render_mode),      
       _screenUpdateThread(new rtc::PlatformThread(ScreenUpdateThreadProc,
                                                   this,
                                                   "win_thread_render_update",
-                                                  rtc::kRealtimePriority)),
+                                                  rtc::kNormalPriority)),
       _running(false),
+      _mirrorRender(mirror),
       _pD3D(nullptr),
       _pd3dDevice(nullptr),
       _pVB(nullptr),
@@ -49,8 +53,6 @@ WinD3d9Render::~WinD3d9Render() {
     _pTexture->Release();
     _pTexture = NULL;
   }
-
-
 }
 
 int WinD3d9Render::Init() {
@@ -108,14 +110,20 @@ bool WinD3d9Render::ScreenUpdateProcess() {
     rtc::CritScope lock(&render_buffer_lock_);
     webrtc::VideoFrame* frame_render = render_buffer_.FrameToRender();
     if (frame_render) {
+      RTC_LOG(LS_INFO) << "render a frame, width:" << _width << " _height:" << _height;
+
       if (_width != frame_render->width() ||
           _height != frame_render->height()) {
         if (FrameSizeChange(frame_render->width(), frame_render->height()) ==
             -1)
           return false;
       }
+
       DeliverFrame(frame_render);
     } else {
+      RTC_LOG(LS_INFO) << "no frame this:" << this
+                       << " theadid:" << &_screenUpdateThread;
+      webrtc::SleepMs(1);      
       continue;
     }
     UpdateRenderSurface();
@@ -126,6 +134,8 @@ bool WinD3d9Render::ScreenUpdateProcess() {
 }
 
 int WinD3d9Render::UpdateRenderSurface() {
+
+	 //RTC_LOG(LS_INFO) << "UpdateRenderSurface:";
   // Clear the backbuffer to a black color
   _pd3dDevice->Clear(0, NULL, D3DCLEAR_TARGET, D3DCOLOR_XRGB(0, 0, 0), 1.0f, 0);
 
@@ -161,18 +171,14 @@ int WinD3d9Render::InitDevice() {
     RTC_LOG(LS_ERROR) << "VideoRenderDirect3D9::InitDevice Could not get window";
     return -1;
   }
+
   _winWidth = (LONG)::GetSystemMetrics(SM_CXSCREEN);
   _winHeight = (LONG)::GetSystemMetrics(SM_CYSCREEN);
   _d3dpp.BackBufferWidth = _winWidth;
   _d3dpp.BackBufferHeight = _winHeight;
-
-  if (!_fullScreen) {
-    _d3dpp.Windowed = TRUE;
-  } else {
-    _d3dpp.Windowed = FALSE;
-    _d3dpp.PresentationInterval = D3DPRESENT_INTERVAL_IMMEDIATE;
-  }
-
+  
+  _d3dpp.Windowed = TRUE;
+ 
   if (InitializeD3D(_hWnd, &_d3dpp) == -1) {
     return -1;
   }
@@ -194,10 +200,10 @@ int WinD3d9Render::InitDevice() {
 
   // Initialize Vertices
   CUSTOMVERTEX Vertices[] = {// front
-                             {-1.0f, -1.0f, 0.0f, 0xffffffff, 0, 1},
-                             {-1.0f, 1.0f, 0.0f, 0xffffffff, 0, 0},
-                             {1.0f, -1.0f, 0.0f, 0xffffffff, 1, 1},
-                             {1.0f, 1.0f, 0.0f, 0xffffffff, 1, 0}};
+                             {-0.5f, -1.0f, 0.0f, 0xffffffff, 0.3, 1},
+                             {-0.5f, 1.0f, 0.0f, 0xffffffff, 0.3, 0},
+                             {0.5f, -1.0f, 0.0f, 0xffffffff, 0.8, 0.6},
+                             {0.5f, 1.0f, 0.0f, 0xffffffff, 0.8, 0.4}};
 
   // Create the vertex buffer.
   if (FAILED(_pd3dDevice->CreateVertexBuffer(sizeof(Vertices), 0,
@@ -250,8 +256,7 @@ int WinD3d9Render::InitializeD3D(HWND hWnd, D3DPRESENT_PARAMETERS* pd3dpp) {
                                        D3DCREATE_MULTITHREADED |
                                        D3DCREATE_FPU_PRESERVE,
                                    pd3dpp, &_pd3dDevice))) {
-      RTC_LOG(LS_ERROR) << " D3D CreateDevice fail ";
-
+      RTC_LOG(LS_ERROR) << " D3D CreateDevice fail";
       return -1;
     }
   }
@@ -277,10 +282,30 @@ VideoRenderType WinD3d9Render::RenderType() {
 }
 
 int WinD3d9Render::RenderFrame(const webrtc::VideoFrame& videoFrame) {
-  
-  rtc::CritScope lock(&render_buffer_lock_);
-  return render_buffer_.AddFrame(&videoFrame);
 
+  if (GetWindowRect(_hWnd, &_originalHwndRect) == 0) {
+    RTC_LOG(LS_ERROR)
+        << "VideoRenderDirect3D9::RenderFrame Could not get window";
+    return -1;
+  }
+  unsigned int width = _originalHwndRect.right - _originalHwndRect.left;
+  unsigned int height = _originalHwndRect.bottom - _originalHwndRect.top;
+  
+  if (_width != videoFrame.width() || _height != videoFrame.height() 
+	  || width != _winWidth || height != _winHeight) {
+    _winWidth = width;
+    _winHeight = height;
+    if (FrameSizeChange(videoFrame.width(), videoFrame.height()) == -1)
+      return -1;
+  }
+
+  DeliverFrame(&videoFrame);
+  UpdateRenderSurface();
+  return 0;
+
+  //rtc::CritScope lock(&render_buffer_lock_);
+  //return render_buffer_.AddFrame(&videoFrame);
+  
 }
 
 int WinD3d9Render::FrameSizeChange(int width, int height) {
@@ -292,37 +317,94 @@ int WinD3d9Render::FrameSizeChange(int width, int height) {
   _height = height;
 
   // clean the previous texture
-
   if (_pTexture != NULL) {
     _pTexture->Release();
     _pTexture = NULL;
   }
 
   HRESULT ret = E_POINTER;
-
   if (_pd3dDevice)
-
     ret = _pd3dDevice->CreateTexture(_width, _height, 1, 0, D3DFMT_A8R8G8B8,
                                      D3DPOOL_MANAGED, &_pTexture, NULL);
   if (FAILED(ret)) {
     _pTexture = NULL;
     return -1;
   }
+  
+  // Initialize Vertices
+  CUSTOMVERTEX Vertices[] = {// front
+                             {-1.0f, -1.0f, 0.0f, 0xffffffff, 0, 1},
+                             {-1.0f, 1.0f, 0.0f, 0xffffffff, 0, 0},
+                             {1.0f, -1.0f, 0.0f, 0xffffffff, 1, 1},
+                             {1.0f, 1.0f, 0.0f, 0xffffffff, 1, 0}};
+  float winRatio = (float)_winWidth / (float)_winHeight;
+  float videoRatio = (float)_width / (float)_height;
+
+  if (_renderMode == 0) {
+    //剪切模式 crop
+    if (winRatio >= videoRatio) {
+      Vertices[0].x = Vertices[1].x = -1.0f;
+      Vertices[2].x = Vertices[3].x = 1.0f;
+
+      Vertices[1].y = Vertices[3].y = ((float)_winWidth * (float)_height) /
+                                      ((float)_winHeight * (float)_width);
+      Vertices[0].y = Vertices[2].y = -Vertices[1].y;
+    } else {
+      Vertices[2].x = Vertices[3].x = ((float)_winHeight * (float)_width) /
+                                      ((float)_winWidth * (float)_height);
+      Vertices[0].x = Vertices[1].x = -Vertices[2].x;
+
+      Vertices[0].y = Vertices[2].y = -1.0f;
+      Vertices[1].y = Vertices[3].y = 1.0f;
+    }
+  } else {
+    //黑边模式 fit
+    if (winRatio >= videoRatio) {
+      Vertices[2].x = Vertices[3].x = ((float)_winHeight * (float)_width) /
+                                      ((float)_winWidth * (float)_height);
+	  Vertices[0].x = Vertices[1].x = -Vertices[2].x;
+
+      Vertices[0].y = Vertices[2].y = -1.0f;
+      Vertices[1].y = Vertices[3].y = 1.0f;
+    } else {
+      Vertices[0].x = Vertices[1].x = -1.0f;
+      Vertices[2].x = Vertices[3].x = 1.0;
+
+      Vertices[1].y = Vertices[3].y = ((float)_winWidth * (float)_height) /
+                                      ((float)_winHeight * (float)_width);
+      Vertices[0].y = Vertices[2].y = -Vertices[1].y;
+    }
+  }
+
+  RTC_LOG(LS_INFO) << " winWidth:" << _winWidth << " winHeight:" << _winHeight
+                   << " videoW:" << _width << " videoH:" << _height;
+
+  RTC_LOG(LS_INFO) << "\n 0.x=" << Vertices[0].x << " 0.y=" << Vertices[0].y
+                   << "\n 1.x=" << Vertices[1].x << " 1.y=" << Vertices[1].y
+                   << "\n 2.x=" << Vertices[2].x << " 2.y=" << Vertices[2].y
+                   << "\n 3.x=" << Vertices[3].x << " 3.y=" << Vertices[3].y;
+
+  // Now we fill the vertex buffer.
+  VOID* pVertices;
+  if (FAILED(_pVB->Lock(0, sizeof(Vertices), (void**)&pVertices, 0))) {
+    RTC_LOG(LS_ERROR) << "Failed to  lock the vertex buffer.";
+    return -1;
+  }
+  memcpy(pVertices, Vertices, sizeof(Vertices));
+  _pVB->Unlock();
 
   return 0;
 }
 
 // Called from video engine when a new frame should be rendered.
-int WinD3d9Render::DeliverFrame(webrtc::VideoFrame* video_frame) {
+int WinD3d9Render::DeliverFrame(const webrtc::VideoFrame* video_frame) {
   // CriticalSectionScoped cs(_critSect);
   if (!_pTexture) {
     RTC_LOG(LS_ERROR) << "Texture for rendering not initialized.";
-
     return -1;
   }
 
   D3DLOCKED_RECT lr;
-
   if (FAILED(_pTexture->LockRect(0, &lr, NULL, 0))) {
     RTC_LOG(LS_ERROR) << "Failed to lock a texture in D3D9.";
     return -1;
@@ -332,29 +414,43 @@ int WinD3d9Render::DeliverFrame(webrtc::VideoFrame* video_frame) {
   rtc::scoped_refptr<webrtc::I420BufferInterface> buffer(
       video_frame->video_frame_buffer()->ToI420());
 
-  libyuv::I420ToARGB(buffer->DataY(), buffer->StrideY(), buffer->DataU(),
-                     buffer->StrideU(), buffer->DataV(), buffer->StrideV(),
-                     pRect, lr.Pitch, buffer->width(), buffer->height());
+  if (_mirrorRender) {
+    std::unique_ptr<uint8_t[]> mirror_image_;
+    mirror_image_.reset(new uint8_t[buffer->width() * buffer->height()*4]);
 
+    rtc::scoped_refptr<webrtc::I420BufferInterface> buffer(
+        video_frame->video_frame_buffer()->ToI420());
+    libyuv::I420ToARGB(buffer->DataY(), buffer->StrideY(), buffer->DataU(),
+                       buffer->StrideU(), buffer->DataV(), buffer->StrideV(),
+                       mirror_image_.get(), lr.Pitch, buffer->width(),
+                       buffer->height());
+
+    libyuv::ARGBMirror(mirror_image_.get(), lr.Pitch,
+                       pRect, lr.Pitch,
+                       buffer->width(), buffer->height());
+  } else {
+    libyuv::I420ToARGB(buffer->DataY(), buffer->StrideY(), buffer->DataU(),
+                       buffer->StrideU(), buffer->DataV(), buffer->StrideV(),
+                       pRect, lr.Pitch, buffer->width(), buffer->height());
+  }
+  
   if (FAILED(_pTexture->UnlockRect(0))) {
     RTC_LOG(LS_ERROR) << "Failed to unlock a texture in D3D9.";
-
     return -1;
   }
+
   return 0;
 }
-
 
  int WinD3d9Render::StartRenderInternal() 
  {
   if (_running) {
-  
     RTC_LOG(LS_WARNING) << "render thread already running.";
     return -1;
-	}
+  }
 
-   _running = true;
-  _screenUpdateThread->Start();
+  _running = true;
+  //_screenUpdateThread->Start();
  
    return 0;
  }
@@ -365,6 +461,6 @@ int WinD3d9Render::DeliverFrame(webrtc::VideoFrame* video_frame) {
      RTC_LOG(LS_WARNING) << "no render thread is running.";
 
    _running = false;
-   _screenUpdateThread->Stop();
+   //_screenUpdateThread->Stop();
    return 0;
  }

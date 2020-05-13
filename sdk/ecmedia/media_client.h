@@ -42,7 +42,6 @@
 #include "modules/desktop_capture/desktop_frame.h"
 #include "modules/video_capture/video_capture.h"
 
-
 #include "ec_log.h"
 
 #ifdef WEBRTC_ANDROID
@@ -111,49 +110,92 @@ class ECDesktopCapture : public rtc::AdaptedVideoTrackSource,
 
 namespace win_render {
 #if defined(WEBRTC_WIN)
-class VideoRenderer : public rtc::VideoSinkInterface<webrtc::VideoFrame> {
- public:
-  VideoRenderer(HWND wnd,
-                int mode,
-                int width,
-                int height,
-                webrtc::VideoTrackInterface* track_to_render);
-  virtual ~VideoRenderer();
 
-  void Lock() { ::EnterCriticalSection(&buffer_lock_); }
+//class VideoRenderer : public rtc::VideoSinkInterface<webrtc::VideoFrame> {
+// public:
+//  VideoRenderer(HWND wnd,
+//                int mode,
+//                int width,
+//                int height,
+//                webrtc::VideoTrackInterface* track_to_render);
+//  virtual ~VideoRenderer();
+//
+//  void Lock() { ::EnterCriticalSection(&buffer_lock_); }
+//
+//  void Unlock() { ::LeaveCriticalSection(&buffer_lock_); }
+//
+//  // VideoSinkInterface implementation
+//  void OnFrame(const webrtc::VideoFrame& frame) override;
+//  void Paint();
+//  bool UpdateVideoTrack(webrtc::VideoTrackInterface* track_to_render);
+//
+//  const BITMAPINFO& bmi() const { return bmi_; }
+//  const uint8_t* image() const { return image_.get(); }
+//  HWND handle() const { return wnd_; }
+//  //add by ytx_wx begin...
+//  bool GetisLocal (){ return isLocal_;}
+//  void SetLocal(bool islocal) { isLocal_ = islocal; }
+//  //add by ytx_wx_end ...
+// protected:
+//  void SetSize(int width, int height);
+//
+//  enum {
+//    SET_SIZE,
+//    RENDER_FRAME,
+//  };
+//
+// private:
+//  HWND wnd_;
+//  bool isLocal_ = false;  // add by ytx_wx
+//  HDC hDC_;
+//  BITMAPINFO bmi_;
+//  std::unique_ptr<uint8_t[]> image_;
+//  CRITICAL_SECTION buffer_lock_;
+//  rtc::scoped_refptr<webrtc::VideoTrackInterface> rendered_track_;
+//  int mode_;
+//};
 
-  void Unlock() { ::LeaveCriticalSection(&buffer_lock_); }
-
-  // VideoSinkInterface implementation
-  void OnFrame(const webrtc::VideoFrame& frame) override;
-  void Paint();
-  bool UpdateVideoTrack(webrtc::VideoTrackInterface* track_to_render);
-
-  const BITMAPINFO& bmi() const { return bmi_; }
-  const uint8_t* image() const { return image_.get(); }
-  HWND handle() const { return wnd_; }
-  //add by ytx_wx begin...
-  bool GetisLocal (){ return isLocal_;}
-  void SetLocal(bool islocal) { isLocal_ = islocal; }
-  //add by ytx_wx_end ...
- protected:
-  void SetSize(int width, int height);
-
-  enum {
-    SET_SIZE,
-    RENDER_FRAME,
-  };
-
- private:
-  HWND wnd_;
-  bool isLocal_ = false;  // add by ytx_wx
-  HDC hDC_;
-  BITMAPINFO bmi_;
-  std::unique_ptr<uint8_t[]> image_;
-  CRITICAL_SECTION buffer_lock_;
-  rtc::scoped_refptr<webrtc::VideoTrackInterface> rendered_track_;
-  int mode_;
-};
+//class VideoRenderer : public rtc::VideoSinkInterface<webrtc::VideoFrame> {
+// public:
+//  VideoRenderer(HWND wnd,
+//                int mode,
+//                int width,
+//                int height,
+//                webrtc::VideoTrackInterface* track_to_render);
+//  virtual ~VideoRenderer();
+//
+//  void Lock() { ::EnterCriticalSection(&buffer_lock_); }
+//
+//  void Unlock() { ::LeaveCriticalSection(&buffer_lock_); }
+//
+//  // VideoSinkInterface implementation
+//  void OnFrame(const webrtc::VideoFrame& frame) override;
+//  void Paint(uint32_t ts);
+//  bool UpdateVideoTrack(webrtc::VideoTrackInterface* track_to_render);
+//
+//  const BITMAPINFO& bmi() const { return bmi_; }
+//  const uint8_t* image() const { return image_.get(); }
+//  HWND handle() const { return wnd_; }
+//
+// protected:
+//  void SetSize(int width, int height);
+//
+//  enum {
+//    SET_SIZE,
+//    RENDER_FRAME,
+//  };
+//
+// private:
+//  HWND wnd_;
+//  HDC hDC_;
+//  BITMAPINFO bmi_;
+//  std::unique_ptr<uint8_t[]> image_;
+//  CRITICAL_SECTION buffer_lock_;
+//  rtc::scoped_refptr<webrtc::VideoTrackInterface> rendered_track_;
+//  int mode_;
+//
+//  webrtc::Clock* clock_;
+//};
 
 // A little helper class to make sure we always to proper locking and
 // unlocking when working with VideoRenderer buffers.
@@ -167,7 +209,7 @@ class AutoLock {
   T* obj_;
 };
 
-class RenderWndsManager : public sigslot::has_slots<> {
+class RenderWndsManager{
  public:
   RenderWndsManager();
   ~RenderWndsManager();
@@ -175,27 +217,29 @@ class RenderWndsManager : public sigslot::has_slots<> {
   void AddRemoteRenderWnd(int channelId,
                           int render_mode,
                           void* winRemote,
+                          rtc::Thread* worker_thread,
                           webrtc::VideoTrackInterface* track_to_render);
-  bool UpdateVideoTrack(int channelId,
+  bool UpdateRemoteVideoTrack(int channelId,
                         webrtc::VideoTrackInterface* track_to_render);
-  bool UpdateLocalVideoTrack(int channelId,
-                             webrtc::VideoTrackInterface* track_to_render);
-  void* GetRemoteWnd(int channelId);
   bool RemoveRemoteRenderWnd(int channelId);
+
   void SetLocalRenderWnd(int channelId,
                          int render_mode,
                          void* winLocal,
+                         rtc::Thread* worker_thread,
                          webrtc::VideoTrackInterface* track_to_render);
+  bool UpdateLocalVideoTrack(int channelId,
+                             webrtc::VideoTrackInterface* track_to_render);
+  
   bool StartLocalRenderer(int window_id,
                           webrtc::VideoTrackInterface* local_video);
+  bool RemoveLocalRenderer(int channelId);
+
   bool StartRemoteRenderer(int channelId,
                            webrtc::VideoTrackInterface* remote_video);
 
-  std::vector<int> GetAllRemoteChanelIds();
-
  private:
-  using ptr_render = std::unique_ptr<win_render::VideoRenderer>;
-  // ptr_render localRender_ = nullptr;
+  using ptr_render = std::unique_ptr<VideoRenderer>;
   std::map<int, ptr_render> mapRemoteRenderWnds;
   std::map<int, ptr_render> mapLocalRenderWnds;
 };

@@ -1,13 +1,15 @@
 #include "video_renderer.h"
 
 #include "win_d3d9_render.h"
+#include "rtc_base/logging.h"
 
 // TODO : STANDARD_RENDERING is platform relevant
 #define STANDARD_RENDERING kRenderWindows
 
 VideoRenderer* VideoRenderer::CreateVideoRenderer(
     void* windows,
-    bool full_screen,
+    int render_mode,
+	bool mirror,
     webrtc::VideoTrackInterface* track_to_render,
     rtc::Thread* worker_thread,
     VideoRenderType type) {
@@ -16,20 +18,28 @@ VideoRenderer* VideoRenderer::CreateVideoRenderer(
     render_type = STANDARD_RENDERING;
   }
 
-  return new VideoRenderImpl(windows, full_screen, track_to_render, worker_thread,
+  RTC_LOG(LS_INFO) << " CreateVideoRenderer "
+                   << " hubin_render";
+  return new VideoRenderImpl(windows, render_mode, mirror, track_to_render,
+                             worker_thread,
                              render_type);
 }
 
 
 VideoRenderImpl::VideoRenderImpl(void* windows,
-                                 bool full_screen,
+                                 int render_mode,
+	                             bool mirror,
                                  webrtc::VideoTrackInterface* track_to_render,
                                  rtc::Thread* worker_thread,
                                  VideoRenderType render_type)
     : worker_thread_(worker_thread), rendered_track_(track_to_render) {
   switch (render_type) {
     case kRenderWindows: {
-      _ptrRenderer = new WinD3d9Render(windows, full_screen);
+      RTC_LOG(LS_INFO) << " new WinD3d9Render begins " << (long)this
+                       << " hubin_render";
+      _ptrRenderer = new WinD3d9Render(windows, render_mode, mirror);
+      RTC_LOG(LS_INFO) << " CreateVideoRenderer ends " << (long)this << " render:" << _ptrRenderer
+                       << " hubin_render";
       break;
     }
       // TODO: other Platform render implementor
@@ -39,20 +49,25 @@ VideoRenderImpl::VideoRenderImpl(void* windows,
 
   if (_ptrRenderer) {
     if (_ptrRenderer->Init() == -1) {
-      // WEBRTC_TRACE(kTraceError, kTraceVideoRenderer, _id,
-      //             "%s: _ptrRenderer->Init() failed.", __FUNCTION__);
+       RTC_LOG(LS_ERROR) << __FUNCTION__ << " _ptrRenderer->Init() failed.";
     }
   }
-
-  // note: crash here because of thread_check
-  worker_thread_->Invoke<void>(RTC_FROM_HERE, 
-      [&] {return rendered_track_->AddOrUpdateSink(this, rtc::VideoSinkWants());
-  });
+  if (rendered_track_) {
+    // note: crash here because of thread_check
+    worker_thread_->Invoke<void>(RTC_FROM_HERE, [&] {
+      return rendered_track_->AddOrUpdateSink(this, rtc::VideoSinkWants());
+    });
+  }
 }
 
 VideoRenderImpl::~VideoRenderImpl() {
-  worker_thread_->Invoke<void>(RTC_FROM_HERE, [&] {
-    return rendered_track_->RemoveSink(this); });
+
+ RTC_LOG(LS_INFO) << " ~VideoRenderImpl begins " << (long)this
+                   << " hubin_render";
+  if (rendered_track_) {
+	worker_thread_->Invoke<void>(RTC_FROM_HERE, [&] {
+		return rendered_track_->RemoveSink(this); });
+  }
   if (_ptrRenderer) {
     VideoRenderType videoRenderType = _ptrRenderer->RenderType();
     switch (videoRenderType) {
@@ -61,6 +76,10 @@ VideoRenderImpl::~VideoRenderImpl() {
             reinterpret_cast<WinD3d9Render*>(_ptrRenderer);
         _ptrRenderer = nullptr;
         delete ptrRenderer;
+
+		RTC_LOG(LS_INFO) << " ~VideoRenderImpl begins " << (long)this
+                         << "render " << ptrRenderer
+                         << " hubin_render";
         break;
       }
       default:
@@ -69,7 +88,7 @@ VideoRenderImpl::~VideoRenderImpl() {
   }
 }
 
-int VideoRenderImpl::StartRender(int channel_id) {
+int VideoRenderImpl::StartRender() {
   // windows platform render start is create a render thread.
   if (_ptrRenderer)
     _ptrRenderer->StartRenderInternal();
@@ -77,11 +96,24 @@ int VideoRenderImpl::StartRender(int channel_id) {
   return 0;
 }
 
-int VideoRenderImpl::StopRender(int channel_id) {
+int VideoRenderImpl::StopRender() {
   // windows platform render start is create a render thread.
   if (_ptrRenderer)
     _ptrRenderer->StopRenderInternal();
 
+  return 0;
+}
+int VideoRenderImpl::UpdateVideoTrack(webrtc::VideoTrackInterface* track_to_render) {
+
+	worker_thread_->Invoke<void>(RTC_FROM_HERE, [&] {
+    if (rendered_track_) {
+      rendered_track_->RemoveSink(this);
+    }
+    rendered_track_ = track_to_render;
+    if (rendered_track_) {
+      rendered_track_->AddOrUpdateSink(this, rtc::VideoSinkWants());
+    }
+	});
   return 0;
 }
 
@@ -93,6 +125,8 @@ void VideoRenderImpl::OnFrame(const webrtc::VideoFrame& frame) {
     switch (render_type) {
       case kRenderWindows:
         _ptrRenderer->RenderFrame(frame);
+        break;
+      case kRenderiOS:
         break;
       default:
         break;
