@@ -566,45 +566,12 @@ int AudioProcessingImpl::InitializeLocked() {
                                                proc_sample_rate_hz());
   if (constants_.use_experimental_agc) {
     if (!private_submodules_->agc_manager.get()) {
-//ytx_add
-#ifdef WIN32
-      CConfigFile cfgfile("apmconfig.ini");     //AVRONG
-      if (cfgfile.IsOpen() == 0) {           //return 0 if apmconfig.ini is ok.
-        char agc_startup_min_volume[10];
-        char agc_clipped_level_min[10];
-        char agc_enabled_agc2_level_estimator[10];
-        char agc_digital_adaptive_disabled[10];
-
-        cfgfile.GetValue("AGC", "startup_min_volume", agc_startup_min_volume);
-        cfgfile.GetValue("AGC", "clipped_level_min", agc_clipped_level_min);
-        cfgfile.GetValue("AGC", "enabled_agc2_level_estimator",
-            agc_enabled_agc2_level_estimator);
-        cfgfile.GetValue("AGC", "digital_adaptive_disabled",
-            agc_digital_adaptive_disabled);
-
-        private_submodules_->agc_manager.reset(new AgcManagerDirect(
-            public_submodules_->gain_control.get(),
-            public_submodules_->gain_control_for_experimental_agc.get(),
-            atoi(agc_startup_min_volume), atoi(agc_clipped_level_min),
-            (strcmp(agc_enabled_agc2_level_estimator, "true") ? false : true),
-            (strcmp(agc_digital_adaptive_disabled, "true") ? false : true)));
-      }
-      else{
-        private_submodules_->agc_manager.reset(new AgcManagerDirect(
-            public_submodules_->gain_control.get(),
-            public_submodules_->gain_control_for_experimental_agc.get(),
-            constants_.agc_startup_min_volume, constants_.agc_clipped_level_min,
-            constants_.use_experimental_agc_agc2_level_estimation,
-            constants_.use_experimental_agc_agc2_digital_adaptive));      
-      }
-#else
       private_submodules_->agc_manager.reset(new AgcManagerDirect(
           public_submodules_->gain_control.get(),
           public_submodules_->gain_control_for_experimental_agc.get(),
           constants_.agc_startup_min_volume, constants_.agc_clipped_level_min,
           constants_.use_experimental_agc_agc2_level_estimation,
           constants_.use_experimental_agc_agc2_digital_adaptive));
-#endif
     }
     private_submodules_->agc_manager->Initialize();
     private_submodules_->agc_manager->SetCaptureMuted(

@@ -93,7 +93,7 @@ int LevelFromGainError(int gain_error, int level) {
 int InitializeGainControl(GainControl* gain_control,
                           bool disable_digital_adaptive) {
 //ytx_add
-#ifdef WIN32
+#ifdef WIN32_ERROR
   CConfigFile cfgfile("apmconfig.ini");     //AVRONG
   if (cfgfile.IsOpen() == 0) {              //return 0 if apmconfig.ini is ok.
     char agc_mode[20];

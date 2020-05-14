@@ -64,9 +64,14 @@ ApmDataDumper::ApmDataDumper(int instance_index)
 //ytx_begin
 #ifdef WIN32
   CConfigFile cfgfile("apmconfig.ini");  // AVRONG_DEBUG_DUMP
-  char apm_dump_enable[10];
-  cfgfile.GetValue("OPTIONS", "apm_dump_enable", apm_dump_enable);
-  recording_activated_ = strcmp(apm_dump_enable, "true") ? false : true;
+  if (cfgfile.IsOpen() == 0) {           //return 0 if apmconfig.ini is ok.
+    char apm_dump_enable[10];
+    cfgfile.GetValue("OPTIONS", "apm_dump_enable", apm_dump_enable);
+    recording_activated_ = strcmp(apm_dump_enable, "true") ? false : true;
+  }
+  else {
+    recording_activated_ = false;
+  }
 #else
   recording_activated_ = false;
 #endif
