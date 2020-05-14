@@ -92,78 +92,6 @@ int LevelFromGainError(int gain_error, int level) {
 
 int InitializeGainControl(GainControl* gain_control,
                           bool disable_digital_adaptive) {
-//ytx_add
-#ifdef WIN32_ERROR
-  CConfigFile cfgfile("apmconfig.ini");     //AVRONG
-  if (cfgfile.IsOpen() == 0) {              //return 0 if apmconfig.ini is ok.
-    char agc_mode[20];
-    char opt_tx_agc_target_dbov[10];
-    char opt_tx_agc_digital_compression_gain[10];
-    char opt_tx_agc_limiter[10];
-
-    cfgfile.GetValue("OPTIONS", "tx_agc_target_dbov", opt_tx_agc_target_dbov);
-    cfgfile.GetValue("OPTIONS", "tx_agc_digital_compression_gain", opt_tx_agc_digital_compression_gain);
-    cfgfile.GetValue("OPTIONS", "tx_agc_limiter", opt_tx_agc_limiter);
-    cfgfile.GetValue("AGC", "agc_mode", agc_mode);
-
-    GainControl::Mode cfgMode;
-    if (!strcmp(agc_mode, "kAdaptiveAnalog")) {
-      cfgMode = GainControl::kAdaptiveAnalog;
-    }
-    else if (!strcmp(agc_mode, "kAdaptiveDigital")) {
-      cfgMode = GainControl::kAdaptiveDigital;
-    }
-    else { // if (!strcmp(agc_mode, "kFixedDigital")) {
-      cfgMode = GainControl::kFixedDigital;
-    }
-
-    if (gain_control->set_mode(cfgMode) != 0) {
-      RTC_LOG(LS_ERROR) << "set_mode(GainControl::kFixedDigital) failed.";
-      return -1;
-    }
-    const int target_level_dbfs = disable_digital_adaptive ? 0 : atoi(opt_tx_agc_target_dbov);
-    if (gain_control->set_target_level_dbfs(target_level_dbfs) != 0) {
-      RTC_LOG(LS_ERROR) << "set_target_level_dbfs() failed.";
-      return -1;
-    }
-    const int compression_gain_db =
-      disable_digital_adaptive ? 0 : atoi(opt_tx_agc_digital_compression_gain);
-    if (gain_control->set_compression_gain_db(compression_gain_db) != 0) {
-      RTC_LOG(LS_ERROR) << "set_compression_gain_db() failed.";
-      return -1;
-    }
-    const bool enable_limiter = !disable_digital_adaptive;
-    if (gain_control->enable_limiter(enable_limiter) != 0) {
-      RTC_LOG(LS_ERROR) << "enable_limiter() failed.";
-      return -1;
-    }
-    return 0;
-  }
-  else
-  {
-    if (gain_control->set_mode(GainControl::kFixedDigital) != 0) {
-      RTC_LOG(LS_ERROR) << "set_mode(GainControl::kFixedDigital) failed.";
-      return -1;
-    }
-    const int target_level_dbfs = disable_digital_adaptive ? 0 : 2;
-    if (gain_control->set_target_level_dbfs(target_level_dbfs) != 0) {
-      RTC_LOG(LS_ERROR) << "set_target_level_dbfs() failed.";
-      return -1;
-    }
-    const int compression_gain_db =
-        disable_digital_adaptive ? 0 : kDefaultCompressionGain;
-    if (gain_control->set_compression_gain_db(compression_gain_db) != 0) {
-      RTC_LOG(LS_ERROR) << "set_compression_gain_db() failed.";
-      return -1;
-    }
-    const bool enable_limiter = !disable_digital_adaptive;
-    if (gain_control->enable_limiter(enable_limiter) != 0) {
-      RTC_LOG(LS_ERROR) << "enable_limiter() failed.";
-      return -1;
-    }
-    return 0;  
-  }
-#else
   if (gain_control->set_mode(GainControl::kFixedDigital) != 0) {
     RTC_LOG(LS_ERROR) << "set_mode(GainControl::kFixedDigital) failed.";
     return -1;
@@ -185,7 +113,6 @@ int InitializeGainControl(GainControl* gain_control,
     return -1;
   }
   return 0;
-#endif
 }
 
 }  // namespace
