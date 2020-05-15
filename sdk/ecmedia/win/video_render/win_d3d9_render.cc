@@ -7,6 +7,7 @@
 #include "third_party/libyuv/include/libyuv.h"
 #include "third_party/libyuv/include/libyuv/convert_argb.h"
 #include "system_wrappers/include/sleep.h"
+#include "api/video/i420_buffer.h"
 
 #pragma comment(lib, "d3d9.lib")
 
@@ -135,7 +136,12 @@ bool WinD3d9Render::ScreenUpdateProcess() {
 
 int WinD3d9Render::UpdateRenderSurface() {
 
-	 //RTC_LOG(LS_INFO) << "UpdateRenderSurface:";
+  if (!_pd3dDevice) {
+    RTC_LOG(LS_ERROR) << "d3dDevice not created.";
+    return -1;
+  }
+
+  //RTC_LOG(LS_INFO) << "UpdateRenderSurface:";
   // Clear the backbuffer to a black color
   _pd3dDevice->Clear(0, NULL, D3DCLEAR_TARGET, D3DCOLOR_XRGB(0, 0, 0), 1.0f, 0);
 
@@ -282,23 +288,6 @@ VideoRenderType WinD3d9Render::RenderType() {
 }
 
 int WinD3d9Render::RenderFrame(const webrtc::VideoFrame& videoFrame) {
-
-  if (GetWindowRect(_hWnd, &_originalHwndRect) == 0) {
-    RTC_LOG(LS_ERROR)
-        << "VideoRenderDirect3D9::RenderFrame Could not get window";
-    return -1;
-  }
-  unsigned int width = _originalHwndRect.right - _originalHwndRect.left;
-  unsigned int height = _originalHwndRect.bottom - _originalHwndRect.top;
-  
-  if (_width != videoFrame.width() || _height != videoFrame.height() 
-	  || width != _winWidth || height != _winHeight) {
-    _winWidth = width;
-    _winHeight = height;
-    if (FrameSizeChange(videoFrame.width(), videoFrame.height()) == -1)
-      return -1;
-  }
-
   DeliverFrame(&videoFrame);
   UpdateRenderSurface();
   return 0;
@@ -399,6 +388,37 @@ int WinD3d9Render::FrameSizeChange(int width, int height) {
 // Called from video engine when a new frame should be rendered.
 int WinD3d9Render::DeliverFrame(const webrtc::VideoFrame* video_frame) {
   // CriticalSectionScoped cs(_critSect);
+
+  rtc::scoped_refptr<webrtc::I420BufferInterface> buffer(
+      video_frame->video_frame_buffer()->ToI420());
+
+  if (video_frame->rotation() != webrtc::kVideoRotation_0) {
+    buffer = webrtc::I420Buffer::Rotate(*buffer, video_frame->rotation());
+  }
+
+  if (GetWindowRect(_hWnd, &_originalHwndRect) == 0) {
+    RTC_LOG(LS_ERROR)
+        << "VideoRenderDirect3D9::DeliverFrame Could not get window";
+    return -1;
+  }
+  unsigned int width = _originalHwndRect.right - _originalHwndRect.left;
+  unsigned int height = _originalHwndRect.bottom - _originalHwndRect.top;
+
+  if (_width != buffer->width() || _height != buffer->height() ||
+      width != _winWidth || height != _winHeight) {
+
+	RTC_LOG(LS_INFO) << "VideoRenderDirect3D9::DeliverFrame width:" << width
+                     << " height:" << height << " _winWidth:" << _winWidth
+                     << " _winHeight:" << _winHeight << " _width:" << _width
+                     << " _height:" << _height << " frame.w:" << buffer->width()
+                     << " frame.h:" << buffer->height();
+    _winWidth = width;
+    _winHeight = height;
+    if (FrameSizeChange(buffer->width(), buffer->height()) == -1)
+      return -1;
+  }
+
+
   if (!_pTexture) {
     RTC_LOG(LS_ERROR) << "Texture for rendering not initialized.";
     return -1;
@@ -410,9 +430,6 @@ int WinD3d9Render::DeliverFrame(const webrtc::VideoFrame* video_frame) {
     return -1;
   }
   UCHAR* pRect = (UCHAR*)lr.pBits;
-
-  rtc::scoped_refptr<webrtc::I420BufferInterface> buffer(
-      video_frame->video_frame_buffer()->ToI420());
 
   if (_mirrorRender) {
     std::unique_ptr<uint8_t[]> mirror_image_;
