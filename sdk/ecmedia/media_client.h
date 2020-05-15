@@ -840,6 +840,14 @@ class MediaClient : public sigslot::has_slots<> {
       ECMedia_ConferenceParticipantCallback* callback);
   int SetConferenceParticipantCallbackTimeInterVal(int channelid,
                                                    int timeInterVal);
+  //ytx_wx add
+  int GetCallStats(char* statistics, int length);
+  bool GetVideoStreamStats(char* jsonVideoStats, int length,int channel_id);
+  bool GetVoiceStreamStats(char* jsonAudioStats,
+                               int length,
+                               int channel_id);
+  //wx end
+
 #if defined(WEBRTC_ANDROID)
   bool SaveLocalVideoTrack(int channelId, webrtc::VideoTrackInterface* track);
   webrtc::VideoTrackInterface* GetLocalVideoTrack(int channelId);

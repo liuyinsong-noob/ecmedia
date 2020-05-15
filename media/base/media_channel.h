@@ -785,6 +785,8 @@ class VoiceMediaChannel : public MediaChannel, public Delayable {
       ECMedia_ConferenceParticipantCallback* callback) { return 0; }
   virtual int SetConferenceParticipantCallbackTimeInterVal(
       int32_t timeInterVal) { return 0; }
+  virtual bool GetVoiceStream(VoiceMediaInfo* info) { return true; }
+
   //ytx_end
 };
 

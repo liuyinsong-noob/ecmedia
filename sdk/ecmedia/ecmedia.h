@@ -860,7 +860,9 @@ ECMEDIA_API int ECMedia_setECMedia_ConferenceParticipantCallback(int channelid,E
  * @return success return 0, eles return -1;
  */
 ECMEDIA_API int ECMedia_setECMedia_ConferenceParticipantCallbackTimeInterVal(int channelid,int timeInterVal);
-//ECMEDIA_API void ECMedia_add_tracks();
+//add by ytx_wx
+ECMEDIA_API int ECMedia_get_stats(char* statistics, int length);
+ECMEDIA_API bool ECMedia_get_StreamStats(char* statistics,int length,int channel_id);
 #ifdef __cplusplus
 }
 #endif

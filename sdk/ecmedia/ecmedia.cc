@@ -761,3 +761,13 @@ int ECMedia_setECMedia_ConferenceParticipantCallback(int channelid, ECMedia_Conf
 int ECMedia_setECMedia_ConferenceParticipantCallbackTimeInterVal( int channelid, int timeInterVal) {
   return g_ECMedia->SetConferenceParticipantCallbackTimeInterVal(channelid,timeInterVal);
 }
+int ECMedia_get_stats(char* statistics, int length) {
+  return g_ECMedia->GetCallStats(statistics, length);
+}
+bool ECMedia_get_StreamStats(char* statistics,int length,int channel_id) {
+  if (channel_id == 0) {
+    return g_ECMedia->GetVoiceStreamStats(statistics, length, channel_id);
+  } else {
+    return g_ECMedia->GetVideoStreamStats(statistics, length, channel_id);
+  }
+}

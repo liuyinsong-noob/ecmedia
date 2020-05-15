@@ -2482,8 +2482,18 @@ cricket::WebRtcVideoChannel* MediaClient::GetInternalVideoChannel(
   RTC_LOG(INFO) << __FUNCTION__ << "(),"
                 << " begin... "
                 << ", channelId: " << channelId;
-  if (mVideoChannels_[channelId]) {
+  // modify by ytx_wx begin
+  // if (mVideoChannels_[channelId]) {
+  if (mVideoChannels_.find(channelId) !=
+      mVideoChannels_.end()) {  
     cricket::VideoChannel* videoChannel = mVideoChannels_[channelId];
+	if (!videoChannel)
+	{
+      RTC_LOG(LS_ERROR) << __FUNCTION__ << "(),"
+                    << "cricket::VideoChannel nullptr ";
+      return nullptr;
+	}
+  //end...
     cricket::VideoMediaChannel* media_channel = videoChannel->media_channel();
     // downcast from VideoMediaChannel to WebrtcVideoChannel
     cricket::WebRtcVideoChannel* internal_video_channel =
@@ -2506,7 +2516,7 @@ bool MediaClient::SetVideoNackStatus(const int channelId,
       GetInternalVideoChannel(channelId);
 
   if (internal_video_channel) {
-    // TODO: thread_checker检查
+    // TODO: thread_checker
     cricket::VideoSendParameters send_params =
         internal_video_channel->GetSendParameters();
 
@@ -2539,7 +2549,7 @@ bool MediaClient::SetVideoUlpFecStatus(const int channelId,
   cricket::WebRtcVideoChannel* internal_video_channel =
       GetInternalVideoChannel(channelId);
   if (internal_video_channel) {
-    // TODO: thread_checker检查
+    // TODO: thread_checker
     cricket::VideoSendParameters send_params =
         internal_video_channel->GetSendParameters();
 
@@ -3086,6 +3096,166 @@ int MediaClient::SetConferenceParticipantCallbackTimeInterVal(
   }
   return ret;
 }
+
+// add by ytx_wx  get call_statistics
+int MediaClient::GetCallStats(char* statistics, int length) {
+
+   API_LOG(LS_INFO) << "MediaClient::GetCallStats begin...";
+   if (call_) {
+    webrtc::Call::Stats stats = call_->GetStats();
+    Json::Value Callstats(Json::objectValue);
+    Callstats["Estimated available send bandwidth"] = stats.send_bandwidth_bps;
+    Callstats["Estimated available receive bandwidth"] =stats.recv_bandwidth_bps;
+    Callstats["Rtt_ms"] = stats.rtt_ms;
+    std::string ret = Callstats.toStyledString();
+		if (length > (int)ret.length()) {
+		  std::memset(statistics, 0, length);
+		  std ::memcpy(statistics, ret.c_str(), ret.length());
+		  API_LOG(INFO) << " stats.send_bandwidth_bps: " << stats.send_bandwidth_bps
+						<< "  stats.recv_bandwidth_bps: "
+						<< stats.recv_bandwidth_bps << "  rtt: " << stats.rtt_ms;
+		  return 0;
+		} else {
+		  API_LOG(LS_ERROR) << "char statistics too short!";
+		  return -1;
+		}
+   } else {
+     API_LOG(LS_ERROR) << "call_ is nullptr!";
+     return -1;
+   }
+}
+
+bool MediaClient::GetVideoStreamStats(char* jsonVideoStats,
+                                      int length,
+                                      int channel_id) {
+  API_LOG(LS_INFO) << "begin... "
+                   << "channel_id: " << channel_id;
+  bool bOk = false;
+  cricket::WebRtcVideoChannel* video_channel_internal =
+      GetInternalVideoChannel(channel_id);
+
+  if (video_channel_internal) {
+    cricket::VideoMediaInfo info;
+
+    std::map<int, ChannelSsrcs>::iterator it =
+        mapChannelSsrcs_.find(channel_id);
+    bool is_receiveonly_channel =
+        bool(it->second.ssrcRemote
+                 .size());  // Determine if the channel is a receiveonly channel
+
+    bOk = worker_thread_->Invoke<bool>(RTC_FROM_HERE, [&] {
+      return video_channel_internal->GetVideoStreamStats(
+          !is_receiveonly_channel, &info);
+    });
+    // Convert string to json
+    if (jsonVideoStats) {
+      if (!is_receiveonly_channel && info.senders.size() > 0) {
+        Json::Value Stream(Json::objectValue);
+        Json::Value SendStream(Json::objectValue);
+        SendStream["channel_id"] = channel_id;
+        SendStream["codec_name"] = info.senders[0].codec_name;
+        SendStream["wideth"] = info.senders[0].send_frame_width;
+        SendStream["height"] = info.senders[0].send_frame_height;
+        SendStream["framerate"] = info.senders[0].framerate_sent;
+        SendStream["nominal_bitrate"] = info.senders[0].nominal_bitrate;
+        SendStream["fraction_lost"] = info.senders[0].fraction_lost;
+
+        Stream["SendStreams"].append(SendStream);
+
+        std::string sendstream = Stream.toStyledString();
+        if (length > (int)sendstream.length()) {
+          std::memset(jsonVideoStats, 0, length);
+          std::memcpy(jsonVideoStats, sendstream.c_str(), sendstream.length());
+          API_LOG(LS_INFO) << jsonVideoStats;
+        } else {
+          API_LOG(LS_ERROR) << "char too short!";
+          return false;
+        }
+      } else if (is_receiveonly_channel && info.receivers.size() > 0) {
+        Json::Value Stream(Json::objectValue);
+        Json::Value ReceiveStream(Json::objectValue);
+        ReceiveStream["channel_id"] = channel_id;
+        ReceiveStream["codec_name"] = info.receivers[0].codec_name;
+        ReceiveStream["width"] = info.receivers[0].frame_width;
+        ReceiveStream["height"] = info.receivers[0].frame_height;
+        ReceiveStream["framerate"] = info.receivers[0].framerate_rcvd;
+        ReceiveStream["fraction_lost"] = info.receivers[0].fraction_lost;
+
+        Stream["ReceicverStreams"].append(ReceiveStream);
+
+        std::string receiverstream = Stream.toStyledString();
+        if (length > (int)receiverstream.length()) {
+          std::memset(jsonVideoStats, 0, length);
+          std::memcpy(jsonVideoStats, receiverstream.c_str(),
+                      receiverstream.length());
+          API_LOG(LS_INFO) << jsonVideoStats;
+        } else {
+          API_LOG(LS_ERROR) << "char too short!";
+          return false;
+        }
+      }
+    }
+    return bOk;
+  } else {
+    API_LOG(LS_ERROR) << "nullptr!";
+    return false;
+  }
+}
+
+bool MediaClient::GetVoiceStreamStats(char* jsonAudioStats,
+                                      int length,
+                                      int channel_id) {
+  bool bOk = false;
+
+  if (mVoiceChannels_.find(channel_id) != mVoiceChannels_.end()) {
+    cricket::VoiceChannel* voicechannel =
+        mVoiceChannels_.find(channel_id)->second;
+    cricket::VoiceMediaChannel* voice_channel_internal = nullptr;
+
+    if (voicechannel) {
+      voice_channel_internal = voicechannel->media_channel();
+    }
+    if (voice_channel_internal) {
+      cricket::VoiceMediaInfo info;
+      bOk = worker_thread_->Invoke<bool>(RTC_FROM_HERE, [&] {
+        return voice_channel_internal->GetVoiceStream(&info);
+      });
+
+      // Convert string to json
+      Json::Value Audio(Json::objectValue);
+      Json::Value Send(Json::objectValue);
+      Json::Value Receive(Json::objectValue);
+
+      Audio["channel_id"] = channel_id;
+      if (info.senders.size() > 0) {
+        Send["codec_name"] = info.senders[0].codec_name;
+        Send["fraction_lost"] = info.senders[0].fraction_lost;
+      }
+      if (info.receivers.size() > 0) {
+        Receive["codec_name"] = info.receivers[0].codec_name;
+        Receive["fraction_lost"] = info.receivers[0].fraction_lost;
+      }
+
+      Audio["SendStream"].append(Send);
+      Audio["Receive"].append(Receive);
+
+      std::string ret = Audio.toStyledString();
+	  if (length>(int)ret.length())
+	  {
+        std::memset(jsonAudioStats, 0, length);
+        std::memcpy(jsonAudioStats, ret.c_str(), ret.length());
+        API_LOG(LS_INFO) << jsonAudioStats;
+	  } 
+	  else
+	  {
+        API_LOG(LS_ERROR) << "char is too short!";
+	  }
+    }
+  }
+  return true;
+}
+
+
 // android interface
 #if defined(WEBRTC_ANDROID)
 bool MediaClient::SaveLocalVideoTrack(int channelId,

@@ -159,6 +159,10 @@ class WebRtcVideoChannel : public VideoMediaChannel, public webrtc::Transport {
   
   //ytx_add
   bool RequestRemoteSsrc(const int channelId, int flag,int32_t ssrc) ;
+
+  //ytx_wx add
+  bool GetVideoStreamStats(bool isSendStream,VideoMediaInfo* info);
+
   // E2E Encrypted Video Frame API
   // Set a frame decryptor to a particular ssrc that will intercept all
   // incoming video frames and attempt to decrypt them before forwarding the

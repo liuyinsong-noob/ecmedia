@@ -250,6 +250,7 @@ class WebRtcVoiceMediaChannel final : public VoiceMediaChannel,
   //ytx_begin by wx
   int Register_ECMedia_ConferenceParticipantCallback(ECMedia_ConferenceParticipantCallback* callback)override;
   int SetConferenceParticipantCallbackTimeInterVal(int32_t timeInterVal)override;
+  bool GetVoiceStream(VoiceMediaInfo* info) override;
   //ytx_end
  private:
   bool SetOptions(const AudioOptions& options);

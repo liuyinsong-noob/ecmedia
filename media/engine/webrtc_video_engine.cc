@@ -1542,8 +1542,25 @@ bool WebRtcVideoChannel::RequestRemoteSsrc( const int channelId,int flag,int32_t
 
   return true;
 }
-//ytx_end
-
+// ytx_wx begin
+bool WebRtcVideoChannel::GetVideoStreamStats(bool isSendStream, VideoMediaInfo* info) {
+  RTC_DCHECK_RUN_ON(&thread_checker_);
+  if (info)
+  {
+    info->Clear();
+	  if (isSendStream)
+	  {
+       FillSenderStats(info, false);
+	  } 
+	  else
+	  {
+       FillReceiverStats(info, false);
+	  }
+       return true;
+  }
+  return false;
+}
+// ytx_end
 
 void WebRtcVideoChannel::OnRtcpReceived(rtc::CopyOnWriteBuffer packet,
                                         int64_t packet_time_us) {

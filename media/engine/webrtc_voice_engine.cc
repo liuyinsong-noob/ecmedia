@@ -2561,5 +2561,14 @@ int WebRtcVoiceMediaChannel::SetConferenceParticipantCallbackTimeInterVal(
     }
     
 }
+bool WebRtcVoiceMediaChannel::GetVoiceStream(VoiceMediaInfo* info) {
+    RTC_DCHECK(worker_thread_checker_.IsCurrent());
+	if (info)
+	{
+    GetStats(info);
+      return true;
+	}
+    return false;
+}
 //ytx_end
 }  // namespace cricket
