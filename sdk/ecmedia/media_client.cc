@@ -3099,30 +3099,30 @@ int MediaClient::SetConferenceParticipantCallbackTimeInterVal(
 
 // add by ytx_wx  get call_statistics
 int MediaClient::GetCallStats(char* statistics, int length) {
-
-   API_LOG(LS_INFO) << "MediaClient::GetCallStats begin...";
-   if (call_) {
+  API_LOG(LS_INFO) << "MediaClient::GetCallStats begin...";
+  if (call_) {
     webrtc::Call::Stats stats = call_->GetStats();
     Json::Value Callstats(Json::objectValue);
-    Callstats["Estimated available send bandwidth"] = stats.send_bandwidth_bps;
-    Callstats["Estimated available receive bandwidth"] =stats.recv_bandwidth_bps;
+    Callstats["Estimated_send_kbps"] = (int)(stats.send_bandwidth_bps*0.001);
+    Callstats["Estimated_received_kbps"] =
+        (int)(stats.recv_bandwidth_bps*0.001);
     Callstats["Rtt_ms"] = stats.rtt_ms;
     std::string ret = Callstats.toStyledString();
-		if (length > (int)ret.length()) {
-		  std::memset(statistics, 0, length);
-		  std ::memcpy(statistics, ret.c_str(), ret.length());
-		  API_LOG(INFO) << " stats.send_bandwidth_bps: " << stats.send_bandwidth_bps
-						<< "  stats.recv_bandwidth_bps: "
-						<< stats.recv_bandwidth_bps << "  rtt: " << stats.rtt_ms;
-		  return 0;
-		} else {
-		  API_LOG(LS_ERROR) << "char statistics too short!";
-		  return -1;
-		}
-   } else {
-     API_LOG(LS_ERROR) << "call_ is nullptr!";
-     return -1;
-   }
+    if (length > (int)ret.length()) {
+      std::memset(statistics, 0, length);
+      std ::memcpy(statistics, ret.c_str(), ret.length());
+      API_LOG(INFO) << " stats.send_bandwidth_bps: " << stats.send_bandwidth_bps
+                    << "  stats.recv_bandwidth_bps: "
+                    << stats.recv_bandwidth_bps << "  rtt: " << stats.rtt_ms;
+      return 0;
+    } else {
+      API_LOG(LS_ERROR) << "char statistics too short!";
+      return -1;
+    }
+  } else {
+    API_LOG(LS_ERROR) << "call_ is nullptr!";
+    return -1;
+  }
 }
 
 bool MediaClient::GetVideoStreamStats(char* jsonVideoStats,
@@ -3154,11 +3154,12 @@ bool MediaClient::GetVideoStreamStats(char* jsonVideoStats,
         Json::Value SendStream(Json::objectValue);
         SendStream["channel_id"] = channel_id;
         SendStream["codec_name"] = info.senders[0].codec_name;
-        SendStream["wideth"] = info.senders[0].send_frame_width;
+        SendStream["width"] = info.senders[0].send_frame_width;
         SendStream["height"] = info.senders[0].send_frame_height;
         SendStream["framerate"] = info.senders[0].framerate_sent;
-        SendStream["nominal_bitrate"] = info.senders[0].nominal_bitrate;
-        SendStream["fraction_lost"] = info.senders[0].fraction_lost;
+        SendStream["encoded_kbps"] = (int)(info.senders[0].nominal_bitrate*0.001);
+        SendStream["total_kbps"] = (int)(info.senders[0].total_bitrate*0.001);
+        SendStream["fraction_lost"] = (int)(info.senders[0].fraction_lost*100);
 
         Stream["SendStreams"].append(SendStream);
 
@@ -3179,7 +3180,8 @@ bool MediaClient::GetVideoStreamStats(char* jsonVideoStats,
         ReceiveStream["width"] = info.receivers[0].frame_width;
         ReceiveStream["height"] = info.receivers[0].frame_height;
         ReceiveStream["framerate"] = info.receivers[0].framerate_rcvd;
-        ReceiveStream["fraction_lost"] = info.receivers[0].fraction_lost;
+        ReceiveStream["fraction_lost"] = (int)(info.receivers[0].fraction_lost*100);
+        ReceiveStream["received_kbps"] = (int)(info.receivers[0].received_bitrates* 0.001);
 
         Stream["ReceicverStreams"].append(ReceiveStream);
 
@@ -3226,14 +3228,13 @@ bool MediaClient::GetVoiceStreamStats(char* jsonAudioStats,
       Json::Value Send(Json::objectValue);
       Json::Value Receive(Json::objectValue);
 
-      Audio["channel_id"] = channel_id;
       if (info.senders.size() > 0) {
         Send["codec_name"] = info.senders[0].codec_name;
-        Send["fraction_lost"] = info.senders[0].fraction_lost;
+        Send["fraction_lost"] = (int)(info.senders[0].fraction_lost*100);
       }
       if (info.receivers.size() > 0) {
         Receive["codec_name"] = info.receivers[0].codec_name;
-        Receive["fraction_lost"] = info.receivers[0].fraction_lost;
+        Receive["fraction_lost"] = (int)(info.receivers[0].fraction_lost*100);
       }
 
       Audio["SendStream"].append(Send);

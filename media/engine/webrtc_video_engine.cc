@@ -2316,6 +2316,8 @@ VideoSenderInfo WebRtcVideoChannel::WebRtcVideoSendStream::GetVideoSenderInfo(
 
   info.nominal_bitrate = stats.media_bitrate_bps;
 
+  info.total_bitrate = stats.media_bitrate_bps;  // add by ytx_wx   get stream total_bitrate_bps
+
   info.content_type = stats.content_type;
   info.huge_frames_sent = stats.huge_frames_sent;
 
@@ -2338,6 +2340,8 @@ VideoSenderInfo WebRtcVideoChannel::WebRtcVideoSendStream::GetVideoSenderInfo(
     info.firs_rcvd += stream_stats.rtcp_packet_type_counts.fir_packets;
     info.nacks_rcvd += stream_stats.rtcp_packet_type_counts.nack_packets;
     info.plis_rcvd += stream_stats.rtcp_packet_type_counts.pli_packets;
+    
+    info.total_bitrate = stream_stats.total_bitrate_bps==0?info.total_bitrate:stream_stats.total_bitrate_bps; // ytx_wx add 
   }
 
   if (!stats.substreams.empty()) {
@@ -2783,6 +2787,8 @@ WebRtcVideoChannel::WebRtcVideoReceiveStream::GetVideoReceiverInfo(
   info.nacks_sent = stats.rtcp_packet_type_counts.nack_packets;
 
   info.timing_frame_info = stats.timing_frame_info;
+ 
+  info.received_bitrates = stats.total_bitrate_bps;//add by ytx_wx;
 
   if (log_stats)
     RTC_LOG(LS_INFO) << stats.ToString(rtc::TimeMillis());

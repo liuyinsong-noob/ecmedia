@@ -24,6 +24,9 @@
 
 namespace webrtc {
 namespace {
+
+#define ytx_ssrc 0xFFFFFFF0 //add by ytx_wx
+
 // Periodic time interval for processing samples for |freq_offset_counter_|.
 const int64_t kFreqOffsetProcessIntervalMs = 40000;
 
@@ -660,6 +663,7 @@ void ReceiveStatisticsProxy::RtcpPacketTypesCounterUpdated(
     uint32_t ssrc,
     const RtcpPacketTypeCounter& packet_counter) {
   rtc::CritScope lock(&crit_);
+  ssrc = ssrc & ytx_ssrc;  //add ytx_wx
   if (stats_.ssrc != ssrc)
     return;
   stats_.rtcp_packet_type_counts = packet_counter;
@@ -669,6 +673,7 @@ void ReceiveStatisticsProxy::StatisticsUpdated(
     const webrtc::RtcpStatistics& statistics,
     uint32_t ssrc) {
   rtc::CritScope lock(&crit_);
+  ssrc = ssrc & ytx_ssrc;  // add ytx_wx
   // TODO(pbos): Handle both local and remote ssrcs here and RTC_DCHECK that we
   // receive stats from one of them.
   if (stats_.ssrc != ssrc)
@@ -682,6 +687,7 @@ void ReceiveStatisticsProxy::StatisticsUpdated(
 
 void ReceiveStatisticsProxy::CNameChanged(const char* cname, uint32_t ssrc) {
   rtc::CritScope lock(&crit_);
+  ssrc = ssrc & ytx_ssrc;  // add ytx_wx
   // TODO(pbos): Handle both local and remote ssrcs here and RTC_DCHECK that we
   // receive stats from one of them.
   if (stats_.ssrc != ssrc)
@@ -695,6 +701,7 @@ void ReceiveStatisticsProxy::DataCountersUpdated(
   size_t last_total_bytes = 0;
   size_t total_bytes = 0;
   rtc::CritScope lock(&crit_);
+  ssrc = ssrc & ytx_ssrc;     // add ytx_wx
   if (ssrc == stats_.ssrc) {
     last_total_bytes = stats_.rtp_stats.transmitted.TotalBytes();
     total_bytes = counters.transmitted.TotalBytes();

@@ -525,6 +525,7 @@ struct VideoSenderInfo : public MediaSenderInfo {
   int framerate_input = 0;
   int framerate_sent = 0;
   int nominal_bitrate = 0;
+  int total_bitrate = 0;//add by wx;
   int adapt_reason = 0;
   int adapt_changes = 0;
   int avg_encode_ms = 0;
@@ -545,6 +546,9 @@ struct VideoReceiverInfo : public MediaReceiverInfo {
   std::vector<SsrcGroup> ssrc_groups;
   // TODO(hbos): Move this to |VideoMediaInfo::receive_codecs|?
   std::string decoder_implementation_name;
+
+  int received_bitrates = 0; //add by ytx_wx
+
   int packets_concealed = 0;
   int firs_sent = 0;
   int plis_sent = 0;
