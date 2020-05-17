@@ -1685,6 +1685,10 @@ rtc_source_set("ecmedia_obj") {
    "ecmedia/ec_common_types.cc",
    "ecmedia/media_client.h",
    "ecmedia/media_client.cc",
+   "ecmedia/render_manager.h",
+   "ecmedia/render_manager.cc",
+   "ecmedia/video_renderer.h",
+   "ecmedia/video_render_defines.h",
   ]
     configs += [
         "..:no_exit_time_destructors",
@@ -1709,14 +1713,14 @@ rtc_source_set("ecmedia_obj") {
       sources +=[
         "ecmedia/ios/objc_client.mm",
         "ecmedia/ios/objc_client.h",
-        "ecmedia/ios/RenderManager.mm",
-        "ecmedia/ios/RenderManager.h",
         "ecmedia/ios/video_capture_iOS_device_info.mm",
         "ecmedia/ios/video_capture_iOS_device_info.h",
         "ecmedia/ios/video_capture_iOS_device_info_objc.mm",
         "ecmedia/ios/video_capture_iOS_device_info_objc.h",
         "ecmedia/ios/VideoRenderView.mm",
         "ecmedia/ios/VideoRenderView.h",
+        "ecmedia/ios/objc_video_renderer_impl.mm",
+        "ecmedia/ios/objc_video_renderer_impl.h",
         ]
         include_dirs = ["objc","objc/base", "objc/Framework/Headers","ecmedia/win",]
     }
@@ -1728,9 +1732,8 @@ rtc_source_set("ecmedia_obj") {
       "ecmedia/win/video_render/win_d3d9_render.cc",
       "ecmedia/win/video_render/video_render_frames.cc",
       "ecmedia/win/video_render/video_render_frames.h",
-      "ecmedia/win/video_render/video_renderer.cc",
-      "ecmedia/win/video_render/video_renderer.h",
-      "ecmedia/win/video_render/video_render_defines.h",
+      "ecmedia/win/video_render/video_renderer_impl.cc",
+      "ecmedia/win/video_render/video_renderer_impl.h",
       "ecmedia/win/video_capturer/i_video_capturer.h",
       "ecmedia/win/video_capturer/video_capturer.cc",
       "ecmedia/win/video_capturer/video_capturer.h",

@@ -70,7 +70,7 @@
 
 #define API_LOG(sev) RTC_LOG(sev) << "[API] " << __FUNCTION__ << " "
 #if defined(WEBRTC_IOS)
-#include "sdk/objc/api/ecmedia/objc_client.h"
+#include "sdk/ecmedia/ios/objc_client.h"
 #endif
 
 namespace ecmedia_sdk {
@@ -275,7 +275,7 @@ bool MediaClient::Initialize() {
 
     m_bInitialized = bOk;
 
-    //SetTrace("ecmediaAPI.txt", 1);
+   // SetTrace("ecmediaAPI.txt", 1);
   }
   return bOk;
 #endif
@@ -633,8 +633,9 @@ void MediaClient::DestroyChannel(int channel_id, bool is_video) {
       if (t.first == channel_id) {
         RtpSenders_[t.first].get()->SetTrack(nullptr);
 
-#if defined(WEBRTC_WIN)
-        renderWndsManager_->RemoveLocalRenderer(t.first);
+#if defined(WEBRTC_WIN) || defined(WEBRTC_IOS)
+        renderWndsManager_->UpdateOrAddVideoTrack(t.first, nullptr);
+        renderWndsManager_->StopRender(t.first, nullptr);
 #endif
         RtpSenders_.erase(RtpSenders_.find(channel_id));
         TrackChannels_.erase(TrackChannels_.find(channel_id));
@@ -644,8 +645,8 @@ void MediaClient::DestroyChannel(int channel_id, bool is_video) {
     it = mVideoChannels_.begin();
     while (it != mVideoChannels_.end()) {
       if (it->first == channel_id) {
-#if defined(WEBRTC_WIN)
-        renderWndsManager_->RemoveRemoteRenderWnd(channel_id);
+#if defined(WEBRTC_WIN) || defined(WEBRTC_IOS)
+        renderWndsManager_->RemoveAllVideoRender(channel_id);
 #endif
         cricket::VideoChannel* channel = it->second;
         if (channel != nullptr) {
@@ -1206,20 +1207,21 @@ bool MediaClient::SelectVideoSource(
                                                            {})));
       EC_CHECK_VALUE(receiverVideo, false);
 
-#if defined WEBRTC_WIN
+#if defined WEBRTC_WIN || defined(WEBRTC_IOS)
       if (renderWndsManager_) {
-        renderWndsManager_->StartRemoteRenderer(
+        renderWndsManager_->UpdateOrAddVideoTrack(
             channelid, static_cast<webrtc::VideoTrackInterface*>(
                            receiverVideo->track().get()));
+        renderWndsManager_->StartRender(channelid, nullptr);
       }
-#elif defined(WEBRTC_IOS)
-      rtc::VideoSinkInterface<webrtc::VideoFrame>* sink =
-      ObjCCallClient:: GetInstance()->getRemoteVideoSilkByChannelID(channelid);
-      if(sink){
-          static_cast<webrtc::VideoTrackInterface*>(
-            receiverVideo->track().get())->AddOrUpdateSink(sink,
-                                                           rtc::VideoSinkWants());
-      }
+//#elif defined(WEBRTC_IOS)
+//      rtc::VideoSinkInterface<webrtc::VideoFrame>* sink =
+//      ObjCCallClient:: GetInstance()->getRemoteVideoSilkByChannelID(channelid);
+//      if(sink){
+//          static_cast<webrtc::VideoTrackInterface*>(
+//            receiverVideo->track().get())->AddOrUpdateSink(sink,
+//                                                           rtc::VideoSinkWants());
+//      }
 #elif defined(WEBRTC_ANDROID)
 	rtc::VideoSinkInterface<webrtc::VideoFrame>* sink =
 		GetRemoteVideoSink(channelid);
@@ -1324,8 +1326,9 @@ MediaClient::SelectVideoSourceOnFlight(int channelid,
                       transceiver->internal()->sender_internal()->SetTrack(
                           video_track)) {
                     // EC_CHECK_VALUE(renderWndsManager_, false);
-                    renderWndsManager_->UpdateLocalVideoTrack(channelid,
+                    renderWndsManager_->UpdateOrAddVideoTrack(channelid,
                                                               video_track);
+                    renderWndsManager_->StartRender(channelid, nullptr);
                   }
                 }
 
@@ -1400,8 +1403,9 @@ void MediaClient::DestroyLocalVideoTrack(
     for (auto t : TrackChannels_) {
       if (t.second == track) {
         RtpSenders_[t.first].get()->SetTrack(nullptr);
-#if defined(WEBRTC_WIN)
-        renderWndsManager_->RemoveLocalRenderer(t.first);
+#if defined(WEBRTC_WIN) || defined(WEBRTC_IOS)
+        renderWndsManager_->UpdateOrAddVideoTrack(t.first, nullptr);
+        renderWndsManager_->StopRender(t.first, nullptr);
 #endif
       }
     }
@@ -1694,7 +1698,7 @@ bool MediaClient::DisposeConnect() {
   });
 
   m_bControll = false;
-#if defined WEBRTC_WIN
+#if defined WEBRTC_WIN || defined(WEBRTC_IOS)
   renderWndsManager_.reset(nullptr);
 #endif
 
@@ -1794,9 +1798,9 @@ cricket::RtpDataChannel* MediaClient::rtp_data_channel() const {
 }
 
 bool MediaClient::InitRenderWndsManager() {
-#if defined WEBRTC_WIN
+#if defined WEBRTC_WIN || defined(WEBRTC_IOS)
   if (!renderWndsManager_) {
-    renderWndsManager_.reset(new win_render::RenderWndsManager());
+    renderWndsManager_.reset(new RenderManager());
   }
   EC_CHECK_VALUE(renderWndsManager_, false);
 #endif
@@ -1810,15 +1814,15 @@ bool MediaClient::SetLocalVideoRenderWindow(int channel_id,
   EC_CHECK_VALUE(view, false);
   EC_CHECK_VALUE((channel_id >= 0), false);
 
-#if defined WEBRTC_WIN
+#if defined WEBRTC_WIN || defined(WEBRTC_IOS)
   if (!renderWndsManager_) {
     InitRenderWndsManager();
   }
 
-  renderWndsManager_->SetLocalRenderWnd(channel_id, render_mode, view,
-                                        worker_thread_, nullptr);
-#elif defined(WEBRTC_IOS)
-  ObjCCallClient::GetInstance()->SetLocalWindowView(view);
+  renderWndsManager_->AttachVideoRender(channel_id, view, render_mode, true,
+                                        worker_thread_);
+//#elif defined(WEBRTC_IOS)
+//  ObjCCallClient::GetInstance()->SetLocalWindowView(view);
 #endif
   return true;
 }
@@ -1827,11 +1831,12 @@ bool MediaClient::PreviewTrack(int window_id, void* video_track) {
   API_LOG(INFO) << "window_id: " << window_id << ", window_id: " << window_id;
   webrtc::VideoTrackInterface* track =
       (webrtc::VideoTrackInterface*)(video_track);
-#if defined WEBRTC_WIN
+#if defined WEBRTC_WIN ||defined(WEBRTC_IOS)
   EC_CHECK_VALUE(renderWndsManager_, false);
-  return renderWndsManager_->StartLocalRenderer(window_id, track);
-#elif defined(WEBRTC_IOS)
-  ObjCCallClient::GetInstance()->PreviewTrack(window_id, video_track);
+  renderWndsManager_->UpdateOrAddVideoTrack(window_id, track);
+  return renderWndsManager_->StartRender(window_id, nullptr);
+//#elif defined(WEBRTC_IOS)
+//  ObjCCallClient::GetInstance()->PreviewTrack(window_id, track);
 #endif
   track = NULL;
   return true;
@@ -1842,17 +1847,17 @@ bool MediaClient::SetRemoteVideoRenderWindow(int channel_Id,
                                              void* view) {
   API_LOG(INFO) << "channel_id: " << channel_Id << ", video_window: " << view;
   EC_CHECK_VALUE((channel_Id >= 0), false);
-#if defined WEBRTC_WIN
+#if defined WEBRTC_WIN || defined(WEBRTC_IOS)
   EC_CHECK_VALUE(view, false);
 
   if (!renderWndsManager_) {
     InitRenderWndsManager();
   }
 
-  renderWndsManager_->AddRemoteRenderWnd(channel_Id, render_mode, view, worker_thread_,
-                                         nullptr);
-#elif defined(WEBRTC_IOS)
-  ObjCCallClient::GetInstance()->SetRemoteWindowView(channel_Id, view);
+  renderWndsManager_->AttachVideoRender(channel_Id, view,  render_mode, false,
+                                        worker_thread_);
+//#elif defined(WEBRTC_IOS)
+//  ObjCCallClient::GetInstance()->SetRemoteWindowView(channel_Id, view);
 #endif
   RTC_LOG(INFO) << __FUNCTION__ << "() "
                 << " end...";
@@ -3550,634 +3555,635 @@ bool ChannelGenerator::ReturnId(int id) {
 
 ///////////////////////////////////VideoRenderer/////////////////////////////////
 
-namespace win_render {
-
-#if defined(WEBRTC_WIN)
-
-//VideoRenderer::VideoRenderer(HWND wnd,
-//                             int mode,
-//                             int width,
-//                             int height,
-//                             webrtc::VideoTrackInterface* track_to_render)
-//    : wnd_(wnd), rendered_track_(track_to_render) {
-//  RTC_LOG(INFO) << __FUNCTION__ << "(),"
-//                << ", wnd: " << wnd << ", width: " << width
-//                << ", height: " << height
-//                << ", track_to_render: " << track_to_render;
-//  mode_ = mode;
-//  ::InitializeCriticalSection(&buffer_lock_);
-//  ZeroMemory(&bmi_, sizeof(bmi_));
-//  bmi_.bmiHeader.biSize = sizeof(BITMAPINFOHEADER);
-//  bmi_.bmiHeader.biPlanes = 1;
-//  bmi_.bmiHeader.biBitCount = 32;
-//  bmi_.bmiHeader.biCompression = BI_RGB;
-//  bmi_.bmiHeader.biWidth = width;
-//  bmi_.bmiHeader.biHeight = -height;
-//  bmi_.bmiHeader.biSizeImage =
-//      width * height * (bmi_.bmiHeader.biBitCount >> 3);
-//  if (rendered_track_) {
-//    rendered_track_->AddOrUpdateSink(this, rtc::VideoSinkWants());
-//  }
-//  if (wnd_) {
-//    hDC_ = GetDC((HWND)wnd_);
-//  } else {
-//    hDC_ = nullptr;
-//  }
-//}
+//namespace win_render {
 //
-//VideoRenderer::~VideoRenderer() {
+//#if defined(WEBRTC_WIN)
+//
+////VideoRenderer::VideoRenderer(HWND wnd,
+////                             int mode,
+////                             int width,
+////                             int height,
+////                             webrtc::VideoTrackInterface* track_to_render)
+////    : wnd_(wnd), rendered_track_(track_to_render) {
+////  RTC_LOG(INFO) << __FUNCTION__ << "(),"
+////                << ", wnd: " << wnd << ", width: " << width
+////                << ", height: " << height
+////                << ", track_to_render: " << track_to_render;
+////  mode_ = mode;
+////  ::InitializeCriticalSection(&buffer_lock_);
+////  ZeroMemory(&bmi_, sizeof(bmi_));
+////  bmi_.bmiHeader.biSize = sizeof(BITMAPINFOHEADER);
+////  bmi_.bmiHeader.biPlanes = 1;
+////  bmi_.bmiHeader.biBitCount = 32;
+////  bmi_.bmiHeader.biCompression = BI_RGB;
+////  bmi_.bmiHeader.biWidth = width;
+////  bmi_.bmiHeader.biHeight = -height;
+////  bmi_.bmiHeader.biSizeImage =
+////      width * height * (bmi_.bmiHeader.biBitCount >> 3);
+////  if (rendered_track_) {
+////    rendered_track_->AddOrUpdateSink(this, rtc::VideoSinkWants());
+////  }
+////  if (wnd_) {
+////    hDC_ = GetDC((HWND)wnd_);
+////  } else {
+////    hDC_ = nullptr;
+////  }
+////}
+////
+////VideoRenderer::~VideoRenderer() {
+////  RTC_LOG(INFO) << __FUNCTION__ << "(),"
+////                << " begin... ";
+////  if (rendered_track_) {
+////    rendered_track_->RemoveSink(this);
+////  }
+////  ::DeleteCriticalSection(&buffer_lock_);
+////}
+////
+////bool VideoRenderer::UpdateVideoTrack(
+////    webrtc::VideoTrackInterface* track_to_render) {
+////  RTC_LOG(INFO) << __FUNCTION__ << "(),"
+////                << " track_to_render: " << track_to_render;
+////  if (rendered_track_) {
+////    rendered_track_->RemoveSink(this);
+////  }
+////  rendered_track_ = track_to_render;
+////  if (rendered_track_) {
+////    rendered_track_->AddOrUpdateSink(this, rtc::VideoSinkWants());
+////    return true;
+////  }
+////  return false;
+////}
+////
+////void VideoRenderer::SetSize(int width, int height) {
+////  // RTC_LOG(INFO) << __FUNCTION__  << "() "<< " begin..."
+////  //              << " width:" << width << "height:" << height;
+////  AutoLock<VideoRenderer> lock(this);
+////
+////  if (width == bmi_.bmiHeader.biWidth && height == bmi_.bmiHeader.biHeight) {
+////    return;
+////  }
+////
+////  bmi_.bmiHeader.biWidth = width;
+////  bmi_.bmiHeader.biHeight = -height;
+////  bmi_.bmiHeader.biSizeImage =
+////      width * height * (bmi_.bmiHeader.biBitCount >> 3);
+////  image_.reset(new uint8_t[bmi_.bmiHeader.biSizeImage]);
+////}
+////
+////void VideoRenderer::OnFrame(const webrtc::VideoFrame& video_frame) {
+////  // RTC_LOG(INFO) << __FUNCTION__  << "() "<< " begin...";
+////  {
+////    AutoLock<VideoRenderer> lock(this);
+////
+////    rtc::scoped_refptr<webrtc::I420BufferInterface> buffer(
+////        video_frame.video_frame_buffer()->ToI420());
+////    if (video_frame.rotation() != webrtc::kVideoRotation_0) {
+////      buffer = webrtc::I420Buffer::Rotate(*buffer, video_frame.rotation());
+////    }
+////
+////    SetSize(buffer->width(), buffer->height());
+////
+////    RTC_DCHECK(image_.get() != NULL);
+////    //add by ytx_wx begin...
+////    bool flag = GetisLocal();
+////    if (flag) {
+////	  std::unique_ptr<uint8_t[]> mirror_image_;
+////      mirror_image_.reset(new uint8_t[bmi_.bmiHeader.biSizeImage]);
+////      RTC_DCHECK(image_.get() != NULL);
+////      libyuv::I420ToARGB(buffer->DataY(), buffer->StrideY(), buffer->DataU(),
+////                         buffer->StrideU(), buffer->DataV(), buffer->StrideV(),
+////                         mirror_image_.get(),
+////                         bmi_.bmiHeader.biWidth * bmi_.bmiHeader.biBitCount / 8,
+////                         buffer->width(), buffer->height());
+////      libyuv::ARGBMirror(mirror_image_.get(),
+////                         bmi_.bmiHeader.biWidth * bmi_.bmiHeader.biBitCount / 8,
+////                         image_.get(),
+////                         bmi_.bmiHeader.biWidth * bmi_.bmiHeader.biBitCount / 8,
+////                         buffer->width(), buffer->height());    
+////    }else{
+////      libyuv::I420ToARGB(buffer->DataY(), buffer->StrideY(), buffer->DataU(),
+////                         buffer->StrideU(), buffer->DataV(), buffer->StrideV(),
+////                         image_.get(),
+////                         bmi_.bmiHeader.biWidth * bmi_.bmiHeader.biBitCount / 8,
+////                         buffer->width(), buffer->height());
+////	}     
+////	//add by ytx_wx end...
+////  }
+////
+////  Paint();
+////}
+////
+////void VideoRenderer::Paint() {
+////  if (image_ != nullptr && handle() != nullptr && hDC_ != nullptr) {
+////    int height = abs(bmi_.bmiHeader.biHeight);
+////    int width = bmi_.bmiHeader.biWidth;
+////
+////    RECT rc;
+////    ::GetClientRect(handle(), &rc);
+////
+////    HDC dc_mem = ::CreateCompatibleDC(hDC_);
+////    ::SetStretchBltMode(dc_mem, HALFTONE);
+////
+////    // Set the map mode so that the ratio will be maintained for us.
+////    HDC all_dc[] = {hDC_, dc_mem};
+////    for (size_t i = 0; i < arraysize(all_dc); ++i) {
+////      SetMapMode(all_dc[i], MM_ISOTROPIC);
+////      SetWindowExtEx(all_dc[i], width, height, NULL);
+////      SetViewportExtEx(all_dc[i], rc.right, rc.bottom, NULL);
+////    }
+////
+////    HBITMAP bmp_mem = ::CreateCompatibleBitmap(hDC_, rc.right, rc.bottom);
+////    HGDIOBJ bmp_old = ::SelectObject(dc_mem, bmp_mem);
+////
+////    POINT logical_area = {rc.right, rc.bottom};
+////    DPtoLP(hDC_, &logical_area, 1);
+////
+////    HBRUSH brush = ::CreateSolidBrush(RGB(0, 0, 0));
+////    RECT logical_rect = {0, 0, logical_area.x, logical_area.y};
+////    ::FillRect(dc_mem, &logical_rect, brush);
+////    ::DeleteObject(brush);
+////
+////    int x = (logical_area.x - width) / 2;
+////    int y = (logical_area.y - height) / 2;
+////    x = x > 0 ? x : 0;
+////    y = y > 0 ? y : 0;
+////    /*  RTC_LOG(INFO) << __FUNCTION__ << "()"
+////                    << "x:" << x << " y:" << y << "  width:" << width
+////                    << " height:" << height << "logica_x:" << logical_area.x
+////                    << " logical_area.y: " << logical_area.y;*/
+////    if (mode_ == 1) {
+////      StretchDIBits(dc_mem, x, y, width, height, 0, 0, width, height,
+////                    image_.get(), &bmi_, DIB_RGB_COLORS, SRCCOPY);
+////      RTC_LOG(INFO) << "render mode = 1";
+////    } else {
+////      if (x > 0) {
+////        y = x * height / width;
+////        x = 0;
+////      } else {
+////        x = y * width / height;
+////        y = 0;
+////      }
+////      StretchDIBits(dc_mem, 0, 0, logical_area.x, logical_area.y, x, y,
+////                    width - x, height - y, image_.get(), &bmi_, DIB_RGB_COLORS,
+////                    SRCCOPY);
+////    }
+////
+////    BitBlt(hDC_, 0, 0, logical_area.x, logical_area.y, dc_mem, 0, 0, SRCCOPY);
+////
+////    ::SelectObject(dc_mem, bmp_old);
+////    ::DeleteObject(bmp_mem);
+////    ::DeleteDC(dc_mem);
+////  }
+////}
+////=======
+////VideoRenderer::VideoRenderer(HWND wnd,
+////                             int mode,
+////                             int width,
+////                             int height,
+////                             webrtc::VideoTrackInterface* track_to_render)
+////    : wnd_(wnd), rendered_track_(track_to_render) ,clock_(webrtc::Clock::GetRealTimeClock()){
+////  RTC_LOG(INFO) << __FUNCTION__ << "(),"
+////                << ", wnd: " << wnd << ", width: " << width
+////                << ", height: " << height
+////                << ", track_to_render: " << track_to_render;
+////  mode_ = mode;
+////  ::InitializeCriticalSection(&buffer_lock_);
+////  ZeroMemory(&bmi_, sizeof(bmi_));
+////  bmi_.bmiHeader.biSize = sizeof(BITMAPINFOHEADER);
+////  bmi_.bmiHeader.biPlanes = 1;
+////  bmi_.bmiHeader.biBitCount = 32;
+////  bmi_.bmiHeader.biCompression = BI_RGB;
+////  bmi_.bmiHeader.biWidth = width;
+////  bmi_.bmiHeader.biHeight = -height;
+////  bmi_.bmiHeader.biSizeImage =
+////      width * height * (bmi_.bmiHeader.biBitCount >> 3);
+////  if (rendered_track_) {
+////    rendered_track_->AddOrUpdateSink(this, rtc::VideoSinkWants());
+////  }
+////  if (wnd_) {
+////    hDC_ = GetDC((HWND)wnd_);
+////  } else {
+////    hDC_ = nullptr;
+////  }
+////}
+////
+////VideoRenderer::~VideoRenderer() {
+////  RTC_LOG(INFO) << __FUNCTION__ << "(),"
+////                << " begin... ";
+////  if (rendered_track_) {
+////    rendered_track_->RemoveSink(this);
+////  }
+////  ::DeleteCriticalSection(&buffer_lock_);
+////}
+////
+////bool VideoRenderer::UpdateVideoTrack(
+////    webrtc::VideoTrackInterface* track_to_render) {
+////  RTC_LOG(INFO) << __FUNCTION__ << "(),"
+////                << " track_to_render: " << track_to_render;
+////  if (rendered_track_) {
+////    rendered_track_->RemoveSink(this);
+////  }
+////  rendered_track_ = track_to_render;
+////  if (rendered_track_) {
+////    rendered_track_->AddOrUpdateSink(this, rtc::VideoSinkWants());
+////    return true;
+////  }
+////  return false;
+////}
+////
+////void VideoRenderer::SetSize(int width, int height) {
+////
+////  AutoLock<VideoRenderer> lock(this);
+////
+////  if (width == bmi_.bmiHeader.biWidth && height == bmi_.bmiHeader.biHeight) {
+////    return;
+////  }
+////
+////  RTC_LOG(INFO) << __FUNCTION__ << "() "
+////                << " begin..."
+////                << " width:" << width << " biWidth:" << bmi_.bmiHeader.biWidth
+////                << "height:" << height << " biHeight:" << bmi_.bmiHeader.biHeight;
+////
+////  bmi_.bmiHeader.biWidth = width;
+////  bmi_.bmiHeader.biHeight = -height;
+////  bmi_.bmiHeader.biSizeImage =
+////      width * height * (bmi_.bmiHeader.biBitCount >> 3);
+////  image_.reset(new uint8_t[bmi_.bmiHeader.biSizeImage]);
+////}
+////
+////void VideoRenderer::OnFrame(const webrtc::VideoFrame& video_frame) {
+////  // RTC_LOG(INFO) << __FUNCTION__  << "() "<< " begin...";
+////  {
+////    AutoLock<VideoRenderer> lock(this);
+////
+////	
+////
+////    //if (video_frame.timestamp() > 0) {
+////    //  RTC_LOG(INFO) << "hubintest OnFrame 000 ts:" << video_frame.timestamp();
+////	//}
+////    rtc::scoped_refptr<webrtc::I420BufferInterface> buffer(
+////        video_frame.video_frame_buffer()->ToI420());
+////    if (video_frame.rotation() != webrtc::kVideoRotation_0) {
+////      buffer = webrtc::I420Buffer::Rotate(*buffer, video_frame.rotation());
+////    }
+////
+////    SetSize(buffer->width(), buffer->height());
+////
+////	//if (video_frame.timestamp() > 0) {
+////    //  RTC_LOG(INFO) << "hubintest OnFrame 111 ts:" << video_frame.timestamp();
+////	//}
+////    RTC_DCHECK(image_.get() != NULL);
+////    libyuv::I420ToARGB(buffer->DataY(), buffer->StrideY(), buffer->DataU(),
+////                       buffer->StrideU(), buffer->DataV(), buffer->StrideV(),
+////                       image_.get(),
+////                       bmi_.bmiHeader.biWidth * bmi_.bmiHeader.biBitCount / 8,
+////                       buffer->width(), buffer->height());
+////  }
+////  //if (video_frame.timestamp() > 0) {
+////  //  RTC_LOG(INFO) << "hubintest OnFrame 222 ts:" << video_frame.timestamp();
+////  //}
+////
+////  Paint(video_frame.timestamp());
+////  //if (video_frame.timestamp() > 0) {
+////	//int64_t end_time = clock_->TimeInMilliseconds();
+////  //  RTC_LOG(INFO) << "hubintest OnFrame 333 ts:" << video_frame.timestamp() << " diff:" << end_time-start_time;
+//// // }
+////}
+////
+////void VideoRenderer::Paint(uint32_t ts) {
+////
+////  if (ts > 0) {
+////    RTC_LOG(INFO) << "hubintest OnPaint 000 ts:" << ts;
+////  }
+////
+////  int64_t start_time_0 = clock_->TimeInMilliseconds();
+////
+////  if (image_ != nullptr && handle() != nullptr && hDC_ != nullptr) {
+////    int height = abs(bmi_.bmiHeader.biHeight);
+////    int width = bmi_.bmiHeader.biWidth;
+////
+////    RECT rc;
+////    ::GetClientRect(handle(), &rc);
+////
+////    HDC dc_mem = ::CreateCompatibleDC(hDC_);
+////    ::SetStretchBltMode(dc_mem, HALFTONE);
+////
+////  if (ts > 0) {
+////    RTC_LOG(INFO) << "hubintest OnPaint 111 ts:" << ts;
+////  }
+////
+////    // Set the map mode so that the ratio will be maintained for us.
+////    HDC all_dc[] = {hDC_, dc_mem};
+////    for (size_t i = 0; i < arraysize(all_dc); ++i) {
+////      SetMapMode(all_dc[i], MM_ISOTROPIC);
+////      SetWindowExtEx(all_dc[i], width, height, NULL);
+////      SetViewportExtEx(all_dc[i], rc.right, rc.bottom, NULL);
+////    }
+////
+////  if (ts > 0) {
+////    RTC_LOG(INFO) << "hubintest OnPaint 222 ts:" << ts;
+////  }
+////
+////    HBITMAP bmp_mem = ::CreateCompatibleBitmap(hDC_, rc.right, rc.bottom);
+////    HGDIOBJ bmp_old = ::SelectObject(dc_mem, bmp_mem);
+////
+////    POINT logical_area = {rc.right, rc.bottom};
+////    DPtoLP(hDC_, &logical_area, 1);
+////
+////    HBRUSH brush = ::CreateSolidBrush(RGB(0, 0, 0));
+////    RECT logical_rect = {0, 0, logical_area.x, logical_area.y};
+////    ::FillRect(dc_mem, &logical_rect, brush);
+////    ::DeleteObject(brush);
+////
+////
+////
+////    int x = (logical_area.x - width) / 2;
+////    int y = (logical_area.y - height) / 2;
+////    x = x > 0 ? x : 0;
+////    y = y > 0 ? y : 0;
+////
+////  if (ts > 0) {
+////    RTC_LOG(INFO) << "hubintest OnPaint 333 ts:" << ts << " mode:" << mode_ << "x:" << x << " y:" << y << "  width:" << width << " height:" << height << "logica_x:" << logical_area.x << " logical_area.y: " << logical_area.y;;
+////  }
+////
+////    //RTC_LOG(INFO) << __FUNCTION__ << "()"
+////    //              << "x:" << x << " y:" << y << "  width:" << width
+////    //              << " height:" << height << "logica_x:" << logical_area.x
+////    //              << " logical_area.y: " << logical_area.y;
+////    if (mode_ == 1) {
+////      StretchDIBits(dc_mem, x, y, width, height, 0, 0, width, height,
+////                    image_.get(), &bmi_, DIB_RGB_COLORS, SRCCOPY);
+////      //RTC_LOG(INFO) << "render mode = 1";
+////    } else {
+////      if (x > 0) {
+////        y = x * height / width;
+////        x = 0;
+////      } else {
+////        x = y * width / height;
+////        y = 0;
+////      }
+////      StretchDIBits(dc_mem, 0, 0, logical_area.x, logical_area.y, x, y,
+////                    width - x, height - y, image_.get(), &bmi_, DIB_RGB_COLORS,
+////                    SRCCOPY);
+////    }
+////
+////  if (ts > 0) {
+////    RTC_LOG(INFO) << "hubintest OnPaint 444 ts:" << ts;
+////  }
+////
+////    BitBlt(hDC_, 0, 0, logical_area.x, logical_area.y, dc_mem, 0, 0, SRCCOPY);
+////
+////
+////  if (ts > 0) {
+////    RTC_LOG(INFO) << "hubintest OnPaint 555 ts:" << ts;
+////  }
+////
+////    ::SelectObject(dc_mem, bmp_old);
+////    ::DeleteObject(bmp_mem);
+////    ::DeleteDC(dc_mem);
+////  }
+////
+////  if (ts > 0) {
+////	int64_t end_time = clock_->TimeInMilliseconds();
+////    RTC_LOG(INFO) << "hubintest OnPaint 666 ts:" << ts << " diff:" << end_time-start_time_0;
+////  }
+////}
+//
+///*void VideoRenderer::Paint() {
+//  // RTC_LOG(INFO) << __FUNCTION__  << "() "<< " begin...";
+//  if (image_ != nullptr && handle() != nullptr && hDC_ != nullptr) {
+//    int srcWidth = bmi_.bmiHeader.biWidth;
+//    int srcHeight = abs(bmi_.bmiHeader.biHeight);
+//
+//    HBITMAP hBitmap = CreateBitmap(srcWidth, srcHeight, 1, 32, image_.get());
+//    if (hBitmap) {
+//      HDC hMemDC = CreateCompatibleDC(hDC_);
+//      HBITMAP hOldBitmap = (HBITMAP)SelectObject(hMemDC, hBitmap);
+//
+//      RECT rectWnd;
+//      ::GetWindowRect(handle(), &rectWnd);
+//
+//      int dstWidth = rectWnd.right - rectWnd.left;
+//      int dstHeight = rectWnd.bottom - rectWnd.top;
+//      RTC_LOG(INFO) << __FUNCTION__ << "() "<< " dstWidth..." << dstWidth << "
+//dstHeight:" << dstHeight<<"srcWidth"<<srcWidth<<"srcHeight"<<srcHeight;
+//      SetStretchBltMode(hDC_, WHITEONBLACK);
+//      if (dstWidth == srcWidth)
+//        ::StretchBlt(hDC_, 0, 0, dstWidth, srcHeight, hMemDC, 0, 0, srcWidth,
+//                   srcHeight, SRCCOPY);
+//      ::StretchBlt(hDC_, 0, 0, dstWidth, dstHeight, hMemDC, 0, 0, srcWidth,
+//                   srcHeight, SRCCOPY);
+//
+//      SelectObject(hMemDC, hOldBitmap);
+//      DeleteDC(hMemDC);
+//      DeleteObject(hBitmap);
+//    }
+//  }
+//}*/
+//
+/////////////////////////////////////RenderWndsManager/////////////////////////////////
+//
+//RenderWndsManager::RenderWndsManager() {}
+//
+//RenderWndsManager::~RenderWndsManager() {
 //  RTC_LOG(INFO) << __FUNCTION__ << "(),"
 //                << " begin... ";
-//  if (rendered_track_) {
-//    rendered_track_->RemoveSink(this);
-//  }
-//  ::DeleteCriticalSection(&buffer_lock_);
-//}
-//
-//bool VideoRenderer::UpdateVideoTrack(
-//    webrtc::VideoTrackInterface* track_to_render) {
-//  RTC_LOG(INFO) << __FUNCTION__ << "(),"
-//                << " track_to_render: " << track_to_render;
-//  if (rendered_track_) {
-//    rendered_track_->RemoveSink(this);
-//  }
-//  rendered_track_ = track_to_render;
-//  if (rendered_track_) {
-//    rendered_track_->AddOrUpdateSink(this, rtc::VideoSinkWants());
-//    return true;
-//  }
-//  return false;
-//}
-//
-//void VideoRenderer::SetSize(int width, int height) {
-//  // RTC_LOG(INFO) << __FUNCTION__  << "() "<< " begin..."
-//  //              << " width:" << width << "height:" << height;
-//  AutoLock<VideoRenderer> lock(this);
-//
-//  if (width == bmi_.bmiHeader.biWidth && height == bmi_.bmiHeader.biHeight) {
-//    return;
-//  }
-//
-//  bmi_.bmiHeader.biWidth = width;
-//  bmi_.bmiHeader.biHeight = -height;
-//  bmi_.bmiHeader.biSizeImage =
-//      width * height * (bmi_.bmiHeader.biBitCount >> 3);
-//  image_.reset(new uint8_t[bmi_.bmiHeader.biSizeImage]);
-//}
-//
-//void VideoRenderer::OnFrame(const webrtc::VideoFrame& video_frame) {
-//  // RTC_LOG(INFO) << __FUNCTION__  << "() "<< " begin...";
-//  {
-//    AutoLock<VideoRenderer> lock(this);
-//
-//    rtc::scoped_refptr<webrtc::I420BufferInterface> buffer(
-//        video_frame.video_frame_buffer()->ToI420());
-//    if (video_frame.rotation() != webrtc::kVideoRotation_0) {
-//      buffer = webrtc::I420Buffer::Rotate(*buffer, video_frame.rotation());
+//  // localRender_.reset();
+//  std::map<int, ptr_render>::iterator it = mapLocalRenderWnds.begin();
+//  while (it != mapLocalRenderWnds.end()) {
+//    if (it->second != nullptr) {
+//      it->second.reset(nullptr);
 //    }
-//
-//    SetSize(buffer->width(), buffer->height());
-//
-//    RTC_DCHECK(image_.get() != NULL);
-//    //add by ytx_wx begin...
-//    bool flag = GetisLocal();
-//    if (flag) {
-//	  std::unique_ptr<uint8_t[]> mirror_image_;
-//      mirror_image_.reset(new uint8_t[bmi_.bmiHeader.biSizeImage]);
-//      RTC_DCHECK(image_.get() != NULL);
-//      libyuv::I420ToARGB(buffer->DataY(), buffer->StrideY(), buffer->DataU(),
-//                         buffer->StrideU(), buffer->DataV(), buffer->StrideV(),
-//                         mirror_image_.get(),
-//                         bmi_.bmiHeader.biWidth * bmi_.bmiHeader.biBitCount / 8,
-//                         buffer->width(), buffer->height());
-//      libyuv::ARGBMirror(mirror_image_.get(),
-//                         bmi_.bmiHeader.biWidth * bmi_.bmiHeader.biBitCount / 8,
-//                         image_.get(),
-//                         bmi_.bmiHeader.biWidth * bmi_.bmiHeader.biBitCount / 8,
-//                         buffer->width(), buffer->height());    
-//    }else{
-//      libyuv::I420ToARGB(buffer->DataY(), buffer->StrideY(), buffer->DataU(),
-//                         buffer->StrideU(), buffer->DataV(), buffer->StrideV(),
-//                         image_.get(),
-//                         bmi_.bmiHeader.biWidth * bmi_.bmiHeader.biBitCount / 8,
-//                         buffer->width(), buffer->height());
-//	}     
-//	//add by ytx_wx end...
+//    it++;
 //  }
-//
-//  Paint();
-//}
-//
-//void VideoRenderer::Paint() {
-//  if (image_ != nullptr && handle() != nullptr && hDC_ != nullptr) {
-//    int height = abs(bmi_.bmiHeader.biHeight);
-//    int width = bmi_.bmiHeader.biWidth;
-//
-//    RECT rc;
-//    ::GetClientRect(handle(), &rc);
-//
-//    HDC dc_mem = ::CreateCompatibleDC(hDC_);
-//    ::SetStretchBltMode(dc_mem, HALFTONE);
-//
-//    // Set the map mode so that the ratio will be maintained for us.
-//    HDC all_dc[] = {hDC_, dc_mem};
-//    for (size_t i = 0; i < arraysize(all_dc); ++i) {
-//      SetMapMode(all_dc[i], MM_ISOTROPIC);
-//      SetWindowExtEx(all_dc[i], width, height, NULL);
-//      SetViewportExtEx(all_dc[i], rc.right, rc.bottom, NULL);
+//  std::map<int, ptr_render>::iterator itR = mapRemoteRenderWnds.begin();
+//  while (itR != mapRemoteRenderWnds.end()) {
+//    if (itR->second != nullptr) {
+//      itR->second.reset(nullptr);
 //    }
-//
-//    HBITMAP bmp_mem = ::CreateCompatibleBitmap(hDC_, rc.right, rc.bottom);
-//    HGDIOBJ bmp_old = ::SelectObject(dc_mem, bmp_mem);
-//
-//    POINT logical_area = {rc.right, rc.bottom};
-//    DPtoLP(hDC_, &logical_area, 1);
-//
-//    HBRUSH brush = ::CreateSolidBrush(RGB(0, 0, 0));
-//    RECT logical_rect = {0, 0, logical_area.x, logical_area.y};
-//    ::FillRect(dc_mem, &logical_rect, brush);
-//    ::DeleteObject(brush);
-//
-//    int x = (logical_area.x - width) / 2;
-//    int y = (logical_area.y - height) / 2;
-//    x = x > 0 ? x : 0;
-//    y = y > 0 ? y : 0;
-//    /*  RTC_LOG(INFO) << __FUNCTION__ << "()"
-//                    << "x:" << x << " y:" << y << "  width:" << width
-//                    << " height:" << height << "logica_x:" << logical_area.x
-//                    << " logical_area.y: " << logical_area.y;*/
-//    if (mode_ == 1) {
-//      StretchDIBits(dc_mem, x, y, width, height, 0, 0, width, height,
-//                    image_.get(), &bmi_, DIB_RGB_COLORS, SRCCOPY);
-//      RTC_LOG(INFO) << "render mode = 1";
-//    } else {
-//      if (x > 0) {
-//        y = x * height / width;
-//        x = 0;
-//      } else {
-//        x = y * width / height;
-//        y = 0;
-//      }
-//      StretchDIBits(dc_mem, 0, 0, logical_area.x, logical_area.y, x, y,
-//                    width - x, height - y, image_.get(), &bmi_, DIB_RGB_COLORS,
-//                    SRCCOPY);
-//    }
-//
-//    BitBlt(hDC_, 0, 0, logical_area.x, logical_area.y, dc_mem, 0, 0, SRCCOPY);
-//
-//    ::SelectObject(dc_mem, bmp_old);
-//    ::DeleteObject(bmp_mem);
-//    ::DeleteDC(dc_mem);
+//    itR++;
 //  }
-//}
-//=======
-//VideoRenderer::VideoRenderer(HWND wnd,
-//                             int mode,
-//                             int width,
-//                             int height,
-//                             webrtc::VideoTrackInterface* track_to_render)
-//    : wnd_(wnd), rendered_track_(track_to_render) ,clock_(webrtc::Clock::GetRealTimeClock()){
-//  RTC_LOG(INFO) << __FUNCTION__ << "(),"
-//                << ", wnd: " << wnd << ", width: " << width
-//                << ", height: " << height
-//                << ", track_to_render: " << track_to_render;
-//  mode_ = mode;
-//  ::InitializeCriticalSection(&buffer_lock_);
-//  ZeroMemory(&bmi_, sizeof(bmi_));
-//  bmi_.bmiHeader.biSize = sizeof(BITMAPINFOHEADER);
-//  bmi_.bmiHeader.biPlanes = 1;
-//  bmi_.bmiHeader.biBitCount = 32;
-//  bmi_.bmiHeader.biCompression = BI_RGB;
-//  bmi_.bmiHeader.biWidth = width;
-//  bmi_.bmiHeader.biHeight = -height;
-//  bmi_.bmiHeader.biSizeImage =
-//      width * height * (bmi_.bmiHeader.biBitCount >> 3);
-//  if (rendered_track_) {
-//    rendered_track_->AddOrUpdateSink(this, rtc::VideoSinkWants());
-//  }
-//  if (wnd_) {
-//    hDC_ = GetDC((HWND)wnd_);
-//  } else {
-//    hDC_ = nullptr;
-//  }
+//  mapLocalRenderWnds.clear();
+//  mapRemoteRenderWnds.clear();
 //}
 //
-//VideoRenderer::~VideoRenderer() {
-//  RTC_LOG(INFO) << __FUNCTION__ << "(),"
-//                << " begin... ";
-//  if (rendered_track_) {
-//    rendered_track_->RemoveSink(this);
-//  }
-//  ::DeleteCriticalSection(&buffer_lock_);
-//}
-//
-//bool VideoRenderer::UpdateVideoTrack(
-//    webrtc::VideoTrackInterface* track_to_render) {
-//  RTC_LOG(INFO) << __FUNCTION__ << "(),"
-//                << " track_to_render: " << track_to_render;
-//  if (rendered_track_) {
-//    rendered_track_->RemoveSink(this);
-//  }
-//  rendered_track_ = track_to_render;
-//  if (rendered_track_) {
-//    rendered_track_->AddOrUpdateSink(this, rtc::VideoSinkWants());
-//    return true;
-//  }
-//  return false;
-//}
-//
-//void VideoRenderer::SetSize(int width, int height) {
-//
-//  AutoLock<VideoRenderer> lock(this);
-//
-//  if (width == bmi_.bmiHeader.biWidth && height == bmi_.bmiHeader.biHeight) {
-//    return;
-//  }
-//
-//  RTC_LOG(INFO) << __FUNCTION__ << "() "
-//                << " begin..."
-//                << " width:" << width << " biWidth:" << bmi_.bmiHeader.biWidth
-//                << "height:" << height << " biHeight:" << bmi_.bmiHeader.biHeight;
-//
-//  bmi_.bmiHeader.biWidth = width;
-//  bmi_.bmiHeader.biHeight = -height;
-//  bmi_.bmiHeader.biSizeImage =
-//      width * height * (bmi_.bmiHeader.biBitCount >> 3);
-//  image_.reset(new uint8_t[bmi_.bmiHeader.biSizeImage]);
-//}
-//
-//void VideoRenderer::OnFrame(const webrtc::VideoFrame& video_frame) {
-//  // RTC_LOG(INFO) << __FUNCTION__  << "() "<< " begin...";
-//  {
-//    AutoLock<VideoRenderer> lock(this);
-//
-//	
-//
-//    //if (video_frame.timestamp() > 0) {
-//    //  RTC_LOG(INFO) << "hubintest OnFrame 000 ts:" << video_frame.timestamp();
-//	//}
-//    rtc::scoped_refptr<webrtc::I420BufferInterface> buffer(
-//        video_frame.video_frame_buffer()->ToI420());
-//    if (video_frame.rotation() != webrtc::kVideoRotation_0) {
-//      buffer = webrtc::I420Buffer::Rotate(*buffer, video_frame.rotation());
-//    }
-//
-//    SetSize(buffer->width(), buffer->height());
-//
-//	//if (video_frame.timestamp() > 0) {
-//    //  RTC_LOG(INFO) << "hubintest OnFrame 111 ts:" << video_frame.timestamp();
-//	//}
-//    RTC_DCHECK(image_.get() != NULL);
-//    libyuv::I420ToARGB(buffer->DataY(), buffer->StrideY(), buffer->DataU(),
-//                       buffer->StrideU(), buffer->DataV(), buffer->StrideV(),
-//                       image_.get(),
-//                       bmi_.bmiHeader.biWidth * bmi_.bmiHeader.biBitCount / 8,
-//                       buffer->width(), buffer->height());
-//  }
-//  //if (video_frame.timestamp() > 0) {
-//  //  RTC_LOG(INFO) << "hubintest OnFrame 222 ts:" << video_frame.timestamp();
-//  //}
-//
-//  Paint(video_frame.timestamp());
-//  //if (video_frame.timestamp() > 0) {
-//	//int64_t end_time = clock_->TimeInMilliseconds();
-//  //  RTC_LOG(INFO) << "hubintest OnFrame 333 ts:" << video_frame.timestamp() << " diff:" << end_time-start_time;
-// // }
-//}
-//
-//void VideoRenderer::Paint(uint32_t ts) {
-//
-//  if (ts > 0) {
-//    RTC_LOG(INFO) << "hubintest OnPaint 000 ts:" << ts;
-//  }
-//
-//  int64_t start_time_0 = clock_->TimeInMilliseconds();
-//
-//  if (image_ != nullptr && handle() != nullptr && hDC_ != nullptr) {
-//    int height = abs(bmi_.bmiHeader.biHeight);
-//    int width = bmi_.bmiHeader.biWidth;
-//
-//    RECT rc;
-//    ::GetClientRect(handle(), &rc);
-//
-//    HDC dc_mem = ::CreateCompatibleDC(hDC_);
-//    ::SetStretchBltMode(dc_mem, HALFTONE);
-//
-//  if (ts > 0) {
-//    RTC_LOG(INFO) << "hubintest OnPaint 111 ts:" << ts;
-//  }
-//
-//    // Set the map mode so that the ratio will be maintained for us.
-//    HDC all_dc[] = {hDC_, dc_mem};
-//    for (size_t i = 0; i < arraysize(all_dc); ++i) {
-//      SetMapMode(all_dc[i], MM_ISOTROPIC);
-//      SetWindowExtEx(all_dc[i], width, height, NULL);
-//      SetViewportExtEx(all_dc[i], rc.right, rc.bottom, NULL);
-//    }
-//
-//  if (ts > 0) {
-//    RTC_LOG(INFO) << "hubintest OnPaint 222 ts:" << ts;
-//  }
-//
-//    HBITMAP bmp_mem = ::CreateCompatibleBitmap(hDC_, rc.right, rc.bottom);
-//    HGDIOBJ bmp_old = ::SelectObject(dc_mem, bmp_mem);
-//
-//    POINT logical_area = {rc.right, rc.bottom};
-//    DPtoLP(hDC_, &logical_area, 1);
-//
-//    HBRUSH brush = ::CreateSolidBrush(RGB(0, 0, 0));
-//    RECT logical_rect = {0, 0, logical_area.x, logical_area.y};
-//    ::FillRect(dc_mem, &logical_rect, brush);
-//    ::DeleteObject(brush);
-//
-//
-//
-//    int x = (logical_area.x - width) / 2;
-//    int y = (logical_area.y - height) / 2;
-//    x = x > 0 ? x : 0;
-//    y = y > 0 ? y : 0;
-//
-//  if (ts > 0) {
-//    RTC_LOG(INFO) << "hubintest OnPaint 333 ts:" << ts << " mode:" << mode_ << "x:" << x << " y:" << y << "  width:" << width << " height:" << height << "logica_x:" << logical_area.x << " logical_area.y: " << logical_area.y;;
-//  }
-//
-//    //RTC_LOG(INFO) << __FUNCTION__ << "()"
-//    //              << "x:" << x << " y:" << y << "  width:" << width
-//    //              << " height:" << height << "logica_x:" << logical_area.x
-//    //              << " logical_area.y: " << logical_area.y;
-//    if (mode_ == 1) {
-//      StretchDIBits(dc_mem, x, y, width, height, 0, 0, width, height,
-//                    image_.get(), &bmi_, DIB_RGB_COLORS, SRCCOPY);
-//      //RTC_LOG(INFO) << "render mode = 1";
-//    } else {
-//      if (x > 0) {
-//        y = x * height / width;
-//        x = 0;
-//      } else {
-//        x = y * width / height;
-//        y = 0;
-//      }
-//      StretchDIBits(dc_mem, 0, 0, logical_area.x, logical_area.y, x, y,
-//                    width - x, height - y, image_.get(), &bmi_, DIB_RGB_COLORS,
-//                    SRCCOPY);
-//    }
-//
-//  if (ts > 0) {
-//    RTC_LOG(INFO) << "hubintest OnPaint 444 ts:" << ts;
-//  }
-//
-//    BitBlt(hDC_, 0, 0, logical_area.x, logical_area.y, dc_mem, 0, 0, SRCCOPY);
-//
-//
-//  if (ts > 0) {
-//    RTC_LOG(INFO) << "hubintest OnPaint 555 ts:" << ts;
-//  }
-//
-//    ::SelectObject(dc_mem, bmp_old);
-//    ::DeleteObject(bmp_mem);
-//    ::DeleteDC(dc_mem);
-//  }
-//
-//  if (ts > 0) {
-//	int64_t end_time = clock_->TimeInMilliseconds();
-//    RTC_LOG(INFO) << "hubintest OnPaint 666 ts:" << ts << " diff:" << end_time-start_time_0;
-//  }
-//}
-
-/*void VideoRenderer::Paint() {
-  // RTC_LOG(INFO) << __FUNCTION__  << "() "<< " begin...";
-  if (image_ != nullptr && handle() != nullptr && hDC_ != nullptr) {
-    int srcWidth = bmi_.bmiHeader.biWidth;
-    int srcHeight = abs(bmi_.bmiHeader.biHeight);
-
-    HBITMAP hBitmap = CreateBitmap(srcWidth, srcHeight, 1, 32, image_.get());
-    if (hBitmap) {
-      HDC hMemDC = CreateCompatibleDC(hDC_);
-      HBITMAP hOldBitmap = (HBITMAP)SelectObject(hMemDC, hBitmap);
-
-      RECT rectWnd;
-      ::GetWindowRect(handle(), &rectWnd);
-
-      int dstWidth = rectWnd.right - rectWnd.left;
-      int dstHeight = rectWnd.bottom - rectWnd.top;
-      RTC_LOG(INFO) << __FUNCTION__ << "() "<< " dstWidth..." << dstWidth << "
-dstHeight:" << dstHeight<<"srcWidth"<<srcWidth<<"srcHeight"<<srcHeight;
-      SetStretchBltMode(hDC_, WHITEONBLACK);
-      if (dstWidth == srcWidth)
-        ::StretchBlt(hDC_, 0, 0, dstWidth, srcHeight, hMemDC, 0, 0, srcWidth,
-                   srcHeight, SRCCOPY);
-      ::StretchBlt(hDC_, 0, 0, dstWidth, dstHeight, hMemDC, 0, 0, srcWidth,
-                   srcHeight, SRCCOPY);
-
-      SelectObject(hMemDC, hOldBitmap);
-      DeleteDC(hMemDC);
-      DeleteObject(hBitmap);
-    }
-  }
-}*/
-
-///////////////////////////////////RenderWndsManager/////////////////////////////////
-
-RenderWndsManager::RenderWndsManager() {}
-
-RenderWndsManager::~RenderWndsManager() {
-  RTC_LOG(INFO) << __FUNCTION__ << "(),"
-                << " begin... ";
-  // localRender_.reset();
-  std::map<int, ptr_render>::iterator it = mapLocalRenderWnds.begin();
-  while (it != mapLocalRenderWnds.end()) {
-    if (it->second != nullptr) {
-      it->second.reset(nullptr);
-    }
-    it++;
-  }
-  std::map<int, ptr_render>::iterator itR = mapRemoteRenderWnds.begin();
-  while (itR != mapRemoteRenderWnds.end()) {
-    if (itR->second != nullptr) {
-      itR->second.reset(nullptr);
-    }
-    itR++;
-  }
-  mapLocalRenderWnds.clear();
-  mapRemoteRenderWnds.clear();
-}
-
-bool RenderWndsManager::StartLocalRenderer(
-    int channelId,
-    webrtc::VideoTrackInterface* local_video) {
-  RTC_LOG(INFO) << __FUNCTION__ << "(),"
-                << " begin... "
-                << ", channelId: " << channelId
-                << ", local_video: " << local_video << " hubin_render";
-  std::map<int, ptr_render>::iterator it = mapLocalRenderWnds.find(channelId);
-  if (it != mapLocalRenderWnds.end()) {
-    it->second->UpdateVideoTrack(local_video);
-    if (local_video)
-      return it->second->StartRender();
-    else
-      return it->second->StopRender();
-  }
-
-  return false;
-}
-
-bool RenderWndsManager::RemoveLocalRenderer(int channelId) {
-  RTC_LOG(INFO) << __FUNCTION__ << "(),"
-                << " begin... "
-                << ", channelId: " << channelId << " hubin_render";
-  std::map<int, ptr_render>::iterator localRender =
-      mapLocalRenderWnds.find(channelId);
-  if (localRender != mapLocalRenderWnds.end()) {
-    if (localRender->second != nullptr) {
-      localRender->second.reset(nullptr);
-    }
-    mapLocalRenderWnds.erase(localRender);
-    return true;
-  }
-  return false;
-}
-
-
-void RenderWndsManager::SetLocalRenderWnd(
-    int channelId,
-    int render_mode,
-    void* winLocal,
-    rtc::Thread* worker_thread, 
-    webrtc::VideoTrackInterface* track_to_render) {
-  RTC_LOG(INFO) << __FUNCTION__ << "(),"
-                << " begin... "
-                << ", channelId: " << channelId << ", winLocal: " << winLocal
-                << ", track_to_render: " << track_to_render << " hubin_render";
-  std::map<int, ptr_render>::iterator localRender =
-      mapLocalRenderWnds.find(channelId);
-  if (localRender != mapLocalRenderWnds.end()) {
-    if (localRender->second != nullptr) {
-      localRender->second.reset(nullptr);
-    }
-    mapLocalRenderWnds.erase(localRender);
-  }
-
-  ptr_render it;
-//<<<<<<< HEAD
-//  it.reset(new win_render::VideoRenderer((HWND)winLocal, render_mode, 1, 1,
-//                                         track_to_render));
-//  
-//=======
-  it.reset(VideoRenderer::CreateVideoRenderer(winLocal, render_mode, true,
-                                              track_to_render, 
-                             worker_thread, kRenderWindows));
-  mapLocalRenderWnds[channelId] = std::move(it);
-}
-
-void RenderWndsManager::AddRemoteRenderWnd(
-    int channelId,
-    int render_mode,
-    void* winRemote,
-    rtc::Thread* worker_thread, 
-    webrtc::VideoTrackInterface* track_to_render) {
-  RTC_LOG(INFO) << __FUNCTION__ << "(),"
-                << " begin... "
-                << ", channelId: " << channelId << ", winRemote: " << winRemote
-                << ", track_to_render: " << track_to_render << " hubin_render";
-  std::map<int, ptr_render>::iterator remoteRender =
-      mapRemoteRenderWnds.find(channelId);
-  if (remoteRender != mapRemoteRenderWnds.end()) {
-    if (remoteRender->second != nullptr) {
-      remoteRender->second.reset(nullptr);
-    }
-    mapRemoteRenderWnds.erase(remoteRender);
-  }
-
-  ptr_render it;
-  it.reset(VideoRenderer::CreateVideoRenderer(
-      winRemote, render_mode, false, track_to_render, 
-                               worker_thread, kRenderWindows));
-  mapRemoteRenderWnds[channelId] = std::move(it);
-}
-bool RenderWndsManager::StartRemoteRenderer(
-    int channelId,
-    webrtc::VideoTrackInterface* remote_video) {
-  RTC_LOG(INFO) << __FUNCTION__ << "(),"
-                << " begin... "
-                << ", channelId: " << channelId
-                << ", remote_video: " << remote_video << " hubin_render";
-  std::map<int, ptr_render>::iterator it = mapRemoteRenderWnds.find(channelId);
-  if (it != mapRemoteRenderWnds.end()) {
-    it->second->UpdateVideoTrack(remote_video);
-	return it->second->StartRender();
-  }
-  return false;
-}
-
-bool RenderWndsManager::UpdateRemoteVideoTrack(
-    int channelId,
-    webrtc::VideoTrackInterface* track_to_render) {
-  RTC_LOG(INFO) << __FUNCTION__ << "(), "
-                << " begin... "
-                << ", channelId: " << channelId
-                << ", track_to_render: " << track_to_render << " hubin_render";
-  std::map<int, ptr_render>::iterator it = mapRemoteRenderWnds.find(channelId);
-  if (it != mapRemoteRenderWnds.end()) {
-    return it->second->UpdateVideoTrack(track_to_render);
-  }
-  return false;
-}
-
-bool RenderWndsManager::RemoveRemoteRenderWnd(int channelId) {
-  RTC_LOG(INFO) << __FUNCTION__ << "(), "
-                << " begin... "
-                << ", channelId: " << channelId << " hubin_render";
-  std::map<int, ptr_render>::iterator it = mapRemoteRenderWnds.find(channelId);
-  if (it != mapRemoteRenderWnds.end()) {
-    if (it->second != nullptr) {
-      it->second.reset(nullptr);
-    }
-    mapRemoteRenderWnds.erase(it);
-    return true;
-  }
-  return false;
-}
-
-bool RenderWndsManager::UpdateLocalVideoTrack(
-    int channelId,
-    webrtc::VideoTrackInterface* track_to_render) {
-  RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__ << "(), "
-                << " begin... "
-                << ", channelId: " << channelId
-                << ", track_to_render: " << track_to_render << " hubin_render";
-  std::map<int, ptr_render>::iterator it = mapLocalRenderWnds.find(channelId);
-  if (it != mapLocalRenderWnds.end()) {
-    return it->second->UpdateVideoTrack(track_to_render);
-  }
-  return false;
-}
-
-//void* RenderWndsManager::GetRemoteWnd(int channelId) {
+//bool RenderWndsManager::StartLocalRenderer(
+//    int channelId,
+//    webrtc::VideoTrackInterface* local_video) {
 //  RTC_LOG(INFO) << __FUNCTION__ << "(),"
 //                << " begin... "
-//                << ", channelId: " << channelId;
+//                << ", channelId: " << channelId
+//                << ", local_video: " << local_video << " hubin_render";
+//  std::map<int, ptr_render>::iterator it = mapLocalRenderWnds.find(channelId);
+//  if (it != mapLocalRenderWnds.end()) {
+//    it->second->UpdateVideoTrack(local_video);
+//    if (local_video)
+//      return it->second->StartRender();
+//    else
+//      return it->second->StopRender();
+//  }
+//
+//  return false;
+//}
+//
+//bool RenderWndsManager::RemoveLocalRenderer(int channelId) {
+//  RTC_LOG(INFO) << __FUNCTION__ << "(),"
+//                << " begin... "
+//                << ", channelId: " << channelId << " hubin_render";
+//  std::map<int, ptr_render>::iterator localRender =
+//      mapLocalRenderWnds.find(channelId);
+//  if (localRender != mapLocalRenderWnds.end()) {
+//    if (localRender->second != nullptr) {
+//      localRender->second.reset(nullptr);
+//    }
+//    mapLocalRenderWnds.erase(localRender);
+//    return true;
+//  }
+//  return false;
+//}
+//
+//
+//void RenderWndsManager::SetLocalRenderWnd(
+//    int channelId,
+//    int render_mode,
+//    void* winLocal,
+//    rtc::Thread* worker_thread, 
+//    webrtc::VideoTrackInterface* track_to_render) {
+//  RTC_LOG(INFO) << __FUNCTION__ << "(),"
+//                << " begin... "
+//                << ", channelId: " << channelId << ", winLocal: " << winLocal
+//                << ", track_to_render: " << track_to_render << " hubin_render";
+//  std::map<int, ptr_render>::iterator localRender =
+//      mapLocalRenderWnds.find(channelId);
+//  if (localRender != mapLocalRenderWnds.end()) {
+//    if (localRender->second != nullptr) {
+//      localRender->second.reset(nullptr);
+//    }
+//    mapLocalRenderWnds.erase(localRender);
+//  }
+//
+//  ptr_render it;
+////<<<<<<< HEAD
+////  it.reset(new win_render::VideoRenderer((HWND)winLocal, render_mode, 1, 1,
+////                                         track_to_render));
+////  
+////=======
+//  it.reset(VideoRenderer::CreateVideoRenderer(winLocal, render_mode, true,
+//                                              track_to_render, 
+//                             worker_thread, kRenderWindows));
+//  mapLocalRenderWnds[channelId] = std::move(it);
+//}
+//
+//void RenderWndsManager::AddRemoteRenderWnd(
+//    int channelId,
+//    int render_mode,
+//    void* winRemote,
+//    rtc::Thread* worker_thread, 
+//    webrtc::VideoTrackInterface* track_to_render) {
+//  RTC_LOG(INFO) << __FUNCTION__ << "(),"
+//                << " begin... "
+//                << ", channelId: " << channelId << ", winRemote: " << winRemote
+//                << ", track_to_render: " << track_to_render << " hubin_render";
+//  std::map<int, ptr_render>::iterator remoteRender =
+//      mapRemoteRenderWnds.find(channelId);
+//  if (remoteRender != mapRemoteRenderWnds.end()) {
+//    if (remoteRender->second != nullptr) {
+//      remoteRender->second.reset(nullptr);
+//    }
+//    mapRemoteRenderWnds.erase(remoteRender);
+//  }
+//
+//  ptr_render it;
+//  it.reset(VideoRenderer::CreateVideoRenderer(
+//      winRemote, render_mode, false, track_to_render, 
+//                               worker_thread, kRenderWindows));
+//  mapRemoteRenderWnds[channelId] = std::move(it);
+//}
+//bool RenderWndsManager::StartRemoteRenderer(
+//    int channelId,
+//    webrtc::VideoTrackInterface* remote_video) {
+//  RTC_LOG(INFO) << __FUNCTION__ << "(),"
+//                << " begin... "
+//                << ", channelId: " << channelId
+//                << ", remote_video: " << remote_video << " hubin_render";
 //  std::map<int, ptr_render>::iterator it = mapRemoteRenderWnds.find(channelId);
 //  if (it != mapRemoteRenderWnds.end()) {
-//    return (void*)it->second->handle();
+//    it->second->UpdateVideoTrack(remote_video);
+//	return it->second->StartRender();
 //  }
-//  return nullptr;
+//  return false;
 //}
-
-
-//std::vector<int> RenderWndsManager::GetAllRemoteChanelIds() {
-//  RTC_LOG(INFO) << __FUNCTION__ << "(),"
-//                << " begin... ";
-//  std::vector<int> vec;
-//  std::map<int, ptr_render>::iterator it = mapRemoteRenderWnds.begin();
-//  while (it != mapRemoteRenderWnds.end()) {
-//    vec.push_back(it->first);
+//
+//bool RenderWndsManager::UpdateRemoteVideoTrack(
+//    int channelId,
+//    webrtc::VideoTrackInterface* track_to_render) {
+//  RTC_LOG(INFO) << __FUNCTION__ << "(), "
+//                << " begin... "
+//                << ", channelId: " << channelId
+//                << ", track_to_render: " << track_to_render << " hubin_render";
+//  std::map<int, ptr_render>::iterator it = mapRemoteRenderWnds.find(channelId);
+//  if (it != mapRemoteRenderWnds.end()) {
+//    return it->second->UpdateVideoTrack(track_to_render);
 //  }
-//  return vec;
+//  return false;
 //}
+//
+//bool RenderWndsManager::RemoveRemoteRenderWnd(int channelId) {
+//  RTC_LOG(INFO) << __FUNCTION__ << "(), "
+//                << " begin... "
+//                << ", channelId: " << channelId << " hubin_render";
+//  std::map<int, ptr_render>::iterator it = mapRemoteRenderWnds.find(channelId);
+//  if (it != mapRemoteRenderWnds.end()) {
+//    if (it->second != nullptr) {
+//      it->second.reset(nullptr);
+//    }
+//    mapRemoteRenderWnds.erase(it);
+//    return true;
+//  }
+//  return false;
+//}
+//
+//bool RenderWndsManager::UpdateLocalVideoTrack(
+//    int channelId,
+//    webrtc::VideoTrackInterface* track_to_render) {
+//  RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__ << "(), "
+//                << " begin... "
+//                << ", channelId: " << channelId
+//                << ", track_to_render: " << track_to_render << " hubin_render";
+//  std::map<int, ptr_render>::iterator it = mapLocalRenderWnds.find(channelId);
+//  if (it != mapLocalRenderWnds.end()) {
+//    return it->second->UpdateVideoTrack(track_to_render);
+//  }
+//  return false;
+//}
+//
+////void* RenderWndsManager::GetRemoteWnd(int channelId) {
+////  RTC_LOG(INFO) << __FUNCTION__ << "(),"
+////                << " begin... "
+////                << ", channelId: " << channelId;
+////  std::map<int, ptr_render>::iterator it = mapRemoteRenderWnds.find(channelId);
+////  if (it != mapRemoteRenderWnds.end()) {
+////    return (void*)it->second->handle();
+////  }
+////  return nullptr;
+////}
+//
+//
+////std::vector<int> RenderWndsManager::GetAllRemoteChanelIds() {
+////  RTC_LOG(INFO) << __FUNCTION__ << "(),"
+////                << " begin... ";
+////  std::vector<int> vec;
+////  std::map<int, ptr_render>::iterator it = mapRemoteRenderWnds.begin();
+////  while (it != mapRemoteRenderWnds.end()) {
+////    vec.push_back(it->first);
+////  }
+////  return vec;
+////}
+//
+//#endif
+//
+//}  // namespace win_render
 
-#endif
-
-}  // namespace win_render
 namespace win_desk {
 #if defined(WEBRTC_WIN)
 ECDesktopCapture::ECDesktopCapture(

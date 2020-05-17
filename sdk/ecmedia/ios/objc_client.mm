@@ -37,8 +37,8 @@
 #endif
 #import "sdk/objc/components/renderer/opengl/RTCEAGLVideoView.h"
 #import "sdk/objc/helpers/RTCCameraPreviewView.h"
-#import "RenderManager.h"
 #import "sdk/objc/components/audio/RTCAudioSessionConfiguration.h"
+
 
 RTCCameraVideoCapturer *capturer_;
 RTCCameraPreviewView *localVideoView;
@@ -57,10 +57,12 @@ ObjCCallClient* ObjCCallClient::GetInstance(){
 ObjCCallClient::ObjCCallClient()
 : call_started_(false){
   rm_ = new RenderManager();
+  render_ = new RenderManager();
   m_fps = 25;
   _usingFrontCamera = true;
   targetWidth = 640;
   targetHeight = 480;
+  
 }
 ObjCCallClient::~ObjCCallClient(){
   rm_ = nullptr;
@@ -109,11 +111,11 @@ bool ObjCCallClient::InitDevice(rtc::Thread* signaling_thread,rtc::Thread* worke
   
   video_source_ =  webrtc::ObjCToNativeVideoCapturer(capturer_, signaling_thread, worker_thread);
   
-  localVideoView = [[RTCCameraPreviewView alloc] init];
+  //localVideoView = [[RTCCameraPreviewView alloc] init];
   
-  if(capturer_ && localVideoView){
-    localVideoView.captureSession = capturer_.captureSession;
-  }
+  //if(capturer_ && localVideoView){
+    //localVideoView.captureSession = capturer_.captureSession;
+  //}
   
 RTCAudioSessionConfiguration *webRTCConfig =
     [RTCAudioSessionConfiguration webRTCConfiguration];
@@ -128,12 +130,21 @@ void ObjCCallClient::SetLocalWindowView(void* local)
 {
   if(local )
   {
-    UIView *parentView = (__bridge UIView *)local;
+    render_->AttachVideoRender(1,
+            local,
+            0,
+            0,
+            nullptr);
+    return;
+   
+    //UIView *parentView = (__bridge UIView *)local;
     dispatch_async(dispatch_get_main_queue(), ^{
-      localVideoView.bounds = CGRectMake(0, 0, parentView.frame.size.width, parentView.frame.size.height);
-      localVideoView.frame = CGRectMake(0, 0, parentView.frame.size.width, parentView.frame.size.height);
-      localVideoView.contentMode = parentView.contentMode;
-      [parentView addSubview:localVideoView];
+//      localVideoView.bounds = CGRectMake(0, 0, parentView.frame.size.width, parentView.frame.size.height);
+//      localVideoView.frame = CGRectMake(0, 0, parentView.frame.size.width, parentView.frame.size.height);
+//      localVideoView.contentMode = parentView.contentMode;
+//      [parentView addSubview:localVideoView];
+      //render->
+     
     });
   }
 }
@@ -142,11 +153,11 @@ void ObjCCallClient::SetRemoteWindowView(int channelID, void* remoteView ){
   if(rm_){
     if( ![[NSThread currentThread] isMainThread] ){
       dispatch_sync(dispatch_get_main_queue(), ^{
-        rm_->SetRemoteWindowView(channelID,remoteView);
+       // rm_->SetRemoteWindowView(channelID,remoteView);
       });
     }
-    else
-      rm_->SetRemoteWindowView(channelID, remoteView);
+    //else
+      //rm_->SetRemoteWindowView(channelID, remoteView);
   }
   return;
   if(remoteView){
@@ -255,20 +266,9 @@ bool ObjCCallClient::SetSpeakerStatus(bool enable) {
     [session setCategory:AVAudioSessionCategoryPlayAndRecord
              withOptions:options
                    error:&error];
- // AudioSessionSetProperty(kAudioSessionProperty_OverrideAudioRoute,
-   //                       sizeof(audioRouteOverride), &audioRouteOverride);
-//    if (enable) {
-//        //设置外放
-//        [session overrideOutputAudioPort:AVAudioSessionPortOverrideSpeaker error:&error];
-//    }else{
-//        //设置听筒
-//        [session overrideOutputAudioPort:AVAudioSessionPortOverrideNone error:&error];
-//    }
-//    [session setActive:YES error:nil];
     if (error) {
         return -1;
     }
-    //kLoudSpeakerStatus = enable;
     return 0;
 }
 
@@ -292,11 +292,8 @@ int ObjCCallClient::GetNumberOfVideoDevices(){
   return  VideoCaptureiOSDeviceInfo::GetInstance()->NumberOfDevices();
 }
 rtc::VideoSinkInterface<webrtc::VideoFrame>*  ObjCCallClient::getRemoteVideoSilkByChannelID(int channelID){
-  //     std::map<int,std::unique_ptr<rtc::VideoSinkInterface<webrtc::VideoFrame>>>::iterator it = remote_sinks.find(channelID);
-  //        if(it != remote_sinks.end())
-  //            return it->second.get();
-  if(rm_)
-    return rm_->getRemoteVideoSilkByChannelID(channelID);
+  //if(rm_)
+    //return rm_->getRemoteVideoSilkByChannelID(channelID);
   return nullptr;
 }
 webrtc::VideoTrackSourceInterface* ObjCCallClient::getLocalVideoSource(rtc::Thread* signaling_thread,rtc::Thread* worker_thread){
@@ -337,8 +334,10 @@ webrtc::VideoCaptureModule::DeviceInfo* ObjCCallClient::getVideoCaptureDeviceInf
 void ObjCCallClient::SetCameraIndex(int index){
   
 }
-bool ObjCCallClient::PreviewTrack(int window_id, void* video_track){
-  
+bool ObjCCallClient::PreviewTrack(int window_id, webrtc::VideoTrackInterface* video_track){
+  if(render_){
+    render_->UpdateOrAddVideoTrack(1,video_track);
+  }
   return true;
 }
 //}  // namespace webrtc_examples

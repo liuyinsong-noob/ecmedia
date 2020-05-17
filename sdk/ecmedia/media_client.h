@@ -34,13 +34,14 @@
 #include "media/base/stream_params.h"
 #include "media/sctp/sctp_transport_internal.h"
 
-#include "sdk/ecmedia/win/video_render/video_renderer.h"
+#include "sdk/ecmedia/video_renderer.h"
 #include "sdk/ecmedia/win/video_capturer/video_capturer.h"
 #include "media/base/video_common.h"
 #include "media/engine/webrtc_video_engine.h"
 #include "modules/desktop_capture/desktop_capturer.h"
 #include "modules/desktop_capture/desktop_frame.h"
 #include "modules/video_capture/video_capture.h"
+#include "sdk/ecmedia/render_manager.h"
 
 #include "ec_log.h"
 
@@ -108,8 +109,8 @@ class ECDesktopCapture : public rtc::AdaptedVideoTrackSource,
 #endif
 }  // namespace win_desk
 
-namespace win_render {
-#if defined(WEBRTC_WIN)
+//namespace win_render {
+//#if defined(WEBRTC_WIN)
 
 //class VideoRenderer : public rtc::VideoSinkInterface<webrtc::VideoFrame> {
 // public:
@@ -199,53 +200,18 @@ namespace win_render {
 
 // A little helper class to make sure we always to proper locking and
 // unlocking when working with VideoRenderer buffers.
-template <typename T>
-class AutoLock {
- public:
-  explicit AutoLock(T* obj) : obj_(obj) { obj_->Lock(); }
-  ~AutoLock() { obj_->Unlock(); }
+//template <typename T>
+//class AutoLock {
+// public:
+//  explicit AutoLock(T* obj) : obj_(obj) { obj_->Lock(); }
+//  ~AutoLock() { obj_->Unlock(); }
+//
+// protected:
+//  T* obj_;
+//};
 
- protected:
-  T* obj_;
-};
+//}
 
-class RenderWndsManager{
- public:
-  RenderWndsManager();
-  ~RenderWndsManager();
-
-  void AddRemoteRenderWnd(int channelId,
-                          int render_mode,
-                          void* winRemote,
-                          rtc::Thread* worker_thread,
-                          webrtc::VideoTrackInterface* track_to_render);
-  bool UpdateRemoteVideoTrack(int channelId,
-                        webrtc::VideoTrackInterface* track_to_render);
-  bool RemoveRemoteRenderWnd(int channelId);
-
-  void SetLocalRenderWnd(int channelId,
-                         int render_mode,
-                         void* winLocal,
-                         rtc::Thread* worker_thread,
-                         webrtc::VideoTrackInterface* track_to_render);
-  bool UpdateLocalVideoTrack(int channelId,
-                             webrtc::VideoTrackInterface* track_to_render);
-  
-  bool StartLocalRenderer(int window_id,
-                          webrtc::VideoTrackInterface* local_video);
-  bool RemoveLocalRenderer(int channelId);
-
-  bool StartRemoteRenderer(int channelId,
-                           webrtc::VideoTrackInterface* remote_video);
-
- private:
-  using ptr_render = std::unique_ptr<VideoRenderer>;
-  std::map<int, ptr_render> mapRemoteRenderWnds;
-  std::map<int, ptr_render> mapLocalRenderWnds;
-};
-
-#endif
-}  // namespace win_render
 
 namespace ecmedia_sdk {
 
@@ -1035,8 +1001,9 @@ class MediaClient : public sigslot::has_slots<> {
 
   std::map<int, rtc::scoped_refptr<win_desk::ECDesktopCapture>>
       desktop_devices_;
-
-  std::unique_ptr<win_render::RenderWndsManager> renderWndsManager_;
+#endif
+#if defined WEBRTC_WIN || defined WEBRTC_IOS
+  std::unique_ptr<RenderManager> renderWndsManager_;
 #endif
   std::unique_ptr<VideoRenderer> local_renderer_;
   bool m_bInitialized;

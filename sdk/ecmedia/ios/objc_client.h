@@ -20,6 +20,7 @@
 #include "modules/video_capture/video_capture.h"
 #include "rtc_base/critical_section.h"
 #include "rtc_base/thread_checker.h"
+#include "sdk/ecmedia/render_manager.h"
 
 
 class ObjCCallClient {
@@ -56,7 +57,7 @@ public:
     void Connect() RTC_RUN_ON(thread_checker_);
     bool SetSpeakerStatus(bool enable);
     bool GetSpeakerStatus(bool& enable);
-    bool PreviewTrack(int window_id, void* video_track);
+    bool PreviewTrack(int window_id, webrtc::VideoTrackInterface* video_track);
     rtc::ThreadChecker thread_checker_;
     
     bool call_started_ RTC_GUARDED_BY(thread_checker_);
@@ -86,6 +87,7 @@ public:
     int targetWidth ;
     int targetHeight ;
     webrtc::VideoCaptureModule::DeviceInfo* _captureInfo;
+    RenderManager* render_;
 };
 
 //}  // namespace webrtc_examples
