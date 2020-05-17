@@ -5,7 +5,7 @@
 #include "api/video/video_frame.h"
 #include "api/video/video_sink_interface.h"
 #include "rtc_base/thread.h"
-#include "video_render_defines.h"
+#include "sdk/ecmedia/video_render_defines.h"
 
 
 class IVideoRender {
