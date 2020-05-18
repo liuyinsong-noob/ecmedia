@@ -91,6 +91,7 @@ class ECDesktopCapture : public rtc::AdaptedVideoTrackSource,
   void Start();
   void Stop();
   void CaptureFrame();
+  bool GetCaptureState();
 
  public:
   bool isStartCapture;
@@ -300,8 +301,8 @@ class MediaClient : public sigslot::has_slots<> {
     int rtx = 1;
     int rtxPayload = 97;
     int payloadType = 96;
-    int width = 1280;
-    int height = 720;
+    int width = 640;
+    int height = 480;
     int minBitrateKps = 300;
     int startBitrateKps = 600;
     int maxBitrateKps = 1700;
@@ -864,7 +865,7 @@ class MediaClient : public sigslot::has_slots<> {
   bool InitRenderWndsManager();
   void DestroyAllChannels();
   bool GetMediaSsrc(bool is_local, int channelId, std::vector<uint32_t>& ssrcs);
-
+  int GetMaxVideoBitrateKbps(int width, int height, bool is_screenshare);
   void DestroyTransceiverChannel(
       rtc::scoped_refptr<
           webrtc::RtpTransceiverProxyWithInternal<webrtc::RtpTransceiver>>
@@ -984,6 +985,7 @@ class MediaClient : public sigslot::has_slots<> {
       webrtc::AudioDeviceModule::kPlatformDefaultAudio;  // zjy
   std::unique_ptr<webrtc::VideoCaptureModule::DeviceInfo> vcm_device_info_;
   typedef std::pair<std::string, VideoCapturer*> UniqueIdVideoCapturerPair;
+
   class FindUniqueId {
    public:
     FindUniqueId(std::string unique_id) : unique_id_(unique_id) {}
@@ -1033,6 +1035,10 @@ class MediaClient : public sigslot::has_slots<> {
   using VideoSinkIterator = std::map<
       int,
       std::unique_ptr<rtc::VideoSinkInterface<webrtc::VideoFrame>>>::iterator;
+#endif
+  int m_MaxBandwidthBps_;
+#if defined(WEBRTC_WIN)
+  int m_MaxBitrateScreen_;
 #endif
 };
 

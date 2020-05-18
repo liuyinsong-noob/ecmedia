@@ -160,6 +160,10 @@ MediaClient::MediaClient() {
   RTC_LOG(INFO) << __FUNCTION__ << "(),"
                 << " begin... ";
 
+  m_MaxBandwidthBps_ = 0;
+#if defined(WEBRTC_WIN)
+  m_MaxBitrateScreen_ = 0;
+#endif
   m_bInitialized = false;
   m_bControll = false;
   isCreateCall = true;
@@ -342,6 +346,7 @@ void MediaClient::UnInitialize() {
          }
    }
    desktop_devices_.clear();*/
+  m_MaxBandwidthBps_ = 0;
   transceivers_.clear();
   mapChannelSsrcs_.clear();
   TrackChannels_.clear();
@@ -726,6 +731,28 @@ bool MediaClient::CreateChannel(const std::string& settings,
   return bOk;
 }
 
+int MediaClient::GetMaxVideoBitrateKbps(int width,
+	int height,
+	bool is_screenshare) {
+	int max_bitrate;
+	//ytx_change 600->500 1700->800 2000->1500
+	if (width * height <= 320 * 240) {
+		max_bitrate = 500;
+	}
+	else if (width * height <= 640 * 480) {
+		max_bitrate = 800;
+	}
+	else if (width * height <= 960 * 540) {
+		max_bitrate = 1000;
+	}
+	else {
+		max_bitrate = 1200;
+	}
+	if (is_screenshare)
+		max_bitrate = std::max(max_bitrate, 1000);
+	return max_bitrate;
+}
+
 bool MediaClient::CreateVideoChannel(const std::string& settings,
                                      int channelId) {
   EC_CHECK_VALUE(channel_manager_, false);
@@ -821,7 +848,7 @@ bool MediaClient::CreateVideoChannel(const std::string& settings,
   cricket::VideoSendParameters vidoe_send_params;
   vidoe_send_params.mid = mid;
 
-  vidoe_send_params.max_bandwidth_bps = kMaxBandwidthBps;
+  //vidoe_send_params.max_bandwidth_bps = kMaxBandwidthBps;
   //
   // config.codecName = "h264";
   // config.payloadType = 104;
@@ -858,7 +885,18 @@ bool MediaClient::CreateVideoChannel(const std::string& settings,
     video_stream_params.AddFidSsrc(*it, *it | 0x40);
     it++;
   }
+  if (ssrcsRemote.size() == 0) {
+	  if (config.isScreenShare) {
+#if defined(WEBRTC_WIN)
+		  m_MaxBitrateScreen_ = GetMaxVideoBitrateKbps(config.width, config.height, config.isScreenShare) * 1000;
+#endif
+	  }
+	  else {
+		  m_MaxBandwidthBps_ += GetMaxVideoBitrateKbps(config.width, config.height, config.isScreenShare) * 1000;
+	  }
+  }
 
+  vidoe_send_params.max_bandwidth_bps = m_MaxBandwidthBps_;// kMaxBandwidthBps;
   bOk = worker_thread_->Invoke<bool>(RTC_FROM_HERE, [&] {
     return video_channel_->media_channel()->SetSendParameters(
         vidoe_send_params);
@@ -1434,8 +1472,18 @@ int MediaClient::StartScreenShare(int type) {
   RTC_LOG(INFO) << __FUNCTION__ << "()";
   desktop_device_ = desktop_devices_.find(type)->second;
   if (desktop_device_) {
-    worker_thread_->Invoke<void>(RTC_FROM_HERE,
-                                 [this] { desktop_device_->Start(); });
+	  if (!desktop_device_->GetCaptureState())
+	  {
+		  worker_thread_->Invoke<void>(RTC_FROM_HERE, [this]
+		  {
+			  m_MaxBandwidthBps_ += m_MaxBitrateScreen_;
+			  webrtc::BitrateConstraints bitrate_config_;
+			  bitrate_config_.max_bitrate_bps = m_MaxBandwidthBps_;
+			  call_->GetTransportControllerSend()->SetSdpBitrateParameters(
+				  bitrate_config_);
+			  desktop_device_->Start();
+		  });
+	  }
     return 0;
   } else {
     return -1;
@@ -1448,12 +1496,29 @@ int MediaClient::StopScreenShare(int type) {
 #if defined(WEBRTC_WIN)
   RTC_LOG(INFO) << __FUNCTION__ << "()";
   desktop_device_ = desktop_devices_.find(type)->second;
-  if (desktop_device_) {
-    desktop_device_->Stop();
+  if (desktop_device_ && desktop_device_->GetCaptureState()) {
+	  worker_thread_->Invoke<void>(RTC_FROM_HERE, [this]
+	  {
+		  m_MaxBandwidthBps_ -= m_MaxBitrateScreen_;
+		  if (m_MaxBandwidthBps_ < 0)
+		  {
+			  m_MaxBandwidthBps_ = 0;
+		  }
+		  else
+		  {
+			  webrtc::BitrateConstraints bitrate_config_;
+			  bitrate_config_.max_bitrate_bps = m_MaxBandwidthBps_;
+			  call_->GetTransportControllerSend()->SetSdpBitrateParameters(
+				  bitrate_config_);
+		  }
+
+	  });
+	  desktop_device_->Stop();
   }
 #endif
   return 0;
 }
+
 int MediaClient::GetWindowsList(int type,
                                 webrtc::DesktopCapturer::SourceList& source) {
 #if defined(WEBRTC_WIN)
@@ -4284,18 +4349,22 @@ int ECDesktopCapture::SetDesktopSourceID(int index) {
 }
 
 void ECDesktopCapture::Stop() {
-  // if (isStartCapture) {
   isStartCapture = false;
-  // }
 }
 
 void ECDesktopCapture::Start() {
   if (!isStartCapture) {
     isStartCapture = true;
-    capturer_->Start(this);
+	capturer_->Start(this);
+
     CaptureFrame();
   }
 }
+
+bool ECDesktopCapture::GetCaptureState() {
+	return isStartCapture;
+}
+
 
 void ECDesktopCapture::OnMessage(rtc::Message* msg) {
   if (msg->message_id == 0 && isStartCapture)
@@ -4304,7 +4373,7 @@ void ECDesktopCapture::OnMessage(rtc::Message* msg) {
 void ECDesktopCapture::CaptureFrame() {
   capturer_->CaptureFrame();
   rtc::Location loc(__FUNCTION__, __FILE__);
-  rtc::Thread::Current()->PostDelayed(loc, 60, this, 0);
+  rtc::Thread::Current()->PostDelayed(loc, 67, this, 0);
 }
 #endif
 }  // namespace win_desk
