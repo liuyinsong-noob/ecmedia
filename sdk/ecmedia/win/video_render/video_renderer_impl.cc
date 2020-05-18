@@ -32,7 +32,9 @@ VideoRenderImpl::VideoRenderImpl(void* windows,
                                  webrtc::VideoTrackInterface* track_to_render,
                                  rtc::Thread* worker_thread,
                                  VideoRenderType render_type)
-    : worker_thread_(worker_thread), rendered_track_(track_to_render) {
+    : worker_thread_(worker_thread),
+      rendered_track_(track_to_render),
+      video_window_(windows) {
   switch (render_type) {
     case kRenderWindows: {
       RTC_LOG(LS_INFO) << " new WinD3d9Render begins " << (long)this
@@ -49,7 +51,10 @@ VideoRenderImpl::VideoRenderImpl(void* windows,
 
   if (_ptrRenderer) {
     if (_ptrRenderer->Init() == -1) {
+      delete _ptrRenderer;
+      _ptrRenderer = nullptr;
        RTC_LOG(LS_ERROR) << __FUNCTION__ << " _ptrRenderer->Init() failed.";
+      return;
     }
   }
   if (rendered_track_) {

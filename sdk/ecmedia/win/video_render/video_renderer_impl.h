@@ -22,12 +22,14 @@ class VideoRenderImpl : public VideoRenderer {
 
   // implement rtc::VideoSinkInterface<webrtc::VideoFrame>
   void OnFrame(const webrtc::VideoFrame& frame) override;
-  void* WindowPtr()override{return this;}
+
+  void* WindowPtr() override  { return video_window_; }
 
  private:
   rtc::Thread* worker_thread_;
   rtc::scoped_refptr<webrtc::VideoTrackInterface> rendered_track_;
   IVideoRender* _ptrRenderer;
+  void* video_window_;
 };
 
 #endif  // VIDEO_RENDERER_H
