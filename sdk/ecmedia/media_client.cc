@@ -229,9 +229,12 @@ bool MediaClient::SetTrace(const char* path, int min_sev) {
       // rtc::LogMessage::LogThreads();
       rtc::LogMessage::AddLogToStream(ec_log_, ls);
     }
-    return true;
-  }
-  return false;
+  } else {
+    rtc::LogMessage::RemoveLogToStream(ec_log_);
+    delete ec_log_;
+    ec_log_ = nullptr;
+   }
+  return true;	
   //if (!ec_log_) {
   //  ec_log_ = new ECLog(path);
   //}
