@@ -308,6 +308,7 @@ typedef struct x264_param_t
 #if _RLCLOUD
     int         iTemporalLayers;
     int         bScreenMode;        /* screen content coding mode */
+    int         bDenoise;
 #endif
 
     /* NAL HRD
