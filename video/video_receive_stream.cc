@@ -752,6 +752,13 @@ void VideoReceiveStream::SetRequestKeyFramCallback(
 void VideoReceiveStream::RequestRemoteSsrc(int flag,int32_t ssrc) {
   uint32_t bandwidth = flag;
   uint32_t localssrc = 0;
+#ifdef SIMULCAST_REQUEST_SMALL_RESOLUTION
+  uint32_t origin_ssrc = (uint32_t)ssrc;
+  uint8_t origin_resolution_index = origin_ssrc & 0x0f;
+  uint8_t half_resolution_index = origin_resolution_index / 2;
+  uint32_t new_ssrc = (origin_ssrc & 0xfffffff0) | half_resolution_index;
+  ssrc = new_ssrc;
+#endif
   rtp_video_stream_receiver_.GetMoudleRtcp()->SendSingleTMMBR(bandwidth,localssrc, (uint32_t)ssrc);
       
  }

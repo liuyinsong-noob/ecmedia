@@ -66,8 +66,9 @@ ECMEDIA_API bool ECMedia_create_transport(const char* l_addr,
 
 ECMEDIA_API bool ECMedia_create_channel(const char* tid,
                                         int& channel_id,
-                                        bool is_video) {
-  return g_ECMedia->CreateChannel(tid, channel_id, is_video);
+                                        bool is_video,
+										bool is_simulcast) {
+  return g_ECMedia->CreateChannel(tid, channel_id, is_video, is_simulcast);
 }
 
 ECMEDIA_API void ECMedia_destroy_channel(int& channel_id, bool is_video) {

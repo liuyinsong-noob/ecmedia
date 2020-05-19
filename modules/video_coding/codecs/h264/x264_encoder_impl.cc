@@ -345,6 +345,8 @@ int32_t X264EncoderImpl::SetRateAllocation(
   for (size_t i = 0; i < encoders_.size(); ++i, --stream_idx) {
     // Update layer config.
     configurations_[i].target_bps = bitrate.GetSpatialLayerSum(stream_idx);
+    //if (configurations_[i].target_bps == 0)  // ---ylr
+    //  configurations_[i].target_bps = 300000;
     configurations_[i].max_frame_rate = static_cast<float>(new_framerate);
 
     if (configurations_[i].target_bps) {

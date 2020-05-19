@@ -714,13 +714,14 @@ void MediaClient::DestroyChannel(int channel_id, bool is_video) {
 
 bool MediaClient::CreateChannel(const std::string& settings,
                                 int channel_id,
-                                bool is_video) {
+                                bool is_video, 
+								bool is_simulcast) {
   bool bOk = false;
   if (signaling_thread_) {
     bOk = signaling_thread_->Invoke<bool>(RTC_FROM_HERE, [=] {
       RTC_DCHECK_RUN_ON(signaling_thread_);
       if (is_video) {
-        return CreateVideoChannel(settings, channel_id);
+        return CreateVideoChannel(settings, channel_id, is_simulcast);
       } else {
         return CreateVoiceChannel(settings, channel_id);
       }
@@ -754,7 +755,7 @@ int MediaClient::GetMaxVideoBitrateKbps(int width,
 }
 
 bool MediaClient::CreateVideoChannel(const std::string& settings,
-                                     int channelId) {
+                                     int channelId, bool is_simulcast) {
   EC_CHECK_VALUE(channel_manager_, false);
   EC_CHECK_VALUE(transport_controller_, false);
   std::string setting = settings;
@@ -897,6 +898,22 @@ bool MediaClient::CreateVideoChannel(const std::string& settings,
   }
 
   vidoe_send_params.max_bandwidth_bps = m_MaxBandwidthBps_;// kMaxBandwidthBps;
+if (is_simulcast) {
+    std::vector<uint32_t> ssrcsSimLocal;
+    for (auto it : ssrcsLocal) {
+      ssrcsSimLocal.push_back(it);
+      uint8_t origin_resolution_index = it & 0x0f;
+      uint8_t half_resolution_index = origin_resolution_index / 2;
+      uint32_t new_ssrc = (it & 0xfffffff0) | half_resolution_index;
+      ssrcsSimLocal.push_back(new_ssrc);
+      video_stream_params.add_ssrc(new_ssrc);
+      video_stream_params.AddFidSsrc(new_ssrc, new_ssrc | 0x40);
+    }
+    video_stream_params.ssrc_groups.push_back(
+        cricket::SsrcGroup(cricket::kSimSsrcGroupSemantics,
+                           ssrcsSimLocal)); 
+  }
+
   bOk = worker_thread_->Invoke<bool>(RTC_FROM_HERE, [&] {
     return video_channel_->media_channel()->SetSendParameters(
         vidoe_send_params);
