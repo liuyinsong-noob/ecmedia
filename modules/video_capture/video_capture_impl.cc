@@ -188,32 +188,6 @@ int32_t VideoCaptureImpl::IncomingFrame(uint8_t* videoFrame,
     return -1;
   }
 
-//ytx_begin
-#ifdef AVRONG_DEBUG_DUMP
-  // if (encoded != NULL && encoded_len > 0)
-  {
-    static int bflag = 0;
-    if (!bflag) {
-      bflag = 1;
-      FILE* fp = fopen("dumpCaptureVideoInfo.txt", "w");
-      fprintf(fp, "width=%d, height=%d, I420\n", width, height);
-      fprintf(fp, "Ystride=%d, Ustride=%d, Vstride=%d\n\n",
-              buffer.get()->StrideY(), buffer.get()->StrideU(),
-              buffer.get()->StrideV());
-      fclose(fp);
-      fp = fopen("dumpCaptureVideo.yuv", "wb");
-      fclose(fp);
-    }
-
-    FILE *fp = fopen(".\\dumpCaptureVideo.yuv", "ab");
-
-    fwrite(buffer.get()->MutableDataY(), 1, width * height, fp);
-    fwrite(buffer.get()->MutableDataU(), 1, width * height / 4, fp);
-    fwrite(buffer.get()->MutableDataV(), 1, width * height / 4, fp);
-    fclose(fp);
-  }
-#endif  
-//ytx_end
   VideoFrame captureFrame =
       VideoFrame::Builder()
           .set_video_frame_buffer(buffer)

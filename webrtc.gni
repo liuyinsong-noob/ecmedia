@@ -95,11 +95,11 @@ declare_args() {
   # Selects whether debug dumps for the audio processing module
   # should be generated.
   #ytx_begin 
-  apm_debug_dump = true
-  
-  agc_debug_dump = true
-  
-  avrong_debug_dump = false
+  if (is_win){
+    apm_debug_dump = true
+    agc_debug_dump = true
+    avrong_debug_dump = false
+  }
   #ytx_end
   # Set this to true to enable BWE test logging.
   rtc_enable_bwe_test_logging = false
