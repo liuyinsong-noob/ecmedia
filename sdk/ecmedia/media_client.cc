@@ -282,7 +282,7 @@ bool MediaClient::Initialize() {
 
     m_bInitialized = bOk;
 
-   // SetTrace("ecmediaAPI.txt", 1);
+    //SetTrace("ecmediaAPI.txt", 1);
   }
   return bOk;
 #endif
@@ -714,14 +714,13 @@ void MediaClient::DestroyChannel(int channel_id, bool is_video) {
 
 bool MediaClient::CreateChannel(const std::string& settings,
                                 int channel_id,
-                                bool is_video, 
-								bool is_simulcast) {
+                                bool is_video) {
   bool bOk = false;
   if (signaling_thread_) {
     bOk = signaling_thread_->Invoke<bool>(RTC_FROM_HERE, [=] {
       RTC_DCHECK_RUN_ON(signaling_thread_);
       if (is_video) {
-        return CreateVideoChannel(settings, channel_id, is_simulcast);
+        return CreateVideoChannel(settings, channel_id);
       } else {
         return CreateVoiceChannel(settings, channel_id);
       }
@@ -755,7 +754,7 @@ int MediaClient::GetMaxVideoBitrateKbps(int width,
 }
 
 bool MediaClient::CreateVideoChannel(const std::string& settings,
-                                     int channelId, bool is_simulcast) {
+                                     int channelId) {
   EC_CHECK_VALUE(channel_manager_, false);
   EC_CHECK_VALUE(transport_controller_, false);
   std::string setting = settings;
@@ -898,7 +897,7 @@ bool MediaClient::CreateVideoChannel(const std::string& settings,
   }
 
   vidoe_send_params.max_bandwidth_bps = m_MaxBandwidthBps_;// kMaxBandwidthBps;
-if (is_simulcast) {
+if (config.isSimulcast) {
     std::vector<uint32_t> ssrcsSimLocal;
     for (auto it : ssrcsLocal) {
       ssrcsSimLocal.push_back(it);
@@ -2428,6 +2427,9 @@ bool MediaClient::ParseVideoCodecSetting(const char* videoCodecSettings,
         }
         if (rtc::GetBoolFromJsonObject(settings, "isScreenShare", &enable)) {
           config->isScreenShare = enable;
+        }
+		if (rtc::GetBoolFromJsonObject(settings, "isSimulcast", &enable)) {
+          config->isSimulcast = enable;
         }
         if (rtc::GetIntFromJsonObject(settings, "payloadType", &value)) {
           config->payloadType = value;

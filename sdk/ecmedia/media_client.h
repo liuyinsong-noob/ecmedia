@@ -296,6 +296,7 @@ class MediaClient : public sigslot::has_slots<> {
     bool red = true;
     bool nack = true;
     bool isScreenShare = false;
+	bool isSimulcast = false;
     int fecType = 1;  // red and ulp fec
     int fecPayload = 97;
     int rtx = 1;
@@ -396,8 +397,7 @@ class MediaClient : public sigslot::has_slots<> {
   /****************************************************************************/
   bool CreateChannel(const std::string& settings,
                      int channel_id,
-                     bool is_video = true,
-					 bool is_simulcast = false);
+                     bool is_video = true);
 
   /****************************************************************************/
   /*** 函数名: 释放通道                                                     ***/
@@ -860,7 +860,7 @@ class MediaClient : public sigslot::has_slots<> {
 #endif
   bool CreateCall(webrtc::RtcEventLog* event_log);
   bool CreateTransportController(bool disable_encryp = true);
-  bool CreateVideoChannel(const std::string& settings, int channel_id, bool is_simulcast);
+  bool CreateVideoChannel(const std::string& settings, int channel_id);
   bool CreateVoiceChannel(const std::string& settingsvvv, int channel_id);
   bool DisposeConnect();
   bool InitRenderWndsManager();

@@ -93,9 +93,8 @@ ECMEDIA_API bool ECMedia_create_transport(const char* l_addr,
 /*** 函数参数1: 名称    tid                  类型   char*                 ***/
 /*** 函数参数2: 名称    channel_id           类型   int                   ***/
 /*** 函数参数3: 名称    is_video             类型   bool                  ***/
-/*** 函数参数4: 名称    is_simulcast         类型   bool                  ***/
 /****************************************************************************/
-ECMEDIA_API bool ECMedia_create_channel(const char* tid, int& channel_id, bool is_video= true, bool is_simulcast=false);
+ECMEDIA_API bool ECMedia_create_channel(const char* tid, int& channel_id, bool is_video= true);
 
 
 
