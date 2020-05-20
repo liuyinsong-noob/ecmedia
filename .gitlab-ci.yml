@@ -9,6 +9,9 @@ cache:
   - resources/
   - buildtools/
   - tools/
+  - build/linux/debian_sid_amd64-sysroot/
+  - build/linux/debian_sid_i386-sysroot/
+  - build/linux/debian_sid_arm64-sysroot/
 ## -------> build
 build_android:
     stage: build
