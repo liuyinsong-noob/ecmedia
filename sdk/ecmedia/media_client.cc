@@ -3196,7 +3196,7 @@ int MediaClient::GetCallStats(char* statistics, int length) {
     Callstats["Estimated_send_kbps"] = (int)(stats.send_bandwidth_bps*0.001);
     Callstats["Estimated_received_kbps"] =
         (int)(stats.recv_bandwidth_bps*0.001);
-    Callstats["Rtt_ms"] = stats.rtt_ms;
+    Callstats["Rtt_ms"] = (Json::UInt) stats.rtt_ms;
     std::string ret = Callstats.toStyledString();
     if (length > (int)ret.length()) {
       std::memset(statistics, 0, length);
