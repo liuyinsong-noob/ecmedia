@@ -58,6 +58,7 @@ def unzip_file(zip_filename, path):
          '''
     else:
          print "error open zipfile",zip_filename
+         sys.exit(-1)
 
 def untarzip_file(targz_file,path):
     tf = tarfile.open(targz_file)
@@ -116,10 +117,12 @@ def build_src():
     else: 
         gn_cmd = 'buildtools/linux64/gn gen out/default --args="' +" ".join(gn_param)+'"'
     print "Excute gn command: ",gn_cmd
-    os.system(gn_cmd)
+    if os.system(gn_cmd) <> 0:
+      sys.exit(-1)
     #ninja 编译工程
     print "Excute ninjia compile source "
-    os.system(os.path.normpath('third_party/depot_tools/ninja') +' -C out/default ecmedia')
+    if os.system(os.path.normpath('third_party/depot_tools/ninja') +' -C out/default ecmedia') <> 0:
+      sys.exit(-1)
                
 if __name__=='__main__' :
     build_src()
