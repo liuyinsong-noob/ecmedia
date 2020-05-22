@@ -654,7 +654,11 @@ void MediaClient::DestroyChannel(int channel_id, bool is_video) {
     while (it != mVideoChannels_.end()) {
       if (it->first == channel_id) {
 #if defined(WEBRTC_WIN) || defined(WEBRTC_IOS)
-        renderWndsManager_->RemoveAllVideoRender(channel_id);
+		  signaling_thread_->Invoke<void>(RTC_FROM_HERE, [&] {
+			  RTC_DCHECK_RUN_ON(signaling_thread_);
+			  renderWndsManager_->RemoveAllVideoRender(channel_id);
+		  });
+        
 #endif
         cricket::VideoChannel* channel = it->second;
         if (channel != nullptr) {
@@ -1456,29 +1460,36 @@ MediaClient::CreateLocalVoiceTrack(const std::string& track_id) {
 void MediaClient::DestroyLocalVideoTrack(
     rtc::scoped_refptr<webrtc::VideoTrackInterface> track) {
   API_LOG(INFO) << "track: " << track;
-  if (track) {
-    for (auto t : TrackChannels_) {
-      if (t.second == track) {
-        RtpSenders_[t.first].get()->SetTrack(nullptr);
-#if defined(WEBRTC_WIN) || defined(WEBRTC_IOS)
-        renderWndsManager_->UpdateOrAddVideoTrack(t.first, nullptr);
-        renderWndsManager_->StopRender(t.first, nullptr);
-#endif
-      }
-    }
-    std::vector<rtc::scoped_refptr<webrtc::VideoTrackInterface>>::iterator it = video_tracks_.begin();
-    while(it != video_tracks_.end()) {
-      if (track == *it) {
-        signaling_thread_->Invoke<void>(
-            RTC_FROM_HERE, [track] { track.get()->GetSource()->Release(); });
-        while (track.release() != nullptr);
-        video_tracks_.erase(it);
-        break;
-      } else {
-        it++;
+
+    if (signaling_thread_) {
+    signaling_thread_->Invoke<void>(RTC_FROM_HERE, [this, track] {
+	  if (track) {
+		for (auto t : TrackChannels_) {
+		  if (t.second == track) {
+			RtpSenders_[t.first].get()->SetTrack(nullptr);
+	#if defined(WEBRTC_WIN) || defined(WEBRTC_IOS)
+			renderWndsManager_->UpdateOrAddVideoTrack(t.first, nullptr);
+			renderWndsManager_->StopRender(t.first, nullptr);
+	#endif
+		  }
+		}
+		std::vector<rtc::scoped_refptr<webrtc::VideoTrackInterface>>::iterator it =
+			video_tracks_.begin();
+		while (it != video_tracks_.end()) {
+		  if (track == *it) {
+			track.get()->GetSource()->Release();
+			//while (track.release() != nullptr);
+			video_tracks_.erase(it);
+			break;
+		  } else {
+			it++;
+		  }
+		}
 	  }
-    }
+    });
   }
+    while (track.release() != nullptr);
+
   RTC_LOG(INFO) << __FUNCTION__ << "(),"
                 << " end... ";
 }
@@ -1759,7 +1770,9 @@ bool MediaClient::CreateTransportController(bool disable_encryp) {
      // sent_packet.packet_id;
   RTC_DCHECK_RUN_ON(worker_thread_);
   EC_CHECK_VALUE(call_, void());
+
   call_->OnSentPacket(sent_packet);
+	
   
 }
 
@@ -1772,7 +1785,12 @@ bool MediaClient::DisposeConnect() {
     transceiver->Stop();
   }
 
-  DestroyAllChannels();
+    signaling_thread_->Invoke<void>(RTC_FROM_HERE, [this] {
+    RTC_DCHECK_RUN_ON(signaling_thread_);
+    DestroyAllChannels();
+  });
+
+  
 
   network_thread_->Invoke<void>(RTC_FROM_HERE, [this] {
     RTC_DCHECK_RUN_ON(network_thread_);
@@ -1902,9 +1920,10 @@ bool MediaClient::SetLocalVideoRenderWindow(int channel_id,
   if (!renderWndsManager_) {
     InitRenderWndsManager();
   }
-
-  renderWndsManager_->AttachVideoRender(channel_id, view, render_mode, true,
-                                        worker_thread_);
+  signaling_thread_->Invoke<void>(RTC_FROM_HERE, [this, channel_id, view, render_mode] {
+	  renderWndsManager_->AttachVideoRender(channel_id, view, render_mode, true,worker_thread_);
+  });
+  
 //#elif defined(WEBRTC_IOS)
 //  ObjCCallClient::GetInstance()->SetLocalWindowView(view);
 #endif
@@ -1915,14 +1934,37 @@ bool MediaClient::PreviewTrack(int window_id, void* video_track) {
   API_LOG(INFO) << "window_id: " << window_id << ", window_id: " << window_id;
   webrtc::VideoTrackInterface* track =
       (webrtc::VideoTrackInterface*)(video_track);
-#if defined WEBRTC_WIN ||defined(WEBRTC_IOS)
-  EC_CHECK_VALUE(renderWndsManager_, false);
-  renderWndsManager_->UpdateOrAddVideoTrack(window_id, track);
-  return renderWndsManager_->StartRender(window_id, nullptr);
+  
+    if (signaling_thread_) {
+    signaling_thread_->Invoke<void>(RTC_FROM_HERE, [this, track, window_id] {
+         bool track_exist = false;
+         std::vector<rtc::scoped_refptr<webrtc::VideoTrackInterface>>::iterator
+             it = video_tracks_.begin();
+         while (it != video_tracks_.end()) {
+           if (track == *it) {
+             track_exist = true;
+             break;
+           } else {
+             it++;
+           }
+         }
+         if (!track_exist) {
+           API_LOG(LS_ERROR)
+               << "video_track:" << track << " is alread destroyed.";
+           return false;
+         }
+
+#if defined WEBRTC_WIN || defined(WEBRTC_IOS)
+         EC_CHECK_VALUE(renderWndsManager_, false);
+         renderWndsManager_->UpdateOrAddVideoTrack(window_id, track);
+         return renderWndsManager_->StartRender(window_id, nullptr);
 //#elif defined(WEBRTC_IOS)
 //  ObjCCallClient::GetInstance()->PreviewTrack(window_id, track);
 #endif
-  track = NULL;
+    });
+  }
+
+
   return true;
 }
 
@@ -1937,9 +1979,10 @@ bool MediaClient::SetRemoteVideoRenderWindow(int channel_Id,
   if (!renderWndsManager_) {
     InitRenderWndsManager();
   }
-
-  renderWndsManager_->AttachVideoRender(channel_Id, view,  render_mode, false,
-                                        worker_thread_);
+  signaling_thread_->Invoke<void>(RTC_FROM_HERE, [this, channel_Id, view, render_mode] {
+	  renderWndsManager_->AttachVideoRender(channel_Id, view, render_mode, false, worker_thread_);
+  });
+  
 //#elif defined(WEBRTC_IOS)
 //  ObjCCallClient::GetInstance()->SetRemoteWindowView(channel_Id, view);
 #endif
@@ -3180,12 +3223,14 @@ int MediaClient::SetConferenceParticipantCallbackTimeInterVal(
     int channel_id,
     int timeInterVal) {
   int ret = -1;
+  API_LOG(INFO) << "begin..." << "channel_id: " << channel_id << " timeInterVal" << timeInterVal;
   if (mVoiceChannels_[channel_id] &&
       mVoiceChannels_[channel_id]->media_channel()) {
     ret = mVoiceChannels_[channel_id]
               ->media_channel()
               ->SetConferenceParticipantCallbackTimeInterVal(timeInterVal);
   }
+  API_LOG(INFO) << "end ...with ret:%d" << ret;
   return ret;
 }
 

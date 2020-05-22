@@ -56,7 +56,7 @@ RtpHeaderParser* RtpHeaderParser::Create() {
 }
 //ytx_begin by wx
 RtpHeaderParserImpl::RtpHeaderParserImpl():_participantCallback(nullptr),\
-callConferenceParticipantCallbacktimeInterVal_(1),last_arr_csrc_count_(0),base_time(0){
+callConferenceParticipantCallbacktimeInterVal_(3),last_arr_csrc_count_(0),base_time(0){
   memset(last_arrOfCSRCs_, 0, sizeof(uint32_t) * kRtpCsrcSize);
 }
 //ytx_end
