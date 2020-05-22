@@ -566,6 +566,34 @@ ECMEDIA_API int ECMedia_set_video_protect_mode(int mode) {
   return 0;
 }
 
+  ECMEDIA_API bool ECMedia_attach_video_render(int channelId, void* videoView,
+                                     int render_mode, int mirror_mode){
+     return g_ECMedia->AttachVideoRender(channelId, videoView, render_mode,
+                                         mirror_mode, nullptr);
+  }
+  ECMEDIA_API bool ECMedia_detach_video_render(int channelId, void* winRemote){
+    
+     return g_ECMedia->DetachVideoRender(channelId,  winRemote);
+  }
+  ECMEDIA_API void ECMedia_remove_all_video_render(int channelId){
+    
+     return g_ECMedia->RemoveAllVideoRender(channelId);
+  }
+
+  ECMEDIA_API bool ECMedia_update_or_add_video_track(int channelId,
+                                                     void* track_to_render){
+    
+     return g_ECMedia->UpdateOrAddVideoTrack( channelId,
+                                             track_to_render);
+  }
+  ECMEDIA_API bool ECMedia_start_render(int channelId, void* videoView){
+    
+     return g_ECMedia->StartRender(channelId, videoView);
+  }
+  ECMEDIA_API bool ECMedia_stop_render(int channelId, void* videoView){
+    
+     return g_ECMedia->StopRender( channelId,  videoView);
+  }
 #if defined(WEBRTC_ANDROID)
 ECMEDIA_API bool ECMedia_SaveLocalVideoTrack(int channelId, void* track) {
 

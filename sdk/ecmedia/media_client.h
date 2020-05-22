@@ -818,6 +818,20 @@ class MediaClient : public sigslot::has_slots<> {
                                int length,
                                int channel_id);
   //wx end
+  
+  
+  bool AttachVideoRender(int channelId,
+                       void* videoView,
+                       int render_mode,
+                       int mirror_mode,
+                       rtc::Thread* worker_thread);
+   bool DetachVideoRender(int channelId, void* winRemote);
+   void RemoveAllVideoRender(int channelId);
+
+   bool UpdateOrAddVideoTrack(int channelId,
+                              void* track_to_render);
+   bool StartRender(int channelId, void* videoView);
+   bool StopRender(int channelId, void* videoView);
 
 #if defined(WEBRTC_ANDROID)
   bool SaveLocalVideoTrack(int channelId, webrtc::VideoTrackInterface* track);
@@ -926,6 +940,8 @@ class MediaClient : public sigslot::has_slots<> {
   rtc::scoped_refptr<webrtc::AudioTrackInterface> audio_tracks_[5];
 
   std::vector<rtc::scoped_refptr<webrtc::VideoTrackInterface>> video_tracks_;
+  
+  std::map<int, rtc::scoped_refptr<webrtc::VideoTrackInterface>> remote_tracks_;
 
   rtc::scoped_refptr<webrtc::VideoTrackInterface> video_track_;
 

@@ -788,6 +788,72 @@ ECMEDIA_API int ECMedia_audio_set_send_destination(int peer_id,
 /*未实现*/
 ECMEDIA_API int ECMedia_set_video_protect_mode(int mode);
 
+
+/****************************************************************************/
+/*** 函数名: ECMedia_attach_video_render                               ***/
+/*** 功能:   将view 添加到channel的显示序列中                              ***/
+/*** 返回值: 类型  bool        true  成功            flase 失败           ***/
+/*** 函数参数1: 名称：channelId     类型   ecmedia::int                   ***/
+/*** 函数参数2: 名称：videoView     类型   void*                          ***/
+/*** 函数参数3: 名称：render_mode   类型   int                            ***/
+/*** 函数参数4: 名称：mirror_mode   类型   int                            ***/
+/****************************************************************************/
+
+ECMEDIA_API bool ECMedia_attach_video_render(int channelId, void* videoView,
+                                   int render_mode, int mirror_mode);
+
+
+/****************************************************************************/
+/*** 函数名: ECMedia_detach_video_render                           ***/
+/*** 功能:   将view 从channel的显示序列中删除                          ***/
+/*** 返回值: 类型  bool        true  成功            false 失败           ***/
+/*** 函数参数1: 名称：channelId     类型   ecmedia::int                   ***/
+/*** 函数参数2: 名称：winRemote        类型   void*                       ***/
+/****************************************************************************/
+
+ECMEDIA_API bool ECMedia_detach_video_render(int channelId, void* winRemote);
+
+
+/****************************************************************************/
+/*** 函数名: ECMedia_remove_all_video_render                           ***/
+/*** 功能:   删除channel的所有显示的view                                  ***/
+/*** 返回值: 类型  void                                                  ***/
+/*** 函数参数1: 名称：channelId       类型   ecmedia::int                 ***/
+/****************************************************************************/
+
+ECMEDIA_API void ECMedia_remove_all_video_render(int channelId);
+
+
+/****************************************************************************/
+/*** 函数名: ECMedia_update_or_add_video_track                           ***/
+/*** 功能:   更新channel对应的track                                       ***/
+/*** 返回值: 类型  bool        true  成功            false 失败                  ***/
+/*** 函数参数1: 名称：channelId       类型   ecmedia::int                   ***/
+/*** 函数参数2: 名称：track_to_render  类型   void*                          ***/
+/****************************************************************************/
+
+ECMEDIA_API bool ECMedia_update_or_add_video_track(int channelId, void* track_to_render);
+
+
+
+/****************************************************************************/
+/*** 函数名: ECMedia_start_render                           ***/
+/*** 功能:  开始渲染                                             ***/
+/*** 返回值: 类型  bool        true  成功            false 失败                  ***/
+/*** 函数参数1: 名称：channelId       类型   ecmedia::int                   ***/
+/*** 函数参数2: 名称：videoView        类型   void*                          ***//****************************************************************************/
+ECMEDIA_API bool ECMedia_start_render(int channelId, void* videoView);
+
+/****************************************************************************/
+/*** 函数名: ECMedia_stop_render                           ***/
+/*** 功能:   停止渲染                                             ***/
+/*** 返回值: 类型  bool        true  成功            false 失败                  ***/
+/*** 函数参数1: 名称：channelId       类型   ecmedia::int                   ***/
+/*** 函数参数2: 名称：videoView        类型   void*                          ***/
+/****************************************************************************/
+
+ECMEDIA_API bool ECMedia_stop_render(int channelId, void* videoView);
+
 #if defined(WEBRTC_ANDROID)
 ECMEDIA_API bool ECMedia_SaveLocalVideoTrack(int channelId, void* track);
 ECMEDIA_API void* ECMedia_GetLocalVideoTrackPtr(int channelId);

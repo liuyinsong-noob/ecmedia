@@ -198,6 +198,13 @@ MediaClient::~MediaClient() {
         while ((*it).release() != nullptr); 
         it++;
       }
+        auto remote_it = remote_tracks_.begin();
+         while (remote_it != remote_tracks_.end()) {
+           (remote_it->second).get()->GetSource()->Release();
+           while ((remote_it->second).release() != nullptr);
+           remote_it++;
+         }
+      remote_tracks_.clear();
       video_tracks_.clear();
       video_track_.release();
     });
@@ -1298,6 +1305,9 @@ bool MediaClient::SelectVideoSource(
                                                        std::vector<std::string>(
                                                            {})));
       EC_CHECK_VALUE(receiverVideo, false);
+      
+      remote_tracks_[channelid] =  static_cast<webrtc::VideoTrackInterface*>(
+                                receiverVideo->track().get());
 
 #if defined WEBRTC_WIN || defined(WEBRTC_IOS)
       if (renderWndsManager_) {
@@ -3425,6 +3435,131 @@ bool MediaClient::GetVoiceStreamStats(char* jsonAudioStats,
   }
   return true;
 }
+  
+bool MediaClient::AttachVideoRender(int channelId, void* videoView,
+                                    int render_mode, int mirror_mode,
+                                    rtc::Thread* worker_thread){
+       API_LOG(INFO) << "channelId: " << channelId << "videoView: " << videoView;
+       EC_CHECK_VALUE((channelId >= 0), false);
+     #if defined WEBRTC_WIN || defined(WEBRTC_IOS)
+       EC_CHECK_VALUE(videoView, false);
+
+       if (!renderWndsManager_) {
+         InitRenderWndsManager();
+       }
+
+    renderWndsManager_->AttachVideoRender(channelId, videoView, render_mode, mirror_mode,
+                                                 worker_thread ? worker_thread : worker_thread_);
+     //#elif defined(WEBRTC_IOS)
+     //  ObjCCallClient::GetInstance()->SetRemoteWindowView(channel_Id, view);
+     #endif
+       RTC_LOG(INFO) << __FUNCTION__ << "() "
+                     << " end...";
+       return true;
+    
+   }
+  
+  bool MediaClient::DetachVideoRender(int channelId, void* winRemote){
+    API_LOG(INFO) << "channelId: " << channelId << ", winRemote: " << winRemote;
+       EC_CHECK_VALUE((channelId >= 0), false);
+     #if defined WEBRTC_WIN || defined(WEBRTC_IOS)
+       EC_CHECK_VALUE(winRemote, false);
+
+       if (!renderWndsManager_) {
+         InitRenderWndsManager();
+       }
+
+     renderWndsManager_->DetachVideoRender(channelId, winRemote);
+     //#elif defined(WEBRTC_IOS)
+     //  ObjCCallClient::GetInstance()->SetRemoteWindowView(channel_Id, view);
+     #endif
+       RTC_LOG(INFO) << __FUNCTION__ << "() "
+                     << " end...";
+       return true;
+   
+  }
+  
+  void MediaClient::RemoveAllVideoRender(int channelId){
+    API_LOG(INFO) << "channelId: " << channelId;
+     #if defined WEBRTC_WIN || defined(WEBRTC_IOS)
+
+       if (!renderWndsManager_) {
+         InitRenderWndsManager();
+       }
+
+      renderWndsManager_->RemoveAllVideoRender(channelId);
+     //#elif defined(WEBRTC_IOS)
+     //  ObjCCallClient::GetInstance()->SetRemoteWindowView(channel_Id, view);
+     #endif
+       RTC_LOG(INFO) << __FUNCTION__ << "() "
+                     << " end...";
+  
+  }
+  
+  bool MediaClient::UpdateOrAddVideoTrack(int channelId,
+                                          void* track_to_render){
+       EC_CHECK_VALUE((channelId >= 0), false);
+     #if defined WEBRTC_WIN || defined(WEBRTC_IOS)
+
+       if (!renderWndsManager_) {
+         InitRenderWndsManager();
+       }
+
+    webrtc::VideoTrackInterface* track =
+    (webrtc::VideoTrackInterface*)(track_to_render);
+    if(!track){
+      auto it  = remote_tracks_.find(channelId);
+      if(it == remote_tracks_.end())
+        return false;
+      track = it->second;
+    }
+       renderWndsManager_->UpdateOrAddVideoTrack(channelId, track);
+     //#elif defined(WEBRTC_IOS)
+     //  ObjCCallClient::GetInstance()->SetRemoteWindowView(channel_Id, view);
+     #endif
+       RTC_LOG(INFO) << __FUNCTION__ << " end...";
+       return true;
+   
+  }
+  
+  bool MediaClient::StartRender(int channelId, void* videoView){
+    API_LOG(INFO) << "channelId: " << channelId << ", videoView: " << videoView;
+       EC_CHECK_VALUE((channelId >= 0), false);
+     #if defined WEBRTC_WIN || defined(WEBRTC_IOS)
+       EC_CHECK_VALUE(videoView, false);
+
+       if (!renderWndsManager_) {
+         InitRenderWndsManager();
+       }
+    
+      renderWndsManager_->StartRender(channelId, videoView);
+     //#elif defined(WEBRTC_IOS)
+     //  ObjCCallClient::GetInstance()->SetRemoteWindowView(channel_Id, view);
+     #endif
+       RTC_LOG(INFO) << __FUNCTION__ << "() "
+                     << " end...";
+       return true;
+   
+  }
+  
+  bool MediaClient::StopRender(int channelId, void* videoView){
+    API_LOG(INFO) << "channelId: " << channelId << ", videoView: " << videoView;
+       EC_CHECK_VALUE((channelId >= 0), false);
+     #if defined WEBRTC_WIN || defined(WEBRTC_IOS)
+       EC_CHECK_VALUE(videoView, false);
+
+       if (!renderWndsManager_) {
+         InitRenderWndsManager();
+       }
+
+    renderWndsManager_->StopRender(channelId, videoView);
+     //#elif defined(WEBRTC_IOS)
+     //  ObjCCallClient::GetInstance()->SetRemoteWindowView(channel_Id, view);
+     #endif
+       RTC_LOG(INFO) << __FUNCTION__ << "() "
+                     << " end...";
+       return true;
+  }
 
 
 // android interface
