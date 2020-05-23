@@ -226,6 +226,15 @@ enum VIDEO_SOURCE_TYPE { VIDEO_CAMPER = 0, VIDEO_SCREEN, VIDEO_EXTERNAL };
 typedef void(ECMedia_ConferenceParticipantCallback)(uint32_t arrOfCSRCs[],
                                                     int count);
 
+#if defined(WEBRTC_ANDROID)
+typedef bool (*OnGetVideoHardwareEncoderFactory)(void** env,
+                                                 void** jencoder_factory,
+                                                 void** jdecoder_factory);
+typedef bool (*OnGetAudioHardwareEncoderFactoryAndAdm)(void** jencoder_factory,
+                                                       void** jdecoder_factory,
+                                                       void** adm);
+#endif
+
 class MediaClient : public sigslot::has_slots<> {
  public:
   enum AV_TYPE {
@@ -326,52 +335,46 @@ class MediaClient : public sigslot::has_slots<> {
 
   static bool SetTrace(const char* path, int min_sev);
   /***************************************************************************/
-  /*** º¯ÊýÃû: ³õÊ¼»¯                                                      ***/
-  /*** ¹¦ÄÜ:   »ñÈ¡Ã½Ìå¿âÊµÀý                                              ***/
-  /*** ·µ»ØÖµ: ÀàÐÍ  bool                                                   ***/
-  /*** º¯Êý²ÎÊý: ÎÞ                                                        ***/
+  /*** \BA\AF\CA\FD\C3\FB: \B3\F5Ê¼\BB\AF                                                      ***/
+  /*** \B9\A6\C4\DC:   \BB\F1È¡Ã½\CC\E5\BF\E2Êµ\C0\FD                                              ***/
+  /*** \B7\B5\BB\D8Öµ: \C0\E0\D0\CD  bool                                                   ***/
+  /*** \BA\AF\CA\FD\B2\CE\CA\FD: \CE\DE                                                        ***/
   /***************************************************************************/
-#if defined(WEBRTC_ANDROID)
-  bool Initialize(JNIEnv* env,
-                  jobject jencoder_factory,
-                  jobject jdecoder_factory);
-#else
   bool Initialize();
-#endif
 
   /****************************************************************************/
-  /*** º¯ÊýÃû: ·´³õÊ¼»¯                                                     ***/
-  /*** ¹¦ÄÜ:   ÊÍ·ÅÃ½Ìå¿âÊµÀý                                               ***/
-  /*** ·µ»ØÖµ: ÀàÐÍ  bool                                                   ***/
-  /*** º¯Êý²ÎÊý: ÎÞ                                                         ***/
+  /*** \BA\AF\CA\FD\C3\FB: \B7\B4\B3\F5Ê¼\BB\AF                                                     ***/
+  /*** \B9\A6\C4\DC:   \CAÍ·\C5Ã½\CC\E5\BF\E2Êµ\C0\FD                                               ***/
+  /*** \B7\B5\BB\D8Öµ: \C0\E0\D0\CD  bool                                                   ***/
+  /*** \BA\AF\CA\FD\B2\CE\CA\FD: \CE\DE                                                         ***/
   /****************************************************************************/
   void UnInitialize();
 
   /****************************************************************************/
-  /*** º¯ÊýÃû: Éú³ÉÃ½ÌåÍ¨µÀid                                               ***/
-  /*** ¹¦ÄÜ:   Ã½Ìå¿â³õÊ¼»¯²¢Éú³ÉÍ¨µÀID                                     ***/
-  /*** ·µ»ØÖµ: ÀàÐÍ    bool   true  ³É¹¦      false  Ê§°Ü                   ***/
-  /*** º¯Êý²ÎÊý: Ãû³Æ  channel_id    ÀàÐÍ   int                             ***/
+  /*** \BA\AF\CA\FD\C3\FB: \C9\FA\B3\C9Ã½\CC\E5Í¨\B5\C0id                                               ***/
+  /*** \B9\A6\C4\DC:   Ã½\CC\E5\BF\E2\B3\F5Ê¼\BB\AF\B2\A2\C9\FA\B3\C9Í¨\B5\C0ID                                     ***/
+  /*** \B7\B5\BB\D8Öµ: \C0\E0\D0\CD    bool   true  \B3É¹\A6      false  Ê§\B0\DC                   ***/
+  /*** \BA\AF\CA\FD\B2\CE\CA\FD: \C3\FB\B3\C6  channel_id    \C0\E0\D0\CD   int                             ***/
   /****************************************************************************/
   bool GenerateChannelId(int& channelId);
 
   /****************************************************************************/
-  /*** º¯ÊýÃû: ÊÍ·ÅÃ½ÌåÍ¨µÀid                                               ***/
-  /*** ¹¦ÄÜ:   ÊÍ·ÅÍ¨µÀID                                                   ***/
-  /*** ·µ»ØÖµ: ÀàÐÍ    bool   true  ³É¹¦      false  Ê§°Ü                   ***/
-  /*** º¯Êý²ÎÊý: Ãû³Æ  channel_id    ÀàÐÍ   int                             ***/
+  /*** \BA\AF\CA\FD\C3\FB: \CAÍ·\C5Ã½\CC\E5Í¨\B5\C0id                                               ***/
+  /*** \B9\A6\C4\DC:   \CAÍ·\C5Í¨\B5\C0ID                                                   ***/
+  /*** \B7\B5\BB\D8Öµ: \C0\E0\D0\CD    bool   true  \B3É¹\A6      false  Ê§\B0\DC                   ***/
+  /*** \BA\AF\CA\FD\B2\CE\CA\FD: \C3\FB\B3\C6  channel_id    \C0\E0\D0\CD   int                             ***/
   /****************************************************************************/
   bool ReleaseChannelId(int channelId);
 
   /****************************************************************************/
-  /*** º¯ÊýÃû: ´´½¨´«Êä                                                     ***/
-  /*** ¹¦ÄÜ:   ´´½¨Ã½ÌåÁ÷´«Êä                                               ***/
-  /*** ·µ»ØÖµ: ÀàÐÍ  bool    true  ³É¹¦      false  Ê§°Ü                    ***/
-  /*** º¯Êý²ÎÊý1: Ãû³Æ    l_addr±¾µØµØÖ·       ÀàÐÍ   const char*           ***/
-  /*** º¯Êý²ÎÊý2: Ãû³Æ    l_port±¾µØ¶Ë¿Ú       ÀàÐÍ   int                   ***/
-  /*** º¯Êý²ÎÊý3: Ãû³Æ    r_addrÔ¶¶ËµØÖ·       ÀàÐÍ   const char*           ***/
-  /*** º¯Êý²ÎÊý4: Ãû³Æ    r_portÔ¶¶Ë¶Ë¿Ú       ÀàÐÍ   int                   ***/
-  /*** º¯Êý²ÎÊý5: Ãû³Æ    tid ´«ÊäID            ÀàÐÍ   const char*          ***/
+  /*** \BA\AF\CA\FD\C3\FB: \B4\B4\BD\A8\B4\AB\CA\E4                                                     ***/
+  /*** \B9\A6\C4\DC:   \B4\B4\BD\A8Ã½\CC\E5\C1\F7\B4\AB\CA\E4                                               ***/
+  /*** \B7\B5\BB\D8Öµ: \C0\E0\D0\CD  bool    true  \B3É¹\A6      false  Ê§\B0\DC                    ***/
+  /*** \BA\AF\CA\FD\B2\CE\CA\FD1: \C3\FB\B3\C6    l_addr\B1\BE\B5Øµ\D8Ö·       \C0\E0\D0\CD   const char*           ***/
+  /*** \BA\AF\CA\FD\B2\CE\CA\FD2: \C3\FB\B3\C6    l_port\B1\BE\B5Ø¶Ë¿\DA       \C0\E0\D0\CD   int                   ***/
+  /*** \BA\AF\CA\FD\B2\CE\CA\FD3: \C3\FB\B3\C6    r_addrÔ¶\B6Ëµ\D8Ö·       \C0\E0\D0\CD   const char*           ***/
+  /*** \BA\AF\CA\FD\B2\CE\CA\FD4: \C3\FB\B3\C6    r_portÔ¶\B6Ë¶Ë¿\DA       \C0\E0\D0\CD   int                   ***/
+  /*** \BA\AF\CA\FD\B2\CE\CA\FD5: \C3\FB\B3\C6    tid \B4\AB\CA\E4ID            \C0\E0\D0\CD   const char*          ***/
   /****************************************************************************/
   bool CreateTransport(const char* local_addr,
                        int local_port,
@@ -381,90 +384,90 @@ class MediaClient : public sigslot::has_slots<> {
                        bool bUdp = true);
 
   /****************************************************************************/
-  /*** º¯ÊýÃû: ÊÍ·Å´«Êä                                                     ***/
-  /*** ¹¦ÄÜ:   ´´½¨Ã½ÌåÁ÷´«Êä                                               ***/
-  /*** ·µ»ØÖµ: ÀàÐÍ  void                                                   ***/
+  /*** \BA\AF\CA\FD\C3\FB: \CAÍ·Å´\AB\CA\E4                                                     ***/
+  /*** \B9\A6\C4\DC:   \B4\B4\BD\A8Ã½\CC\E5\C1\F7\B4\AB\CA\E4                                               ***/
+  /*** \B7\B5\BB\D8Öµ: \C0\E0\D0\CD  void                                                   ***/
   /****************************************************************************/
   void DestroyTransport();
 
   /****************************************************************************/
-  /*** º¯ÊýÃû: ´´½¨Í¨µÀ                                                     ***/
-  /*** ¹¦ÄÜ:   Ã½Ìå¿â´´½¨Âß¼­Í¨µÀ                                           ***/
-  /*** ·µ»ØÖµ: ÀàÐÍ  bool   true  ³É¹¦      false  Ê§°Ü                     ***/
-  /*** º¯Êý²ÎÊý1: Ãû³Æ    tid                  ÀàÐÍ   int                   ***/
-  /*** º¯Êý²ÎÊý2: Ãû³Æ    channel_id           ÀàÐÍ   int                   ***/
-  /*** º¯Êý²ÎÊý3: Ãû³Æ    is_video             ÀàÐÍ   bool                  ***/
+  /*** \BA\AF\CA\FD\C3\FB: \B4\B4\BD\A8Í¨\B5\C0                                                     ***/
+  /*** \B9\A6\C4\DC:   Ã½\CC\E5\BFâ´´\BD\A8\C2ß¼\ADÍ¨\B5\C0                                           ***/
+  /*** \B7\B5\BB\D8Öµ: \C0\E0\D0\CD  bool   true  \B3É¹\A6      false  Ê§\B0\DC                     ***/
+  /*** \BA\AF\CA\FD\B2\CE\CA\FD1: \C3\FB\B3\C6    tid                  \C0\E0\D0\CD   int                   ***/
+  /*** \BA\AF\CA\FD\B2\CE\CA\FD2: \C3\FB\B3\C6    channel_id           \C0\E0\D0\CD   int                   ***/
+  /*** \BA\AF\CA\FD\B2\CE\CA\FD3: \C3\FB\B3\C6    is_video             \C0\E0\D0\CD   bool                  ***/
   /****************************************************************************/
   bool CreateChannel(const std::string& settings,
                      int channel_id,
                      bool is_video = true);
 
   /****************************************************************************/
-  /*** º¯ÊýÃû: ÊÍ·ÅÍ¨µÀ                                                     ***/
-  /*** ¹¦ÄÜ:   Ã½Ìå¿âÊÍ·ÅÂß¼­Í¨µÀ                                           ***/
-  /*** ·µ»ØÖµ: ÀàÐÍ  void                                                   ***/
-  /*** º¯Êý²ÎÊý1: Ãû³Æ    channel_id           ÀàÐÍ   int                   ***/
-  /*** º¯Êý²ÎÊý2: Ãû³Æ    is_video             ÀàÐÍ   bool                  ***/
+  /*** \BA\AF\CA\FD\C3\FB: \CAÍ·\C5Í¨\B5\C0                                                     ***/
+  /*** \B9\A6\C4\DC:   Ã½\CC\E5\BF\E2\CAÍ·\C5\C2ß¼\ADÍ¨\B5\C0                                           ***/
+  /*** \B7\B5\BB\D8Öµ: \C0\E0\D0\CD  void                                                   ***/
+  /*** \BA\AF\CA\FD\B2\CE\CA\FD1: \C3\FB\B3\C6    channel_id           \C0\E0\D0\CD   int                   ***/
+  /*** \BA\AF\CA\FD\B2\CE\CA\FD2: \C3\FB\B3\C6    is_video             \C0\E0\D0\CD   bool                  ***/
   /****************************************************************************/
   void DestroyChannel(int channel_id, bool is_video = true);
 
   /****************************************************************************/
-  /*** º¯ÊýÃû: ´´½¨±¾µØÒôÆµtrack                                            ***/
-  /*** ¹¦ÄÜ:   ´´½¨±¾µØÒôÆµÔ´track                                          ***/
-  /*** ·µ»ØÖµ: ÀàÐÍ  void*    ·µ»Ø´´½¨µÄtrackÖ¸Õë                           ***/
-  /*** º¯Êý²ÎÊý1: Ãû³Æ    track_id             ÀàÐÍ   const char            ***/
-  /*** º¯Êý²ÎÊý2: Ãû³Æ    voice_index          ÀàÐÍ   int                   ***/
+  /*** \BA\AF\CA\FD\C3\FB: \B4\B4\BD\A8\B1\BE\B5\D8\D2\F4Æµtrack                                            ***/
+  /*** \B9\A6\C4\DC:   \B4\B4\BD\A8\B1\BE\B5\D8\D2\F4ÆµÔ´track                                          ***/
+  /*** \B7\B5\BB\D8Öµ: \C0\E0\D0\CD  void*    \B7\B5\BBØ´\B4\BD\A8\B5\C4trackÖ¸\D5\EB                           ***/
+  /*** \BA\AF\CA\FD\B2\CE\CA\FD1: \C3\FB\B3\C6    track_id             \C0\E0\D0\CD   const char            ***/
+  /*** \BA\AF\CA\FD\B2\CE\CA\FD2: \C3\FB\B3\C6    voice_index          \C0\E0\D0\CD   int                   ***/
   /****************************************************************************/
   rtc::scoped_refptr<webrtc::AudioTrackInterface> CreateLocalVoiceTrack(
       const std::string& trace_id);
 
   /****************************************************************************/
-  /*** º¯ÊýÃû: ÊÍ·Å±¾µØÒôÆµtrack                                            ***/
-  /*** ¹¦ÄÜ:   ÊÍ·Å±¾µØÒôÆµÔ´track                                          ***/
-  /*** ·µ»ØÖµ: ÀàÐÍ  void                                                   ***/
-  /*** º¯Êý²ÎÊý1: Ãû³Æ    track               ÀàÐÍ   void*                  ***/
+  /*** \BA\AF\CA\FD\C3\FB: \CAÍ·Å±\BE\B5\D8\D2\F4Æµtrack                                            ***/
+  /*** \B9\A6\C4\DC:   \CAÍ·Å±\BE\B5\D8\D2\F4ÆµÔ´track                                          ***/
+  /*** \B7\B5\BB\D8Öµ: \C0\E0\D0\CD  void                                                   ***/
+  /*** \BA\AF\CA\FD\B2\CE\CA\FD1: \C3\FB\B3\C6    track               \C0\E0\D0\CD   void*                  ***/
   /****************************************************************************/
   void DestroyLocalAudioTrack(
       rtc::scoped_refptr<webrtc::AudioTrackInterface> track);
 
   /****************************************************************************/
-  /*** º¯ÊýÃû: ´´½¨±¾µØÊÓÆµtrack                                            ***/
-  /*** ¹¦ÄÜ:   ´´½¨±¾µØÊÓÆµÔ´track                                          ***/
-  /*** ·µ»ØÖµ: ÀàÐÍ  VideoTrackInterface*    ·µ»Ø´´½¨µÄtrackÖ¸Õë            ***/
-  /*** º¯Êý²ÎÊý1: Ãû³Æ    video_mode           ÀàÐÍ   int                   ***/
-  /*** º¯Êý²ÎÊý2: Ãû³Æ    track_id             ÀàÐÍ   const char            ***/
-  /*** º¯Êý²ÎÊý3: Ãû³Æ    camera_index         ÀàÐÍ   int                   ***/
+  /*** \BA\AF\CA\FD\C3\FB: \B4\B4\BD\A8\B1\BE\B5\D8\CA\D3Æµtrack                                            ***/
+  /*** \B9\A6\C4\DC:   \B4\B4\BD\A8\B1\BE\B5\D8\CA\D3ÆµÔ´track                                          ***/
+  /*** \B7\B5\BB\D8Öµ: \C0\E0\D0\CD  VideoTrackInterface*    \B7\B5\BBØ´\B4\BD\A8\B5\C4trackÖ¸\D5\EB            ***/
+  /*** \BA\AF\CA\FD\B2\CE\CA\FD1: \C3\FB\B3\C6    video_mode           \C0\E0\D0\CD   int                   ***/
+  /*** \BA\AF\CA\FD\B2\CE\CA\FD2: \C3\FB\B3\C6    track_id             \C0\E0\D0\CD   const char            ***/
+  /*** \BA\AF\CA\FD\B2\CE\CA\FD3: \C3\FB\B3\C6    camera_index         \C0\E0\D0\CD   int                   ***/
   /****************************************************************************/
   rtc::scoped_refptr<webrtc::VideoTrackInterface> CreateLocalVideoTrack(
       const std::string& track_params);  //------modify
 
   /****************************************************************************/
-  /*** º¯ÊýÃû: ÊÍ·Å±¾µØÊÓÆµtrack                                            ***/
-  /*** ¹¦ÄÜ:   ÊÍ·Å±¾µØÊÓÆµÔ´track                                          ***/
-  /*** ·µ»ØÖµ: ÀàÐÍ  void                                                   ***/
-  /*** º¯Êý²ÎÊý1: Ãû³Æ    track               ÀàÐÍ   void*                  ***/
+  /*** \BA\AF\CA\FD\C3\FB: \CAÍ·Å±\BE\B5\D8\CA\D3Æµtrack                                            ***/
+  /*** \B9\A6\C4\DC:   \CAÍ·Å±\BE\B5\D8\CA\D3ÆµÔ´track                                          ***/
+  /*** \B7\B5\BB\D8Öµ: \C0\E0\D0\CD  void                                                   ***/
+  /*** \BA\AF\CA\FD\B2\CE\CA\FD1: \C3\FB\B3\C6    track               \C0\E0\D0\CD   void*                  ***/
   /****************************************************************************/
   void DestroyLocalVideoTrack(
       rtc::scoped_refptr<webrtc::VideoTrackInterface> track);
 
   /****************************************************************************/
-  /*** º¯ÊýÃû: Ô¤ÀÀ±¾µØÊÓÆµtrack                                            ***/
-  /*** ¹¦ÄÜ:   ¿ªÆôÔ¤ÀÀ±¾µØÊÓÆµÔ´track                                      ***/
-  /*** ·µ»ØÖµ: ÀàÐÍ  bool    true  ³É¹¦      false  Ê§°Ü                    ***/
-  /*** º¯Êý²ÎÊý1: Ãû³Æ    window_id           ÀàÐÍ   int                    ***/
-  /*** º¯Êý²ÎÊý2: Ãû³Æ    video_track         ÀàÐÍ   void*                  ***/
+  /*** \BA\AF\CA\FD\C3\FB: Ô¤\C0\C0\B1\BE\B5\D8\CA\D3Æµtrack                                            ***/
+  /*** \B9\A6\C4\DC:   \BF\AA\C6\F4Ô¤\C0\C0\B1\BE\B5\D8\CA\D3ÆµÔ´track                                      ***/
+  /*** \B7\B5\BB\D8Öµ: \C0\E0\D0\CD  bool    true  \B3É¹\A6      false  Ê§\B0\DC                    ***/
+  /*** \BA\AF\CA\FD\B2\CE\CA\FD1: \C3\FB\B3\C6    window_id           \C0\E0\D0\CD   int                    ***/
+  /*** \BA\AF\CA\FD\B2\CE\CA\FD2: \C3\FB\B3\C6    video_track         \C0\E0\D0\CD   void*                  ***/
   /****************************************************************************/
   bool PreviewTrack(int window_id, void* video_track);
 
   /****************************************************************************/
-  /*** º¯ÊýÃû: Ñ¡ÔñÊÓÆµÔ´                                                   ***/
-  /*** ¹¦ÄÜ:   °ó¶¨ÊÓÆµÔ´trackÓëÂß¼­Í¨µÀchannel_id                          ***/
-  /*** ·µ»ØÖµ: ÀàÐÍ  bool    true  ³É¹¦      false  Ê§°Ü                    ***/
-  /*** º¯Êý²ÎÊý1: Ãû³Æ    tid                  ÀàÐÍ   const char*           ***/
-  /*** º¯Êý²ÎÊý2: Ãû³Æ    channel_id           ÀàÐÍ   int                   ***/
-  /*** º¯Êý²ÎÊý3: Ãû³Æ    track_id             ÀàÐÍ   const char*           ***/
-  /*** º¯Êý²ÎÊý4: Ãû³Æ    video_track          ÀàÐÍ   VideoTrackInterface*  ***/
-  /*** º¯Êý²ÎÊý5: Ãû³Æ    stream_ids           ÀàÐÍ std::vector<std::string>***/
+  /*** \BA\AF\CA\FD\C3\FB: Ñ¡\D4\F1\CA\D3ÆµÔ´                                                   ***/
+  /*** \B9\A6\C4\DC:   \B0\F3\B6\A8\CA\D3ÆµÔ´track\D3\EB\C2ß¼\ADÍ¨\B5\C0channel_id                          ***/
+  /*** \B7\B5\BB\D8Öµ: \C0\E0\D0\CD  bool    true  \B3É¹\A6      false  Ê§\B0\DC                    ***/
+  /*** \BA\AF\CA\FD\B2\CE\CA\FD1: \C3\FB\B3\C6    tid                  \C0\E0\D0\CD   const char*           ***/
+  /*** \BA\AF\CA\FD\B2\CE\CA\FD2: \C3\FB\B3\C6    channel_id           \C0\E0\D0\CD   int                   ***/
+  /*** \BA\AF\CA\FD\B2\CE\CA\FD3: \C3\FB\B3\C6    track_id             \C0\E0\D0\CD   const char*           ***/
+  /*** \BA\AF\CA\FD\B2\CE\CA\FD4: \C3\FB\B3\C6    video_track          \C0\E0\D0\CD   VideoTrackInterface*  ***/
+  /*** \BA\AF\CA\FD\B2\CE\CA\FD5: \C3\FB\B3\C6    stream_ids           \C0\E0\D0\CD std::vector<std::string>***/
   /****************************************************************************/
   bool SelectVideoSource(
       int channelid,
@@ -477,14 +480,14 @@ class MediaClient : public sigslot::has_slots<> {
       const std::string& track_params);
 
   /****************************************************************************/
-  /*** º¯ÊýÃû: Ñ¡ÔñÒôÆµÔ´                                                   ***/
-  /*** ¹¦ÄÜ:   °ó¶¨ÒôÆµÔ´trackÓëÂß¼­Í¨µÀchannel_id                          ***/
-  /*** ·µ»ØÖµ: ÀàÐÍ  bool    true  ³É¹¦      false  Ê§°Ü                    ***/
-  /*** º¯Êý²ÎÊý1: Ãû³Æ    tid                  ÀàÐÍ   const char*           ***/
-  /*** º¯Êý²ÎÊý2: Ãû³Æ    channel_id           ÀàÐÍ   int                   ***/
-  /*** º¯Êý²ÎÊý3: Ãû³Æ    track_id             ÀàÐÍ   const char*           ***/
-  /*** º¯Êý²ÎÊý4: Ãû³Æ    audio_track          ÀàÐÍ   AudioTrackInterface*  ***/
-  /*** º¯Êý²ÎÊý5: Ãû³Æ    stream_ids           ÀàÐÍ std::vector<std::string>***/
+  /*** \BA\AF\CA\FD\C3\FB: Ñ¡\D4\F1\D2\F4ÆµÔ´                                                   ***/
+  /*** \B9\A6\C4\DC:   \B0\F3\B6\A8\D2\F4ÆµÔ´track\D3\EB\C2ß¼\ADÍ¨\B5\C0channel_id                          ***/
+  /*** \B7\B5\BB\D8Öµ: \C0\E0\D0\CD  bool    true  \B3É¹\A6      false  Ê§\B0\DC                    ***/
+  /*** \BA\AF\CA\FD\B2\CE\CA\FD1: \C3\FB\B3\C6    tid                  \C0\E0\D0\CD   const char*           ***/
+  /*** \BA\AF\CA\FD\B2\CE\CA\FD2: \C3\FB\B3\C6    channel_id           \C0\E0\D0\CD   int                   ***/
+  /*** \BA\AF\CA\FD\B2\CE\CA\FD3: \C3\FB\B3\C6    track_id             \C0\E0\D0\CD   const char*           ***/
+  /*** \BA\AF\CA\FD\B2\CE\CA\FD4: \C3\FB\B3\C6    audio_track          \C0\E0\D0\CD   AudioTrackInterface*  ***/
+  /*** \BA\AF\CA\FD\B2\CE\CA\FD5: \C3\FB\B3\C6    stream_ids           \C0\E0\D0\CD std::vector<std::string>***/
   /****************************************************************************/
   bool SelectVoiceSource(
       int channelid,
@@ -492,20 +495,20 @@ class MediaClient : public sigslot::has_slots<> {
       rtc::scoped_refptr<webrtc::AudioTrackInterface> audiotrack);
 
   /****************************************************************************/
-  /*** º¯ÊýÃû: ¿ªÊ¼Í¨µÀ                                                     ***/
-  /*** ¹¦ÄÜ:   ¿ªÊ¼channel_idÂß¼­                                           ***/
-  /*** ·µ»ØÖµ: ÀàÐÍ  bool     true  ³É¹¦         false  Ê§°Ü                ***/
-  /*** º¯Êý²ÎÊý1: Ãû³Æ    channel_id           ÀàÐÍ   int                   ***/
-  /*** º¯Êý²ÎÊý2: Ãû³Æ    is_video             ÀàÐÍ   bool                  ***/
+  /*** \BA\AF\CA\FD\C3\FB: \BF\AAÊ¼Í¨\B5\C0                                                     ***/
+  /*** \B9\A6\C4\DC:   \BF\AAÊ¼channel_id\C2ß¼\AD                                           ***/
+  /*** \B7\B5\BB\D8Öµ: \C0\E0\D0\CD  bool     true  \B3É¹\A6         false  Ê§\B0\DC                ***/
+  /*** \BA\AF\CA\FD\B2\CE\CA\FD1: \C3\FB\B3\C6    channel_id           \C0\E0\D0\CD   int                   ***/
+  /*** \BA\AF\CA\FD\B2\CE\CA\FD2: \C3\FB\B3\C6    is_video             \C0\E0\D0\CD   bool                  ***/
   /****************************************************************************/
   bool StartChannel(int channel_id);  //------modify
 
   /****************************************************************************/
-  /*** º¯ÊýÃû: Í£Ö¹Í¨µÀ                                                     ***/
-  /*** ¹¦ÄÜ:   Í£Ö¹channel_idÂß¼­                                           ***/
-  /*** ·µ»ØÖµ: ÀàÐÍ  bool   true  ³É¹¦      false  Ê§°Ü                     ***/
-  /*** º¯Êý²ÎÊý1: Ãû³Æ    channel_id           ÀàÐÍ   int                   ***/
-  /*** º¯Êý²ÎÊý2: Ãû³Æ    is_video             ÀàÐÍ   bool                  ***/
+  /*** \BA\AF\CA\FD\C3\FB: Í£Ö¹Í¨\B5\C0                                                     ***/
+  /*** \B9\A6\C4\DC:   Í£Ö¹channel_id\C2ß¼\AD                                           ***/
+  /*** \B7\B5\BB\D8Öµ: \C0\E0\D0\CD  bool   true  \B3É¹\A6      false  Ê§\B0\DC                     ***/
+  /*** \BA\AF\CA\FD\B2\CE\CA\FD1: \C3\FB\B3\C6    channel_id           \C0\E0\D0\CD   int                   ***/
+  /*** \BA\AF\CA\FD\B2\CE\CA\FD2: \C3\FB\B3\C6    is_video             \C0\E0\D0\CD   bool                  ***/
   /****************************************************************************/
   bool StopChannel(int channel_id);
 
@@ -526,137 +529,137 @@ class MediaClient : public sigslot::has_slots<> {
    bool AddMediaSsrc(bool is_local, int channelId, uint32_t ssrc);*/
 
   /****************************************************************************/
-  /*** º¯ÊýÃû: ÉèÖÃ±¾µØÊÓÆµÁ÷ssrc                                           ***/
-  /*** ¹¦ÄÜ:   ÉèÖÃÍ¨µÀchannel_id±¾µØÃ½ÌåÁ÷ssrc                             ***/
-  /*** ·µ»ØÖµ: ÀàÐÍ  bool    true  ³É¹¦      false  Ê§°Ü                    ***/
-  /*** º¯Êý²ÎÊý1: Ãû³Æ    channel_id           ÀàÐÍ   int                   ***/
-  /*** º¯Êý²ÎÊý2: Ãû³Æ    ssrc                 ÀàÐÍ   unsigned int          ***/
+  /*** \BA\AF\CA\FD\C3\FB: \C9\E8\D6Ã±\BE\B5\D8\CA\D3Æµ\C1\F7ssrc                                           ***/
+  /*** \B9\A6\C4\DC:   \C9\E8\D6\C3Í¨\B5\C0channel_id\B1\BE\B5\D8Ã½\CC\E5\C1\F7ssrc                             ***/
+  /*** \B7\B5\BB\D8Öµ: \C0\E0\D0\CD  bool    true  \B3É¹\A6      false  Ê§\B0\DC                    ***/
+  /*** \BA\AF\CA\FD\B2\CE\CA\FD1: \C3\FB\B3\C6    channel_id           \C0\E0\D0\CD   int                   ***/
+  /*** \BA\AF\CA\FD\B2\CE\CA\FD2: \C3\FB\B3\C6    ssrc                 \C0\E0\D0\CD   unsigned int          ***/
   /****************************************************************************/
   bool AddMediaSsrc(bool is_local, int channelId, uint32_t ssrc);
 
   /****************************************************************************/
-  /*** º¯ÊýÃû: Ôö¼Ó±¾µØäÖÈ¾´°¿Ú                                             ***/
-  /*** ¹¦ÄÜ:   Ôö¼Ó±¾µØÊÓÆµäÖÈ¾´°¿Ú                                         ***/
-  /*** ·µ»ØÖµ: ÀàÐÍ  bool    true  ³É¹¦      false  Ê§°Ü                    ***/
-  /*** º¯Êý²ÎÊý1: Ãû³Æ    window_id           ÀàÐÍ   int                    ***/
-  /*** º¯Êý²ÎÊý2: Ãû³Æ    view                ÀàÐÍ   void*                  ***/
+  /*** \BA\AF\CA\FD\C3\FB: \D4\F6\BCÓ±\BE\B5\D8\E4\D6È¾\B4\B0\BF\DA                                             ***/
+  /*** \B9\A6\C4\DC:   \D4\F6\BCÓ±\BE\B5\D8\CA\D3Æµ\E4\D6È¾\B4\B0\BF\DA                                         ***/
+  /*** \B7\B5\BB\D8Öµ: \C0\E0\D0\CD  bool    true  \B3É¹\A6      false  Ê§\B0\DC                    ***/
+  /*** \BA\AF\CA\FD\B2\CE\CA\FD1: \C3\FB\B3\C6    window_id           \C0\E0\D0\CD   int                    ***/
+  /*** \BA\AF\CA\FD\B2\CE\CA\FD2: \C3\FB\B3\C6    view                \C0\E0\D0\CD   void*                  ***/
   /****************************************************************************/
   bool SetLocalVideoRenderWindow(int window_id, int render_mode, void* view);
 
   /****************************************************************************/
-  /*** º¯ÊýÃû: Ôö¼ÓÔ¶¶ËäÖÈ¾´°¿Ú                                             ***/
-  /*** ¹¦ÄÜ:   Ôö¼ÓÔ¶¶Ë½ÓÊÕÊÓÆµäÖÈ¾´°¿Ú                                     ***/
-  /*** ·µ»ØÖµ: ÀàÐÍ  bool    true  ³É¹¦      false  Ê§°Ü                    ***/
-  /*** º¯Êý²ÎÊý1: Ãû³Æ    channel_id           ÀàÐÍ   int                   ***/
-  /*** º¯Êý²ÎÊý2: Ãû³Æ    video_window         ÀàÐÍ   void*                 ***/
+  /*** \BA\AF\CA\FD\C3\FB: \D4\F6\BC\D3Ô¶\B6\CB\E4\D6È¾\B4\B0\BF\DA                                             ***/
+  /*** \B9\A6\C4\DC:   \D4\F6\BC\D3Ô¶\B6Ë½\D3\CA\D5\CA\D3Æµ\E4\D6È¾\B4\B0\BF\DA                                     ***/
+  /*** \B7\B5\BB\D8Öµ: \C0\E0\D0\CD  bool    true  \B3É¹\A6      false  Ê§\B0\DC                    ***/
+  /*** \BA\AF\CA\FD\B2\CE\CA\FD1: \C3\FB\B3\C6    channel_id           \C0\E0\D0\CD   int                   ***/
+  /*** \BA\AF\CA\FD\B2\CE\CA\FD2: \C3\FB\B3\C6    video_window         \C0\E0\D0\CD   void*                 ***/
   /****************************************************************************/
   bool SetRemoteVideoRenderWindow(int channelId, int render_mode, void* view);
 
   /****************************************************************************/
-  /*** º¯ÊýÃû: ÉèÖÃ±¾µØ¾²Òô                                                 ***/
-  /*** ¹¦ÄÜ:   ±¾µØ¾²Òô                                                     ***/
-  /*** ·µ»ØÖµ: ÀàÐÍ  bool    true  ³É¹¦      false  Ê§°Ü                    ***/
-  /*** º¯Êý²ÎÊý1: Ãû³Æ    channel_id           ÀàÐÍ   int                   ***/
-  /*** º¯Êý²ÎÊý2: Ãû³Æ    bMute                ÀàÐÍ   bool                  ***/
+  /*** \BA\AF\CA\FD\C3\FB: \C9\E8\D6Ã±\BE\B5Ø¾\B2\D2\F4                                                 ***/
+  /*** \B9\A6\C4\DC:   \B1\BE\B5Ø¾\B2\D2\F4                                                     ***/
+  /*** \B7\B5\BB\D8Öµ: \C0\E0\D0\CD  bool    true  \B3É¹\A6      false  Ê§\B0\DC                    ***/
+  /*** \BA\AF\CA\FD\B2\CE\CA\FD1: \C3\FB\B3\C6    channel_id           \C0\E0\D0\CD   int                   ***/
+  /*** \BA\AF\CA\FD\B2\CE\CA\FD2: \C3\FB\B3\C6    bMute                \C0\E0\D0\CD   bool                  ***/
   /****************************************************************************/
   bool SetLocalMute(int channel_id, bool bMute);  //------add
 
   /****************************************************************************/
-  /*** ¡Ò???¡Ì?: ¡­?¡Â¡Ì¡À????¡Ü¡°?                                                 ***/
-  /*** ¦Ð???:   ¡À????¡Ü¡°?                                                     ***/
-  /*** ¡Æ???¡Â?: ??¨C?  bool    true  ¡Ý¡­¦Ð?      false  ??¡Þ?                    ***/
-  /*** ¡Ò???¡Ü???1: ¡Ì?¡Ý?    channel_id           ??¨C?   int                   ***/
-  /*** ¡Ò???¡Ü???2: ¡Ì?¡Ý?    bMute                ??¨C?   bool                  ***/
+  /*** \A1\D2???\A1\CC?: \A1\AD?\A1Â¡Ì¡\C0????\A1Ü¡\B0?                                                 ***/
+  /*** \A6\D0???:   \A1\C0????\A1Ü¡\B0?                                                     ***/
+  /*** \A1\C6???\A1\C2?: ??\A8C?  bool    true  \A1Ý¡\AD\A6\D0?      false  ??\A1\DE?                    ***/
+  /*** \A1\D2???\A1\DC???1: \A1\CC?\A1\DD?    channel_id           ??\A8C?   int                   ***/
+  /*** \A1\D2???\A1\DC???2: \A1\CC?\A1\DD?    bMute                ??\A8C?   bool                  ***/
   /****************************************************************************/
   bool SetLoudSpeakerStatus(bool enabled);  //------add
 
   /****************************************************************************/
-  /*** ¡Ò???¡Ì?: ¡­?¡Â¡Ì¡À????¡Ü¡°?                                                 ***/
-  /*** ¦Ð???:   ¡À????¡Ü¡°?                                                     ***/
-  /*** ¡Æ???¡Â?: ??¨C?  bool    true  ¡Ý¡­¦Ð?      false  ??¡Þ?                    ***/
-  /*** ¡Ò???¡Ü???1: ¡Ì?¡Ý?    channel_id           ??¨C?   int                   ***/
-  /*** ¡Ò???¡Ü???2: ¡Ì?¡Ý?    bMute                ??¨C?   bool                  ***/
+  /*** \A1\D2???\A1\CC?: \A1\AD?\A1Â¡Ì¡\C0????\A1Ü¡\B0?                                                 ***/
+  /*** \A6\D0???:   \A1\C0????\A1Ü¡\B0?                                                     ***/
+  /*** \A1\C6???\A1\C2?: ??\A8C?  bool    true  \A1Ý¡\AD\A6\D0?      false  ??\A1\DE?                    ***/
+  /*** \A1\D2???\A1\DC???1: \A1\CC?\A1\DD?    channel_id           ??\A8C?   int                   ***/
+  /*** \A1\D2???\A1\DC???2: \A1\CC?\A1\DD?    bMute                ??\A8C?   bool                  ***/
   /****************************************************************************/
   bool GetLoudSpeakerStatus(bool& enabled);  //------add
 
   /****************************************************************************/
-  /*** º¯ÊýÃû: ÉèÖÃÔ¶¶Ë¾²Òô                                                 ***/
-  /*** ¹¦ÄÜ:   Ö¸¶¨Í¨µÀµÄÔ¶¶Ë¾²Òô                                           ***/
-  /*** ·µ»ØÖµ: ÀàÐÍ  bool    true  ³É¹¦      false  Ê§°Ü                    ***/
-  /*** º¯Êý²ÎÊý1: Ãû³Æ    channel_id           ÀàÐÍ   int                   ***/
-  /*** º¯Êý²ÎÊý2: Ãû³Æ    bMute                ÀàÐÍ   bool                  ***/
+  /*** \BA\AF\CA\FD\C3\FB: \C9\E8\D6\C3Ô¶\B6Ë¾\B2\D2\F4                                                 ***/
+  /*** \B9\A6\C4\DC:   Ö¸\B6\A8Í¨\B5\C0\B5\C4Ô¶\B6Ë¾\B2\D2\F4                                           ***/
+  /*** \B7\B5\BB\D8Öµ: \C0\E0\D0\CD  bool    true  \B3É¹\A6      false  Ê§\B0\DC                    ***/
+  /*** \BA\AF\CA\FD\B2\CE\CA\FD1: \C3\FB\B3\C6    channel_id           \C0\E0\D0\CD   int                   ***/
+  /*** \BA\AF\CA\FD\B2\CE\CA\FD2: \C3\FB\B3\C6    bMute                \C0\E0\D0\CD   bool                  ***/
   /****************************************************************************/
   bool SetRemoteMute(int channel_id, bool bMute);  //------add
 
   /****************************************************************************/
-  /*** º¯ÊýÃû: RequestRemoteVideo                                           ***/
-  /*** ¹¦ÄÜ:   ÇëÇóÔ¶¶ËÊÓÆµ                                                 ***/
-  /*** ·µ»ØÖµ: ÀàÐÍ  bool    true  ³É¹¦      false  Ê§°Ü                    ***/
-  /*** º¯Êý²ÎÊý1: Ãû³Æ    channel_id           ÀàÐÍ   int                   ***/
-  /*** º¯Êý²ÎÊý2: Ãû³Æ    remote_ssrc          ÀàÐÍ   int_32_t              ***/
+  /*** \BA\AF\CA\FD\C3\FB: RequestRemoteVideo                                           ***/
+  /*** \B9\A6\C4\DC:   \C7\EB\C7\F3Ô¶\B6\CB\CA\D3Æµ                                                 ***/
+  /*** \B7\B5\BB\D8Öµ: \C0\E0\D0\CD  bool    true  \B3É¹\A6      false  Ê§\B0\DC                    ***/
+  /*** \BA\AF\CA\FD\B2\CE\CA\FD1: \C3\FB\B3\C6    channel_id           \C0\E0\D0\CD   int                   ***/
+  /*** \BA\AF\CA\FD\B2\CE\CA\FD2: \C3\FB\B3\C6    remote_ssrc          \C0\E0\D0\CD   int_32_t              ***/
   /****************************************************************************/
   bool RequestRemoteVideo(int channel_id, int32_t remote_ssrc);
 
   /****************************************************************************/
-  /*** º¯ÊýÃû: RequestRemoteSsrc                                            ***/
-  /*** ¹¦ÄÜ:   ÇëÇóÔ¶¶Ëssrc                                                 ***/
-  /*** ·µ»ØÖµ: ÀàÐÍ  bool        true   ³É¹¦   false  Ê§°Ü                  ***/
-  /*** º¯Êý²ÎÊý1: ÀàÐÍ  int       channel_id                                ***/
-  /*** º¯Êý²ÎÊý2: ÀàÐÍ  int32_t       ssrc                                  ***/
+  /*** \BA\AF\CA\FD\C3\FB: RequestRemoteSsrc                                            ***/
+  /*** \B9\A6\C4\DC:   \C7\EB\C7\F3Ô¶\B6\CBssrc                                                 ***/
+  /*** \B7\B5\BB\D8Öµ: \C0\E0\D0\CD  bool        true   \B3É¹\A6   false  Ê§\B0\DC                  ***/
+  /*** \BA\AF\CA\FD\B2\CE\CA\FD1: \C0\E0\D0\CD  int       channel_id                                ***/
+  /*** \BA\AF\CA\FD\B2\CE\CA\FD2: \C0\E0\D0\CD  int32_t       ssrc                                  ***/
   /****************************************************************************/
   bool RequestRemoteSsrc(int channel_id, int flag, int32_t ssrc);
   /****************************************************************************/
-  /*** º¯ÊýÃû: GetNumberOfVideoDevices                                      ***/
-  /*** ¹¦ÄÜ:   »ñÈ¡µ±Ç°ÏµÍ³ËùÓÐÊÓÆµÉè±¸                                     ***/
-  /*** ·µ»ØÖµ: ÀàÐÍ  uint32_t    ÊÓÆµÉè±¸¸öÊý                               ***/
+  /*** \BA\AF\CA\FD\C3\FB: GetNumberOfVideoDevices                                      ***/
+  /*** \B9\A6\C4\DC:   \BB\F1È¡\B5\B1Ç°ÏµÍ³\CB\F9\D3\D0\CA\D3Æµ\C9è±¸                                     ***/
+  /*** \B7\B5\BB\D8Öµ: \C0\E0\D0\CD  uint32_t    \CA\D3Æµ\C9è±¸\B8\F6\CA\FD                               ***/
   /****************************************************************************/
   uint32_t GetNumberOfVideoDevices();
 
   /****************************************************************************/
-  /*** º¯ÊýÃû: GetVideoDevices                                ***/
-  /*** ¹¦ÄÜ:   »ñÈ¡µ±Ç°ÏµÍ³ËùÓÐÊÓÆµÉè±¸ÐÅÏ¢                                 ***/
-  /*** ·µ»ØÖµ: ÀàÐÍ  bool true  ³É¹¦   false  Ê§°ÜÊ±·µ»ØÐèÒª»º´æ´óÐ¡        ***/
-  /*** º¯Êý²ÎÊý1: Ãû³Æ jsonDeviceInfos  ÀàÐÍ   char*  json¸ñÊ½µÄÐÅÏ¢×Ö·û´®  ***/
-  /*** º¯Êý²ÎÊý2: Ãû³Æ  ength           ÀàÐÍ   int*  [in out]ÊäÈëÊä³ö²ÎÊý   ***/
+  /*** \BA\AF\CA\FD\C3\FB: GetVideoDevices                                ***/
+  /*** \B9\A6\C4\DC:   \BB\F1È¡\B5\B1Ç°ÏµÍ³\CB\F9\D3\D0\CA\D3Æµ\C9è±¸\D0\C5Ï¢                                 ***/
+  /*** \B7\B5\BB\D8Öµ: \C0\E0\D0\CD  bool true  \B3É¹\A6   false  Ê§\B0\DCÊ±\B7\B5\BB\D8\D0\E8Òª\BB\BA\B4\E6\B4\F3Ð¡        ***/
+  /*** \BA\AF\CA\FD\B2\CE\CA\FD1: \C3\FB\B3\C6 jsonDeviceInfos  \C0\E0\D0\CD   char*  json\B8\F1Ê½\B5\C4\D0\C5Ï¢\D7Ö·\FB\B4\AE  ***/
+  /*** \BA\AF\CA\FD\B2\CE\CA\FD2: \C3\FB\B3\C6  ength           \C0\E0\D0\CD   int*  [in out]\CA\E4\C8\EB\CA\E4\B3\F6\B2\CE\CA\FD   ***/
   /****************************************************************************/
   bool GetVideoDevices(char* jsonDeviceInfos, int* length);
 
   /****************************************************************************/
-  /*** º¯ÊýÃû: GetVideoCodecs                                ***/
-  /*** ¹¦ÄÜ:   »ñÈ¡µ±Ç°ÏµÍ³ËùÓÐÊÓÆµÉè±¸ÐÅÏ¢                                 ***/
-  /*** ·µ»ØÖµ: ÀàÐÍ  bool true  ³É¹¦   false  Ê§°ÜÊ±·µ»ØÐèÒª»º´æ´óÐ¡        ***/
-  /*** º¯Êý²ÎÊý1:Ãû³Æ jsonVideoCodecInfos ÀàÐÍ char*  json¸ñÊ½µÄÐÅÏ¢×Ö·û´®  ***/
-  /*** º¯Êý²ÎÊý2:Ãû³Æ length            ÀàÐÍ   int*  [in out]ÊäÈëÊä³ö²ÎÊý   ***/
+  /*** \BA\AF\CA\FD\C3\FB: GetVideoCodecs                                ***/
+  /*** \B9\A6\C4\DC:   \BB\F1È¡\B5\B1Ç°ÏµÍ³\CB\F9\D3\D0\CA\D3Æµ\C9è±¸\D0\C5Ï¢                                 ***/
+  /*** \B7\B5\BB\D8Öµ: \C0\E0\D0\CD  bool true  \B3É¹\A6   false  Ê§\B0\DCÊ±\B7\B5\BB\D8\D0\E8Òª\BB\BA\B4\E6\B4\F3Ð¡        ***/
+  /*** \BA\AF\CA\FD\B2\CE\CA\FD1:\C3\FB\B3\C6 jsonVideoCodecInfos \C0\E0\D0\CD char*  json\B8\F1Ê½\B5\C4\D0\C5Ï¢\D7Ö·\FB\B4\AE  ***/
+  /*** \BA\AF\CA\FD\B2\CE\CA\FD2:\C3\FB\B3\C6 length            \C0\E0\D0\CD   int*  [in out]\CA\E4\C8\EB\CA\E4\B3\F6\B2\CE\CA\FD   ***/
   /****************************************************************************/
   bool GetVideoCodecs(char* jsonVideoCodecInfos, int* length);
 
   /****************************************************************************/
-  /*** º¯ÊýÃû: GetAudioCodecs                                ***/
-  /*** ¹¦ÄÜ:   »ñÈ¡µ±Ç°ÏµÍ³ËùÓÐÊÓÆµÉè±¸ÐÅÏ¢                                 ***/
-  /*** ·µ»ØÖµ: ÀàÐÍ  bool true  ³É¹¦   false  Ê§°ÜÊ±·µ»ØÐèÒª»º´æ´óÐ¡        ***/
-  /*** º¯Êý²ÎÊý1:Ãû³Æ jsonAudioCodecInfos ÀàÐÍ char*  json¸ñÊ½µÄÐÅÏ¢×Ö·û´®  ***/
-  /*** º¯Êý²ÎÊý2:Ãû³Æ length            ÀàÐÍ   int*  [in out]ÊäÈëÊä³ö²ÎÊý   ***/
+  /*** \BA\AF\CA\FD\C3\FB: GetAudioCodecs                                ***/
+  /*** \B9\A6\C4\DC:   \BB\F1È¡\B5\B1Ç°ÏµÍ³\CB\F9\D3\D0\CA\D3Æµ\C9è±¸\D0\C5Ï¢                                 ***/
+  /*** \B7\B5\BB\D8Öµ: \C0\E0\D0\CD  bool true  \B3É¹\A6   false  Ê§\B0\DCÊ±\B7\B5\BB\D8\D0\E8Òª\BB\BA\B4\E6\B4\F3Ð¡        ***/
+  /*** \BA\AF\CA\FD\B2\CE\CA\FD1:\C3\FB\B3\C6 jsonAudioCodecInfos \C0\E0\D0\CD char*  json\B8\F1Ê½\B5\C4\D0\C5Ï¢\D7Ö·\FB\B4\AE  ***/
+  /*** \BA\AF\CA\FD\B2\CE\CA\FD2:\C3\FB\B3\C6 length            \C0\E0\D0\CD   int*  [in out]\CA\E4\C8\EB\CA\E4\B3\F6\B2\CE\CA\FD   ***/
   /****************************************************************************/
   bool GetAudioCodecs(char* jsonAudioCodecInfos, int* length);
 
   //////////////////////////ylr interface start////////////////////////////////
   /****************************************************************************/
-  /*** º¯ÊýÃû: ÉèÖÃÊÓÆµµÄNack¹¦ÄÜ                                           ***/
-  /*** ¹¦ÄÜ:   ¿ªÆô»ò¹Ø±ÕNack¹¦ÄÜ ***/
-  /*** ·µ»ØÖµ: ÀàÐÍ  bool    true  ³É¹¦      false  Ê§°Ü                    ***/
-  /*** º¯Êý²ÎÊý1: Ãû³Æ    channel_id       ÀàÐÍ   int                       ***/
-  /*** º¯Êý²ÎÊý2: Ãû³Æ    enable_nack	   ÀàÐÍ   bool                      ***/
+  /*** \BA\AF\CA\FD\C3\FB: \C9\E8\D6\C3\CA\D3Æµ\B5\C4Nack\B9\A6\C4\DC                                           ***/
+  /*** \B9\A6\C4\DC:   \BF\AA\C6\F4\BB\F2\B9Ø±\D5Nack\B9\A6\C4\DC ***/
+  /*** \B7\B5\BB\D8Öµ: \C0\E0\D0\CD  bool    true  \B3É¹\A6      false  Ê§\B0\DC                    ***/
+  /*** \BA\AF\CA\FD\B2\CE\CA\FD1: \C3\FB\B3\C6    channel_id       \C0\E0\D0\CD   int                       ***/
+  /*** \BA\AF\CA\FD\B2\CE\CA\FD2: \C3\FB\B3\C6    enable_nack	   \C0\E0\D0\CD   bool                      ***/
   /****************************************************************************/
   bool SetVideoNackStatus(const int channelId, const bool enable_nack);
 
   /****************************************************************************/
-  /*** º¯ÊýÃû: ÉèÖÃÊÓÆµµÄFec¹¦ÄÜ                                            ***/
-  /*** ¹¦ÄÜ:   ¿ªÆô»ò¹Ø±ÕÊÓÆµFec¹¦ÄÜ                                        ***/
-  /*** ·µ»ØÖµ: ÀàÐÍ  bool    true  ³É¹¦      false  Ê§°Ü                    ***/
-  /*** º¯Êý²ÎÊý1: Ãû³Æ    channel_id       ÀàÐÍ   int                       ***/
-  /*** º¯Êý²ÎÊý2: Ãû³Æ    enable    	   ÀàÐÍ   bool                      ***/
-  /*** º¯Êý²ÎÊý3: Ãû³Æ    payloadtype_red  ÀàÐÍ   uint8_t                   ***/
-  /*** º¯Êý²ÎÊý4: Ãû³Æ    payloadtype_fec  ÀàÐÍ   uint8_t                   ***/
+  /*** \BA\AF\CA\FD\C3\FB: \C9\E8\D6\C3\CA\D3Æµ\B5\C4Fec\B9\A6\C4\DC                                            ***/
+  /*** \B9\A6\C4\DC:   \BF\AA\C6\F4\BB\F2\B9Ø±\D5\CA\D3ÆµFec\B9\A6\C4\DC                                        ***/
+  /*** \B7\B5\BB\D8Öµ: \C0\E0\D0\CD  bool    true  \B3É¹\A6      false  Ê§\B0\DC                    ***/
+  /*** \BA\AF\CA\FD\B2\CE\CA\FD1: \C3\FB\B3\C6    channel_id       \C0\E0\D0\CD   int                       ***/
+  /*** \BA\AF\CA\FD\B2\CE\CA\FD2: \C3\FB\B3\C6    enable    	   \C0\E0\D0\CD   bool                      ***/
+  /*** \BA\AF\CA\FD\B2\CE\CA\FD3: \C3\FB\B3\C6    payloadtype_red  \C0\E0\D0\CD   uint8_t                   ***/
+  /*** \BA\AF\CA\FD\B2\CE\CA\FD4: \C3\FB\B3\C6    payloadtype_fec  \C0\E0\D0\CD   uint8_t                   ***/
   /****************************************************************************/
   bool SetVideoUlpFecStatus(const int channelId,
                             const bool enable,
@@ -664,27 +667,27 @@ class MediaClient : public sigslot::has_slots<> {
                             const uint8_t payloadtype_fec);
 
   /****************************************************************************/
-  /*** º¯ÊýÃû: ÉèÖÃÊÓÆµµÄDegradationMode¹¦ÄÜ                                ***/
-  /*** ¹¦ÄÜ:   ¿ªÆô»ò¹Ø±ÕÊÓÆµDegradationMode¹¦ÄÜ                            ***/
-  /*** ·µ»ØÖµ: ÀàÐÍ  bool    true  ³É¹¦      false  Ê§°Ü                    ***/
-  /*** º¯Êý²ÎÊý1: Ãû³Æ    channel_id       ÀàÐÍ   int                       ***/
-  /*** º¯Êý²ÎÊý2: Ãû³Æ    mode      	   ÀàÐÍ   DegradationPreference     ***/
+  /*** \BA\AF\CA\FD\C3\FB: \C9\E8\D6\C3\CA\D3Æµ\B5\C4DegradationMode\B9\A6\C4\DC                                ***/
+  /*** \B9\A6\C4\DC:   \BF\AA\C6\F4\BB\F2\B9Ø±\D5\CA\D3ÆµDegradationMode\B9\A6\C4\DC                            ***/
+  /*** \B7\B5\BB\D8Öµ: \C0\E0\D0\CD  bool    true  \B3É¹\A6      false  Ê§\B0\DC                    ***/
+  /*** \BA\AF\CA\FD\B2\CE\CA\FD1: \C3\FB\B3\C6    channel_id       \C0\E0\D0\CD   int                       ***/
+  /*** \BA\AF\CA\FD\B2\CE\CA\FD2: \C3\FB\B3\C6    mode      	   \C0\E0\D0\CD   DegradationPreference     ***/
   /****************************************************************************/
   bool SetVideoDegradationMode(const int channelId,
                                const webrtc::DegradationPreference mode);
   /****************************************************************************/
-  /*** º¯ÊýÃû: ¹Ø¼üÖ¡·¢ËÍ                                                   ***/
-  /*** ¹¦ÄÜ:   ·¢ËÍ¹Ø¼üÖ¡                                                   ***/
-  /*** ·µ»ØÖµ: ÀàÐÍ  bool    true  ³É¹¦      false  Ê§°Ü                    ***/
-  /*** º¯Êý²ÎÊý1: Ãû³Æ    channel_id       ÀàÐÍ   int                       ***/
+  /*** \BA\AF\CA\FD\C3\FB: \B9Ø¼\FCÖ¡\B7\A2\CB\CD                                                   ***/
+  /*** \B9\A6\C4\DC:   \B7\A2\CBÍ¹Ø¼\FCÖ¡                                                   ***/
+  /*** \B7\B5\BB\D8Öµ: \C0\E0\D0\CD  bool    true  \B3É¹\A6      false  Ê§\B0\DC                    ***/
+  /*** \BA\AF\CA\FD\B2\CE\CA\FD1: \C3\FB\B3\C6    channel_id       \C0\E0\D0\CD   int                       ***/
   /****************************************************************************/
   bool SendKeyFrame(const int channelId);
   /****************************************************************************/
-  /*** º¯ÊýÃû: ÉèÖÃ¹Ø¼üÖ¡»Øµ÷ÇëÇó                                           ***/
-  /*** ¹¦ÄÜ:   ÉèÖÃÇëÇó¹Ø¼üÖ¡»Øµ÷                                           ***/
-  /*** ·µ»ØÖµ: ÀàÐÍ  bool    true  ³É¹¦      false  Ê§°Ü                    ***/
-  /*** º¯Êý²ÎÊý1: Ãû³Æ    channel_id       ÀàÐÍ   int                       ***/
-  /*** º¯Êý²ÎÊý1: Ãû³Æ    cb        ÀàÐÍ  OnRequestKeyFrameCallbackº¯ÊýÖ¸Õë ***/
+  /*** \BA\AF\CA\FD\C3\FB: \C9\E8\D6Ã¹Ø¼\FCÖ¡\BBØµ\F7\C7\EB\C7\F3                                           ***/
+  /*** \B9\A6\C4\DC:   \C9\E8\D6\C3\C7\EB\C7\F3\B9Ø¼\FCÖ¡\BBØµ\F7                                           ***/
+  /*** \B7\B5\BB\D8Öµ: \C0\E0\D0\CD  bool    true  \B3É¹\A6      false  Ê§\B0\DC                    ***/
+  /*** \BA\AF\CA\FD\B2\CE\CA\FD1: \C3\FB\B3\C6    channel_id       \C0\E0\D0\CD   int                       ***/
+  /*** \BA\AF\CA\FD\B2\CE\CA\FD1: \C3\FB\B3\C6    cb        \C0\E0\D0\CD  OnRequestKeyFrameCallback\BA\AF\CA\FDÖ¸\D5\EB ***/
   /****************************************************************************/
   bool SetKeyFrameRequestCallback(const int channelId,
                                   OnRequestKeyFrameCallback cb);
@@ -693,60 +696,60 @@ class MediaClient : public sigslot::has_slots<> {
   //////////////////////////zjy interface start///////////////////////////////
 
   /****************************************************************************/
-  /*** º¯ÊýÃû: ÉèÖÃ»ØÉùÏû³ý                                                 ***/
-  /*** ¹¦ÄÜ:   ÒôÆµÍ¨»°»ØÒôÏû³ý                                             ***/
-  /*** ·µ»ØÖµ: ÀàÐÍ  bool    true  ³É¹¦      false  Ê§°Ü                    ***/
-  /*** º¯Êý²ÎÊý1: Ãû³Æ    enable       ÀàÐÍ   bool                          ***/
-  /*** ´Ëº¯ÊýÐèÒªÔÚCreateChannelÖ®Ç°Ê¹ÓÃ                                    ***/
+  /*** \BA\AF\CA\FD\C3\FB: \C9\E8\D6Ã»\D8\C9\F9\CF\FB\B3\FD                                                 ***/
+  /*** \B9\A6\C4\DC:   \D2\F4ÆµÍ¨\BB\B0\BB\D8\D2\F4\CF\FB\B3\FD                                             ***/
+  /*** \B7\B5\BB\D8Öµ: \C0\E0\D0\CD  bool    true  \B3É¹\A6      false  Ê§\B0\DC                    ***/
+  /*** \BA\AF\CA\FD\B2\CE\CA\FD1: \C3\FB\B3\C6    enable       \C0\E0\D0\CD   bool                          ***/
+  /*** \B4Ëº\AF\CA\FD\D0\E8Òª\D4\DACreateChannelÖ®Ç°Ê¹\D3\C3                                    ***/
   /****************************************************************************/
   bool SetAEC(bool enable);
   /****************************************************************************/
-  /*** º¯ÊýÃû: ÉèÖÃÓïÒô×Ô¶¯ÔöÒæ¹¦ÄÜ                                         ***/
-  /*** ¹¦ÄÜ:   ÓïÒô×Ô¶¯ÔöÒæ                                                 ***/
-  /*** ·µ»ØÖµ: ÀàÐÍ  bool    true  ³É¹¦      false  Ê§°Ü                    ***/
-  /*** º¯Êý²ÎÊý1: Ãû³Æ    enable       ÀàÐÍ   bool                          ***/
-  /*** ´Ëº¯ÊýÐèÒªÔÚCreateChannelÖ®Ç°Ê¹ÓÃ                                    ***/
+  /*** \BA\AF\CA\FD\C3\FB: \C9\E8\D6\C3\D3\EF\D2\F4\D7Ô¶\AF\D4\F6\D2æ¹¦\C4\DC                                         ***/
+  /*** \B9\A6\C4\DC:   \D3\EF\D2\F4\D7Ô¶\AF\D4\F6\D2\E6                                                 ***/
+  /*** \B7\B5\BB\D8Öµ: \C0\E0\D0\CD  bool    true  \B3É¹\A6      false  Ê§\B0\DC                    ***/
+  /*** \BA\AF\CA\FD\B2\CE\CA\FD1: \C3\FB\B3\C6    enable       \C0\E0\D0\CD   bool                          ***/
+  /*** \B4Ëº\AF\CA\FD\D0\E8Òª\D4\DACreateChannelÖ®Ç°Ê¹\D3\C3                                    ***/
   /****************************************************************************/
   bool SetAGC(bool enable);
   /****************************************************************************/
-  /*** º¯ÊýÃû: ÉèÖÃÓïÒôÔëÉùÒÖÖÆ¹¦ÄÜ                                         ***/
-  /*** ¹¦ÄÜ:   ÓïÒôÔëÉùÒÖÖÆ                                                 ***/
-  /*** ·µ»ØÖµ: ÀàÐÍ  bool    true  ³É¹¦      false  Ê§°Ü                    ***/
-  /*** º¯Êý²ÎÊý1: Ãû³Æ    enable       ÀàÐÍ   bool                          ***/
-  /*** ´Ëº¯ÊýÐèÒªÔÚCreateChannelÖ®Ç°Ê¹ÓÃ                                    ***/
+  /*** \BA\AF\CA\FD\C3\FB: \C9\E8\D6\C3\D3\EF\D2\F4\D4\EB\C9\F9\D2\D6\D6Æ¹\A6\C4\DC                                         ***/
+  /*** \B9\A6\C4\DC:   \D3\EF\D2\F4\D4\EB\C9\F9\D2\D6\D6\C6                                                 ***/
+  /*** \B7\B5\BB\D8Öµ: \C0\E0\D0\CD  bool    true  \B3É¹\A6      false  Ê§\B0\DC                    ***/
+  /*** \BA\AF\CA\FD\B2\CE\CA\FD1: \C3\FB\B3\C6    enable       \C0\E0\D0\CD   bool                          ***/
+  /*** \B4Ëº\AF\CA\FD\D0\E8Òª\D4\DACreateChannelÖ®Ç°Ê¹\D3\C3                                    ***/
   /****************************************************************************/
   bool SetNS(bool enable);
 
   /****************************************************************************/
-  /*** º¯ÊýÃû: ´´½¨ÒôÆµÉè±¸¶ÔÏó                                             ***/
-  /*** ¹¦ÄÜ:   »ñÈ¡µ×²ãAudioDeviceModule¶ÔÏó                                ***/
-  /*** ·µ»ØÖµ: ÀàÐÍ  scoped_refptr<webrtc::AudioDeviceModule>               ***/
+  /*** \BA\AF\CA\FD\C3\FB: \B4\B4\BD\A8\D2\F4Æµ\C9è±¸\B6\D4\CF\F3                                             ***/
+  /*** \B9\A6\C4\DC:   \BB\F1È¡\B5×²\E3AudioDeviceModule\B6\D4\CF\F3                                ***/
+  /*** \B7\B5\BB\D8Öµ: \C0\E0\D0\CD  scoped_refptr<webrtc::AudioDeviceModule>               ***/
   /****************************************************************************/
   bool CreateAudioDevice();
 
   // int GetAudioRecordingDevice(const int a);
 
   /****************************************************************************/
-  /*** º¯ÊýÃû: ÉèÖÃÂ¼ÒôÒôÁ¿                                                 ***/
-  /*** ¹¦ÄÜ:   ÉèÖÃÂ¼ÒôÉè±¸Â¼ÒôÒôÁ¿                                         ***/
-  /*** ·µ»ØÖµ: ÀàÐÍ  bool        true  ³É¹¦      false   Ê§°Ü               ***/
-  /*** º¯Êý²ÎÊý1: Ãû³Æ   vol                ÀàÐÍ    uint32_t                ***/
+  /*** \BA\AF\CA\FD\C3\FB: \C9\E8\D6\C3Â¼\D2\F4\D2\F4\C1\BF                                                 ***/
+  /*** \B9\A6\C4\DC:   \C9\E8\D6\C3Â¼\D2\F4\C9è±¸Â¼\D2\F4\D2\F4\C1\BF                                         ***/
+  /*** \B7\B5\BB\D8Öµ: \C0\E0\D0\CD  bool        true  \B3É¹\A6      false   Ê§\B0\DC               ***/
+  /*** \BA\AF\CA\FD\B2\CE\CA\FD1: \C3\FB\B3\C6   vol                \C0\E0\D0\CD    uint32_t                ***/
   /****************************************************************************/
   bool SetAudioRecordingVolume(uint32_t vol);
 
   /****************************************************************************/
-  /*** º¯ÊýÃû: »ñÈ¡Â¼ÒôÉè±¸ÁÐ±í ***/
-  /*** ¹¦ÄÜ:   »ñÈ¡Â¼ÒôÉè±¸ÁÐ±í×Ö·û´® ***/
-  /*** ·µ»ØÖµ: ÀàÐÍ  char* ***/
-  /*** º¯Êý²ÎÊý1: Ãû³Æ   length                 ÀàÐÍ    int* ***/
+  /*** \BA\AF\CA\FD\C3\FB: \BB\F1È¡Â¼\D2\F4\C9è±¸\C1Ð±\ED ***/
+  /*** \B9\A6\C4\DC:   \BB\F1È¡Â¼\D2\F4\C9è±¸\C1Ð±\ED\D7Ö·\FB\B4\AE ***/
+  /*** \B7\B5\BB\D8Öµ: \C0\E0\D0\CD  char* ***/
+  /*** \BA\AF\CA\FD\B2\CE\CA\FD1: \C3\FB\B3\C6   length                 \C0\E0\D0\CD    int* ***/
   /*****************************************************************************/
   char* GetAudioDeviceList(int* length);
 
   /****************************************************************************/
-  /*** º¯ÊýÃû: ÉèÖÃÂ¼ÒôÉè±¸ ***/
-  /*** ¹¦ÄÜ:   ¸ù¾ÝË÷ÒýÑ¡ÔñÐèÒªÊ¹ÓÃµÄÂ¼ÒôÉè±¸ ***/
-  /*** ·µ»ØÖµ: ÀàÐÍ  bool        true  ³É¹¦      false   Ê§°Ü ***/
-  /*** º¯Êý²ÎÊý1: Ãû³Æ   index                   ÀàÐÍ    int ***/
+  /*** \BA\AF\CA\FD\C3\FB: \C9\E8\D6\C3Â¼\D2\F4\C9è±¸ ***/
+  /*** \B9\A6\C4\DC:   \B8\F9\BE\DD\CB\F7\D2\FDÑ¡\D4\F1\D0\E8ÒªÊ¹\D3Ãµ\C4Â¼\D2\F4\C9è±¸ ***/
+  /*** \B7\B5\BB\D8Öµ: \C0\E0\D0\CD  bool        true  \B3É¹\A6      false   Ê§\B0\DC ***/
+  /*** \BA\AF\CA\FD\B2\CE\CA\FD1: \C3\FB\B3\C6   index                   \C0\E0\D0\CD    int ***/
   /*****************************************************************************/
   bool SetAudioRecordingDevice(int index);
 
@@ -754,10 +757,10 @@ class MediaClient : public sigslot::has_slots<> {
   bool SetAudioPlayoutDeviceOnFlight(int index);
 
   /****************************************************************************/
-  /*** º¯ÊýÃû: ÉèÖÃ²¥·ÅÉè±¸                                                 ***/
-  /*** ¹¦ÄÜ:   ¸ù¾ÝË÷ÒýÑ¡ÔñÐèÒªÊ¹ÓÃ²¥·ÅÉè±¸                                 ***/
-  /*** ·µ»ØÖµ: ÀàÐÍ  bool        true  ³É¹¦      false   Ê§°Ü               ***/
-  /*** º¯Êý²ÎÊý1: Ãû³Æ   index                   ÀàÐÍ    int                ***/
+  /*** \BA\AF\CA\FD\C3\FB: \C9\E8\D6Ã²\A5\B7\C5\C9è±¸                                                 ***/
+  /*** \B9\A6\C4\DC:   \B8\F9\BE\DD\CB\F7\D2\FDÑ¡\D4\F1\D0\E8ÒªÊ¹\D3Ã²\A5\B7\C5\C9è±¸                                 ***/
+  /*** \B7\B5\BB\D8Öµ: \C0\E0\D0\CD  bool        true  \B3É¹\A6      false   Ê§\B0\DC               ***/
+  /*** \BA\AF\CA\FD\B2\CE\CA\FD1: \C3\FB\B3\C6   index                   \C0\E0\D0\CD    int                ***/
   /*****************************************************************************/
   bool SetAudioPlayoutDevice(int index);
   ///////////////////////// zjy interface end//////////////////////////////////
@@ -841,6 +844,11 @@ class MediaClient : public sigslot::has_slots<> {
                           bool is_screencast,
                           bool align_timestamps);
 
+  void SetVideoHardwareEncoderFactoryCallback(
+      OnGetVideoHardwareEncoderFactory callback);
+  void SetAudioHardwareEncoderFactoryAndAdmCallback(
+      OnGetAudioHardwareEncoderFactoryAndAdm callback);
+
 #endif
 
  private:
@@ -852,9 +860,7 @@ class MediaClient : public sigslot::has_slots<> {
   bool CreateChannelManager(
       std::unique_ptr<webrtc::VideoEncoderFactory> encoderFactory,
       std::unique_ptr<webrtc::VideoDecoderFactory> decoderFactory);
-  bool AndroidInitialize(JNIEnv* env,
-                         jobject jencoder_factory,
-                         jobject jdecoder_factory);
+  bool AndroidInitialize();
 #else
   bool CreateChannelManager();
 #endif
@@ -1036,6 +1042,10 @@ class MediaClient : public sigslot::has_slots<> {
   using VideoSinkIterator = std::map<
       int,
       std::unique_ptr<rtc::VideoSinkInterface<webrtc::VideoFrame>>>::iterator;
+
+  OnGetVideoHardwareEncoderFactory onGetVideoHardwareEncoderFactory_ = nullptr;
+  OnGetAudioHardwareEncoderFactoryAndAdm
+      onGetAudioHardwareEncoderFactoryAndAdm_ = nullptr;
 #endif
   int m_MaxBandwidthBps_;
 #if defined(WEBRTC_WIN)

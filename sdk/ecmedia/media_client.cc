@@ -253,17 +253,10 @@ bool MediaClient::SetTrace(const char* path, int min_sev) {
   //return true;
 }
 
-#if defined(WEBRTC_ANDROID)
-bool MediaClient::Initialize(JNIEnv* env,
-                             jobject jencoder_factory,
-                             jobject jdecoder_factory) {
-#else
 bool MediaClient::Initialize() {
-#endif
 #if defined(WEBRTC_ANDROID)
-  return AndroidInitialize(env, jencoder_factory, jdecoder_factory);
+  return AndroidInitialize();
 #else
-
   // Set Field Trials String
   // webrtc::field_trial::IsEnabled("WebRTC-DisableUlpFecExperiment");
   // webrtc::FLAG_force_fieldtrials ="WebRTC-FlexFEC-03-Advertised/Enabled/";
@@ -289,11 +282,25 @@ bool MediaClient::Initialize() {
 }  // namespace ecmedia_sdk
 
 #if defined(WEBRTC_ANDROID)
-bool MediaClient::AndroidInitialize(JNIEnv* env,
-                                    jobject jencoder_factory,
-                                    jobject jdecoder_factory) {
+bool MediaClient::AndroidInitialize() {
   bool bOk = true;
   InitializeJVM();
+
+  JNIEnv* env = nullptr;
+  jobject jencoder_factory = nullptr;
+  jobject jdecoder_factory = nullptr;
+
+  if (onGetAudioHardwareEncoderFactoryAndAdm_) {
+    void* env_r = nullptr;
+    void* enf_r = nullptr;
+    void* def_r = nullptr;
+
+    onGetAudioHardwareEncoderFactoryAndAdm_(&env_r, &enf_r, &def_r);
+
+    env = static_cast<JNIEnv*>(env_r);
+    jencoder_factory = static_cast<jobject>(enf_r);
+    jdecoder_factory = static_cast<jobject>(def_r);
+  }
   RTC_LOG(INFO) << __FUNCTION__ << " env: " << env
                 << " jencoder_factory:" << jdecoder_factory
                 << " jdecoder_factory: " << jdecoder_factory;
@@ -464,11 +471,35 @@ bool MediaClient::CreateChannelManager() {
   RTC_DCHECK_RUN_ON(signaling_thread_);
   rtc::InitRandom(rtc::Time32());
 
+#if defined(WEBRTC_ANDROID)
+  void* audioAdm = nullptr;
+  void* audioEnFactory = nullptr;
+  void* audioDeFactory = nullptr;
+  if (onGetAudioHardwareEncoderFactoryAndAdm_) {
+    onGetAudioHardwareEncoderFactoryAndAdm_(&audioEnFactory, &audioDeFactory,
+                                            &audioAdm);
+  }
+#endif
+
   rtc::scoped_refptr<webrtc::AudioDeviceModule> default_adm = nullptr;
+#if defined(WEBRTC_ANDROID)
+  default_adm = reinterpret_cast<webrtc::AudioDeviceModule*>(audioAdm);
+#endif
+
   rtc::scoped_refptr<webrtc::AudioEncoderFactory> audio_encoder_factory =
+#if defined(WEBRTC_ANDROID)
+      reinterpret_cast<webrtc::AudioEncoderFactory*>(audioEnFactory);
+#else
       webrtc::CreateBuiltinAudioEncoderFactory();
+#endif
+
   rtc::scoped_refptr<webrtc::AudioDecoderFactory> audio_decoder_factory =
+#if defined(WEBRTC_ANDROID)
+      reinterpret_cast<webrtc::AudioDecoderFactory*>(audioDeFactory);
+#else
       webrtc::CreateBuiltinAudioDecoderFactory();
+#endif
+
   std::unique_ptr<webrtc::VideoEncoderFactory> video_encoder_factory =
 #if defined(WEBRTC_IOS)
       ObjCCallClient::GetInstance()->getVideoEncoderFactory();
@@ -1936,7 +1967,7 @@ bool MediaClient::PreviewTrack(int window_id, void* video_track) {
       (webrtc::VideoTrackInterface*)(video_track);
   
     if (signaling_thread_) {
-    signaling_thread_->Invoke<void>(RTC_FROM_HERE, [this, track, window_id] {
+    signaling_thread_->Invoke<bool>(RTC_FROM_HERE, [&] {
          bool track_exist = false;
          std::vector<rtc::scoped_refptr<webrtc::VideoTrackInterface>>::iterator
              it = video_tracks_.begin();
@@ -1960,6 +1991,8 @@ bool MediaClient::PreviewTrack(int window_id, void* video_track) {
          return renderWndsManager_->StartRender(window_id, nullptr);
 //#elif defined(WEBRTC_IOS)
 //  ObjCCallClient::GetInstance()->PreviewTrack(window_id, track);
+#else
+         return true;
 #endif
     });
   }
@@ -3619,6 +3652,16 @@ void* MediaClient::CreateVideoSource(JNIEnv* env,
       new rtc::RefCountedObject<webrtc::jni::AndroidVideoTrackSource>(
           signaling_thread_, env, is_screencast, align_timestamps));
   return source.release();
+}
+
+void MediaClient::SetVideoHardwareEncoderFactoryCallback(
+	OnGetVideoHardwareEncoderFactory callback) {
+  onGetVideoHardwareEncoderFactory_ = callback;
+  }
+
+void MediaClient::SetAudioHardwareEncoderFactoryAndAdmCallback(
+	OnGetAudioHardwareEncoderFactoryAndAdm callback) {
+  onGetAudioHardwareEncoderFactoryAndAdm_ = callback;
 }
 
 #endif

@@ -40,11 +40,7 @@ ECMEDIA_API bool ECMedia_set_trace(const char* path ,const int level);
 /*** 返回值: 类型  int                                                   ***/
 /*** 函数参数: 无                                                        ***/
 /***************************************************************************/
-#if defined(WEBRTC_ANDROID)
-ECMEDIA_API int ECMedia_init(void* env, void* jencoder_factory, void* jdecoder_factory);
-#else
 ECMEDIA_API int ECMedia_init();
-#endif
 
 /****************************************************************************/
 /*** 函数名: 反初始化                                                     ***/
@@ -816,6 +812,12 @@ ECMEDIA_API void* CreateVideoTrack(
 ECMEDIA_API void* CreateAudioTrack(
     const char* id,
     void* source);
+
+ECMEDIA_API void ECMedia_SetVideoHardwareEncoderFactoryCallback(
+    ECMedia_OnGetVideoHardwareEncoderFactory callback);
+
+ECMEDIA_API void ECMedia_SetAudioHardwareEncoderFactoryAndAdmCallback(
+    ECMedia_OnGetAudioHardwareEncoderFactoryAndAdm callback);
 
 #endif
 

@@ -17,19 +17,11 @@ ECMEDIA_API bool ECMedia_set_trace(const char* path, const int level) {
 }
 
 /******************init**********************************************************/
-#if defined(WEBRTC_ANDROID)
-ECMEDIA_API int ECMedia_init(void* env, void* jencoder_factory, void* jdecoder_factory) {
-#else
 ECMEDIA_API int ECMedia_init() {
-#endif
   RTC_LOG(INFO) << "ECMedia SDK " << ECMEDIA_VERSION;
   if (g_ECMedia == nullptr) {
     g_ECMedia = ecmedia_sdk::MediaClient::GetInstance();
-#if defined(WEBRTC_ANDROID)
-    g_ECMedia->Initialize((JNIEnv*)env, (jobject)jencoder_factory, (jobject)jdecoder_factory);
-#else
     g_ECMedia->Initialize();
-#endif
     return 0;
   }
   return -1;
@@ -657,6 +649,18 @@ ECMEDIA_API void* CreateAudioTrack(
   RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__ << "() "
                 << " begin...";
     return g_ECMedia->CreateAudioTrack(id, (webrtc::AudioSourceInterface *)source);
+}
+
+ECMEDIA_API void ECMedia_SetVideoHardwareEncoderFactoryCallback(
+    ECMedia_OnGetVideoHardwareEncoderFactory callback) {
+  g_ECMedia->SetVideoHardwareEncoderFactoryCallback(
+      (ecmedia_sdk::OnGetVideoHardwareEncoderFactory)callback);
+}
+
+ECMEDIA_API void ECMedia_SetAudioHardwareEncoderFactoryAndAdmCallback(
+    ECMedia_OnGetAudioHardwareEncoderFactoryAndAdm callback) {
+  g_ECMedia->SetAudioHardwareEncoderFactoryAndAdmCallback(
+      (ecmedia_sdk::OnGetAudioHardwareEncoderFactoryAndAdm)callback);
 }
 
 #endif
