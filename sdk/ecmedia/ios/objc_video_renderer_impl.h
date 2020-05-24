@@ -17,6 +17,7 @@
 #include "api/video/video_frame.h"
 #include "api/video/video_sink_interface.h"
 #include "sdk/ecmedia/video_renderer.h"
+#include "VideoRenderView.h"
 
 @protocol RTCVideoRenderer;
 
@@ -43,6 +44,7 @@ class ObjCVideoRendererImpl : public VideoRenderer {
   bool mirror_;
   VideoRenderType type_;
   rtc::Thread* worker_thread_;
+  VideoRenderView*  videoview;
  
 };
 

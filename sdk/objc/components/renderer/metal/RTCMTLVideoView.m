@@ -115,7 +115,7 @@
   self.metalView = [RTCMTLVideoView createMetalView:self.bounds];
   self.metalView.delegate = self;
   //ytx_change contentMode from UIViewContentModeScaleAspectFill to UIViewContentModeScaleToFill
-  self.metalView.contentMode = UIViewContentModeScaleToFill;
+  self.metalView.contentMode = [self superview].contentMode;
   [self addSubview:self.metalView];
   self.videoFrameSize = CGSizeZero;
 }
@@ -241,7 +241,10 @@
 
     strongSelf.videoFrameSize = size;
     CGSize drawableSize = [strongSelf drawableSize];
-
+    
+    //ytx addby yukening reset size should reset contentMode
+    strongSelf.metalView.contentMode = [self superview].contentMode;
+    
     strongSelf.metalView.drawableSize = drawableSize;
     [strongSelf setNeedsLayout];
     [strongSelf.delegate videoView:self didChangeVideoSize:size];

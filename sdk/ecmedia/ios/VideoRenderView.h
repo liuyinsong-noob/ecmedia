@@ -32,6 +32,7 @@
 // display status, and also a hangup button.
 @interface VideoRenderView : UIView
 
+@property(nonatomic) UIViewContentMode videoContentMode;
 @property(nonatomic, readonly) UILabel *statusLabel;
 @property (nonatomic, retain) UIView* parentView;
 //@property(nonatomic, readonly) RTCCameraPreviewView *localVideoView;

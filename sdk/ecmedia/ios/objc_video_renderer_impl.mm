@@ -14,7 +14,7 @@
 #import "base/RTCVideoRenderer.h"
 
 #include "sdk/objc/native/src/objc_video_frame.h"
-#include "VideoRenderView.h"
+
 // TODO : STANDARD_RENDERING is platform relevant
 #define STANDARD_RENDERING kRenderWindows
 
@@ -66,6 +66,12 @@ ObjCVideoRendererImpl::~ObjCVideoRendererImpl(){
      mirror_ = false;
      render_mode_ = 0;
      type_ = kRenderiOS;
+     if (videoview && [videoview superview]) {
+          [videoview removeFromSuperview];
+          videoview = nil;
+     }
+     if(videoview)
+       videoview = nil;
    }
 }
 
@@ -87,7 +93,6 @@ id<RTCVideoRenderer> ObjCVideoRendererImpl::GetWindwoRenderPtr(void* remoteView)
   
   if(remoteView){
     UIView *parentView = (__bridge UIView *)remoteView;
-    VideoRenderView * videoview;
     videoview = [[VideoRenderView alloc] initWithFrame:CGRectZero];
     videoview.bounds = CGRectMake(0, 0, parentView.frame.size.width, parentView.frame.size.height);
     videoview.frame = CGRectMake(0, 0, parentView.frame.size.width, parentView.frame.size.height);
@@ -99,6 +104,9 @@ id<RTCVideoRenderer> ObjCVideoRendererImpl::GetWindwoRenderPtr(void* remoteView)
       transform = CGAffineTransformScale(transform, -1, 1);
       videoview.transform = transform;
     }
+    render_mode_ == 0 ? videoview.videoContentMode = UIViewContentModeScaleAspectFill :
+                        videoview.videoContentMode = UIViewContentModeScaleAspectFit;
+    videoview.contentMode =videoview.videoContentMode;
     if (videoview.superview != parentView) {
       [videoview removeFromSuperview];
       [parentView addSubview:videoview];
