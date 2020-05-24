@@ -654,103 +654,108 @@ bool MediaClient::CreateTransport(const char* local_addr,
   return true;
 }
 void MediaClient::DestroyChannel(int channel_id, bool is_video) {
-  API_LOG(INFO) << "channel_id: " << channel_id << ", is_video: " << is_video;
-  std::map<int, cricket::VideoChannel*>::iterator it = mVideoChannels_.begin();
-  std::map<int, cricket::VoiceChannel*>::iterator ait = mVoiceChannels_.begin();
-  while (it != mVideoChannels_.end()) {
-    if (it->second == nullptr) {
-      mVideoChannels_.erase(it);
-      it = mVideoChannels_.begin();
-    } else {
-      it++;
-    }
-  }
-  while (ait != mVoiceChannels_.end()) {
-    if (ait->second == nullptr) {
-      mVoiceChannels_.erase(ait);
-      ait = mVoiceChannels_.begin();
-    } else {
-      ait++;
-    }
-  }
-
-  if (is_video) {
-    for (auto t : TrackChannels_) {
-      if (t.first == channel_id) {
-        RtpSenders_[t.first].get()->SetTrack(nullptr);
-
-#if defined(WEBRTC_WIN) || defined(WEBRTC_IOS)
-        renderWndsManager_->UpdateOrAddVideoTrack(t.first, nullptr);
-        renderWndsManager_->StopRender(t.first, nullptr);
-#endif
-        RtpSenders_.erase(RtpSenders_.find(channel_id));
-        TrackChannels_.erase(TrackChannels_.find(channel_id));
-        break;
+  if (signaling_thread_) {
+    signaling_thread_->Invoke<void>(RTC_FROM_HERE, [&] {
+      RTC_DCHECK_RUN_ON(signaling_thread_);
+      API_LOG(INFO) << "channel_id: " << channel_id << ", is_video: " << is_video;
+      std::map<int, cricket::VideoChannel*>::iterator it = mVideoChannels_.begin();
+      std::map<int, cricket::VoiceChannel*>::iterator ait = mVoiceChannels_.begin();
+      while (it != mVideoChannels_.end()) {
+        if (it->second == nullptr) {
+          mVideoChannels_.erase(it);
+          it = mVideoChannels_.begin();
+        } else {
+          it++;
+        }
       }
-    }
-    it = mVideoChannels_.begin();
-    while (it != mVideoChannels_.end()) {
-      if (it->first == channel_id) {
+      while (ait != mVoiceChannels_.end()) {
+        if (ait->second == nullptr) {
+          mVoiceChannels_.erase(ait);
+          ait = mVoiceChannels_.begin();
+        } else {
+          ait++;
+        }
+      }
+      
+      if (is_video) {
+        for (auto t : TrackChannels_) {
+          if (t.first == channel_id) {
+            RtpSenders_[t.first].get()->SetTrack(nullptr);
+            
 #if defined(WEBRTC_WIN) || defined(WEBRTC_IOS)
-		  signaling_thread_->Invoke<void>(RTC_FROM_HERE, [&] {
-			  RTC_DCHECK_RUN_ON(signaling_thread_);
-			  renderWndsManager_->RemoveAllVideoRender(channel_id);
-		  });
-        
+            renderWndsManager_->UpdateOrAddVideoTrack(t.first, nullptr);
+            renderWndsManager_->StopRender(t.first, nullptr);
 #endif
-        cricket::VideoChannel* channel = it->second;
-        if (channel != nullptr) {
-          channel->disconnect_all();
-          for (auto transceiver : transceivers_) {
-            cricket::ChannelInterface* channel_1 =
+            RtpSenders_.erase(RtpSenders_.find(channel_id));
+            TrackChannels_.erase(TrackChannels_.find(channel_id));
+            break;
+          }
+        }
+        it = mVideoChannels_.begin();
+        while (it != mVideoChannels_.end()) {
+          if (it->first == channel_id) {
+#if defined(WEBRTC_WIN) || defined(WEBRTC_IOS)
+            signaling_thread_->Invoke<void>(RTC_FROM_HERE, [&] {
+              RTC_DCHECK_RUN_ON(signaling_thread_);
+              renderWndsManager_->RemoveAllVideoRender(channel_id);
+            });
+            
+#endif
+            cricket::VideoChannel* channel = it->second;
+            if (channel != nullptr) {
+              channel->disconnect_all();
+              for (auto transceiver : transceivers_) {
+                cricket::ChannelInterface* channel_1 =
                 transceiver->internal()->channel();
-            if (channel == channel_1) {
-              if (signaling_thread_) {
-                signaling_thread_->Invoke<void>(RTC_FROM_HERE, [&] {
-                  RTC_DCHECK_RUN_ON(signaling_thread_);
-                  transceiver->internal()->SetChannel(nullptr);
-                });
+                if (channel == channel_1) {
+                  if (signaling_thread_) {
+                    signaling_thread_->Invoke<void>(RTC_FROM_HERE, [&] {
+                      RTC_DCHECK_RUN_ON(signaling_thread_);
+                      transceiver->internal()->SetChannel(nullptr);
+                    });
+                  }
+                  DestroyChannelInterface(channel);
+                }
               }
-              DestroyChannelInterface(channel);
             }
+            
+            mVideoChannels_.erase(it);
+            break;
+          } else {
+            it++;
           }
         }
-
-        mVideoChannels_.erase(it);
-        break;
       } else {
-        it++;
-      }
-    }
-  } else {
-    ait = mVoiceChannels_.begin();
-    while (ait != mVoiceChannels_.end()) {
-      if (ait->first == channel_id) {
-        cricket::VoiceChannel* channel = ait->second;
-        if (channel != nullptr) {
-          channel->disconnect_all();
-          for (auto transceiver : transceivers_) {
-            cricket::ChannelInterface* channel_1 =
+        ait = mVoiceChannels_.begin();
+        while (ait != mVoiceChannels_.end()) {
+          if (ait->first == channel_id) {
+            cricket::VoiceChannel* channel = ait->second;
+            if (channel != nullptr) {
+              channel->disconnect_all();
+              for (auto transceiver : transceivers_) {
+                cricket::ChannelInterface* channel_1 =
                 transceiver->internal()->channel();
-            if (channel == channel_1) {
-              signaling_thread_->Invoke<void>(RTC_FROM_HERE, [=] {
-                transceiver->internal()->SetChannel(nullptr);
-                DestroyChannelInterface(channel);
-              });
+                if (channel == channel_1) {
+                  signaling_thread_->Invoke<void>(RTC_FROM_HERE, [=] {
+                    transceiver->internal()->SetChannel(nullptr);
+                    DestroyChannelInterface(channel);
+                  });
+                }
+              }
             }
+            mVoiceChannels_.erase(ait);
+            break;
+          } else {
+            ait++;
           }
         }
-        mVoiceChannels_.erase(ait);
-        break;
-      } else {
-        ait++;
       }
-    }
-  }
-
-  if (mVideoChannels_.size() == 0 && mVoiceChannels_.size() == 0) {
-    DestroyTransport();
-    UnInitialize();
+      
+      if (mVideoChannels_.size() == 0 && mVoiceChannels_.size() == 0) {
+        DestroyTransport();
+        UnInitialize();
+      }
+    });
   }
 }
 
@@ -1027,14 +1032,22 @@ bool MediaClient::RequestRemoteSsrc(int channel_id, int flag, int32_t ssrc) {
 
 bool MediaClient::SetLocalMute(int channel_id, bool bMute) {
   API_LOG(INFO) << "channel_id " << channel_id << ", bMute : " << bMute;
+  bool bOk = false;
+  if (signaling_thread_) {
+    bOk = signaling_thread_->Invoke<bool>(RTC_FROM_HERE, [&] {
+      RTC_DCHECK_RUN_ON(signaling_thread_);
   for (const auto& transceiver : transceivers_) {
     std::string mid = GetMidFromChannelId(channel_id);
     if (transceiver.get()->mid() == mid) {
       return transceiver.get()->sender()->track()->set_enabled(!bMute);
       break;
     }
+      }
+      return bOk;
+    });
   }
-  return false;
+  API_LOG(INFO) << "channel_id: " << channel_id;
+  return bOk;
 }
 
 bool MediaClient::SetLoudSpeakerStatus(bool enabled) {
