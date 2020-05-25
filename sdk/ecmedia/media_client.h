@@ -226,13 +226,20 @@ enum VIDEO_SOURCE_TYPE { VIDEO_CAMPER = 0, VIDEO_SCREEN, VIDEO_EXTERNAL };
 typedef void(ECMedia_ConferenceParticipantCallback)(uint32_t arrOfCSRCs[],
                                                     int count);
 
+#ifdef __cplusplus
+extern "C" {
+#endif
 #if defined(WEBRTC_ANDROID)
-typedef bool (*OnGetVideoHardwareEncoderFactory)(void** env,
-                                                 void** jencoder_factory,
-                                                 void** jdecoder_factory);
-typedef bool (*OnGetAudioHardwareEncoderFactoryAndAdm)(void** jencoder_factory,
-                                                       void** jdecoder_factory,
-                                                       void** adm);
+typedef int (*OnGetVideoHardwareEncoderFactory)(void** env,
+                                                void** jencoder_factory,
+                                                void** jdecoder_factory);
+typedef int (*OnGetAudioHardwareEncoderFactoryAndAdm)(void** jencoder_factory,
+                                                      void** jdecoder_factory,
+                                                      void** adm);
+#endif
+
+#ifdef __cplusplus
+}
 #endif
 
 class MediaClient : public sigslot::has_slots<> {
@@ -858,9 +865,9 @@ class MediaClient : public sigslot::has_slots<> {
                           bool is_screencast,
                           bool align_timestamps);
 
-  void SetVideoHardwareEncoderFactoryCallback(
+  static void SetVideoHardwareEncoderFactoryCallback(
       OnGetVideoHardwareEncoderFactory callback);
-  void SetAudioHardwareEncoderFactoryAndAdmCallback(
+  static void SetAudioHardwareEncoderFactoryAndAdmCallback(
       OnGetAudioHardwareEncoderFactoryAndAdm callback);
 
 #endif
@@ -1059,9 +1066,9 @@ class MediaClient : public sigslot::has_slots<> {
       int,
       std::unique_ptr<rtc::VideoSinkInterface<webrtc::VideoFrame>>>::iterator;
 
-  OnGetVideoHardwareEncoderFactory onGetVideoHardwareEncoderFactory_ = nullptr;
-  OnGetAudioHardwareEncoderFactoryAndAdm
-      onGetAudioHardwareEncoderFactoryAndAdm_ = nullptr;
+  static OnGetVideoHardwareEncoderFactory onGetVideoHardwareEncoderFactory_;
+  static OnGetAudioHardwareEncoderFactoryAndAdm
+      onGetAudioHardwareEncoderFactoryAndAdm_;
 #endif
   int m_MaxBandwidthBps_;
 #if defined(WEBRTC_WIN)

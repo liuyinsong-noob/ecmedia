@@ -681,13 +681,13 @@ ECMEDIA_API void* CreateAudioTrack(
 
 ECMEDIA_API void ECMedia_SetVideoHardwareEncoderFactoryCallback(
     ECMedia_OnGetVideoHardwareEncoderFactory callback) {
-  g_ECMedia->SetVideoHardwareEncoderFactoryCallback(
+  ecmedia_sdk::MediaClient::SetVideoHardwareEncoderFactoryCallback(
       (ecmedia_sdk::OnGetVideoHardwareEncoderFactory)callback);
 }
 
 ECMEDIA_API void ECMedia_SetAudioHardwareEncoderFactoryAndAdmCallback(
     ECMedia_OnGetAudioHardwareEncoderFactoryAndAdm callback) {
-  g_ECMedia->SetAudioHardwareEncoderFactoryAndAdmCallback(
+  ecmedia_sdk::MediaClient::SetAudioHardwareEncoderFactoryAndAdmCallback(
       (ecmedia_sdk::OnGetAudioHardwareEncoderFactoryAndAdm)callback);
 }
 

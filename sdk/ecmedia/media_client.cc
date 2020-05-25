@@ -134,6 +134,10 @@ void ReadMediaConfig(const char* filename) {
 rtc::LogSink* MediaClient::ec_log_ = nullptr;
 MediaClient* MediaClient::m_pInstance = NULL;
 rtc::CriticalSection MediaClient::m_critical;
+#if defined(WEBRTC_ANDROID)
+OnGetVideoHardwareEncoderFactory MediaClient::onGetVideoHardwareEncoderFactory_ = nullptr;
+OnGetAudioHardwareEncoderFactoryAndAdm MediaClient::onGetAudioHardwareEncoderFactoryAndAdm_ = nullptr;
+#endif
 
 MediaClient* MediaClient::GetInstance() {
   rtc::CritScope lock(&m_critical);
@@ -297,12 +301,12 @@ bool MediaClient::AndroidInitialize() {
   jobject jencoder_factory = nullptr;
   jobject jdecoder_factory = nullptr;
 
-  if (onGetAudioHardwareEncoderFactoryAndAdm_) {
+  if (onGetVideoHardwareEncoderFactory_) {
     void* env_r = nullptr;
     void* enf_r = nullptr;
     void* def_r = nullptr;
 
-    onGetAudioHardwareEncoderFactoryAndAdm_(&env_r, &enf_r, &def_r);
+    onGetVideoHardwareEncoderFactory_(&env_r, &enf_r, &def_r);
 
     env = static_cast<JNIEnv*>(env_r);
     jencoder_factory = static_cast<jobject>(enf_r);

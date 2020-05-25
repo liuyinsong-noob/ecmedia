@@ -323,21 +323,21 @@ typedef int(*ECLiveStreamVideoResolution)(int width, int height);
 typedef void(ECMedia_ConferenceParticipantCallback)(unsigned int arrOfCSRCs[],
                                                     int count);
 
-#if defined(WEBRTC_ANDROID)
-typedef bool (*ECMedia_OnGetVideoHardwareEncoderFactory)(
-    void** env,
-    void** jencoder_factory,
-    void** jdecoder_factory);
-typedef bool (*ECMedia_OnGetAudioHardwareEncoderFactoryAndAdm)(
-    void** jencoder_factory,
-    void** jdecoder_factory,
-    void** adm);
-#endif
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
+#if defined(WEBRTC_ANDROID)
+typedef int (*ECMedia_OnGetVideoHardwareEncoderFactory)(
+    void** env,
+    void** jencoder_factory,
+    void** jdecoder_factory);
+typedef int (*ECMedia_OnGetAudioHardwareEncoderFactoryAndAdm)(
+    void** jencoder_factory,
+    void** jdecoder_factory,
+    void** adm);
+#endif
 
 #ifdef __cplusplus
 }
