@@ -1,7 +1,9 @@
 #include "video_renderer_impl.h"
 
 #include "win_d3d9_render.h"
+#include "win_gdi_render.h"
 #include "rtc_base/logging.h"
+#include "system_wrappers/include/clock.h"
 
 // TODO : STANDARD_RENDERING is platform relevant
 #define STANDARD_RENDERING kRenderWindows
@@ -40,7 +42,7 @@ VideoRenderImpl::VideoRenderImpl(void* windows,
       RTC_LOG(LS_INFO) << " new WinD3d9Render begins " << (long)this
                        << " hubin_render";
       _ptrRenderer = new WinD3d9Render(windows, render_mode, mirror);
-      RTC_LOG(LS_INFO) << " CreateVideoRenderer ends " << (long)this << " render:" << _ptrRenderer
+	  RTC_LOG(LS_INFO) << " CreateVideoRenderer ends " << (long)this << " render:" << _ptrRenderer
                        << " hubin_render";
       break;
     }
@@ -48,12 +50,14 @@ VideoRenderImpl::VideoRenderImpl(void* windows,
     default:
       break;
   }
-
+ 
   if (_ptrRenderer) {
     if (_ptrRenderer->Init() == -1) {
       delete _ptrRenderer;
       _ptrRenderer = nullptr;
        RTC_LOG(LS_ERROR) << __FUNCTION__ << " _ptrRenderer->Init() failed.";
+      _ptrRenderer = new WinGdiRender(windows, render_mode, mirror);
+       RTC_LOG(INFO) << "create gdi Renderer...";
       return;
     }
   }
@@ -77,13 +81,16 @@ VideoRenderImpl::~VideoRenderImpl() {
     VideoRenderType videoRenderType = _ptrRenderer->RenderType();
     switch (videoRenderType) {
       case kRenderWindows: {
-        WinD3d9Render* ptrRenderer =
+        //modify by ytx_wx begin...
+        /*WinD3d9Render* ptrRenderer =
             reinterpret_cast<WinD3d9Render*>(_ptrRenderer);
         _ptrRenderer = nullptr;
-        delete ptrRenderer;
-
+        delete ptrRenderer;*/
+        delete _ptrRenderer;
+        _ptrRenderer = nullptr;
+		//modify by ytx_wx end...
 		RTC_LOG(LS_INFO) << " ~VideoRenderImpl begins " << (long)this
-                         << "render " << ptrRenderer
+                         << "render " << _ptrRenderer
                          << " hubin_render";
         break;
       }
@@ -121,7 +128,6 @@ int VideoRenderImpl::UpdateVideoTrack(webrtc::VideoTrackInterface* track_to_rend
 	});
   return 0;
 }
-
 void VideoRenderImpl::OnFrame(const webrtc::VideoFrame& frame) {
   if (_ptrRenderer) {
     if (!_ptrRenderer->IsRunning())

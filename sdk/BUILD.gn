@@ -1730,6 +1730,8 @@ rtc_source_set("ecmedia_obj") {
       "ecmedia/win/video_render/i_video_render.h",
       "ecmedia/win/video_render/win_d3d9_render.h",
       "ecmedia/win/video_render/win_d3d9_render.cc",
+      "ecmedia/win/video_render/win_gdi_render.h",
+      "ecmedia/win/video_render/win_gdi_render.cc",
       "ecmedia/win/video_render/video_render_frames.cc",
       "ecmedia/win/video_render/video_render_frames.h",
       "ecmedia/win/video_render/video_renderer_impl.cc",
