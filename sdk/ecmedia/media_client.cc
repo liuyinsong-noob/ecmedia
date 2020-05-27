@@ -2041,16 +2041,15 @@ bool MediaClient::SetRemoteVideoRenderWindow(int channel_Id,
                                              void* view) {
   API_LOG(INFO) << "channel_id: " << channel_Id << ", video_window: " << view;
   EC_CHECK_VALUE((channel_Id >= 0), false);
-#if defined WEBRTC_WIN || defined(WEBRTC_IOS)
+#if defined WEBRTC_WIN
   EC_CHECK_VALUE(view, false);
 
   if (!renderWndsManager_) {
     InitRenderWndsManager();
   }
-//  signaling_thread_->Invoke<void>(RTC_FROM_HERE, [this, channel_Id, view, render_mode] {
-//	  renderWndsManager_->AttachVideoRender(channel_Id, view, render_mode, false, worker_thread_);
-//  });
-  
+  signaling_thread_->Invoke<void>(RTC_FROM_HERE, [this, channel_Id, view, render_mode] {
+	  renderWndsManager_->AttachVideoRender(channel_Id, view, render_mode, false, worker_thread_);
+  });
 //#elif defined(WEBRTC_IOS)
 //  ObjCCallClient::GetInstance()->SetRemoteWindowView(channel_Id, view);
 #endif
