@@ -854,6 +854,11 @@ ECMEDIA_API bool ECMedia_start_render(int channelId, void* videoView);
 
 ECMEDIA_API bool ECMedia_stop_render(int channelId, void* videoView);
 
+#if defined(WEBRTC_IOS)
+ECMEDIA_API int ECMedia_get_orientation(int deviceid, ECMediaRotateCapturedFrame &tr);
+ECMEDIA_API int ECMedia_set_rotate_captured_frames(int deviceid, ECMediaRotateCapturedFrame tr);
+#endif
+
 #if defined(WEBRTC_ANDROID)
 ECMEDIA_API bool ECMedia_SaveLocalVideoTrack(int channelId, void* track);
 ECMEDIA_API void* ECMedia_GetLocalVideoTrackPtr(int channelId);

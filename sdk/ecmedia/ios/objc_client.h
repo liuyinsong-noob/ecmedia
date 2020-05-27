@@ -21,6 +21,7 @@
 #include "rtc_base/critical_section.h"
 #include "rtc_base/thread_checker.h"
 #include "sdk/ecmedia/render_manager.h"
+#include "sdk/ecmedia/sdk_common.h"
 
 
 class ObjCCallClient {
@@ -63,8 +64,12 @@ public:
     bool call_started_ RTC_GUARDED_BY(thread_checker_);
     
     bool  getRemoteView(int channelID);
-    
+  
+    int GetOrientation(int deviceid, ECMediaRotateCapturedFrame &tr);
+    int SetRotateCapturedFrames(int deviceid, ECMediaRotateCapturedFrame tr);
     webrtc::VideoCaptureModule::DeviceInfo* getVideoCaptureDeviceInfo();
+    
+private:
     
     rtc::scoped_refptr<webrtc::PeerConnectionFactoryInterface> pcf_
     RTC_GUARDED_BY(thread_checker_);
@@ -88,6 +93,7 @@ public:
     int targetHeight ;
     webrtc::VideoCaptureModule::DeviceInfo* _captureInfo;
     RenderManager* render_;
+    ECMediaRotateCapturedFrame tr_;
 };
 
 //}  // namespace webrtc_examples

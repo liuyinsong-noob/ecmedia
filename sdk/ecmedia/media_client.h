@@ -50,6 +50,7 @@
 #endif
 
 #include "media/base/adapted_video_track_source.h"
+#include "sdk_common.h"
 //#include "third_party/protobuf/src/google/protobuf/message_lite.h"
 
 // class myclass : public ::google::protobuf::MessageLite {
@@ -839,6 +840,11 @@ class MediaClient : public sigslot::has_slots<> {
                               void* track_to_render);
    bool StartRender(int channelId, void* videoView);
    bool StopRender(int channelId, void* videoView);
+  
+#if defined(WEBRTC_IOS)
+ int GetOrientation(int deviceid, ECMediaRotateCapturedFrame &tr);
+ int SetRotateCapturedFrames(int deviceid, ECMediaRotateCapturedFrame tr);
+#endif
 
 #if defined(WEBRTC_ANDROID)
   bool SaveLocalVideoTrack(int channelId, webrtc::VideoTrackInterface* track);

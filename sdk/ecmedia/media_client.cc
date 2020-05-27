@@ -2039,9 +2039,9 @@ bool MediaClient::SetRemoteVideoRenderWindow(int channel_Id,
   if (!renderWndsManager_) {
     InitRenderWndsManager();
   }
-  signaling_thread_->Invoke<void>(RTC_FROM_HERE, [this, channel_Id, view, render_mode] {
-	  renderWndsManager_->AttachVideoRender(channel_Id, view, render_mode, false, worker_thread_);
-  });
+//  signaling_thread_->Invoke<void>(RTC_FROM_HERE, [this, channel_Id, view, render_mode] {
+//	  renderWndsManager_->AttachVideoRender(channel_Id, view, render_mode, false, worker_thread_);
+//  });
   
 //#elif defined(WEBRTC_IOS)
 //  ObjCCallClient::GetInstance()->SetRemoteWindowView(channel_Id, view);
@@ -3577,8 +3577,16 @@ bool MediaClient::AttachVideoRender(int channelId, void* videoView,
                      << " end...";
        return true;
   }
-
-
+#if defined(WEBRTC_IOS)
+  int MediaClient::GetOrientation(int deviceid, ECMediaRotateCapturedFrame &tr){
+    ObjCCallClient::GetInstance()->GetOrientation(deviceid, tr);
+    return 0;
+  }
+  int MediaClient::SetRotateCapturedFrames(int deviceid, ECMediaRotateCapturedFrame tr){
+    ObjCCallClient::GetInstance()->SetRotateCapturedFrames(deviceid, tr);
+    return 0;
+  }
+#endif
 // android interface
 #if defined(WEBRTC_ANDROID)
 bool MediaClient::SaveLocalVideoTrack(int channelId,

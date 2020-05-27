@@ -38,6 +38,7 @@
 #import "sdk/objc/components/renderer/opengl/RTCEAGLVideoView.h"
 #import "sdk/objc/helpers/RTCCameraPreviewView.h"
 #import "sdk/objc/components/audio/RTCAudioSessionConfiguration.h"
+#import "helpers/RTCDispatcher+Private.h"
 
 
 RTCCameraVideoCapturer *capturer_;
@@ -339,6 +340,17 @@ bool ObjCCallClient::PreviewTrack(int window_id, webrtc::VideoTrackInterface* vi
     render_->UpdateOrAddVideoTrack(1,video_track);
   }
   return true;
+}
+int ObjCCallClient::GetOrientation(int deviceid, ECMediaRotateCapturedFrame &tr){
+  tr = tr_;
+  return 0;
+}
+int ObjCCallClient::SetRotateCapturedFrames(int deviceid, ECMediaRotateCapturedFrame tr){
+  tr_ = tr;
+  if(capturer_ == nullptr)
+    return -1;
+  [capturer_ switchCameraRotate:(RTCVideoRotation(tr))];
+  return 0;
 }
 //}  // namespace webrtc_examples
 

@@ -594,6 +594,16 @@ ECMEDIA_API int ECMedia_set_video_protect_mode(int mode) {
     
      return g_ECMedia->StopRender( channelId,  videoView);
   }
+
+#if defined(WEBRTC_IOS)
+ECMEDIA_API int ECMedia_get_orientation(int deviceid, ECMediaRotateCapturedFrame &tr){
+  return g_ECMedia->GetOrientation(deviceid, tr);
+}
+ECMEDIA_API int ECMedia_set_rotate_captured_frames(int deviceid, ECMediaRotateCapturedFrame tr){
+  return g_ECMedia->SetRotateCapturedFrames(deviceid, tr);
+}
+#endif
+
 #if defined(WEBRTC_ANDROID)
 ECMEDIA_API bool ECMedia_SaveLocalVideoTrack(int channelId, void* track) {
 

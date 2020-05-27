@@ -51,6 +51,9 @@ NS_EXTENSION_UNAVAILABLE_IOS("Camera not available in app extensions.")
 // Stops the capture session asynchronously.
 - (void)stopCapture;
 
+//ytx add by yukening //ui control camrea Rotate
+- (void)switchCameraRotate:(RTCVideoRotation)camrearotate;
+
 @end
 
 NS_ASSUME_NONNULL_END

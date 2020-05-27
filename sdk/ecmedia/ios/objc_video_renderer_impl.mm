@@ -55,7 +55,6 @@ ObjCVideoRendererImpl::ObjCVideoRendererImpl( void* parent, int render_mode,
                                              rtc::Thread* worker_thread, VideoRenderType type)
 : size_(CGSizeZero), track_(track),render_mode_(render_mode),
 parent_(parent), mirror_(mirror), type_(type) ,worker_thread_(worker_thread){
-  
   renderer_ = GetWindwoRenderPtr(parent);
 }
 ObjCVideoRendererImpl::~ObjCVideoRendererImpl(){
@@ -66,12 +65,22 @@ ObjCVideoRendererImpl::~ObjCVideoRendererImpl(){
      mirror_ = false;
      render_mode_ = 0;
      type_ = kRenderiOS;
-     if (videoview && [videoview superview]) {
-          [videoview removeFromSuperview];
-          videoview = nil;
+     if( ![[NSThread currentThread] isMainThread] ){
+         VideoRenderView* oldvideoview = videoview;
+         videoview = nil;
+        dispatch_async(dispatch_get_main_queue(), ^{
+          if (oldvideoview && [oldvideoview superview]) {
+            [oldvideoview removeFromSuperview];
+          }
+        });
+     }else{
+       if (videoview && [videoview superview]) {
+         [videoview removeFromSuperview];
+         videoview = nil;
+       }
+       if(videoview)
+             videoview = nil;
      }
-     if(videoview)
-       videoview = nil;
    }
 }
 
