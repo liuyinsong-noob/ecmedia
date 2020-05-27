@@ -73,7 +73,8 @@ const int64_t kNanosecondsPerSecond = 1000000000;
     NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
 #if TARGET_OS_IPHONE
     _orientation = UIDeviceOrientationPortrait;
-    _rotation = RTCVideoRotation_90;
+    //ytx modify by yukening ;UI control Rotatio; so this  RTCVideoRotation_90  to RTCVideoRotation_0;
+    _rotation = RTCVideoRotation_0;
     [center addObserver:self
                selector:@selector(deviceOrientationDidChange:)
                    name:UIDeviceOrientationDidChangeNotification
