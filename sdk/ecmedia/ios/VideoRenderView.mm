@@ -106,6 +106,7 @@
 }
 
 - (void)layoutSubviews {
+    [super layoutSubviews];
   CGRect bounds = self.bounds;
   if (_remoteVideoSize.width > 0 && _remoteVideoSize.height > 0) {
     // Aspect fill remote video into bounds.

@@ -107,6 +107,7 @@ id<RTCVideoRenderer> ObjCVideoRendererImpl::GetWindwoRenderPtr(void* remoteView)
     videoview.frame = CGRectMake(0, 0, parentView.frame.size.width, parentView.frame.size.height);
   
     videoview.parentView = parentView;
+    videoview.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     videoview.contentMode = parentView.contentMode;
     if(mirror_){
       CGAffineTransform transform = CGAffineTransformIdentity;
