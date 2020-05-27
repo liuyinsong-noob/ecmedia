@@ -964,14 +964,17 @@ if (config.isSimulcast) {
                            ssrcsSimLocal)); 
   }
 
-  bOk = worker_thread_->Invoke<bool>(RTC_FROM_HERE, [&] {
-    return video_channel_->media_channel()->SetSendParameters(
-        vidoe_send_params);
-  });
 
-  bOk = worker_thread_->Invoke<bool>(RTC_FROM_HERE, [&] {
-    return video_channel_->media_channel()->AddSendStream(video_stream_params);
-  });
+if (!config.isRecvOnly) {
+	bOk = worker_thread_->Invoke<bool>(RTC_FROM_HERE, [&] {
+		return video_channel_->media_channel()->SetSendParameters(
+			vidoe_send_params);
+	});
+
+	bOk = worker_thread_->Invoke<bool>(RTC_FROM_HERE, [&] {
+		return video_channel_->media_channel()->AddSendStream(video_stream_params);
+	});
+}
 
   cricket::StreamParams video_stream_params_recv;
   video_stream_params_recv.cname = "DcRqgGg4U0HjSqLy";
@@ -1028,8 +1031,12 @@ bool MediaClient::RequestRemoteSsrc(int channel_id, int flag, int32_t ssrc) {
   cricket::WebRtcVideoChannel* internal_video_channel =
       GetInternalVideoChannel(channel_id);
   bool bOk = false;
+  std::vector<uint32_t> ssrcsLocal;
+  GetMediaSsrc(true, channel_id, ssrcsLocal);
+  RTC_CHECK(ssrcsLocal.size() > 0);
+  uint32_t local_ssrc = ssrcsLocal.front();
   bOk = worker_thread_->Invoke<bool>(RTC_FROM_HERE, [&] {
-    return internal_video_channel->RequestRemoteSsrc(channel_id, flag, ssrc);
+    return internal_video_channel->RequestRemoteSsrc(channel_id, flag, ssrc, local_ssrc);
   });
   return bOk;
 }
@@ -1279,6 +1286,7 @@ bool MediaClient::SelectVideoSource(
     int channelid,
     const std::string& track_id,
     rtc::scoped_refptr<webrtc::VideoTrackInterface> video_track) {
+
   API_LOG(INFO) << "channelid: " << channelid << ", track_id: " << track_id
                 << ", video_track: " << video_track;
   bool bResult = false;
@@ -1826,7 +1834,7 @@ bool MediaClient::CreateTransportController(bool disable_encryp) {
  void MediaClient::OnSentPacket(const rtc::SentPacket& sent_packet) {
     // RTC_LOG(INFO) << __FUNCTION__ << "() packet number:" <<
      // sent_packet.packet_id;
-  RTC_DCHECK_RUN_ON(worker_thread_);
+  RTC_DCHECK_RUN_ON(network_thread_);  // ytx ---ylr 
   EC_CHECK_VALUE(call_, void());
 
   call_->OnSentPacket(sent_packet);
@@ -2533,6 +2541,9 @@ bool MediaClient::ParseVideoCodecSetting(const char* videoCodecSettings,
         }
 		if (rtc::GetBoolFromJsonObject(settings, "isSimulcast", &enable)) {
           config->isSimulcast = enable;
+        }
+		if (rtc::GetBoolFromJsonObject(settings, "recvonly", &enable)) {
+          config->isRecvOnly = enable;
         }
         if (rtc::GetIntFromJsonObject(settings, "payloadType", &value)) {
           config->payloadType = value;

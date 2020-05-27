@@ -905,6 +905,8 @@ int ModuleRtpRtcpImpl::SendSingleTMMBR(uint32_t bandwidth,
   tmmbr_ssrc = ssrc;
   tmmbr_remote_ssrc = remote_ssrc;
 
+  rtcp_sender_.SetSSRC(ssrc); // ---ylr
+
   rtcp_sender_.SetRemoteSSRC(tmmbr_remote_ssrc);
   rtcp_sender_.SetTargetBitrate(tmmbr_bandwidth * 1000);
   // rtcp_sender_.SendRTCP(GetFeedbackState(), kRtcpTmmbr);

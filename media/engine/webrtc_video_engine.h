@@ -158,7 +158,7 @@ class WebRtcVideoChannel : public VideoMediaChannel, public webrtc::Transport {
                     webrtc::MediaTransportInterface* media_transport) override;
   
   //ytx_add
-  bool RequestRemoteSsrc(const int channelId, int flag,int32_t ssrc) ;
+  bool RequestRemoteSsrc(const int channelId, int flag,int32_t ssrc, uint32_t local_ssrc) ;
 
   //ytx_wx add
   bool GetVideoStreamStats(bool isSendStream,VideoMediaInfo* info);
@@ -436,7 +436,9 @@ class WebRtcVideoChannel : public VideoMediaChannel, public webrtc::Transport {
 
     void SetRequestKeyframeCallback(const int channelId,
                                OnRequestKeyFrameCallback cb);
-    void RequestRemoteSsrc(int flag,int32_t ssrc);
+
+
+    void RequestRemoteSsrc(int flag,int32_t ssrc, uint32_t local_ssrc);
 
     private :
     void RecreateWebRtcVideoStream();

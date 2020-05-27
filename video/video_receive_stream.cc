@@ -749,9 +749,9 @@ void VideoReceiveStream::SetRequestKeyFramCallback(
   request_key_frame_callback_ = cb;
 }
 //ytx_begin 
-void VideoReceiveStream::RequestRemoteSsrc(int flag,int32_t ssrc) {
+void VideoReceiveStream::RequestRemoteSsrc(int flag,int32_t ssrc, uint32_t local_ssrc) {
   uint32_t bandwidth = flag;
-  uint32_t localssrc = 0;
+  uint32_t localssrc = local_ssrc;
 #ifdef SIMULCAST_REQUEST_SMALL_RESOLUTION
   uint32_t origin_ssrc = (uint32_t)ssrc;
   uint8_t origin_resolution_index = origin_ssrc & 0x0f;
