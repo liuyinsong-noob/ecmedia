@@ -36,14 +36,14 @@
 - (instancetype)initWithFrame:(CGRect)frame {
   if (self = [super initWithFrame:frame]) {
 
-//#if defined(RTC_SUPPORTS_METAL)
+#if defined(RTC_SUPPORTS_METAL)
       _remoteVideoView = [[RTCMTLVideoView alloc] initWithFrame:CGRectZero];
   //   _remoteVideoView =[[RTCEAGLVideoView alloc] initWithFrame:CGRectZero];
-//#else
-   // RTCEAGLVideoView *remoteView = [[RTCEAGLVideoView alloc] initWithFrame:CGRectZero];
-    //remoteView.delegate = self;
-    //_remoteVideoView = remoteView;
-//#endif
+#else
+    RTCEAGLVideoView *remoteView = [[RTCEAGLVideoView alloc] initWithFrame:CGRectZero];
+    remoteView.delegate = self;
+    _remoteVideoView = remoteView;
+#endif
 
    // _remoteVideoView  = _videoContentMode;
     [self addSubview:_remoteVideoView];

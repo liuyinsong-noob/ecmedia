@@ -34,10 +34,12 @@ static NSString *const shaderSource = MTL_STRINGIFY(
       float2 texcoord;
     } Varyings;
 
-    vertex Varyings vertexPassthrough(device Vertex * verticies[[buffer(0)]],
+     //ytx modify by yukening; support new ios system; frome device to constant
+    vertex Varyings vertexPassthrough(constant Vertex *verticies[[buffer(0)]],
                                       unsigned int vid[[vertex_id]]) {
       Varyings out;
-      device Vertex &v = verticies[vid];
+       //ytx modify by yukening; support new ios system; frome device to constant
+      constant Vertex &v = verticies[vid];
       out.position = float4(float2(v.position), 0.0, 1.0);
       out.texcoord = v.texcoord;
       return out;

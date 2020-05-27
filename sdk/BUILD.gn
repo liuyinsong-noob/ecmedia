@@ -1722,6 +1722,9 @@ rtc_source_set("ecmedia_obj") {
         "ecmedia/ios/objc_video_renderer_impl.mm",
         "ecmedia/ios/objc_video_renderer_impl.h",
         ]
+        configs += [
+                "..:common_objc",
+              ]
         include_dirs = ["objc","objc/base", "objc/Framework/Headers","ecmedia/win",]
     }
     if (is_win) {
