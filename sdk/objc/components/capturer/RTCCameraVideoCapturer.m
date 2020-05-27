@@ -506,36 +506,22 @@ const int64_t kNanosecondsPerSecond = 1000000000;
   NSAssert([RTCDispatcher isOnQueueForType:RTCDispatcherTypeCaptureSession],
            @"updateOrientation must be called on the capture queue.");
 #if TARGET_OS_IPHONE
-  _orientation = [UIDevice currentDevice].orientation;
+ // _orientation = [UIDevice currentDevice].orientation;
 #endif
 }
 
 //ytx add by yukening //ui control camrea Rotate
 - (void)switchCameraRotate:(RTCVideoRotation)camrearotate {
-  
-  [RTCDispatcher dispatchAsyncOnType:RTCDispatcherTypeCaptureSession
-                               block:^{
-    switch (camrearotate) {
-      case RTCVideoRotation_0:
-        self->_orientation = UIDeviceOrientationPortrait;
-        break;
-      case RTCVideoRotation_90:
-        self->_orientation = UIDeviceOrientationLandscapeRight;
-        break;
-      case RTCVideoRotation_180:
-        self->_orientation = UIDeviceOrientationPortraitUpsideDown;
-        break;
-      case RTCVideoRotation_270:
-        self->_orientation = UIDeviceOrientationLandscapeLeft;
-        break;
-        // case ECMediaRotateCapturedFrame_auto:
-        // [capturer_ switchCameraRotate:UIDeviceOrientationPortrait];
-        //break;
-        
-      default:
-        self->_orientation = UIDeviceOrientationUnknown;
-        break;
-    }
-  }];
+//  self->_orientation = camrearotate;
+  if(camrearotate == RTCVideoRotation_0)
+    self->_orientation = UIDeviceOrientationPortrait;
+  else if(camrearotate == RTCVideoRotation_90)
+    self->_orientation = UIDeviceOrientationLandscapeRight;
+  else if(camrearotate == RTCVideoRotation_180)
+    self->_orientation = UIDeviceOrientationPortraitUpsideDown;
+  else if(camrearotate == RTCVideoRotation_270)
+    self->_orientation = UIDeviceOrientationLandscapeLeft;
+  else
+     self->_orientation = UIDeviceOrientationUnknown;
 }
 @end

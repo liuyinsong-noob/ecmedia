@@ -349,7 +349,24 @@ int ObjCCallClient::SetRotateCapturedFrames(int deviceid, ECMediaRotateCapturedF
   tr_ = tr;
   if(capturer_ == nullptr)
     return -1;
-  [capturer_ switchCameraRotate:(RTCVideoRotation(tr))];
+//  switch (tr) {
+//    case ECMediaRotateCapturedFrame_0:
+//     [capturer_ switchCameraRotate:(RTCVideoRotation)tr];
+//      break;
+//    case ECMediaRotateCapturedFrame_90:
+//         [capturer_ switchCameraRotate:(RTCVideoRotation)tr];
+//         break;
+//    case ECMediaRotateCapturedFrame_180:
+//             [capturer_ switchCameraRotate:(RTCVideoRotation)tr];
+//              break;
+//    case ECMediaRotateCapturedFrame_270:
+//            [capturer_ switchCameraRotate:(RTCVideoRotation)tr];
+//            break;
+//
+//    default:
+//      break;
+//  }
+  [capturer_ switchCameraRotate:(RTCVideoRotation)tr];
   return 0;
 }
 //}  // namespace webrtc_examples
