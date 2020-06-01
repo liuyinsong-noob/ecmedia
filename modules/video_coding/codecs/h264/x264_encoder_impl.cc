@@ -345,9 +345,16 @@ int32_t X264EncoderImpl::SetRateAllocation(
   for (size_t i = 0; i < encoders_.size(); ++i, --stream_idx) {
     // Update layer config.
     configurations_[i].target_bps = bitrate.GetSpatialLayerSum(stream_idx);
+	//ytx change target_bps for H264 
+	configurations_[i].target_bps = configurations_[i].target_bps *
+                                    configurations_[i].max_frame_rate /
+                                    new_framerate;
+    ;
     //if (configurations_[i].target_bps == 0)  // ---ylr
     //  configurations_[i].target_bps = 300000;
-    configurations_[i].max_frame_rate = static_cast<float>(new_framerate);
+
+	//ytx change for no use to transfer
+   // configurations_[i].max_frame_rate = static_cast<float>(new_framerate);
 
     if (configurations_[i].target_bps) {
       configurations_[i].SetStreamState(true);
@@ -629,8 +636,8 @@ x264_param_t X264EncoderImpl::CreateEncoderParams(size_t i) const {
     p_params->b_annexb = 1;
     p_params->rc.i_rc_method = X264_RC_ABR;
     p_params->rc.i_bitrate = codec_.simulcastStream[idx].targetBitrate;
-    p_params->rc.i_vbv_buffer_size = 20000;
-    //codec_.simulcastStream[idx].targetBitrate;  // 8000
+    p_params->rc.i_vbv_buffer_size =// 20000; -changed by Dr.Wei
+    codec_.simulcastStream[idx].targetBitrate;  // 8000
 	p_params->rc.i_vbv_max_bitrate = codec_.simulcastStream[idx].targetBitrate;
 
     //p_params->rc.b_filler = 1;
