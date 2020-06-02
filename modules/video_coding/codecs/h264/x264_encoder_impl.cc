@@ -637,7 +637,7 @@ x264_param_t X264EncoderImpl::CreateEncoderParams(size_t i) const {
     p_params->rc.i_rc_method = X264_RC_ABR;
     p_params->rc.i_bitrate = codec_.simulcastStream[idx].targetBitrate;
     p_params->rc.i_vbv_buffer_size =// 20000; -changed by Dr.Wei
-    codec_.simulcastStream[idx].targetBitrate;  // 8000
+    codec_.simulcastStream[idx].targetBitrate*2;  // 8000
 	p_params->rc.i_vbv_max_bitrate = codec_.simulcastStream[idx].targetBitrate;
 
     //p_params->rc.b_filler = 1;
