@@ -1086,15 +1086,14 @@ void RTCPReceiver::TriggerCallbacksFromRtcpPacket(
 
   if (transport_feedback_observer_ &&
       (packet_information.packet_type_flags & kRtcpTransportFeedback)) {
-// ytx_begin
-   /* uint32_t media_source_ssrc =
+    uint32_t media_source_ssrc =
         packet_information.transport_feedback->media_ssrc();
     if (media_source_ssrc == local_ssrc ||
-        registered_ssrcs.find(media_source_ssrc) != registered_ssrcs.end()) {*/
+        registered_ssrcs.find(media_source_ssrc) != registered_ssrcs.end()) {
       transport_feedback_observer_->OnTransportFeedback(
           *packet_information.transport_feedback);
-   // }
-// ytx_end
+    }
+
   }
 
   if (bitrate_allocation_observer_ &&
