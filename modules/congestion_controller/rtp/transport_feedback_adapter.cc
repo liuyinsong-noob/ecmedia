@@ -243,9 +243,11 @@ std::vector<PacketFeedback> TransportFeedbackAdapter::GetPacketFeedbackVector(
     }
 
     if (failed_lookups > 0) {
-      RTC_LOG(LS_WARNING) << "Failed to lookup send time for " << failed_lookups
+	// ytx_begin
+     /* RTC_LOG(LS_WARNING) << "Failed to lookup send time for " << failed_lookups
                           << " packet" << (failed_lookups > 1 ? "s" : "")
-                          << ". Send time history too small?";
+                          << ". Send time history too small?";*/
+	// ytx_end
     }
   }
   return packet_feedback_vector;

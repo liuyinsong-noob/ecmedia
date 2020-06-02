@@ -943,7 +943,10 @@ class MediaClient : public sigslot::has_slots<> {
 
  private:
   static MediaClient* m_pInstance;
-
+#if defined(WEBRTC_WIN)
+  int m_screenshareID;
+  bool m_screenshareStart;
+#endif
   static rtc::CriticalSection m_critical;
   bool isCreateCall;
   char* pAudioDevice;
@@ -951,7 +954,7 @@ class MediaClient : public sigslot::has_slots<> {
   //rtc::LogSink* ec_log_ = nullptr;
   //bool bfirst = true;
   static rtc::LogSink* ec_log_;
-  rtc::scoped_refptr<webrtc::AudioTrackInterface> audio_tracks_[5];
+  rtc::scoped_refptr<webrtc::AudioTrackInterface> audio_tracks_[100];
 
   std::vector<rtc::scoped_refptr<webrtc::VideoTrackInterface>> video_tracks_;
   
@@ -1044,7 +1047,7 @@ class MediaClient : public sigslot::has_slots<> {
 #if defined WEBRTC_WIN || defined WEBRTC_IOS
   std::unique_ptr<RenderManager> renderWndsManager_;
 #endif
-  std::unique_ptr<VideoRenderer> local_renderer_;
+ // std::unique_ptr<VideoRenderer> local_renderer_;
   bool m_bInitialized;
   bool m_bControll;
   uint32_t m_nConnected;

@@ -167,6 +167,8 @@ MediaClient::MediaClient() {
   m_MaxBandwidthBps_ = 0;
 #if defined(WEBRTC_WIN)
   m_MaxBitrateScreen_ = 0;
+  m_screenshareID = -1;
+  m_screenshareStart = false;
 #endif
   m_bInitialized = false;
   m_bControll = false;
@@ -364,6 +366,11 @@ void MediaClient::UnInitialize() {
          }
    }
    desktop_devices_.clear();*/
+#if defined(WEBRTC_WIN)
+  m_screenshareID = -1;
+  m_screenshareStart = false;
+#endif
+
   m_MaxBandwidthBps_ = 0;
   transceivers_.clear();
   mapChannelSsrcs_.clear();
@@ -391,7 +398,7 @@ void MediaClient::UnInitialize() {
       asum_ = 0;
     });
   }
-  // RTC_LOG(INFO) << __FUNCTION__  << "(),"<< " end... ";
+   RTC_LOG(INFO) << __FUNCTION__  << "(),"<< " end... ";
 }
 
 void MediaClient::DestroyTransport() {
@@ -687,8 +694,16 @@ void MediaClient::DestroyChannel(int channel_id, bool is_video) {
             RtpSenders_[t.first].get()->SetTrack(nullptr);
             
 #if defined(WEBRTC_WIN) || defined(WEBRTC_IOS)
-            renderWndsManager_->UpdateOrAddVideoTrack(t.first, nullptr);
-            renderWndsManager_->StopRender(t.first, nullptr);
+		InitRenderWndsManager();
+		signaling_thread_->Invoke<void>(RTC_FROM_HERE, [&] {
+			renderWndsManager_->UpdateOrAddVideoTrack(t.first, nullptr);
+			renderWndsManager_->StopRender(t.first, nullptr);
+		});
+       
+#endif
+#if defined(WEBRTC_IOS) 
+		renderWndsManager_->UpdateOrAddVideoTrack(t.first, nullptr);
+		renderWndsManager_->StopRender(t.first, nullptr);
 #endif
             RtpSenders_.erase(RtpSenders_.find(channel_id));
             TrackChannels_.erase(TrackChannels_.find(channel_id));
@@ -761,6 +776,7 @@ void MediaClient::DestroyChannel(int channel_id, bool is_video) {
       }
     });
   }
+  API_LOG(INFO) << "channel_id: " << channel_id << ", is_video: " << is_video<<" end";
 }
 
 bool MediaClient::CreateChannel(const std::string& settings,
@@ -875,6 +891,8 @@ bool MediaClient::CreateVideoChannel(const std::string& settings,
       return CreateCall(event_log_ptr_);
     });
     isCreateCall = false;
+	if (!bOk)
+		RTC_LOG(INFO) << "CreateCall fail !";
   }
 
   cricket::VideoChannel* video_channel_ = channel_manager_->CreateVideoChannel(
@@ -940,6 +958,7 @@ bool MediaClient::CreateVideoChannel(const std::string& settings,
 	  if (config.isScreenShare) {
 #if defined(WEBRTC_WIN)
 		  m_MaxBitrateScreen_ = GetMaxVideoBitrateKbps(config.width, config.height, config.isScreenShare) * 1000;
+		  m_screenshareID = channelId;
 #endif
 	  }
 	  else {
@@ -1000,7 +1019,8 @@ if (!config.isRecvOnly) {
     return video_channel_->media_channel()->SetRecvParameters(
         video_recv_params);
   });
-
+  if (!bOk)
+	  RTC_LOG(INFO) << "createvideochannel SetRecvParameters fail !";
   bOk = worker_thread_->Invoke<bool>(RTC_FROM_HERE, [&] {
     return video_channel_->media_channel()->AddRecvStream(
         video_stream_params_recv);
@@ -1021,6 +1041,7 @@ if (!config.isRecvOnly) {
   /*if (config.isScreenShare) {
     SetVideoDegradationMode(channelId,webrtc::DegradationPreference::MAINTAIN_RESOLUTION);
   }*/
+  RTC_LOG(INFO) << "createvideochannel bOK:" << bOk;
   return bOk;
 }
 
@@ -1453,9 +1474,13 @@ MediaClient::SelectVideoSourceOnFlight(int channelid,
                       transceiver->internal()->sender_internal()->SetTrack(
                           video_track)) {
                     // EC_CHECK_VALUE(renderWndsManager_, false);
-                    renderWndsManager_->UpdateOrAddVideoTrack(channelid,
-                                                              video_track);
-                    renderWndsManager_->StartRender(channelid, nullptr);
+					//  if (video_track) {
+					  InitRenderWndsManager();
+
+						  renderWndsManager_->UpdateOrAddVideoTrack(channelid,
+							  video_track);
+						  renderWndsManager_->StartRender(channelid, nullptr);
+					 // }
                   }
                 }
 
@@ -1476,7 +1501,7 @@ void MediaClient::DestroyLocalAudioTrack(
 
   cameraId_videoTrack_pairs_.clear();
   if (track) {
-    for (int i = 0; i < 5; i++) {
+    for (int i = 0; i < 100; i++) {
       if (track == audio_tracks_[i]) {
         audio_tracks_[i].release();
         audio_tracks_[i] = NULL;
@@ -1534,6 +1559,7 @@ void MediaClient::DestroyLocalVideoTrack(
 		  if (t.second == track) {
 			RtpSenders_[t.first].get()->SetTrack(nullptr);
 	#if defined(WEBRTC_WIN) || defined(WEBRTC_IOS)
+			InitRenderWndsManager();
 			renderWndsManager_->UpdateOrAddVideoTrack(t.first, nullptr);
 			renderWndsManager_->StopRender(t.first, nullptr);
 	#endif
@@ -1554,6 +1580,14 @@ void MediaClient::DestroyLocalVideoTrack(
 	  }
     });
   }
+    std::map<int, rtc::scoped_refptr<webrtc::VideoTrackInterface>>::iterator it= cameraId_videoTrack_pairs_.begin();
+	while (it != cameraId_videoTrack_pairs_.end()) {
+		if (it->second == track) {
+			cameraId_videoTrack_pairs_.erase(it);
+			break;
+		}
+		it++;
+	}
     while (track.release() != nullptr);
 
   RTC_LOG(INFO) << __FUNCTION__ << "(),"
@@ -1577,6 +1611,8 @@ int MediaClient::StartScreenShare(int type) {
 			  desktop_device_->Start();
 		  });
 	  }
+	  m_screenshareStart = true;
+	  StartChannel(m_screenshareID);
     return 0;
   } else {
     return -1;
@@ -1596,6 +1632,7 @@ int MediaClient::StopScreenShare(int type) {
 		  if (m_MaxBandwidthBps_ < 0)
 		  {
 			  m_MaxBandwidthBps_ = 0;
+			  RTC_LOG(INFO) << __FUNCTION__ << "() m_MaxBandwidthBps_ < 0";
 		  }
 		  else
 		  {
@@ -1603,11 +1640,13 @@ int MediaClient::StopScreenShare(int type) {
 			  bitrate_config_.max_bitrate_bps = m_MaxBandwidthBps_;
 			  call_->GetTransportControllerSend()->SetSdpBitrateParameters(
 				  bitrate_config_);
+			  RTC_LOG(INFO) << __FUNCTION__ << "() set bitrate :" << m_MaxBandwidthBps_;
 		  }
-
+		  desktop_device_->Stop();
 	  });
-	  desktop_device_->Stop();
+	
   }
+  RTC_LOG(INFO) << __FUNCTION__ << "()end";
 #endif
   return 0;
 }
@@ -1723,7 +1762,7 @@ MediaClient::CreateLocalVideoTrack(const std::string& track_params) {
 		 RTC_LOG(INFO) <<"andorid camer id"<< camera_index ;
 
 #endif
-
+		 cameraId_videoTrack_pairs_[camera_index] = video_track;
                       return video_track;
                     case VIDEO_SCREEN:
 #ifdef WEBRTC_WIN
@@ -1764,7 +1803,10 @@ bool MediaClient::StartChannel(int channel_id) {
   API_LOG(INFO) << "channel_id: " << channel_id;
   bool bOk = false;
   m_nConnected = SC_CONNECTED;
-
+#if defined(WEBRTC_WIN)
+  if (channel_id == m_screenshareID && !m_screenshareStart)
+	  return true;
+#endif
   bOk = worker_thread_->Invoke<bool>(RTC_FROM_HERE, [&] {
     if (mVideoChannels_[channel_id] &&
         mVideoChannels_[channel_id]->media_channel()) {
@@ -2022,6 +2064,7 @@ bool MediaClient::PreviewTrack(int window_id, void* video_track) {
 
 #if defined WEBRTC_WIN || defined(WEBRTC_IOS)
          EC_CHECK_VALUE(renderWndsManager_, false);
+		 InitRenderWndsManager();
          renderWndsManager_->UpdateOrAddVideoTrack(window_id, track);
          return renderWndsManager_->StartRender(window_id, nullptr);
 //#elif defined(WEBRTC_IOS)
@@ -4581,7 +4624,7 @@ bool ECDesktopCapture::remote() const {
   SetSourceID(2);*/
   return true;
 }
-
+static int num = 0;
 void ECDesktopCapture::OnCaptureResult(
     webrtc::DesktopCapturer::Result result,
     std::unique_ptr<webrtc::DesktopFrame> desktopframe) {
@@ -4600,7 +4643,11 @@ void ECDesktopCapture::OnCaptureResult(
                         (stride + 1) / 2, vplane, (stride + 1) / 2, 0, 0, width,
                         height, width, height, libyuv::kRotate0,
                         libyuv::FOURCC_ARGB);
-
+  num++;
+  if (num == 800) {
+	  RTC_LOG(INFO) << "ScreenShare continue!";
+	  num = 0;
+  }
   webrtc::VideoFrame frame =
       webrtc::VideoFrame(buffer, 0, 0, webrtc::kVideoRotation_0);
   this->OnFrame(frame);
@@ -4632,8 +4679,8 @@ void ECDesktopCapture::Stop() {
 void ECDesktopCapture::Start() {
   if (!isStartCapture) {
     isStartCapture = true;
+	
 	capturer_->Start(this);
-
     CaptureFrame();
   }
 }

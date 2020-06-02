@@ -755,12 +755,17 @@ ECMEDIA_API int ECMedia_get_window_list(int type, WindowShare** windowList) {
   webrtc::DesktopCapturer::SourceList sources;
   g_ECMedia->GetWindowsList(type, sources);
   int num = sources.size();
-  WindowShare* m_pWindowlist = new WindowShare[num];
+  WindowShare* m_pWindowlist = NULL;
+  m_pWindowlist = new WindowShare[num];
+  if (m_pWindowlist == NULL) {
+	  RTC_LOG(INFO) << "new operate fail!";
+	  return -1;
+  }
   WindowShare* temp = m_pWindowlist;
   for (auto it = sources.begin(); it != sources.end(); ++it) {
      (*temp).id = it->id;
      (*temp).type = 0;
-      memcpy((*temp).title, it->title.c_str(), kTitleLength);
+      memcpy_s((*temp).title, kTitleLength,it->title.c_str(), kTitleLength);
       temp++;
   }
   *windowList = m_pWindowlist;
