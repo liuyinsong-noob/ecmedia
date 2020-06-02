@@ -765,7 +765,9 @@ ECMEDIA_API int ECMedia_get_window_list(int type, WindowShare** windowList) {
   for (auto it = sources.begin(); it != sources.end(); ++it) {
      (*temp).id = it->id;
      (*temp).type = 0;
+#if defined(WEBRTC_WIN)
       memcpy_s((*temp).title, kTitleLength,it->title.c_str(), kTitleLength);
+#endif
       temp++;
   }
   *windowList = m_pWindowlist;
