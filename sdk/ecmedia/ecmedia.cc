@@ -784,13 +784,13 @@ ECMEDIA_API int ECMedia_release_screen_list(ScreenID** screen) {
   return 0;
 }
 
-ECMEDIA_API int ECMedia_start_screen_share(int type) {
-  return g_ECMedia->StartScreenShare(type);
+ECMEDIA_API int ECMedia_start_screen_share(int type,int channelId) {
+  return g_ECMedia->StartScreenShare(type,channelId);
   
 }
 
-ECMEDIA_API int ECMedia_stop_screen_share(int type) {
-  return g_ECMedia->StopScreenShare(type);
+ECMEDIA_API int ECMedia_stop_screen_share(int type,int channelId) {
+  return g_ECMedia->StopScreenShare(type,channelId);
 
 }
 ECMEDIA_API void ECMedia_get_audio_channel_volume_level(int audioid,

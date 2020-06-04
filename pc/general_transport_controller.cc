@@ -1155,8 +1155,16 @@ void GeneralTransportController::DestroyAllGeneralTransports_n() {
     config_.transport_observer->OnTransportChanged(jsep_transport.first,
                                                    nullptr, nullptr, nullptr);
     ReleaseUdpConnection(jsep_transport.first);
+	
   }
-
+  std::map<std::string, std::unique_ptr<cricket::GeneralTransport>>::iterator it = general_transports_by_name_.begin();
+  while (it != general_transports_by_name_.end())
+  {
+	  if (it->second) {
+		  it->second.release();
+	  }
+	  it++;
+  }
   general_transports_by_name_.clear();
   //ytx_add
   mid_to_transport_.clear();

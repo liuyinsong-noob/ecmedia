@@ -395,9 +395,9 @@ void MediaClient::UnInitialize() {
         it++;
       }
       video_tracks_.clear();
-      asum_ = 0;
     });
   }
+  asum_ = 0;
    RTC_LOG(INFO) << __FUNCTION__  << "(),"<< " end... ";
 }
 
@@ -1594,7 +1594,7 @@ void MediaClient::DestroyLocalVideoTrack(
                 << " end... ";
 }
 
-int MediaClient::StartScreenShare(int type) {
+int MediaClient::StartScreenShare(int type, int channelId) {
 #if defined(WEBRTC_WIN)
   RTC_LOG(INFO) << __FUNCTION__ << "()";
   desktop_device_ = desktop_devices_.find(type)->second;
@@ -1612,7 +1612,7 @@ int MediaClient::StartScreenShare(int type) {
 		  });
 	  }
 	  m_screenshareStart = true;
-	  StartChannel(m_screenshareID);
+	  StartChannel(channelId);
     return 0;
   } else {
     return -1;
@@ -1621,7 +1621,7 @@ int MediaClient::StartScreenShare(int type) {
   return 0;
 }
 
-int MediaClient::StopScreenShare(int type) {
+int MediaClient::StopScreenShare(int type,int channelId) {
 #if defined(WEBRTC_WIN)
   RTC_LOG(INFO) << __FUNCTION__ << "()";
   desktop_device_ = desktop_devices_.find(type)->second;
@@ -1644,7 +1644,7 @@ int MediaClient::StopScreenShare(int type) {
 		  }
 		  desktop_device_->Stop();
 	  });
-	
+	  StopChannel(channelId);
   }
   RTC_LOG(INFO) << __FUNCTION__ << "()end";
 #endif
@@ -4577,6 +4577,7 @@ namespace win_desk {
 ECDesktopCapture::ECDesktopCapture(
     std::unique_ptr<webrtc::DesktopCapturer> capturer)
     : capturer_(std::move(capturer)) {
+  capturer_->Start(this);
   isStartCapture = false;
 }
 
@@ -4680,7 +4681,6 @@ void ECDesktopCapture::Start() {
   if (!isStartCapture) {
     isStartCapture = true;
 	
-	capturer_->Start(this);
     CaptureFrame();
   }
 }
