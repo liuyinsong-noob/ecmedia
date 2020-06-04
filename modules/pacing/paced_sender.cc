@@ -147,8 +147,7 @@ void PacedSender::Resume() {
 void PacedSender::SetCongestionWindow(int64_t congestion_window_bytes) {
   rtc::CritScope cs(&critsect_);
   congestion_window_bytes_ = congestion_window_bytes;
-  //ytx_add
-  RTC_LOG(LS_INFO) << "ykn.SetCongestionWindow value is :" << congestion_window_bytes;
+ 
 }
 
 void PacedSender::UpdateOutstandingData(int64_t outstanding_bytes) {
@@ -161,7 +160,8 @@ bool PacedSender::Congested() const {
     return false;
   //ytx_add
   if(outstanding_bytes_ >= congestion_window_bytes_){
-    printf("yukening Congested...\n");
+	  RTC_LOG(LS_INFO) << "ykn. Congestiond  value is :" << congestion_window_bytes_
+		  <<"outstanding_bytes_ :" << outstanding_bytes_;
   }
   return outstanding_bytes_ >= congestion_window_bytes_;
 }

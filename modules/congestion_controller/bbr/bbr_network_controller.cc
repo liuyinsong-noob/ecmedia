@@ -295,7 +295,8 @@ NetworkControlUpdate BbrNetworkController::CreateRateUpdate(
     target_rate_msg.network_estimate.loss_rate_ratio = 0.02;
     loss_count += loss_rate_.GetLossRate();
   }
-  RTC_LOG(LS_INFO) << "real lost rate calculate by BBR = "
+  if(loss_rate_.GetLossRate() != 0 && target_rate_msg.network_estimate.loss_rate_ratio != 0)
+	  RTC_LOG(LS_INFO) << "real lost rate calculate by BBR = "
                    << loss_rate_.GetLossRate() << "  set to FEC lost   = "
                    << target_rate_msg.network_estimate.loss_rate_ratio;
   /*----------------------zjy changed --------------*/
