@@ -1115,7 +1115,11 @@ bool MediaClient::CreateVoiceChannel(const std::string& settings,
   SetAGC(true);
   audio_options_.experimental_agc = true;
   audio_options_.experimental_ns = true;
+#if defined(WEBRTC_ANDROID)
+  audio_options_.delay_agnostic_aec = false;
+#else
   audio_options_.delay_agnostic_aec = true;
+#endif
 
   webrtc::CryptoOptions option;
   bool bOk = false;
