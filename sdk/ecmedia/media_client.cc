@@ -714,6 +714,7 @@ void MediaClient::DestroyChannel(int channel_id, bool is_video) {
         while (it != mVideoChannels_.end()) {
           if (it->first == channel_id) {
 #if defined(WEBRTC_WIN) || defined(WEBRTC_IOS)
+            InitRenderWndsManager();
             signaling_thread_->Invoke<void>(RTC_FROM_HERE, [&] {
               RTC_DCHECK_RUN_ON(signaling_thread_);
               renderWndsManager_->RemoveAllVideoRender(channel_id);
