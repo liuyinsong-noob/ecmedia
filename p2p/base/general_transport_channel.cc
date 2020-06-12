@@ -2696,8 +2696,12 @@ void GeneralTransportChannel::OnReadPacket(GeneralConnection* connection,
 void GeneralTransportChannel::OnSentPacket(GeneralConnection* connection,
                   const rtc::SentPacket& sent_packet){
    RTC_DCHECK(network_thread_ == rtc::Thread::Current());
-  
-  SignalSentPacket(this,sent_packet);
+   if (network_thread_) {
+	   network_thread_->Invoke<void>(RTC_FROM_HERE,[this,sent_packet] {
+		   SignalSentPacket(this, sent_packet);
+	   });
+  }
+ 
 }
 //ytx_end
 

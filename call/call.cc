@@ -496,7 +496,20 @@ Call::Call(Clock* clock,
 
 Call::~Call() {
   RTC_DCHECK_RUN_ON(&configuration_sequence_checker_);
-
+  // ytx_begin
+  if (!video_send_streams_.empty())
+  {
+	  video_send_streams_.clear();  
+  }
+  if (!video_send_ssrcs_.empty())
+  {
+	  video_send_ssrcs_.clear();
+  }
+  if (!audio_send_ssrcs_.empty()) 
+  {
+	  audio_send_ssrcs_.clear();
+  }
+  //  ytx_end
   RTC_CHECK(audio_send_ssrcs_.empty());
   RTC_CHECK(video_send_ssrcs_.empty());
   RTC_CHECK(video_send_streams_.empty());
