@@ -3091,19 +3091,23 @@ bool MediaClient::SetAudioRecordingDevice(int index) {
 }
 
 bool MediaClient::SetAudioRecordingDeviceOnFlight(int i) {
-  rtc::scoped_refptr<webrtc::AudioState> audio_state =
-      channel_manager_->media_engine()->voice().GetAudioState();
-  if (audio_state->SetRecordingDevice(i) == -1)
-    return false;
-  return true;
+	return worker_thread_->Invoke<bool>(RTC_FROM_HERE, [this, i] {
+		rtc::scoped_refptr<webrtc::AudioState> audio_state =
+			channel_manager_->media_engine()->voice().GetAudioState();
+		if (audio_state->SetRecordingDevice(i) == -1)
+			return false;
+		return true;
+	});
 }
 
 bool MediaClient::SetAudioPlayoutDeviceOnFlight(int i) {
-  rtc::scoped_refptr<webrtc::AudioState> audio_state =
-      channel_manager_->media_engine()->voice().GetAudioState();
-  if (audio_state->SetPlayoutDevice(i) == -1)
-    return false;
-  return true;
+	return worker_thread_->Invoke<bool>(RTC_FROM_HERE, [this, i] {
+		rtc::scoped_refptr<webrtc::AudioState> audio_state =
+			channel_manager_->media_engine()->voice().GetAudioState();
+		if (audio_state->SetPlayoutDevice(i) == -1)
+			return false;
+		return true;
+	});
 }
 
 bool MediaClient::SetAudioPlayoutDevice(int index) {
