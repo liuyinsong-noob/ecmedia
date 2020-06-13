@@ -2246,19 +2246,31 @@ bool MediaClient::FilterVideoCodec(const VideoCodecConfig& config,
                     << " id: " << it->id;
       it++;
     } else if (name.compare(cname) == 0 && !find_codec) {
-      it->GetParam("packetization-mode", &out);
-      if (out == 1) {
-        RTC_LOG(INFO) << __FUNCTION__ << " found codec. name: " << it->name
-                      << " id: " << it->id
-                      << " payloadTYpe: " << config.payloadType;
-        it->id = config.payloadType;
-        find_codec = true;
-        it++;
-      } else {
-        RTC_LOG(INFO) << __FUNCTION__ << " deleted found. name: " << it->name
-                      << " id: " << it->id;
-        it = vec.erase(it);
-      }
+		if (name.compare("h264") == 0) {
+			it->GetParam("packetization-mode", &out);
+			if (out == 1) {
+				RTC_LOG(INFO) << __FUNCTION__ << " found codec. name: " << it->name
+					<< " id: " << it->id
+					<< " payloadTYpe: " << config.payloadType;
+				it->id = config.payloadType;
+				find_codec = true;
+				it++;
+			}
+			else {
+				RTC_LOG(INFO) << __FUNCTION__ << " deleted found. name: " << it->name
+					<< " id: " << it->id;
+				it = vec.erase(it);
+			}
+		}
+		else {
+			RTC_LOG(INFO) << __FUNCTION__ << " found codec. name: " << it->name
+				<< " id: " << it->id
+				<< " payloadTYpe: " << config.payloadType;
+			it->id = config.payloadType;
+			find_codec = true;
+			it++;
+		}
+     
     } else if (name.compare("rtx") == 0 &&
                /*it->id == config.rtxPayload*/ config.rtx == 1 && !found_rtx) {
       it->SetParam(cricket::kCodecParamAssociatedPayloadType,
