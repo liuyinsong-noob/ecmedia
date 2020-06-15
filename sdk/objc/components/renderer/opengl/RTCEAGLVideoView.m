@@ -167,6 +167,8 @@
 - (void)layoutSubviews {
   [super layoutSubviews];
   _glkView.frame = self.bounds;
+  self.contentMode = [self superview].contentMode;
+  _glkView.contentMode = self.contentMode;
 }
 
 #pragma mark - GLKViewDelegate

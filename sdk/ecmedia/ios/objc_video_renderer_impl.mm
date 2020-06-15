@@ -107,8 +107,10 @@ id<RTCVideoRenderer> ObjCVideoRendererImpl::GetWindwoRenderPtr(void* remoteView)
     videoview.frame = CGRectMake(0, 0, parentView.frame.size.width, parentView.frame.size.height);
   
     videoview.parentView = parentView;
-    videoview.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+    videoview.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleRightMargin |UIViewAutoresizingFlexibleTopMargin |
+      UIViewAutoresizingFlexibleBottomMargin;
     videoview.contentMode = parentView.contentMode;
+    
     if(mirror_){
       CGAffineTransform transform = CGAffineTransformIdentity;
       transform = CGAffineTransformScale(transform, -1, 1);
@@ -117,6 +119,7 @@ id<RTCVideoRenderer> ObjCVideoRendererImpl::GetWindwoRenderPtr(void* remoteView)
     render_mode_ == 0 ? videoview.videoContentMode = UIViewContentModeScaleAspectFill :
                         videoview.videoContentMode = UIViewContentModeScaleAspectFit;
     videoview.contentMode =videoview.videoContentMode;
+    parentView.contentMode = videoview.videoContentMode;
     if (videoview.superview != parentView) {
       [videoview removeFromSuperview];
       [parentView addSubview:videoview];

@@ -35,147 +35,109 @@
 
 - (instancetype)initWithFrame:(CGRect)frame {
   if (self = [super initWithFrame:frame]) {
-
-#if defined(RTC_SUPPORTS_METAL)
-      _remoteVideoView = [[RTCMTLVideoView alloc] initWithFrame:CGRectZero];
-  //   _remoteVideoView =[[RTCEAGLVideoView alloc] initWithFrame:CGRectZero];
+    
+#if defined(RTC_SUPPORTS_METAL) && false//somting error not support
+    _remoteVideoView = [[RTCMTLVideoView alloc] initWithFrame:CGRectZero];
+    //   _remoteVideoView =[[RTCEAGLVideoView alloc] initWithFrame:CGRectZero];
 #else
     RTCEAGLVideoView *remoteView = [[RTCEAGLVideoView alloc] initWithFrame:CGRectZero];
     remoteView.delegate = self;
     _remoteVideoView = remoteView;
 #endif
-
-   // _remoteVideoView  = _videoContentMode;
     [self addSubview:_remoteVideoView];
-
-   // _localVideoView = [[RTCCameraPreviewView alloc] initWithFrame:CGRectZero];
-    //[self addSubview:_localVideoView];
-
-   // _statsView = [[ARDStatsView alloc] initWithFrame:CGRectZero];
-    //_statsView.hidden = YES;
-    //[self addSubview:_statsView];
-
-//    _routeChangeButton = [UIButton buttonWithType:UIButtonTypeCustom];
-//    _routeChangeButton.backgroundColor = [UIColor whiteColor];
-//    _routeChangeButton.layer.cornerRadius = kButtonSize / 2;
-//    _routeChangeButton.layer.masksToBounds = YES;
-//    UIImage *image = [UIImage imageNamed:@"ic_surround_sound_black_24dp.png"];
-//    [_routeChangeButton setImage:image forState:UIControlStateNormal];
-//    [_routeChangeButton addTarget:self
-//                           action:@selector(onRouteChange:)
-//                 forControlEvents:UIControlEventTouchUpInside];
-//    [self addSubview:_routeChangeButton];
-
-    // TODO(tkchin): don't display this if we can't actually do camera switch.
-//    _cameraSwitchButton = [UIButton buttonWithType:UIButtonTypeCustom];
-//    _cameraSwitchButton.backgroundColor = [UIColor whiteColor];
-//    _cameraSwitchButton.layer.cornerRadius = kButtonSize / 2;
-//    _cameraSwitchButton.layer.masksToBounds = YES;
-//    image = [UIImage imageNamed:@"ic_switch_video_black_24dp.png"];
-//    [_cameraSwitchButton setImage:image forState:UIControlStateNormal];
-//    [_cameraSwitchButton addTarget:self
-//                      action:@selector(onCameraSwitch:)
-//            forControlEvents:UIControlEventTouchUpInside];
-//    [self addSubview:_cameraSwitchButton];
-
-//    _hangupButton = [UIButton buttonWithType:UIButtonTypeCustom];
-//    _hangupButton.backgroundColor = [UIColor redColor];
-//    _hangupButton.layer.cornerRadius = kButtonSize / 2;
-//    _hangupButton.layer.masksToBounds = YES;
-//    image = [UIImage imageForName:@"ic_call_end_black_24dp.png"
-//                            color:[UIColor whiteColor]];
-//    [_hangupButton setImage:image forState:UIControlStateNormal];
-//    [_hangupButton addTarget:self
-//                      action:@selector(onHangup:)
-//            forControlEvents:UIControlEventTouchUpInside];
-//    [self addSubview:_hangupButton];
-
-//    _statusLabel = [[UILabel alloc] initWithFrame:CGRectZero];
-//    _statusLabel.font = [UIFont fontWithName:@"Roboto" size:16];
-//    _statusLabel.textColor = [UIColor whiteColor];
-//    [self addSubview:_statusLabel];
-//
-//    UITapGestureRecognizer *tapRecognizer =
-//        [[UITapGestureRecognizer alloc]
-//            initWithTarget:self
-//                    action:@selector(didTripleTap:)];
-//    tapRecognizer.numberOfTapsRequired = 3;
-//    [self addGestureRecognizer:tapRecognizer];
   }
   return self;
 }
 
 - (void)layoutSubviews {
-    [super layoutSubviews];
+  [super layoutSubviews];
+  self.contentMode = _videoContentMode;
   CGRect bounds = self.bounds;
-  if (_remoteVideoSize.width > 0 && _remoteVideoSize.height > 0) {
-    // Aspect fill remote video into bounds.
-    CGRect remoteVideoFrame =
-        AVMakeRectWithAspectRatioInsideRect(_remoteVideoSize, bounds);
-    CGFloat scale = 1;
-    if (remoteVideoFrame.size.width > remoteVideoFrame.size.height) {
-      // Scale by height.
-      scale = bounds.size.height / remoteVideoFrame.size.height;
-    } else {
-      // Scale by width.
-      scale = bounds.size.width / remoteVideoFrame.size.width;
-    }
-    //CGFloat scale_widht = bounds.size.width / remoteVideoFrame.size.width;
-    //CGFloat scale_height = bounds.size.height / remoteVideoFrame.size.height;
-    //scale = scale_widht > scale_height ? scale_height : scale_widht;
-    remoteVideoFrame.size.height *= scale;
-    remoteVideoFrame.size.width *= scale;
-//    if(remoteVideoFrame.size.height >   bounds.size.height)
-//      remoteVideoFrame.size.height =  bounds.size.height;
-//    if(remoteVideoFrame.size.width > bounds.size.width)
-//      remoteVideoFrame.size.width =  bounds.size.width;
+  NSLog(@"yukening renderview  w: %d ,h: %d",(int)self.bounds.size.width, (int)self.bounds.size.height);
+  if (_remoteVideoSize.width > 0 && _remoteVideoSize.height > 0 ) {
+    
+    if(_videoContentMode == UIViewContentModeScaleAspectFill){
+//      // Aspect fill remote video into bounds.
+//      CGRect remoteVideoFrame =
+//      AVMakeRectWithAspectRatioInsideRect(_remoteVideoSize, bounds);
+//      CGFloat scale = 1;
+//      if (remoteVideoFrame.size.width > remoteVideoFrame.size.height) {
+//        // Scale by height.
+//        scale = bounds.size.height / remoteVideoFrame.size.height;
+//      } else {
+//        // Scale by width.
+//        scale = bounds.size.width / remoteVideoFrame.size.width;
+//      }
+//
+//      remoteVideoFrame.size.height *= scale;
+//      remoteVideoFrame.size.width *= scale;
+//
+//      _remoteVideoView.frame = remoteVideoFrame;
+//      _remoteVideoView.center =
+//      CGPointMake(CGRectGetMidX(bounds), CGRectGetMidY(bounds));
+      CGRect remoteVideoFrame = CGRectMake(0, 0, _remoteVideoSize.width,  _remoteVideoSize.height);
+      CGFloat scale = 1;
+      CGFloat scale_widht = 1;
+      CGFloat scale_height = 1;
+
+      if(remoteVideoFrame.size.width > bounds.size.width){
+             if(remoteVideoFrame.size.height > bounds.size.height){
+               scale_widht = bounds.size.width / remoteVideoFrame.size.width;
+               scale_height = bounds.size.height / remoteVideoFrame.size.height;
+               scale = scale_widht > scale_height ? scale_widht : scale_height;
+             }else{
+               scale = bounds.size.height / remoteVideoFrame.size.height;
+             }
+           }else{
+             if(remoteVideoFrame.size.height < bounds.size.height){
+               scale_widht = bounds.size.width / remoteVideoFrame.size.width;
+               scale_height = bounds.size.height / remoteVideoFrame.size.height;
+               scale = scale_widht > scale_height ? scale_widht : scale_height;
+             }else{
+               scale = bounds.size.width / remoteVideoFrame.size.width;
+             }
+           }
+           NSLog(@"remoteVideoFrame--- w %f,h:%f, scaw:%f,scah:%f self is :%@",remoteVideoFrame.size.width,remoteVideoFrame.size.height,scale_widht,scale_height,self );
+           remoteVideoFrame.size.height *= scale;
+           remoteVideoFrame.size.width *= scale;
+           _remoteVideoView.frame = remoteVideoFrame;
+                _remoteVideoView.center =
+                CGPointMake(CGRectGetMidX(bounds), CGRectGetMidY(bounds));
       
-    _remoteVideoView.frame = remoteVideoFrame;
-    _remoteVideoView.center =
-        CGPointMake(CGRectGetMidX(bounds), CGRectGetMidY(bounds));
+      
+    }else{
+      CGRect remoteVideoFrame =  CGRectMake(0, 0, _remoteVideoSize.width,  _remoteVideoSize.height);
+      CGFloat scale = 1;
+      CGFloat scale_widht = 1;
+      CGFloat scale_height = 1;
+      if(remoteVideoFrame.size.width > bounds.size.width){
+        if(remoteVideoFrame.size.height > bounds.size.height){
+          scale_widht = bounds.size.width / remoteVideoFrame.size.width;
+          scale_height = bounds.size.height / remoteVideoFrame.size.height;
+          scale = scale_widht > scale_height ? scale_height : scale_widht;
+        }else{
+          scale = bounds.size.width / remoteVideoFrame.size.width;
+        }
+      }else{
+        if(remoteVideoFrame.size.height < bounds.size.height){
+          scale_widht = bounds.size.width / remoteVideoFrame.size.width;
+          scale_height = bounds.size.height / remoteVideoFrame.size.height;
+          scale = scale_widht > scale_height ? scale_height : scale_widht;
+        }else{
+          scale = bounds.size.height / remoteVideoFrame.size.height;
+        }
+      }
+      NSLog(@"remoteVideoFrame w %f,h:%f, scaw:%f,scah:%f  self:%@",remoteVideoFrame.size.width,remoteVideoFrame.size.height,scale_widht,scale_height,self );
+      remoteVideoFrame.size.height *= scale;
+      remoteVideoFrame.size.width *= scale;
+      _remoteVideoView.frame = remoteVideoFrame;
+           _remoteVideoView.center =
+           CGPointMake(CGRectGetMidX(bounds), CGRectGetMidY(bounds));
+      
+    }
   } else {
     _remoteVideoView.frame = bounds;
   }
-
-//  // Aspect fit local video view into a square box.
-//  CGRect localVideoFrame =
-//      CGRectMake(0, 0, kLocalVideoViewSize, kLocalVideoViewSize);
-//  // Place the view in the bottom right.
-//  localVideoFrame.origin.x = CGRectGetMaxX(bounds)
-//      - localVideoFrame.size.width - kLocalVideoViewPadding;
-//  localVideoFrame.origin.y = CGRectGetMaxY(bounds)
-//      - localVideoFrame.size.height - kLocalVideoViewPadding;
-//  _localVideoView.frame = localVideoFrame;
-//
-//  // Place stats at the top.
-//  CGSize statsSize = [_statsView sizeThatFits:bounds.size];
-//  _statsView.frame = CGRectMake(CGRectGetMinX(bounds),
-//                                CGRectGetMinY(bounds) + kStatusBarHeight,
-//                                statsSize.width, statsSize.height);
-//
-//  // Place hangup button in the bottom left.
-//  _hangupButton.frame =
-//      CGRectMake(CGRectGetMinX(bounds) + kButtonPadding,
-//                 CGRectGetMaxY(bounds) - kButtonPadding -
-//                     kButtonSize,
-//                 kButtonSize,
-//                 kButtonSize);
-//
-//  // Place button to the right of hangup button.
-//  CGRect cameraSwitchFrame = _hangupButton.frame;
-//  cameraSwitchFrame.origin.x =
-//      CGRectGetMaxX(cameraSwitchFrame) + kButtonPadding;
-//  _cameraSwitchButton.frame = cameraSwitchFrame;
-//
-//  // Place route button to the right of camera button.
-//  CGRect routeChangeFrame = _cameraSwitchButton.frame;
-//  routeChangeFrame.origin.x =
-//      CGRectGetMaxX(routeChangeFrame) + kButtonPadding;
-//  _routeChangeButton.frame = routeChangeFrame;
-//
-//  [_statusLabel sizeToFit];
-//  _statusLabel.center =
-//      CGPointMake(CGRectGetMidX(bounds), CGRectGetMidY(bounds));
 }
 
 #pragma mark - RTCVideoViewDelegate
