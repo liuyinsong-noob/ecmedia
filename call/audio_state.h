@@ -65,6 +65,7 @@ class AudioState : public rtc::RefCountInterface {
   //ytx_begin
   virtual int32_t SetRecordingDevice(uint16_t index) = 0;
   virtual int32_t SetPlayoutDevice(uint16_t index) = 0;
+  virtual int32_t SetMicrophoneVolume(uint32_t volume)=0;
   //ytx_end
 
   virtual Stats GetAudioInputStats() const = 0;

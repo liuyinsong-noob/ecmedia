@@ -2970,25 +2970,39 @@ bool MediaClient::CreateAudioDevice() {
 }
 
 bool MediaClient::SetAudioRecordingVolume(uint32_t vol) {
-  /*rtc::scoped_refptr<webrtc::AudioDeviceModule> own_adm;
-  own_adm = webrtc::AudioDeviceModule::Create(
-      webrtc::AudioDeviceModule::kPlatformDefaultAudio);
-  assert(own_adm);
-  own_adm->Init();
- */
-  API_LOG(INFO) << "vol: " << vol;
-  CreateAudioDevice();
-  EC_CHECK_VALUE((own_adm != nullptr), false);
-  bool can_vol = false;
-  own_adm->MicrophoneVolumeIsAvailable(&can_vol);
-  if (can_vol)
-    own_adm->SetMicrophoneVolume(vol);
-  else {
-    return false;
-  }
-  own_adm->InitRecording();
+  
+  bool bOK = false;
+#if defined(WEBRTC_WIN)
+  RTC_DCHECK(channel_manager_);
+  bOK = worker_thread_->Invoke<bool>(RTC_FROM_HERE, [this, vol] {
+    rtc::scoped_refptr<webrtc::AudioState> audio_state =
+        channel_manager_->media_engine()->voice().GetAudioState();
+    if (audio_state->SetMicrophoneVolume(vol) == -1)
+      return false;
+    return true;
+  });
+#endif
+  return bOK;
 
-  return true;
+ // /*rtc::scoped_refptr<webrtc::AudioDeviceModule> own_adm;
+ // own_adm = webrtc::AudioDeviceModule::Create(
+ //     webrtc::AudioDeviceModule::kPlatformDefaultAudio);
+ // assert(own_adm);
+ // own_adm->Init();
+ //*/
+ // API_LOG(INFO) << "vol: " << vol;
+ // CreateAudioDevice();
+ // EC_CHECK_VALUE((own_adm != nullptr), false);
+ // bool can_vol = false;
+ // own_adm->MicrophoneVolumeIsAvailable(&can_vol);
+ // if (can_vol)
+ //   own_adm->SetMicrophoneVolume(vol);
+ // else {
+ //   return false;
+ // }
+ // own_adm->InitRecording();
+
+ // return true;
 }
 
 char* MediaClient::GetAudioDeviceList(int* length) {

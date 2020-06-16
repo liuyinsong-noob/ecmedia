@@ -180,6 +180,16 @@ int32_t AudioState::SetPlayoutDevice(uint16_t index) {
 
   return 0;
 }
+int32_t AudioState::SetMicrophoneVolume(uint32_t volume) {
+  RTC_LOG(INFO) << "SetMicrophoneVolume:" << volume;
+  RTC_DCHECK(thread_checker_.IsCurrent());
+  bool available = false;
+  config_.audio_device_module->MicrophoneVolumeIsAvailable(&available);
+  if(available){
+     return config_.audio_device_module->SetMicrophoneVolume(volume);
+  }
+  return -1;
+}
 //ytx_end
 
 AudioState::Stats AudioState::GetAudioInputStats() const {

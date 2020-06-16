@@ -44,6 +44,7 @@ class AudioState : public webrtc::AudioState {
   //ytx_begin
   int32_t SetRecordingDevice(uint16_t index) override;
   int32_t SetPlayoutDevice(uint16_t index) override;
+  int32_t SetMicrophoneVolume(uint32_t volume)override;
   //ytx_end
 
   Stats GetAudioInputStats() const override;
