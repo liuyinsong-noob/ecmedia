@@ -9,7 +9,7 @@
 #include "rtc_base/checks.h"
 #include "rtc_base/logging.h"
 #include "third_party/libyuv/include/libyuv/scale.h"
-
+#include "system_wrappers/include/field_trial.h"
 #include "rtc_base/time_utils.h"
 // before using x264-svc, must define macro RLCLOUD
 
@@ -653,7 +653,12 @@ x264_param_t X264EncoderImpl::CreateEncoderParams(size_t i) const {
       p_params->bScreenMode = true;
     } else {
       p_params->bScreenMode = false;
-      p_params->iTemporalLayers = 1;
+      if (field_trial::FindFullName("Test-For-X264-Time-SVC") == "3")
+        p_params->iTemporalLayers = 3;
+      else if (field_trial::FindFullName("Test-For-X264-Time-SVC") == "2")
+        p_params->iTemporalLayers = 2;
+      else
+        p_params->iTemporalLayers = 1;
 	}
     
 #endif

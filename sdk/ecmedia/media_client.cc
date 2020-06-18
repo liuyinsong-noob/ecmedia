@@ -105,6 +105,7 @@ void ReadMediaConfig(const char* filename) {
 
   fr.Read(buf, sizeof(buf) - 1);
   std::string ccmode, h264_encoder = "openh264";
+  std::string tid;
   Json::Reader reader;
   Json::Value config;
   if (!reader.parse(buf, config)) {
@@ -113,6 +114,7 @@ void ReadMediaConfig(const char* filename) {
 
   rtc::GetStringFromJsonObject(config, "Congestion-Control-Mode", &ccmode);
   rtc::GetStringFromJsonObject(config, "H264-Encoder", &h264_encoder);
+  rtc::GetStringFromJsonObject(config, "Test-For-X264-Time-SVC", &tid);
 
   static std::string trail_string;
   trail_string.append("EC-Congestion-Control-Mode");
@@ -126,6 +128,15 @@ void ReadMediaConfig(const char* filename) {
     trail_string.append("/openh264/");
   } else
     trail_string.append("/x264/");
+
+  trail_string.append("Test-For-X264-Time-SVC");
+  if (tid == "2") {
+    trail_string.append("/2/");
+  } else if ((tid == "3"))
+    trail_string.append("3");
+  else {
+    trail_string.append("/false/");
+  }
 
   webrtc::field_trial::InitFieldTrialsFromString(trail_string.c_str());
 }
