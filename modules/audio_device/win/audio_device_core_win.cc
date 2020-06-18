@@ -2167,7 +2167,7 @@ int32_t AudioDeviceWindowsCore::InitRecording() {
     return -1;
   }
 
-  SetMicrophoneVolume(200);//add by ytx_wx
+  SetMicrophoneVolume(220);//add by ytx_wx
 
   if (_builtInAecEnabled) {
     // The DMO will configure the capture device.

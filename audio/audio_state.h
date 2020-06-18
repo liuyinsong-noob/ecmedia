@@ -41,16 +41,11 @@ class AudioState : public webrtc::AudioState {
   void SetPlayout(bool enabled) override;
   void SetRecording(bool enabled) override;
 
-  //ytx_begin
-  int32_t SetRecordingDevice(uint16_t index) override;
-  int32_t SetPlayoutDevice(uint16_t index) override;
-  int32_t SetMicrophoneVolume(uint32_t volume)override;
-  //ytx_end
 
   Stats GetAudioInputStats() const override;
   void SetStereoChannelSwapping(bool enable) override;
 
-  AudioDeviceModule* audio_device_module() {
+  AudioDeviceModule* audio_device_module() override {
     RTC_DCHECK(config_.audio_device_module);
     return config_.audio_device_module.get();
   }

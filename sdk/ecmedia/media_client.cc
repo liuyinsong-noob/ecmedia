@@ -2969,41 +2969,7 @@ bool MediaClient::CreateAudioDevice() {
   return bOk;
 }
 
-bool MediaClient::SetAudioRecordingVolume(uint32_t vol) {
-  
-  bool bOK = false;
-#if defined(WEBRTC_WIN)
-  RTC_DCHECK(channel_manager_);
-  bOK = worker_thread_->Invoke<bool>(RTC_FROM_HERE, [this, vol] {
-    rtc::scoped_refptr<webrtc::AudioState> audio_state =
-        channel_manager_->media_engine()->voice().GetAudioState();
-    if (audio_state->SetMicrophoneVolume(vol) == -1)
-      return false;
-    return true;
-  });
-#endif
-  return bOK;
 
- // /*rtc::scoped_refptr<webrtc::AudioDeviceModule> own_adm;
- // own_adm = webrtc::AudioDeviceModule::Create(
- //     webrtc::AudioDeviceModule::kPlatformDefaultAudio);
- // assert(own_adm);
- // own_adm->Init();
- //*/
- // API_LOG(INFO) << "vol: " << vol;
- // CreateAudioDevice();
- // EC_CHECK_VALUE((own_adm != nullptr), false);
- // bool can_vol = false;
- // own_adm->MicrophoneVolumeIsAvailable(&can_vol);
- // if (can_vol)
- //   own_adm->SetMicrophoneVolume(vol);
- // else {
- //   return false;
- // }
- // own_adm->InitRecording();
-
- // return true;
-}
 
 char* MediaClient::GetAudioDeviceList(int* length) {
   API_LOG(INFO) << "len: " << *length;
@@ -3083,81 +3049,66 @@ char* MediaClient::GetAudioDeviceList(int* length) {
   return NULL;
 }
 
-bool MediaClient::SetAudioRecordingDevice(int index) {
-  API_LOG(INFO) << "index: " << index;
-  CreateAudioDevice();
-  EC_CHECK_VALUE((own_adm != nullptr), false);
-  int num_devices = own_adm->RecordingDevices();
-  if (audio_layer_ == webrtc::AudioDeviceModule::kWindowsCoreAudio2) {
-    num_devices += 2;
-  }
-  EC_CHECK_VALUE((num_devices != 0), false);
-  // Verify that all available recording devices can be set (not enabled yet).
-  for (int j = 0; j < num_devices; ++j) {
-    int ret = own_adm->SetRecordingDevice(j);
-    EC_CHECK_VALUE((ret != -1), false);
-  }
-#ifdef WEBRTC_WIN
-  // On Windows, verify the alternative method where the user can select device
-  // by role.
-/*  EC_CHECK_VALUE(
-      (own_adm->SetRecordingDevice(webrtc::AudioDeviceModule::kDefaultDevice)),
-      false);
-  EC_CHECK_VALUE((own_adm->SetRecordingDevice(
-                     webrtc::AudioDeviceModule::kDefaultCommunicationDevice)),
-                 false);*/
-#endif
-  if (!(own_adm->SetRecordingDevice(index))) {
-    own_adm->InitRecording();
-    return true;
-  }
+webrtc::AudioDeviceModule* MediaClient::GetCurrentAudioDeviceModule() const {
+  if (!channel_manager_)
+    return nullptr;
+  return worker_thread_->Invoke<webrtc::AudioDeviceModule*>(
+      RTC_FROM_HERE, [this] {
+        rtc::scoped_refptr<webrtc::AudioState> audio_state =
+            channel_manager_->media_engine()->voice().GetAudioState();
+        return audio_state->audio_device_module();
+      });
+}
 
-  else
-    return false;
+
+bool MediaClient::SetAudioRecordingVolume(uint32_t vol) {
+  return worker_thread_->Invoke<bool>(RTC_FROM_HERE, [this, vol] {
+    rtc::scoped_refptr<webrtc::AudioDeviceModule> audio_device_module =
+        GetCurrentAudioDeviceModule();
+    if (!audio_device_module)
+      return false;
+    if (audio_device_module->SetMicrophoneVolume(vol) == -1)
+      return false;
+    return true;
+  });
 }
 
 bool MediaClient::SetAudioRecordingDeviceOnFlight(int i) {
-	return worker_thread_->Invoke<bool>(RTC_FROM_HERE, [this, i] {
-		rtc::scoped_refptr<webrtc::AudioState> audio_state =
-			channel_manager_->media_engine()->voice().GetAudioState();
-		if (audio_state->SetRecordingDevice(i) == -1)
-			return false;
-		return true;
-	});
+  return worker_thread_->Invoke<bool>(RTC_FROM_HERE, [this, i] {
+    rtc::scoped_refptr<webrtc::AudioDeviceModule> audio_device_module =
+        GetCurrentAudioDeviceModule();
+    if (!audio_device_module)
+      return false;
+    if (audio_device_module->StopRecording() == -1)
+      return false;
+    if (audio_device_module->SetRecordingDevice(i) == -1)
+      return false;
+    if (audio_device_module->InitRecording() == -1)
+      return false;
+    if (audio_device_module->StartRecording() == -1)
+      return false;
+    return true;
+  });
 }
 
 bool MediaClient::SetAudioPlayoutDeviceOnFlight(int i) {
-	return worker_thread_->Invoke<bool>(RTC_FROM_HERE, [this, i] {
-		rtc::scoped_refptr<webrtc::AudioState> audio_state =
-			channel_manager_->media_engine()->voice().GetAudioState();
-		if (audio_state->SetPlayoutDevice(i) == -1)
-			return false;
-		return true;
-	});
-}
-
-bool MediaClient::SetAudioPlayoutDevice(int index) {
-#ifdef WEBRTC_WIN
-  API_LOG(INFO) << "index: " << index;
-  CreateAudioDevice();
-  EC_CHECK_VALUE((own_adm != nullptr), false);
-  int num_devices = own_adm->PlayoutDevices();
-  EC_CHECK_VALUE((num_devices != 0), false);
-  // Verify that all available recording devices can be set (not enabled yet).
-  for (int j = 0; j < num_devices; ++j) {
-    int ret = own_adm->SetPlayoutDevice(j);
-    EC_CHECK_VALUE((ret != -1), false);
-  }
-
-  if (!(own_adm->SetPlayoutDevice(index))) {
-    own_adm->InitPlayout();
+  return worker_thread_->Invoke<bool>(RTC_FROM_HERE, [this, i] {
+    rtc::scoped_refptr<webrtc::AudioDeviceModule> audio_device_module =
+        GetCurrentAudioDeviceModule();
+    if (!audio_device_module)
+      return false;
+    if (audio_device_module->StopPlayout() == -1)
+      return false;
+    if (audio_device_module->SetPlayoutDevice(i) == -1)
+      return false;
+    if (audio_device_module->InitPlayout() == -1)
+      return false;
+    if (audio_device_module->StartPlayout() == -1)
+      return false;
     return true;
-  } else
-    return false;
-#else
-  return true;
-#endif
+  });
 }
+
 
 int MediaClient::GetCaptureDevice(int index,
                                   char* device_name,

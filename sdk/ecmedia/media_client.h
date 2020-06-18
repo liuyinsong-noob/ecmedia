@@ -754,24 +754,10 @@ class MediaClient : public sigslot::has_slots<> {
   /*****************************************************************************/
   char* GetAudioDeviceList(int* length);
 
-  /****************************************************************************/
-  /*** \BA\AF\CA\FD\C3\FB: \C9\E8\D6\C3¼\D2\F4\C9豸 ***/
-  /*** \B9\A6\C4\DC:   \B8\F9\BE\DD\CB\F7\D2\FDѡ\D4\F1\D0\E8Ҫʹ\D3õ\C4¼\D2\F4\C9豸 ***/
-  /*** \B7\B5\BB\D8ֵ: \C0\E0\D0\CD  bool        true  \B3ɹ\A6      false   ʧ\B0\DC ***/
-  /*** \BA\AF\CA\FD\B2\CE\CA\FD1: \C3\FB\B3\C6   index                   \C0\E0\D0\CD    int ***/
-  /*****************************************************************************/
-  bool SetAudioRecordingDevice(int index);
-
   bool SetAudioRecordingDeviceOnFlight(int index);
+
   bool SetAudioPlayoutDeviceOnFlight(int index);
 
-  /****************************************************************************/
-  /*** \BA\AF\CA\FD\C3\FB: \C9\E8\D6ò\A5\B7\C5\C9豸                                                 ***/
-  /*** \B9\A6\C4\DC:   \B8\F9\BE\DD\CB\F7\D2\FDѡ\D4\F1\D0\E8Ҫʹ\D3ò\A5\B7\C5\C9豸                                 ***/
-  /*** \B7\B5\BB\D8ֵ: \C0\E0\D0\CD  bool        true  \B3ɹ\A6      false   ʧ\B0\DC               ***/
-  /*** \BA\AF\CA\FD\B2\CE\CA\FD1: \C3\FB\B3\C6   index                   \C0\E0\D0\CD    int                ***/
-  /*****************************************************************************/
-  bool SetAudioPlayoutDevice(int index);
   ///////////////////////// zjy interface end//////////////////////////////////
   //#if defined(WEBRTC_WIN)
   int CreateDesktopCapture(int type);
@@ -815,12 +801,17 @@ class MediaClient : public sigslot::has_slots<> {
   void SetSendCodecAudio(cricket::AudioCodec* audio_codec);
   void SetReceiveCodecAudio(int peer_id, cricket::AudioCodec* audio_codec);
   // wx begin
+ private:
+  // get adm in use
+  webrtc::AudioDeviceModule* GetCurrentAudioDeviceModule() const;
+
+ public:
+
   int RegisterConferenceParticipantCallback(
       int channelid,
       ECMedia_ConferenceParticipantCallback* callback);
   int SetConferenceParticipantCallbackTimeInterVal(int channelid,
                                                    int timeInterVal);
-  //ytx_wx add
   int GetCallStats(char* statistics, int length);
   bool GetVideoStreamStats(char* jsonVideoStats, int length,int channel_id);
   bool GetVoiceStreamStats(char* jsonAudioStats,
@@ -1021,8 +1012,6 @@ class MediaClient : public sigslot::has_slots<> {
 
   rtc::scoped_refptr<webrtc::AudioDeviceModule> own_adm;  // zjy
 
-  webrtc::AudioDeviceModule::AudioLayer audio_layer_ =
-      webrtc::AudioDeviceModule::kPlatformDefaultAudio;  // zjy
   std::unique_ptr<webrtc::VideoCaptureModule::DeviceInfo> vcm_device_info_;
   typedef std::pair<std::string, VideoCapturer*> UniqueIdVideoCapturerPair;
 

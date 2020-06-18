@@ -426,7 +426,7 @@ ECMEDIA_API void* ECMedia_create_audio_device();
 /*** 函数名: 设置录音音量                                                 ***/
 /*** 功能:   设置录音设备录音音量                                         ***/
 /*** 返回值: 类型  bool        true  成功      false   失败               ***/
-/*** 函数参数1: 名称   vol                类型    uint32_t                ***/
+/*** 函数参数1: 名称   vol range(0~255)   类型    uint32_t                ***/
 /****************************************************************************/
 ECMEDIA_API bool ECMedia_set_audio_recording_volume(uint32_t vol);
 
