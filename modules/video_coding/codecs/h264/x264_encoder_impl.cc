@@ -12,7 +12,7 @@
 #include "system_wrappers/include/field_trial.h"
 #include "rtc_base/time_utils.h"
 // before using x264-svc, must define macro RLCLOUD
-#define SAVE_ENCODEDE_FILE
+//#define SAVE_ENCODEDE_FILE
 //#define RLCLOUD 1
 #define _RLCLOUD 1
 #ifdef _RLCLOUD
