@@ -12,7 +12,7 @@
 #include "system_wrappers/include/field_trial.h"
 #include "rtc_base/time_utils.h"
 // before using x264-svc, must define macro RLCLOUD
-
+#define SAVE_ENCODEDE_FILE
 //#define RLCLOUD 1
 #define _RLCLOUD 1
 #ifdef _RLCLOUD
@@ -219,18 +219,6 @@ int32_t X264EncoderImpl::InitEncode(const VideoCodec* inst,
 
   num_temporal_layers_ = codec_.H264()->numberOfTemporalLayers;
 
-#ifdef SAVE_ENCODEDE_FILE
-  for (int tid = 0; tid < num_temporal_layers_; tid++) {
-    std::string file_name("x264svc_t");
-    file_name += std::to_string(tid) + std::string(".264");
-    std::ofstream ofile(file_name, std::ios::binary | std::ios::out);
-    if (!ofile) {
-      RTC_LOG(LS_INFO) << "failed to open file: " << file_name;
-    } else
-      output_temporal_files_.push_back(std::move(ofile));
-  }
-
-#endif
 
   for (int i = 0, idx = number_of_streams - 1; i < number_of_streams;
        ++i, --idx) {
@@ -245,6 +233,7 @@ int32_t X264EncoderImpl::InitEncode(const VideoCodec* inst,
 	 
     x264_param_t x264_param = CreateEncoderParams(i);
     x264_t* x264_encoder = x264_encoder_open(&x264_param);
+	num_temporal_layers_=x264_param.iTemporalLayers;
     if (x264_encoder == nullptr) {
       // Failed to create encoder.
       RTC_LOG(LS_ERROR) << "Failed to create X264 encoder";
@@ -254,13 +243,25 @@ int32_t X264EncoderImpl::InitEncode(const VideoCodec* inst,
       return WEBRTC_VIDEO_CODEC_ERROR;
     }
 #ifdef SAVE_ENCODEDE_FILE
+     
+    for (int tid = 0; tid <num_temporal_layers_ ; tid++) {
     std::string file_name("x264svc_");
-    file_name += std::to_string(encoder_seq_) + " " + std::to_string(i) + std::string(".264");
+//ytx add
+//naming scheme: (number of encoder(realtime/screenshare)+simulcast+timeSVC)
+    file_name += std::to_string(encoder_seq_)+"_"+ std::to_string(i+1) +"_t"+std::to_string(tid)+ std::string(".264");
     std::ofstream ofile(file_name, std::ios::binary | std::ios::out);
     if (!ofile) {
       RTC_LOG(LS_INFO) << "failed to open file: " << file_name;
     } else
-      output_files_.push_back(std::move(ofile));
+      output_temporal_files_.push_back(std::move(ofile));
+  }
+ //   std::string file_name("x264svc_");
+  //  file_name += std::to_string(encoder_seq_) + " " + std::to_string(i) + std::string(".264");
+  //  std::ofstream ofile(file_name, std::ios::binary | std::ios::out);
+  //  if (!ofile) {
+  //    RTC_LOG(LS_INFO) << "failed to open file: " << file_name;
+  //  } else
+  //    output_files_.push_back(std::move(ofile));
 #endif
     RTC_DCHECK(x264_encoder);
     encoders_[i] = x264_encoder;
@@ -524,17 +525,17 @@ int32_t X264EncoderImpl::Encode(
     }
 
 #ifdef SAVE_ENCODEDE_FILE
-    if (output_files_[i]) {
-      for (int idx = 0; idx < num_nals; idx++) {
-        output_files_[i].write(
-            reinterpret_cast<char*>(pnals_out[idx].p_payload),
-            pnals_out[idx].i_payload);
-      }
-    }
+   // if (output_files_[i]) {
+   //   for (int idx = 0; idx < num_nals; idx++) {
+   //     output_files_[i].write(
+    //        reinterpret_cast<char*>(pnals_out[idx].p_payload),
+    //        pnals_out[idx].i_payload);
+    //  }
+  //  }
     if (temporal_id != -1) {
-      for (int tid = 0; tid < 4 - temporal_id; tid++) {
+      for (int tid = 0; tid < num_temporal_layers_ - temporal_id; tid++) {
         for (int idx = 0; idx < num_nals; idx++) {
-          output_temporal_files_[3 - tid].write(
+          output_temporal_files_[num_temporal_layers_-1 - tid].write(
               reinterpret_cast<char*>(pnals_out[idx].p_payload),
               pnals_out[idx].i_payload);
         }
@@ -663,6 +664,7 @@ x264_param_t X264EncoderImpl::CreateEncoderParams(size_t i) const {
     
 #endif
   }
+
 
   return param;
 }

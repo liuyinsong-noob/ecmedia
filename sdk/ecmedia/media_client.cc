@@ -133,7 +133,7 @@ void ReadMediaConfig(const char* filename) {
   if (tid == "2") {
     trail_string.append("/2/");
   } else if ((tid == "3"))
-    trail_string.append("3");
+    trail_string.append("/3/");
   else {
     trail_string.append("/false/");
   }

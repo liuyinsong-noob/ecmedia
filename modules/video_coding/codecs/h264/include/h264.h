@@ -22,7 +22,7 @@
 #include "rtc_base/system/rtc_export.h"
 
 #define WEBRTC_USE_X264
-//#define SAVE_ENCODEDE_FILE
+#define SAVE_ENCODEDE_FILE
 //#define SAVE_DECODING_FILE
 
 namespace webrtc {
