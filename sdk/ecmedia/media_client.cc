@@ -1145,7 +1145,15 @@ bool MediaClient::CreateVoiceChannel(const std::string& settings,
   if (!ParseAudioCodecSetting(settings.c_str(), &config)) {
     return false;
   }
-
+  if (isCreateCall) {
+	  bOk = worker_thread_->Invoke<bool>(RTC_FROM_HERE, [&] {
+		  EC_CHECK_VALUE(event_log_ptr_, false);
+		  return CreateCall(event_log_ptr_);
+	  });
+	  isCreateCall = false;
+	  if (!bOk)
+		  RTC_LOG(INFO) << "CreateVoiceChannel CreateCall fail !";
+  }
   rtp_transport = transport_controller_->GetRtpTransport(config.transportId);
   EC_CHECK_VALUE(rtp_transport, false);
   cricket::VoiceChannel* voice_channel_ = channel_manager_->CreateVoiceChannel(
