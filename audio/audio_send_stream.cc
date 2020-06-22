@@ -342,6 +342,10 @@ void AudioSendStream::Start() {
   sending_ = true;
   audio_state()->AddSendingStream(this, encoder_sample_rate_hz_,
                                   encoder_num_channels_);
+  // ytx_wx begin
+  //send audio keepalive packets && set default timeinternal 3s.
+  Set_Audio_Keepalive(true, 3, config_.send_codec_spec->payload_type);
+  //ytx_wx end
 }
 
 void AudioSendStream::Stop() {
@@ -821,5 +825,17 @@ void AudioSendStream::RegisterCngPayloadType(int payload_type,
                                              int clockrate_hz) {
   channel_send_->RegisterCngPayloadType(payload_type, clockrate_hz);
 }
+
+//ytx_wx begin
+int AudioSendStream::Set_Audio_Keepalive(bool enable,
+	int packetsend_time_internal,
+	int playload) {
+  rtp_rtcp_module_->Set_Audio_Keepalive(enable, packetsend_time_internal,
+                                        playload);
+
+  return 0;
+}
+//ytx_wx  end
+
 }  // namespace internal
 }  // namespace webrtc

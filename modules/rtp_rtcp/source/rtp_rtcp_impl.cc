@@ -141,8 +141,17 @@ int64_t ModuleRtpRtcpImpl::TimeUntilNextProcess() {
 void ModuleRtpRtcpImpl::Process() {
   const int64_t now = clock_->TimeInMilliseconds();
   next_process_time_ = now + kRtpRtcpMaxIdleTimeProcessMs;
-
+  
   if (rtp_sender_) {
+
+    // ytx_wx  begin...
+	  //for send audio keepalive packets
+	  if (rtp_sender_->RTPKeepalive()&&rtp_sender_->TimeToSendRTPKeepalive())
+	  {
+      rtp_sender_->SendRTPKeepalivePacket();
+	  }
+    // ytx_wx  end...
+
     if (now >= last_bitrate_process_time_ + kRtpRtcpBitrateProcessTimeMs) {
       rtp_sender_->ProcessBitrate();
       last_bitrate_process_time_ = now;
@@ -925,5 +934,16 @@ int ModuleRtpRtcpImpl::SendSingleTMMBR(uint32_t bandwidth,
 void ModuleRtpRtcpImpl::OnReceivedTMMBN() {
   isSendingTmmbr = false;
 }
+
+int ModuleRtpRtcpImpl::Set_Audio_Keepalive(bool enable,
+                                           int packetsend_time_internal,
+                                           int playload) {
+  if (enable) {
+    return rtp_sender_->EnableRTPKeepalive(playload, packetsend_time_internal);
+  } else {
+    return rtp_sender_->DisableRTPKeepalive();
+  }
+}
+
 
 }  // namespace webrtc

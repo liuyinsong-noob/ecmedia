@@ -49,6 +49,12 @@ class ModuleRtpRtcpImpl : public RtpRtcp, public RTCPReceiver::ModuleRtpRtcp {
   int SendSingleTMMBR(uint32_t bandwidth,uint32_t ssrc, uint32_t remote_ssrc) override;
   void OnReceivedTMMBN() override;
 
+ // ytx_wx add
+  // send audio keepalive packet
+  virtual int Set_Audio_Keepalive(bool enable,
+                                  int packetsend_time_internal,
+                                  int playload) override;
+
   // Returns the number of milliseconds until the module want a worker thread to
   // call Process.
   int64_t TimeUntilNextProcess() override;

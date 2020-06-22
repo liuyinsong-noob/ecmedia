@@ -102,6 +102,13 @@ class AudioSendStream final : public webrtc::AudioSendStream,
   size_t TestOnlyGetPerPacketOverheadBytes() const
       RTC_LOCKS_EXCLUDED(overhead_per_packet_lock_);
 
+
+  //ytx_wx add for send audio keepalive packet
+  int Set_Audio_Keepalive(bool enable,
+                          int packetsend_time_internal,
+                          int playload);
+  //ytx end
+
  private:
   class TimedTransport;
 

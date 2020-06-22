@@ -140,6 +140,13 @@ class RtpRtcp : public Module, public RtcpFeedbackSenderInterface {
   // Sender
   // **************************************************************************
 
+  //ytx_wx add
+  //send audio keepalive packet
+  virtual int Set_Audio_Keepalive(bool enable,
+                                  int packetsend_time_internal,
+                                  int playload) = 0;
+
+
   // Sets the maximum size of an RTP packet, including RTP headers.
   virtual void SetMaxRtpPacketSize(size_t size) = 0;
 

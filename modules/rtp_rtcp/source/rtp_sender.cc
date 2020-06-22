@@ -105,7 +105,13 @@ RTPSender::RTPSender(
     bool require_frame_encryption,
     bool extmap_allow_mixed,
     const WebRtcKeyValueConfig& field_trials)
-    : clock_(clock),
+    :  // ytx_wx begin
+      _keepAliveIsActive(false),
+      _keepAlivePayloadType(-1),
+      _lastSent(0),
+      _keepAliveDeltaTimeSend(1),
+      // ytx_wx end
+      clock_(clock),
       // TODO(holmer): Remove this conversion?
       clock_delta_ms_(clock_->TimeInMilliseconds() - rtc::TimeMillis()),
       random_(clock_->TimeInMicroseconds()),
@@ -672,7 +678,9 @@ bool RTPSender::SendToNetwork(std::unique_ptr<RtpPacketToSend> packet,
   int64_t now_ms = clock_->TimeInMilliseconds();
 
   uint32_t ssrc = packet->Ssrc();
-  if (paced_sender_) {
+  // if (paced_sender_) {// modify by ytx_wx keepalive packet not insert into pacer module;
+  if (paced_sender_ &&
+      packet->payload_size() > 0) {  
     uint16_t seq_no = packet->SequenceNumber();
     // Correct offset between implementations of millisecond time stamps in
     // TickTime and Clock.
@@ -1239,4 +1247,85 @@ void RTPSender::SetRtt(int64_t rtt_ms) {
   packet_history_.SetRtt(rtt_ms);
   flexfec_packet_history_.SetRtt(rtt_ms);
 }
+ //ytx_wx begin keepalive fun
+
+int32_t RTPSender::EnableRTPKeepalive(const int8_t unknownPayloadType,
+	const uint16_t deltaTransmitTimeMS) {
+
+  rtc::CritScope lock(&ytx_keepalive_critsect_);
+
+  RTC_LOG(INFO) << "EnableRTPKeepalive payloadType="<<unknownPayloadType<<" time="<< deltaTransmitTimeMS;
+	  
+  RTC_DCHECK_LE(unknownPayloadType, 0x7Fu);
+
+  _keepAliveIsActive = true;
+  _keepAlivePayloadType = unknownPayloadType;
+  _keepAliveDeltaTimeSend = deltaTransmitTimeMS * 1000;  
+
+  return 0;
+}
+
+int32_t RTPSender::DisableRTPKeepalive() {
+  rtc::CritScope lock(&ytx_keepalive_critsect_);
+  _keepAliveIsActive = false;
+  return 0;
+}
+
+int32_t RTPSender::GetRTPKeepaliveStatus(bool* enable,
+	int8_t* unknownPayloadType,
+	uint16_t* deltaTransmitTimeMS) const {
+  rtc::CritScope lock(&ytx_keepalive_critsect_);
+  if (enable) {
+    *enable = _keepAliveIsActive;
+  }
+  if (unknownPayloadType) {
+    *unknownPayloadType = _keepAlivePayloadType;
+  }
+  if (deltaTransmitTimeMS) {
+    *deltaTransmitTimeMS = _keepAliveDeltaTimeSend;
+  }
+  return 0;
+}
+
+bool RTPSender::RTPKeepalive() const {
+  rtc::CritScope lock(&ytx_keepalive_critsect_);
+  return _keepAliveIsActive;
+}
+
+bool RTPSender::TimeToSendRTPKeepalive() {
+  rtc::CritScope lock(&ytx_keepalive_critsect_);
+
+  bool timeToSend(false);
+
+  int64_t dT = clock_->TimeInMilliseconds() - _lastSent;
+  // sent 3 times alive packet continuously at the beginning
+  static int num_send_times = 0;
+  if (num_send_times < 3 || dT > _keepAliveDeltaTimeSend) {
+    timeToSend = true;
+    _lastSent = clock_->TimeInMilliseconds();
+    num_send_times++;
+  }
+  return timeToSend;
+}
+
+  // RFC summary:
+// - Send an RTP packet of 0 length;
+// - dynamic payload type has not been negotiated (not mapped to any media);
+// - sequence number is incremented by one for each packet;
+// - timestamp contains the same value a media packet would have at this time;
+// - marker bit is set to zero.
+
+int32_t RTPSender::SendRTPKeepalivePacket() {
+
+  rtc::CritScope lock(&ytx_keepalive_critsect_);
+
+  std::unique_ptr<RtpPacketToSend> packet = AllocatePacket();
+  packet->SetPayloadType(_keepAlivePayloadType);
+  packet->SetMarker(false);
+ // packet->SetTimestamp(clock_->TimeInMilliseconds());
+  return SendToNetwork(std::move(packet), kDontRetransmit,
+                       RtpPacketSender::kNormalPriority);
+}
+
+//ytx_wx end
 }  // namespace webrtc

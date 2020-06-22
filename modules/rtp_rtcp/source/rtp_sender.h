@@ -173,6 +173,33 @@ class RTPSender {
 
   void SetRtt(int64_t rtt_ms);
 
+
+
+  // ytx_wx begin
+  // add keepalive fun
+  int32_t EnableRTPKeepalive(const int8_t unknownPayloadType,
+                             const uint16_t deltaTransmitTimeMS);
+
+  int32_t GetRTPKeepaliveStatus(bool* enable,
+                                int8_t* unknownPayloadType,
+                                uint16_t* deltaTransmitTimeMS) const;
+
+  int32_t DisableRTPKeepalive();
+
+  bool RTPKeepalive() const;
+
+  bool TimeToSendRTPKeepalive();
+
+  int32_t SendRTPKeepalivePacket();
+
+ private:
+  bool _keepAliveIsActive RTC_GUARDED_BY(ytx_keepalive_critsect_);
+  uint8_t _keepAlivePayloadType RTC_GUARDED_BY(ytx_keepalive_critsect_);
+  uint64_t _lastSent RTC_GUARDED_BY(ytx_keepalive_critsect_);
+  uint32_t _keepAliveDeltaTimeSend RTC_GUARDED_BY(ytx_keepalive_critsect_);
+  rtc::CriticalSection ytx_keepalive_critsect_;
+  // ytx_wx end
+
  private:
   // Maps capture time in milliseconds to send-side delay in milliseconds.
   // Send-side delay is the difference between transmission time and capture
