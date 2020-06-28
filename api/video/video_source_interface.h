@@ -42,6 +42,8 @@ struct RTC_EXPORT VideoSinkWants {
   absl::optional<int> target_pixel_count;
   // Tells the source the maximum framerate the sink wants.
   int max_framerate_fps = std::numeric_limits<int>::max();
+  // ytx_add by dxf
+  bool fixed_resolution = false;  
 };
 
 template <typename VideoFrameT>

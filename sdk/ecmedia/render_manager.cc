@@ -85,10 +85,11 @@ RenderManager::~RenderManager() {
 }
 
 bool RenderManager::AttachVideoRender(int channelId,
-                                          void* videoView,
-                                          int render_mode,
-                                          int mirror_mode,
-                                          rtc::Thread* worker_thread) {
+                                      void* videoView,
+                                      int render_mode,
+                                      int mirror_mode,
+                                      rtc::Thread* worker_thread,
+                                      rtc::VideoSinkWants wants) {
   RTC_LOG(INFO) << __FUNCTION__ << "() "
                 << ", channelId: " << channelId << ", videoView: " << videoView
                 << ", render_mode: " << render_mode
@@ -115,7 +116,7 @@ bool RenderManager::AttachVideoRender(int channelId,
   }
   
    VideoRenderer* render = VideoRenderer::CreateVideoRenderer(
-      videoView, render_mode, mirror_mode, nullptr, worker_thread, kRenderWindows);
+      videoView, render_mode, mirror_mode, nullptr, worker_thread, kRenderWindows, wants);
   
   std::map<int, render_list>::iterator iter = map_video_renders_.find(channelId);
   if (iter == map_video_renders_.end()) {
@@ -189,7 +190,8 @@ void RenderManager::RemoveAllVideoRender(int channelId) {
 
 bool RenderManager::UpdateOrAddVideoTrack(
     int channelId,
-    webrtc::VideoTrackInterface* track_to_render) {
+    webrtc::VideoTrackInterface* track_to_render,
+    rtc::VideoSinkWants wants) {
   RTC_LOG(INFO) << __FUNCTION__ << "() "
                 << ", channelId: " << channelId << " track:" << track_to_render;
   std::map<int, render_list>::iterator it = map_video_renders_.find(channelId);
@@ -200,7 +202,7 @@ bool RenderManager::UpdateOrAddVideoTrack(
 
   std::list<VideoRenderer*>::iterator renderIter = it->second.begin();
   while (renderIter != it->second.end()) {
-    (*renderIter)->UpdateVideoTrack(track_to_render);
+    (*renderIter)->UpdateVideoTrack(track_to_render, wants);
     renderIter++;
   }
   return true;

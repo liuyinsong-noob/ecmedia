@@ -11,14 +11,16 @@ class VideoRenderImpl : public VideoRenderer {
 	              bool mirror,
                   webrtc::VideoTrackInterface* track_to_render,
                   rtc::Thread* worker_thread,
-                  VideoRenderType render_type);
+                  VideoRenderType render_type,
+                  rtc::VideoSinkWants wants);
 
   virtual ~VideoRenderImpl();
 
   int StartRender() override;
   int StopRender() override;
 
-  int UpdateVideoTrack(webrtc::VideoTrackInterface* track_to_render) override;
+  int UpdateVideoTrack(webrtc::VideoTrackInterface* track_to_render,
+                       rtc::VideoSinkWants wants) override;
 
   // implement rtc::VideoSinkInterface<webrtc::VideoFrame>
   void OnFrame(const webrtc::VideoFrame& frame) override;

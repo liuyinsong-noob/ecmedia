@@ -40,8 +40,16 @@ class VideoSourceBase : public VideoSourceInterface<webrtc::VideoFrame> {
 
   const std::vector<SinkPair>& sink_pairs() const { return sinks_; }
 
+  // ytx_add by dxf begin
+  const std::vector<SinkPair>& sink_no_scale_pairs() const {
+    return sinks_no_scale_;
+  }
+  // ytx_add end
+
  private:
   std::vector<SinkPair> sinks_;
+  // ytx_add by dxf
+  std::vector<SinkPair> sinks_no_scale_;
 };
 
 }  // namespace rtc

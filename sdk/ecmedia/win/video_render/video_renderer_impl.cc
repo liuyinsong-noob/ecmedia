@@ -14,7 +14,8 @@ VideoRenderer* VideoRenderer::CreateVideoRenderer(
 	bool mirror,
     webrtc::VideoTrackInterface* track_to_render,
     rtc::Thread* worker_thread,
-    VideoRenderType type) {
+    VideoRenderType type,
+    rtc::VideoSinkWants wants) {
   VideoRenderType render_type = type;
   if (render_type == kRenderDefault) {
     render_type = STANDARD_RENDERING;
@@ -24,7 +25,7 @@ VideoRenderer* VideoRenderer::CreateVideoRenderer(
                    << " hubin_render";
   return new VideoRenderImpl(windows, render_mode, mirror, track_to_render,
                              worker_thread,
-                             render_type);
+                             render_type, wants);
 }
 
 
@@ -33,7 +34,8 @@ VideoRenderImpl::VideoRenderImpl(void* windows,
 	                             bool mirror,
                                  webrtc::VideoTrackInterface* track_to_render,
                                  rtc::Thread* worker_thread,
-                                 VideoRenderType render_type)
+                                 VideoRenderType render_type,
+                                 rtc::VideoSinkWants wants)
     : worker_thread_(worker_thread),
       rendered_track_(track_to_render),
       video_window_(windows) {
@@ -64,7 +66,7 @@ VideoRenderImpl::VideoRenderImpl(void* windows,
   if (rendered_track_) {
     // note: crash here because of thread_check
     worker_thread_->Invoke<void>(RTC_FROM_HERE, [&] {
-      return rendered_track_->AddOrUpdateSink(this, rtc::VideoSinkWants());
+      return rendered_track_->AddOrUpdateSink(this, wants);
     });
   }
 }
@@ -115,7 +117,9 @@ int VideoRenderImpl::StopRender() {
 
   return 0;
 }
-int VideoRenderImpl::UpdateVideoTrack(webrtc::VideoTrackInterface* track_to_render) {
+int VideoRenderImpl::UpdateVideoTrack(
+    webrtc::VideoTrackInterface* track_to_render,
+    rtc::VideoSinkWants wants) {
 
 	worker_thread_->Invoke<void>(RTC_FROM_HERE, [&] {
     if (rendered_track_) {
@@ -123,7 +127,7 @@ int VideoRenderImpl::UpdateVideoTrack(webrtc::VideoTrackInterface* track_to_rend
     }
     rendered_track_ = track_to_render;
     if (rendered_track_) {
-      rendered_track_->AddOrUpdateSink(this, rtc::VideoSinkWants());
+      rendered_track_->AddOrUpdateSink(this, wants);
     }
 	});
   return 0;

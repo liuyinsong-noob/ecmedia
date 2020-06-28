@@ -47,6 +47,8 @@ class VideoBroadcaster : public VideoSourceBase,
   // may pass in frames without precise synchronization with changes
   // to the VideoSinkWants.
   void OnFrame(const webrtc::VideoFrame& frame) override;
+  // ytx_add by dxf
+  void OnFixedFrame(const webrtc::VideoFrame& frame) override;
 
   void OnDiscardedFrame() override;
 

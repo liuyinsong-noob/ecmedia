@@ -92,6 +92,19 @@ void VideoBroadcaster::OnFrame(const webrtc::VideoFrame& frame) {
   previous_frame_sent_to_all_sinks_ = !current_frame_was_discarded;
 }
 
+// ytx_add by dxf begin
+void VideoBroadcaster::OnFixedFrame(const webrtc::VideoFrame& frame) {
+  rtc::CritScope cs(&sinks_and_wants_lock_);
+  for (auto& sink_pair : sink_no_scale_pairs()) {
+    if (sink_pair.wants.fixed_resolution) {
+      sink_pair.sink->OnFrame(frame);
+      // RTC_LOG_T_F(LS_INFO) << " Width: " << frame.width()
+      //                     << " height: " << frame.height();
+    }
+  }
+}
+// ytx_add end
+
 void VideoBroadcaster::OnDiscardedFrame() {
   for (auto& sink_pair : sink_pairs()) {
     sink_pair.sink->OnDiscardedFrame();

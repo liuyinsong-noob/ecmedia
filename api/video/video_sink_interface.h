@@ -21,6 +21,8 @@ class VideoSinkInterface {
   virtual ~VideoSinkInterface() = default;
 
   virtual void OnFrame(const VideoFrameT& frame) = 0;
+  // ytx_add by dxf
+  virtual void OnFixedFrame(const VideoFrameT& frame) {}
 
   // Should be called by the source when it discards the frame due to rate
   // limiting.

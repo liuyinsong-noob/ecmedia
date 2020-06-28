@@ -55,15 +55,17 @@ class RenderManager{
   ~RenderManager();
   
   bool AttachVideoRender(int channelId,
-                      void* videoView,
-                      int render_mode,
-                      int mirror_mode,
-                      rtc::Thread* worker_thread);
+                         void* videoView,
+                         int render_mode,
+                         int mirror_mode,
+                         rtc::Thread* worker_thread,
+                         rtc::VideoSinkWants wants = rtc::VideoSinkWants());
   bool DetachVideoRender(int channelId, void* winRemote);
   void RemoveAllVideoRender(int channelId);
 
   bool UpdateOrAddVideoTrack(int channelId,
-                             webrtc::VideoTrackInterface* track_to_render);
+                             webrtc::VideoTrackInterface* track_to_render,
+                             rtc::VideoSinkWants wants = rtc::VideoSinkWants());
   bool StartRender(int channelId, void* videoView);
   bool StopRender(int channelId, void* videoView);
 

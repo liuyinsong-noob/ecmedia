@@ -34,6 +34,8 @@ void TestVideoCapturer::OnFrame(const VideoFrame& frame) {
     // Drop frame in order to respect frame rate constraint.
     return;
   }
+    
+  broadcaster_.OnFixedFrame(frame);
 
   if (out_height != frame.height() || out_width != frame.width()) {
     // Video adapter has requested a down-scale. Allocate a new buffer and
