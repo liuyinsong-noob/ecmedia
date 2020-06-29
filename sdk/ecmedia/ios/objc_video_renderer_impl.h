@@ -31,7 +31,7 @@ class ObjCVideoRendererImpl : public VideoRenderer {
   void OnFrame(const VideoFrame& nativeVideoFrame) override;
   int StartRender() override {return 0;}
   int StopRender() override {return 0;}
-  int UpdateVideoTrack(webrtc::VideoTrackInterface* track_to_render) override;
+  int UpdateVideoTrack(webrtc::VideoTrackInterface* track_to_render, rtc::VideoSinkWants wants) override;
   void* WindowPtr() override{return parent_;}
  
  private:

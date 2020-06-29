@@ -24,7 +24,8 @@ VideoRenderer* VideoRenderer::CreateVideoRenderer(
     bool mirror,
     webrtc::VideoTrackInterface* track_to_render,
     rtc::Thread* worker_thread,
-    VideoRenderType type) {
+    VideoRenderType type,
+    rtc::VideoSinkWants wants) {
   VideoRenderType render_type = type;
   if (render_type == kRenderDefault) {
     render_type = STANDARD_RENDERING;
@@ -128,7 +129,7 @@ id<RTCVideoRenderer> ObjCVideoRendererImpl::GetWindwoRenderPtr(void* remoteView)
   }
   return nullptr;
 }
-int ObjCVideoRendererImpl::UpdateVideoTrack(webrtc::VideoTrackInterface* track_to_render){
+int ObjCVideoRendererImpl::UpdateVideoTrack(webrtc::VideoTrackInterface* track_to_render, rtc::VideoSinkWants wants){
   if(!track_to_render)
     return 0;
   track_ = track_to_render;
