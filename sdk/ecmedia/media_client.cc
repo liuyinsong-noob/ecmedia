@@ -1335,11 +1335,22 @@ bool MediaClient::SelectVideoSource(
   API_LOG(INFO) << "channelid: " << channelid << ", track_id: " << track_id
                 << ", video_track: " << video_track;
   bool bResult = false;
+  if (channelid <= 1 && video_track == nullptr && track_id.compare("p2p") != 0) {
+	  return bResult;
+  }
   bResult = signaling_thread_->Invoke<bool>(RTC_FROM_HERE, [this, channelid,
                                                             track_id,
                                                             video_track] {
     RTC_DCHECK_RUN_ON(signaling_thread_);
     bool bOk = false;
+	if (track_id.compare("p2p") == 0) {
+		if (renderWndsManager_) {
+			renderWndsManager_->UpdateOrAddVideoTrack(
+				channelid+1, remote_tracks_.find(channelid)->second);
+			renderWndsManager_->StartRender(channelid+1, nullptr);
+			return false;
+		}
+	}
     if (RtpSenders_.find(channelid) != RtpSenders_.end()) {
       bOk = RtpSenders_[channelid].get()->SetTrack(video_track);
 
@@ -1456,6 +1467,7 @@ bool MediaClient::SelectVideoSource(
         }
       }
     }
+	
     return bOk;
   });
   if (bResult) {
