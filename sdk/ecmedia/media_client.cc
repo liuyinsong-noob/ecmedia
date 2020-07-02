@@ -1344,12 +1344,15 @@ bool MediaClient::SelectVideoSource(
     RTC_DCHECK_RUN_ON(signaling_thread_);
     bool bOk = false;
 	if (track_id.compare("p2p") == 0) {
+#if defined WEBRTC_WIN
 		if (renderWndsManager_) {
 			renderWndsManager_->UpdateOrAddVideoTrack(
 				channelid+1, remote_tracks_.find(channelid)->second);
 			renderWndsManager_->StartRender(channelid+1, nullptr);
 			return false;
 		}
+#endif
+		return true;
 	}
     if (RtpSenders_.find(channelid) != RtpSenders_.end()) {
       bOk = RtpSenders_[channelid].get()->SetTrack(video_track);
@@ -1818,7 +1821,6 @@ MediaClient::CreateLocalVideoTrack(const std::string& track_params) {
                       break;
                   }
                 });
-
     video_tracks_.push_back(video_track_);
     return video_track_;
   }
