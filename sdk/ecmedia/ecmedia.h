@@ -924,7 +924,9 @@ ECMEDIA_API void ECMedia_set_video_show_window_mode(int mode);
  * @param callback : callback @see ECMedia_ConferenceParticipantCallback
  * @return success return 0, eles return -1;
  */
-ECMEDIA_API int ECMedia_setECMedia_ConferenceParticipantCallback(int channelid,ECMedia_ConferenceParticipantCallback* callback);
+ECMEDIA_API int ECMedia_setECMedia_ConferenceParticipantCallback(
+    int channelid,
+    ECMedia_ConferenceParticipantCallback* callback);
 
 /**
  * @param channelid: channel id
@@ -933,9 +935,17 @@ ECMEDIA_API int ECMedia_setECMedia_ConferenceParticipantCallback(int channelid,E
  * @return success return 0, eles return -1;
  */
 ECMEDIA_API int ECMedia_setECMedia_ConferenceParticipantCallbackTimeInterVal(int channelid,int timeInterVal);
-//add by ytx_wx
+
+ECMEDIA_API int ECMedia_set_voice_energy_callback(
+    int channelid,
+    ECMedia_CSRCsCallback* callback);
+ECMEDIA_API bool ECMedia_get_local_audio_level(uint32_t* audio_level);
+
+// add by ytx_wx
 ECMEDIA_API int ECMedia_get_stats(char* statistics, int length);
-ECMEDIA_API bool ECMedia_get_StreamStats(char* statistics,int length,int channel_id);
+ECMEDIA_API bool ECMedia_get_StreamStats(char* statistics,
+                                         int length,
+                                         int channel_id);
 #ifdef __cplusplus
 }
 #endif

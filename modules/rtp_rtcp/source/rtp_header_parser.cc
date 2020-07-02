@@ -35,18 +35,17 @@ class RtpHeaderParserImpl : public RtpHeaderParser {
   bool DeregisterRtpHeaderExtension(RtpExtension extension) override;
 
    //ytx_begin by wx ÓïÒô¼¤Àø»Øµ÷º¯Êý
-   int setECMediaConferenceParticipantCallback(ECMedia_ConferenceParticipantCallback* cb) override;
-   void setECMediaConferenceParticipantCallbackTimeInterVal(int timeInterVal) override;
+   int setECMediaCSRCsCallback(ECMedia_CSRCsCallback* cb) override;
+
+ private:
+   void GetCSRCsLists(RTPHeader* header) const; 
    //ytx_end
  private:
   rtc::CriticalSection critical_section_;
   RtpHeaderExtensionMap rtp_header_extension_map_
       RTC_GUARDED_BY(critical_section_);
   //ytx_begin added by wx.
-  ECMedia_ConferenceParticipantCallback* _participantCallback;  
-  int callConferenceParticipantCallbacktimeInterVal_;
-  mutable uint8_t last_arr_csrc_count_;
-  mutable uint32_t last_arrOfCSRCs_[kRtpCsrcSize];
+  ECMedia_CSRCsCallback* _csrcsCallback;  
   mutable int64_t base_time;
   //ytx_end
 };
@@ -55,9 +54,7 @@ RtpHeaderParser* RtpHeaderParser::Create() {
   return new RtpHeaderParserImpl;
 }
 //ytx_begin by wx
-RtpHeaderParserImpl::RtpHeaderParserImpl():_participantCallback(nullptr),\
-callConferenceParticipantCallbacktimeInterVal_(3),last_arr_csrc_count_(0),base_time(0){
-  memset(last_arrOfCSRCs_, 0, sizeof(uint32_t) * kRtpCsrcSize);
+RtpHeaderParserImpl::RtpHeaderParserImpl():_csrcsCallback(nullptr),base_time(0){
 }
 //ytx_end
 
@@ -75,7 +72,21 @@ absl::optional<uint32_t> RtpHeaderParser::GetSsrc(const uint8_t* packet,
   }
   return absl::nullopt;
 }
-
+//ytx_wx begin...
+void RtpHeaderParserImpl::GetCSRCsLists(RTPHeader* header) const {
+  bool should_send = false;
+  {
+    int64_t current_time = Clock::GetRealTimeClock()->TimeInMilliseconds();
+    should_send = (current_time - base_time) >= 1000;
+    if (should_send) {
+      base_time = Clock::GetRealTimeClock()->TimeInMilliseconds();
+    }
+  }
+  if (_csrcsCallback && should_send) {
+    _csrcsCallback(header->arrOfCSRCs, header->numCSRCs);
+  }
+}
+// ytx_wx end...
 bool RtpHeaderParserImpl::Parse(const uint8_t* packet,
                                 size_t length,
                                 RTPHeader* header) const{
@@ -92,51 +103,9 @@ bool RtpHeaderParserImpl::Parse(const uint8_t* packet,
   if (!valid_rtpheader) {
     return false;
   }
-  /****  callback conference csrc array when csrc array changed, added by wx ******/
-  //ytx_begin
-  bool should_send = false;
-  {
-    int64_t current_time = Clock::GetRealTimeClock()->TimeInMilliseconds();
-    should_send = (current_time - base_time) >=
-                  callConferenceParticipantCallbacktimeInterVal_ * 1000;
-    if (should_send) {
-      base_time = Clock::GetRealTimeClock()->TimeInMilliseconds();
-    }
-  }
+  GetCSRCsLists(header);  //callback conference csrc array when csrc
+                          // array changed, added by wx 
  
-  if (_participantCallback && should_send) {
-    if (last_arr_csrc_count_ != header->numCSRCs) {
-      for (int i = 0; i < header->numCSRCs; i++) {
-        RTC_LOG(INFO) << "audio csrc count changed, participantCallback i:" << i
-                      << " ssrc:" << header->arrOfCSRCs[i];
-      }
-      _participantCallback(header->arrOfCSRCs, header->numCSRCs);
-      last_arr_csrc_count_ = header->numCSRCs;
-      for (int i = 0; i < header->numCSRCs; i++) {
-        last_arrOfCSRCs_[i] = header->arrOfCSRCs[i];
-      }
-    } else if (header->numCSRCs != 0) {
-      bool need_callback = true;
-      for (int i = 0; i < header->numCSRCs; i++) {
-        // callback only once, when csrc list change
-        if (header->arrOfCSRCs[i] != last_arrOfCSRCs_[i]) {
-          if (need_callback) {
-            for (int i = 0; i < header->numCSRCs; i++) {
-              RTC_LOG(INFO)<< "audio csrc ssrc changed, participantCallback i:" << i
-                  << " ssrc:" << header->arrOfCSRCs[i];
-            }
-            _participantCallback(header->arrOfCSRCs, header->numCSRCs);
-            need_callback = false;
-          }
-        }
-        // copy current csrs arr.
-        last_arrOfCSRCs_[i] = header->arrOfCSRCs[i];
-      }
-      // store last arr count.
-      last_arr_csrc_count_ = header->numCSRCs;
-    }
-  }
-  //ytx_end
   return true;
 }
 bool RtpHeaderParserImpl::RegisterRtpHeaderExtension(RtpExtension extension) {
@@ -161,28 +130,19 @@ bool RtpHeaderParserImpl::DeregisterRtpHeaderExtension(RTPExtensionType type) {
   return rtp_header_extension_map_.Deregister(type) == 0;
 }
 //ytx_begin by wx
-int RtpHeaderParserImpl::setECMediaConferenceParticipantCallback(ECMedia_ConferenceParticipantCallback* cb) {
+int RtpHeaderParserImpl::setECMediaCSRCsCallback(ECMedia_CSRCsCallback* cb) {
   if (cb == nullptr) {
-    RTC_LOG(LS_ERROR) << "setECMediaConferenceParticipantCallback is null.";
+    RTC_LOG(LS_ERROR) << "setECMediaCSRCsCallback is null.";
     return -1;
   }
 
-  if (_participantCallback == cb) {
-    RTC_LOG(LS_WARNING)<< "setECMediaConferenceParticipantCallback already have been set.";
+  if (_csrcsCallback == cb) {
+    RTC_LOG(LS_WARNING)<< "setECMediaCSRCsCallback already have been set.";
     return 0;
   }
 
-  _participantCallback =cb;
+  _csrcsCallback =cb;
   return 0;
-}
-
-void RtpHeaderParserImpl::setECMediaConferenceParticipantCallbackTimeInterVal(int timeInterVal) {
-  if (timeInterVal < 0) {
-    RTC_LOG(LS_ERROR)<< "setECMediaConferenceParticipantCallback timeInterVal is 0.";
-    timeInterVal =1;
-  }
-
-  callConferenceParticipantCallbacktimeInterVal_ = timeInterVal;
 }
 //ytx_end
 }  // namespace webrtc

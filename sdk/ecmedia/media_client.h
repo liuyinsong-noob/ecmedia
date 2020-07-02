@@ -1,6 +1,7 @@
-
+﻿
 #ifndef MEDIA_CLIENT_H_
 #define MEDIA_CLIENT_H_
+
 
 #include <map>
 #include <memory>
@@ -33,6 +34,7 @@
 
 #include "media/base/stream_params.h"
 #include "media/sctp/sctp_transport_internal.h"
+#include "system_wrappers/include/clock.h"
 
 #include "sdk/ecmedia/video_renderer.h"
 #include "sdk/ecmedia/win/video_capturer/video_capturer.h"
@@ -224,7 +226,7 @@ namespace ecmedia_sdk {
 class TransportControllerObserve;
 class ChannelGenerator;
 enum VIDEO_SOURCE_TYPE { VIDEO_CAMPER = 0, VIDEO_SCREEN, VIDEO_EXTERNAL };
-typedef void(ECMedia_ConferenceParticipantCallback)(uint32_t arrOfCSRCs[],
+typedef void(ECMedia_CSRCsCallback)(uint32_t arrOfCSRCs[],
                                                     int count);
 
 #ifdef __cplusplus
@@ -242,6 +244,8 @@ typedef int (*OnGetAudioHardwareEncoderFactoryAndAdm)(void** jencoder_factory,
 #ifdef __cplusplus
 }
 #endif
+
+extern void ECMediaGetCsrcsListsCallback(uint32_t arrOfCSRCs[], int count);
 
 class MediaClient : public sigslot::has_slots<> {
  public:
@@ -755,7 +759,6 @@ class MediaClient : public sigslot::has_slots<> {
   char* GetAudioDeviceList(int* length);
 
   bool SetAudioRecordingDeviceOnFlight(int index);
-
   bool SetAudioPlayoutDeviceOnFlight(int index);
 
   ///////////////////////// zjy interface end//////////////////////////////////
@@ -802,22 +805,27 @@ class MediaClient : public sigslot::has_slots<> {
   void SetReceiveCodecAudio(int peer_id, cricket::AudioCodec* audio_codec);
   // wx begin
  private:
-  // get adm in use
   webrtc::AudioDeviceModule* GetCurrentAudioDeviceModule() const;
 
- public:
+  //Voice excitation && Get voice energy-------------------------------
+  bool CalculateTimeInternalhasArrived(int time_internal);
 
-  int RegisterConferenceParticipantCallback(
-      int channelid,
+ public:
+  bool GetVoiceEnergyLevel(uint32_t* local_energy,uint32_t* remote_energy);//get remote voice energy Level only when there are 2 participants in conference
+  void getCsrcsLists(uint32_t arrOfCSRCs[], int count);
+
+  int RegisterGetMemberVolumeLevelCallback(int channelid,
+                                           ECMedia_CSRCsCallback* callback);
+
+  int RegisterConferenceParticipantCallback(int channelid,
       ECMedia_ConferenceParticipantCallback* callback);
-  int SetConferenceParticipantCallbackTimeInterVal(int channelid,
-                                                   int timeInterVal);
+  int SetConferenceParticipantCallbackTimeInterVal(int timeInterVal);
+  //statistics-----------------------------------------------------------
+
   int GetCallStats(char* statistics, int length);
-  bool GetVideoStreamStats(char* jsonVideoStats, int length,int channel_id);
-  bool GetVoiceStreamStats(char* jsonAudioStats,
-                               int length,
-                               int channel_id);
-  //wx end
+  bool GetVideoStreamStats(char* jsonVideoStats, int length, int channel_id);
+  bool GetVoiceStreamStats(char* jsonAudioStats, int length, int channel_id);
+  // wx end
   
   
   bool AttachVideoRender(int channelId,
@@ -932,7 +940,7 @@ class MediaClient : public sigslot::has_slots<> {
   bool RemoveVideoCodec(cricket::VideoCodecs& input_codecs,
                         const std::string& codec_name);
 
- private:
+ public:
   static MediaClient* m_pInstance;
 #if defined(WEBRTC_WIN)
   int m_screenshareID;
@@ -945,6 +953,22 @@ class MediaClient : public sigslot::has_slots<> {
   //rtc::LogSink* ec_log_ = nullptr;
   //bool bfirst = true;
   static rtc::LogSink* ec_log_;
+  //wx begin...
+ private:
+  ECMedia_ConferenceParticipantCallback*
+      conference_participant_cb_=nullptr; 
+
+  int callConferenceParticipantCallbacktimeInterVal_=2;
+
+  ECMedia_CSRCsCallback* audio_energy_level_cb_ = nullptr;
+
+  std::vector<uint32_t> csrcs_list_;
+
+  int32_t base_time = 0;
+
+ public:
+ //wx end
+
   rtc::scoped_refptr<webrtc::AudioTrackInterface> audio_tracks_[100];
 
   std::vector<rtc::scoped_refptr<webrtc::VideoTrackInterface>> video_tracks_;
@@ -1012,6 +1036,8 @@ class MediaClient : public sigslot::has_slots<> {
 
   rtc::scoped_refptr<webrtc::AudioDeviceModule> own_adm;  // zjy
 
+  webrtc::AudioDeviceModule::AudioLayer audio_layer_ =
+      webrtc::AudioDeviceModule::kPlatformDefaultAudio;  // zjy
   std::unique_ptr<webrtc::VideoCaptureModule::DeviceInfo> vcm_device_info_;
   typedef std::pair<std::string, VideoCapturer*> UniqueIdVideoCapturerPair;
 

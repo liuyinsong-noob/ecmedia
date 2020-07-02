@@ -736,7 +736,7 @@ struct AudioSendParameters : RtpSendParameters<AudioCodec> {
 
 struct AudioRecvParameters : RtpParameters<AudioCodec> {};
 //ytx_add by wx
-typedef void(ECMedia_ConferenceParticipantCallback)(uint32_t arrOfCSRCs[],
+typedef void(ECMedia_CSRCsCallback)(uint32_t arrOfCSRCs[],
                                                     int count);
 class VoiceMediaChannel : public MediaChannel, public Delayable {
  public:
@@ -785,12 +785,9 @@ class VoiceMediaChannel : public MediaChannel, public Delayable {
 
   virtual std::vector<webrtc::RtpSource> GetSources(uint32_t ssrc) const = 0;
   //ytx_begin  by wx
-  virtual int Register_ECMedia_ConferenceParticipantCallback(
-      ECMedia_ConferenceParticipantCallback* callback) { return 0; }
-  virtual int SetConferenceParticipantCallbackTimeInterVal(
-      int32_t timeInterVal) { return 0; }
+  virtual int Register_ECMedia_CSRCsCallback(
+      ECMedia_CSRCsCallback* callback) { return 0; }
   virtual bool GetVoiceStream(VoiceMediaInfo* info) { return true; }
-
   //ytx_end
 };
 

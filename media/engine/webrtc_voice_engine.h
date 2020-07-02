@@ -248,8 +248,7 @@ class WebRtcVoiceMediaChannel final : public VoiceMediaChannel,
   bool MuteStream(uint32_t ssrc, bool mute) override;
   WebRtcVoiceEngine* engine() { return engine_; }
   //ytx_begin by wx
-  int Register_ECMedia_ConferenceParticipantCallback(ECMedia_ConferenceParticipantCallback* callback)override;
-  int SetConferenceParticipantCallbackTimeInterVal(int32_t timeInterVal)override;
+  int Register_ECMedia_CSRCsCallback(ECMedia_CSRCsCallback* callback)override;
   bool GetVoiceStream(VoiceMediaInfo* info) override;
   //ytx_end
  private:
@@ -257,8 +256,6 @@ class WebRtcVoiceMediaChannel final : public VoiceMediaChannel,
   bool SetRecvCodecs(const std::vector<AudioCodec>& codecs);
   bool SetSendCodecs(const std::vector<AudioCodec>& codecs);
   bool SetLocalSource(uint32_t ssrc, AudioSource* source);
-
-
   // WebRtcVoiceEngine* engine() { return engine_; }
   void ChangePlayout(bool playout);
   int CreateVoEChannel();

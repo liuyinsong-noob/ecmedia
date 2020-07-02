@@ -2538,29 +2538,16 @@ bool WebRtcVoiceMediaChannel::MaybeDeregisterUnsignaledRecvStream(
 }
 
 //ytx_begin add by 
-int WebRtcVoiceMediaChannel::Register_ECMedia_ConferenceParticipantCallback(
-	ECMedia_ConferenceParticipantCallback* callback){
+int WebRtcVoiceMediaChannel::Register_ECMedia_CSRCsCallback(
+	ECMedia_CSRCsCallback* callback){
 	if (callback==nullptr)
 	{
     return -1;
 	}
-    rtp_header_praser_->setECMediaConferenceParticipantCallback(callback);
+    rtp_header_praser_->setECMediaCSRCsCallback(callback);
     return 0;
 }
-int WebRtcVoiceMediaChannel::SetConferenceParticipantCallbackTimeInterVal(
-	int32_t timeInterVal) {
-    int ret = -1;
-	if (timeInterVal<=0)
-	{
-      return ret;
-    } else {
-      rtp_header_praser_
-              ->setECMediaConferenceParticipantCallbackTimeInterVal(timeInterVal);
-      ret = 0;
-      return ret;
-    }
-    
-}
+
 bool WebRtcVoiceMediaChannel::GetVoiceStream(VoiceMediaInfo* info) {
     RTC_DCHECK(worker_thread_checker_.IsCurrent());
 	if (info)

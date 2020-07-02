@@ -320,10 +320,11 @@ typedef int(*ECLiveStreamVideoResolution)(int width, int height);
 
 //wx begin
 
-typedef void(ECMedia_ConferenceParticipantCallback)(unsigned int arrOfCSRCs[],
+typedef void(ECMedia_CSRCsCallback)(uint32_t arrOfCSRCs[],
                                                     int count);
-
-
+typedef void(ECMedia_ConferenceParticipantCallback)(uint32_t arrOfCSRCs[],
+                                                    int count);
+//wx end
 #ifdef __cplusplus
 extern "C" {
 #endif

@@ -2,12 +2,10 @@
 #include "api/rtc_error.h"
 #include "api/rtp_sender_interface.h"
 #include "api/rtp_transceiver_interface.h"
-#include "modules/video_capture/video_capture_factory.h"
 #include "media_client.h"
-
+#include "modules/video_capture/video_capture_factory.h"
 
 ecmedia_sdk::MediaClient* g_ECMedia = nullptr;
-
 
 #define ECMEDIA_VERSION "v3.0.0"
 
@@ -28,7 +26,6 @@ ECMEDIA_API int ECMedia_init() {
 }
 
 ECMEDIA_API int ECMedia_uninit() {
-
   if (g_ECMedia) {
     delete g_ECMedia;
     g_ECMedia = NULL;
@@ -39,7 +36,7 @@ ECMEDIA_API int ECMedia_uninit() {
 /************************channel************************************************/
 ECMEDIA_API bool ECMedia_generate_channel_id(int& channel_id) {
   RTC_DCHECK(g_ECMedia);
-  bool ret =  g_ECMedia->GenerateChannelId(channel_id);
+  bool ret = g_ECMedia->GenerateChannelId(channel_id);
   return ret;
 }
 
@@ -63,7 +60,6 @@ ECMEDIA_API bool ECMedia_create_channel(const char* tid,
 }
 
 ECMEDIA_API void ECMedia_destroy_channel(int& channel_id, bool is_video) {
-
   g_ECMedia->DestroyChannel(channel_id, is_video);
 }
 
@@ -86,24 +82,22 @@ ECMEDIA_API bool ECMedia_set_local_audio_mute(int channel_id, bool bMute) {
   return g_ECMedia->SetLocalMute(channel_id, bMute);
 }
 
-ECMEDIA_API int ECMedia_set_loudspeaker_status(bool enabled){
-    return g_ECMedia->SetLoudSpeakerStatus(enabled);
+ECMEDIA_API int ECMedia_set_loudspeaker_status(bool enabled) {
+  return g_ECMedia->SetLoudSpeakerStatus(enabled);
 }
 
-ECMEDIA_API int ECMedia_get_loudpeaker_status(bool& enabled){
-    return g_ECMedia->GetLoudSpeakerStatus(enabled);
+ECMEDIA_API int ECMedia_get_loudpeaker_status(bool& enabled) {
+  return g_ECMedia->GetLoudSpeakerStatus(enabled);
 }
-
 
 ECMEDIA_API bool ECMedia_set_remote_audio_mute(int channel_id, bool bMute) {
-
   return g_ECMedia->SetRemoteMute(channel_id, bMute);
 }
 
 ECMEDIA_API bool ECMedia_request_remote_ssrc(int channel_id,
                                              int flag,
                                              int ssrc) {
-  return g_ECMedia->RequestRemoteSsrc(channel_id,flag, ssrc);
+  return g_ECMedia->RequestRemoteSsrc(channel_id, flag, ssrc);
 }
 
 ECMEDIA_API bool ECMedia_get_video_codecs(char* jsonVideoCodecInfos,
@@ -114,19 +108,22 @@ ECMEDIA_API bool ECMedia_get_video_codecs(char* jsonVideoCodecInfos,
 ECMEDIA_API bool ECMedia_get_audio_codecs(char* jsonAudioCodecInfos,
                                           int* length) {
   return g_ECMedia->GetAudioCodecs(jsonAudioCodecInfos, length);
-
 }
 /**********************************render********************************************/
-ECMEDIA_API bool ECMedia_add_local_render(int channel_id,int mode, void* video_window) {
+ECMEDIA_API bool ECMedia_add_local_render(int channel_id,
+                                          int mode,
+                                          void* video_window) {
   RTC_DCHECK(g_ECMedia);
 
-  return g_ECMedia->SetLocalVideoRenderWindow(channel_id, mode,video_window);
+  return g_ECMedia->SetLocalVideoRenderWindow(channel_id, mode, video_window);
 }
 
-ECMEDIA_API bool ECMedia_add_remote_render(int channel_id,int mode, void* video_window) {
+ECMEDIA_API bool ECMedia_add_remote_render(int channel_id,
+                                           int mode,
+                                           void* video_window) {
   RTC_DCHECK(g_ECMedia);
-  
-  return g_ECMedia->SetRemoteVideoRenderWindow(channel_id,mode, video_window);
+
+  return g_ECMedia->SetRemoteVideoRenderWindow(channel_id, mode, video_window);
 }
 
 /***********************ssrc*********************************************************/
@@ -153,7 +150,6 @@ ECMEDIA_API void* ECMedia_create_audio_track(const char* track_id,
 }
 
 ECMEDIA_API void ECMedia_destroy_audio_track(void* track) {
-
   webrtc::AudioTrackInterface* ptrack = (webrtc::AudioTrackInterface*)track;
   g_ECMedia->DestroyLocalAudioTrack(ptrack);
 }
@@ -176,8 +172,6 @@ ECMEDIA_API bool ECMedia_select_video_source(const char* tid,
                                              const char* track_id,
                                              void* video_track,
                                              const char* s_ids) {
-
-
   return g_ECMedia->SelectVideoSource(
       channelid, track_id, (webrtc::VideoTrackInterface*)video_track);
 }
@@ -188,13 +182,12 @@ ECMEDIA_API bool ECMedia_select_audio_source(
     const char* track_id,
     void* audio_track,
     const std::vector<std::string>& stream_ids) {
-  return g_ECMedia->SelectVoiceSource(channelid, track_id, 
-		(webrtc::AudioTrackInterface*)audio_track);
+  return g_ECMedia->SelectVoiceSource(
+      channelid, track_id, (webrtc::AudioTrackInterface*)audio_track);
 }
 
 ECMEDIA_API bool ECMedia_set_video_nack_status(const int channelId,
                                                const bool enable_nack) {
-
   return g_ECMedia->SetVideoNackStatus(channelId, enable_nack);
 }
 
@@ -203,7 +196,6 @@ ECMEDIA_API bool ECMedia_set_video_ulpfec_status(
     const bool enable,
     const uint8_t payloadtype_red,
     const uint8_t payloadtype_fec) {
-  
   return g_ECMedia->SetVideoUlpFecStatus(channelId, enable, payloadtype_red,
                                          payloadtype_fec);
 }
@@ -252,7 +244,7 @@ ECMEDIA_API bool ECMedia_set_ns(bool enable) {
 }
 
 ECMEDIA_API void* ECMedia_create_audio_device() {
-  //TODO 
+  // TODO
   return nullptr;
 }
 
@@ -265,14 +257,16 @@ ECMEDIA_API char* ECMedia_get_audio_device_list(int* len) {
 }
 
 ECMEDIA_API bool ECMedia_set_audio_recording_device(int index) {
-  RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__  << "(),"<< " begins... "
-                << ", index: " << index ;
+  RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__ << "(),"
+                << " begins... "
+                << ", index: " << index;
   return g_ECMedia->SetAudioRecordingDeviceOnFlight(index);
 }
 
 ECMEDIA_API bool ECMedia_set_audio_playout_device(int index) {
-  RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__  << "(),"<< " begins... "
-                << ", index: " << index ;
+  RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__ << "(),"
+                << " begins... "
+                << ", index: " << index;
   return g_ECMedia->SetAudioPlayoutDeviceOnFlight(index);
 //  #define TEST_SELECT_CAMERA
 #ifdef TEST_SELECT_CAMERA
@@ -294,7 +288,6 @@ ECMEDIA_API bool ECMedia_set_audio_playout_device(int index) {
 #endif
 }
 
-
 ECMEDIA_API int ECMedia_create_engine() {
   return 0;
 }
@@ -313,7 +306,6 @@ ECMEDIA_API int ECMedia_delete_channel(int peer_id) {
 ECMEDIA_API int ECMdeia_num_of_capture_devices() {
   RTC_DCHECK(g_ECMedia);
   return g_ECMedia->GetNumberOfVideoDevices();
-
 }
 
 ECMEDIA_API int ECMedia_get_capture_device(int index,
@@ -322,8 +314,7 @@ ECMEDIA_API int ECMedia_get_capture_device(int index,
                                            char* id,
                                            int id_len) {
   RTC_DCHECK(g_ECMedia);
-  return g_ECMedia->GetCaptureDevice(index, name, name_len,
-                                                id, id_len);
+  return g_ECMedia->GetCaptureDevice(index, name, name_len, id, id_len);
 }
 
 ECMEDIA_API int ECMedia_num_of_capabilities(const char* id, int id_len) {
@@ -360,7 +351,6 @@ ECMEDIA_API int ECMedia_connect_capture_device(int deviceid, int peer_id) {
   return g_ECMedia->ConnectCaptureDevice(deviceid, peer_id);
 }
 
-
 ECMEDIA_API void* ECMedia_select_camera_on_flight(
     int channelid,
     int device_idx,
@@ -380,7 +370,7 @@ ECMEDIA_API void* ECMedia_select_camera_on_flight(
 
 ECMEDIA_API int ECMedia_start_capture(int deviceid, CameraCapability cam) {
   RTC_DCHECK(g_ECMedia);
- 
+
   webrtc::VideoCaptureCapability cap;
   cap.width = cam.width;
   cap.height = cam.height;
@@ -421,12 +411,10 @@ ECMEDIA_API int ECMedia_start_sendrecv(int peer_id) {
 }
 
 ECMEDIA_API int ECMedia_video_start_receive(int peer_id) {
-
   return int();
 }
 
 ECMEDIA_API int ECMedia_video_stop_receive(int peer_id) {
-
   return int();
 }
 
@@ -438,7 +426,6 @@ ECMEDIA_API int ECMedia_video_start_send(int peer_id) {
 }
 
 ECMEDIA_API int ECMedia_video_stop_send(int peer_id) {
-
   return g_ECMedia->StopAllCapturer();
 }
 
@@ -448,12 +435,10 @@ ECMEDIA_API int ECMedia_audio_start_receive(int peer_id) {
 }
 
 ECMEDIA_API int ECMedia_audio_stop_receive(int peer_id) {
-
   return 0;
 }
 
 ECMEDIA_API int ECMedia_audio_start_send(int peer_id) {
-
   return g_ECMedia->AudioStartSend(peer_id);
 }
 
@@ -466,14 +451,12 @@ ECMEDIA_API int ECMedia_audio_stop_send(int peer_id) {
 
 ECMEDIA_API bool ECMedia_start_connect(int audio_channel_id,
                                        int video_channel_id) {
-
   return g_ECMedia->StartConnectChannel(audio_channel_id, video_channel_id);
 }
 
 /*********************codec**********************/
 ECMEDIA_API int ECMedia_get_supported_codecs_video(
     std::vector<ecmedia::VideoCodec>* video_codecs) {
-  
   cricket::VideoCodecs cricket_video_codecs;
   g_ECMedia->GetVideoCodecs(&cricket_video_codecs);
 
@@ -487,7 +470,6 @@ ECMEDIA_API int ECMedia_get_supported_codecs_video(
 
 ECMEDIA_API int ECMedia_get_supported_codecs_audio(
     std::vector<ecmedia::AudioCodec>* audio_codecs) {
-  
   cricket::AudioCodecs cricket_audio_codecs;
   g_ECMedia->GetAudioCodecs(&cricket_audio_codecs);
 
@@ -502,7 +484,6 @@ ECMEDIA_API int ECMedia_get_supported_codecs_audio(
 
 ECMEDIA_API int ECMedia_set_send_codec_video(int peer_id,
                                              ecmedia::VideoCodec* video_codec) {
-  
   cricket::VideoCodec cricket_video_codec(video_codec->id, video_codec->name);
 
   g_ECMedia->SetSendCodecVideo(&cricket_video_codec);
@@ -512,7 +493,6 @@ ECMEDIA_API int ECMedia_set_send_codec_video(int peer_id,
 ECMEDIA_API int ECMedia_set_receive_codec_video(
     int peer_id,
     ecmedia::VideoCodec* video_codec) {
-
   cricket::VideoCodec cricket_video_codec(video_codec->id, video_codec->name);
 
   g_ECMedia->SetReceiveCodecVideo(peer_id, &cricket_video_codec);
@@ -521,7 +501,6 @@ ECMEDIA_API int ECMedia_set_receive_codec_video(
 
 ECMEDIA_API int ECMedia_set_send_codec_audio(int peer_id,
                                              ecmedia::AudioCodec* audio_codec) {
-
   cricket::AudioCodec cricket_audio_codec(
       audio_codec->id, audio_codec->name, audio_codec->clockrate,
       audio_codec->bitrate, audio_codec->channels);
@@ -532,7 +511,6 @@ ECMEDIA_API int ECMedia_set_send_codec_audio(int peer_id,
 ECMEDIA_API int ECMedia_set_receive_playloadType_audio(
     int peer_id,
     ecmedia::AudioCodec* audio_codec) {
-
   cricket::AudioCodec cricket_audio_codec(
       audio_codec->id, audio_codec->name, audio_codec->clockrate,
       audio_codec->bitrate, audio_codec->channels);
@@ -546,7 +524,6 @@ ECMEDIA_API int ECMedia_video_set_send_destination(int peer_id,
                                                    const char* r_addr,
                                                    const char* l_addr,
                                                    int port) {
-
   return 0;
 }
 
@@ -566,47 +543,45 @@ ECMEDIA_API int ECMedia_set_video_protect_mode(int mode) {
   return 0;
 }
 
-  ECMEDIA_API bool ECMedia_attach_video_render(int channelId, void* videoView,
-                                     int render_mode, int mirror_mode){
-     return g_ECMedia->AttachVideoRender(channelId, videoView, render_mode,
-                                         mirror_mode, nullptr);
-  }
-  ECMEDIA_API bool ECMedia_detach_video_render(int channelId, void* winRemote){
-    
-     return g_ECMedia->DetachVideoRender(channelId,  winRemote);
-  }
-  ECMEDIA_API void ECMedia_remove_all_video_render(int channelId){
-    
-     return g_ECMedia->RemoveAllVideoRender(channelId);
-  }
+ECMEDIA_API bool ECMedia_attach_video_render(int channelId,
+                                             void* videoView,
+                                             int render_mode,
+                                             int mirror_mode) {
+  return g_ECMedia->AttachVideoRender(channelId, videoView, render_mode,
+                                      mirror_mode, nullptr);
+}
+ECMEDIA_API bool ECMedia_detach_video_render(int channelId, void* winRemote) {
+  return g_ECMedia->DetachVideoRender(channelId, winRemote);
+}
+ECMEDIA_API void ECMedia_remove_all_video_render(int channelId) {
+  return g_ECMedia->RemoveAllVideoRender(channelId);
+}
 
-  ECMEDIA_API bool ECMedia_update_or_add_video_track(int channelId,
-                                                     void* track_to_render){
-    
-     return g_ECMedia->UpdateOrAddVideoTrack( channelId,
-                                             track_to_render);
-  }
-  ECMEDIA_API bool ECMedia_start_render(int channelId, void* videoView){
-    
-     return g_ECMedia->StartRender(channelId, videoView);
-  }
-  ECMEDIA_API bool ECMedia_stop_render(int channelId, void* videoView){
-    
-     return g_ECMedia->StopRender( channelId,  videoView);
-  }
+ECMEDIA_API bool ECMedia_update_or_add_video_track(int channelId,
+                                                   void* track_to_render) {
+  return g_ECMedia->UpdateOrAddVideoTrack(channelId, track_to_render);
+}
+ECMEDIA_API bool ECMedia_start_render(int channelId, void* videoView) {
+  return g_ECMedia->StartRender(channelId, videoView);
+}
+ECMEDIA_API bool ECMedia_stop_render(int channelId, void* videoView) {
+  return g_ECMedia->StopRender(channelId, videoView);
+}
 
 #if defined(WEBRTC_IOS)
-ECMEDIA_API int ECMedia_get_orientation(int deviceid, ECMediaRotateCapturedFrame &tr){
+ECMEDIA_API int ECMedia_get_orientation(int deviceid,
+                                        ECMediaRotateCapturedFrame& tr) {
   return g_ECMedia->GetOrientation(deviceid, tr);
 }
-ECMEDIA_API int ECMedia_set_rotate_captured_frames(int deviceid, ECMediaRotateCapturedFrame tr){
+ECMEDIA_API int ECMedia_set_rotate_captured_frames(
+    int deviceid,
+    ECMediaRotateCapturedFrame tr) {
   return g_ECMedia->SetRotateCapturedFrames(deviceid, tr);
 }
 #endif
 
 #if defined(WEBRTC_ANDROID)
 ECMEDIA_API bool ECMedia_SaveLocalVideoTrack(int channelId, void* track) {
-
   bool bOk = g_ECMedia->SaveLocalVideoTrack(channelId, track);
   RTC_LOG(INFO) << " channelId: " << channelId << " track: " << track
                 << " bOk: " << bOk;
@@ -615,16 +590,13 @@ ECMEDIA_API bool ECMedia_SaveLocalVideoTrack(int channelId, void* track) {
 
 ECMEDIA_API void* ECMedia_GetLocalVideoTrackPtr(int channelId) {
   void* track = g_ECMedia->GetLocalVideoTrackPtr(channelId);
-  RTC_LOG(INFO) << " channelId: " << channelId
-				<< " track: " << track;
+  RTC_LOG(INFO) << " channelId: " << channelId << " track: " << track;
   return track;
 }
 
 ECMEDIA_API bool ECMedia_RemoveLocalVideoTrack(int channelId) {
-
   bool bOk = g_ECMedia->RemoveLocalVideoTrack(channelId);
-  RTC_LOG(INFO) << " channelId: " << channelId
-                << " bOk: " << bOk;
+  RTC_LOG(INFO) << " channelId: " << channelId << " bOk: " << bOk;
   return bOk;
 }
 
@@ -633,8 +605,7 @@ ECMEDIA_API bool ECMedia_SaveRemoteVideoSink(int channelId,
                                              jobject javaSink) {
   bool bOk = g_ECMedia->SaveRemoteVideoSink(channelId, env, javaSink);
   RTC_LOG(INFO) << " channelId: " << channelId << " env: " << env
-                << " javaSink: " << javaSink
-                << " bOk: " << bOk;
+                << " javaSink: " << javaSink << " bOk: " << bOk;
   return bOk;
 }
 
@@ -642,10 +613,9 @@ ECMEDIA_API bool ECMedia_RemoveRemoteVideoSink(int channelId) {
   RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__ << "() "
                 << " begin..."
                 << " channelId: " << channelId;
-  
+
   bool bOk = g_ECMedia->RemoveRemoteVideoSink(channelId);
-  RTC_LOG(INFO) << " channelId: " << channelId
-				<< " bOk: " << bOk;
+  RTC_LOG(INFO) << " channelId: " << channelId << " bOk: " << bOk;
   return bOk;
 }
 
@@ -663,30 +633,26 @@ ECMEDIA_API void* CreateAudioSource() {
 }
 
 ECMEDIA_API void* CreateVideoSource(JNIEnv* env,
-        bool is_screencast,
-        bool align_timestamps) {
+                                    bool is_screencast,
+                                    bool align_timestamps) {
   RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__ << "() "
                 << " begin...";
 
   return g_ECMedia->CreateVideoSource(env, is_screencast, align_timestamps);
 }
 
-ECMEDIA_API void* CreateVideoTrack(
-    const char* id,
-    void* source) {
+ECMEDIA_API void* CreateVideoTrack(const char* id, void* source) {
   RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__ << "() "
                 << " begin...";
 
-  return g_ECMedia->CreateVideoTrack(id, (webrtc::VideoTrackSourceInterface *)source);
-
+  return g_ECMedia->CreateVideoTrack(
+      id, (webrtc::VideoTrackSourceInterface*)source);
 }
 
-ECMEDIA_API void* CreateAudioTrack(
-    const char* id,
-    void* source) {
+ECMEDIA_API void* CreateAudioTrack(const char* id, void* source) {
   RTC_LOG(INFO) << "[ECMEDIA3.0]" << __FUNCTION__ << "() "
                 << " begin...";
-    return g_ECMedia->CreateAudioTrack(id, (webrtc::AudioSourceInterface *)source);
+  return g_ECMedia->CreateAudioTrack(id, (webrtc::AudioSourceInterface*)source);
 }
 
 ECMEDIA_API void ECMedia_SetVideoHardwareEncoderFactoryCallback(
@@ -709,14 +675,11 @@ ECMEDIA_API int ECMedia_set_desktop_capture_source(int type, int id) {
 }
 
 ECMEDIA_API int ECMedia_create_desktop_capture(int type) {
-
   return g_ECMedia->CreateDesktopCapture(type);
- 
 }
 
 ECMEDIA_API int ECMedia_get_screen_list(int type, ScreenID** screenList) {
   if (!screenList) {
-   
     return -1;
   } else {
     webrtc::DesktopCapturer::SourceList sources;
@@ -735,7 +698,6 @@ ECMEDIA_API int ECMedia_get_screen_list(int type, ScreenID** screenList) {
 }
 
 ECMEDIA_API bool ECMedia_select_screen(int type, ScreenID screeninfo) {
-
   int ret = g_ECMedia->SetDesktopSourceID(type, screeninfo);
   return ret == 0 ? true : false;
 }
@@ -743,7 +705,7 @@ ECMEDIA_API bool ECMedia_select_screen(int type, ScreenID screeninfo) {
 ECMEDIA_API int ECMedia_release_window_list(WindowShare** windowList) {
   if ((*windowList) == NULL) {
     return -1;
-  } 
+  }
   delete[](*windowList);
   (*windowList) = NULL;
   return 0;
@@ -751,28 +713,27 @@ ECMEDIA_API int ECMedia_release_window_list(WindowShare** windowList) {
 ECMEDIA_API int ECMedia_get_window_list(int type, WindowShare** windowList) {
   if (!windowList) {
     return -1;
-  } 
+  }
   webrtc::DesktopCapturer::SourceList sources;
   g_ECMedia->GetWindowsList(type, sources);
   int num = sources.size();
   WindowShare* m_pWindowlist = NULL;
   m_pWindowlist = new WindowShare[num];
   if (m_pWindowlist == NULL) {
-	  RTC_LOG(INFO) << "new operate fail!";
-	  return -1;
+    RTC_LOG(INFO) << "new operate fail!";
+    return -1;
   }
   WindowShare* temp = m_pWindowlist;
   for (auto it = sources.begin(); it != sources.end(); ++it) {
-     (*temp).id = it->id;
-     (*temp).type = 0;
+    (*temp).id = it->id;
+    (*temp).type = 0;
 #if defined(WEBRTC_WIN)
-      memcpy_s((*temp).title, kTitleLength,it->title.c_str(), kTitleLength);
+    memcpy_s((*temp).title, kTitleLength, it->title.c_str(), kTitleLength);
 #endif
-      temp++;
+    temp++;
   }
   *windowList = m_pWindowlist;
   return num;
-  
 }
 
 ECMEDIA_API int ECMedia_release_screen_list(ScreenID** screen) {
@@ -784,14 +745,12 @@ ECMEDIA_API int ECMedia_release_screen_list(ScreenID** screen) {
   return 0;
 }
 
-ECMEDIA_API int ECMedia_start_screen_share(int type,int channelId) {
-  return g_ECMedia->StartScreenShare(type,channelId);
-  
+ECMEDIA_API int ECMedia_start_screen_share(int type, int channelId) {
+  return g_ECMedia->StartScreenShare(type, channelId);
 }
 
-ECMEDIA_API int ECMedia_stop_screen_share(int type,int channelId) {
-  return g_ECMedia->StopScreenShare(type,channelId);
-
+ECMEDIA_API int ECMedia_stop_screen_share(int type, int channelId) {
+  return g_ECMedia->StopScreenShare(type, channelId);
 }
 ECMEDIA_API void ECMedia_get_audio_channel_volume_level(int audioid,
                                                         int level) {
@@ -801,19 +760,34 @@ ECMEDIA_API void ECMedia_get_audio_channel_volume_level(int audioid,
 ECMEDIA_API void ECMedia_set_video_show_window_mode(int mode) {
   return;
 }
-/**************************************************Voice excitation**************************************************************/
-//wx begin
-int ECMedia_setECMedia_ConferenceParticipantCallback(int channelid, ECMedia_ConferenceParticipantCallback* callback) {
-  return g_ECMedia->RegisterConferenceParticipantCallback(channelid,callback);
+/**************************************************Voice
+ * excitation**************************************************************/
+// wx begin
+int ECMedia_setECMedia_ConferenceParticipantCallback(
+    int channelid,
+    ECMedia_ConferenceParticipantCallback* callback) {
+  return g_ECMedia->RegisterConferenceParticipantCallback(channelid, callback);
 }
 
-int ECMedia_setECMedia_ConferenceParticipantCallbackTimeInterVal( int channelid, int timeInterVal) {
-  return g_ECMedia->SetConferenceParticipantCallbackTimeInterVal(channelid,timeInterVal);
+int ECMedia_setECMedia_ConferenceParticipantCallbackTimeInterVal(
+    int channelid,
+    int timeInterVal) {
+  return g_ECMedia->SetConferenceParticipantCallbackTimeInterVal(timeInterVal);
 }
+int ECMedia_set_voice_energy_callback(int channelid,
+                                      ECMedia_CSRCsCallback* callback) {
+  return g_ECMedia->RegisterGetMemberVolumeLevelCallback(channelid, callback);
+}
+
+bool ECMedia_get_local_audio_level(uint32_t* audio_level) {
+
+  return g_ECMedia->GetVoiceEnergyLevel(audio_level, nullptr);
+}
+
 int ECMedia_get_stats(char* statistics, int length) {
   return g_ECMedia->GetCallStats(statistics, length);
 }
-bool ECMedia_get_StreamStats(char* statistics,int length,int channel_id) {
+bool ECMedia_get_StreamStats(char* statistics, int length, int channel_id) {
   if (channel_id == 0) {
     return g_ECMedia->GetVoiceStreamStats(statistics, length, channel_id);
   } else {
