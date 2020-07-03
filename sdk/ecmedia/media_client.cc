@@ -979,6 +979,9 @@ bool MediaClient::CreateVideoChannel(const std::string& settings,
   }
 
   vidoe_send_params.max_bandwidth_bps = m_MaxBandwidthBps_;// kMaxBandwidthBps;
+#if defined(WEBRTC_IOS) //add bu yukening；看不懂上面的代码，iOS括起来重新重新定义最大值；
+  vidoe_send_params.max_bandwidth_bps = m_MaxBandwidthBps_ == 0 ? kMaxBandwidthBps : m_MaxBandwidthBps_;
+#endif
 if (config.isSimulcast) {
     std::vector<uint32_t> ssrcsSimLocal;
     for (auto it : ssrcsLocal) {
@@ -1344,11 +1347,12 @@ bool MediaClient::SelectVideoSource(
     RTC_DCHECK_RUN_ON(signaling_thread_);
     bool bOk = false;
 	if (track_id.compare("p2p") == 0) {
-#if defined WEBRTC_WIN
+#if defined WEBRTC_WIN || defined(WEBRTC_IOS)
 		if (renderWndsManager_) {
 			renderWndsManager_->UpdateOrAddVideoTrack(
 				channelid+1, remote_tracks_.find(channelid)->second);
 			renderWndsManager_->StartRender(channelid+1, nullptr);
+   remote_tracks_[channelid + 1] = remote_tracks_.find(channelid)->second; //add by yukening  搞不懂为什么这样设计，导致iOS没法整，虽然这样写很SB，但是目前这么干；
 			return false;
 		}
 #endif

@@ -36,7 +36,12 @@ VideoRenderer* VideoRenderer::CreateVideoRenderer(
   
   if(windows){
     if( ![[NSThread currentThread] isMainThread] ){
-      return nullptr;
+      //return nullptr;
+     __block webrtc::ObjCVideoRendererImpl* objimpl = nullptr;
+     dispatch_sync(dispatch_get_main_queue(), ^{
+      objimpl = new webrtc::ObjCVideoRendererImpl( windows, render_mode, mirror, track_to_render, worker_thread, type);
+     });
+     return objimpl;
     }
     else{
       webrtc::ObjCVideoRendererImpl* objimpl =
