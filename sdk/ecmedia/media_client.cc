@@ -2066,7 +2066,7 @@ bool MediaClient::SetLocalVideoRenderWindow(int channel_id,
   EC_CHECK_VALUE(view, false);
   EC_CHECK_VALUE((channel_id >= 0), false);
 
-#if defined WEBRTC_WIN || defined(WEBRTC_IOS)
+#if defined WEBRTC_WIN
   if (!renderWndsManager_) {
     InitRenderWndsManager();
   }
@@ -2104,7 +2104,7 @@ bool MediaClient::PreviewTrack(int window_id, void* video_track) {
            return false;
          }
 
-#if defined WEBRTC_WIN || defined(WEBRTC_IOS)
+#if defined WEBRTC_WIN
          EC_CHECK_VALUE(renderWndsManager_, false);
 		 InitRenderWndsManager();
          renderWndsManager_->UpdateOrAddVideoTrack(window_id, track);
