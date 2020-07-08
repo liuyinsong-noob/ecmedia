@@ -25,7 +25,7 @@ namespace webrtc {
 
 class ObjCVideoRendererImpl : public VideoRenderer {
  public:
-  ObjCVideoRendererImpl(void* parent, int render_mode, bool mirror, webrtc::VideoTrackInterface* track,
+  ObjCVideoRendererImpl(int channelid, void* parent, int render_mode, bool mirror, webrtc::VideoTrackInterface* track,
                         rtc::Thread* worker_thread_, VideoRenderType type);
   ~ObjCVideoRendererImpl();
   void OnFrame(const VideoFrame& nativeVideoFrame) override;
@@ -33,10 +33,12 @@ class ObjCVideoRendererImpl : public VideoRenderer {
   int StopRender() override {return 0;}
   int UpdateVideoTrack(webrtc::VideoTrackInterface* track_to_render, rtc::VideoSinkWants wants) override;
   void* WindowPtr() override{return parent_;}
+  bool RegisterRemoteVideoResoluteCallback(ECMedia_FrameSizeChangeCallback* callback) override {return call_back_ = callback;}
  
  private:
   id<RTCVideoRenderer> GetWindwoRenderPtr(void* remoteView);
   id<RTCVideoRenderer> renderer_;
+  int channelid_;
   CGSize size_;
   webrtc::VideoTrackInterface* track_;
   int render_mode_;
@@ -45,6 +47,7 @@ class ObjCVideoRendererImpl : public VideoRenderer {
   VideoRenderType type_;
   rtc::Thread* worker_thread_;
   VideoRenderView*  videoview;
+  ECMedia_FrameSizeChangeCallback* call_back_;
  
 };
 

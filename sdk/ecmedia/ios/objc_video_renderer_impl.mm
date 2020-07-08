@@ -19,6 +19,7 @@
 #define STANDARD_RENDERING kRenderWindows
 
 VideoRenderer* VideoRenderer::CreateVideoRenderer(
+    int channelid,
     void* windows,
     int render_mode,
     bool mirror,
@@ -39,13 +40,13 @@ VideoRenderer* VideoRenderer::CreateVideoRenderer(
       //return nullptr;
      __block webrtc::ObjCVideoRendererImpl* objimpl = nullptr;
      dispatch_sync(dispatch_get_main_queue(), ^{
-      objimpl = new webrtc::ObjCVideoRendererImpl( windows, render_mode, mirror, track_to_render, worker_thread, type);
+      objimpl = new webrtc::ObjCVideoRendererImpl(channelid, windows, render_mode, mirror, track_to_render, worker_thread, type);
      });
      return objimpl;
     }
     else{
       webrtc::ObjCVideoRendererImpl* objimpl =
-      new webrtc::ObjCVideoRendererImpl( windows, render_mode, mirror, track_to_render, worker_thread, type);
+      new webrtc::ObjCVideoRendererImpl(channelid, windows, render_mode, mirror, track_to_render, worker_thread, type);
       return objimpl;
     }
   }
@@ -56,10 +57,10 @@ VideoRenderer* VideoRenderer::CreateVideoRenderer(
 
 namespace webrtc {
 
-ObjCVideoRendererImpl::ObjCVideoRendererImpl( void* parent, int render_mode,
+ObjCVideoRendererImpl::ObjCVideoRendererImpl(int channelid, void* parent, int render_mode,
                                              bool mirror, webrtc::VideoTrackInterface* track,
                                              rtc::Thread* worker_thread, VideoRenderType type)
-: size_(CGSizeZero), track_(track),render_mode_(render_mode),
+:channelid_(channelid), size_(CGSizeZero), track_(track),render_mode_(render_mode),
 parent_(parent), mirror_(mirror), type_(type) ,worker_thread_(worker_thread){
   renderer_ = GetWindwoRenderPtr(parent);
 }
@@ -100,6 +101,9 @@ void ObjCVideoRendererImpl::OnFrame(const VideoFrame& nativeVideoFrame) {
   if (!CGSizeEqualToSize(size_, current_size)) {
     size_ = current_size;
     [renderer_ setSize:size_];
+   if(call_back_){
+    call_back_(channelid_, current_size.width,current_size.height);
+   }
   }
   [renderer_ renderFrame:videoFrame];
 }
