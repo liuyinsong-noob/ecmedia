@@ -1825,7 +1825,8 @@ MediaClient::CreateLocalVideoTrack(const std::string& track_params) {
                       break;
                   }
                 });
-    video_tracks_.push_back(video_track_);
+	if(video_track_ != nullptr)
+      video_tracks_.push_back(video_track_);
     return video_track_;
   }
   RTC_LOG(INFO) << __FUNCTION__ << "() "
@@ -2418,8 +2419,8 @@ bool MediaClient::GetVideoDevices(char* jsonDeviceInfos, int* length) {
         device["deviceId"] = deviceId;
         device["deviceName"] = deviceName;
 
-        uint32_t num_capabilities = info->NumberOfCapabilities(deviceId);
-        for (uint32_t j = 0; j < num_capabilities; j++) {
+        int32_t num_capabilities = info->NumberOfCapabilities(deviceId);
+        for (int32_t j = 0; j < num_capabilities; j++) {
           info->GetCapability(deviceId, j, capability);
 
           Json::Value cap(Json::objectValue);

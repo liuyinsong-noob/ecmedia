@@ -245,13 +245,13 @@ config("common_config") {
     defines += [ "WEBRTC_USE_H264" ]
   }
   #ytx_begin
-  if (agc_debug_dump) {
-    defines += [ "WEBRTC_AGC_DEBUG_DUMP" ]
-  }
+  #if (agc_debug_dump) {
+  #  defines += [ "WEBRTC_AGC_DEBUG_DUMP" ]
+  #}
   
-  if (avrong_debug_dump) {
-    defines += [ "AVRONG_DEBUG_DUMP" ]
-  }
+  #if (avrong_debug_dump) {
+  #  defines += [ "AVRONG_DEBUG_DUMP" ]
+  #}
   #ytx_end
   if (build_with_chromium) {
     defines += [
