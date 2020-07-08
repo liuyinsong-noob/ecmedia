@@ -3,12 +3,14 @@
 
 #include "i_video_render.h"
 #include "sdk/ecmedia/video_renderer.h"
+#include "sdk/ecmedia/sdk_common.h"
 
 class VideoRenderImpl : public VideoRenderer {
  public:
-  VideoRenderImpl(void* windows,
+  VideoRenderImpl(int channelid,
+                  void* windows,
                   int render_mode,
-	              bool mirror,
+                  bool mirror,
                   webrtc::VideoTrackInterface* track_to_render,
                   rtc::Thread* worker_thread,
                   VideoRenderType render_type,
@@ -24,14 +26,20 @@ class VideoRenderImpl : public VideoRenderer {
 
   // implement rtc::VideoSinkInterface<webrtc::VideoFrame>
   void OnFrame(const webrtc::VideoFrame& frame) override;
+  bool RegisterRemoteVideoResoluteCallback(
+      ECMedia_FrameSizeChangeCallback* callback) override;
 
-  void* WindowPtr() override  { return video_window_; }
+  void* WindowPtr() override { return video_window_; }
 
  private:
+  int channelid_;
   rtc::Thread* worker_thread_;
   rtc::scoped_refptr<webrtc::VideoTrackInterface> rendered_track_;
   IVideoRender* _ptrRenderer;
   void* video_window_;
+  int last_width_;
+  int last_height_;
+  ECMedia_FrameSizeChangeCallback* callback_;
 };
 
 #endif  // VIDEO_RENDERER_H

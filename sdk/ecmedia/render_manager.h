@@ -43,7 +43,7 @@
 #include "modules/video_capture/video_capture.h"
 
 #include "ec_log.h"
-
+#include "sdk/ecmedia/sdk_common.h"
 
 #include "media/base/adapted_video_track_source.h"
 
@@ -68,6 +68,9 @@ class RenderManager{
                              rtc::VideoSinkWants wants = rtc::VideoSinkWants());
   bool StartRender(int channelId, void* videoView);
   bool StopRender(int channelId, void* videoView);
+  bool RegisterRemoteVideoResoluteCallback(
+      int channelid,
+      ECMedia_FrameSizeChangeCallback* callback);
 
  private:
   using ptr_render = std::unique_ptr<VideoRenderer>;

@@ -116,7 +116,7 @@ bool RenderManager::AttachVideoRender(int channelId,
   }
   
    VideoRenderer* render = VideoRenderer::CreateVideoRenderer(
-      videoView, render_mode, mirror_mode, nullptr, worker_thread, kRenderWindows, wants);
+     channelId, videoView, render_mode, mirror_mode, nullptr, worker_thread, kRenderWindows, wants);
   
   std::map<int, render_list>::iterator iter = map_video_renders_.find(channelId);
   if (iter == map_video_renders_.end()) {
@@ -269,3 +269,21 @@ bool RenderManager::StopRender(int channelId, void* videoView) {
   }
   
 }
+bool RenderManager::RegisterRemoteVideoResoluteCallback(
+      int channelid,
+      ECMedia_FrameSizeChangeCallback* callback){
+  RTC_LOG(INFO) << __FUNCTION__ << "() "
+                << ", channelId: " << channelid;
+   std::map<int, render_list>::iterator it = map_video_renders_.find(channelid);
+  if (it == map_video_renders_.end()) {
+     RTC_LOG(LERROR) << __FUNCTION__ << "() can't find channelId:" << channelid;
+    return false;
+  }
+
+  std::list<VideoRenderer*>::iterator renderIter = it->second.begin();
+  while (renderIter != it->second.end()) {
+    (*renderIter)->RegisterRemoteVideoResoluteCallback(callback);
+    renderIter++;
+  }
+  return true;
+ }

@@ -892,7 +892,9 @@ ECMEDIA_API void ECMedia_SetAudioHardwareEncoderFactoryAndAdmCallback(
 
 #endif
 
-ECMEDIA_API bool ECMedia_set_remote_video_resolute_callback(int channelid,void* callback);
+ECMEDIA_API bool ECMedia_set_remote_video_resolute_callback(
+    int channelid,
+    ECMedia_FrameSizeChangeCallback* callback);
 
 ECMEDIA_API int ECMedia_create_desktop_capture(int type);
 

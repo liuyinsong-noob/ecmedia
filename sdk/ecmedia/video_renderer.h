@@ -1,6 +1,7 @@
 #ifndef VIDEO_RENDERER_H
 #define VIDEO_RENDERER_H
 #include "video_render_defines.h"
+#include "sdk/ecmedia/sdk_common.h"
 
 #if defined(WEBRTC_IOS)
 #include "api/peer_connection_interface.h"
@@ -14,6 +15,7 @@
 class VideoRenderer : public rtc::VideoSinkInterface<webrtc::VideoFrame> {
  public:
   static VideoRenderer* CreateVideoRenderer(
+	  int channelid,
       void* windows,
       int render_mode,
 	    bool mirror,
@@ -29,6 +31,8 @@ class VideoRenderer : public rtc::VideoSinkInterface<webrtc::VideoFrame> {
                                rtc::VideoSinkWants wants) = 0;
   virtual void OnFrame(const webrtc::VideoFrame& frame) = 0;
   virtual void* WindowPtr()= 0;
+  virtual bool RegisterRemoteVideoResoluteCallback(
+      ECMedia_FrameSizeChangeCallback* callback) = 0;
 };
 
 #endif  // VIDEO_RENDERER_H

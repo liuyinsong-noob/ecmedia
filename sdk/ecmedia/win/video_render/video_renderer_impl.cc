@@ -9,6 +9,7 @@
 #define STANDARD_RENDERING kRenderWindows
 
 VideoRenderer* VideoRenderer::CreateVideoRenderer(
+    int channelid,
     void* windows,
     int render_mode,
 	bool mirror,
@@ -23,20 +24,22 @@ VideoRenderer* VideoRenderer::CreateVideoRenderer(
 
   RTC_LOG(LS_INFO) << " CreateVideoRenderer "
                    << " hubin_render";
-  return new VideoRenderImpl(windows, render_mode, mirror, track_to_render,
+  return new VideoRenderImpl(channelid, windows, render_mode, mirror, track_to_render,
                              worker_thread,
                              render_type, wants);
 }
 
 
-VideoRenderImpl::VideoRenderImpl(void* windows,
+VideoRenderImpl::VideoRenderImpl(int channelid,
+                                void* windows,
                                  int render_mode,
 	                             bool mirror,
                                  webrtc::VideoTrackInterface* track_to_render,
                                  rtc::Thread* worker_thread,
                                  VideoRenderType render_type,
                                  rtc::VideoSinkWants wants)
-    : worker_thread_(worker_thread),
+    : channelid_(channelid),
+      worker_thread_(worker_thread),
       rendered_track_(track_to_render),
       video_window_(windows) {
   switch (render_type) {
@@ -133,6 +136,13 @@ int VideoRenderImpl::UpdateVideoTrack(
   return 0;
 }
 void VideoRenderImpl::OnFrame(const webrtc::VideoFrame& frame) {
+  if(last_width_ != frame.width() || last_height_ != frame.height()){
+   last_width_ = frame.width();
+   last_height_ = frame.height();
+   if(callback_){
+      callback_(channelid_, last_width_, last_height_ );
+    }
+  }
   if (_ptrRenderer) {
     if (!_ptrRenderer->IsRunning())
       return;
@@ -147,4 +157,8 @@ void VideoRenderImpl::OnFrame(const webrtc::VideoFrame& frame) {
         break;
     }
   }
+}
+ bool VideoRenderImpl::RegisterRemoteVideoResoluteCallback(
+      ECMedia_FrameSizeChangeCallback* callback){
+   return  callback_ = callback;
 }
