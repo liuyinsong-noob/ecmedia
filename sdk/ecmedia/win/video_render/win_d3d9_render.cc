@@ -135,13 +135,33 @@ bool WinD3d9Render::ScreenUpdateProcess() {
 }
 
 int WinD3d9Render::UpdateRenderSurface() {
-
+  HRESULT hr;
   if (!_pd3dDevice) {
     RTC_LOG(LS_ERROR) << "d3dDevice not created.";
     return -1;
   }
+  if (FAILED(hr = _pd3dDevice->TestCooperativeLevel())) {
+    // the device has been lost but cannot be reset at this time
+    if (hr == D3DERR_DEVICELOST) {
+      return 0;
+    }
 
-  //RTC_LOG(LS_INFO) << "UpdateRenderSurface:";
+    // the device has been lost and can be reset
+    if (hr == D3DERR_DEVICENOTRESET) {
+      // do lost/reset/restore cycle
+      hr = _pd3dDevice->Reset(&_d3dpp);
+      if (FAILED(hr)) {
+        CloseDevice();
+        InitDevice();
+        if (_pTexture != NULL) {
+          _pTexture->Release();
+          _pTexture = NULL;
+        }
+        return 0;
+      }
+    }
+  }
+  // RTC_LOG(LS_INFO) << "UpdateRenderSurface:";
   // Clear the backbuffer to a black color
   _pd3dDevice->Clear(0, NULL, D3DCLEAR_TARGET, D3DCOLOR_XRGB(0, 0, 0), 1.0f, 0);
 
