@@ -1840,7 +1840,7 @@ MediaClient::CreateLocalVideoTrack(const std::string& track_params) {
                       break;
                   }
                 });
-	if(video_track_ != nullptr)
+    if (video_track_ != nullptr)
       video_tracks_.push_back(video_track_);
     return video_track_;
   }
@@ -3365,13 +3365,16 @@ bool MediaClient::RegisterRemoteVideoResoluteCallback(
     ECMedia_FrameSizeChangeCallback* callback) {
   API_LOG(INFO) << "channelId: " << channelid;
   EC_CHECK_VALUE((channelid >= 0), false);
-
+#if defined WEBRTC_WIN || defined(WEBRTC_IOS)
   if (!renderWndsManager_) {
     InitRenderWndsManager();
   }
 
-return renderWndsManager_->RegisterRemoteVideoResoluteCallback(channelid,
+  return renderWndsManager_->RegisterRemoteVideoResoluteCallback(channelid,
                                                                  callback);
+#else
+  return false;
+#endif
 }
 int MediaClient::SetConferenceParticipantCallbackTimeInterVal(
     int channel_id,
@@ -4080,17 +4083,17 @@ bool ChannelGenerator::ReturnId(int id) {
 ////      mirror_image_.reset(new uint8_t[bmi_.bmiHeader.biSizeImage]);
 ////      RTC_DCHECK(image_.get() != NULL);
 ////      libyuv::I420ToARGB(buffer->DataY(), buffer->StrideY(),
-///buffer->DataU(), /                         buffer->StrideU(),
-///buffer->DataV(), buffer->StrideV(), / mirror_image_.get(), /
-///bmi_.bmiHeader.biWidth * bmi_.bmiHeader.biBitCount / 8, / buffer->width(),
-///buffer->height()); /      libyuv::ARGBMirror(mirror_image_.get(), /
-///bmi_.bmiHeader.biWidth * bmi_.bmiHeader.biBitCount / 8, / image_.get(), /
-///bmi_.bmiHeader.biWidth * bmi_.bmiHeader.biBitCount / 8, / buffer->width(),
-///buffer->height()); /    }else{ /      libyuv::I420ToARGB(buffer->DataY(),
-///buffer->StrideY(), buffer->DataU(), / buffer->StrideU(), buffer->DataV(),
-///buffer->StrideV(), /                         image_.get(), /
-///bmi_.bmiHeader.biWidth * bmi_.bmiHeader.biBitCount / 8, / buffer->width(),
-///buffer->height()); /	} /	//add by ytx_wx end... /  }
+/// buffer->DataU(), /                         buffer->StrideU(),
+/// buffer->DataV(), buffer->StrideV(), / mirror_image_.get(), /
+/// bmi_.bmiHeader.biWidth * bmi_.bmiHeader.biBitCount / 8, / buffer->width(),
+/// buffer->height()); /      libyuv::ARGBMirror(mirror_image_.get(), /
+/// bmi_.bmiHeader.biWidth * bmi_.bmiHeader.biBitCount / 8, / image_.get(), /
+/// bmi_.bmiHeader.biWidth * bmi_.bmiHeader.biBitCount / 8, / buffer->width(),
+/// buffer->height()); /    }else{ /      libyuv::I420ToARGB(buffer->DataY(),
+/// buffer->StrideY(), buffer->DataU(), / buffer->StrideU(), buffer->DataV(),
+/// buffer->StrideV(), /                         image_.get(), /
+/// bmi_.bmiHeader.biWidth * bmi_.bmiHeader.biBitCount / 8, / buffer->width(),
+/// buffer->height()); /	} /	//add by ytx_wx end... /  }
 ////
 ////  Paint();
 ////}
@@ -4147,10 +4150,10 @@ bool ChannelGenerator::ReturnId(int id) {
 ////      }
 ////      StretchDIBits(dc_mem, 0, 0, logical_area.x, logical_area.y, x, y,
 ////                    width - x, height - y, image_.get(), &bmi_,
-///DIB_RGB_COLORS, /                    SRCCOPY); /    }
+/// DIB_RGB_COLORS, /                    SRCCOPY); /    }
 ////
 ////    BitBlt(hDC_, 0, 0, logical_area.x, logical_area.y, dc_mem, 0, 0,
-///SRCCOPY);
+/// SRCCOPY);
 ////
 ////    ::SelectObject(dc_mem, bmp_old);
 ////    ::DeleteObject(bmp_mem);
@@ -4166,15 +4169,15 @@ bool ChannelGenerator::ReturnId(int id) {
 ////    : wnd_(wnd), rendered_track_(track_to_render)
 ///,clock_(webrtc::Clock::GetRealTimeClock()){ /  RTC_LOG(INFO) << __FUNCTION__
 ///<< "()," /                << ", wnd: " << wnd << ", width: " << width / << ",
-///height: " << height /                << ", track_to_render: " <<
-///track_to_render; /  mode_ = mode; /
+/// height: " << height /                << ", track_to_render: " <<
+/// track_to_render; /  mode_ = mode; /
 ///::InitializeCriticalSection(&buffer_lock_); /  ZeroMemory(&bmi_,
-///sizeof(bmi_)); /  bmi_.bmiHeader.biSize = sizeof(BITMAPINFOHEADER); /
-///bmi_.bmiHeader.biPlanes = 1; /  bmi_.bmiHeader.biBitCount = 32; /
-///bmi_.bmiHeader.biCompression = BI_RGB; /  bmi_.bmiHeader.biWidth = width; /
-///bmi_.bmiHeader.biHeight = -height; /  bmi_.bmiHeader.biSizeImage = / width *
-///height * (bmi_.bmiHeader.biBitCount >> 3); /  if (rendered_track_) { /
-///rendered_track_->AddOrUpdateSink(this, rtc::VideoSinkWants()); /  } /  if
+/// sizeof(bmi_)); /  bmi_.bmiHeader.biSize = sizeof(BITMAPINFOHEADER); /
+/// bmi_.bmiHeader.biPlanes = 1; /  bmi_.bmiHeader.biBitCount = 32; /
+/// bmi_.bmiHeader.biCompression = BI_RGB; /  bmi_.bmiHeader.biWidth = width; /
+/// bmi_.bmiHeader.biHeight = -height; /  bmi_.bmiHeader.biSizeImage = / width *
+/// height * (bmi_.bmiHeader.biBitCount >> 3); /  if (rendered_track_) { /
+/// rendered_track_->AddOrUpdateSink(this, rtc::VideoSinkWants()); /  } /  if
 ///(wnd_) { /    hDC_ = GetDC((HWND)wnd_); /  } else { /    hDC_ = nullptr; /  }
 ////}
 ////
@@ -4212,8 +4215,8 @@ bool ChannelGenerator::ReturnId(int id) {
 ////  RTC_LOG(INFO) << __FUNCTION__ << "() "
 ////                << " begin..."
 ////                << " width:" << width << " biWidth:" <<
-///bmi_.bmiHeader.biWidth /                << "height:" << height << "
-///biHeight:" << bmi_.bmiHeader.biHeight;
+/// bmi_.bmiHeader.biWidth /                << "height:" << height << "
+/// biHeight:" << bmi_.bmiHeader.biHeight;
 ////
 ////  bmi_.bmiHeader.biWidth = width;
 ////  bmi_.bmiHeader.biHeight = -height;
@@ -4231,29 +4234,29 @@ bool ChannelGenerator::ReturnId(int id) {
 ////
 ////    //if (video_frame.timestamp() > 0) {
 ////    //  RTC_LOG(INFO) << "hubintest OnFrame 000 ts:" <<
-///video_frame.timestamp(); /	//} /
-///rtc::scoped_refptr<webrtc::I420BufferInterface> buffer( /
-///video_frame.video_frame_buffer()->ToI420()); /    if (video_frame.rotation()
+/// video_frame.timestamp(); /	//} /
+/// rtc::scoped_refptr<webrtc::I420BufferInterface> buffer( /
+/// video_frame.video_frame_buffer()->ToI420()); /    if (video_frame.rotation()
 ///!= webrtc::kVideoRotation_0) { /      buffer =
-///webrtc::I420Buffer::Rotate(*buffer, video_frame.rotation()); /    }
+/// webrtc::I420Buffer::Rotate(*buffer, video_frame.rotation()); /    }
 ////
 ////    SetSize(buffer->width(), buffer->height());
 ////
 ////	//if (video_frame.timestamp() > 0) {
 ////    //  RTC_LOG(INFO) << "hubintest OnFrame 111 ts:" <<
-///video_frame.timestamp(); /	//} /    RTC_DCHECK(image_.get() != NULL); /
-///libyuv::I420ToARGB(buffer->DataY(), buffer->StrideY(), buffer->DataU(), /
-///buffer->StrideU(), buffer->DataV(), buffer->StrideV(), / image_.get(), /
-///bmi_.bmiHeader.biWidth * bmi_.bmiHeader.biBitCount / 8, / buffer->width(),
-///buffer->height()); /  } /  //if (video_frame.timestamp() > 0) { /  //
-///RTC_LOG(INFO) << "hubintest OnFrame 222 ts:" << video_frame.timestamp(); /
+/// video_frame.timestamp(); /	//} /    RTC_DCHECK(image_.get() != NULL); /
+/// libyuv::I420ToARGB(buffer->DataY(), buffer->StrideY(), buffer->DataU(), /
+/// buffer->StrideU(), buffer->DataV(), buffer->StrideV(), / image_.get(), /
+/// bmi_.bmiHeader.biWidth * bmi_.bmiHeader.biBitCount / 8, / buffer->width(),
+/// buffer->height()); /  } /  //if (video_frame.timestamp() > 0) { /  //
+/// RTC_LOG(INFO) << "hubintest OnFrame 222 ts:" << video_frame.timestamp(); /
 /////}
 ////
 ////  Paint(video_frame.timestamp());
 ////  //if (video_frame.timestamp() > 0) {
 ////	//int64_t end_time = clock_->TimeInMilliseconds();
 ////  //  RTC_LOG(INFO) << "hubintest OnFrame 333 ts:" <<
-///video_frame.timestamp() << " diff:" << end_time-start_time; / // }
+/// video_frame.timestamp() << " diff:" << end_time-start_time; / // }
 ////}
 ////
 ////void VideoRenderer::Paint(uint32_t ts) {
@@ -4331,14 +4334,14 @@ bool ChannelGenerator::ReturnId(int id) {
 ////      }
 ////      StretchDIBits(dc_mem, 0, 0, logical_area.x, logical_area.y, x, y,
 ////                    width - x, height - y, image_.get(), &bmi_,
-///DIB_RGB_COLORS, /                    SRCCOPY); /    }
+/// DIB_RGB_COLORS, /                    SRCCOPY); /    }
 ////
 ////  if (ts > 0) {
 ////    RTC_LOG(INFO) << "hubintest OnPaint 444 ts:" << ts;
 ////  }
 ////
 ////    BitBlt(hDC_, 0, 0, logical_area.x, logical_area.y, dc_mem, 0, 0,
-///SRCCOPY);
+/// SRCCOPY);
 ////
 ////
 ////  if (ts > 0) {
@@ -4353,7 +4356,7 @@ bool ChannelGenerator::ReturnId(int id) {
 ////  if (ts > 0) {
 ////	int64_t end_time = clock_->TimeInMilliseconds();
 ////    RTC_LOG(INFO) << "hubintest OnPaint 666 ts:" << ts << " diff:" <<
-///end_time-start_time_0; /  }
+/// end_time-start_time_0; /  }
 ////}
 //
 ///*void VideoRenderer::Paint() {
@@ -4574,7 +4577,7 @@ bool ChannelGenerator::ReturnId(int id) {
 ////                << " begin... "
 ////                << ", channelId: " << channelId;
 ////  std::map<int, ptr_render>::iterator it =
-///mapRemoteRenderWnds.find(channelId); /  if (it != mapRemoteRenderWnds.end())
+/// mapRemoteRenderWnds.find(channelId); /  if (it != mapRemoteRenderWnds.end())
 ///{ /    return (void*)it->second->handle(); /  } /  return nullptr;
 ////}
 //
