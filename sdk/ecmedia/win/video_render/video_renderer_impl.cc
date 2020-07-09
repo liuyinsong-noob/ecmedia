@@ -41,7 +41,8 @@ VideoRenderImpl::VideoRenderImpl(int channelid,
     : channelid_(channelid),
       worker_thread_(worker_thread),
       rendered_track_(track_to_render),
-      video_window_(windows) {
+      video_window_(windows),
+      callback_(nullptr) {
   switch (render_type) {
     case kRenderWindows: {
       RTC_LOG(LS_INFO) << " new WinD3d9Render begins " << (long)this

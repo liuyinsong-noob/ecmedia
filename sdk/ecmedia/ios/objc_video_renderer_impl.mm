@@ -61,7 +61,7 @@ ObjCVideoRendererImpl::ObjCVideoRendererImpl(int channelid, void* parent, int re
                                              bool mirror, webrtc::VideoTrackInterface* track,
                                              rtc::Thread* worker_thread, VideoRenderType type)
 :channelid_(channelid), size_(CGSizeZero), track_(track),render_mode_(render_mode),
-parent_(parent), mirror_(mirror), type_(type) ,worker_thread_(worker_thread){
+parent_(parent), mirror_(mirror), type_(type) ,worker_thread_(worker_thread), call_back_(nullptr){
   renderer_ = GetWindwoRenderPtr(parent);
 }
 ObjCVideoRendererImpl::~ObjCVideoRendererImpl(){
