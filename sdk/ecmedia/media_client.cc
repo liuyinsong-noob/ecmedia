@@ -105,6 +105,7 @@ void ReadMediaConfig(const char* filename) {
 
   fr.Read(buf, sizeof(buf) - 1);
   std::string ccmode, h264_encoder = "openh264";
+  std::string simulcast = "false";
   std::string tid;
   Json::Reader reader;
   Json::Value config;
@@ -115,7 +116,7 @@ void ReadMediaConfig(const char* filename) {
   rtc::GetStringFromJsonObject(config, "Congestion-Control-Mode", &ccmode);
   rtc::GetStringFromJsonObject(config, "H264-Encoder", &h264_encoder);
   rtc::GetStringFromJsonObject(config, "Test-For-X264-Time-SVC", &tid);
-
+  rtc::GetStringFromJsonObject(config, "Simulcast", &simulcast);
   static std::string trail_string;
   trail_string.append("EC-Congestion-Control-Mode");
   if (ccmode == "gcc") {
@@ -137,7 +138,13 @@ void ReadMediaConfig(const char* filename) {
   else {
     trail_string.append("/false/");
   }
-
+  trail_string.append("Simulcast");
+  if (simulcast == "true") {
+	  trail_string.append("/true/");
+  }
+  else {
+	  trail_string.append("/false/");
+  }
   webrtc::field_trial::InitFieldTrialsFromString(trail_string.c_str());
 }
 
@@ -997,7 +1004,19 @@ bool MediaClient::CreateVideoChannel(const std::string& settings,
   vidoe_send_params.max_bandwidth_bps =
       m_MaxBandwidthBps_ == 0 ? kMaxBandwidthBps : m_MaxBandwidthBps_;
 #endif
-  if (config.isSimulcast) {
+  bool isSimulcast = false;
+  if (!config.isSimulcast)
+  {
+	if (webrtc::field_trial::FindFullName("Simulcast") == "true")
+	{
+	  isSimulcast = true;
+	}
+  }
+  else 
+  {
+	isSimulcast = true;
+  }
+  if (isSimulcast) {
     std::vector<uint32_t> ssrcsSimLocal;
     for (auto it : ssrcsLocal) {
       ssrcsSimLocal.push_back(it);
