@@ -998,12 +998,9 @@ bool MediaClient::CreateVideoChannel(const std::string& settings,
 
   vidoe_send_params.max_bandwidth_bps =
       m_MaxBandwidthBps_;  // kMaxBandwidthBps;
-#if defined( \
-    WEBRTC_IOS)  // add bu
-                 // yukening；看不懂上面的代码，iOS括起来重新重新定义最大值；
+  // add bu yukening 如果当前的最大带宽是0 就重置为默认最大带宽；
   vidoe_send_params.max_bandwidth_bps =
       m_MaxBandwidthBps_ == 0 ? kMaxBandwidthBps : m_MaxBandwidthBps_;
-#endif
   bool isSimulcast = false;
   if (!config.isSimulcast)
   {

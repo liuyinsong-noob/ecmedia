@@ -97,6 +97,10 @@ RtpTransportControllerSend::RtpTransportControllerSend(
           TaskQueueFactory::Priority::NORMAL)) {
   initial_config_.constraints = ConvertConstraints(bitrate_config, clock_);
   RTC_DCHECK(bitrate_config.start_bitrate_bps > 0);
+       if(field_trial::FindFullName("EC-Congestion-Control-Mode") == "gcc") {
+        gcc_ = true;
+       }else
+        gcc_ = false;
 
   pacer_.SetPacingRates(bitrate_config.start_bitrate_bps, 0);
 
@@ -576,7 +580,7 @@ void RtpTransportControllerSend::PostUpdates(NetworkControlUpdate update) {
       pacer_.SetCongestionWindow(PacedSender::kNoCongestionWindow);
   }
   if (update.pacer_config) {
-    pacer_.SetPacingRates(update.pacer_config->data_rate().bps() +  100000,
+    pacer_.SetPacingRates(update.pacer_config->data_rate().bps() + (gcc_ ? 0:100000),
                           update.pacer_config->pad_rate().bps());
   }
   for (const auto& probe : update.probe_cluster_configs) {
@@ -618,7 +622,8 @@ void RtpTransportControllerSend::PostUpdates(NetworkControlUpdate update) {
       nack_bps  = nack_bps * 0.7;
     else if(nack_bps >=  90 )
       nack_bps = 80;
-    (*update.target_rate).target_rate = (*update.target_rate).target_rate*((float)nack_bps/100 + 0.01) ;
+   if(!gcc_)
+     (*update.target_rate).target_rate = (*update.target_rate).target_rate*((float)nack_bps/100 + 0.01) ;
     //ytx_end
     control_handler_->SetTargetRate(*update.target_rate);
     //ytx_begin

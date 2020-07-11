@@ -158,10 +158,11 @@ void PacedSender::UpdateOutstandingData(int64_t outstanding_bytes) {
 bool PacedSender::Congested() const {
   if (congestion_window_bytes_ == kNoCongestionWindow)
     return false;
-  //ytx_add
-  if(outstanding_bytes_ >= congestion_window_bytes_){
-	  RTC_LOG(LS_INFO) << "ykn. Congestiond  value is :" << congestion_window_bytes_
-		  <<"outstanding_bytes_ :" << outstanding_bytes_;
+  // ytx_add
+  if (outstanding_bytes_ >= congestion_window_bytes_) {
+    RTC_LOG(LS_INFO) << "ykn. Congestiond  value is :"
+                     << congestion_window_bytes_
+                     << "outstanding_bytes_ :" << outstanding_bytes_;
   }
   return outstanding_bytes_ >= congestion_window_bytes_;
 }
@@ -228,23 +229,24 @@ void PacedSender::SetPacingRates(uint32_t pacing_rate_bps,
       last_valid_padding_bps_ = padding_rate_bps;
       last_valid_padding_time_ = clock_->TimeInMilliseconds();
     }
-  }else if(padding_rate_bps > last_valid_padding_bps_ &&
-           (clock_->TimeInMilliseconds() - last_valid_padding_time_ ) < 3000 ){
-    if(padding_rate_bps - last_valid_padding_bps_ > last_valid_padding_bps_){
-      last_valid_padding_bps_ = last_valid_padding_bps_ + (padding_rate_bps - last_valid_padding_bps_) /2 ;
-    }else {
-      last_valid_padding_bps_  = padding_rate_bps;
+  } else if (padding_rate_bps > last_valid_padding_bps_ &&
+             (clock_->TimeInMilliseconds() - last_valid_padding_time_) < 500) {
+    if (padding_rate_bps - last_valid_padding_bps_ > last_valid_padding_bps_) {
+      last_valid_padding_bps_ =
+          last_valid_padding_bps_ +
+          (padding_rate_bps - last_valid_padding_bps_) / 2;
+    } else {
+      last_valid_padding_bps_ = padding_rate_bps;
     }
     last_valid_padding_time_ = clock_->TimeInMilliseconds();
     padding_rate_bps = last_valid_padding_bps_;
-  }else
+  } else
     padding_rate_bps == 0 ? padding_rate_bps = 0
-                          : padding_rate_bps = last_valid_padding_bps_;
-						  
-  
-  if (GetNackbps() <= 60)
-    padding_rate_bps = (float)GetNackbps()/100 * padding_rate_bps;
-  //ytx_end
+                          : last_valid_padding_bps_ = padding_rate_bps;
+
+  if (GetNackbps() <= 50)
+    padding_rate_bps = (float)GetNackbps() / 100 * padding_rate_bps;
+  // ytx_end
   pacing_bitrate_kbps_ = pacing_rate_bps / 1000;
   padding_budget_.set_target_rate_kbps(padding_rate_bps / 1000);
 
@@ -447,9 +449,9 @@ void PacedSender::Process() {
         last_nack_send_time = now_us /1000;
       last_nack_size = last_nack_size + packet->bytes;
     }
-    
-    if(!packet->retransmission){
-      ssrc_send_end_[packet->ssrc] = ssrc_send_end_[packet->ssrc] + 1;
+
+    if (!packet->retransmission) {
+      ssrc_send_[packet->ssrc] = ssrc_send_[packet->ssrc] + 1;
     }
     ssrc_send_retran_[packet->ssrc] = ssrc_send_retran_[packet->ssrc] + 1;
     //ytx_end
@@ -588,7 +590,7 @@ uint32_t PacedSender::GetNackbps(){
   rtc::CritScope cs(&critsect_);
   static uint32_t bps = 100;
   int64_t now_ms = clock_->TimeInMilliseconds();
-  if(now_ms - last_nack_time < 500)
+  if(now_ms - last_nack_time < 5000)
     return bps;
   
   bps = 100;
@@ -596,44 +598,27 @@ uint32_t PacedSender::GetNackbps(){
   auto it = ssrc_send_retran_.begin();
   while(it != ssrc_send_retran_.end() ){
     uint32_t ssrc = it->first;
-    uint32_t sum_send_package_ = it->second;
-    uint16_t send_start = 0;
-    uint16_t send_end = 0;
-    
+    uint32_t sum_packages_ = it->second;
+    uint16_t send_packages_ = 0;
+    if((ssrc & 0x30) == 0 || sum_packages_ < 20){
+     it++;
+     continue;
+    }
    
-    auto it_end = ssrc_send_end_.find(ssrc);
-    if(it_end != ssrc_send_end_.end()){
-      send_end = it_end->second;
-    }
-    else
-      send_end = 0;
-    
-    auto it_start = ssrc_send_start_.find(ssrc);
-    if(it_start != ssrc_send_start_.end()){
-       send_start = it_start->second;
-      if(send_start > send_end && abs(send_end -65535) < 100){
-        ssrc_send_start_[ssrc] = 0;
-      }
-    }
-       else
-         ssrc_send_start_[ssrc] = send_end;
-    
-     //ssrc_send_retran_[ssrc] = 0;
-    if(send_end - send_start == 0 || sum_send_package_ == 0 || send_end - send_start == sum_send_package_){
-      it++;
-      continue;
+    auto it_end = ssrc_send_.find(ssrc);
+    if(it_end != ssrc_send_.end()){
+      send_packages_ = it_end->second;
     }
       
-    int16_t delay = abs(send_end - send_start);
-    uint32_t bps_  = ((float)delay / (float)sum_send_package_) * 100;
-     //printf("nack bps pace_send sssrc: %u  sum_page %d strt_seq: %u start_end %u  delay : %u  bps %u   \n",ssrc,sum_send_package_,send_start,send_end,abs(send_end - send_start),bps_);
-    if(ssrc_send_end_[ssrc] > sum_send_package_)
-      ssrc_send_end_[ssrc] = sum_send_package_;
-    bps_ = (float)ssrc_send_end_[ssrc] / sum_send_package_ * 100;
+    uint32_t bps_  =  100;
+   if(send_packages_ < sum_packages_)
+    bps_ = (float) send_packages_ / sum_packages_ * 100;
     if(bps_ < bps)
       bps = bps_;
     it++;
   }
+ ssrc_send_.clear();
+ ssrc_send_retran_.clear();
   return bps;
 }
 //ytx_end

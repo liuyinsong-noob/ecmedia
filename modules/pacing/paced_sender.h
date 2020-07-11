@@ -224,8 +224,7 @@ class PacedSender : public Pacer {
   using NackTime = std::map<uint16_t, int64_t>;
   std::map<uint32_t, NackTime> ssrc_time_ RTC_GUARDED_BY(critsect_);
   
-  std::map<uint32_t, uint16_t> ssrc_send_start_ RTC_GUARDED_BY(critsect_);
-  std::map<uint32_t, uint16_t> ssrc_send_end_ RTC_GUARDED_BY(critsect_);
+  std::map<uint32_t, uint16_t> ssrc_send_ RTC_GUARDED_BY(critsect_);
   std::map<uint32_t, uint16_t> ssrc_send_retran_ RTC_GUARDED_BY(critsect_);
   int64_t last_nack_time RTC_GUARDED_BY(critsect_);
   //ytx_end

@@ -171,6 +171,7 @@ class RtpTransportControllerSend final
   //ytx_begin by yukening
   int64_t last_congested_time;
   int64_t last_low_band_time;
+  bool gcc_;
   //ytx_end
   // Transport overhead is written by OnNetworkRouteChanged and read by
   // AddPacket.
