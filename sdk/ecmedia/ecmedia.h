@@ -6,6 +6,8 @@
 #define ECMEDIA_API __attribute__((visibility("default")))
 #elif defined(WIN32)
 #define ECMEDIA_API _declspec(dllexport)
+#elif defined(WEBRTC_LINUX)
+#define ECMEDIA_API __attribute__((visibility("default")))
 #else
 #import "RTCMacros.h"
 #define ECMEDIA_API RTC_OBJC_EXPORT

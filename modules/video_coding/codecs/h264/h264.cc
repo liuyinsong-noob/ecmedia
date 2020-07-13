@@ -94,13 +94,16 @@ std::unique_ptr<H264Encoder> H264Encoder::Create(
 #if defined(WEBRTC_USE_H264)
   RTC_CHECK(g_rtc_use_h264);
   //ytx_begin add x264 encoder
-  if (webrtc::field_trial::FindFullName("EC-H264-Encoder") == "openh264") {
-    RTC_LOG(LS_INFO) << "Creating OpenH264EncoderImpl.";
-    return absl::make_unique<H264EncoderImpl>(codec);
-  } else {
-    RTC_LOG(LS_INFO) << "Creating X264EncoderImpl.";
-    return absl::make_unique<X264EncoderImpl>(codec);
+#ifdef WEBRTC_WIN
+  if (webrtc::field_trial::FindFullName("EC-H264-Encoder") == "x264") {
+
+	  RTC_LOG(LS_INFO) << "Creating X264EncoderImpl.";
+	  return absl::make_unique<X264EncoderImpl>(codec);
   }
+#endif
+  RTC_LOG(LS_INFO) << "Creating OpenH264EncoderImpl.";
+  return absl::make_unique<H264EncoderImpl>(codec);
+  
   //ytx_end
 #else
   RTC_NOTREACHED();

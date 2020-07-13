@@ -1747,6 +1747,30 @@ rtc_source_set("ecmedia_obj") {
       ]
       include_dirs = ["ecmedia/win",]
     }
+
+    if (is_linux) {
+      configs += [ "//build/config/linux:compiler" ]
+      sources += [
+      "ecmedia/linux/video_render/i_video_render.h",
+      "ecmedia/linux/video_render/linux_render.h",
+      "ecmedia/linux/video_render/linux_render.cc",
+      "ecmedia/linux/video_render/video_render_frames.cc",
+      "ecmedia/linux/video_render/video_render_frames.h",
+      "ecmedia/linux/video_render/video_renderer_impl.cc",
+      "ecmedia/linux/video_render/video_renderer_impl.h",
+      "ecmedia/linux/video_capturer/i_video_capturer.h",
+      "ecmedia/linux/video_capturer/video_capturer.cc",
+      "ecmedia/linux/video_capturer/video_capturer.h",
+      "ecmedia/linux/video_capturer/capturer_track_source.h",
+      "ecmedia/linux/video_capturer/capturer_track_source.cc",
+      ]
+      include_dirs = ["ecmedia/linux",]
+      libs = [ "Xext" ]
+      lib_dirs = [ "build/linux/debian_sid_arm64-sysroot/usr/lib/aarch64-linux-gnu/" ]
+    }
+
+
+
     deps = [
       "../api:create_peerconnection_factory",
       "../api:libjingle_peerconnection_api",

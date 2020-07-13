@@ -114,10 +114,13 @@ bool RenderManager::AttachVideoRender(int channelId,
     }
     it++;
   }
-  
+#if defined(WEBRTC_LINUX_ONLY)
+VideoRenderer* render = VideoRenderer::CreateVideoRenderer(
+	channelId,videoView, render_mode, mirror_mode, nullptr, worker_thread, kRenderX11,wants);
+#else 
    VideoRenderer* render = VideoRenderer::CreateVideoRenderer(
      channelId, videoView, render_mode, mirror_mode, nullptr, worker_thread, kRenderWindows, wants);
-  
+#endif  
   std::map<int, render_list>::iterator iter = map_video_renders_.find(channelId);
   if (iter == map_video_renders_.end()) {
     render_list _renderList;

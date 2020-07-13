@@ -49,6 +49,10 @@
 #include <jni.h>
 #endif
 
+#if defined(WEBRTC_LINUX) && !defined(WEBRTC_ANDROID)
+#define WEBRTC_LINUX_ONLY
+#endif
+
 #include "media/base/adapted_video_track_source.h"
 #include "sdk_common.h"
 //#include "third_party/protobuf/src/google/protobuf/message_lite.h"
@@ -64,7 +68,7 @@ typedef void (*OnDetroyChannel)(int channel_id);
 }
 #endif
 namespace win_desk {
-#if defined(WEBRTC_WIN)
+#if defined(WEBRTC_WIN)|| defined(WEBRTC_LINUX_ONLY)
 class ECDesktopCapture : public rtc::AdaptedVideoTrackSource,
                          public rtc::MessageHandler,
                          public webrtc::DesktopCapturer::Callback {
@@ -937,7 +941,7 @@ class MediaClient : public sigslot::has_slots<> {
 
  private:
   static MediaClient* m_pInstance;
-#if defined(WEBRTC_WIN)
+#if defined(WEBRTC_WIN)|| defined(WEBRTC_LINUX_ONLY)
   int m_screenshareID;
   bool m_screenshareStart;
 #endif
@@ -1030,13 +1034,13 @@ class MediaClient : public sigslot::has_slots<> {
     std::string unique_id_;
   };
   std::map<int, UniqueIdVideoCapturerPair> camera_devices_;
-#if defined WEBRTC_WIN
+#if defined WEBRTC_WIN || defined(WEBRTC_LINUX_ONLY)
   rtc::scoped_refptr<win_desk::ECDesktopCapture> desktop_device_;
 
   std::map<int, rtc::scoped_refptr<win_desk::ECDesktopCapture>>
       desktop_devices_;
 #endif
-#if defined WEBRTC_WIN || defined WEBRTC_IOS
+#if defined WEBRTC_WIN || defined WEBRTC_IOS|| defined(WEBRTC_LINUX_ONLY)
   std::unique_ptr<RenderManager> renderWndsManager_;
 #endif
  // std::unique_ptr<VideoRenderer> local_renderer_;
@@ -1073,7 +1077,7 @@ class MediaClient : public sigslot::has_slots<> {
       onGetAudioHardwareEncoderFactoryAndAdm_;
 #endif
   int m_MaxBandwidthBps_;
-#if defined(WEBRTC_WIN)
+#if defined(WEBRTC_WIN) || defined(WEBRTC_LINUX_ONLY)
   int m_MaxBitrateScreen_;
 #endif
 };
