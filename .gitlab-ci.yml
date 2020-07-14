@@ -22,6 +22,16 @@ build_android:
       - develop
     tags:
       - ecmedia-ubuntu
+      
+build_linux:
+    stage: build
+    script:    
+      - "python build.py --target_os=linux"
+    allow_failure: true
+    only:
+      - develop
+    tags:
+      - ecmedia-ubuntu      
 
 build_ios:
     stage: build
