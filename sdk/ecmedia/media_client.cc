@@ -1369,7 +1369,7 @@ bool MediaClient::SelectVideoSource(
                 << ", video_track: " << video_track;
   bool bResult = false;
   if (channelid <= 1 && video_track == nullptr &&
-      track_id.compare("p2p") != 0) {
+      track_id.compare("p2p") != 0 && track_id.compare("tp2p") != 0) {
     return bResult;
   }
   bResult = signaling_thread_->Invoke<bool>(RTC_FROM_HERE, [this, channelid,
