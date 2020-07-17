@@ -3366,14 +3366,20 @@ int MediaClient::RegisterConferenceParticipantCallback(
     ECMedia_ConferenceParticipantCallback* callback) {
   API_LOG(INFO) << "begin...";
   int ret = -1;
+  ret = signaling_thread_->Invoke<int>(
+     RTC_FROM_HERE, [this, ret,channel_id, callback] {
   if (mVoiceChannels_[channel_id] &&
       mVoiceChannels_[channel_id]->media_channel()) {
-    ret = mVoiceChannels_[channel_id]
+    return mVoiceChannels_[channel_id]
               ->media_channel()
               ->Register_ECMedia_ConferenceParticipantCallback(callback);
   } else {
     API_LOG(LS_ERROR) << "Can't find media_voice_channel!";
+    return ret;
   }
+  
+ });
+
   return ret;
 }
 bool MediaClient::RegisterRemoteVideoResoluteCallback(
@@ -3392,22 +3398,27 @@ bool MediaClient::RegisterRemoteVideoResoluteCallback(
   return false;
 #endif
 }
-int MediaClient::SetConferenceParticipantCallbackTimeInterVal(
-    int channel_id,
-    int timeInterVal) {
+ int MediaClient::SetConferenceParticipantCallbackTimeInterVal(
+                                                               int channel_id,
+                                                               int timeInterVal) {
   int ret = -1;
   API_LOG(INFO) << "begin..."
-                << "channel_id: " << channel_id << " timeInterVal"
-                << timeInterVal;
-  if (mVoiceChannels_[channel_id] &&
-      mVoiceChannels_[channel_id]->media_channel()) {
-    ret = mVoiceChannels_[channel_id]
-              ->media_channel()
-              ->SetConferenceParticipantCallbackTimeInterVal(timeInterVal);
-  }
+  << "channel_id: " << channel_id << " timeInterVal"
+  << timeInterVal;
+  ret = signaling_thread_->Invoke<int>(
+                                       RTC_FROM_HERE, [this, ret, channel_id, timeInterVal] {
+   
+   if (mVoiceChannels_[channel_id] &&
+       mVoiceChannels_[channel_id]->media_channel()) {
+    return mVoiceChannels_[channel_id]
+    ->media_channel()
+    ->SetConferenceParticipantCallbackTimeInterVal(timeInterVal);
+   }
+   return ret;
+  });
   API_LOG(INFO) << "end ...with ret:%d" << ret;
   return ret;
-}
+ }
 
 // add by ytx_wx  get call_statistics
 int MediaClient::GetCallStats(char* statistics, int length) {
@@ -3443,6 +3454,8 @@ bool MediaClient::GetVideoStreamStats(char* jsonVideoStats,
   API_LOG(LS_INFO) << "begin... "
                    << "channel_id: " << channel_id;
   bool bOk = false;
+  bOk = signaling_thread_->Invoke<bool>(
+                                      RTC_FROM_HERE, [this, bOk, jsonVideoStats, length, channel_id]() mutable {
   cricket::WebRtcVideoChannel* video_channel_internal =
       GetInternalVideoChannel(channel_id);
 
@@ -3455,7 +3468,7 @@ bool MediaClient::GetVideoStreamStats(char* jsonVideoStats,
         bool(it->second.ssrcRemote
                  .size());  // Determine if the channel is a receiveonly channel
 
-    bOk = worker_thread_->Invoke<bool>(RTC_FROM_HERE, [&] {
+    bOk = worker_thread_->Invoke<bool> (RTC_FROM_HERE, [&]{
       return video_channel_internal->GetVideoStreamStats(
           !is_receiveonly_channel, &info);
     });
@@ -3518,12 +3531,17 @@ bool MediaClient::GetVideoStreamStats(char* jsonVideoStats,
     API_LOG(LS_ERROR) << "nullptr!";
     return false;
   }
+   
+  });
+ return bOk;
 }
-
+ 
 bool MediaClient::GetVoiceStreamStats(char* jsonAudioStats,
                                       int length,
                                       int channel_id) {
   bool bOk = false;
+  bOk = signaling_thread_->Invoke<bool>(
+                                     RTC_FROM_HERE, [this, bOk, jsonAudioStats, length, channel_id]() mutable {
 
   if (mVoiceChannels_.find(channel_id) != mVoiceChannels_.end()) {
     cricket::VoiceChannel* voicechannel =
@@ -3565,8 +3583,12 @@ bool MediaClient::GetVoiceStreamStats(char* jsonAudioStats,
         API_LOG(LS_ERROR) << "char is too short!";
       }
     }
+   return bOk;
+  }else{
+   return bOk;
   }
-  return true;
+  });
+  return bOk;
 }
 
 bool MediaClient::AttachVideoRender(int channelId,
