@@ -55,8 +55,7 @@ ObjCCallClient* ObjCCallClient::GetInstance(){
      }
      return m_pInstance;
 }
-ObjCCallClient::ObjCCallClient()
-: call_started_(false){
+ObjCCallClient::ObjCCallClient(){
   rm_ = new RenderManager();
   render_ = new RenderManager();
   m_fps = 25;
@@ -79,32 +78,6 @@ void ObjCCallClient::Hangup() {
   capturer_ = nullptr;
 }
 
-void ObjCCallClient::CreatePeerConnection() {
-  rtc::CritScope lock(&pc_mutex_);
-  webrtc::PeerConnectionInterface::RTCConfiguration config;
-  config.sdp_semantics = webrtc::SdpSemantics::kUnifiedPlan;
-  // DTLS SRTP has to be disabled for loopback to work.
-  config.enable_dtls_srtp = false;
-  pc_ = pcf_->CreatePeerConnection(
-                                   config, nullptr /* port_allocator */, nullptr /* cert_generator */, nullptr);
-  RTC_LOG(LS_INFO) << "PeerConnection created: " << pc_;
-  
-  rtc::scoped_refptr<webrtc::VideoTrackInterface> local_video_track =
-  pcf_->CreateVideoTrack("video", video_source_);
-  pc_->AddTransceiver(local_video_track);
-  RTC_LOG(LS_INFO) << "Local video sink set up: " << local_video_track;
-  
-  for (const rtc::scoped_refptr<webrtc::RtpTransceiverInterface>& tranceiver :
-       pc_->GetTransceivers()) {
-    rtc::scoped_refptr<webrtc::MediaStreamTrackInterface> track = tranceiver->receiver()->track();
-    if (track && track->kind() == webrtc::MediaStreamTrackInterface::kVideoKind) {
-      static_cast<webrtc::VideoTrackInterface*>(track.get())
-      ->AddOrUpdateSink(remote_sink_.get(), rtc::VideoSinkWants());
-      RTC_LOG(LS_INFO) << "Remote video sink set up: " << track;
-      break;
-    }
-  }
-}
 
 bool ObjCCallClient::InitDevice(rtc::Thread* signaling_thread,rtc::Thread* worker_thread){
   
@@ -125,54 +98,6 @@ webRTCConfig.categoryOptions = webRTCConfig.categoryOptions |
 [RTCAudioSessionConfiguration setWebRTCConfiguration:webRTCConfig];
 
   return true;
-}
-
-void ObjCCallClient::SetLocalWindowView(void* local)
-{
-  if(local )
-  {
-    render_->AttachVideoRender(1,
-            local,
-            0,
-            0,
-            nullptr);
-    return;
-   
-    //UIView *parentView = (__bridge UIView *)local;
-    dispatch_async(dispatch_get_main_queue(), ^{
-//      localVideoView.bounds = CGRectMake(0, 0, parentView.frame.size.width, parentView.frame.size.height);
-//      localVideoView.frame = CGRectMake(0, 0, parentView.frame.size.width, parentView.frame.size.height);
-//      localVideoView.contentMode = parentView.contentMode;
-//      [parentView addSubview:localVideoView];
-      //render->
-     
-    });
-  }
-}
-
-void ObjCCallClient::SetRemoteWindowView(int channelID, void* remoteView ){
-  if(rm_){
-    if( ![[NSThread currentThread] isMainThread] ){
-      dispatch_sync(dispatch_get_main_queue(), ^{
-       // rm_->SetRemoteWindowView(channelID,remoteView);
-      });
-    }
-    //else
-      //rm_->SetRemoteWindowView(channelID, remoteView);
-  }
-  return;
-  if(remoteView){
-    std::map<int,std::unique_ptr<rtc::VideoSinkInterface<webrtc::VideoFrame>>>::iterator it = remote_sinks.find(channelID);
-    if(it != remote_sinks.end())
-      return;
-    RTCEAGLVideoView* videoview = [[RTCEAGLVideoView alloc] init];
-    remote_sinks[channelID] = ((webrtc::ObjCToNativeVideoRenderer(videoview)));
-    UIView *parentView = (__bridge UIView *)remoteView;
-    videoview.bounds = CGRectMake(0, 0, parentView.frame.size.width, parentView.frame.size.height);
-    videoview.frame = CGRectMake(0, 0, parentView.frame.size.width, parentView.frame.size.height);
-    videoview.contentMode = parentView.contentMode;
-    [parentView addSubview:videoview];
-  }
 }
 
 void ObjCCallClient::SetCameraFPS(int fps){
@@ -349,23 +274,6 @@ int ObjCCallClient::SetRotateCapturedFrames(int deviceid, ECMediaRotateCapturedF
   tr_ = tr;
   if(capturer_ == nullptr)
     return -1;
-//  switch (tr) {
-//    case ECMediaRotateCapturedFrame_0:
-//     [capturer_ switchCameraRotate:(RTCVideoRotation)tr];
-//      break;
-//    case ECMediaRotateCapturedFrame_90:
-//         [capturer_ switchCameraRotate:(RTCVideoRotation)tr];
-//         break;
-//    case ECMediaRotateCapturedFrame_180:
-//             [capturer_ switchCameraRotate:(RTCVideoRotation)tr];
-//              break;
-//    case ECMediaRotateCapturedFrame_270:
-//            [capturer_ switchCameraRotate:(RTCVideoRotation)tr];
-//            break;
-//
-//    default:
-//      break;
-//  }
   [capturer_ switchCameraRotate:(RTCVideoRotation)tr];
   return 0;
 }

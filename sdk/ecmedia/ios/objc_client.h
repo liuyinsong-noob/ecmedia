@@ -35,8 +35,6 @@ public:
     void Call();
     bool InitDevice(rtc::Thread* signaling_thread,rtc::Thread* worker_thread) ;
     void Hangup();
-    void SetLocalWindowView(void* local) ;
-    void SetRemoteWindowView(int channelID, void* remoteView ) ;
     rtc::VideoSinkInterface<webrtc::VideoFrame>*  getRemoteVideoSilkByChannelID(int channelID);
     webrtc::VideoTrackSourceInterface* getLocalVideoSource(rtc::Thread* signaling_thread,rtc::Thread* worker_thread);
     std::unique_ptr<webrtc::VideoEncoderFactory> getVideoEncoderFactory() ;
@@ -53,17 +51,13 @@ public:
                           const uint32_t deviceCapabilityNumber,
                            webrtc::VideoCaptureCapability& capability);
     
-    void CreatePeerConnectionFactory() RTC_RUN_ON(thread_checker_);
-    void CreatePeerConnection() RTC_RUN_ON(thread_checker_);
-    void Connect() RTC_RUN_ON(thread_checker_);
+    
     bool SetSpeakerStatus(bool enable);
     bool GetSpeakerStatus(bool& enable);
     bool PreviewTrack(int window_id, webrtc::VideoTrackInterface* video_track);
     rtc::ThreadChecker thread_checker_;
     
-    bool call_started_ RTC_GUARDED_BY(thread_checker_);
     
-    bool  getRemoteView(int channelID);
   
     int GetOrientation(int deviceid, ECMediaRotateCapturedFrame &tr);
     int SetRotateCapturedFrames(int deviceid, ECMediaRotateCapturedFrame tr);
