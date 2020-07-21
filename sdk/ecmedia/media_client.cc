@@ -763,9 +763,9 @@ void MediaClient::DestroyChannel(int channel_id, bool is_video) {
                       transceiver->internal()->SetChannel(nullptr);
                     });
                   }
-                  DestroyChannelInterface(channel);
                 }
               }
+              DestroyChannelInterface(channel);// 经胡斌和章明确认，暂时用这种办法解决iOS点对点崩溃的问题。临时性的解决办法；
             }
 
             mVideoChannels_.erase(it);
