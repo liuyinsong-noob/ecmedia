@@ -25,6 +25,7 @@
 #include <endpointvolume.h>
 #include <mediaobj.h>     // IMediaObject
 #include <mmdeviceapi.h>  // MMDevice
+#include <devicetopology.h>
 
 #include "api/scoped_refptr.h"
 #include "rtc_base/critical_section.h"
@@ -144,6 +145,8 @@ class AudioDeviceWindowsCore : public AudioDeviceGeneric {
   virtual int32_t MicrophoneVolume(uint32_t& volume) const;
   virtual int32_t MaxMicrophoneVolume(uint32_t& maxVolume) const;
   virtual int32_t MinMicrophoneVolume(uint32_t& minVolume) const;
+  // ytx_wx add
+  virtual int32_t SetMicrophoneGainLevel(uint32_t level);
 
   // Speaker mute control
   virtual int32_t SpeakerMuteIsAvailable(bool& available);

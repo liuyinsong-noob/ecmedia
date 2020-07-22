@@ -35,6 +35,7 @@
 #include <strsafe.h>
 #include <uuids.h>
 #include <windows.h>
+#include <initguid.h>//add by wxtest
 
 #include <iomanip>
 
@@ -1405,6 +1406,92 @@ int32_t AudioDeviceWindowsCore::MinMicrophoneVolume(uint32_t& minVolume) const {
 }
 
 // ----------------------------------------------------------------------------
+//  SetMicrophoneGainLevel to 0db
+//  ytx_wx add
+//-----------------------------------------------------------------------------
+
+int32_t AudioDeviceWindowsCore::SetMicrophoneGainLevel(uint32_t level) {
+  HRESULT hr(-1);
+
+  if (!_microphoneIsInitialized) {
+    return hr;
+  }
+
+  IAudioVolumeLevel* m_pMicBoost = nullptr;
+  IDeviceTopology* pTopo = nullptr;
+  IConnector* pConn = nullptr;
+
+  hr = _ptrDeviceIn->Activate(__uuidof(IDeviceTopology), CLSCTX_INPROC_SERVER,
+                              0, (void**)&pTopo);
+  if (FAILED(hr))
+    return hr;
+  hr = pTopo->GetConnector(0, &pConn);
+  if (FAILED(hr))
+    return hr;
+  int count = 0;
+  while (pConn) {
+    IConnector* pConnNext = NULL;
+    hr = pConn->GetConnectedTo(&pConnNext);
+    if (FAILED(hr))
+      break;
+    IPart* pPart = NULL;
+    hr = pConnNext->QueryInterface(__uuidof(IPart), (void**)&pPart);
+    pConn = NULL;
+    // find MicBoost handle
+    while (pPart) {
+      // Limit the number of cycles
+      count++;
+      if (count > 100) {
+        RTC_LOG(INFO) << "Can't find MicBoostAPI.";
+        return -1;
+      }
+      IPartsList* pPartsList = NULL;
+      IPart* pPartNext = NULL;
+      hr = pPart->EnumPartsOutgoing(&pPartsList);
+      if (FAILED(hr))
+        break;
+      hr = pPartsList->GetPart(0, &pPartNext);
+      if (FAILED(hr))
+        break;
+      PartType pt;
+      LPWSTR name = NULL;
+      pPartNext->GetName(&name);
+      pPartNext->GetPartType(&pt);
+      if (Connector == pt) {
+        pConn = NULL;
+        hr = pPartNext->QueryInterface(__uuidof(IConnector), (void**)&pConn);
+        CoTaskMemFree(name);
+        if (FAILED(hr))
+          return hr;
+        break;
+      }
+      IAudioVolumeLevel* pAL = NULL;
+      hr = pPartNext->Activate(CLSCTX_INPROC_SERVER,
+                               __uuidof(IAudioVolumeLevel), (void**)&pAL);
+      if (SUCCEEDED(hr) && ((wcscmp(L"麦克风加强", name) == 0) ||
+                            (wcscmp(L"麦克风增强", name) == 0))) {
+        m_pMicBoost = pAL;
+        float fLevel = 0.0f;
+        float fMin = 0.0f;
+        float fMax = 0.0f;
+        float fStep = 0.0f;
+        // get micboost Level;
+        hr = m_pMicBoost->GetLevel(0, &fLevel);
+        hr = m_pMicBoost->GetLevelRange(0, &fMin, &fMax, &fStep);
+        // set micboost Level;
+        RTC_LOG(INFO) << "Set Micphone boost to " << level * fStep;
+        hr = m_pMicBoost->SetLevelUniform(level * fStep, NULL);
+        CoTaskMemFree(name);
+        return hr;
+      }
+      pPart = pPartNext;
+    }
+  }
+  RTC_LOG(INFO) << "Can't find MicBoostAPI.";
+  return hr;
+}
+
+// ----------------------------------------------------------------------------
 //  PlayoutDevices
 // ----------------------------------------------------------------------------
 
@@ -2167,7 +2254,8 @@ int32_t AudioDeviceWindowsCore::InitRecording() {
     return -1;
   }
 
-  SetMicrophoneVolume(220);//add by ytx_wx
+  SetMicrophoneVolume(220);  // add by ytx_wx
+  SetMicrophoneGainLevel(0);  // add by ytx_wx
 
   if (_builtInAecEnabled) {
     // The DMO will configure the capture device.
