@@ -59,7 +59,7 @@ group("examples") {
   if (is_android || is_win) {
     deps += [ 
       ":webrtc_unity_plugin",
-      "//sdk:ecmedia",
+      "//sdk:ECMedia",
       ]
   }
 }

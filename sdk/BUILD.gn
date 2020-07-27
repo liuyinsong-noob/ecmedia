@@ -1831,7 +1831,7 @@ rtc_source_set("ecmedia_obj") {
 }
 
 
-rtc_shared_library("ecmedia") {
+rtc_shared_library("ECMedia") {
     visibility = [ "*" ]
     allow_poison = [ "audio_codecs", "software_video_codecs", ]
     sources = [ 

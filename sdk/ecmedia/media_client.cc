@@ -3809,16 +3809,17 @@ bool MediaClient::RemoveLocalVideoTrack(int channelId) {
 }
 
 bool MediaClient::SaveRemoteVideoSink(int channelId,
-                                      JNIEnv* env,
+                                      JNIEnv* jenv,
                                       jobject javaSink) {
   RTC_LOG(INFO) << __FUNCTION__ << "() "
                 << " begin..."
-                << " channelId:" << channelId << " env: " << env
+                << " channelId:" << channelId << " jenv: " << jenv
                 << " javaSink: " << javaSink;
 
   bool bOk = false;
-  RTC_LOG(INFO) << __FUNCTION__ << "() "
-                << " static_cast env: " << env << " javaSink: " << javaSink;
+  JNIEnv* env = webrtc::AttachCurrentThreadIfNeeded();
+  RTC_LOG_T_F(INFO) << " AttachCurrentThreadIfNeeded env: " << env << " javaSink: " << javaSink;
+
   if (env && javaSink && channelId >= 0) {
     RTC_LOG(INFO) << __FUNCTION__ << "() "
                   << " JavaToNativeVideoSink before.";
@@ -3831,8 +3832,7 @@ bool MediaClient::SaveRemoteVideoSink(int channelId,
       bOk = true;
     }
   }
-  RTC_LOG(INFO) << __FUNCTION__ << "() "
-                << " end..."
+  RTC_LOG_T_F(INFO) << " end..."
                 << " bOk: " << bOk;
 
   return bOk;
