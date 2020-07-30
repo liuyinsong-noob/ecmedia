@@ -1099,7 +1099,9 @@ bool MediaClient::RequestRemoteSsrc(int channel_id, int flag, int32_t ssrc) {
   bool bOk = false;
   std::vector<uint32_t> ssrcsLocal;
   GetMediaSsrc(true, channel_id, ssrcsLocal);
-  RTC_CHECK(ssrcsLocal.size() > 0);
+  //RTC_CHECK(ssrcsLocal.size() > 0); 
+ if(ssrcsLocal.size() <= 0)
+  return false;
   uint32_t local_ssrc = ssrcsLocal.front();
   bOk = worker_thread_->Invoke<bool>(RTC_FROM_HERE, [&] {
     return internal_video_channel->RequestRemoteSsrc(channel_id, flag, ssrc,
