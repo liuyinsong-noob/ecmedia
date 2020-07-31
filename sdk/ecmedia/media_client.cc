@@ -650,10 +650,11 @@ bool MediaClient::CreateTransport(const char* local_addr,
   API_LOG(INFO) << "l_addr: " << local_addr << ", l_port: " << local_port
                 << ", r_addr: " << remote_addr << ", r_port: " << remote_port
                 << ", tid: " << tid;
-
+  std::string clocal_addr = "0.0.0.0";
   rtc::SocketAddress local, remote;
   std::ostringstream strL, strRemote;
-  strL << local_addr << ":" << local_port;
+  // strL << local_addr << ":" << local_port;
+  strL << clocal_addr.c_str() << ":" << local_port;
   local.FromString(strL.str().c_str());
   strRemote << remote_addr << ":" << remote_port;
   remote.FromString(strRemote.str().c_str());

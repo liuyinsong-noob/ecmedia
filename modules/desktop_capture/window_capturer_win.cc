@@ -34,12 +34,16 @@ BOOL CALLBACK WindowsEnumerationHandler(HWND hwnd, LPARAM param) {
 
   // Skip windows that are invisible, minimized, have no title, or are owned,
   // unless they have the app window style set.
-  int len = GetWindowTextLength(hwnd);
+  
   HWND owner = GetWindow(hwnd, GW_OWNER);
   LONG exstyle = GetWindowLong(hwnd, GWL_EXSTYLE);
-  if (len == 0 || IsIconic(hwnd) || !IsWindowVisible(hwnd) ||
-      (owner && !(exstyle & WS_EX_APPWINDOW))) {
+  if ( !IsWindowVisible(hwnd) || (owner && !(exstyle & WS_EX_APPWINDOW))) {
     return TRUE;
+  }
+  int len = GetWindowTextLength(hwnd);
+  if (len == 0 || IsIconic(hwnd) /*|| !IsWindowVisible(hwnd) ||
+	 (owner && !(exstyle & WS_EX_APPWINDOW))*/) {
+	  return TRUE;
   }
   // Skip unresponsive windows. Set timout with 50ms, in case system is under
   // heavy load, the check can wait longer but wont' be too long to delay the
