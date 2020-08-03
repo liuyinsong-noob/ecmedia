@@ -79,7 +79,10 @@ void AdaptedVideoTrackSource::RemoveSink(
 }
 
 bool AdaptedVideoTrackSource::apply_rotation() {
-  return broadcaster_.wants().rotation_applied;
+  //ytx_add by hubin
+  return true;
+  //return broadcaster_.wants().rotation_applied;
+  //ytx_add end
 }
 
 void AdaptedVideoTrackSource::OnSinkWantsChanged(
