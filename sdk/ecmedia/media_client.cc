@@ -2669,7 +2669,7 @@ bool MediaClient::ParseVideoCodecSetting(const char* videoCodecSettings,
         if (rtc::GetBoolFromJsonObject(settings, "isSimulcast", &enable)) {
           config->isSimulcast = enable;
         }
-        if (rtc::GetBoolFromJsonObject(settings, "recvonly", &enable)) {
+        if (rtc::GetBoolFromJsonObject(settings, "isRecvOnly", &enable)) {
           config->isRecvOnly = enable;
         }
         if (rtc::GetIntFromJsonObject(settings, "payloadType", &value)) {

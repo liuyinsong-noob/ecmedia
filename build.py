@@ -123,7 +123,7 @@ def gn_project(target_os,target_cpu):
 def build_project():
    #gn 生成可编译的工程
     #ninja 编译工程
-    ninja_cmd = os.path.normpath('third_party/depot_tools/ninja') +' -C out/default ecmedia'
+    ninja_cmd = os.path.normpath('third_party/depot_tools/ninja') +' -C out/default ECMedia'
     print "Excute ninjia command: ",ninja_cmd
     if os.system(ninja_cmd) <> 0:
       sys.exit(-1)

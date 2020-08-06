@@ -1048,7 +1048,7 @@ bool WebRtcVideoChannel::SetVideoSend(
   const auto& kv = send_streams_.find(ssrc);
   if (kv == send_streams_.end()) {
     // Allow unknown ssrc only if source is null.
-    RTC_CHECK(source == nullptr);
+    //RTC_CHECK(source == nullptr);
     RTC_LOG(LS_ERROR) << "No sending stream on ssrc " << ssrc;
     return false;
   }
