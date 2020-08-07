@@ -721,7 +721,8 @@ void MediaClient::DestroyChannel(int channel_id, bool is_video) {
       if (is_video) {
         for (auto t : TrackChannels_) {
           if (t.first == channel_id) {
-            RtpSenders_[t.first].get()->SetTrack(nullptr);
+			  if(RtpSenders_.find(channel_id) != RtpSenders_.end())
+                 RtpSenders_[t.first].get()->SetTrack(nullptr);
 
 #if defined(WEBRTC_WIN) || defined(WEBRTC_IOS)|| defined(WEBRTC_LINUX_ONLY)
             InitRenderWndsManager();
@@ -735,7 +736,8 @@ void MediaClient::DestroyChannel(int channel_id, bool is_video) {
             renderWndsManager_->UpdateOrAddVideoTrack(t.first, nullptr);
             renderWndsManager_->StopRender(t.first, nullptr);
 #endif
-            RtpSenders_.erase(RtpSenders_.find(channel_id));
+			if (RtpSenders_.find(channel_id) != RtpSenders_.end())
+               RtpSenders_.erase(RtpSenders_.find(channel_id));
             TrackChannels_.erase(TrackChannels_.find(channel_id));
             break;
           }
@@ -2140,7 +2142,9 @@ bool MediaClient::PreviewTrack(int window_id, void* video_track) {
       EC_CHECK_VALUE(renderWndsManager_, false);
       InitRenderWndsManager();
       renderWndsManager_->UpdateOrAddVideoTrack(window_id, track);
+	  TrackChannels_[window_id] = track;
       return renderWndsManager_->StartRender(window_id, nullptr);
+	
 //#elif defined(WEBRTC_IOS)
 //  ObjCCallClient::GetInstance()->PreviewTrack(window_id, track);
 #else

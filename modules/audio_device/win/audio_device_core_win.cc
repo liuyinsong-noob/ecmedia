@@ -369,8 +369,8 @@ bool AudioDeviceWindowsCore::CoreAudioIsSupported() {
     RTC_LOG(LS_VERBOSE) << "*** Windows Core Audio is NOT supported"
                         << " => will revert to the Wave API ***";
   }
-
-  return (coreAudioIsSupported);
+  return true;
+ // return (coreAudioIsSupported);
 }
 
 // ============================================================================
