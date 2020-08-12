@@ -741,7 +741,9 @@ class MediaClient : public sigslot::has_slots<> {
   bool CreateAudioDevice();
 
   // int GetAudioRecordingDevice(const int a);
+  int SetSpeakerVolume(int volumep);
 
+  int GetSpeakerVolume(unsigned int& volumep);
   /****************************************************************************/
   /*** \BA\AF\CA\FD\C3\FB: \C9\E8\D6\C3¼\D2\F4\D2\F4\C1\BF                                                 ***/
   /*** \B9\A6\C4\DC:   \C9\E8\D6\C3¼\D2\F4\C9豸¼\D2\F4\D2\F4\C1\BF                                         ***/

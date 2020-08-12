@@ -249,6 +249,15 @@ ECMEDIA_API void* ECMedia_create_audio_device() {
   return nullptr;
 }
 
+ECMEDIA_API int ECMedia_set_speaker_volume(int volumep) {
+	return g_ECMedia->SetSpeakerVolume(volumep);
+}
+
+ECMEDIA_API int ECMedia_get_speaker_volume(unsigned int& volumep) {
+	return g_ECMedia->GetSpeakerVolume(volumep);
+}
+
+
 ECMEDIA_API bool ECMedia_set_audio_recording_volume(uint32_t vol) {
   return g_ECMedia->SetAudioRecordingVolume(vol);
 }

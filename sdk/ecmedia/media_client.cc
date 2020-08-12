@@ -3117,6 +3117,36 @@ char* MediaClient::GetAudioDeviceList(int* length) {
   return NULL;
 }
 
+int MediaClient::SetSpeakerVolume(int volumep)
+{
+	rtc::scoped_refptr<webrtc::AudioDeviceModule> audio_device_module =
+		GetCurrentAudioDeviceModule();
+	if (!audio_device_module)
+		return -1;
+	if (audio_device_module->SetSpeakerVolume(volumep) == -1)
+	{
+		return -1;
+	}
+	else {
+		return 0;
+	}
+}
+
+int MediaClient::GetSpeakerVolume(unsigned int& volumep)
+{
+	rtc::scoped_refptr<webrtc::AudioDeviceModule> audio_device_module =
+		GetCurrentAudioDeviceModule();
+	if (!audio_device_module)
+		return -1;
+	if (audio_device_module->SpeakerVolume(&volumep) == -1)
+	{
+		return -1;
+	}
+	else {
+		return 0;
+	}
+}
+
 webrtc::AudioDeviceModule* MediaClient::GetCurrentAudioDeviceModule() const {
   if (!channel_manager_)
     return nullptr;

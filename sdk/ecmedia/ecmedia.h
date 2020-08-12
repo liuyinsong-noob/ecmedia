@@ -275,6 +275,13 @@ ECMEDIA_API bool ECMedia_select_audio_source(const char* tid, int channelid, con
 /****************************************************************************/
 ECMEDIA_API bool ECMedia_stop_connect();
 
+ECMEDIA_API int ECMedia_set_speaker_volume(int volumep);
+/*
+ *
+ */
+ECMEDIA_API int ECMedia_get_speaker_volume(unsigned int& volumep);
+
+
 
 /****************************************************************************/
 /*** 函数名: 设置本地静音                                                 ***/
