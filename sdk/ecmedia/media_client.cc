@@ -3440,7 +3440,6 @@ bool MediaClient::RegisterRemoteVideoResoluteCallback(
   int ret = -1;
   API_LOG(INFO) << "begin..."
   << "channel_id: " << channelid;
-  media_timeout_cb_ = media_timeout_cb;
   ret = worker_thread_->Invoke<int>(RTC_FROM_HERE, [this, ret, channelid, media_timeout_cb] {
    
    if (mVoiceChannels_[channelid] &&
@@ -3457,7 +3456,6 @@ bool MediaClient::RegisterRemoteVideoResoluteCallback(
   int ret = -1;
    API_LOG(INFO) << "begin..."
    << "channel_id: " << channelid;
-   time_out_ms = timeout_ms;
    ret = worker_thread_->Invoke<int>(RTC_FROM_HERE, [this, ret, channelid, timeout_ms] {
     
     if (mVoiceChannels_[channelid] &&
