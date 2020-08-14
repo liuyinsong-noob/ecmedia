@@ -387,5 +387,17 @@ void AudioReceiveStream::ConfigureStream(AudioReceiveStream* stream,
 
   stream->config_ = new_config;
 }
+int AudioReceiveStream::RegisterMediaPacketTimeoutCallback(ECMedia_PacketTimeout* media_timeout_cb){
+  RTC_DCHECK_RUN_ON(&worker_thread_checker_);
+ if(channel_receive_)
+  return channel_receive_->RegisterMediaPacketTimeoutCallback(media_timeout_cb);
+ return 0;
+}
+int AudioReceiveStream::SetPacketTimeoutNotification(int timeout_ms){
+  RTC_DCHECK_RUN_ON(&worker_thread_checker_);
+ if(channel_receive_)
+  return channel_receive_->SetPacketTimeoutNotification(timeout_ms);
+ return 0;
+}
 }  // namespace internal
 }  // namespace webrtc

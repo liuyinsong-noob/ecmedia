@@ -905,6 +905,11 @@ ECMEDIA_API bool ECMedia_set_remote_video_resolute_callback(
     int channelid,
     ECMedia_FrameSizeChangeCallback* callback);
 
+ECMEDIA_API int ECMedia_set_media_packet_timeout_callback(int channelid, ECMedia_PacketTimeout* media_timeout_cb);
+
+ECMEDIA_API int ECMedia_set_packet_timeout_noti(int channel, int timeout_ms);
+
+
 ECMEDIA_API int ECMedia_create_desktop_capture(int type);
 
 ECMEDIA_API int ECMedia_set_desktop_capture_source(int type,int id);

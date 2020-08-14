@@ -27,6 +27,7 @@
 #include "call/rtp_packet_sink_interface.h"
 #include "call/syncable.h"
 #include "modules/audio_coding/include/audio_coding_module.h"
+#include "sdk/ecmedia/sdk_common.h"
 
 // TODO(solenberg, nisse): This file contains a few NOLINT marks, to silence
 // warnings about use of unsigned short.
@@ -133,6 +134,9 @@ class ChannelReceiveInterface : public RtpPacketSinkInterface {
       const ChannelSendInterface* channel) = 0;
 
   virtual std::vector<RtpSource> GetSources() const = 0;
+  // add by yukening
+  virtual int RegisterMediaPacketTimeoutCallback(ECMedia_PacketTimeout* media_timeout_cb) = 0;
+  virtual int SetPacketTimeoutNotification(int timeout_ms) = 0;
 };
 
 std::unique_ptr<ChannelReceiveInterface> CreateChannelReceive(

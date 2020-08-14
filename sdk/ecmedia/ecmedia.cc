@@ -800,3 +800,10 @@ bool ECMedia_set_remote_video_resolute_callback(
     ECMedia_FrameSizeChangeCallback* callback) {
   return g_ECMedia->RegisterRemoteVideoResoluteCallback(channelid, callback);
 }
+int ECMedia_set_media_packet_timeout_callback(int channelid, ECMedia_PacketTimeout* media_timeout_cb){
+ return g_ECMedia->RegisterMediaPacketTimeoutCallback(channelid, media_timeout_cb);
+}
+int ECMedia_set_packet_timeout_noti(int channel, int timeout_ms){
+ return g_ECMedia->SetPacketTimeoutNotification(channel, timeout_ms);
+}
+

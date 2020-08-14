@@ -37,6 +37,7 @@ const int64_t kRtpRtcpBitrateProcessTimeMs = 10;
 const int64_t kDefaultExpectedRetransmissionTimeMs = 125;
 constexpr int32_t kDefaultVideoReportInterval = 1000;
 constexpr int32_t kDefaultAudioReportInterval = 5000;
+const uint32_t kDefaultMediaTimeOutMs = 3 * 60 * 1000;
 }  // namespace
 
 RtpRtcp::Configuration::Configuration() = default;
@@ -95,7 +96,9 @@ ModuleRtpRtcpImpl::ModuleRtpRtcpImpl(const Configuration& configuration)
       ack_observer_(configuration.ack_observer),
       rtt_stats_(configuration.rtt_stats),
       rtt_ms_(0),
-      isSendingTmmbr(false){
+      isSendingTmmbr(false),
+      media_timeout_ms(kDefaultMediaTimeOutMs),
+      media_timeout_cb_(nullptr){
   FieldTrialBasedConfig default_trials;
   if (!configuration.receiver_only) {
     rtp_sender_.reset(new RTPSender(
@@ -126,6 +129,8 @@ ModuleRtpRtcpImpl::ModuleRtpRtcpImpl(const Configuration& configuration)
   // webrtc::VideoSendStream::Config::Rtp::kDefaultMaxPacketSize.
   const size_t kTcpOverIpv4HeaderSize = 40;
   SetMaxRtpPacketSize(IP_PACKET_SIZE - kTcpOverIpv4HeaderSize);
+  last_receive_pcket_time = static_cast<int64_t*>(malloc(sizeof(int64_t)));
+  *last_receive_pcket_time = clock()->TimeInMilliseconds();
 }
 
 ModuleRtpRtcpImpl::~ModuleRtpRtcpImpl() = default;
@@ -243,6 +248,9 @@ void ModuleRtpRtcpImpl::Process() {
   if (TMMBR() && rtcp_receiver_.UpdateTmmbrTimers()) {
     rtcp_receiver_.NotifyTmmbrUpdated();
   }
+ if( media_timeout_cb_ && abs(clock_->TimeInMilliseconds() - *last_receive_pcket_time) > media_timeout_ms ){
+   media_timeout_cb_();
+ }
 }
 
 void ModuleRtpRtcpImpl::SetRtxSendStatus(int mode) {
@@ -511,6 +519,7 @@ int32_t ModuleRtpRtcpImpl::RTT(const uint32_t remote_ssrc,
     // Try to get RTT from RtcpRttStats class.
     *rtt = rtt_ms();
   }
+  *last_receive_pcket_time = clock()->TimeInMilliseconds();
   return ret;
 }
 
@@ -944,6 +953,12 @@ int ModuleRtpRtcpImpl::Set_Audio_Keepalive(bool enable,
     return rtp_sender_->DisableRTPKeepalive();
   }
 }
-
+int ModuleRtpRtcpImpl::RegisterMediaPacketTimeoutCallback(ECMedia_PacketTimeout* media_timeout_cb){
+ media_timeout_cb_ = media_timeout_cb;
+ return 0;
+}
+int ModuleRtpRtcpImpl::SetPacketTimeoutNotification(int timeout_ms){
+ return media_timeout_ms = timeout_ms;
+}
 
 }  // namespace webrtc

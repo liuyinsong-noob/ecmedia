@@ -28,6 +28,7 @@
 #include "modules/rtp_rtcp/source/rtp_sender.h"
 #include "rtc_base/constructor_magic.h"
 #include "rtc_base/deprecation.h"
+#include "sdk/ecmedia/sdk_common.h"
 
 namespace webrtc {
 
@@ -145,6 +146,9 @@ class RtpRtcp : public Module, public RtcpFeedbackSenderInterface {
   virtual int Set_Audio_Keepalive(bool enable,
                                   int packetsend_time_internal,
                                   int playload) = 0;
+ //add by yukening
+ virtual int RegisterMediaPacketTimeoutCallback(ECMedia_PacketTimeout* media_timeout_cb) = 0;
+ virtual int SetPacketTimeoutNotification(int timeout_ms)  = 0;
 
 
   // Sets the maximum size of an RTP packet, including RTP headers.

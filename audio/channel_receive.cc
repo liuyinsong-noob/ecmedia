@@ -156,7 +156,10 @@ class ChannelReceive : public ChannelReceiveInterface,
   void SetAssociatedSendChannel(const ChannelSendInterface* channel) override;
 
   std::vector<RtpSource> GetSources() const override;
-
+   
+  // add by yukening
+  int RegisterMediaPacketTimeoutCallback(ECMedia_PacketTimeout* media_timeout_cb) override;
+  int SetPacketTimeoutNotification(int timeout_ms) override;
  private:
   bool ReceivePacket(const uint8_t* packet,
                      size_t packet_length,
@@ -954,6 +957,12 @@ int64_t ChannelReceive::GetRTT() const {
   return rtt;
 }
 
+int ChannelReceive::RegisterMediaPacketTimeoutCallback(ECMedia_PacketTimeout* media_timeout_cb){
+ return _rtpRtcpModule->RegisterMediaPacketTimeoutCallback(media_timeout_cb);
+}
+int ChannelReceive::SetPacketTimeoutNotification(int timeout_ms){
+ return _rtpRtcpModule->SetPacketTimeoutNotification(timeout_ms);
+}
 }  // namespace
 
 std::unique_ptr<ChannelReceiveInterface> CreateChannelReceive(

@@ -3435,6 +3435,40 @@ bool MediaClient::RegisterRemoteVideoResoluteCallback(
   return false;
 #endif
 }
+ int MediaClient::RegisterMediaPacketTimeoutCallback(int channelid,
+                                                     ECMedia_PacketTimeout* media_timeout_cb){
+  int ret = -1;
+  API_LOG(INFO) << "begin..."
+  << "channel_id: " << channelid;
+  media_timeout_cb_ = media_timeout_cb;
+  ret = worker_thread_->Invoke<int>(RTC_FROM_HERE, [this, ret, channelid, media_timeout_cb] {
+   
+   if (mVoiceChannels_[channelid] &&
+       mVoiceChannels_[channelid]->media_channel()) {
+    return mVoiceChannels_[channelid]->media_channel()->RegisterMediaPacketTimeoutCallback(media_timeout_cb);
+   }
+   return ret;
+  });
+  API_LOG(INFO) << "end ...with ret:%d" << ret;
+  return ret;
+  
+ }
+ int MediaClient::SetPacketTimeoutNotification(int channelid, int timeout_ms){
+  int ret = -1;
+   API_LOG(INFO) << "begin..."
+   << "channel_id: " << channelid;
+   time_out_ms = timeout_ms;
+   ret = worker_thread_->Invoke<int>(RTC_FROM_HERE, [this, ret, channelid, timeout_ms] {
+    
+    if (mVoiceChannels_[channelid] &&
+        mVoiceChannels_[channelid]->media_channel()) {
+     return mVoiceChannels_[channelid]->media_channel()->SetPacketTimeoutNotification(timeout_ms);
+    }
+    return ret;
+   });
+   API_LOG(INFO) << "end ...with ret:%d" << ret;
+   return ret;
+ }
  int MediaClient::SetConferenceParticipantCallbackTimeInterVal(
                                                                int channel_id,
                                                                int timeInterVal) {

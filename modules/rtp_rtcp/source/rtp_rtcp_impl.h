@@ -298,6 +298,10 @@ class ModuleRtpRtcpImpl : public RtpRtcp, public RTCPReceiver::ModuleRtpRtcp {
 
   RTPSender* RtpSender() override;
   const RTPSender* RtpSender() const override;
+ 
+  int RegisterMediaPacketTimeoutCallback(ECMedia_PacketTimeout* media_timeout_cb) override;
+  int SetPacketTimeoutNotification(int timeout_ms) override;
+ 
 
  protected:
   bool UpdateRTCPReceiveInformationTimers();
@@ -358,7 +362,11 @@ class ModuleRtpRtcpImpl : public RtpRtcp, public RTCPReceiver::ModuleRtpRtcp {
   uint32_t tmmbr_bandwidth;
   uint32_t tmmbr_remote_ssrc;
   uint32_t tmmbr_ssrc;
+  uint32_t media_timeout_ms;
+  int64_t* last_receive_pcket_time;
   ReceiveStatistics* receive_statistics_;
+  
+  ECMedia_PacketTimeout* media_timeout_cb_;
  // SSRCDatabase* ssrc_db_;
 
   int64_t lastSendTmmbrTime_;

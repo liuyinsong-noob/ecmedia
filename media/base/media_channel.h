@@ -47,6 +47,7 @@
 #include "rtc_base/string_encode.h"
 #include "rtc_base/strings/string_builder.h"
 #include "rtc_base/third_party/sigslot/sigslot.h"
+#include "sdk/ecmedia/sdk_common.h"
 
 namespace rtc {
 class Timing;
@@ -790,6 +791,9 @@ class VoiceMediaChannel : public MediaChannel, public Delayable {
   virtual int SetConferenceParticipantCallbackTimeInterVal(
       int32_t timeInterVal) { return 0; }
   virtual bool GetVoiceStream(VoiceMediaInfo* info) { return true; }
+  //add by yukening
+  virtual int RegisterMediaPacketTimeoutCallback(ECMedia_PacketTimeout* media_timeout_cb) { return 0;}
+  virtual int SetPacketTimeoutNotification(int timeout_ms) { return 0; }
 
   //ytx_end
 };

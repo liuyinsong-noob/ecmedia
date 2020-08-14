@@ -251,6 +251,9 @@ class WebRtcVoiceMediaChannel final : public VoiceMediaChannel,
   int Register_ECMedia_ConferenceParticipantCallback(ECMedia_ConferenceParticipantCallback* callback)override;
   int SetConferenceParticipantCallbackTimeInterVal(int32_t timeInterVal)override;
   bool GetVoiceStream(VoiceMediaInfo* info) override;
+  int RegisterMediaPacketTimeoutCallback(ECMedia_PacketTimeout* media_timeout_cb) override; //add by yukening
+  int SetPacketTimeoutNotification(int timeout_ms) override;
+                                       
   //ytx_end
  private:
   bool SetOptions(const AudioOptions& options);

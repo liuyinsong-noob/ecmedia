@@ -819,6 +819,12 @@ class MediaClient : public sigslot::has_slots<> {
   bool RegisterRemoteVideoResoluteCallback(
       int channelid,
       ECMedia_FrameSizeChangeCallback* callback);
+  
+  int RegisterMediaPacketTimeoutCallback(int channelid,
+                                         ECMedia_PacketTimeout* media_timeout_cb);
+  
+  int SetPacketTimeoutNotification(int channelid, int timeout_ms);
+
   int SetConferenceParticipantCallbackTimeInterVal(int channelid,
                                                    int timeInterVal);
   int GetCallStats(char* statistics, int length);

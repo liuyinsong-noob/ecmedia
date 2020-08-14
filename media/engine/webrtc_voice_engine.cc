@@ -1404,6 +1404,20 @@ class WebRtcVoiceMediaChannel::WebRtcAudioReceiveStream {
     return rtp_parameters;
   }
 
+ int RegisterMediaPacketTimeoutCallback(ECMedia_PacketTimeout* media_timeout_cb){
+  RTC_DCHECK(worker_thread_checker_.IsCurrent());
+  RTC_DCHECK(stream_);
+  if(stream_)
+   return stream_->RegisterMediaPacketTimeoutCallback(media_timeout_cb);
+  return 0;
+ }
+ int SetPacketTimeoutNotification(int timeout_ms){
+  RTC_DCHECK(worker_thread_checker_.IsCurrent());
+  RTC_DCHECK(stream_);
+  if(stream_)
+   return stream_->SetPacketTimeoutNotification(timeout_ms);
+  return 0;
+ }
  private:
   void RecreateAudioReceiveStream() {
     RTC_DCHECK(worker_thread_checker_.IsCurrent());
@@ -2569,6 +2583,20 @@ bool WebRtcVoiceMediaChannel::GetVoiceStream(VoiceMediaInfo* info) {
       return true;
 	}
     return false;
+}
+int WebRtcVoiceMediaChannel::RegisterMediaPacketTimeoutCallback(ECMedia_PacketTimeout* media_timeout_cb){ //add by yukening
+ int ret = -1;
+ for (const auto& stream : recv_streams_){
+  stream.second->RegisterMediaPacketTimeoutCallback(media_timeout_cb);
+ }
+ return ret;
+}
+int WebRtcVoiceMediaChannel::SetPacketTimeoutNotification(int timeout_ms){
+ int ret = -1;
+ for (const auto& stream : recv_streams_){
+  stream.second->SetPacketTimeoutNotification(timeout_ms);
+ }
+ return ret;
 }
 //ytx_end
 }  // namespace cricket

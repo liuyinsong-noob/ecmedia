@@ -325,6 +325,7 @@ typedef void(ECMedia_ConferenceParticipantCallback)(unsigned int arrOfCSRCs[],
 typedef void(ECMedia_FrameSizeChangeCallback)(int channelid,
 	                                          int width,
 	                                          int height);
+typedef void(ECMedia_PacketTimeout)();
 
 
 #ifdef __cplusplus

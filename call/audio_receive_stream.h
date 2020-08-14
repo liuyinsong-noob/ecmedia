@@ -25,6 +25,7 @@
 #include "api/rtp_receiver_interface.h"
 #include "api/scoped_refptr.h"
 #include "call/rtp_config.h"
+#include "sdk/ecmedia/sdk_common.h"
 
 namespace webrtc {
 class AudioSinkInterface;
@@ -175,6 +176,9 @@ class AudioReceiveStream {
   virtual int GetBaseMinimumPlayoutDelayMs() const = 0;
 
   virtual std::vector<RtpSource> GetSources() const = 0;
+  //add by yukening
+  virtual int RegisterMediaPacketTimeoutCallback(ECMedia_PacketTimeout* media_timeout_cb) = 0;
+  virtual int SetPacketTimeoutNotification(int timeout_ms) = 0;
 
  protected:
   virtual ~AudioReceiveStream() {}
