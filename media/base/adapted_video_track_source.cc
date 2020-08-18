@@ -16,6 +16,7 @@
 #include "api/video/video_rotation.h"
 #include "rtc_base/checks.h"
 #include "rtc_base/time_utils.h"
+#include "rtc_base/logging.h"
 
 namespace rtc {
 
@@ -48,7 +49,26 @@ void AdaptedVideoTrackSource::OnFrame(const webrtc::VideoFrame& frame) {
      true was just added. The VideoBroadcaster enforces
      synchronization for us in this case, by not passing the frame on
      to sinks which don't want it. */
-  if (apply_rotation() && frame.rotation() != webrtc::kVideoRotation_0 &&
+  RTC_LOG_T_F(INFO) << " width: " << frame.width()
+                    << " heigth: " << frame.height()
+                    << " rotation: " << frame.rotation();
+#if defined(WEBRTC_ANDROID)
+  if (apply_rotation() && frame.rotation() == webrtc::kVideoRotation_0 &&
+      buffer->type() == webrtc::VideoFrameBuffer::Type::kI420) {
+#else
+   if(0) {
+#endif
+    /* Apply pending rotation. */
+    webrtc::VideoFrame rotated_frame =
+        webrtc::VideoFrame::Builder()
+            .set_video_frame_buffer(webrtc::I420Buffer::Rotate(
+                *buffer->GetI420(), webrtc::kVideoRotation_0))
+            .set_rotation(webrtc::kVideoRotation_270)
+            .set_timestamp_us(frame.timestamp_us())
+            .set_id(frame.id())
+            .build();
+    broadcaster_.OnFrame(rotated_frame);
+    }else if (apply_rotation() && frame.rotation() != webrtc::kVideoRotation_0 &&
       buffer->type() == webrtc::VideoFrameBuffer::Type::kI420) {
     /* Apply pending rotation. */
     webrtc::VideoFrame rotated_frame =
