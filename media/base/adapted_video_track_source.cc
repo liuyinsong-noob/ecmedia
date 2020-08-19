@@ -49,9 +49,10 @@ void AdaptedVideoTrackSource::OnFrame(const webrtc::VideoFrame& frame) {
      true was just added. The VideoBroadcaster enforces
      synchronization for us in this case, by not passing the frame on
      to sinks which don't want it. */
-  RTC_LOG_T_F(INFO) << " width: " << frame.width()
-                    << " heigth: " << frame.height()
-                    << " rotation: " << frame.rotation();
+  //ytx_add by dingxf
+  //RTC_LOG_T_F(INFO) << " width: " << frame.width()
+  //                  << " heigth: " << frame.height()
+  //                  << " rotation: " << frame.rotation();
 #if defined(WEBRTC_ANDROID)
   if (apply_rotation() && frame.rotation() == webrtc::kVideoRotation_0 &&
       buffer->type() == webrtc::VideoFrameBuffer::Type::kI420) {
@@ -68,6 +69,7 @@ void AdaptedVideoTrackSource::OnFrame(const webrtc::VideoFrame& frame) {
             .set_id(frame.id())
             .build();
     broadcaster_.OnFrame(rotated_frame);
+    //ytx_add end
     }else if (apply_rotation() && frame.rotation() != webrtc::kVideoRotation_0 &&
       buffer->type() == webrtc::VideoFrameBuffer::Type::kI420) {
     /* Apply pending rotation. */
