@@ -135,7 +135,7 @@ class ChannelReceiveInterface : public RtpPacketSinkInterface {
 
   virtual std::vector<RtpSource> GetSources() const = 0;
   // add by yukening
-  virtual int RegisterMediaPacketTimeoutCallback(ECMedia_PacketTimeout* media_timeout_cb) = 0;
+  virtual int RegisterMediaPacketTimeoutCallback(int channelid, ECMedia_PacketTimeout* media_timeout_cb) = 0;
   virtual int SetPacketTimeoutNotification(int timeout_ms) = 0;
 };
 

@@ -387,10 +387,10 @@ void AudioReceiveStream::ConfigureStream(AudioReceiveStream* stream,
 
   stream->config_ = new_config;
 }
-int AudioReceiveStream::RegisterMediaPacketTimeoutCallback(ECMedia_PacketTimeout* media_timeout_cb){
+int AudioReceiveStream::RegisterMediaPacketTimeoutCallback(int channelid, ECMedia_PacketTimeout* media_timeout_cb){
   RTC_DCHECK_RUN_ON(&worker_thread_checker_);
  if(channel_receive_)
-  return channel_receive_->RegisterMediaPacketTimeoutCallback(media_timeout_cb);
+  return channel_receive_->RegisterMediaPacketTimeoutCallback(channelid, media_timeout_cb);
  return 0;
 }
 int AudioReceiveStream::SetPacketTimeoutNotification(int timeout_ms){

@@ -95,7 +95,7 @@ class AudioReceiveStream final : public webrtc::AudioReceiveStream,
   const webrtc::AudioReceiveStream::Config& config() const;
   const AudioSendStream* GetAssociatedSendStreamForTesting() const;
   //add by yukening
-  int RegisterMediaPacketTimeoutCallback(ECMedia_PacketTimeout* media_timeout_cb) override;
+  int RegisterMediaPacketTimeoutCallback(int channelid, ECMedia_PacketTimeout* media_timeout_cb) override;
   int SetPacketTimeoutNotification(int timeout_ms) override;
                                   
 

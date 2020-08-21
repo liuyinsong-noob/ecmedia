@@ -792,7 +792,7 @@ class VoiceMediaChannel : public MediaChannel, public Delayable {
       int32_t timeInterVal) { return 0; }
   virtual bool GetVoiceStream(VoiceMediaInfo* info) { return true; }
   //add by yukening
-  virtual int RegisterMediaPacketTimeoutCallback(ECMedia_PacketTimeout* media_timeout_cb) { return 0;}
+  virtual int RegisterMediaPacketTimeoutCallback(int channelid, ECMedia_PacketTimeout* media_timeout_cb) { return 0;}
   virtual int SetPacketTimeoutNotification(int timeout_ms) { return 0; }
 
   //ytx_end

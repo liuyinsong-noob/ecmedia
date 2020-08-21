@@ -147,7 +147,7 @@ class RtpRtcp : public Module, public RtcpFeedbackSenderInterface {
                                   int packetsend_time_internal,
                                   int playload) = 0;
  //add by yukening
- virtual int RegisterMediaPacketTimeoutCallback(ECMedia_PacketTimeout* media_timeout_cb) = 0;
+ virtual int RegisterMediaPacketTimeoutCallback(int channelid, ECMedia_PacketTimeout* media_timeout_cb) = 0;
  virtual int SetPacketTimeoutNotification(int timeout_ms)  = 0;
 
 

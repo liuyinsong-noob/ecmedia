@@ -131,6 +131,7 @@ ModuleRtpRtcpImpl::ModuleRtpRtcpImpl(const Configuration& configuration)
   SetMaxRtpPacketSize(IP_PACKET_SIZE - kTcpOverIpv4HeaderSize);
   last_receive_pcket_time = static_cast<int64_t*>(malloc(sizeof(int64_t)));
   *last_receive_pcket_time = clock()->TimeInMilliseconds();
+  channelid_ = 0;
 }
 
 ModuleRtpRtcpImpl::~ModuleRtpRtcpImpl() = default;
@@ -249,7 +250,7 @@ void ModuleRtpRtcpImpl::Process() {
     rtcp_receiver_.NotifyTmmbrUpdated();
   }
  if( media_timeout_cb_ && abs(clock_->TimeInMilliseconds() - *last_receive_pcket_time) > media_timeout_ms ){
-   media_timeout_cb_();
+   media_timeout_cb_(channelid_);
  }
 }
 
@@ -953,8 +954,9 @@ int ModuleRtpRtcpImpl::Set_Audio_Keepalive(bool enable,
     return rtp_sender_->DisableRTPKeepalive();
   }
 }
-int ModuleRtpRtcpImpl::RegisterMediaPacketTimeoutCallback(ECMedia_PacketTimeout* media_timeout_cb){
+int ModuleRtpRtcpImpl::RegisterMediaPacketTimeoutCallback(int channelid, ECMedia_PacketTimeout* media_timeout_cb){
  media_timeout_cb_ = media_timeout_cb;
+ channelid_ = channelid;
  return 0;
 }
 int ModuleRtpRtcpImpl::SetPacketTimeoutNotification(int timeout_ms){

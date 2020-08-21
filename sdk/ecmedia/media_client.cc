@@ -3444,7 +3444,7 @@ bool MediaClient::RegisterRemoteVideoResoluteCallback(
    
    if (mVoiceChannels_[channelid] &&
        mVoiceChannels_[channelid]->media_channel()) {
-    return mVoiceChannels_[channelid]->media_channel()->RegisterMediaPacketTimeoutCallback(media_timeout_cb);
+    return mVoiceChannels_[channelid]->media_channel()->RegisterMediaPacketTimeoutCallback(channelid, media_timeout_cb);
    }
    return ret;
   });
