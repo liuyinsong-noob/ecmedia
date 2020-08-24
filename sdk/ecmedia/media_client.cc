@@ -1122,7 +1122,10 @@ bool MediaClient::SetLocalMute(int channel_id, bool bMute) {
       for (const auto& transceiver : transceivers_) {
         std::string mid = GetMidFromChannelId(channel_id);
         if (transceiver.get()->mid() == mid) {
-          return transceiver.get()->sender()->track()->set_enabled(!bMute);
+          if( transceiver.get()->sender() && transceiver.get()->sender()->track())
+            return transceiver.get()->sender()->track()->set_enabled(!bMute);
+          else
+           return bOk;
           break;
         }
       }
