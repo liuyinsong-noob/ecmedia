@@ -5,3 +5,7 @@ Version 3.0.3
 Version 3.0.4
 1、Android屏幕共享
 2、Windows端增加设置和获取speaker音量
+
+Version 3.0.5
+1、增加媒体库超时设置和回调
+2、修改iOS端崩溃
