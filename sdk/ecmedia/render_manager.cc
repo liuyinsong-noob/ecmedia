@@ -210,7 +210,21 @@ bool RenderManager::UpdateOrAddVideoTrack(
   }
   return true;
 }
-
+int RenderManager::SaveVideoSnapshot(int channelID, const char* fileName)
+{
+	std::map<int, render_list>::iterator it = map_video_renders_.find(channelID);
+	if (it == map_video_renders_.end()) {
+		RTC_LOG(LERROR) << __FUNCTION__ << "() can't find channelId:" << channelID;
+		return -1;
+	}
+	
+		std::list<VideoRenderer*>::iterator renderIter = it->second.begin();
+		if (renderIter != it->second.end()) {
+			(*renderIter)->SaveVideoSnapshot(fileName);
+		}
+		
+	return 0;
+}
 bool RenderManager::StartRender(int channelId, void* videoView) {
   RTC_LOG(INFO) << __FUNCTION__ << "() "
                 << ", channelId: " << channelId << " videoView:" << videoView;

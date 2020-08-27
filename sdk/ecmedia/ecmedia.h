@@ -282,7 +282,7 @@ ECMEDIA_API int ECMedia_set_speaker_volume(int volumep);
 ECMEDIA_API int ECMedia_get_speaker_volume(unsigned int& volumep);
 
 
-
+ECMEDIA_API int ECMedia_save_local_video_snapshot(int channelID, const char* fileName);
 /****************************************************************************/
 /*** 函数名: 设置本地静音                                                 ***/
 /*** 功能:   将本地音频源静音                                             ***/

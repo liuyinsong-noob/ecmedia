@@ -744,6 +744,8 @@ class MediaClient : public sigslot::has_slots<> {
   int SetSpeakerVolume(int volumep);
 
   int GetSpeakerVolume(unsigned int& volumep);
+
+  int SaveLocalVideoSnapshot(int channelID, const char* fileName);
   /****************************************************************************/
   /*** \BA\AF\CA\FD\C3\FB: \C9\E8\D6\C3¼\D2\F4\D2\F4\C1\BF                                                 ***/
   /*** \B9\A6\C4\DC:   \C9\E8\D6\C3¼\D2\F4\C9豸¼\D2\F4\D2\F4\C1\BF                                         ***/

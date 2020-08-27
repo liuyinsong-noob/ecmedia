@@ -1821,6 +1821,7 @@ MediaClient::CreateLocalVideoTrack(const std::string& track_params) {
                     case VIDEO_CAMPER:
 #if defined(WEBRTC_WIN)|| defined(WEBRTC_LINUX_ONLY)
                       video_device = CapturerTrackSource::Create(
+						//  352,288,15,
                           config.width, config.height, config.maxFramerate,
                           camera_index);
                       if (video_device) {
@@ -2469,7 +2470,7 @@ bool MediaClient::GetVideoDevices(char* jsonDeviceInfos, int* length) {
         }
         devices["devices"].append(device);
       }
-
+	  info.release();
       std::string strDevices = devices.toStyledString();
       int len = strDevices.length();
       if (len > *length) {
@@ -3148,6 +3149,15 @@ int MediaClient::GetSpeakerVolume(unsigned int& volumep)
 	else {
 		return 0;
 	}
+}
+
+int MediaClient::SaveLocalVideoSnapshot(int channelID, const char* fileName)
+{
+	if (!renderWndsManager_) {
+		InitRenderWndsManager();
+	}
+	renderWndsManager_->SaveVideoSnapshot(channelID, fileName);
+	return 0;
 }
 
 webrtc::AudioDeviceModule* MediaClient::GetCurrentAudioDeviceModule() const {

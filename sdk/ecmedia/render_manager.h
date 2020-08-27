@@ -68,6 +68,7 @@ class RenderManager{
                              rtc::VideoSinkWants wants = rtc::VideoSinkWants());
   bool StartRender(int channelId, void* videoView);
   bool StopRender(int channelId, void* videoView);
+  int  SaveVideoSnapshot(int channelID, const char* fileName);
   bool RegisterRemoteVideoResoluteCallback(
       int channelid,
       ECMedia_FrameSizeChangeCallback* callback);
