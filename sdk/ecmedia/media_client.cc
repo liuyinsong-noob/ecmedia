@@ -3691,20 +3691,34 @@ bool MediaClient::AttachVideoRender(int channelId,
 bool MediaClient::DetachVideoRender(int channelId, void* winRemote) {
   API_LOG(INFO) << "channelId: " << channelId << ", winRemote: " << winRemote;
   EC_CHECK_VALUE((channelId >= 0), false);
-#if defined WEBRTC_WIN || defined(WEBRTC_IOS)|| defined(WEBRTC_LINUX_ONLY)
+#if defined WEBRTC_WIN 
   EC_CHECK_VALUE(winRemote, false);
+  bool bOk = false;
+  bOk = signaling_thread_->Invoke<bool>(
+	  RTC_FROM_HERE, [&] {
 
+	  if (!renderWndsManager_) {
+		  InitRenderWndsManager();
+	  }
+	  return renderWndsManager_->DetachVideoRender(channelId, winRemote);
+  });
+  RTC_LOG(INFO) << __FUNCTION__ << "() "
+	  << " end...";
+  return bOk;
+
+#elif defined(WEBRTC_IOS)|| defined(WEBRTC_LINUX_ONLY)
+  EC_CHECK_VALUE(winRemote, false);
   if (!renderWndsManager_) {
-    InitRenderWndsManager();
+	InitRenderWndsManager();
   }
-
-  renderWndsManager_->DetachVideoRender(channelId, winRemote);
+  return renderWndsManager_->DetachVideoRender(channelId, winRemote);
 //#elif defined(WEBRTC_IOS)
 //  ObjCCallClient::GetInstance()->SetRemoteWindowView(channel_Id, view);
-#endif
+
   RTC_LOG(INFO) << __FUNCTION__ << "() "
                 << " end...";
   return true;
+#endif
 }
 
 void MediaClient::RemoveAllVideoRender(int channelId) {

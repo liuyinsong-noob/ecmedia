@@ -23,7 +23,7 @@ class VideoRenderImpl : public VideoRenderer {
 
   int UpdateVideoTrack(webrtc::VideoTrackInterface* track_to_render,
                        rtc::VideoSinkWants wants) override;
-
+  
   // implement rtc::VideoSinkInterface<webrtc::VideoFrame>
   void OnFrame(const webrtc::VideoFrame& frame) override;
   bool RegisterRemoteVideoResoluteCallback(

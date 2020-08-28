@@ -136,6 +136,8 @@ int VideoRenderImpl::UpdateVideoTrack(
 	});
   return 0;
 }
+
+
 void VideoRenderImpl::OnFrame(const webrtc::VideoFrame& frame) {
   if(last_width_ != frame.width() || last_height_ != frame.height()){
    last_width_ = frame.width();

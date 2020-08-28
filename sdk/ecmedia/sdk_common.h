@@ -34,7 +34,7 @@ struct WindowShare {
 	WindowID id;
 	// Title of the window in UTF-8 encoding.
 	int type;
-	char title[kTitleLength];
+	char title[kTitleLength] = { 0 };
 };
 
 typedef struct{
