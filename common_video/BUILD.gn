@@ -37,7 +37,12 @@ rtc_static_library("common_video") {
     "video_render_frames.cc",
     "video_render_frames.h",
   ]
-
+  if(is_win) {
+  sources +=[
+    "jpeg.cc",
+    "data_manager.cc",
+    ]
+   }
   deps = [
     "../api:scoped_refptr",
     "../api/task_queue",

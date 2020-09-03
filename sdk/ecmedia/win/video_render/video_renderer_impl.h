@@ -4,7 +4,7 @@
 #include "i_video_render.h"
 #include "sdk/ecmedia/video_renderer.h"
 #include "sdk/ecmedia/sdk_common.h"
-
+#include "common_video/include/jpeg.h"
 class VideoRenderImpl : public VideoRenderer {
  public:
   VideoRenderImpl(int channelid,
@@ -23,7 +23,7 @@ class VideoRenderImpl : public VideoRenderer {
 
   int UpdateVideoTrack(webrtc::VideoTrackInterface* track_to_render,
                        rtc::VideoSinkWants wants) override;
-  
+  int SaveVideoSnapshot(const char* fileName)override;
   // implement rtc::VideoSinkInterface<webrtc::VideoFrame>
   void OnFrame(const webrtc::VideoFrame& frame) override;
   bool RegisterRemoteVideoResoluteCallback(
@@ -32,6 +32,8 @@ class VideoRenderImpl : public VideoRenderer {
   void* WindowPtr() override { return video_window_; }
 
  private:
+  rtc::CriticalSection snapshot_;
+  std::vector<webrtc::VideoFrame> shot_frames_;
   int channelid_;
   rtc::Thread* worker_thread_;
   rtc::scoped_refptr<webrtc::VideoTrackInterface> rendered_track_;

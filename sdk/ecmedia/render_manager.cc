@@ -212,17 +212,18 @@ bool RenderManager::UpdateOrAddVideoTrack(
 }
 int RenderManager::SaveVideoSnapshot(int channelID, const char* fileName)
 {
+#if defined(WEBRTC_WIN)
 	std::map<int, render_list>::iterator it = map_video_renders_.find(channelID);
 	if (it == map_video_renders_.end()) {
 		RTC_LOG(LERROR) << __FUNCTION__ << "() can't find channelId:" << channelID;
 		return -1;
 	}
 	
-		std::list<VideoRenderer*>::iterator renderIter = it->second.begin();
-		if (renderIter != it->second.end()) {
-			(*renderIter)->SaveVideoSnapshot(fileName);
-		}
-		
+	std::list<VideoRenderer*>::iterator renderIter = it->second.begin();
+	if (renderIter != it->second.end()) {
+		(*renderIter)->SaveVideoSnapshot(fileName);
+	}
+#endif	
 	return 0;
 }
 bool RenderManager::StartRender(int channelId, void* videoView) {

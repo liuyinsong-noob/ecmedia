@@ -79,6 +79,7 @@ VideoRenderImpl::~VideoRenderImpl() {
 
  RTC_LOG(LS_INFO) << " ~VideoRenderImpl begins " << (long)this
                    << " hubin_render";
+  shot_frames_.clear();
   if (rendered_track_) {
 	worker_thread_->Invoke<void>(RTC_FROM_HERE, [&] {
 		return rendered_track_->RemoveSink(this); });
@@ -137,8 +138,21 @@ int VideoRenderImpl::UpdateVideoTrack(
   return 0;
 }
 
-
+int VideoRenderImpl::SaveVideoSnapshot(const char* fileName)
+{
+	JpegEncoder jencoder_;
+	jencoder_.SetFileName(fileName);
+	rtc::CritScope cs(&snapshot_);
+	jencoder_.Encode(shot_frames_.back());
+	shot_frames_.pop_back();
+	
+	return 0;
+}
 void VideoRenderImpl::OnFrame(const webrtc::VideoFrame& frame) {
+	rtc::CritScope cs(&snapshot_);
+	if (shot_frames_.size() > 1)
+		shot_frames_.clear();
+	shot_frames_.push_back(frame);
   if(last_width_ != frame.width() || last_height_ != frame.height()){
    last_width_ = frame.width();
    last_height_ = frame.height();

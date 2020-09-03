@@ -3153,10 +3153,12 @@ int MediaClient::GetSpeakerVolume(unsigned int& volumep)
 
 int MediaClient::SaveLocalVideoSnapshot(int channelID, const char* fileName)
 {
+#if defined(WEBRTC_WIN)
 	if (!renderWndsManager_) {
 		InitRenderWndsManager();
 	}
 	renderWndsManager_->SaveVideoSnapshot(channelID, fileName);
+#endif
 	return 0;
 }
 
