@@ -1,4 +1,4 @@
-Version 3.0.6.1
+Version 3.0.7
 增加签到功能
 
 Version 3.0.6
