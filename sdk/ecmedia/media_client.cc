@@ -4751,10 +4751,11 @@ ECDesktopCapture::~ECDesktopCapture() {
 
 rtc::scoped_refptr<ECDesktopCapture> ECDesktopCapture::Create(int type) {
   std::unique_ptr<webrtc::DesktopCapturer> capturer = nullptr;
+  webrtc::DesktopCaptureOptions option;
+  option.set_disable_effects(false);
   switch (type) {
     case 0:
-      capturer = webrtc::DesktopCapturer::CreateScreenCapturer(
-          webrtc::DesktopCaptureOptions::CreateDefault());
+      capturer = webrtc::DesktopCapturer::CreateScreenCapturer(option);
       return new rtc::RefCountedObject<ECDesktopCapture>(std::move(capturer));
       break;
     case 1:
