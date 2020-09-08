@@ -29,7 +29,9 @@ class VideoRenderer : public rtc::VideoSinkInterface<webrtc::VideoFrame> {
   virtual int StopRender() = 0;
   virtual int UpdateVideoTrack(webrtc::VideoTrackInterface* track_to_render,
                                rtc::VideoSinkWants wants) = 0;
+#if defined(WEBRTC_WIN)
   virtual int SaveVideoSnapshot(const char* fileName) = 0;
+#endif
   virtual void OnFrame(const webrtc::VideoFrame& frame) = 0;
   virtual void* WindowPtr()= 0;
   virtual bool RegisterRemoteVideoResoluteCallback(
