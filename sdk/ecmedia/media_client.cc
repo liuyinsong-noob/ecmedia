@@ -3729,8 +3729,9 @@ bool MediaClient::DetachVideoRender(int channelId, void* winRemote) {
 
   RTC_LOG(INFO) << __FUNCTION__ << "() "
                 << " end...";
-  return true;
 #endif
+  return true;
+
 }
 
 void MediaClient::RemoveAllVideoRender(int channelId) {
