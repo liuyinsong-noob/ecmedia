@@ -592,6 +592,9 @@ ECMEDIA_API int ECMedia_set_rotate_captured_frames(
     ECMediaRotateCapturedFrame tr) {
   return g_ECMedia->SetRotateCapturedFrames(deviceid, tr);
 }
+int ECMedia_audio_set_microphone_gain(int channelId, float gain){
+ return g_ECMedia->SetMicrophoneGain(channelId,  gain);
+}
 #endif
 
 #if defined(WEBRTC_ANDROID)

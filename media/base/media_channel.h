@@ -794,6 +794,7 @@ class VoiceMediaChannel : public MediaChannel, public Delayable {
   //add by yukening
   virtual int RegisterMediaPacketTimeoutCallback(int channelid, ECMedia_PacketTimeout* media_timeout_cb) { return 0;}
   virtual int SetPacketTimeoutNotification(int timeout_ms) { return 0; }
+  virtual int SetMicrophoneGain(int channelId, float gain) {return 0 ;}
 
   //ytx_end
 };

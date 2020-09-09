@@ -195,7 +195,7 @@ bool RenderManager::UpdateOrAddVideoTrack(
     int channelId,
     webrtc::VideoTrackInterface* track_to_render,
     rtc::VideoSinkWants wants) {
-  RTC_LOG(INFO) << __FUNCTION__ << "() "
+  RTC_LOG(INFO) << __FUNCTION__ << "() begin "
                 << ", channelId: " << channelId << " track:" << track_to_render;
   std::map<int, render_list>::iterator it = map_video_renders_.find(channelId);
   if (it == map_video_renders_.end()) {
@@ -208,6 +208,8 @@ bool RenderManager::UpdateOrAddVideoTrack(
     (*renderIter)->UpdateVideoTrack(track_to_render, wants);
     renderIter++;
   }
+ RTC_LOG(INFO) << __FUNCTION__ << "() end "
+ << ", channelId: " << channelId << " track:" << track_to_render;
   return true;
 }
 int RenderManager::SaveVideoSnapshot(int channelID, const char* fileName)

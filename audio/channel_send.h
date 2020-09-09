@@ -111,6 +111,8 @@ class ChannelSendInterface {
   virtual int64_t GetRTT() const = 0;
   virtual void StartSend() = 0;
   virtual void StopSend() = 0;
+  
+  virtual int SetMicrophoneGain(int channelId, float gain) = 0;
 
   // E2EE Custom Audio Frame Encryption (Optional)
   virtual void SetFrameEncryptor(

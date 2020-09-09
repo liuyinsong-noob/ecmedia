@@ -1045,7 +1045,10 @@ class WebRtcVoiceMediaChannel::WebRtcAudioSendStream
     RTC_DCHECK(stream_);
     return stream_->GetStats(has_remote_tracks);
   }
-
+ int SetMicrophoneGain(int channelId, float gain){
+      RTC_DCHECK(worker_thread_checker_.IsCurrent());
+        return stream_->SetMicrophoneGain(channelId, gain);
+     }
   // Starts the sending by setting ourselves as a sink to the AudioSource to
   // get data callbacks.
   // This method is called on the libjingle worker thread.
@@ -2597,6 +2600,13 @@ int WebRtcVoiceMediaChannel::SetPacketTimeoutNotification(int timeout_ms){
   stream.second->SetPacketTimeoutNotification(timeout_ms);
  }
  return ret;
+}
+int WebRtcVoiceMediaChannel::SetMicrophoneGain(int channelId, float gain){
+ RTC_DCHECK(worker_thread_checker_.IsCurrent());
+ for(const auto & stream : send_streams_){
+  stream.second->SetMicrophoneGain(channelId, gain);
+ }
+ return 0;
 }
 //ytx_end
 }  // namespace cricket

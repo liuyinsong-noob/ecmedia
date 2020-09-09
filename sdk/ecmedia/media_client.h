@@ -853,6 +853,7 @@ class MediaClient : public sigslot::has_slots<> {
 #if defined(WEBRTC_IOS)
  int GetOrientation(int deviceid, ECMediaRotateCapturedFrame &tr);
  int SetRotateCapturedFrames(int deviceid, ECMediaRotateCapturedFrame tr);
+ int SetMicrophoneGain(int channelId, float gain);
 #endif
 
 #if defined(WEBRTC_ANDROID)

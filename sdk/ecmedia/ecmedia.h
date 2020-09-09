@@ -866,6 +866,7 @@ ECMEDIA_API bool ECMedia_stop_render(int channelId, void* videoView);
 #if defined(WEBRTC_IOS)
 ECMEDIA_API int ECMedia_get_orientation(int deviceid, ECMediaRotateCapturedFrame &tr);
 ECMEDIA_API int ECMedia_set_rotate_captured_frames(int deviceid, ECMediaRotateCapturedFrame tr);
+ECMEDIA_API int ECMedia_audio_set_microphone_gain(int channelId, float gain);
 #endif
 
 #if defined(WEBRTC_ANDROID)

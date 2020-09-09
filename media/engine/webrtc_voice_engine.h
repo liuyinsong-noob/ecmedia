@@ -253,6 +253,7 @@ class WebRtcVoiceMediaChannel final : public VoiceMediaChannel,
   bool GetVoiceStream(VoiceMediaInfo* info) override;
   int RegisterMediaPacketTimeoutCallback(int channelid, ECMedia_PacketTimeout* media_timeout_cb) override; //add by yukening
   int SetPacketTimeoutNotification(int timeout_ms) override;
+  int SetMicrophoneGain(int channelId, float gain) override;
                                        
   //ytx_end
  private:

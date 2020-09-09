@@ -1635,7 +1635,8 @@ MediaClient::CreateLocalVoiceTrack(const std::string& track_id) {
 
 void MediaClient::DestroyLocalVideoTrack(
     rtc::scoped_refptr<webrtc::VideoTrackInterface> track) {
-  API_LOG(INFO) << "track: " << track;
+  API_LOG(INFO) << __FUNCTION__ << "()"<< "track: " << track;
+ 
 
   if (signaling_thread_) {
     signaling_thread_->Invoke<void>(RTC_FROM_HERE, [this, track] {
@@ -1845,6 +1846,8 @@ MediaClient::CreateLocalVideoTrack(const std::string& track_params) {
 		 RTC_LOG(INFO) <<"andorid camer id"<< camera_index ;
 
 #endif
+                    RTC_LOG(INFO) << __FUNCTION__ <<
+                          " track:" << video_track;
                       cameraId_videoTrack_pairs_[camera_index] = video_track;
                       return video_track;
                     case VIDEO_SCREEN:
@@ -3821,6 +3824,21 @@ int MediaClient::SetRotateCapturedFrames(int deviceid,
   ObjCCallClient::GetInstance()->SetRotateCapturedFrames(deviceid, tr);
   return 0;
 }
+ int MediaClient::SetMicrophoneGain(int channelId, float gain){
+  int ret = -1;
+  API_LOG(INFO) << "begin..."
+  << "channel_id: " << channelId;
+  ret = worker_thread_->Invoke<int>(RTC_FROM_HERE, [this, ret, channelId, gain] {
+   
+   if (mVoiceChannels_[channelId] &&
+       mVoiceChannels_[channelId]->media_channel()) {
+    return mVoiceChannels_[channelId]->media_channel()->SetMicrophoneGain(channelId, gain);
+   }
+   return ret;
+  });
+  API_LOG(INFO) << "end ...with ret:%d" << ret;
+  return ret;
+ }
 #endif
 // android interface
 #if defined(WEBRTC_ANDROID)

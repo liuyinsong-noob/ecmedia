@@ -835,6 +835,12 @@ int AudioSendStream::Set_Audio_Keepalive(bool enable,
 
   return 0;
 }
+int AudioSendStream::SetMicrophoneGain(int channelId, float gain){
+ if(channel_send_)
+   return channel_send_->SetMicrophoneGain( channelId,  gain);
+ return -1;
+ 
+}
 //ytx_wx  end
 
 }  // namespace internal

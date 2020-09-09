@@ -127,4 +127,19 @@ const int16_t* AudioFrame::empty_data() {
   return &null_data[0];
 }
 
+void AudioFrame::ScaleRawData(float scale){
+   for(size_t i=0;i<samples_per_channel_*num_channels_;i++){
+        int32_t temp=static_cast<int32_t>(scale*data_[i]);
+        if(temp<32767&&temp>-32767){
+            data_[i] = data_[i] * scale;
+        }else if(temp>32767){
+            data_[i]=32767;
+        }else{
+            data_[i]=-32767;
+        }
+        //data_[i] = (scale * data_[i]) >= (32767) ? 32767:(scale*data_[i]);
+    }
+
+}
+
 }  // namespace webrtc

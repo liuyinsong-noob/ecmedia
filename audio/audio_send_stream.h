@@ -107,6 +107,7 @@ class AudioSendStream final : public webrtc::AudioSendStream,
   int Set_Audio_Keepalive(bool enable,
                           int packetsend_time_internal,
                           int playload);
+  int SetMicrophoneGain(int channelId, float gain) override;
   //ytx end
 
  private:

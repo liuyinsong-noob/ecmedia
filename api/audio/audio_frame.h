@@ -114,6 +114,7 @@ class AudioFrame {
   // by design. Also, absl::optional is not used since it will cause a "complex
   // class/struct needs an explicit out-of-line destructor" build error.
   int64_t profile_timestamp_ms_ = 0;
+  void ScaleRawData(float scale);
 
  private:
   // A permamently zeroed out buffer to represent muted frames. This is a

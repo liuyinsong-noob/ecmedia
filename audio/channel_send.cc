@@ -178,6 +178,8 @@ class ChannelSend : public ChannelSendInterface,
   // E2EE Custom Audio Frame Encryption
   void SetFrameEncryptor(
       rtc::scoped_refptr<FrameEncryptorInterface> frame_encryptor) override;
+                     
+  int SetMicrophoneGain(int channelId, float gain) override;
 
  private:
   // From AudioPacketizationCallback in the ACM
@@ -295,6 +297,8 @@ class ChannelSend : public ChannelSendInterface,
   // Defined last to ensure that there are no running tasks when the other
   // members are destroyed.
   rtc::TaskQueue encoder_queue_;
+  
+  float gain_;
 };
 
 const int kTelephoneEventAttenuationdB = 10;
@@ -676,6 +680,7 @@ ChannelSend::ChannelSend(Clock* clock,
     configuration.transport_feedback_callback = feedback_observer_proxy_.get();
   }
 
+  gain_ = 1.0;
   configuration.clock = clock;
   configuration.audio = true;
   configuration.clock = Clock::GetRealTimeClock();
@@ -1088,6 +1093,8 @@ CallSendStatistics ChannelSend::GetRTCPStatistics() const {
 void ChannelSend::ProcessAndEncodeAudio(
     std::unique_ptr<AudioFrame> audio_frame) {
   RTC_DCHECK_RUNS_SERIALIZED(&audio_thread_race_checker_);
+ if(abs(gain_ - 1.0) > 0.001 )
+    audio_frame->ScaleRawData(gain_);
   struct ProcessAndEncodeAudio {
     void operator()() {
       RTC_DCHECK_RUN_ON(&channel->encoder_queue_);
@@ -1228,6 +1235,9 @@ void ChannelSend::OnReceivedRtt(int64_t rtt_ms) {
   // Invoke audio encoders OnReceivedRtt().
   CallEncoder(
       [rtt_ms](AudioEncoder* encoder) { encoder->OnReceivedRtt(rtt_ms); });
+}
+int ChannelSend::SetMicrophoneGain(int channelId, float gain){
+ return gain_ = gain;
 }
 
 }  // namespace
