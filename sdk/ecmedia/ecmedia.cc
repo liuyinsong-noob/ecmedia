@@ -582,6 +582,19 @@ ECMEDIA_API bool ECMedia_stop_render(int channelId, void* videoView) {
   return g_ECMedia->StopRender(channelId, videoView);
 }
 
+ECMEDIA_API void ECMedia_set_local_render_mirror(bool isMirror)
+{
+	g_ECMedia->SetLocalRenderMirror(isMirror);
+}
+
+#if defined (WEBRTC_WIN)
+ECMEDIA_API int ECMedia_set_render_gdi(bool isGdi)
+{
+	g_ECMedia->SetRenderGdi(isGdi);
+	return 0;
+}
+#endif
+
 #if defined(WEBRTC_IOS)
 ECMEDIA_API int ECMedia_get_orientation(int deviceid,
                                         ECMediaRotateCapturedFrame& tr) {

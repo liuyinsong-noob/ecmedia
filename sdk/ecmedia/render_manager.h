@@ -53,7 +53,11 @@ class RenderManager{
  public:
   RenderManager();
   ~RenderManager();
-  
+
+#if defined(WEBRTC_WIN)
+  int  SetRenderGdi(bool isGdi);
+#endif
+
   bool AttachVideoRender(int channelId,
                          void* videoView,
                          int render_mode,
@@ -77,6 +81,9 @@ class RenderManager{
   using ptr_render = std::unique_ptr<VideoRenderer>;
   using render_list = std::list<VideoRenderer*>;
   std::map<int, render_list> map_video_renders_;
+#if defined(WEBRTC_WIN)
+  bool m_isGdi;
+#endif
 };
 
 #endif  // MEDIA_CLIENT_H_

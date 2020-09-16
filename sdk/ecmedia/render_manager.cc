@@ -64,7 +64,11 @@
 #endif
 ///////////////////////////////////VideoRenderer/////////////////////////////////
 
-RenderManager::RenderManager() {}
+RenderManager::RenderManager() {
+#if defined(WEBRTC_WIN)
+	 m_isGdi = false;
+#endif
+}
 RenderManager::~RenderManager() {
   RTC_LOG(INFO) << __FUNCTION__ << "(), " << " this:" << this
                 << " begin... ";
@@ -83,7 +87,13 @@ RenderManager::~RenderManager() {
   }
   map_video_renders_.clear();
 }
-
+#if defined(WEBRTC_WIN)
+int  RenderManager::SetRenderGdi(bool isGdi)
+{
+	m_isGdi = isGdi;
+	return 0;
+}
+#endif
 bool RenderManager::AttachVideoRender(int channelId,
                                       void* videoView,
                                       int render_mode,
@@ -117,6 +127,10 @@ bool RenderManager::AttachVideoRender(int channelId,
 #if defined(WEBRTC_LINUX_ONLY)
 VideoRenderer* render = VideoRenderer::CreateVideoRenderer(
 	channelId,videoView, render_mode, mirror_mode, nullptr, worker_thread, kRenderX11,wants);
+#endif
+#if defined(WEBRTC_WIN)
+VideoRenderer* render = VideoRenderer::CreateVideoRenderer(
+	channelId, videoView, render_mode, mirror_mode, nullptr, worker_thread, kRenderWindows, wants,m_isGdi);
 #else 
    VideoRenderer* render = VideoRenderer::CreateVideoRenderer(
      channelId, videoView, render_mode, mirror_mode, nullptr, worker_thread, kRenderWindows, wants);

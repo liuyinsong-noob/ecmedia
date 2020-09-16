@@ -190,6 +190,11 @@ MediaClient::MediaClient() {
   m_screenshareID = -1;
   m_screenshareStart = false;
 #endif
+
+#if defined(WEBRTC_WIN)
+  m_mirror = true;
+#endif
+
   m_bInitialized = false;
   m_bControll = false;
   isCreateCall = true;
@@ -2099,6 +2104,14 @@ bool MediaClient::InitRenderWndsManager() {
   return true;
 }
 
+void MediaClient::SetLocalRenderMirror(bool isMirror)
+{
+#if defined(WEBRTC_WIN)
+	m_mirror = isMirror;
+#endif
+
+}
+
 bool MediaClient::SetLocalVideoRenderWindow(int channel_id,
                                             int render_mode,
                                             void* view) {
@@ -2106,18 +2119,29 @@ bool MediaClient::SetLocalVideoRenderWindow(int channel_id,
   EC_CHECK_VALUE(view, false);
   EC_CHECK_VALUE((channel_id >= 0), false);
 
-#if defined WEBRTC_WIN || defined(WEBRTC_LINUX_ONLY)
+#if defined (WEBRTC_WIN) 
   if (!renderWndsManager_) {
     InitRenderWndsManager();
   }
   signaling_thread_->Invoke<void>(
       RTC_FROM_HERE, [this, channel_id, view, render_mode] {
         renderWndsManager_->AttachVideoRender(channel_id, view, render_mode,
-                                              true, worker_thread_);
+                                              m_mirror, worker_thread_);
       });
 
 //#elif defined(WEBRTC_IOS)
 //  ObjCCallClient::GetInstance()->SetLocalWindowView(view);
+#endif
+
+#if defined(WEBRTC_LINUX_ONLY)
+  if (!renderWndsManager_) {
+	  InitRenderWndsManager();
+  }
+  signaling_thread_->Invoke<void>(
+	  RTC_FROM_HERE, [this, channel_id, view, render_mode] {
+	  renderWndsManager_->AttachVideoRender(channel_id, view, render_mode,
+		  true, worker_thread_);
+  });
 #endif
   return true;
 }
@@ -3677,6 +3701,17 @@ bool MediaClient::GetVoiceStreamStats(char* jsonAudioStats,
   });
   return bOk;
 }
+#if defined(WEBRTC_WIN)
+int MediaClient::SetRenderGdi(bool isGdi)
+{
+	if (!renderWndsManager_) {
+		InitRenderWndsManager();
+	}
+
+	renderWndsManager_->SetRenderGdi(isGdi);
+	return 0;
+}
+#endif
 
 bool MediaClient::AttachVideoRender(int channelId,
                                     void* videoView,

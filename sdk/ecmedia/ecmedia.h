@@ -863,6 +863,10 @@ ECMEDIA_API bool ECMedia_start_render(int channelId, void* videoView);
 
 ECMEDIA_API bool ECMedia_stop_render(int channelId, void* videoView);
 
+ECMEDIA_API void ECMedia_set_local_render_mirror(bool isMirror);
+#if defined (WEBRTC_WIN)
+ECMEDIA_API int ECMedia_set_render_gdi(bool isGdi);
+#endif
 #if defined(WEBRTC_IOS)
 ECMEDIA_API int ECMedia_get_orientation(int deviceid, ECMediaRotateCapturedFrame &tr);
 ECMEDIA_API int ECMedia_set_rotate_captured_frames(int deviceid, ECMediaRotateCapturedFrame tr);

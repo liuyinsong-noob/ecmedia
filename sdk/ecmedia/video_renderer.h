@@ -18,12 +18,19 @@ class VideoRenderer : public rtc::VideoSinkInterface<webrtc::VideoFrame> {
 	  int channelid,
       void* windows,
       int render_mode,
-	    bool mirror,
+	  bool mirror,
       webrtc::VideoTrackInterface* track_to_render,
       rtc::Thread* worker_thread,
       const VideoRenderType type = kRenderDefault,
-      rtc::VideoSinkWants wants = rtc::VideoSinkWants());
-  virtual ~VideoRenderer() {}
+#if defined(WEBRTC_WIN)
+	  rtc::VideoSinkWants wants = rtc::VideoSinkWants(),
+      bool isGdi = false);
+#else
+	  rtc::VideoSinkWants wants = rtc::VideoSinkWants()
+	  );
+#endif
+
+ virtual ~VideoRenderer() {}
 
   virtual int StartRender() = 0;
   virtual int StopRender() = 0;

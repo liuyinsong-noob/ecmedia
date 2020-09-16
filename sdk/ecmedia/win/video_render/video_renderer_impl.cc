@@ -15,8 +15,15 @@ VideoRenderer* VideoRenderer::CreateVideoRenderer(
 	bool mirror,
     webrtc::VideoTrackInterface* track_to_render,
     rtc::Thread* worker_thread,
-    VideoRenderType type,
-    rtc::VideoSinkWants wants) {
+    VideoRenderType type, 
+#if defined(WEBRTC_WIN)
+	rtc::VideoSinkWants wants,
+	bool isGdi)
+#else
+	rtc::VideoSinkWants wants
+	)
+#endif
+{ 	
   VideoRenderType render_type = type;
   if (render_type == kRenderDefault) {
     render_type = STANDARD_RENDERING;
@@ -26,7 +33,7 @@ VideoRenderer* VideoRenderer::CreateVideoRenderer(
                    << " hubin_render";
   return new VideoRenderImpl(channelid, windows, render_mode, mirror, track_to_render,
                              worker_thread,
-                             render_type, wants);
+                             render_type, wants,isGdi);
 }
 
 
@@ -37,36 +44,45 @@ VideoRenderImpl::VideoRenderImpl(int channelid,
                                  webrtc::VideoTrackInterface* track_to_render,
                                  rtc::Thread* worker_thread,
                                  VideoRenderType render_type,
-                                 rtc::VideoSinkWants wants)
+                                 rtc::VideoSinkWants wants,bool isGdi)
     : channelid_(channelid),
       worker_thread_(worker_thread),
       rendered_track_(track_to_render),
       video_window_(windows),
       callback_(nullptr) {
-  switch (render_type) {
-    case kRenderWindows: {
-      RTC_LOG(LS_INFO) << " new WinD3d9Render begins " << (long)this
-                       << " hubin_render";
-      _ptrRenderer = new WinD3d9Render(windows, render_mode, mirror);
-	  RTC_LOG(LS_INFO) << " CreateVideoRenderer ends " << (long)this << " render:" << _ptrRenderer
-                       << " hubin_render";
-      break;
-    }
-      // TODO: other Platform render implementor
-    default:
-      break;
-  }
- 
-  if (_ptrRenderer) {
-    if (_ptrRenderer->Init() == -1) {
-      delete _ptrRenderer;
-      _ptrRenderer = nullptr;
-       RTC_LOG(LS_ERROR) << __FUNCTION__ << " _ptrRenderer->Init() failed.";
-      _ptrRenderer = new WinGdiRender(windows, render_mode, mirror);
-       RTC_LOG(INFO) << "create gdi Renderer...";
-      return;
-    }
-  }
+	if (!isGdi) {
+		switch (render_type) {
+		case kRenderWindows: {
+			RTC_LOG(LS_INFO) << " new WinD3d9Render begins " << (long)this
+				<< " hubin_render";
+			_ptrRenderer = new WinD3d9Render(windows, render_mode, mirror);
+			RTC_LOG(LS_INFO) << " CreateVideoRenderer ends " << (long)this << " render:" << _ptrRenderer
+				<< " hubin_render";
+			break;
+		}
+							 // TODO: other Platform render implementor
+		default:
+			break;
+		}
+
+		if (_ptrRenderer) {
+			if (_ptrRenderer->Init() == -1) {
+				delete _ptrRenderer;
+				_ptrRenderer = nullptr;
+				RTC_LOG(LS_ERROR) << __FUNCTION__ << " _ptrRenderer->Init() failed.";
+				_ptrRenderer = new WinGdiRender(windows, render_mode, mirror);
+				RTC_LOG(INFO) << "create gdi Renderer...";
+				return;
+			}
+		}
+	}
+	else
+	{
+		_ptrRenderer = new WinGdiRender(windows, render_mode, mirror);
+		RTC_LOG(INFO) << "create gdi Renderer...";
+		return;
+	}
+  
   if (rendered_track_) {
     // note: crash here because of thread_check
     worker_thread_->Invoke<void>(RTC_FROM_HERE, [&] {

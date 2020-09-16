@@ -14,7 +14,13 @@ class VideoRenderImpl : public VideoRenderer {
                   webrtc::VideoTrackInterface* track_to_render,
                   rtc::Thread* worker_thread,
                   VideoRenderType render_type,
-                  rtc::VideoSinkWants wants);
+#if defined(WEBRTC_WIN)
+	  rtc::VideoSinkWants wants,
+	  bool isGdi = false);
+#else
+	  rtc::VideoSinkWants wants
+	  );
+#endif
 
   virtual ~VideoRenderImpl();
 

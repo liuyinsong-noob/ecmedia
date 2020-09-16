@@ -762,6 +762,11 @@ class MediaClient : public sigslot::has_slots<> {
   /*****************************************************************************/
   char* GetAudioDeviceList(int* length);
 
+  void SetLocalRenderMirror(bool isMirror);
+#if defined(WEBRTC_WIN)
+  int SetRenderGdi(bool isGdi);
+#endif
+
   bool SetAudioRecordingDeviceOnFlight(int index);
 
   bool SetAudioPlayoutDeviceOnFlight(int index);
@@ -956,6 +961,11 @@ class MediaClient : public sigslot::has_slots<> {
   int m_screenshareID;
   bool m_screenshareStart;
 #endif
+
+#if defined(WEBRTC_WIN)
+  bool m_mirror;
+#endif
+
   static rtc::CriticalSection m_critical;
   bool isCreateCall;
   char* pAudioDevice;
