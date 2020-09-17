@@ -863,7 +863,8 @@ ECMEDIA_API bool ECMedia_start_render(int channelId, void* videoView);
 
 ECMEDIA_API bool ECMedia_stop_render(int channelId, void* videoView);
 
-ECMEDIA_API void ECMedia_set_local_render_mirror(bool isMirror);
+ECMEDIA_API void ECMedia_set_render_mode(bool isLocal, int renderMode, bool mirrorMode);
+
 #if defined (WEBRTC_WIN)
 ECMEDIA_API int ECMedia_set_render_gdi(bool isGdi);
 #endif

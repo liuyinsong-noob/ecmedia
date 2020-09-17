@@ -762,7 +762,8 @@ class MediaClient : public sigslot::has_slots<> {
   /*****************************************************************************/
   char* GetAudioDeviceList(int* length);
 
-  void SetLocalRenderMirror(bool isMirror);
+  void SetRenderMode(bool  isLocal,int renderMode, bool mirrorMode);
+  
 #if defined(WEBRTC_WIN)
   int SetRenderGdi(bool isGdi);
 #endif
@@ -963,7 +964,11 @@ class MediaClient : public sigslot::has_slots<> {
 #endif
 
 #if defined(WEBRTC_WIN)
-  bool m_mirror;
+  int m_localRenderMode;
+  int m_remoteRenderMode;
+  bool m_localMirrorMode;
+  bool m_remoteMirrorMode;
+
 #endif
 
   static rtc::CriticalSection m_critical;

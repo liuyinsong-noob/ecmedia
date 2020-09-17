@@ -192,7 +192,10 @@ MediaClient::MediaClient() {
 #endif
 
 #if defined(WEBRTC_WIN)
-  m_mirror = true;
+   m_localRenderMode = 1;
+   m_remoteRenderMode =1;
+   m_localMirrorMode = true;
+   m_remoteMirrorMode = false;
 #endif
 
   m_bInitialized = false;
@@ -2103,14 +2106,23 @@ bool MediaClient::InitRenderWndsManager() {
 #endif
   return true;
 }
-
-void MediaClient::SetLocalRenderMirror(bool isMirror)
-{
+void MediaClient::SetRenderMode(bool  isLocal, int renderMode, bool mirrorMode)
+{// renderMode  0 裁剪  1 填充    mirrorMode   0 是不镜像  1是镜像 
 #if defined(WEBRTC_WIN)
-	m_mirror = isMirror;
+	if (isLocal)
+	{
+		m_localRenderMode = renderMode;	
+		m_localMirrorMode = mirrorMode;
+		
+	}
+	else
+	{
+		 m_remoteRenderMode = renderMode;
+		 m_remoteMirrorMode = mirrorMode;
+	}
 #endif
-
 }
+
 
 bool MediaClient::SetLocalVideoRenderWindow(int channel_id,
                                             int render_mode,
@@ -2125,8 +2137,7 @@ bool MediaClient::SetLocalVideoRenderWindow(int channel_id,
   }
   signaling_thread_->Invoke<void>(
       RTC_FROM_HERE, [this, channel_id, view, render_mode] {
-        renderWndsManager_->AttachVideoRender(channel_id, view, render_mode,
-                                              m_mirror, worker_thread_);
+        renderWndsManager_->AttachVideoRender(channel_id, view, render_mode,m_localMirrorMode, worker_thread_);
       });
 
 //#elif defined(WEBRTC_IOS)
@@ -2192,7 +2203,7 @@ bool MediaClient::SetRemoteVideoRenderWindow(int channel_Id,
                                              void* view) {
   API_LOG(INFO) << "channel_id: " << channel_Id << ", video_window: " << view;
   EC_CHECK_VALUE((channel_Id >= 0), false);
-#if defined WEBRTC_WIN || defined(WEBRTC_LINUX_ONLY)
+#if defined WEBRTC_WIN 
   EC_CHECK_VALUE(view, false);
 
   if (!renderWndsManager_) {
@@ -2200,11 +2211,22 @@ bool MediaClient::SetRemoteVideoRenderWindow(int channel_Id,
   }
   signaling_thread_->Invoke<void>(
       RTC_FROM_HERE, [this, channel_Id, view, render_mode] {
-        renderWndsManager_->AttachVideoRender(channel_Id, view, render_mode,
-                                              false, worker_thread_);
+        renderWndsManager_->AttachVideoRender(channel_Id, view, render_mode,m_remoteMirrorMode, worker_thread_);
       });
 //#elif defined(WEBRTC_IOS)
 //  ObjCCallClient::GetInstance()->SetRemoteWindowView(channel_Id, view);
+#endif
+#if defined(WEBRTC_LINUX_ONLY)
+  EC_CHECK_VALUE(view, false);
+
+  if (!renderWndsManager_) {
+	  InitRenderWndsManager();
+  }
+  signaling_thread_->Invoke<void>(
+	  RTC_FROM_HERE, [this, channel_Id, view, render_mode] {
+	  renderWndsManager_->AttachVideoRender(channel_Id, view, render_mode, false, worker_thread_);
+  });
+ 
 #endif
   RTC_LOG(INFO) << __FUNCTION__ << "() "
                 << " end...";

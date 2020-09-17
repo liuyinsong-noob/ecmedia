@@ -582,9 +582,9 @@ ECMEDIA_API bool ECMedia_stop_render(int channelId, void* videoView) {
   return g_ECMedia->StopRender(channelId, videoView);
 }
 
-ECMEDIA_API void ECMedia_set_local_render_mirror(bool isMirror)
+ECMEDIA_API void ECMedia_set_render_mode(bool isLocal, int renderMode, bool mirrorMode)
 {
-	g_ECMedia->SetLocalRenderMirror(isMirror);
+	g_ECMedia->SetRenderMode(isLocal,renderMode, mirrorMode);
 }
 
 #if defined (WEBRTC_WIN)
