@@ -129,9 +129,9 @@ DesktopFrameWithCursor::~DesktopFrameWithCursor() {
 }  // namespace
 
 DesktopAndCursorComposer::DesktopAndCursorComposer(
-    std::unique_ptr<DesktopCapturer> desktop_capturer,
+    DesktopCapturer* desktop_capturer,
     const DesktopCaptureOptions& options)
-    : DesktopAndCursorComposer(desktop_capturer.release(),
+    : DesktopAndCursorComposer(desktop_capturer,
                                MouseCursorMonitor::Create(options).release()) {}
 
 DesktopAndCursorComposer::DesktopAndCursorComposer(
@@ -159,6 +159,14 @@ void DesktopAndCursorComposer::CaptureFrame() {
   if (mouse_monitor_)
     mouse_monitor_->Capture();
   desktop_capturer_->CaptureFrame();
+}
+
+bool DesktopAndCursorComposer::GetSourceList(SourceList* sources) {
+  return desktop_capturer_->GetSourceList(sources);
+}
+
+bool DesktopAndCursorComposer::SelectSource(SourceId id) {
+  return desktop_capturer_->SelectSource(id);
 }
 
 void DesktopAndCursorComposer::SetExcludedWindow(WindowId window) {

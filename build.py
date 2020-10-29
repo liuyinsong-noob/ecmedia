@@ -98,7 +98,7 @@ def download_deps(target_os):
 def gn_project(target_os,target_cpu):
     download_deps(target_os)
     gn_param = []
-    gn_param.append('is_debug=false')
+    gn_param.append('is_debug=true')
     gn_param.append('rtc_include_tests=false')
     gn_param.append('target_cpu=\\\"'+target_cpu+'\\\"')
     gn_param.append('target_os=\\\"'+target_os+'\\\"')

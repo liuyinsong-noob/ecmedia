@@ -24,6 +24,8 @@
 #include "rtc_base/trace_event.h"
 #include "rtc_base/win32.h"
 
+#include "modules/desktop_capture/desktop_and_cursor_composer.h"
+
 namespace webrtc {
 
 namespace {
@@ -357,7 +359,9 @@ void WindowCapturerWin::CaptureFrame() {
 // static
 std::unique_ptr<DesktopCapturer> DesktopCapturer::CreateRawWindowCapturer(
     const DesktopCaptureOptions& options) {
-  return std::unique_ptr<DesktopCapturer>(new WindowCapturerWin());
+ // return std::unique_ptr<DesktopCapturer>(new WindowCapturerWin());
+  return std::unique_ptr<DesktopCapturer> (
+     new DesktopAndCursorComposer(new WindowCapturerWin(), options));
 }
 
 }  // namespace webrtc
