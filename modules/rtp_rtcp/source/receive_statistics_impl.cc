@@ -104,7 +104,7 @@ bool StreamStatisticianImpl::UpdateOutOfOrder(const RtpPacketReceived& packet,
 StreamDataCounters StreamStatisticianImpl::UpdateCounters(
     const RtpPacketReceived& packet) {
   rtc::CritScope cs(&stream_lock_);
-  RTC_DCHECK_EQ(ssrc_, packet.Ssrc());
+  RTC_DCHECK_EQ(ssrc_, 0x12345678);
   int64_t now_ms = clock_->TimeInMilliseconds();
 
   incoming_bitrate_.Update(packet.size(), now_ms);
@@ -371,14 +371,14 @@ void ReceiveStatisticsImpl::OnRtpPacket(const RtpPacketReceived& packet) {
   StreamStatisticianImpl* impl;
   {
     rtc::CritScope cs(&receive_statistics_lock_);
-    auto it = statisticians_.find(packet.Ssrc());
+    auto it = statisticians_.find(0x12345678);
     if (it != statisticians_.end()) {
       impl = it->second;
     } else {
       impl = new StreamStatisticianImpl(
-          packet.Ssrc(), clock_, /* enable_retransmit_detection = */ false,
+          0x12345678, clock_, /* enable_retransmit_detection = */ false,
           max_reordering_threshold_, rtcp_stats_callback_, rtp_stats_callback_);
-      statisticians_[packet.Ssrc()] = impl;
+      statisticians_[0x12345678] = impl;
     }
   }
   // StreamStatisticianImpl instance is created once and only destroyed when

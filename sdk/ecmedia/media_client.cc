@@ -661,7 +661,7 @@ bool MediaClient::CreateTransport(const char* local_addr,
   std::string clocal_addr = "0.0.0.0";
   rtc::SocketAddress local, remote;
   std::ostringstream strL, strRemote;
-  // strL << local_addr << ":" << local_port;
+  //strL << local_addr << ":" << local_port;
   strL << clocal_addr.c_str() << ":" << local_port;
   local.FromString(strL.str().c_str());
   strRemote << remote_addr << ":" << remote_port;
@@ -962,8 +962,8 @@ bool MediaClient::CreateVideoChannel(const std::string& settings,
   channel_manager_->GetSupportedVideoCodecs(&vidoe_send_params.codecs);
   // FilterVideoCodec(&config.video_stream_configs, vidoe_send_params.codecs);
   FilterVideoCodec(config, vidoe_send_params.codecs);
-  channel_manager_->GetSupportedVideoRtpHeaderExtensions(
-      &vidoe_send_params.extensions);
+ // channel_manager_->GetSupportedVideoRtpHeaderExtensions(
+ //     &vidoe_send_params.extensions);
 
   /* if (vidoe_send_params.codecs.size() > 0) {
      vidoe_send_params.codecs.at(0).params[cricket::kCodecParamMinBitrate] =
@@ -992,7 +992,8 @@ bool MediaClient::CreateVideoChannel(const std::string& settings,
     video_stream_params.AddFidSsrc(*it, *it | 0x40);
     it++;
   }
-  if (ssrcsRemote.size() == 0) {
+  //if (ssrcsRemote.size() == 0) 
+  {
     if (config.isScreenShare) {
 #if defined(WEBRTC_WIN)|| defined(WEBRTC_LINUX_ONLY)
       m_MaxBitrateScreen_ = GetMaxVideoBitrateKbps(config.width, config.height,
@@ -1067,8 +1068,8 @@ bool MediaClient::CreateVideoChannel(const std::string& settings,
     //  FilterVideoCodec(&config.video_stream_configs,
     //  video_recv_params.codecs);
     FilterVideoCodec(config, video_recv_params.codecs);
-    channel_manager_->GetSupportedVideoRtpHeaderExtensions(
-        &video_recv_params.extensions);
+    //channel_manager_->GetSupportedVideoRtpHeaderExtensions(
+    //    &video_recv_params.extensions);
   });
 
   bOk = worker_thread_->Invoke<bool>(RTC_FROM_HERE, [&] {
@@ -1227,8 +1228,8 @@ bool MediaClient::CreateVoiceChannel(const std::string& settings,
 
   signaling_thread_->Invoke<void>(RTC_FROM_HERE, [&] {
     channel_manager_->GetSupportedAudioSendCodecs(&sendParams.codecs);
-    channel_manager_->GetSupportedAudioRtpHeaderExtensions(
-        &sendParams.extensions);
+    //channel_manager_->GetSupportedAudioRtpHeaderExtensions(
+    //    &sendParams.extensions);
   });
 
   FilterAudioCodec(config, sendParams.codecs);
@@ -1269,8 +1270,8 @@ bool MediaClient::CreateVoiceChannel(const std::string& settings,
 
   cricket::AudioRecvParameters recvParams;
   channel_manager_->GetSupportedAudioReceiveCodecs(&recvParams.codecs);
-  channel_manager_->GetSupportedAudioRtpHeaderExtensions(
-      &recvParams.extensions);
+  //channel_manager_->GetSupportedAudioRtpHeaderExtensions(
+  //    &recvParams.extensions);
 
   bOk = worker_thread_->Invoke<bool>(RTC_FROM_HERE, [&] {
     return voice_channel_->media_channel()->SetRecvParameters(recvParams);
@@ -2731,6 +2732,9 @@ bool MediaClient::ParseVideoCodecSetting(const char* videoCodecSettings,
         }
         if (rtc::GetIntFromJsonObject(settings, "payloadType", &value)) {
           config->payloadType = value;
+        }
+        if (rtc::GetIntFromJsonObject(settings, "rtx", &value)) {
+          config->rtx = value;
         }
         if (rtc::GetIntFromJsonObject(settings, "rtxPayload", &value)) {
           config->rtxPayload = value;

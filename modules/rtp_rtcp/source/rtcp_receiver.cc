@@ -683,9 +683,9 @@ void RTCPReceiver::HandleNack(const CommonHeader& rtcp_block,
 
 //ytx_begin  by yukening
  // if (receiver_only_ || main_ssrc_ != nack.media_ssrc())  // Not to us.
-  uint32_t general_media_ssrc = GetGeneralSsrc(nack.media_ssrc());
-  if (receiver_only_ ||  general_main_ssrc_ != general_media_ssrc)  // Not to us.
-    return;
+  //uint32_t general_media_ssrc = GetGeneralSsrc(nack.media_ssrc());
+  //if (receiver_only_ ||  general_main_ssrc_ != general_media_ssrc)  // Not to us.
+    //return;
 //ytx_end
 
   packet_information->nack_sequence_numbers.insert(
@@ -825,8 +825,9 @@ void RTCPReceiver::HandlePli(const CommonHeader& rtcp_block,
 
   //ytx_begin by yukening
    //if (main_ssrc_ == pli.media_ssrc())
-    uint32_t pli_media_ssrc = GetGeneralSsrc(pli.media_ssrc());
-  if ( general_main_ssrc_ == pli_media_ssrc ){
+    //uint32_t pli_media_ssrc = GetGeneralSsrc(pli.media_ssrc());
+  //if ( general_main_ssrc_ == pli_media_ssrc )
+  {
  //ytx_begi
     ++packet_type_counter_.pli_packets;
     // Received a signal that we need to send a new key frame.
@@ -926,8 +927,10 @@ void RTCPReceiver::HandleFir(const CommonHeader& rtcp_block,
     ++num_skipped_packets_;
     return;
   }
-
-  for (const rtcp::Fir::Request& fir_request : fir.requests()) {
+  ++packet_type_counter_.fir_packets;
+  packet_information->packet_type_flags |= kRtcpFir;
+  for (const rtcp::Fir::Request& fir_request : fir.requests()) 
+  {
     // Is it our sender that is requested to generate a new keyframe.
     //ytx_begin
     //if (main_ssrc_ != fir_request.ssrc)

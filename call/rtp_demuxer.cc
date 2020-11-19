@@ -173,7 +173,8 @@ RtpPacketSinkInterface* RtpDemuxer::ResolveSink(
   if (!has_rsid) {
     has_rsid = packet.GetExtension<RtpStreamId>(&packet_rsid);
   }
-  uint32_t ssrc = packet.Ssrc();
+  uint32_t ssrc = 0x12345678;
+  //packet.Ssrc();
 
   // The BUNDLE spec says to drop any packets with unknown MIDs, even if the
   // SSRC is known/latched.

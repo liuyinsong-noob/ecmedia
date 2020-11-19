@@ -130,10 +130,21 @@ PhysicalSocket::PhysicalSocket(PhysicalSocketServer* ss, SOCKET s)
 
 PhysicalSocket::~PhysicalSocket() {
   Close();
+#if defined(WEBRTC_WIN)
+  WSACleanup();
+#endif
 }
 
 bool PhysicalSocket::Create(int family, int type) {
   Close();
+#if defined(WEBRTC_WIN)
+  //≥ı ºªØWSA
+  WORD sockVersion = MAKEWORD(2, 2);
+  WSADATA wsaData;
+  if (WSAStartup(sockVersion, &wsaData) != 0) {
+    return false;
+  }
+#endif
   s_ = ::socket(family, type, 0);
   udp_ = (SOCK_DGRAM == type);
   UpdateLastError();
