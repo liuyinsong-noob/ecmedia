@@ -932,6 +932,12 @@ ECMEDIA_API int ECMedia_start_screen_share(int type,int channelId);
 
 ECMEDIA_API int ECMedia_stop_screen_share(int type,int channelId); 
 
+/* add by lys */
+ECMEDIA_API int ECMedia_crop_desktop_capture(int type,
+                                             int x,
+                                             int y,
+                                             int width,
+                                             int height);
 
 ECMEDIA_API bool ECMedia_select_screen(int desktop_captureid, ScreenID screeninfo);
 

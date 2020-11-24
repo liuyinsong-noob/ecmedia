@@ -97,6 +97,9 @@ class ECDesktopCapture : public rtc::AdaptedVideoTrackSource,
   void Stop();
   void CaptureFrame();
   bool GetCaptureState();
+  /* add by lys */
+  void SetMonitorArea(int x, int y, int width, int height);
+  int crop_x = 0, crop_y = 0, crop_width = 0, crop_height = 0;
 
  public:
   bool isStartCapture;
@@ -779,6 +782,7 @@ class MediaClient : public sigslot::has_slots<> {
   int GetWindowsList(int type, webrtc::DesktopCapturer::SourceList& source);
   int StartScreenShare(int type, int channelId);
   int StopScreenShare(int type, int channelId);
+  int CropDesktopCapture(int type, int x, int y, int width, int height);
 
   int GetCaptureDevice(int index,
                        char* device_name,

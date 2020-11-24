@@ -250,16 +250,16 @@ ECMEDIA_API void* ECMedia_create_audio_device() {
 }
 
 ECMEDIA_API int ECMedia_set_speaker_volume(int volumep) {
-	return g_ECMedia->SetSpeakerVolume(volumep);
+  return g_ECMedia->SetSpeakerVolume(volumep);
 }
 
 ECMEDIA_API int ECMedia_get_speaker_volume(unsigned int& volumep) {
-	return g_ECMedia->GetSpeakerVolume(volumep);
+  return g_ECMedia->GetSpeakerVolume(volumep);
 }
 
-
-ECMEDIA_API int ECMedia_save_local_video_snapshot(int channelID, const char* fileName) {
-	return g_ECMedia->SaveLocalVideoSnapshot(channelID, fileName);
+ECMEDIA_API int ECMedia_save_local_video_snapshot(int channelID,
+                                                  const char* fileName) {
+  return g_ECMedia->SaveLocalVideoSnapshot(channelID, fileName);
 }
 
 ECMEDIA_API bool ECMedia_set_audio_recording_volume(uint32_t vol) {
@@ -582,16 +582,16 @@ ECMEDIA_API bool ECMedia_stop_render(int channelId, void* videoView) {
   return g_ECMedia->StopRender(channelId, videoView);
 }
 
-ECMEDIA_API void ECMedia_set_render_mode(bool isLocal, int renderMode, bool mirrorMode)
-{
-	g_ECMedia->SetRenderMode(isLocal,renderMode, mirrorMode);
+ECMEDIA_API void ECMedia_set_render_mode(bool isLocal,
+                                         int renderMode,
+                                         bool mirrorMode) {
+  g_ECMedia->SetRenderMode(isLocal, renderMode, mirrorMode);
 }
 
-#if defined (WEBRTC_WIN)
-ECMEDIA_API int ECMedia_set_render_gdi(bool isGdi)
-{
-	g_ECMedia->SetRenderGdi(isGdi);
-	return 0;
+#if defined(WEBRTC_WIN)
+ECMEDIA_API int ECMedia_set_render_gdi(bool isGdi) {
+  g_ECMedia->SetRenderGdi(isGdi);
+  return 0;
 }
 #endif
 
@@ -605,8 +605,8 @@ ECMEDIA_API int ECMedia_set_rotate_captured_frames(
     ECMediaRotateCapturedFrame tr) {
   return g_ECMedia->SetRotateCapturedFrames(deviceid, tr);
 }
-int ECMedia_audio_set_microphone_gain(int channelId, float gain){
- return g_ECMedia->SetMicrophoneGain(channelId,  gain);
+int ECMedia_audio_set_microphone_gain(int channelId, float gain) {
+  return g_ECMedia->SetMicrophoneGain(channelId, gain);
 }
 #endif
 
@@ -758,9 +758,9 @@ ECMEDIA_API int ECMedia_get_window_list(int type, WindowShare** windowList) {
     (*temp).id = it->id;
     (*temp).type = 0;
 #if defined(WEBRTC_WIN)
-	int len = it->title.length();
-	if (len >= kTitleLength)
-		len = kTitleLength - 1;
+    int len = it->title.length();
+    if (len >= kTitleLength)
+      len = kTitleLength - 1;
     memcpy_s((*temp).title, len, it->title.c_str(), len);
 #endif
     temp++;
@@ -784,6 +784,13 @@ ECMEDIA_API int ECMedia_start_screen_share(int type, int channelId) {
 
 ECMEDIA_API int ECMedia_stop_screen_share(int type, int channelId) {
   return g_ECMedia->StopScreenShare(type, channelId);
+}
+ECMEDIA_API int ECMedia_crop_desktop_capture(int type,
+                                             int x,
+                                             int y,
+                                             int width,
+                                             int height) {
+  return g_ECMedia->CropDesktopCapture(type, x, y, width, height);
 }
 ECMEDIA_API void ECMedia_get_audio_channel_volume_level(int audioid,
                                                         int level) {
@@ -823,10 +830,12 @@ bool ECMedia_set_remote_video_resolute_callback(
     ECMedia_FrameSizeChangeCallback* callback) {
   return g_ECMedia->RegisterRemoteVideoResoluteCallback(channelid, callback);
 }
-int ECMedia_set_media_packet_timeout_callback(int channelid, ECMedia_PacketTimeout* media_timeout_cb){
- return g_ECMedia->RegisterMediaPacketTimeoutCallback(channelid, media_timeout_cb);
+int ECMedia_set_media_packet_timeout_callback(
+    int channelid,
+    ECMedia_PacketTimeout* media_timeout_cb) {
+  return g_ECMedia->RegisterMediaPacketTimeoutCallback(channelid,
+                                                       media_timeout_cb);
 }
-int ECMedia_set_packet_timeout_noti(int channel, int timeout_ms){
- return g_ECMedia->SetPacketTimeoutNotification(channel, timeout_ms);
+int ECMedia_set_packet_timeout_noti(int channel, int timeout_ms) {
+  return g_ECMedia->SetPacketTimeoutNotification(channel, timeout_ms);
 }
-
