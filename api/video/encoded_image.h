@@ -137,9 +137,11 @@ class RTC_EXPORT EncodedImage {
   // TODO(bugs.webrtc.org/9378): We're transitioning to always owning the
   // encoded data.
   rtc::CopyOnWriteBuffer encoded_data_;
+ public:
   size_t size_;      // Size of encoded frame data.
   // Non-null when used with an un-owned buffer.
   uint8_t* buffer_;
+ private:
   // Allocated size of _buffer; relevant only if it's non-null.
   size_t capacity_;
   uint32_t timestamp_rtp_ = 0;

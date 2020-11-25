@@ -1749,13 +1749,45 @@ int MediaClient::CropDesktopCapture(int type,
   RTC_LOG(INFO) << __FUNCTION__ << "()";
   desktop_device_ = desktop_devices_.find(type)->second;
   if (desktop_device_ && desktop_device_->GetCaptureState()) {
-    desktop_device_->SetMonitorArea(x, y, width, height);
+	  worker_thread_->Invoke<void>(RTC_FROM_HERE, [this, x, y, width,height] {
+		  desktop_device_->SetMonitorArea(x, y, width, height); });
     RTC_LOG(INFO) << __FUNCTION__ << "() set monitor area:" << x << " " << y
                   << " " << width << " " << height;
   }
   RTC_LOG(INFO) << __FUNCTION__ << "()end";
 #endif
   return 0;
+}
+
+int MediaClient::StartPicture()
+{
+#if defined(WEBRTC_WIN) || defined(WEBRTC_LINUX_ONLY)
+	RTC_LOG(INFO) << __FUNCTION__ << "()";
+	if (file_picture)
+	{
+		worker_thread_->Invoke<void>(RTC_FROM_HERE, [this] {
+			file_picture->Start();
+		});
+		RTC_LOG(INFO) << __FUNCTION__ << "() start success";
+	}
+	RTC_LOG(INFO) << __FUNCTION__ << "()end";
+#endif
+	return 0;
+}
+int MediaClient::StopPicture()
+{
+#if defined(WEBRTC_WIN) || defined(WEBRTC_LINUX_ONLY)
+	RTC_LOG(INFO) << __FUNCTION__ << "()";
+	if (file_picture)
+	{
+		worker_thread_->Invoke<void>(RTC_FROM_HERE, [this] {
+			file_picture->Stop();
+		});
+		RTC_LOG(INFO) << __FUNCTION__ << "() stop success";
+	}
+	RTC_LOG(INFO) << __FUNCTION__ << "()end";
+#endif
+	return 0;
 }
 
 int MediaClient::GetWindowsList(int type,
@@ -1884,6 +1916,18 @@ MediaClient::CreateLocalVideoTrack(const std::string& track_params) {
                                                      worker_thread_));
 #endif
                       return video_track;
+
+                      break;
+					case VIDEO_PICTURE:
+#if defined(WEBRTC_WIN) || defined(WEBRTC_LINUX_ONLY)
+					file_picture = lys_file::ECFilePicture::Create(config.fileUTF8.c_str());
+					//file_picture->Start();
+                      video_track = webrtc::VideoTrackProxy::Create(
+                          signaling_thread_, worker_thread_,
+                          webrtc::VideoTrack::Create(track_id, file_picture,
+                                                     worker_thread_));
+#endif
+					  return video_track;
 
                       break;
                     default:
@@ -2654,6 +2698,9 @@ bool MediaClient::ParseVideoDeviceSetting(const char* videoDeviceSettings,
         }
         if (rtc::GetStringFromJsonObject(settings, "transportId", &token)) {
           config->transportId = token;
+        }
+		if (rtc::GetStringFromJsonObject(settings, "fileUTF8", &token)) {
+          config->fileUTF8 = token;
         }
 
         return true;
@@ -5001,7 +5048,109 @@ void ECDesktopCapture::OnMessage(rtc::Message* msg) {
 void ECDesktopCapture::CaptureFrame() {
   capturer_->CaptureFrame();
   rtc::Location loc(__FUNCTION__, __FILE__);
-  rtc::Thread::Current()->PostDelayed(loc, 67, this, 0);
+  rtc::Thread::Current()->PostDelayed(loc, 50, this, 0);
 }
 #endif
 }  // namespace win_desk
+namespace lys_file
+{
+#if defined(WEBRTC_WIN) || defined(WEBRTC_LINUX_ONLY)
+ECFilePicture::~ECFilePicture()
+{
+	isStartCapture = false;
+}
+ECFilePicture::ECFilePicture(const char *fileUTF8)
+{
+	if (!fileUTF8)
+		return;
+	webrtc::EncodedImage image_buffer;
+	isStartCapture = false;
+	FILE* image_file = fopen(fileUTF8, "rb");
+	if (!image_file) {
+		return;
+	}
+	if (fseek(image_file, 0, SEEK_END) != 0) {
+		fclose(image_file);
+		return;
+	}
+	int buffer_size = ftell(image_file);
+	if (buffer_size == -1) {
+		fclose(image_file);
+		return;
+	}
+	image_buffer.size_ = buffer_size;
+	if (fseek(image_file, 0, SEEK_SET) != 0) {
+		fclose(image_file);
+		return;
+	}
+	image_buffer.buffer_ = new uint8_t[image_buffer.size_ + 1];
+	if (image_buffer.size_ != fread(image_buffer.buffer_, sizeof(uint8_t),
+		image_buffer.size_, image_file)) {
+		fclose(image_file);
+		delete[] image_buffer.buffer_;
+		return;
+	}
+	fclose(image_file);
+	libyuv::MJpegDecoder mjpeg_decoder;
+	if (mjpeg_decoder.LoadFrame(image_buffer.buffer_, buffer_size))
+	{
+		int width = mjpeg_decoder.GetWidth();
+		int height = mjpeg_decoder.GetHeight();
+		rtc::scoped_refptr<webrtc::I420Buffer> buffer =
+			webrtc::I420Buffer::Create(width, height);
+		int stride = width;
+		uint8_t* yplane = buffer->MutableDataY();
+		uint8_t* uplane = buffer->MutableDataU();
+		uint8_t* vplane = buffer->MutableDataV();
+		libyuv::ConvertToI420(image_buffer.buffer_, buffer_size, yplane, stride, uplane,
+							(stride + 1) / 2, vplane, (stride + 1) / 2, 0, 0, width,
+							height, width, height, libyuv::kRotate0,
+							libyuv::FOURCC_MJPG);
+		file_frame = new webrtc::VideoFrame(buffer, 0, 0, webrtc::kVideoRotation_0);
+	}
+}
+bool ECFilePicture::is_screencast() const {
+  return true;
+}
+absl::optional<bool> ECFilePicture::needs_denoising() const {
+  return true;
+}
+webrtc::MediaSourceInterface::SourceState ECFilePicture::state() const {
+  return kInitializing;
+}
+bool ECFilePicture::remote() const {
+  return true;
+}
+void ECFilePicture::OnMessage(rtc::Message* msg) {
+	if (msg->message_id == 0 && isStartCapture)
+		CaptureFrame();
+}
+void ECFilePicture::CaptureFrame() {
+	if (file_frame)
+	{
+		this->OnFrame(*file_frame);
+		rtc::Location loc(__FUNCTION__, __FILE__);
+		rtc::Thread::Current()->PostDelayed(loc, 200, this, 0);
+	}
+	else
+		RTC_LOG(INFO) << __FUNCTION__ << "() file frame is nullptr";
+}
+bool ECFilePicture::GetCaptureState() {
+	return isStartCapture;
+}
+void ECFilePicture::Stop() {
+	isStartCapture = false;
+}
+
+void ECFilePicture::Start() {
+	if (!isStartCapture) {
+		isStartCapture = true;
+		CaptureFrame();
+	}
+}
+rtc::scoped_refptr<ECFilePicture> ECFilePicture::Create(const char *fileUTF8) {
+  ECFilePicture *capturer = new ECFilePicture(fileUTF8);
+  return capturer;
+}
+#endif
+}

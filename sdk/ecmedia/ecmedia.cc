@@ -792,6 +792,14 @@ ECMEDIA_API int ECMedia_crop_desktop_capture(int type,
                                              int height) {
   return g_ECMedia->CropDesktopCapture(type, x, y, width, height);
 }
+ECMEDIA_API int ECMedia_start_picture()
+{
+	return g_ECMedia->StartPicture();
+}
+ECMEDIA_API int ECMedia_stop_picture()
+{
+	return g_ECMedia->StopPicture();
+}
 ECMEDIA_API void ECMedia_get_audio_channel_volume_level(int audioid,
                                                         int level) {
   return;
