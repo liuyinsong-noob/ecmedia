@@ -127,12 +127,19 @@ DesktopFrameWithCursor::~DesktopFrameWithCursor() {
 }
 
 }  // namespace
-
+#if defined(WEBRTC_WIN)
 DesktopAndCursorComposer::DesktopAndCursorComposer(
     DesktopCapturer* desktop_capturer,
     const DesktopCaptureOptions& options)
     : DesktopAndCursorComposer(desktop_capturer,
                                MouseCursorMonitor::Create(options).release()) {}
+#else
+DesktopAndCursorComposer::DesktopAndCursorComposer(
+	std::unique_ptr<DesktopCapturer> desktop_capturer,
+	const DesktopCaptureOptions& options)
+	: DesktopAndCursorComposer(desktop_capturer.release(),
+		MouseCursorMonitor::Create(options).release()) {}
+#endif
 
 DesktopAndCursorComposer::DesktopAndCursorComposer(
     DesktopCapturer* desktop_capturer,
