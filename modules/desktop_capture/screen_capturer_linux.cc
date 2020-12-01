@@ -18,6 +18,7 @@
 #endif  // defined(WEBRTC_USE_PIPEWIRE)
 
 #if defined(USE_X11)
+#include "modules/desktop_capture/desktop_and_cursor_composer.h"
 #include "modules/desktop_capture/linux/screen_capturer_x11.h"
 #endif  // defined(USE_X11)
 
@@ -33,7 +34,10 @@ std::unique_ptr<DesktopCapturer> DesktopCapturer::CreateRawScreenCapturer(
 #endif  // defined(WEBRTC_USE_PIPEWIRE)
 
 #if defined(USE_X11)
-  return ScreenCapturerX11::CreateRawScreenCapturer(options);
+  std::unique_ptr<DesktopCapturer> capturer(
+	  new DesktopAndCursorComposer(ScreenCapturerX11::CreateRawScreenCapturer(options),options));
+  return capturer;
+  //return ScreenCapturerX11::CreateRawScreenCapturer(options);
 #endif  // defined(USE_X11)
 
   return nullptr;

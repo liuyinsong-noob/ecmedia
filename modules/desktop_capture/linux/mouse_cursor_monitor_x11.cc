@@ -206,9 +206,11 @@ void MouseCursorMonitorX11::CaptureCursor() {
   std::unique_ptr<DesktopFrame> image(
       new BasicDesktopFrame(DesktopSize(img->width, img->height)));
 
-  uint64_t* src = reinterpret_cast<uint64_t*>(img->pixels);
+  //uint64_t* src = reinterpret_cast<uint64_t*>(img->pixels);
+  uint32_t* src = reinterpret_cast<uint32_t*>(img->pixels);
   uint32_t* dst = reinterpret_cast<uint32_t*>(image->data());
   uint32_t* dst_end = dst + (img->width * img->height);
+  RTC_LOG(LS_INFO) << "src width:" << img->width << " src height:" << img->height;
   while (dst < dst_end) {
     *dst++ = *src++;
   }
@@ -219,6 +221,7 @@ void MouseCursorMonitorX11::CaptureCursor() {
   XFree(img);
 
   cursor_shape_.reset(new MouseCursor(image.release(), hotspot));
+  //image.release();
 }
 
 // static

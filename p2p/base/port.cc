@@ -3009,6 +3009,7 @@ int GeneralConnection::Send(const void* data,
   int sent = 0;
   if (udpSocket_) {
     sent = udpSocket_->SendTo(data, size, addrRemote_, options);
+	//RTC_LOG(INFO) << __FUNCTION__ << "()end sent bytes:" << sent << " size:" << size;
   }
   if (sent <= 0) {
     //RTC_DCHECK(sent < 0);

@@ -660,8 +660,8 @@ bool MediaClient::CreateTransport(const char* local_addr,
   std::string clocal_addr = "0.0.0.0";
   rtc::SocketAddress local, remote;
   std::ostringstream strL, strRemote;
-  // strL << local_addr << ":" << local_port;
-  strL << clocal_addr.c_str() << ":" << local_port;
+   strL << local_addr << ":" << local_port;
+  //strL << clocal_addr.c_str() << ":" << local_port;
   local.FromString(strL.str().c_str());
   strRemote << remote_addr << ":" << remote_port;
   remote.FromString(strRemote.str().c_str());
@@ -686,9 +686,9 @@ bool MediaClient::CreateTransport(const char* local_addr,
   EC_CHECK_VALUE(error.ok(), false);
 
   network_thread_->Invoke<void>(RTC_FROM_HERE, [=] {
-    if (bUdp)
-      transport_controller_->setUdpConnection(
-          tid, default_socket_factory_.get(), local, remote);
+	  if (bUdp)
+		  transport_controller_->setUdpConnection(
+			  tid, default_socket_factory_.get(), local, remote);
   });
   webrtc::RtpTransportInternal* rtp_transport =
       transport_controller_->GetRtpTransport(tid);
@@ -4891,6 +4891,9 @@ rtc::scoped_refptr<ECDesktopCapture> ECDesktopCapture::Create(int type) {
   std::unique_ptr<webrtc::DesktopCapturer> capturer = nullptr;
   webrtc::DesktopCaptureOptions option;
   option.set_disable_effects(false);
+#if defined(WEBRTC_LINUX_ONLY)
+  option = webrtc::DesktopCaptureOptions::CreateDefault();
+#endif
   switch (type) {
     case 0:
       capturer = webrtc::DesktopCapturer::CreateScreenCapturer(option);

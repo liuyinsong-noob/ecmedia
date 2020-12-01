@@ -54,14 +54,14 @@ bool ScreenCapturerX11::Init(const DesktopCaptureOptions& options) {
   root_window_ = RootWindow(display(), DefaultScreen(display()));
   if (root_window_ == BadValue) {
     RTC_LOG(LS_ERROR) << "Unable to get the root window";
-    DeinitXlib();
+	DeinitXlib();
     return false;
   }
 
   gc_ = XCreateGC(display(), root_window_, 0, NULL);
   if (gc_ == NULL) {
     RTC_LOG(LS_ERROR) << "Unable to get graphics context";
-    DeinitXlib();
+	DeinitXlib();
     return false;
   }
 
@@ -81,13 +81,13 @@ bool ScreenCapturerX11::Init(const DesktopCaptureOptions& options) {
 
   if (!x_server_pixel_buffer_.Init(display(), DefaultRootWindow(display()))) {
     RTC_LOG(LS_ERROR) << "Failed to initialize pixel buffer.";
-    return false;
+	return false;
   }
 
   if (options_.use_update_notifications()) {
     InitXDamage();
   }
-
+  RTC_LOG(LS_INFO) << "Create x11 screen capturer success!";
   return true;
 }
 
@@ -155,7 +155,7 @@ void ScreenCapturerX11::CaptureFrame() {
   if (!x_server_pixel_buffer_.is_initialized()) {
     // We failed to initialize pixel buffer.
     RTC_LOG(LS_ERROR) << "Pixel buffer is not initialized.";
-    callback_->OnCaptureResult(Result::ERROR_PERMANENT, nullptr);
+	callback_->OnCaptureResult(Result::ERROR_PERMANENT, nullptr);
     return;
   }
 
@@ -171,7 +171,7 @@ void ScreenCapturerX11::CaptureFrame() {
   std::unique_ptr<DesktopFrame> result = CaptureScreen();
   if (!result) {
     RTC_LOG(LS_WARNING) << "Temporarily failed to capture screen.";
-    callback_->OnCaptureResult(Result::ERROR_TEMPORARY, nullptr);
+	callback_->OnCaptureResult(Result::ERROR_TEMPORARY, nullptr);
     return;
   }
 

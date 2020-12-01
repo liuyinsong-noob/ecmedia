@@ -241,7 +241,7 @@ int32_t VideoCaptureModuleV4L2::StartCapture(
 
   // start capture thread;
   if (!_captureThread) {
-    _captureThread.reset(new rtc::PlatformThread(
+	_captureThread.reset(new rtc::PlatformThread(
         VideoCaptureModuleV4L2::CaptureThread, this, "CaptureThread"));
     _captureThread->Start();
     _captureThread->SetPriority(rtc::kHighPriority);
@@ -367,6 +367,7 @@ bool VideoCaptureModuleV4L2::CaptureProcess() {
   timeout.tv_usec = 0;
 
   retVal = select(_deviceFd + 1, &rSet, NULL, NULL, &timeout);
+  RTC_LOG(LS_INFO) << "deviceFd:"<< _deviceFd <<" retVal:" << retVal << " errno:" << errno;
   if (retVal < 0 && errno != EINTR)  // continue if interrupted
   {
     // select failed

@@ -146,6 +146,7 @@ bool PhysicalSocket::Create(int family, int type) {
   }
 #endif
   s_ = ::socket(family, type, 0);
+  RTC_LOG(INFO) << __FUNCTION__ << "()end family:" << family << "  type:" << type << " socket:" << s_;
   udp_ = (SOCK_DGRAM == type);
   UpdateLastError();
   if (udp_) {
