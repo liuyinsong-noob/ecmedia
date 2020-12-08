@@ -1269,7 +1269,7 @@ bool MediaClient::CreateVoiceChannel(const std::string& settings,
   channel_manager_->GetSupportedAudioReceiveCodecs(&recvParams.codecs);
   // channel_manager_->GetSupportedAudioRtpHeaderExtensions(
   //    &recvParams.extensions);
-
+  FilterAudioCodec(config, recvParams.codecs);
   bOk = worker_thread_->Invoke<bool>(RTC_FROM_HERE, [&] {
     return voice_channel_->media_channel()->SetRecvParameters(recvParams);
   });
@@ -1748,7 +1748,7 @@ int MediaClient::CropDesktopCapture(int type,
 #if defined(WEBRTC_WIN) || defined(WEBRTC_LINUX_ONLY)
   RTC_LOG(INFO) << __FUNCTION__ << "()";
   desktop_device_ = desktop_devices_.find(type)->second;
-  if (desktop_device_ && desktop_device_->GetCaptureState()) {
+  if (desktop_device_) {
 	  worker_thread_->Invoke<void>(RTC_FROM_HERE, [this, x, y, width,height] {
 		  desktop_device_->SetMonitorArea(x, y, width, height); });
     RTC_LOG(INFO) << __FUNCTION__ << "() set monitor area:" << x << " " << y
@@ -1784,6 +1784,21 @@ int MediaClient::StopPicture()
 			file_picture->Stop();
 		});
 		RTC_LOG(INFO) << __FUNCTION__ << "() stop success";
+	}
+	RTC_LOG(INFO) << __FUNCTION__ << "()end";
+#endif
+	return 0;
+}
+
+int MediaClient::DestroyPicture()
+{
+#if defined(WEBRTC_WIN) || defined(WEBRTC_LINUX_ONLY)
+	RTC_LOG(INFO) << __FUNCTION__ << "()";
+	if (file_picture)
+	{
+		delete file_picture;
+		file_picture = NULL;
+		RTC_LOG(INFO) << __FUNCTION__ << "() Have already delete file picture";
 	}
 	RTC_LOG(INFO) << __FUNCTION__ << "()end";
 #endif

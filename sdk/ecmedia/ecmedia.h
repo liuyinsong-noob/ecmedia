@@ -942,6 +942,7 @@ ECMEDIA_API int ECMedia_crop_desktop_capture(int type,
                                              int height);
 ECMEDIA_API int ECMedia_start_picture();
 ECMEDIA_API int ECMedia_stop_picture();
+ECMEDIA_API int ECMedia_destroy_picture();
 
 ECMEDIA_API bool ECMedia_select_screen(int desktop_captureid, ScreenID screeninfo);
 

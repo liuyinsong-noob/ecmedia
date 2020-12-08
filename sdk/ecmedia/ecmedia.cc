@@ -800,6 +800,10 @@ ECMEDIA_API int ECMedia_stop_picture()
 {
 	return g_ECMedia->StopPicture();
 }
+ECMEDIA_API int ECMedia_destroy_picture()
+{
+	return g_ECMedia->DestroyPicture();
+}
 ECMEDIA_API void ECMedia_get_audio_channel_volume_level(int audioid,
                                                         int level) {
   return;

@@ -927,6 +927,7 @@ class MediaClient : public sigslot::has_slots<> {
   int CropDesktopCapture(int type, int x, int y, int width, int height);
   int StartPicture();
   int StopPicture();
+  int DestroyPicture();
 
   int GetCaptureDevice(int index,
                        char* device_name,
