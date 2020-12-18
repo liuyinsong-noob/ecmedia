@@ -104,7 +104,7 @@ void ReadMediaConfig(const char* filename) {
     return;
 
   fr.Read(buf, sizeof(buf) - 1);
-  std::string ccmode, h264_encoder = "openh264";
+  std::string ccmode, h264_encoder = "x264";
   std::string simulcast = "false";
   std::string tid;
   Json::Reader reader;
@@ -1748,7 +1748,7 @@ int MediaClient::CropDesktopCapture(int type,
 #if defined(WEBRTC_WIN) || defined(WEBRTC_LINUX_ONLY)
   RTC_LOG(INFO) << __FUNCTION__ << "()";
   desktop_device_ = desktop_devices_.find(type)->second;
-  if (desktop_device_) {
+  if (desktop_device_ ) {
 	  worker_thread_->Invoke<void>(RTC_FROM_HERE, [this, x, y, width,height] {
 		  desktop_device_->SetMonitorArea(x, y, width, height); });
     RTC_LOG(INFO) << __FUNCTION__ << "() set monitor area:" << x << " " << y
