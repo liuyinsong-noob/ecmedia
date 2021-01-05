@@ -1794,10 +1794,11 @@ int MediaClient::DestroyPicture()
 {
 #if defined(WEBRTC_WIN) || defined(WEBRTC_LINUX_ONLY)
 	RTC_LOG(INFO) << __FUNCTION__ << "()";
-	if (file_picture)
+	if (file_picture != nullptr)
 	{
+		StopPicture();
 		delete file_picture;
-		file_picture = NULL;
+		file_picture = nullptr;
 		RTC_LOG(INFO) << __FUNCTION__ << "() Have already delete file picture";
 	}
 	RTC_LOG(INFO) << __FUNCTION__ << "()end";

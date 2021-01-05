@@ -127,8 +127,8 @@ bool RenderManager::AttachVideoRender(int channelId,
 #if defined(WEBRTC_LINUX_ONLY)
 VideoRenderer* render = VideoRenderer::CreateVideoRenderer(
 	channelId,videoView, render_mode, mirror_mode, nullptr, worker_thread, kRenderX11,wants);
-#endif
-#if defined(WEBRTC_WIN)
+//#endif
+#elif defined(WEBRTC_WIN)
 VideoRenderer* render = VideoRenderer::CreateVideoRenderer(
 	channelId, videoView, render_mode, mirror_mode, nullptr, worker_thread, kRenderWindows, wants,m_isGdi);
 #else 
