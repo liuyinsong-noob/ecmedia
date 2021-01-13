@@ -393,8 +393,6 @@ int32_t H264EncoderImpl::SetRateAllocation(
 int32_t H264EncoderImpl::Encode(
     const VideoFrame& input_frame,
     const std::vector<VideoFrameType>* frame_types) {
-	RTC_LOG(LS_INFO)
-		<< "LYS coming a frame";
   if (encoders_.empty()) {
     ReportError();
     return WEBRTC_VIDEO_CODEC_UNINITIALIZED;

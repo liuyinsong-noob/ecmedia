@@ -193,7 +193,7 @@ int32_t X264EncoderImpl::InitEncode(const VideoCodec* inst,
     return release_ret;
   }
 
-  int number_of_streams = SimulcastUtility::NumberOfSimulcastStreams(*inst);
+  int number_of_streams = 1;// SimulcastUtility::NumberOfSimulcastStreams(*inst);
   bool doing_simulcast = (number_of_streams > 1);
 
   if (doing_simulcast &&
@@ -399,11 +399,12 @@ int32_t X264EncoderImpl::Encode(
     ReportError();
     return WEBRTC_VIDEO_CODEC_UNINITIALIZED;
   }
+  bool send_key_frame = false;
 
   rtc::scoped_refptr<const I420BufferInterface> frame_buffer =
       input_frame.video_frame_buffer()->ToI420();
 
-  bool send_key_frame = false;
+ 
   for (size_t i = 0; i < configurations_.size(); ++i) {
     if (configurations_[i].key_frame_request && configurations_[i].sending) {
       send_key_frame = true;
@@ -633,7 +634,8 @@ x264_param_t X264EncoderImpl::CreateEncoderParams(size_t i) const {
     p_params->i_height = configurations_[i].height;
     p_params->i_fps_num = configurations_[i].max_frame_rate;
     p_params->i_fps_den = 1;
-    p_params->i_keyint_max = configurations_[i].key_frame_interval;
+	//by LYS
+	p_params->i_keyint_max = 50;//configurations_[i].key_frame_interval;
     p_params->b_annexb = 1;
     p_params->rc.i_rc_method = X264_RC_ABR;
     p_params->rc.i_bitrate = codec_.simulcastStream[idx].targetBitrate;
