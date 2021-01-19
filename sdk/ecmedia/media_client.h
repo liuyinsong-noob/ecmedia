@@ -130,6 +130,7 @@ class ECFilePicture : public rtc::AdaptedVideoTrackSource,
 
   void AddRef() const override {}
   rtc::RefCountReleaseStatus Release() const override {
+	  //delete this;
     return rtc::RefCountReleaseStatus::kDroppedLastRef;
   }
    bool is_screencast() const override;

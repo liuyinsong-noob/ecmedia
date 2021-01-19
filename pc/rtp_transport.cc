@@ -266,7 +266,7 @@ void RtpTransport::OnReadPacket(rtc::PacketTransportInternal* transport,
   rtc::CopyOnWriteBuffer packet(data, len);
   if (packet_type == cricket::RtpPacketType::kRtcp) {
     OnRtcpPacketReceived(std::move(packet), packet_time_us);
-  } else {
+  } else { 
     OnRtpPacketReceived(std::move(packet), packet_time_us);
   }
 }
