@@ -125,8 +125,11 @@ bool PacketBuffer::InsertPacket(VCMPacket* packet) {
 
     int64_t now_ms = clock_->TimeInMilliseconds();
     last_received_packet_ms_ = now_ms;
-    if (packet->frameType == VideoFrameType::kVideoFrameKey)
-      last_received_keyframe_packet_ms_ = now_ms;
+	if (packet->frameType == VideoFrameType::kVideoFrameKey)
+	{
+		RTC_LOG(LS_INFO) << "LYS this is an idr frame.";
+		last_received_keyframe_packet_ms_ = now_ms;
+	}
 
     found_frames = FindFrames(seq_num);
   }

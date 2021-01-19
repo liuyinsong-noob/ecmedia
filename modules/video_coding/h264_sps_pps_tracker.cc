@@ -71,6 +71,7 @@ H264SpsPpsTracker::PacketAction H264SpsPpsTracker::CopyAndFixBitstream(
         break;
       }
       case H264::NaluType::kIdr: {
+		  //RTC_LOG(LS_INFO) << "LYS find a idr frame.";
         // If this is the first packet of an IDR, make sure we have the required
         // SPS/PPS and also calculate how much extra space we need in the buffer
         // to prepend the SPS/PPS to the bitstream with start codes.
@@ -99,6 +100,7 @@ H264SpsPpsTracker::PacketAction H264SpsPpsTracker::CopyAndFixBitstream(
           // band.
           packet->video_header.width = sps->second.width;
           packet->video_header.height = sps->second.height;
+		  packet->frameType = VideoFrameType::kVideoFrameKey;
 
           // If the SPS/PPS was supplied out of band then we will have saved
           // the actual bitstream in |data|.

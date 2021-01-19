@@ -205,6 +205,9 @@ RtpFrameReferenceFinder::ManageFramePidOrSeqNum(RtpFrameObject* frame,
     last_seq_num_gop_.insert(std::make_pair(
         frame->last_seq_num(),
         std::make_pair(frame->last_seq_num(), frame->last_seq_num())));
+	RTC_LOG(LS_INFO) << "LYS insert a key frame Seqnumber:"
+		<< frame->first_seq_num() << ", "
+		<< frame->last_seq_num();
   }
 
   // We have received a frame but not yet a keyframe, stash this frame.
