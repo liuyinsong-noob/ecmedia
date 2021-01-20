@@ -517,24 +517,6 @@ int32_t H264EncoderImpl::Encode(
     RTPFragmentationHeader frag_header;
     RtpFragmentize(&encoded_images_[i], *frame_buffer, &info, &frag_header);
 
-#ifdef SAVE_ENCODEDE_FILE
-    unsigned char start_code[4] = {0, 0, 0, 1};
-    for (int layer = 0; layer < info.iLayerNum; ++layer) {
-      size_t layer_len = 0;
-      const SLayerBSInfo& layerInfo = info.sLayerInfo[layer];
-      for (int nal = 0; nal < layerInfo.iNalCount; ++nal) {
-        RTC_DCHECK_GE(layerInfo.pNalLengthInByte[nal], 4);
-        RTC_DCHECK_EQ(layerInfo.pBsBuf[layer_len + 0], start_code[0]);
-        RTC_DCHECK_EQ(layerInfo.pBsBuf[layer_len + 1], start_code[1]);
-        RTC_DCHECK_EQ(layerInfo.pBsBuf[layer_len + 2], start_code[2]);
-        RTC_DCHECK_EQ(layerInfo.pBsBuf[layer_len + 3], start_code[3]);
-        layer_len += layerInfo.pNalLengthInByte[nal];
-      }
-
-      output_files_[i].write(reinterpret_cast<char*>(layerInfo.pBsBuf),
-                             layer_len);
-    }
-#endif
 
     // Encoder can skip frames to save bandwidth in which case
     // |encoded_images_[i]._length| == 0.

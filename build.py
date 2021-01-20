@@ -98,7 +98,7 @@ def download_deps(target_os):
 def gn_project(target_os,target_cpu):
     download_deps(target_os)
     gn_param = []
-    gn_param.append('is_debug=false')
+    gn_param.append('is_debug=true')
     gn_param.append('rtc_include_tests=false')
     gn_param.append('target_cpu=\\\"'+target_cpu+'\\\"')
     gn_param.append('target_os=\\\"'+target_os+'\\\"')
@@ -123,7 +123,7 @@ def gn_project(target_os,target_cpu):
 def build_project():
    #gn 生成可编译的工程
     #ninja 编译工程
-    ninja_cmd = os.path.normpath('third_party/depot_tools/ninja') +' -C out/release ECMedia'
+    ninja_cmd = os.path.normpath('third_party/depot_tools/ninja') +' -C out/debug ECMedia'
     print "Excute ninjia command: ",ninja_cmd
     if os.system(ninja_cmd) <> 0:
       sys.exit(-1)

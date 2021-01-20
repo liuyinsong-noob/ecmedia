@@ -5149,7 +5149,7 @@ void ECFilePicture::CaptureFrame() {
 	{
 		this->OnFrame(*file_frame);
 		rtc::Location loc(__FUNCTION__, __FILE__);
-		rtc::Thread::Current()->PostDelayed(loc, 60000, this, 0);
+		rtc::Thread::Current()->PostDelayed(loc, 500, this, 0);
 	}
 	else
 		RTC_LOG(INFO) << __FUNCTION__ << "() file frame is nullptr";
