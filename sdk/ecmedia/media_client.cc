@@ -5069,7 +5069,7 @@ void ECDesktopCapture::OnMessage(rtc::Message* msg) {
 void ECDesktopCapture::CaptureFrame() {
   capturer_->CaptureFrame();
   rtc::Location loc(__FUNCTION__, __FILE__);
-  rtc::Thread::Current()->PostDelayed(loc, 50, this, 0);
+  rtc::Thread::Current()->PostDelayed(loc, 3000, this, 0);
 }
 #endif
 }  // namespace win_desk
@@ -5151,7 +5151,7 @@ void ECFilePicture::CaptureFrame() {
 	{
 		this->OnFrame(*file_frame);
 		rtc::Location loc(__FUNCTION__, __FILE__);
-		rtc::Thread::Current()->PostDelayed(loc, 100, this, 0);
+		rtc::Thread::Current()->PostDelayed(loc, 1000, this, 0);
 	}
 	else
 		RTC_LOG(INFO) << __FUNCTION__ << "() file frame is nullptr";

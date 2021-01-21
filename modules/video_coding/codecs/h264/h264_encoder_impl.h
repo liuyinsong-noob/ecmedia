@@ -22,6 +22,14 @@
 
 #include "third_party/openh264/src/codec/api/svc/codec_app_def.h"
 
+#include <iostream>
+#ifdef WIN32
+#include <stdio.h>
+#include <tchar.h>
+#include <windows.h>
+#endif // WIN32
+
+
 class ISVCEncoder;
 
 namespace webrtc {
@@ -65,6 +73,9 @@ class H264EncoderImpl : public H264Encoder {
   int32_t SetRateAllocation(const VideoBitrateAllocation& bitrate_allocation,
                             uint32_t framerate) override;
 
+  int32_t sendh264(char* j, int i, int nLen, int nFrameType);
+
+  int GetLen(int nPos, int nTotalSize, char* btData);
   // The result of encoding - an EncodedImage and RTPFragmentationHeader - are
   // passed to the encode complete callback.
   int32_t Encode(const VideoFrame& frame,
@@ -101,7 +112,7 @@ class H264EncoderImpl : public H264Encoder {
   bool has_reported_error_;
 
   int num_temporal_layers_;
-  uint8_t tl0sync_limit_;
+  //uint8_t tl0sync_limit_;
 };
 
 }  // namespace webrtc
