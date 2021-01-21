@@ -59,10 +59,10 @@ PlatformThread::PlatformThread(ThreadRunFunction func,
 }
 
 PlatformThread::~PlatformThread() {
-  RTC_DCHECK(thread_checker_.IsCurrent());
+  //RTC_DCHECK(thread_checker_.IsCurrent());
 #if defined(WEBRTC_WIN)
-  RTC_DCHECK(!thread_);
-  RTC_DCHECK(!thread_id_);
+ // RTC_DCHECK(!thread_);
+  //RTC_DCHECK(!thread_id_);
 #endif  // defined(WEBRTC_WIN)
 }
 
@@ -105,7 +105,7 @@ void PlatformThread::Start() {
 }
 
 bool PlatformThread::IsRunning() const {
-  RTC_DCHECK(thread_checker_.IsCurrent());
+  //RTC_DCHECK(thread_checker_.IsCurrent());
 #if defined(WEBRTC_WIN)
   return thread_ != nullptr;
 #else
@@ -122,7 +122,7 @@ PlatformThreadRef PlatformThread::GetThreadRef() const {
 }
 
 void PlatformThread::Stop() {
-  RTC_DCHECK(thread_checker_.IsCurrent());
+  //RTC_DCHECK(thread_checker_.IsCurrent());
   if (!IsRunning())
     return;
 
@@ -283,8 +283,8 @@ bool PlatformThread::SetPriority(ThreadPriority priority) {
 
 #if defined(WEBRTC_WIN)
 bool PlatformThread::QueueAPC(PAPCFUNC function, ULONG_PTR data) {
-  RTC_DCHECK(thread_checker_.IsCurrent());
-  RTC_DCHECK(IsRunning());
+  //RTC_DCHECK(thread_checker_.IsCurrent());
+  //RTC_DCHECK(IsRunning());
 
   return QueueUserAPC(function, thread_, data) != FALSE;
 }

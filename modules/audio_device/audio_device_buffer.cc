@@ -69,10 +69,10 @@ AudioDeviceBuffer::AudioDeviceBuffer(TaskQueueFactory* task_queue_factory)
 }
 
 AudioDeviceBuffer::~AudioDeviceBuffer() {
-  RTC_DCHECK_RUN_ON(&main_thread_checker_);
-  RTC_DCHECK(!playing_);
-  RTC_DCHECK(!recording_);
-  RTC_LOG(INFO) << "AudioDeviceBuffer::~dtor";
+  //RTC_DCHECK_RUN_ON(&main_thread_checker_);
+  //RTC_DCHECK(!playing_);
+  //RTC_DCHECK(!recording_);
+  //RTC_LOG(INFO) << "AudioDeviceBuffer::~dtor";
 }
 
 int32_t AudioDeviceBuffer::RegisterAudioCallback(

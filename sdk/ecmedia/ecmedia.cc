@@ -19,7 +19,7 @@ ECMEDIA_API bool ECMedia_set_trace(const char* path, const int level) {
 ECMEDIA_API int ECMedia_init() {
   RTC_LOG(INFO) << "ECMedia SDK " << ECMEDIA_VERSION;
   if (g_ECMedia == nullptr) {
-    g_ECMedia = ecmedia_sdk::MediaClient::GetInstance();
+    g_ECMedia = new ecmedia_sdk::MediaClient();
     g_ECMedia->Initialize();
     return 0;
   }

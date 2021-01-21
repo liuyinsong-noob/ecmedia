@@ -157,7 +157,7 @@ RtcEventLogImpl::RtcEventLogImpl(
 }
 
 RtcEventLogImpl::~RtcEventLogImpl() {
-  RTC_DCHECK_RUN_ON(&owner_sequence_checker_);
+  //RTC_DCHECK_RUN_ON(&owner_sequence_checker_);
 
   // If we're logging to the output, this will stop that. Blocking function.
   StopLogging();
@@ -206,7 +206,7 @@ bool RtcEventLogImpl::StartLogging(std::unique_ptr<RtcEventLogOutput> output,
 }
 
 void RtcEventLogImpl::StopLogging() {
-  RTC_DCHECK_RUN_ON(&owner_sequence_checker_);
+  //RTC_DCHECK_RUN_ON(&owner_sequence_checker_);
 
   RTC_LOG(LS_INFO) << "Stopping WebRTC event log.";
 

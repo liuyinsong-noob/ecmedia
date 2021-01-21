@@ -254,15 +254,15 @@ MediaClient::~MediaClient() {
   }
   desktop_devices_.clear();
 #endif
-  if (own_adm != nullptr) {
-    own_adm->Release();
-  }
+  //if (own_adm != nullptr) {
+  //  own_adm->Release();
+  //}
 
-  if (ec_log_) {
-    delete ec_log_;
-  }
-  RTC_LOG(INFO) << __FUNCTION__ << "(),"
-                << " end... ";
+  //if (ec_log_) {
+  //  delete ec_log_;
+  //}
+  //RTC_LOG(INFO) << __FUNCTION__ << "(),"
+  //              << " end... ";
 }
 // wwx
 bool MediaClient::SetTrace(const char* path, int min_sev) {
@@ -312,9 +312,11 @@ bool MediaClient::Initialize() {
 
     bOk &= signaling_thread_->Invoke<bool>(
         RTC_FROM_HERE, [&] { return CreateChannelManager(); });
+	//CreateChannelManager();
 
     bOk &= worker_thread_->Invoke<bool>(RTC_FROM_HERE,
                                         [&] { return CreateRtcEventLog(); });
+	//CreateRtcEventLog();
 
     m_bInitialized = bOk;
 
@@ -5149,7 +5151,7 @@ void ECFilePicture::CaptureFrame() {
 	{
 		this->OnFrame(*file_frame);
 		rtc::Location loc(__FUNCTION__, __FILE__);
-		rtc::Thread::Current()->PostDelayed(loc, 500, this, 0);
+		rtc::Thread::Current()->PostDelayed(loc, 100, this, 0);
 	}
 	else
 		RTC_LOG(INFO) << __FUNCTION__ << "() file frame is nullptr";

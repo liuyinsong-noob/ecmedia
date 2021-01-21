@@ -1039,9 +1039,8 @@ class MediaClient : public sigslot::has_slots<> {
       OnGetAudioHardwareEncoderFactoryAndAdm callback);
 
 #endif
-
- private:
   MediaClient();
+ private:
 
   bool CreateThreads();
   bool CreateRtcEventLog();
