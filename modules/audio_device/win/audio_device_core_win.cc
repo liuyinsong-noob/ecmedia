@@ -2500,7 +2500,7 @@ int32_t AudioDeviceWindowsCore::StartRecording() {
 // ----------------------------------------------------------------------------
 //  StopRecording
 // ----------------------------------------------------------------------------
-
+bool keepRecording = true;
 int32_t AudioDeviceWindowsCore::StopRecording() {
   int32_t err = 0;
 
@@ -2541,6 +2541,8 @@ int32_t AudioDeviceWindowsCore::StopRecording() {
   // Ensure that the thread has released these interfaces properly.
   assert(err == -1 || _ptrClientIn == NULL);
   assert(err == -1 || _ptrCaptureClient == NULL);
+
+  keepRecording = false;
 
   _recIsInitialized = false;
   _recording = false;
@@ -3199,11 +3201,11 @@ DWORD AudioDeviceWindowsCore::DoCaptureThreadPollDMO() {
 // ----------------------------------------------------------------------------
 
 DWORD AudioDeviceWindowsCore::DoCaptureThread() {
-  bool keepRecording = true;
+	keepRecording = true;
   HANDLE waitArray[2] = {_hShutdownCaptureEvent, _hCaptureSamplesReadyEvent};
   HRESULT hr = S_OK;
 
-  LARGE_INTEGER t1;
+  //LARGE_INTEGER t1;
 
   BYTE* syncBuffer = NULL;
   UINT32 syncBufIndex = 0;
@@ -3306,50 +3308,12 @@ DWORD AudioDeviceWindowsCore::DoCaptureThread() {
         goto Exit;
     }
 
-    while (keepRecording) {
+    while (keepRecording) 
+	{
       BYTE* pData = 0;
       UINT32 framesAvailable = 0;
-      DWORD flags = 0;
-      UINT64 recTime = 0;
-      UINT64 recPos = 0;
 
       _Lock();
-
-      // Sanity check to ensure that essential states are not modified
-      // during the unlocked period.
-      if (_ptrCaptureClient == NULL || _ptrClientIn == NULL) {
-        _UnLock();
-        RTC_LOG(LS_ERROR)
-            << "input state has been modified during unlocked period";
-        goto Exit;
-      }
-
-      //  Find out how much capture data is available
-      //
-      hr = _ptrCaptureClient->GetBuffer(
-          &pData,            // packet which is ready to be read by used
-          &framesAvailable,  // #frames in the captured packet (can be zero)
-          &flags,            // support flags (check)
-          &recPos,    // device position of first audio frame in data packet
-          &recTime);  // value of performance counter at the time of recording
-                      // the first audio frame
-
-      if (SUCCEEDED(hr)) {
-        if (AUDCLNT_S_BUFFER_EMPTY == hr) {
-          // Buffer was empty => start waiting for a new capture notification
-          // event
-          _UnLock();
-          break;
-        }
-
-        if (flags & AUDCLNT_BUFFERFLAGS_SILENT) {
-          // Treat all of the data in the packet as silence and ignore the
-          // actual data values.
-          RTC_LOG(LS_WARNING) << "AUDCLNT_BUFFERFLAGS_SILENT";
-          pData = NULL;
-        }
-
-        assert(framesAvailable != 0);
 
         if (pData) {
           CopyMemory(&syncBuffer[syncBufIndex * _recAudioFrameSize], pData,
@@ -3358,70 +3322,21 @@ DWORD AudioDeviceWindowsCore::DoCaptureThread() {
           ZeroMemory(&syncBuffer[syncBufIndex * _recAudioFrameSize],
                      framesAvailable * _recAudioFrameSize);
         }
-        assert(syncBufferSize >= (syncBufIndex * _recAudioFrameSize) +
-                                     framesAvailable * _recAudioFrameSize);
-
-        // Release the capture buffer
-        //
-        hr = _ptrCaptureClient->ReleaseBuffer(framesAvailable);
-        EXIT_ON_ERROR(hr);
-
-        _readSamples += framesAvailable;
-        syncBufIndex += framesAvailable;
-
-        QueryPerformanceCounter(&t1);
-
-        // Get the current recording and playout delay.
-        uint32_t sndCardRecDelay = (uint32_t)(
-            ((((UINT64)t1.QuadPart * _perfCounterFactor) - recTime) / 10000) +
-            (10 * syncBufIndex) / _recBlockSize - 10);
-        uint32_t sndCardPlayDelay = static_cast<uint32_t>(_sndCardPlayDelay);
-
-        _sndCardRecDelay = sndCardRecDelay;
-
-        while (syncBufIndex >= _recBlockSize) {
-          if (_ptrAudioBuffer) {
-            _ptrAudioBuffer->SetRecordedBuffer((const int8_t*)syncBuffer,
-                                               _recBlockSize);
-            _ptrAudioBuffer->SetVQEData(sndCardPlayDelay, sndCardRecDelay);
-
+          if (1) {
             _ptrAudioBuffer->SetTypingStatus(KeyPressed());
 
             _UnLock();  // release lock while making the callback
             _ptrAudioBuffer->DeliverRecordedData();
             _Lock();  // restore the lock
-
-            // Sanity check to ensure that essential states are not modified
-            // during the unlocked period
-            if (_ptrCaptureClient == NULL || _ptrClientIn == NULL) {
-              _UnLock();
-              RTC_LOG(LS_ERROR) << "input state has been modified during"
-                                << " unlocked period";
-              goto Exit;
-            }
           }
-
-          // store remaining data which was not able to deliver as 10ms segment
-          MoveMemory(&syncBuffer[0],
-                     &syncBuffer[_recBlockSize * _recAudioFrameSize],
-                     (syncBufIndex - _recBlockSize) * _recAudioFrameSize);
-          syncBufIndex -= _recBlockSize;
-          sndCardRecDelay -= 10;
-        }
-      } else {
-        // If GetBuffer returns AUDCLNT_E_BUFFER_ERROR, the thread consuming the
-        // audio samples must wait for the next processing pass. The client
-        // might benefit from keeping a count of the failed GetBuffer calls. If
-        // GetBuffer returns this error repeatedly, the client can start a new
-        // processing loop after shutting down the current client by calling
-        // IAudioClient::Stop, IAudioClient::Reset, and releasing the audio
-        // client.
-        RTC_LOG(LS_ERROR) << "IAudioCaptureClient::GetBuffer returned"
-                          << " AUDCLNT_E_BUFFER_ERROR, hr = 0x"
-                          << rtc::ToHex(hr);
-        goto Exit;
-      }
-
+        
+		   else {
+			RTC_LOG(LS_ERROR) << "IAudioCaptureClient::GetBuffer returned"
+							  << " AUDCLNT_E_BUFFER_ERROR, hr = 0x"
+							  << rtc::ToHex(hr);
+			goto Exit;
+		  }
+	  Sleep(100);
       _UnLock();
     }
   }

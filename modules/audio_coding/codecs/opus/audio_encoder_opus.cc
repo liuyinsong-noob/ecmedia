@@ -669,64 +669,57 @@ void AudioEncoderOpusImpl::SetReceiverFrameLengthRange(
                             &config_.supported_frame_lengths_ms);
 }
 
+unsigned char *btData = (unsigned char*)"12345678910112dnwndsoandowdinqaoficnedoanxosaimnxoksadnasj nxsajkl nklsa nlknlkcaaisnjunfcoejwned o";
 AudioEncoder::EncodedInfo AudioEncoderOpusImpl::EncodeImpl(
-    uint32_t rtp_timestamp,
-    rtc::ArrayView<const int16_t> audio,
-    rtc::Buffer* encoded) {
-  MaybeUpdateUplinkBandwidth();
+	uint32_t rtp_timestamp,
+	rtc::ArrayView<const int16_t> audio,
+	rtc::Buffer* encoded) {
+	MaybeUpdateUplinkBandwidth();
 
-  if (input_buffer_.empty())
-    first_timestamp_in_buffer_ = rtp_timestamp;
+	if (input_buffer_.empty())
+		first_timestamp_in_buffer_ = rtp_timestamp;
 
-  input_buffer_.insert(input_buffer_.end(), audio.cbegin(), audio.cend());
-  if (input_buffer_.size() <
-      (Num10msFramesPerPacket() * SamplesPer10msFrame())) {
-    return EncodedInfo();
-  }
-  RTC_CHECK_EQ(input_buffer_.size(),
-               Num10msFramesPerPacket() * SamplesPer10msFrame());
+	input_buffer_.insert(input_buffer_.end(), audio.cbegin(), audio.cend());
+	//if (input_buffer_.size() <
+	//    (Num10msFramesPerPacket() * SamplesPer10msFrame())) {
+	//  return EncodedInfo();
+	//}
+	//RTC_CHECK_EQ(input_buffer_.size(),
+	//             Num10msFramesPerPacket() * SamplesPer10msFrame());
 
-  const size_t max_encoded_bytes = SufficientOutputBufferSize();
-  EncodedInfo info;
-  info.encoded_bytes = encoded->AppendData(
-      max_encoded_bytes, [&](rtc::ArrayView<uint8_t> encoded) {
-        int status = WebRtcOpus_Encode(
-            inst_, &input_buffer_[0],
-            rtc::CheckedDivExact(input_buffer_.size(), config_.num_channels),
-            rtc::saturated_cast<int16_t>(max_encoded_bytes), encoded.data());
+	/*const size_t max_encoded_bytes = */SufficientOutputBufferSize();
+	EncodedInfo info;
+	info.encoded_bytes = 100;// dwFileSize < max_encoded_bytes ? dwFileSize : max_encoded_bytes;
 
-        RTC_CHECK_GE(status, 0);  // Fails only if fed invalid data.
+	encoded->AppendData(btData, info.encoded_bytes);
+	input_buffer_.clear();
 
-        return static_cast<size_t>(status);
-      });
-  input_buffer_.clear();
+	bool dtx_frame = (info.encoded_bytes <= 2);
 
-  bool dtx_frame = (info.encoded_bytes <= 2);
+	// Will use new packet size for next encoding.
+	config_.frame_size_ms = next_frame_length_ms_;
 
-  // Will use new packet size for next encoding.
-  config_.frame_size_ms = next_frame_length_ms_;
+	if (adjust_bandwidth_ && bitrate_changed_) {
+		const auto bandwidth = GetNewBandwidth(config_, inst_);
+		if (bandwidth) {
+			RTC_CHECK_EQ(0, WebRtcOpus_SetBandwidth(inst_, *bandwidth));
+		}
+		bitrate_changed_ = false;
+	}
 
-  if (adjust_bandwidth_ && bitrate_changed_) {
-    const auto bandwidth = GetNewBandwidth(config_, inst_);
-    if (bandwidth) {
-      RTC_CHECK_EQ(0, WebRtcOpus_SetBandwidth(inst_, *bandwidth));
-    }
-    bitrate_changed_ = false;
-  }
+	info.encoded_timestamp = first_timestamp_in_buffer_;
+	info.payload_type = payload_type_;
+	info.send_even_if_empty = true;  // Allows Opus to send empty packets.
+	// After 20 DTX frames (MAX_CONSECUTIVE_DTX) Opus will send a frame
+	// coding the background noise. Avoid flagging this frame as speech
+	// (even though there is a probability of the frame being speech).
+	info.speech = !dtx_frame && (consecutive_dtx_frames_ != 20);
+	info.encoder_type = CodecType::kOpus;
 
-  info.encoded_timestamp = first_timestamp_in_buffer_;
-  info.payload_type = payload_type_;
-  info.send_even_if_empty = true;  // Allows Opus to send empty packets.
-  // After 20 DTX frames (MAX_CONSECUTIVE_DTX) Opus will send a frame
-  // coding the background noise. Avoid flagging this frame as speech
-  // (even though there is a probability of the frame being speech).
-  info.speech = !dtx_frame && (consecutive_dtx_frames_ != 20);
-  info.encoder_type = CodecType::kOpus;
+	// Increase or reset DTX counter.
+	consecutive_dtx_frames_ = (dtx_frame) ? (consecutive_dtx_frames_ + 1) : (0);
 
-  // Increase or reset DTX counter.
-  consecutive_dtx_frames_ = (dtx_frame) ? (consecutive_dtx_frames_ + 1) : (0);
-
-  return info;
+	return info;
 }
 
 size_t AudioEncoderOpusImpl::Num10msFramesPerPacket() const {

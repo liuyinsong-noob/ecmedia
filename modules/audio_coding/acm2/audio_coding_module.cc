@@ -344,8 +344,8 @@ int32_t AudioCodingModuleImpl::Encode(const InputData& input_data) {
     return -1;
 
   if (!first_frame_) {
-    RTC_DCHECK(IsNewerTimestamp(input_data.input_timestamp, last_timestamp_))
-        << "Time should not move backwards";
+    //RTC_DCHECK(IsNewerTimestamp(input_data.input_timestamp, last_timestamp_))
+     //   << "Time should not move backwards";
   }
 
   // Scale the timestamp to the codec's RTP timestamp rate.
@@ -452,8 +452,9 @@ int AudioCodingModuleImpl::RegisterTransportCallback(
 int AudioCodingModuleImpl::Add10MsData(const AudioFrame& audio_frame) {
   InputData input_data;
   rtc::CritScope lock(&acm_crit_sect_);
-  int r = Add10MsDataInternal(audio_frame, &input_data);
-  return r < 0 ? r : Encode(input_data);
+  //int r = Add10MsDataInternal(audio_frame, &input_data);
+  input_data.input_timestamp = audio_frame.timestamp_;
+  return Encode(input_data);
 }
 
 int AudioCodingModuleImpl::Add10MsDataInternal(const AudioFrame& audio_frame,

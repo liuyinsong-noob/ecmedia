@@ -37,12 +37,12 @@ AudioEncoder::EncodedInfo AudioEncoder::Encode(
     rtc::ArrayView<const int16_t> audio,
     rtc::Buffer* encoded) {
   TRACE_EVENT0("webrtc", "AudioEncoder::Encode");
-  RTC_CHECK_EQ(audio.size(),
-               static_cast<size_t>(NumChannels() * SampleRateHz() / 100));
+  //RTC_CHECK_EQ(audio.size(),
+              // static_cast<size_t>(NumChannels() * SampleRateHz() / 100));
 
-  const size_t old_size = encoded->size();
+  //const size_t old_size = encoded->size();
   EncodedInfo info = EncodeImpl(rtp_timestamp, audio, encoded);
-  RTC_CHECK_EQ(encoded->size() - old_size, info.encoded_bytes);
+  //RTC_CHECK_EQ(encoded->size() - old_size, info.encoded_bytes);
   return info;
 }
 

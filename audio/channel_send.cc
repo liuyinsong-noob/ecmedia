@@ -249,7 +249,7 @@ class ChannelSend : public ChannelSendInterface,
   ProcessThread* const _moduleProcessThreadPtr;
   RmsLevel rms_level_ RTC_GUARDED_BY(encoder_queue_);
   bool input_mute_ RTC_GUARDED_BY(volume_settings_critsect_);
-  bool previous_frame_muted_ RTC_GUARDED_BY(encoder_queue_);
+  //bool previous_frame_muted_ RTC_GUARDED_BY(encoder_queue_);
   // VoeRTP_RTCP
   // TODO(henrika): can today be accessed on the main thread and on the
   // task queue; hence potential race.
@@ -647,7 +647,7 @@ ChannelSend::ChannelSend(Clock* clock,
                       // random offset
       _moduleProcessThreadPtr(module_process_thread),
       input_mute_(false),
-      previous_frame_muted_(false),
+      //previous_frame_muted_(false),
       _includeAudioLevelIndication(false),
       rtcp_observer_(new VoERtcpObserver(this)),
       feedback_observer_proxy_(new TransportFeedbackProxy()),
@@ -1108,35 +1108,35 @@ void ChannelSend::ProcessAndEncodeAudio(
   };
   // Profile time between when the audio frame is added to the task queue and
   // when the task is actually executed.
-  audio_frame->UpdateProfileTimeStamp();
+  //audio_frame->UpdateProfileTimeStamp();
   encoder_queue_.PostTask(ProcessAndEncodeAudio{std::move(audio_frame), this});
 }
 
 void ChannelSend::ProcessAndEncodeAudioOnTaskQueue(AudioFrame* audio_input) {
-  RTC_DCHECK_GT(audio_input->samples_per_channel_, 0);
-  RTC_DCHECK_LE(audio_input->num_channels_, 2);
+  //RTC_DCHECK_GT(audio_input->samples_per_channel_, 0);
+  //RTC_DCHECK_LE(audio_input->num_channels_, 2);
 
   // Measure time between when the audio frame is added to the task queue and
   // when the task is actually executed. Goal is to keep track of unwanted
   // extra latency added by the task queue.
-  RTC_HISTOGRAM_COUNTS_10000("WebRTC.Audio.EncodingTaskQueueLatencyMs",
-                             audio_input->ElapsedProfileTimeMs());
+  //RTC_HISTOGRAM_COUNTS_10000("WebRTC.Audio.EncodingTaskQueueLatencyMs",
+  //                           audio_input->ElapsedProfileTimeMs());
 
-  bool is_muted = InputMute();
-  AudioFrameOperations::Mute(audio_input, previous_frame_muted_, is_muted);
+  //bool is_muted = InputMute();
+  //AudioFrameOperations::Mute(audio_input, previous_frame_muted_, is_muted);
 
-  if (_includeAudioLevelIndication) {
-    size_t length =
-        audio_input->samples_per_channel_ * audio_input->num_channels_;
-    RTC_CHECK_LE(length, AudioFrame::kMaxDataSizeBytes);
-    if (is_muted && previous_frame_muted_) {
-      rms_level_.AnalyzeMuted(length);
-    } else {
-      rms_level_.Analyze(
-          rtc::ArrayView<const int16_t>(audio_input->data(), length));
-    }
-  }
-  previous_frame_muted_ = is_muted;
+  //if (_includeAudioLevelIndication) {
+  //  size_t length =
+  //      audio_input->samples_per_channel_ * audio_input->num_channels_;
+  //  RTC_CHECK_LE(length, AudioFrame::kMaxDataSizeBytes);
+  //  if (is_muted && previous_frame_muted_) {
+  //    rms_level_.AnalyzeMuted(length);
+  //  } else {
+  //    rms_level_.Analyze(
+  //        rtc::ArrayView<const int16_t>(audio_input->data(), length));
+  //  }
+  //}
+  //previous_frame_muted_ = is_muted;
 
   // Add 10ms of raw (PCM) audio data to the encoder @ 32kHz.
 
@@ -1150,7 +1150,7 @@ void ChannelSend::ProcessAndEncodeAudioOnTaskQueue(AudioFrame* audio_input) {
     return;
   }
 
-  _timeStamp += static_cast<uint32_t>(audio_input->samples_per_channel_);
+  _timeStamp += 480;// static_cast<uint32_t>(audio_input->samples_per_channel_);
 }
 
 ANAStats ChannelSend::GetANAStatistics() const {
