@@ -3223,65 +3223,7 @@ DWORD AudioDeviceWindowsCore::DoCaptureThread() {
   if (FAILED(hr)) {
     return hr;
   }
-
   _Lock();
-
-  // Get size of capturing buffer (length is expressed as the number of audio
-  // frames the buffer can hold). This value is fixed during the capturing
-  // session.
-  //
-  //UINT32 bufferLength = 0;
-  //if (_ptrClientIn == NULL) {
-  //  RTC_LOG(LS_ERROR)
-  //      << "input state has been modified before capture loop starts.";
-  //  return 1;
-  //}
-  //hr = _ptrClientIn->GetBufferSize(&bufferLength);
-  //EXIT_ON_ERROR(hr);
-  //RTC_LOG(LS_VERBOSE) << "[CAPT] size of buffer       : " << bufferLength;
-
-  // Allocate memory for sync buffer.
-  // It is used for compensation between native 44.1 and internal 44.0 and
-  // for cases when the capture buffer is larger than 10ms.
-  //
-  //const UINT32 syncBufferSize = 2 * (bufferLength * _recAudioFrameSize);
-  //syncBuffer = new BYTE[syncBufferSize];
-  //if (syncBuffer == NULL) {
-  //  return (DWORD)E_POINTER;
-  //}
-  //RTC_LOG(LS_VERBOSE) << "[CAPT] size of sync buffer  : " << syncBufferSize
-  //                    << " [bytes]";
-
-  //// Get maximum latency for the current stream (will not change for the
-  //// lifetime of the IAudioClient object).
-  ////
-  //REFERENCE_TIME latency;
-  //_ptrClientIn->GetStreamLatency(&latency);
-  //RTC_LOG(LS_VERBOSE) << "[CAPT] max stream latency   : " << (DWORD)latency
-  //                    << " (" << (double)(latency / 10000.0) << " ms)";
-
-  // Get the length of the periodic interval separating successive processing
-  // passes by the audio engine on the data in the endpoint buffer.
-  //
-  //REFERENCE_TIME devPeriod = 0;
-  //REFERENCE_TIME devPeriodMin = 0;
-  //_ptrClientIn->GetDevicePeriod(&devPeriod, &devPeriodMin);
-  //RTC_LOG(LS_VERBOSE) << "[CAPT] device period        : " << (DWORD)devPeriod
-  //                    << " (" << (double)(devPeriod / 10000.0) << " ms)";
-
-  //double extraDelayMS = (double)((latency + devPeriod) / 10000.0);
-  //RTC_LOG(LS_VERBOSE) << "[CAPT] extraDelayMS         : " << extraDelayMS;
-
-  //double endpointBufferSizeMS =
-  //    10.0 * ((double)bufferLength / (double)_recBlockSize);
-  //RTC_LOG(LS_VERBOSE) << "[CAPT] endpointBufferSizeMS : "
-  //                    << endpointBufferSizeMS;
-
-  //// Start up the capturing stream.
-  ////
-  //hr = _ptrClientIn->Start();
-  //EXIT_ON_ERROR(hr);
-
   _UnLock();
 
   // Set event which will ensure that the calling thread modifies the recording
@@ -3292,22 +3234,6 @@ DWORD AudioDeviceWindowsCore::DoCaptureThread() {
   // >> ---------------------------- THREAD LOOP ----------------------------
 
   while (keepRecording) {
-    // Wait for a capture notification event or a shutdown event
-    //DWORD waitResult = WaitForMultipleObjects(2, waitArray, FALSE, 500);
-    //switch (waitResult) {
-    //  case WAIT_OBJECT_0 + 0:  // _hShutdownCaptureEvent
-    //    keepRecording = false;
-    //    break;
-    //  case WAIT_OBJECT_0 + 1:  // _hCaptureSamplesReadyEvent
-    //    break;
-    //  case WAIT_TIMEOUT:  // timeout notification
-    //    RTC_LOG(LS_WARNING) << "capture event timed out after 0.5 seconds";
-    //    goto Exit;
-    //  default:  // unexpected error
-    //    RTC_LOG(LS_WARNING) << "unknown wait termination on capture side";
-    //    goto Exit;
-    //}
-
     while (keepRecording) 
 	{
       BYTE* pData = 0;
@@ -3336,7 +3262,7 @@ DWORD AudioDeviceWindowsCore::DoCaptureThread() {
 							  << rtc::ToHex(hr);
 			goto Exit;
 		  }
-	  Sleep(20);
+	  Sleep(10);
       _UnLock();
     }
   }

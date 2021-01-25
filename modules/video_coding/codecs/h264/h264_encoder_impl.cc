@@ -474,14 +474,14 @@ int32_t H264EncoderImpl::Encode(
 			sendh264(&btData[i + 3], i, nLen, btData[i + 3]);
 			j++;
 			i += 3;
-			Sleep(50);
+			Sleep(75);
 		}
 		else if (btData[i] == 0x00 && btData[i + 1] == 0x00 && btData[i + 2] == 0x00 && btData[i + 3] == 0x01) {
 			int nLen = GetLen(i + 4, dwFileSize, btData);
 			sendh264(&btData[i + 4], i, nLen, btData[i + 4]);
 			j++;
 			i += 4;
-			Sleep(50);
+			Sleep(75);
 		}
 		else {
 			i++;
