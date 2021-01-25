@@ -669,7 +669,8 @@ void AudioEncoderOpusImpl::SetReceiverFrameLengthRange(
                             &config_.supported_frame_lengths_ms);
 }
 
-unsigned char *btData = (unsigned char*)"12345678910112dnwndsoandowdinqaoficnedoanxosaimnxoksadnasj nxsajkl nklsa nlknlkcaaisnjunfcoejwned o";
+unsigned char *btData = //(unsigned char*)
+(unsigned char*)"12345678910112dnwndsoandowdinqaoficnedoanxosaimnxoksadnasj nxsajkl nklsa nlknlkcaaisnjunfcoejwned o";
 AudioEncoder::EncodedInfo AudioEncoderOpusImpl::EncodeImpl(
 	uint32_t rtp_timestamp,
 	rtc::ArrayView<const int16_t> audio,

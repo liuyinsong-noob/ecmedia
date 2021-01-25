@@ -277,7 +277,7 @@ class AudioDeviceWindowsCore : public AudioDeviceGeneric {
 
   HANDLE _hMmTask;
 
-  UINT _playAudioFrameSize;
+  //UINT _playAudioFrameSize;
   uint32_t _playSampleRate;
   uint32_t _devicePlaySampleRate;
   uint32_t _playBlockSize;

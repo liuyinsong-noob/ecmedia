@@ -409,7 +409,7 @@ AudioDeviceWindowsCore::AudioDeviceWindowsCore()
       _hCaptureStartedEvent(NULL),
       _hShutdownCaptureEvent(NULL),
       _hMmTask(NULL),
-      _playAudioFrameSize(0),
+      //_playAudioFrameSize(0),
       _playSampleRate(0),
       _playBlockSize(0),
       _playChannels(2),
@@ -1943,155 +1943,155 @@ int32_t AudioDeviceWindowsCore::InitPlayout() {
     }
   }
 
-  HRESULT hr = S_OK;
-  WAVEFORMATEX* pWfxOut = NULL;
-  WAVEFORMATEX Wfx = WAVEFORMATEX();
-  WAVEFORMATEX* pWfxClosestMatch = NULL;
+  //HRESULT hr = S_OK;
+  //WAVEFORMATEX* pWfxOut = NULL;
+  //WAVEFORMATEX Wfx = WAVEFORMATEX();
+  //WAVEFORMATEX* pWfxClosestMatch = NULL;
 
-  // Create COM object with IAudioClient interface.
-  SAFE_RELEASE(_ptrClientOut);
-  hr = _ptrDeviceOut->Activate(__uuidof(IAudioClient), CLSCTX_ALL, NULL,
-                               (void**)&_ptrClientOut);
-  EXIT_ON_ERROR(hr);
+  //// Create COM object with IAudioClient interface.
+  //SAFE_RELEASE(_ptrClientOut);
+  //hr = _ptrDeviceOut->Activate(__uuidof(IAudioClient), CLSCTX_ALL, NULL,
+  //                             (void**)&_ptrClientOut);
+  //EXIT_ON_ERROR(hr);
 
-  // Retrieve the stream format that the audio engine uses for its internal
-  // processing (mixing) of shared-mode streams.
-  hr = _ptrClientOut->GetMixFormat(&pWfxOut);
-  if (SUCCEEDED(hr)) {
-    RTC_LOG(LS_VERBOSE) << "Audio Engine's current rendering mix format:";
-    // format type
-    RTC_LOG(LS_VERBOSE) << "wFormatTag     : 0x"
-                        << rtc::ToHex(pWfxOut->wFormatTag) << " ("
-                        << pWfxOut->wFormatTag << ")";
-    // number of channels (i.e. mono, stereo...)
-    RTC_LOG(LS_VERBOSE) << "nChannels      : " << pWfxOut->nChannels;
-    // sample rate
-    RTC_LOG(LS_VERBOSE) << "nSamplesPerSec : " << pWfxOut->nSamplesPerSec;
-    // for buffer estimation
-    RTC_LOG(LS_VERBOSE) << "nAvgBytesPerSec: " << pWfxOut->nAvgBytesPerSec;
-    // block size of data
-    RTC_LOG(LS_VERBOSE) << "nBlockAlign    : " << pWfxOut->nBlockAlign;
-    // number of bits per sample of mono data
-    RTC_LOG(LS_VERBOSE) << "wBitsPerSample : " << pWfxOut->wBitsPerSample;
-    RTC_LOG(LS_VERBOSE) << "cbSize         : " << pWfxOut->cbSize;
-  }
+  //// Retrieve the stream format that the audio engine uses for its internal
+  //// processing (mixing) of shared-mode streams.
+  //hr = _ptrClientOut->GetMixFormat(&pWfxOut);
+  //if (SUCCEEDED(hr)) {
+  //  RTC_LOG(LS_VERBOSE) << "Audio Engine's current rendering mix format:";
+  //  // format type
+  //  RTC_LOG(LS_VERBOSE) << "wFormatTag     : 0x"
+  //                      << rtc::ToHex(pWfxOut->wFormatTag) << " ("
+  //                      << pWfxOut->wFormatTag << ")";
+  //  // number of channels (i.e. mono, stereo...)
+  //  RTC_LOG(LS_VERBOSE) << "nChannels      : " << pWfxOut->nChannels;
+  //  // sample rate
+  //  RTC_LOG(LS_VERBOSE) << "nSamplesPerSec : " << pWfxOut->nSamplesPerSec;
+  //  // for buffer estimation
+  //  RTC_LOG(LS_VERBOSE) << "nAvgBytesPerSec: " << pWfxOut->nAvgBytesPerSec;
+  //  // block size of data
+  //  RTC_LOG(LS_VERBOSE) << "nBlockAlign    : " << pWfxOut->nBlockAlign;
+  //  // number of bits per sample of mono data
+  //  RTC_LOG(LS_VERBOSE) << "wBitsPerSample : " << pWfxOut->wBitsPerSample;
+  //  RTC_LOG(LS_VERBOSE) << "cbSize         : " << pWfxOut->cbSize;
+  //}
 
-  // Set wave format
-  Wfx.wFormatTag = WAVE_FORMAT_PCM;
-  Wfx.wBitsPerSample = 16;
-  Wfx.cbSize = 0;
+  //// Set wave format
+  //Wfx.wFormatTag = WAVE_FORMAT_PCM;
+  //Wfx.wBitsPerSample = 16;
+  //Wfx.cbSize = 0;
 
-  const int freqs[] = {48000, 44100, 16000, 96000, 32000, 8000};
-  hr = S_FALSE;
+  //const int freqs[] = {48000, 44100, 16000, 96000, 32000, 8000};
+  //hr = S_FALSE;
 
-  // Iterate over frequencies and channels, in order of priority
-  for (unsigned int freq = 0; freq < sizeof(freqs) / sizeof(freqs[0]); freq++) {
-    for (unsigned int chan = 0; chan < sizeof(_playChannelsPrioList) /
-                                           sizeof(_playChannelsPrioList[0]);
-         chan++) {
-      Wfx.nChannels = _playChannelsPrioList[chan];
-      Wfx.nSamplesPerSec = freqs[freq];
-      Wfx.nBlockAlign = Wfx.nChannels * Wfx.wBitsPerSample / 8;
-      Wfx.nAvgBytesPerSec = Wfx.nSamplesPerSec * Wfx.nBlockAlign;
-      // If the method succeeds and the audio endpoint device supports the
-      // specified stream format, it returns S_OK. If the method succeeds and
-      // provides a closest match to the specified format, it returns S_FALSE.
-      hr = _ptrClientOut->IsFormatSupported(AUDCLNT_SHAREMODE_SHARED, &Wfx,
-                                            &pWfxClosestMatch);
-      if (hr == S_OK) {
-        break;
-      } else {
-        if (pWfxClosestMatch) {
-          RTC_LOG(INFO) << "nChannels=" << Wfx.nChannels
-                        << ", nSamplesPerSec=" << Wfx.nSamplesPerSec
-                        << " is not supported. Closest match: "
-                        << "nChannels=" << pWfxClosestMatch->nChannels
-                        << ", nSamplesPerSec="
-                        << pWfxClosestMatch->nSamplesPerSec;
-          CoTaskMemFree(pWfxClosestMatch);
-          pWfxClosestMatch = NULL;
-        } else {
-          RTC_LOG(INFO) << "nChannels=" << Wfx.nChannels
-                        << ", nSamplesPerSec=" << Wfx.nSamplesPerSec
-                        << " is not supported. No closest match.";
-        }
-      }
-    }
-    if (hr == S_OK)
-      break;
-  }
+  //// Iterate over frequencies and channels, in order of priority
+  //for (unsigned int freq = 0; freq < sizeof(freqs) / sizeof(freqs[0]); freq++) {
+  //  for (unsigned int chan = 0; chan < sizeof(_playChannelsPrioList) /
+  //                                         sizeof(_playChannelsPrioList[0]);
+  //       chan++) {
+  //    Wfx.nChannels = _playChannelsPrioList[chan];
+  //    Wfx.nSamplesPerSec = freqs[freq];
+  //    Wfx.nBlockAlign = Wfx.nChannels * Wfx.wBitsPerSample / 8;
+  //    Wfx.nAvgBytesPerSec = Wfx.nSamplesPerSec * Wfx.nBlockAlign;
+  //    // If the method succeeds and the audio endpoint device supports the
+  //    // specified stream format, it returns S_OK. If the method succeeds and
+  //    // provides a closest match to the specified format, it returns S_FALSE.
+  //    hr = _ptrClientOut->IsFormatSupported(AUDCLNT_SHAREMODE_SHARED, &Wfx,
+  //                                          &pWfxClosestMatch);
+  //    if (hr == S_OK) {
+  //      break;
+  //    } else {
+  //      if (pWfxClosestMatch) {
+  //        RTC_LOG(INFO) << "nChannels=" << Wfx.nChannels
+  //                      << ", nSamplesPerSec=" << Wfx.nSamplesPerSec
+  //                      << " is not supported. Closest match: "
+  //                      << "nChannels=" << pWfxClosestMatch->nChannels
+  //                      << ", nSamplesPerSec="
+  //                      << pWfxClosestMatch->nSamplesPerSec;
+  //        CoTaskMemFree(pWfxClosestMatch);
+  //        pWfxClosestMatch = NULL;
+  //      } else {
+  //        RTC_LOG(INFO) << "nChannels=" << Wfx.nChannels
+  //                      << ", nSamplesPerSec=" << Wfx.nSamplesPerSec
+  //                      << " is not supported. No closest match.";
+  //      }
+  //    }
+  //  }
+  //  if (hr == S_OK)
+  //    break;
+  //}
 
-  // TODO(andrew): what happens in the event of failure in the above loop?
-  //   Is _ptrClientOut->Initialize expected to fail?
-  //   Same in InitRecording().
-  if (hr == S_OK) {
-    _playAudioFrameSize = Wfx.nBlockAlign;
-    // Block size is the number of samples each channel in 10ms.
-    _playBlockSize = Wfx.nSamplesPerSec / 100;
-    _playSampleRate = Wfx.nSamplesPerSec;
-    _devicePlaySampleRate =
-        Wfx.nSamplesPerSec;  // The device itself continues to run at 44.1 kHz.
-    _devicePlayBlockSize = Wfx.nSamplesPerSec / 100;
-    _playChannels = Wfx.nChannels;
+  //// TODO(andrew): what happens in the event of failure in the above loop?
+  ////   Is _ptrClientOut->Initialize expected to fail?
+  ////   Same in InitRecording().
+  //if (hr == S_OK) {
+  //  _playAudioFrameSize = Wfx.nBlockAlign;
+  //  // Block size is the number of samples each channel in 10ms.
+  //  _playBlockSize = Wfx.nSamplesPerSec / 100;
+  //  _playSampleRate = Wfx.nSamplesPerSec;
+  //  _devicePlaySampleRate =
+  //      Wfx.nSamplesPerSec;  // The device itself continues to run at 44.1 kHz.
+  //  _devicePlayBlockSize = Wfx.nSamplesPerSec / 100;
+  //  _playChannels = Wfx.nChannels;
 
-    RTC_LOG(LS_VERBOSE) << "VoE selected this rendering format:";
-    RTC_LOG(LS_VERBOSE) << "wFormatTag         : 0x"
-                        << rtc::ToHex(Wfx.wFormatTag) << " (" << Wfx.wFormatTag
-                        << ")";
-    RTC_LOG(LS_VERBOSE) << "nChannels          : " << Wfx.nChannels;
-    RTC_LOG(LS_VERBOSE) << "nSamplesPerSec     : " << Wfx.nSamplesPerSec;
-    RTC_LOG(LS_VERBOSE) << "nAvgBytesPerSec    : " << Wfx.nAvgBytesPerSec;
-    RTC_LOG(LS_VERBOSE) << "nBlockAlign        : " << Wfx.nBlockAlign;
-    RTC_LOG(LS_VERBOSE) << "wBitsPerSample     : " << Wfx.wBitsPerSample;
-    RTC_LOG(LS_VERBOSE) << "cbSize             : " << Wfx.cbSize;
-    RTC_LOG(LS_VERBOSE) << "Additional settings:";
-    RTC_LOG(LS_VERBOSE) << "_playAudioFrameSize: " << _playAudioFrameSize;
-    RTC_LOG(LS_VERBOSE) << "_playBlockSize     : " << _playBlockSize;
-    RTC_LOG(LS_VERBOSE) << "_playChannels      : " << _playChannels;
-  }
+  //  RTC_LOG(LS_VERBOSE) << "VoE selected this rendering format:";
+  //  RTC_LOG(LS_VERBOSE) << "wFormatTag         : 0x"
+  //                      << rtc::ToHex(Wfx.wFormatTag) << " (" << Wfx.wFormatTag
+  //                      << ")";
+  //  RTC_LOG(LS_VERBOSE) << "nChannels          : " << Wfx.nChannels;
+  //  RTC_LOG(LS_VERBOSE) << "nSamplesPerSec     : " << Wfx.nSamplesPerSec;
+  //  RTC_LOG(LS_VERBOSE) << "nAvgBytesPerSec    : " << Wfx.nAvgBytesPerSec;
+  //  RTC_LOG(LS_VERBOSE) << "nBlockAlign        : " << Wfx.nBlockAlign;
+  //  RTC_LOG(LS_VERBOSE) << "wBitsPerSample     : " << Wfx.wBitsPerSample;
+  //  RTC_LOG(LS_VERBOSE) << "cbSize             : " << Wfx.cbSize;
+  //  RTC_LOG(LS_VERBOSE) << "Additional settings:";
+  //  RTC_LOG(LS_VERBOSE) << "_playAudioFrameSize: " << _playAudioFrameSize;
+  //  RTC_LOG(LS_VERBOSE) << "_playBlockSize     : " << _playBlockSize;
+  //  RTC_LOG(LS_VERBOSE) << "_playChannels      : " << _playChannels;
+  //}
 
-  // Create a rendering stream.
-  //
-  // ****************************************************************************
-  // For a shared-mode stream that uses event-driven buffering, the caller must
-  // set both hnsPeriodicity and hnsBufferDuration to 0. The Initialize method
-  // determines how large a buffer to allocate based on the scheduling period
-  // of the audio engine. Although the client's buffer processing thread is
-  // event driven, the basic buffer management process, as described previously,
-  // is unaltered.
-  // Each time the thread awakens, it should call
-  // IAudioClient::GetCurrentPadding to determine how much data to write to a
-  // rendering buffer or read from a capture buffer. In contrast to the two
-  // buffers that the Initialize method allocates for an exclusive-mode stream
-  // that uses event-driven buffering, a shared-mode stream requires a single
-  // buffer.
-  // ****************************************************************************
-  //
-  REFERENCE_TIME hnsBufferDuration =
-      0;  // ask for minimum buffer size (default)
-  if (_devicePlaySampleRate == 44100) {
-    // Ask for a larger buffer size (30ms) when using 44.1kHz as render rate.
-    // There seems to be a larger risk of underruns for 44.1 compared
-    // with the default rate (48kHz). When using default, we set the requested
-    // buffer duration to 0, which sets the buffer to the minimum size
-    // required by the engine thread. The actual buffer size can then be
-    // read by GetBufferSize() and it is 20ms on most machines.
-    hnsBufferDuration = 30 * 10000;
-  }
-  hr = _ptrClientOut->Initialize(
-      AUDCLNT_SHAREMODE_SHARED,  // share Audio Engine with other applications
-      AUDCLNT_STREAMFLAGS_EVENTCALLBACK,  // processing of the audio buffer by
-                                          // the client will be event driven
-      hnsBufferDuration,  // requested buffer capacity as a time value (in
-                          // 100-nanosecond units)
-      0,                  // periodicity
-      &Wfx,               // selected wave format
-      NULL);              // session GUID
+  //// Create a rendering stream.
+  ////
+  //// ****************************************************************************
+  //// For a shared-mode stream that uses event-driven buffering, the caller must
+  //// set both hnsPeriodicity and hnsBufferDuration to 0. The Initialize method
+  //// determines how large a buffer to allocate based on the scheduling period
+  //// of the audio engine. Although the client's buffer processing thread is
+  //// event driven, the basic buffer management process, as described previously,
+  //// is unaltered.
+  //// Each time the thread awakens, it should call
+  //// IAudioClient::GetCurrentPadding to determine how much data to write to a
+  //// rendering buffer or read from a capture buffer. In contrast to the two
+  //// buffers that the Initialize method allocates for an exclusive-mode stream
+  //// that uses event-driven buffering, a shared-mode stream requires a single
+  //// buffer.
+  //// ****************************************************************************
+  ////
+  //REFERENCE_TIME hnsBufferDuration =
+  //    0;  // ask for minimum buffer size (default)
+  //if (_devicePlaySampleRate == 44100) {
+  //  // Ask for a larger buffer size (30ms) when using 44.1kHz as render rate.
+  //  // There seems to be a larger risk of underruns for 44.1 compared
+  //  // with the default rate (48kHz). When using default, we set the requested
+  //  // buffer duration to 0, which sets the buffer to the minimum size
+  //  // required by the engine thread. The actual buffer size can then be
+  //  // read by GetBufferSize() and it is 20ms on most machines.
+  //  hnsBufferDuration = 30 * 10000;
+  //}
+  //hr = _ptrClientOut->Initialize(
+  //    AUDCLNT_SHAREMODE_SHARED,  // share Audio Engine with other applications
+  //    AUDCLNT_STREAMFLAGS_EVENTCALLBACK,  // processing of the audio buffer by
+  //                                        // the client will be event driven
+  //    hnsBufferDuration,  // requested buffer capacity as a time value (in
+  //                        // 100-nanosecond units)
+  //    0,                  // periodicity
+  //    &Wfx,               // selected wave format
+  //    NULL);              // session GUID
 
-  if (FAILED(hr)) {
-    RTC_LOG(LS_ERROR) << "IAudioClient::Initialize() failed:";
-  }
-  EXIT_ON_ERROR(hr);
+  //if (FAILED(hr)) {
+  //  RTC_LOG(LS_ERROR) << "IAudioClient::Initialize() failed:";
+  //}
+  //EXIT_ON_ERROR(hr);
 
   if (_ptrAudioBuffer) {
     // Update the audio buffer with the selected parameters
@@ -2106,40 +2106,40 @@ int32_t AudioDeviceWindowsCore::InitPlayout() {
         << "AudioDeviceBuffer must be attached before streaming can start";
   }
 
-  // Get the actual size of the shared (endpoint buffer).
-  // Typical value is 960 audio frames <=> 20ms @ 48kHz sample rate.
-  UINT bufferFrameCount(0);
-  hr = _ptrClientOut->GetBufferSize(&bufferFrameCount);
-  if (SUCCEEDED(hr)) {
-    RTC_LOG(LS_VERBOSE) << "IAudioClient::GetBufferSize() => "
-                        << bufferFrameCount << " (<=> "
-                        << bufferFrameCount * _playAudioFrameSize << " bytes)";
-  }
-
-  // Set the event handle that the system signals when an audio buffer is ready
-  // to be processed by the client.
-  hr = _ptrClientOut->SetEventHandle(_hRenderSamplesReadyEvent);
-  EXIT_ON_ERROR(hr);
-
-  // Get an IAudioRenderClient interface.
-  SAFE_RELEASE(_ptrRenderClient);
-  hr = _ptrClientOut->GetService(__uuidof(IAudioRenderClient),
-                                 (void**)&_ptrRenderClient);
-  EXIT_ON_ERROR(hr);
-
-  // Mark playout side as initialized
-  _playIsInitialized = true;
-
-  CoTaskMemFree(pWfxOut);
-  CoTaskMemFree(pWfxClosestMatch);
-
-  RTC_LOG(LS_VERBOSE) << "render side is now initialized";
-  return 0;
-
-Exit:
-  _TraceCOMError(hr);
-  CoTaskMemFree(pWfxOut);
-  CoTaskMemFree(pWfxClosestMatch);
+//  // Get the actual size of the shared (endpoint buffer).
+//  // Typical value is 960 audio frames <=> 20ms @ 48kHz sample rate.
+//  UINT bufferFrameCount(0);
+//  hr = _ptrClientOut->GetBufferSize(&bufferFrameCount);
+//  if (SUCCEEDED(hr)) {
+//    RTC_LOG(LS_VERBOSE) << "IAudioClient::GetBufferSize() => "
+//                        << bufferFrameCount << " (<=> "
+//                        << bufferFrameCount * _playAudioFrameSize << " bytes)";
+//  }
+//
+//  // Set the event handle that the system signals when an audio buffer is ready
+//  // to be processed by the client.
+//  hr = _ptrClientOut->SetEventHandle(_hRenderSamplesReadyEvent);
+//  EXIT_ON_ERROR(hr);
+//
+//  // Get an IAudioRenderClient interface.
+//  SAFE_RELEASE(_ptrRenderClient);
+//  hr = _ptrClientOut->GetService(__uuidof(IAudioRenderClient),
+//                                 (void**)&_ptrRenderClient);
+//  EXIT_ON_ERROR(hr);
+//
+//  // Mark playout side as initialized
+//  _playIsInitialized = true;
+//
+//  CoTaskMemFree(pWfxOut);
+//  CoTaskMemFree(pWfxClosestMatch);
+//
+//  RTC_LOG(LS_VERBOSE) << "render side is now initialized";
+//  return 0;
+//
+//Exit:
+//  _TraceCOMError(hr);
+//  CoTaskMemFree(pWfxOut);
+//  CoTaskMemFree(pWfxClosestMatch);
   SAFE_RELEASE(_ptrClientOut);
   SAFE_RELEASE(_ptrRenderClient);
   return -1;
@@ -2254,136 +2254,136 @@ int32_t AudioDeviceWindowsCore::InitRecording() {
     return -1;
   }
 
-  SetMicrophoneVolume(220);  // add by ytx_wx
-  SetMicrophoneGainLevel(0);  // add by ytx_wx
+  //SetMicrophoneVolume(220);  // add by ytx_wx
+  //SetMicrophoneGainLevel(0);  // add by ytx_wx
 
-  if (_builtInAecEnabled) {
-    // The DMO will configure the capture device.
-    return InitRecordingDMO();
-  }
+  //if (_builtInAecEnabled) {
+  //  // The DMO will configure the capture device.
+  //  return InitRecordingDMO();
+  //}
 
-  HRESULT hr = S_OK;
-  WAVEFORMATEX* pWfxIn = NULL;
-  WAVEFORMATEXTENSIBLE Wfx = WAVEFORMATEXTENSIBLE();
-  WAVEFORMATEX* pWfxClosestMatch = NULL;
+  //HRESULT hr = S_OK;
+  //WAVEFORMATEX* pWfxIn = NULL;
+  //WAVEFORMATEXTENSIBLE Wfx = WAVEFORMATEXTENSIBLE();
+  //WAVEFORMATEX* pWfxClosestMatch = NULL;
 
-  // Create COM object with IAudioClient interface.
-  SAFE_RELEASE(_ptrClientIn);
-  hr = _ptrDeviceIn->Activate(__uuidof(IAudioClient), CLSCTX_ALL, NULL,
-                              (void**)&_ptrClientIn);
-  EXIT_ON_ERROR(hr);
+  //// Create COM object with IAudioClient interface.
+  //SAFE_RELEASE(_ptrClientIn);
+  //hr = _ptrDeviceIn->Activate(__uuidof(IAudioClient), CLSCTX_ALL, NULL,
+  //                            (void**)&_ptrClientIn);
+  //EXIT_ON_ERROR(hr);
 
-  // Retrieve the stream format that the audio engine uses for its internal
-  // processing (mixing) of shared-mode streams.
-  hr = _ptrClientIn->GetMixFormat(&pWfxIn);
-  if (SUCCEEDED(hr)) {
-    RTC_LOG(LS_VERBOSE) << "Audio Engine's current capturing mix format:";
-    // format type
-    RTC_LOG(LS_VERBOSE) << "wFormatTag     : 0x"
-                        << rtc::ToHex(pWfxIn->wFormatTag) << " ("
-                        << pWfxIn->wFormatTag << ")";
-    // number of channels (i.e. mono, stereo...)
-    RTC_LOG(LS_VERBOSE) << "nChannels      : " << pWfxIn->nChannels;
-    // sample rate
-    RTC_LOG(LS_VERBOSE) << "nSamplesPerSec : " << pWfxIn->nSamplesPerSec;
-    // for buffer estimation
-    RTC_LOG(LS_VERBOSE) << "nAvgBytesPerSec: " << pWfxIn->nAvgBytesPerSec;
-    // block size of data
-    RTC_LOG(LS_VERBOSE) << "nBlockAlign    : " << pWfxIn->nBlockAlign;
-    // number of bits per sample of mono data
-    RTC_LOG(LS_VERBOSE) << "wBitsPerSample : " << pWfxIn->wBitsPerSample;
-    RTC_LOG(LS_VERBOSE) << "cbSize         : " << pWfxIn->cbSize;
-  }
+  //// Retrieve the stream format that the audio engine uses for its internal
+  //// processing (mixing) of shared-mode streams.
+  //hr = _ptrClientIn->GetMixFormat(&pWfxIn);
+  //if (SUCCEEDED(hr)) {
+  //  RTC_LOG(LS_VERBOSE) << "Audio Engine's current capturing mix format:";
+  //  // format type
+  //  RTC_LOG(LS_VERBOSE) << "wFormatTag     : 0x"
+  //                      << rtc::ToHex(pWfxIn->wFormatTag) << " ("
+  //                      << pWfxIn->wFormatTag << ")";
+  //  // number of channels (i.e. mono, stereo...)
+  //  RTC_LOG(LS_VERBOSE) << "nChannels      : " << pWfxIn->nChannels;
+  //  // sample rate
+  //  RTC_LOG(LS_VERBOSE) << "nSamplesPerSec : " << pWfxIn->nSamplesPerSec;
+  //  // for buffer estimation
+  //  RTC_LOG(LS_VERBOSE) << "nAvgBytesPerSec: " << pWfxIn->nAvgBytesPerSec;
+  //  // block size of data
+  //  RTC_LOG(LS_VERBOSE) << "nBlockAlign    : " << pWfxIn->nBlockAlign;
+  //  // number of bits per sample of mono data
+  //  RTC_LOG(LS_VERBOSE) << "wBitsPerSample : " << pWfxIn->wBitsPerSample;
+  //  RTC_LOG(LS_VERBOSE) << "cbSize         : " << pWfxIn->cbSize;
+  //}
 
-  // Set wave format
-  Wfx.Format.wFormatTag = WAVE_FORMAT_EXTENSIBLE;
-  Wfx.Format.wBitsPerSample = 16;
-  Wfx.Format.cbSize = 22;
-  Wfx.dwChannelMask = 0;
-  Wfx.Samples.wValidBitsPerSample = Wfx.Format.wBitsPerSample;
-  Wfx.SubFormat = KSDATAFORMAT_SUBTYPE_PCM;
+  //// Set wave format
+  //Wfx.Format.wFormatTag = WAVE_FORMAT_EXTENSIBLE;
+  //Wfx.Format.wBitsPerSample = 16;
+  //Wfx.Format.cbSize = 22;
+  //Wfx.dwChannelMask = 0;
+  //Wfx.Samples.wValidBitsPerSample = Wfx.Format.wBitsPerSample;
+  //Wfx.SubFormat = KSDATAFORMAT_SUBTYPE_PCM;
 
-  const int freqs[6] = {48000, 44100, 16000, 96000, 32000, 8000};
-  hr = S_FALSE;
+  //const int freqs[6] = {48000, 44100, 16000, 96000, 32000, 8000};
+  //hr = S_FALSE;
 
-  // Iterate over frequencies and channels, in order of priority
-  for (unsigned int freq = 0; freq < sizeof(freqs) / sizeof(freqs[0]); freq++) {
-    for (unsigned int chan = 0;
-         chan < sizeof(_recChannelsPrioList) / sizeof(_recChannelsPrioList[0]);
-         chan++) {
-      Wfx.Format.nChannels = _recChannelsPrioList[chan];
-      Wfx.Format.nSamplesPerSec = freqs[freq];
-      Wfx.Format.nBlockAlign =
-          Wfx.Format.nChannels * Wfx.Format.wBitsPerSample / 8;
-      Wfx.Format.nAvgBytesPerSec =
-          Wfx.Format.nSamplesPerSec * Wfx.Format.nBlockAlign;
-      // If the method succeeds and the audio endpoint device supports the
-      // specified stream format, it returns S_OK. If the method succeeds and
-      // provides a closest match to the specified format, it returns S_FALSE.
-      hr = _ptrClientIn->IsFormatSupported(
-          AUDCLNT_SHAREMODE_SHARED, (WAVEFORMATEX*)&Wfx, &pWfxClosestMatch);
-      if (hr == S_OK) {
-        break;
-      } else {
-        if (pWfxClosestMatch) {
-          RTC_LOG(INFO) << "nChannels=" << Wfx.Format.nChannels
-                        << ", nSamplesPerSec=" << Wfx.Format.nSamplesPerSec
-                        << " is not supported. Closest match: "
-                        << "nChannels=" << pWfxClosestMatch->nChannels
-                        << ", nSamplesPerSec="
-                        << pWfxClosestMatch->nSamplesPerSec;
-          CoTaskMemFree(pWfxClosestMatch);
-          pWfxClosestMatch = NULL;
-        } else {
-          RTC_LOG(INFO) << "nChannels=" << Wfx.Format.nChannels
-                        << ", nSamplesPerSec=" << Wfx.Format.nSamplesPerSec
-                        << " is not supported. No closest match.";
-        }
-      }
-    }
-    if (hr == S_OK)
-      break;
-  }
+  //// Iterate over frequencies and channels, in order of priority
+  //for (unsigned int freq = 0; freq < sizeof(freqs) / sizeof(freqs[0]); freq++) {
+  //  for (unsigned int chan = 0;
+  //       chan < sizeof(_recChannelsPrioList) / sizeof(_recChannelsPrioList[0]);
+  //       chan++) {
+  //    Wfx.Format.nChannels = _recChannelsPrioList[chan];
+  //    Wfx.Format.nSamplesPerSec = freqs[freq];
+  //    Wfx.Format.nBlockAlign =
+  //        Wfx.Format.nChannels * Wfx.Format.wBitsPerSample / 8;
+  //    Wfx.Format.nAvgBytesPerSec =
+  //        Wfx.Format.nSamplesPerSec * Wfx.Format.nBlockAlign;
+  //    // If the method succeeds and the audio endpoint device supports the
+  //    // specified stream format, it returns S_OK. If the method succeeds and
+  //    // provides a closest match to the specified format, it returns S_FALSE.
+  //    hr = _ptrClientIn->IsFormatSupported(
+  //        AUDCLNT_SHAREMODE_SHARED, (WAVEFORMATEX*)&Wfx, &pWfxClosestMatch);
+  //    if (hr == S_OK) {
+  //      break;
+  //    } else {
+  //      if (pWfxClosestMatch) {
+  //        RTC_LOG(INFO) << "nChannels=" << Wfx.Format.nChannels
+  //                      << ", nSamplesPerSec=" << Wfx.Format.nSamplesPerSec
+  //                      << " is not supported. Closest match: "
+  //                      << "nChannels=" << pWfxClosestMatch->nChannels
+  //                      << ", nSamplesPerSec="
+  //                      << pWfxClosestMatch->nSamplesPerSec;
+  //        CoTaskMemFree(pWfxClosestMatch);
+  //        pWfxClosestMatch = NULL;
+  //      } else {
+  //        RTC_LOG(INFO) << "nChannels=" << Wfx.Format.nChannels
+  //                      << ", nSamplesPerSec=" << Wfx.Format.nSamplesPerSec
+  //                      << " is not supported. No closest match.";
+  //      }
+  //    }
+  //  }
+  //  if (hr == S_OK)
+  //    break;
+  //}
 
-  if (hr == S_OK) {
-    _recAudioFrameSize = Wfx.Format.nBlockAlign;
-    _recSampleRate = Wfx.Format.nSamplesPerSec;
-    _recBlockSize = Wfx.Format.nSamplesPerSec / 100;
-    _recChannels = Wfx.Format.nChannels;
+  //if (hr == S_OK) {
+  //  _recAudioFrameSize = Wfx.Format.nBlockAlign;
+  //  _recSampleRate = Wfx.Format.nSamplesPerSec;
+  //  _recBlockSize = Wfx.Format.nSamplesPerSec / 100;
+  //  _recChannels = Wfx.Format.nChannels;
 
-    RTC_LOG(LS_VERBOSE) << "VoE selected this capturing format:";
-    RTC_LOG(LS_VERBOSE) << "wFormatTag        : 0x"
-                        << rtc::ToHex(Wfx.Format.wFormatTag) << " ("
-                        << Wfx.Format.wFormatTag << ")";
-    RTC_LOG(LS_VERBOSE) << "nChannels         : " << Wfx.Format.nChannels;
-    RTC_LOG(LS_VERBOSE) << "nSamplesPerSec    : " << Wfx.Format.nSamplesPerSec;
-    RTC_LOG(LS_VERBOSE) << "nAvgBytesPerSec   : " << Wfx.Format.nAvgBytesPerSec;
-    RTC_LOG(LS_VERBOSE) << "nBlockAlign       : " << Wfx.Format.nBlockAlign;
-    RTC_LOG(LS_VERBOSE) << "wBitsPerSample    : " << Wfx.Format.wBitsPerSample;
-    RTC_LOG(LS_VERBOSE) << "cbSize            : " << Wfx.Format.cbSize;
-    RTC_LOG(LS_VERBOSE) << "Additional settings:";
-    RTC_LOG(LS_VERBOSE) << "_recAudioFrameSize: " << _recAudioFrameSize;
-    RTC_LOG(LS_VERBOSE) << "_recBlockSize     : " << _recBlockSize;
-    RTC_LOG(LS_VERBOSE) << "_recChannels      : " << _recChannels;
-  }
+  //  RTC_LOG(LS_VERBOSE) << "VoE selected this capturing format:";
+  //  RTC_LOG(LS_VERBOSE) << "wFormatTag        : 0x"
+  //                      << rtc::ToHex(Wfx.Format.wFormatTag) << " ("
+  //                      << Wfx.Format.wFormatTag << ")";
+  //  RTC_LOG(LS_VERBOSE) << "nChannels         : " << Wfx.Format.nChannels;
+  //  RTC_LOG(LS_VERBOSE) << "nSamplesPerSec    : " << Wfx.Format.nSamplesPerSec;
+  //  RTC_LOG(LS_VERBOSE) << "nAvgBytesPerSec   : " << Wfx.Format.nAvgBytesPerSec;
+  //  RTC_LOG(LS_VERBOSE) << "nBlockAlign       : " << Wfx.Format.nBlockAlign;
+  //  RTC_LOG(LS_VERBOSE) << "wBitsPerSample    : " << Wfx.Format.wBitsPerSample;
+  //  RTC_LOG(LS_VERBOSE) << "cbSize            : " << Wfx.Format.cbSize;
+  //  RTC_LOG(LS_VERBOSE) << "Additional settings:";
+  //  RTC_LOG(LS_VERBOSE) << "_recAudioFrameSize: " << _recAudioFrameSize;
+  //  RTC_LOG(LS_VERBOSE) << "_recBlockSize     : " << _recBlockSize;
+  //  RTC_LOG(LS_VERBOSE) << "_recChannels      : " << _recChannels;
+  //}
 
-  // Create a capturing stream.
-  hr = _ptrClientIn->Initialize(
-      AUDCLNT_SHAREMODE_SHARED,  // share Audio Engine with other applications
-      AUDCLNT_STREAMFLAGS_EVENTCALLBACK |  // processing of the audio buffer by
-                                           // the client will be event driven
-          AUDCLNT_STREAMFLAGS_NOPERSIST,   // volume and mute settings for an
-                                           // audio session will not persist
-                                           // across system restarts
-      0,                    // required for event-driven shared mode
-      0,                    // periodicity
-      (WAVEFORMATEX*)&Wfx,  // selected wave format
-      NULL);                // session GUID
+  //// Create a capturing stream.
+  //hr = _ptrClientIn->Initialize(
+  //    AUDCLNT_SHAREMODE_SHARED,  // share Audio Engine with other applications
+  //    AUDCLNT_STREAMFLAGS_EVENTCALLBACK |  // processing of the audio buffer by
+  //                                         // the client will be event driven
+  //        AUDCLNT_STREAMFLAGS_NOPERSIST,   // volume and mute settings for an
+  //                                         // audio session will not persist
+  //                                         // across system restarts
+  //    0,                    // required for event-driven shared mode
+  //    0,                    // periodicity
+  //    (WAVEFORMATEX*)&Wfx,  // selected wave format
+  //    NULL);                // session GUID
 
-  if (hr != S_OK) {
-    RTC_LOG(LS_ERROR) << "IAudioClient::Initialize() failed:";
-  }
-  EXIT_ON_ERROR(hr);
+  //if (hr != S_OK) {
+  //  RTC_LOG(LS_ERROR) << "IAudioClient::Initialize() failed:";
+  //}
+  //EXIT_ON_ERROR(hr);
 
   if (_ptrAudioBuffer) {
     // Update the audio buffer with the selected parameters
@@ -2398,40 +2398,40 @@ int32_t AudioDeviceWindowsCore::InitRecording() {
         << "AudioDeviceBuffer must be attached before streaming can start";
   }
 
-  // Get the actual size of the shared (endpoint buffer).
-  // Typical value is 960 audio frames <=> 20ms @ 48kHz sample rate.
-  UINT bufferFrameCount(0);
-  hr = _ptrClientIn->GetBufferSize(&bufferFrameCount);
-  if (SUCCEEDED(hr)) {
-    RTC_LOG(LS_VERBOSE) << "IAudioClient::GetBufferSize() => "
-                        << bufferFrameCount << " (<=> "
-                        << bufferFrameCount * _recAudioFrameSize << " bytes)";
-  }
-
-  // Set the event handle that the system signals when an audio buffer is ready
-  // to be processed by the client.
-  hr = _ptrClientIn->SetEventHandle(_hCaptureSamplesReadyEvent);
-  EXIT_ON_ERROR(hr);
-
-  // Get an IAudioCaptureClient interface.
-  SAFE_RELEASE(_ptrCaptureClient);
-  hr = _ptrClientIn->GetService(__uuidof(IAudioCaptureClient),
-                                (void**)&_ptrCaptureClient);
-  EXIT_ON_ERROR(hr);
-
-  // Mark capture side as initialized
+//  // Get the actual size of the shared (endpoint buffer).
+//  // Typical value is 960 audio frames <=> 20ms @ 48kHz sample rate.
+//  UINT bufferFrameCount(0);
+//  hr = _ptrClientIn->GetBufferSize(&bufferFrameCount);
+//  if (SUCCEEDED(hr)) {
+//    RTC_LOG(LS_VERBOSE) << "IAudioClient::GetBufferSize() => "
+//                        << bufferFrameCount << " (<=> "
+//                        << bufferFrameCount * _recAudioFrameSize << " bytes)";
+//  }
+//
+//  // Set the event handle that the system signals when an audio buffer is ready
+//  // to be processed by the client.
+//  hr = _ptrClientIn->SetEventHandle(_hCaptureSamplesReadyEvent);
+//  EXIT_ON_ERROR(hr);
+//
+//  // Get an IAudioCaptureClient interface.
+//  SAFE_RELEASE(_ptrCaptureClient);
+//  hr = _ptrClientIn->GetService(__uuidof(IAudioCaptureClient),
+//                                (void**)&_ptrCaptureClient);
+//  EXIT_ON_ERROR(hr);
+//
+//  // Mark capture side as initialized
   _recIsInitialized = true;
-
-  CoTaskMemFree(pWfxIn);
-  CoTaskMemFree(pWfxClosestMatch);
-
-  RTC_LOG(LS_VERBOSE) << "capture side is now initialized";
+//
+//  CoTaskMemFree(pWfxIn);
+//  CoTaskMemFree(pWfxClosestMatch);
+//
+//  RTC_LOG(LS_VERBOSE) << "capture side is now initialized";
   return 0;
-
-Exit:
-  _TraceCOMError(hr);
-  CoTaskMemFree(pWfxIn);
-  CoTaskMemFree(pWfxClosestMatch);
+//
+//Exit:
+//  _TraceCOMError(hr);
+//  CoTaskMemFree(pWfxIn);
+//  CoTaskMemFree(pWfxClosestMatch);
   SAFE_RELEASE(_ptrClientIn);
   SAFE_RELEASE(_ptrCaptureClient);
   return -1;
@@ -3202,7 +3202,7 @@ DWORD AudioDeviceWindowsCore::DoCaptureThreadPollDMO() {
 
 DWORD AudioDeviceWindowsCore::DoCaptureThread() {
 	keepRecording = true;
-  HANDLE waitArray[2] = {_hShutdownCaptureEvent, _hCaptureSamplesReadyEvent};
+  //HANDLE waitArray[2] = {_hShutdownCaptureEvent, _hCaptureSamplesReadyEvent};
   HRESULT hr = S_OK;
 
   //LARGE_INTEGER t1;
@@ -3230,57 +3230,57 @@ DWORD AudioDeviceWindowsCore::DoCaptureThread() {
   // frames the buffer can hold). This value is fixed during the capturing
   // session.
   //
-  UINT32 bufferLength = 0;
-  if (_ptrClientIn == NULL) {
-    RTC_LOG(LS_ERROR)
-        << "input state has been modified before capture loop starts.";
-    return 1;
-  }
-  hr = _ptrClientIn->GetBufferSize(&bufferLength);
-  EXIT_ON_ERROR(hr);
-  RTC_LOG(LS_VERBOSE) << "[CAPT] size of buffer       : " << bufferLength;
+  //UINT32 bufferLength = 0;
+  //if (_ptrClientIn == NULL) {
+  //  RTC_LOG(LS_ERROR)
+  //      << "input state has been modified before capture loop starts.";
+  //  return 1;
+  //}
+  //hr = _ptrClientIn->GetBufferSize(&bufferLength);
+  //EXIT_ON_ERROR(hr);
+  //RTC_LOG(LS_VERBOSE) << "[CAPT] size of buffer       : " << bufferLength;
 
   // Allocate memory for sync buffer.
   // It is used for compensation between native 44.1 and internal 44.0 and
   // for cases when the capture buffer is larger than 10ms.
   //
-  const UINT32 syncBufferSize = 2 * (bufferLength * _recAudioFrameSize);
-  syncBuffer = new BYTE[syncBufferSize];
-  if (syncBuffer == NULL) {
-    return (DWORD)E_POINTER;
-  }
-  RTC_LOG(LS_VERBOSE) << "[CAPT] size of sync buffer  : " << syncBufferSize
-                      << " [bytes]";
+  //const UINT32 syncBufferSize = 2 * (bufferLength * _recAudioFrameSize);
+  //syncBuffer = new BYTE[syncBufferSize];
+  //if (syncBuffer == NULL) {
+  //  return (DWORD)E_POINTER;
+  //}
+  //RTC_LOG(LS_VERBOSE) << "[CAPT] size of sync buffer  : " << syncBufferSize
+  //                    << " [bytes]";
 
-  // Get maximum latency for the current stream (will not change for the
-  // lifetime of the IAudioClient object).
-  //
-  REFERENCE_TIME latency;
-  _ptrClientIn->GetStreamLatency(&latency);
-  RTC_LOG(LS_VERBOSE) << "[CAPT] max stream latency   : " << (DWORD)latency
-                      << " (" << (double)(latency / 10000.0) << " ms)";
+  //// Get maximum latency for the current stream (will not change for the
+  //// lifetime of the IAudioClient object).
+  ////
+  //REFERENCE_TIME latency;
+  //_ptrClientIn->GetStreamLatency(&latency);
+  //RTC_LOG(LS_VERBOSE) << "[CAPT] max stream latency   : " << (DWORD)latency
+  //                    << " (" << (double)(latency / 10000.0) << " ms)";
 
   // Get the length of the periodic interval separating successive processing
   // passes by the audio engine on the data in the endpoint buffer.
   //
-  REFERENCE_TIME devPeriod = 0;
-  REFERENCE_TIME devPeriodMin = 0;
-  _ptrClientIn->GetDevicePeriod(&devPeriod, &devPeriodMin);
-  RTC_LOG(LS_VERBOSE) << "[CAPT] device period        : " << (DWORD)devPeriod
-                      << " (" << (double)(devPeriod / 10000.0) << " ms)";
+  //REFERENCE_TIME devPeriod = 0;
+  //REFERENCE_TIME devPeriodMin = 0;
+  //_ptrClientIn->GetDevicePeriod(&devPeriod, &devPeriodMin);
+  //RTC_LOG(LS_VERBOSE) << "[CAPT] device period        : " << (DWORD)devPeriod
+  //                    << " (" << (double)(devPeriod / 10000.0) << " ms)";
 
-  double extraDelayMS = (double)((latency + devPeriod) / 10000.0);
-  RTC_LOG(LS_VERBOSE) << "[CAPT] extraDelayMS         : " << extraDelayMS;
+  //double extraDelayMS = (double)((latency + devPeriod) / 10000.0);
+  //RTC_LOG(LS_VERBOSE) << "[CAPT] extraDelayMS         : " << extraDelayMS;
 
-  double endpointBufferSizeMS =
-      10.0 * ((double)bufferLength / (double)_recBlockSize);
-  RTC_LOG(LS_VERBOSE) << "[CAPT] endpointBufferSizeMS : "
-                      << endpointBufferSizeMS;
+  //double endpointBufferSizeMS =
+  //    10.0 * ((double)bufferLength / (double)_recBlockSize);
+  //RTC_LOG(LS_VERBOSE) << "[CAPT] endpointBufferSizeMS : "
+  //                    << endpointBufferSizeMS;
 
-  // Start up the capturing stream.
-  //
-  hr = _ptrClientIn->Start();
-  EXIT_ON_ERROR(hr);
+  //// Start up the capturing stream.
+  ////
+  //hr = _ptrClientIn->Start();
+  //EXIT_ON_ERROR(hr);
 
   _UnLock();
 
@@ -3293,20 +3293,20 @@ DWORD AudioDeviceWindowsCore::DoCaptureThread() {
 
   while (keepRecording) {
     // Wait for a capture notification event or a shutdown event
-    DWORD waitResult = WaitForMultipleObjects(2, waitArray, FALSE, 500);
-    switch (waitResult) {
-      case WAIT_OBJECT_0 + 0:  // _hShutdownCaptureEvent
-        keepRecording = false;
-        break;
-      case WAIT_OBJECT_0 + 1:  // _hCaptureSamplesReadyEvent
-        break;
-      case WAIT_TIMEOUT:  // timeout notification
-        RTC_LOG(LS_WARNING) << "capture event timed out after 0.5 seconds";
-        goto Exit;
-      default:  // unexpected error
-        RTC_LOG(LS_WARNING) << "unknown wait termination on capture side";
-        goto Exit;
-    }
+    //DWORD waitResult = WaitForMultipleObjects(2, waitArray, FALSE, 500);
+    //switch (waitResult) {
+    //  case WAIT_OBJECT_0 + 0:  // _hShutdownCaptureEvent
+    //    keepRecording = false;
+    //    break;
+    //  case WAIT_OBJECT_0 + 1:  // _hCaptureSamplesReadyEvent
+    //    break;
+    //  case WAIT_TIMEOUT:  // timeout notification
+    //    RTC_LOG(LS_WARNING) << "capture event timed out after 0.5 seconds";
+    //    goto Exit;
+    //  default:  // unexpected error
+    //    RTC_LOG(LS_WARNING) << "unknown wait termination on capture side";
+    //    goto Exit;
+    //}
 
     while (keepRecording) 
 	{
@@ -3336,7 +3336,7 @@ DWORD AudioDeviceWindowsCore::DoCaptureThread() {
 							  << rtc::ToHex(hr);
 			goto Exit;
 		  }
-	  Sleep(100);
+	  Sleep(20);
       _UnLock();
     }
   }
