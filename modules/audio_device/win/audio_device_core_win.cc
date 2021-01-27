@@ -34,7 +34,14 @@
 #include <mmsystem.h>
 #include <strsafe.h>
 #include <uuids.h>
+
+#ifdef WIN32
 #include <windows.h>
+#elif defined(WEBRTC_LINUX)
+#include <unistd.h>
+#endif
+
+
 #include <initguid.h>//add by wxtest
 
 #include <iomanip>
@@ -3262,7 +3269,11 @@ DWORD AudioDeviceWindowsCore::DoCaptureThread() {
 							  << rtc::ToHex(hr);
 			goto Exit;
 		  }
-	  Sleep(10);
+#ifdef WIN32
+                  Sleep(20);
+#elif defined(WEBRTC_LINUX)
+                  usleep(20 * 1000);
+#endif
       _UnLock();
     }
   }

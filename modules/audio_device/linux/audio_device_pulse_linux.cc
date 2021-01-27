@@ -161,7 +161,6 @@ AudioDeviceGeneric::InitStatus AudioDeviceLinuxPulse::Init() {
   // RECORDING
   _ptrThreadRec.reset(new rtc::PlatformThread(
       RecThreadFunc, this, "webrtc_audio_module_rec_thread"));
-
   _ptrThreadRec->Start();
   _ptrThreadRec->SetPriority(rtc::kRealtimePriority);
 
@@ -857,88 +856,11 @@ int32_t AudioDeviceLinuxPulse::InitPlayout() {
     return 0;
   }
 
-  // Initialize the speaker (devices might have been added or removed)
-  if (InitSpeaker() == -1) {
-    RTC_LOG(LS_WARNING) << "InitSpeaker() failed";
-  }
-
-  // Set the play sample specification
-  pa_sample_spec playSampleSpec;
-  playSampleSpec.channels = _playChannels;
-  playSampleSpec.format = PA_SAMPLE_S16LE;
-  playSampleSpec.rate = sample_rate_hz_;
-
-  // Create a new play stream
-  _playStream =
-      LATE(pa_stream_new)(_paContext, "playStream", &playSampleSpec, NULL);
-
-  if (!_playStream) {
-    RTC_LOG(LS_ERROR) << "failed to create play stream, err="
-                      << LATE(pa_context_errno)(_paContext);
-    return -1;
-  }
-
-  // Provide the playStream to the mixer
-  _mixerManager.SetPlayStream(_playStream);
-
   if (_ptrAudioBuffer) {
     // Update audio buffer with the selected parameters
     _ptrAudioBuffer->SetPlayoutSampleRate(sample_rate_hz_);
     _ptrAudioBuffer->SetPlayoutChannels((uint8_t)_playChannels);
   }
-
-  RTC_LOG(LS_VERBOSE) << "stream state "
-                      << LATE(pa_stream_get_state)(_playStream);
-
-  // Set stream flags
-  _playStreamFlags = (pa_stream_flags_t)(PA_STREAM_AUTO_TIMING_UPDATE |
-                                         PA_STREAM_INTERPOLATE_TIMING);
-
-  if (_configuredLatencyPlay != WEBRTC_PA_NO_LATENCY_REQUIREMENTS) {
-    // If configuring a specific latency then we want to specify
-    // PA_STREAM_ADJUST_LATENCY to make the server adjust parameters
-    // automatically to reach that target latency. However, that flag
-    // doesn't exist in Ubuntu 8.04 and many people still use that,
-    // so we have to check the protocol version of libpulse.
-    if (LATE(pa_context_get_protocol_version)(_paContext) >=
-        WEBRTC_PA_ADJUST_LATENCY_PROTOCOL_VERSION) {
-      _playStreamFlags |= PA_STREAM_ADJUST_LATENCY;
-    }
-
-    const pa_sample_spec* spec = LATE(pa_stream_get_sample_spec)(_playStream);
-    if (!spec) {
-      RTC_LOG(LS_ERROR) << "pa_stream_get_sample_spec()";
-      return -1;
-    }
-
-    size_t bytesPerSec = LATE(pa_bytes_per_second)(spec);
-    uint32_t latency = bytesPerSec * WEBRTC_PA_PLAYBACK_LATENCY_MINIMUM_MSECS /
-                       WEBRTC_PA_MSECS_PER_SEC;
-
-    // Set the play buffer attributes
-    _playBufferAttr.maxlength = latency;  // num bytes stored in the buffer
-    _playBufferAttr.tlength = latency;    // target fill level of play buffer
-    // minimum free num bytes before server request more data
-    _playBufferAttr.minreq = latency / WEBRTC_PA_PLAYBACK_REQUEST_FACTOR;
-    // prebuffer tlength before starting playout
-    _playBufferAttr.prebuf = _playBufferAttr.tlength - _playBufferAttr.minreq;
-
-    _configuredLatencyPlay = latency;
-  }
-
-  // num samples in bytes * num channels
-  _playbackBufferSize = sample_rate_hz_ / 100 * 2 * _playChannels;
-  _playbackBufferUnused = _playbackBufferSize;
-  _playBuffer = new int8_t[_playbackBufferSize];
-
-  // Enable underflow callback
-  LATE(pa_stream_set_underflow_callback)
-  (_playStream, PaStreamUnderflowCallback, this);
-
-  // Set the state callback function for the stream
-  LATE(pa_stream_set_state_callback)(_playStream, PaStreamStateCallback, this);
-
-  // Mark playout side as initialized
   _playIsInitialized = true;
   _sndCardPlayDelay = 0;
   _sndCardRecDelay = 0;
@@ -947,6 +869,7 @@ int32_t AudioDeviceLinuxPulse::InitPlayout() {
 }
 
 int32_t AudioDeviceLinuxPulse::InitRecording() {
+  RTC_LOG(LS_ERROR) << "AudioDeviceLinuxPulse::InitRecording";
   RTC_DCHECK(thread_checker_.IsCurrent());
 
   if (_recording) {
@@ -961,88 +884,18 @@ int32_t AudioDeviceLinuxPulse::InitRecording() {
     return 0;
   }
 
-  // Initialize the microphone (devices might have been added or removed)
-  if (InitMicrophone() == -1) {
-    RTC_LOG(LS_WARNING) << "InitMicrophone() failed";
-  }
-
-  // Set the rec sample specification
-  pa_sample_spec recSampleSpec;
-  recSampleSpec.channels = _recChannels;
-  recSampleSpec.format = PA_SAMPLE_S16LE;
-  recSampleSpec.rate = sample_rate_hz_;
-
-  // Create a new rec stream
-  _recStream =
-      LATE(pa_stream_new)(_paContext, "recStream", &recSampleSpec, NULL);
-  if (!_recStream) {
-    RTC_LOG(LS_ERROR) << "failed to create rec stream, err="
-                      << LATE(pa_context_errno)(_paContext);
-    return -1;
-  }
-
-  // Provide the recStream to the mixer
-  _mixerManager.SetRecStream(_recStream);
-
   if (_ptrAudioBuffer) {
     // Update audio buffer with the selected parameters
     _ptrAudioBuffer->SetRecordingSampleRate(sample_rate_hz_);
     _ptrAudioBuffer->SetRecordingChannels((uint8_t)_recChannels);
   }
-
-  if (_configuredLatencyRec != WEBRTC_PA_NO_LATENCY_REQUIREMENTS) {
-    _recStreamFlags = (pa_stream_flags_t)(PA_STREAM_AUTO_TIMING_UPDATE |
-                                          PA_STREAM_INTERPOLATE_TIMING);
-
-    // If configuring a specific latency then we want to specify
-    // PA_STREAM_ADJUST_LATENCY to make the server adjust parameters
-    // automatically to reach that target latency. However, that flag
-    // doesn't exist in Ubuntu 8.04 and many people still use that,
-    //  so we have to check the protocol version of libpulse.
-    if (LATE(pa_context_get_protocol_version)(_paContext) >=
-        WEBRTC_PA_ADJUST_LATENCY_PROTOCOL_VERSION) {
-      _recStreamFlags |= PA_STREAM_ADJUST_LATENCY;
-    }
-
-    const pa_sample_spec* spec = LATE(pa_stream_get_sample_spec)(_recStream);
-    if (!spec) {
-      RTC_LOG(LS_ERROR) << "pa_stream_get_sample_spec(rec)";
-      return -1;
-    }
-
-    size_t bytesPerSec = LATE(pa_bytes_per_second)(spec);
-    uint32_t latency = bytesPerSec * WEBRTC_PA_LOW_CAPTURE_LATENCY_MSECS /
-                       WEBRTC_PA_MSECS_PER_SEC;
-
-    // Set the rec buffer attributes
-    // Note: fragsize specifies a maximum transfer size, not a minimum, so
-    // it is not possible to force a high latency setting, only a low one.
-    _recBufferAttr.fragsize = latency;  // size of fragment
-    _recBufferAttr.maxlength =
-        latency + bytesPerSec * WEBRTC_PA_CAPTURE_BUFFER_EXTRA_MSECS /
-                      WEBRTC_PA_MSECS_PER_SEC;
-
-    _configuredLatencyRec = latency;
-  }
-
-  _recordBufferSize = sample_rate_hz_ / 100 * 2 * _recChannels;
-  _recordBufferUsed = 0;
-  _recBuffer = new int8_t[_recordBufferSize];
-
-  // Enable overflow callback
-  LATE(pa_stream_set_overflow_callback)
-  (_recStream, PaStreamOverflowCallback, this);
-
-  // Set the state callback function for the stream
-  LATE(pa_stream_set_state_callback)(_recStream, PaStreamStateCallback, this);
-
-  // Mark recording side as initialized
   _recIsInitialized = true;
 
   return 0;
 }
-
+bool keepRecording = true;
 int32_t AudioDeviceLinuxPulse::StartRecording() {
+  RTC_LOG(LS_ERROR) << "AudioDeviceLinuxPulse::StartRecording";
   RTC_DCHECK(thread_checker_.IsCurrent());
   if (!_recIsInitialized) {
     return -1;
@@ -1054,7 +907,7 @@ int32_t AudioDeviceLinuxPulse::StartRecording() {
 
   // Set state to ensure that the recording starts from the audio thread.
   _startRec = true;
-
+  keepRecording = true;
   // The audio thread will signal when recording has started.
   _timeEventRec.Set();
   if (!_recStartEvent.Wait(10000)) {
@@ -1066,7 +919,7 @@ int32_t AudioDeviceLinuxPulse::StartRecording() {
     RTC_LOG(LS_ERROR) << "failed to activate recording";
     return -1;
   }
-
+  _timeEventRec.Set();
   {
     rtc::CritScope lock(&_critSect);
     if (_recording) {
@@ -1080,8 +933,8 @@ int32_t AudioDeviceLinuxPulse::StartRecording() {
 
   return 0;
 }
-
 int32_t AudioDeviceLinuxPulse::StopRecording() {
+  RTC_LOG(LS_ERROR) << "AudioDeviceLinuxPulse::StopRecording";
   RTC_DCHECK(thread_checker_.IsCurrent());
   rtc::CritScope lock(&_critSect);
 
@@ -1089,43 +942,20 @@ int32_t AudioDeviceLinuxPulse::StopRecording() {
     return 0;
   }
 
-  if (_recStream == NULL) {
-    return -1;
-  }
-
   _recIsInitialized = false;
   _recording = false;
+  keepRecording = false;
 
   RTC_LOG(LS_VERBOSE) << "stopping recording";
 
   // Stop Recording
   PaLock();
 
-  DisableReadCallback();
-  LATE(pa_stream_set_overflow_callback)(_recStream, NULL, NULL);
+  //DisableReadCallback();
 
-  // Unset this here so that we don't get a TERMINATED callback
-  LATE(pa_stream_set_state_callback)(_recStream, NULL, NULL);
-
-  if (LATE(pa_stream_get_state)(_recStream) != PA_STREAM_UNCONNECTED) {
-    // Disconnect the stream
-    if (LATE(pa_stream_disconnect)(_recStream) != PA_OK) {
-      RTC_LOG(LS_ERROR) << "failed to disconnect rec stream, err="
-                        << LATE(pa_context_errno)(_paContext);
-      PaUnLock();
-      return -1;
-    }
-
-    RTC_LOG(LS_VERBOSE) << "disconnected recording";
-  }
-
-  LATE(pa_stream_unref)(_recStream);
   _recStream = NULL;
 
   PaUnLock();
-
-  // Provide the recStream to the mixer
-  _mixerManager.SetRecStream(_recStream);
 
   if (_recBuffer) {
     delete[] _recBuffer;
@@ -1880,69 +1710,12 @@ int32_t AudioDeviceLinuxPulse::LatencyUsecs(pa_stream* stream) {
 int32_t AudioDeviceLinuxPulse::ReadRecordedData(const void* bufferData,
                                                 size_t bufferSize)
     RTC_EXCLUSIVE_LOCKS_REQUIRED(_critSect) {
-  size_t size = bufferSize;
-  uint32_t numRecSamples = _recordBufferSize / (2 * _recChannels);
-
-  // Account for the peeked data and the used data.
-  uint32_t recDelay =
-      (uint32_t)((LatencyUsecs(_recStream) / 1000) +
-                 10 * ((size + _recordBufferUsed) / _recordBufferSize));
-
-  _sndCardRecDelay = recDelay;
-
-  if (_playStream) {
-    // Get the playout delay.
-    _sndCardPlayDelay = (uint32_t)(LatencyUsecs(_playStream) / 1000);
-  }
-
-  if (_recordBufferUsed > 0) {
-    // Have to copy to the buffer until it is full.
-    size_t copy = _recordBufferSize - _recordBufferUsed;
-    if (size < copy) {
-      copy = size;
-    }
-
-    memcpy(&_recBuffer[_recordBufferUsed], bufferData, copy);
-    _recordBufferUsed += copy;
-    bufferData = static_cast<const char*>(bufferData) + copy;
-    size -= copy;
-
-    if (_recordBufferUsed != _recordBufferSize) {
-      // Not enough data yet to pass to VoE.
-      return 0;
-    }
 
     // Provide data to VoiceEngine.
-    if (ProcessRecordedData(_recBuffer, numRecSamples, recDelay) == -1) {
+    if (ProcessRecordedData(_recBuffer, 0, 0) == -1) {
       // We have stopped recording.
       return -1;
     }
-
-    _recordBufferUsed = 0;
-  }
-
-  // Now process full 10ms sample sets directly from the input.
-  while (size >= _recordBufferSize) {
-    // Provide data to VoiceEngine.
-    if (ProcessRecordedData(static_cast<int8_t*>(const_cast<void*>(bufferData)),
-                            numRecSamples, recDelay) == -1) {
-      // We have stopped recording.
-      return -1;
-    }
-
-    bufferData = static_cast<const char*>(bufferData) + _recordBufferSize;
-    size -= _recordBufferSize;
-
-    // We have consumed 10ms of data.
-    recDelay -= 10;
-  }
-
-  // Now save any leftovers for later.
-  if (size > 0) {
-    memcpy(_recBuffer, bufferData, size);
-    _recordBufferUsed = size;
-  }
-
   return 0;
 }
 
@@ -1950,21 +1723,6 @@ int32_t AudioDeviceLinuxPulse::ProcessRecordedData(int8_t* bufferData,
                                                    uint32_t bufferSizeInSamples,
                                                    uint32_t recDelay)
     RTC_EXCLUSIVE_LOCKS_REQUIRED(_critSect) {
-  _ptrAudioBuffer->SetRecordedBuffer(bufferData, bufferSizeInSamples);
-
-  // TODO(andrew): this is a temporary hack, to avoid non-causal far- and
-  // near-end signals at the AEC for PulseAudio. I think the system delay is
-  // being correctly calculated here, but for legacy reasons we add +10 ms
-  // to the value in the AEC. The real fix will be part of a larger
-  // investigation into managing system delay in the AEC.
-  if (recDelay > 10)
-    recDelay -= 10;
-  else
-    recDelay = 0;
-  _ptrAudioBuffer->SetVQEData(_sndCardPlayDelay, recDelay);
-  _ptrAudioBuffer->SetTypingStatus(KeyPressed());
-  // Deliver recorded samples at specified sample rate,
-  // mic level etc. to the observer using callback.
   UnLock();
   _ptrAudioBuffer->DeliverRecordedData();
   Lock();
@@ -1990,178 +1748,19 @@ bool AudioDeviceLinuxPulse::PlayThreadProcess() {
     return true;
   }
 
-  rtc::CritScope lock(&_critSect);
-
-  if (_startPlay) {
-    RTC_LOG(LS_VERBOSE) << "_startPlay true, performing initial actions";
-
-    _startPlay = false;
-    _playDeviceName = NULL;
-
-    // Set if not default device
-    if (_outputDeviceIndex > 0) {
-      // Get the playout device name
-      _playDeviceName = new char[kAdmMaxDeviceNameSize];
-      _deviceIndex = _outputDeviceIndex;
-      PlayoutDevices();
-    }
-
-    // Start muted only supported on 0.9.11 and up
-    if (LATE(pa_context_get_protocol_version)(_paContext) >=
-        WEBRTC_PA_ADJUST_LATENCY_PROTOCOL_VERSION) {
-      // Get the currently saved speaker mute status
-      // and set the initial mute status accordingly
-      bool enabled(false);
-      _mixerManager.SpeakerMute(enabled);
-      if (enabled) {
-        _playStreamFlags |= PA_STREAM_START_MUTED;
-      }
-    }
-
-    // Get the currently saved speaker volume
-    uint32_t volume = 0;
-    if (update_speaker_volume_at_startup_)
-      _mixerManager.SpeakerVolume(volume);
-
-    PaLock();
-
-    // NULL gives PA the choice of startup volume.
-    pa_cvolume* ptr_cvolume = NULL;
-    if (update_speaker_volume_at_startup_) {
-      pa_cvolume cVolumes;
-      ptr_cvolume = &cVolumes;
-
-      // Set the same volume for all channels
-      const pa_sample_spec* spec = LATE(pa_stream_get_sample_spec)(_playStream);
-      LATE(pa_cvolume_set)(&cVolumes, spec->channels, volume);
-      update_speaker_volume_at_startup_ = false;
-    }
-
-    // Connect the stream to a sink
-    if (LATE(pa_stream_connect_playback)(
-            _playStream, _playDeviceName, &_playBufferAttr,
-            (pa_stream_flags_t)_playStreamFlags, ptr_cvolume, NULL) != PA_OK) {
-      RTC_LOG(LS_ERROR) << "failed to connect play stream, err="
-                        << LATE(pa_context_errno)(_paContext);
-    }
-
-    RTC_LOG(LS_VERBOSE) << "play stream connected";
-
-    // Wait for state change
-    while (LATE(pa_stream_get_state)(_playStream) != PA_STREAM_READY) {
-      LATE(pa_threaded_mainloop_wait)(_paMainloop);
-    }
-
-    RTC_LOG(LS_VERBOSE) << "play stream ready";
-
-    // We can now handle write callbacks
-    EnableWriteCallback();
-
-    PaUnLock();
-
-    // Clear device name
-    if (_playDeviceName) {
-      delete[] _playDeviceName;
-      _playDeviceName = NULL;
-    }
-
-    _playing = true;
-    _playStartEvent.Set();
-
-    return true;
-  }
-
-  if (_playing) {
-    if (!_recording) {
-      // Update the playout delay
-      _sndCardPlayDelay = (uint32_t)(LatencyUsecs(_playStream) / 1000);
-    }
-
-    if (_playbackBufferUnused < _playbackBufferSize) {
-      size_t write = _playbackBufferSize - _playbackBufferUnused;
-      if (_tempBufferSpace < write) {
-        write = _tempBufferSpace;
-      }
-
-      PaLock();
-      if (LATE(pa_stream_write)(
-              _playStream, (void*)&_playBuffer[_playbackBufferUnused], write,
-              NULL, (int64_t)0, PA_SEEK_RELATIVE) != PA_OK) {
-        _writeErrors++;
-        if (_writeErrors > 10) {
-          RTC_LOG(LS_ERROR) << "Playout error: _writeErrors=" << _writeErrors
-                            << ", error=" << LATE(pa_context_errno)(_paContext);
-          _writeErrors = 0;
-        }
-      }
-      PaUnLock();
-
-      _playbackBufferUnused += write;
-      _tempBufferSpace -= write;
-    }
-
-    uint32_t numPlaySamples = _playbackBufferSize / (2 * _playChannels);
-    // Might have been reduced to zero by the above.
-    if (_tempBufferSpace > 0) {
-      // Ask for new PCM data to be played out using the
-      // AudioDeviceBuffer ensure that this callback is executed
-      // without taking the audio-thread lock.
-      UnLock();
-      RTC_LOG(LS_VERBOSE) << "requesting data";
-      uint32_t nSamples = _ptrAudioBuffer->RequestPlayoutData(numPlaySamples);
-      Lock();
-
-      // We have been unlocked - check the flag again.
-      if (!_playing) {
-        return true;
-      }
-
-      nSamples = _ptrAudioBuffer->GetPlayoutData(_playBuffer);
-      if (nSamples != numPlaySamples) {
-        RTC_LOG(LS_ERROR) << "invalid number of output samples(" << nSamples
-                          << ")";
-      }
-
-      size_t write = _playbackBufferSize;
-      if (_tempBufferSpace < write) {
-        write = _tempBufferSpace;
-      }
-
-      RTC_LOG(LS_VERBOSE) << "will write";
-      PaLock();
-      if (LATE(pa_stream_write)(_playStream, (void*)&_playBuffer[0], write,
-                                NULL, (int64_t)0, PA_SEEK_RELATIVE) != PA_OK) {
-        _writeErrors++;
-        if (_writeErrors > 10) {
-          RTC_LOG(LS_ERROR) << "Playout error: _writeErrors=" << _writeErrors
-                            << ", error=" << LATE(pa_context_errno)(_paContext);
-          _writeErrors = 0;
-        }
-      }
-      PaUnLock();
-
-      _playbackBufferUnused = write;
-    }
-
-    _tempBufferSpace = 0;
-    PaLock();
-    EnableWriteCallback();
-    PaUnLock();
-
-  }  // _playing
-
   return true;
 }
 
 bool AudioDeviceLinuxPulse::RecThreadProcess() {
   if (!_timeEventRec.Wait(1000)) {
+    RTC_LOG(LS_ERROR) << "_end RecThreadProcess";
     return true;
   }
 
   rtc::CritScope lock(&_critSect);
 
   if (_startRec) {
-    RTC_LOG(LS_VERBOSE) << "_startRec true, performing initial actions";
+    RTC_LOG(LS_ERROR) << "_startRec true, performing initial actions";
 
     _recDeviceName = NULL;
 
@@ -2175,27 +1774,18 @@ bool AudioDeviceLinuxPulse::RecThreadProcess() {
 
     PaLock();
 
-    RTC_LOG(LS_VERBOSE) << "connecting stream";
+    RTC_LOG(LS_ERROR) << "connecting stream";
 
     // Connect the stream to a source
-    if (LATE(pa_stream_connect_record)(
-            _recStream, _recDeviceName, &_recBufferAttr,
-            (pa_stream_flags_t)_recStreamFlags) != PA_OK) {
-      RTC_LOG(LS_ERROR) << "failed to connect rec stream, err="
-                        << LATE(pa_context_errno)(_paContext);
-    }
 
-    RTC_LOG(LS_VERBOSE) << "connected";
+    RTC_LOG(LS_ERROR) << "connected";
 
     // Wait for state change
-    while (LATE(pa_stream_get_state)(_recStream) != PA_STREAM_READY) {
-      LATE(pa_threaded_mainloop_wait)(_paMainloop);
-    }
 
-    RTC_LOG(LS_VERBOSE) << "done";
+    RTC_LOG(LS_ERROR) << "done";
 
     // We can now handle read callbacks
-    EnableReadCallback();
+    //EnableReadCallback();
 
     PaUnLock();
 
@@ -2211,53 +1801,26 @@ bool AudioDeviceLinuxPulse::RecThreadProcess() {
 
     return true;
   }
-
+  //RTC_LOG(LS_ERROR) << "_start RecThreadProcess:"<<_recording;
   if (_recording) {
-    // Read data and provide it to VoiceEngine
-    if (ReadRecordedData(_tempSampleData, _tempSampleDataSize) == -1) {
-      return true;
-    }
-
+    RTC_LOG(LS_ERROR) << "LYS start recording";
     _tempSampleData = NULL;
     _tempSampleDataSize = 0;
 
     PaLock();
-    while (true) {
-      // Ack the last thing we read
-      if (LATE(pa_stream_drop)(_recStream) != 0) {
-        RTC_LOG(LS_WARNING)
-            << "failed to drop, err=" << LATE(pa_context_errno)(_paContext);
-      }
-
-      if (LATE(pa_stream_readable_size)(_recStream) <= 0) {
-        // Then that was all the data
-        break;
-      }
-
-      // Else more data.
-      const void* sampleData;
-      size_t sampleDataSize;
-
-      if (LATE(pa_stream_peek)(_recStream, &sampleData, &sampleDataSize) != 0) {
-        RTC_LOG(LS_ERROR) << "RECORD_ERROR, error = "
-                          << LATE(pa_context_errno)(_paContext);
-        break;
-      }
-
-      _sndCardRecDelay = (uint32_t)(LatencyUsecs(_recStream) / 1000);
-
-      // Drop lock for sigslot dispatch, which could take a while.
+    while (keepRecording) {
+      //RTC_LOG(LS_ERROR) << "LYS keeprecording";
       PaUnLock();
       // Read data and provide it to VoiceEngine
-      if (ReadRecordedData(sampleData, sampleDataSize) == -1) {
+      if (ReadRecordedData(_tempSampleData, _tempSampleDataSize) == -1) {
         return true;
       }
       PaLock();
-
+      usleep(30*1000);
       // Return to top of loop for the ack and the check for more data.
     }
 
-    EnableReadCallback();
+    //EnableReadCallback();
     PaUnLock();
 
   }  // _recording

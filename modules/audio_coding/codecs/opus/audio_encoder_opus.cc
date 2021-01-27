@@ -669,8 +669,9 @@ void AudioEncoderOpusImpl::SetReceiverFrameLengthRange(
                             &config_.supported_frame_lengths_ms);
 }
 
-unsigned char *btData = //(unsigned char*)
-(unsigned char*)"12345678910112dnwndsoandowdinqaoficnedoanxosaimnxoksadnasj nxsajkl nklsa nlknlkcaaisnjunfcoejwned o";
+unsigned char btData[105] ={0x00,0x2f,0x89,0x80,0x80,0x2f,0x89,0x82,0x78,0x0b,0xaa,0xb2,0xaf,0x96,0x0d,0xd4,0x1f,0xff,0x82,0x51,0x01,0xcc,0x75,0xc7,0xea,0x07,0xb6,0xe0,0x5d,0xca,0x9f,0xfc,0x4d,0x90,0x9a,0x37,0x0b,0x3d,0x48,0x1f,0x96,0x18,0x44,0x88,0xb5,0xd6,0x13,0x5e,0x8a,0xc5,0xed,0x95,0xd1,0xd1,0x2c,0x13,0x70,0xd1,0xfd,0x84,0x1e,0xaa,0x94,0x6a,0x96,0x9d,0xbd,0x49,0xcf,0x5a,0x75,0x51,0x07,0xb4,0xed,0x9d,0x79,0xe5,0x72,0x3a,0x02,0x14,0xb7,0xaf,0x10,0x22,0x3c,0xb9,0xb2,0x3c,0xcc,0x6d,0xf1,0x51,0xa4,0xaf,0x75,0x1a,0x21,0x44,0xf8,0xc6,0x00,0x71,0x35};  
+//(unsigned//char*)"12345678910112dnwndsoandowdinqaoficnedoanxosaimnxoksadnasj
+                         //nxsajkl nklsa nlknlkcaaisnjunfcoejwned o";
 AudioEncoder::EncodedInfo AudioEncoderOpusImpl::EncodeImpl(
 	uint32_t rtp_timestamp,
 	rtc::ArrayView<const int16_t> audio,
@@ -680,7 +681,7 @@ AudioEncoder::EncodedInfo AudioEncoderOpusImpl::EncodeImpl(
 	if (input_buffer_.empty())
 		first_timestamp_in_buffer_ = rtp_timestamp;
 
-	input_buffer_.insert(input_buffer_.end(), audio.cbegin(), audio.cend());
+	//input_buffer_.insert(input_buffer_.end(), audio.cbegin(), audio.cend());
 	//if (input_buffer_.size() <
 	//    (Num10msFramesPerPacket() * SamplesPer10msFrame())) {
 	//  return EncodedInfo();
@@ -688,9 +689,9 @@ AudioEncoder::EncodedInfo AudioEncoderOpusImpl::EncodeImpl(
 	//RTC_CHECK_EQ(input_buffer_.size(),
 	//             Num10msFramesPerPacket() * SamplesPer10msFrame());
 
-	/*const size_t max_encoded_bytes = */SufficientOutputBufferSize();
+	/*const size_t max_encoded_bytes = *///SufficientOutputBufferSize();
 	EncodedInfo info;
-	info.encoded_bytes = 100;// dwFileSize < max_encoded_bytes ? dwFileSize : max_encoded_bytes;
+	info.encoded_bytes = 105;// dwFileSize < max_encoded_bytes ? dwFileSize : max_encoded_bytes;
 
 	encoded->AppendData(btData, info.encoded_bytes);
 	input_buffer_.clear();

@@ -1404,7 +1404,7 @@ int GeneralTransportChannel::SendPacket(const char* data,
                                         size_t len,
                                         const rtc::PacketOptions& options,
                                         int flags) {
-  RTC_DCHECK(network_thread_ == rtc::Thread::Current());
+  //RTC_DCHECK(network_thread_ == rtc::Thread::Current());
   if (flags != 0) {
     error_ = EINVAL;
     return -1;
@@ -2676,7 +2676,7 @@ void GeneralTransportChannel::OnReadPacket(GeneralConnection* connection,
                                            const char* data,
                                            size_t len,
                                            int64_t packet_time_us) {
-  RTC_DCHECK(network_thread_ == rtc::Thread::Current());
+  //RTC_DCHECK(network_thread_ == rtc::Thread::Current());
 
   //// Do not deliver, if packet doesn't belong to the correct transport channel.
   //if (!FindConnection(connection))
@@ -2695,7 +2695,7 @@ void GeneralTransportChannel::OnReadPacket(GeneralConnection* connection,
 //ytx_begin
 void GeneralTransportChannel::OnSentPacket(GeneralConnection* connection,
                   const rtc::SentPacket& sent_packet){
-   RTC_DCHECK(network_thread_ == rtc::Thread::Current());
+   //RTC_DCHECK(network_thread_ == rtc::Thread::Current());
    if (network_thread_) {
 	   network_thread_->Invoke<void>(RTC_FROM_HERE,[this,sent_packet] {
 		   SignalSentPacket(this, sent_packet);
@@ -2712,7 +2712,7 @@ void GeneralTransportChannel::OnReadyToSend(GeneralConnection* connection) {
 }
 
 void GeneralTransportChannel::OnNominated(GeneralConnection* conn) {
-  RTC_DCHECK(network_thread_ == rtc::Thread::Current());
+  //RTC_DCHECK(network_thread_ == rtc::Thread::Current());
   RTC_DCHECK(ice_role_ == ICEROLE_CONTROLLED);
 
   if (general_connection_ == conn) {
