@@ -146,7 +146,7 @@ AudioDeviceGeneric::InitStatus AudioDeviceLinuxPulse::Init() {
     if (TerminatePulseAudio() < 0) {
       RTC_LOG(LS_ERROR) << "failed to terminate PulseAudio";
     }
-    return InitStatus::OTHER_ERROR;
+    //return InitStatus::OTHER_ERROR;
   }
 
 #if defined(WEBRTC_USE_X11)
@@ -240,7 +240,7 @@ int32_t AudioDeviceLinuxPulse::InitSpeaker() {
   // check if default device
   if (_outputDeviceIndex == 0) {
     uint16_t deviceIndex = 0;
-    GetDefaultDeviceInfo(false, NULL, deviceIndex);
+    //GetDefaultDeviceInfo(false, NULL, deviceIndex);
     _paDeviceIndex = deviceIndex;
   } else {
     // get the PA device index from
@@ -277,7 +277,7 @@ int32_t AudioDeviceLinuxPulse::InitMicrophone() {
   // Check if default device
   if (_inputDeviceIndex == 0) {
     uint16_t deviceIndex = 0;
-    GetDefaultDeviceInfo(true, NULL, deviceIndex);
+    //GetDefaultDeviceInfo(true, NULL, deviceIndex);
     _paDeviceIndex = deviceIndex;
   } else {
     // Get the PA device index from
@@ -642,18 +642,7 @@ int32_t AudioDeviceLinuxPulse::MinMicrophoneVolume(uint32_t& minVolume) const {
 }
 
 int16_t AudioDeviceLinuxPulse::PlayoutDevices() {
-  PaLock();
-
-  pa_operation* paOperation = NULL;
   _numPlayDevices = 1;  // init to 1 to account for "default"
-
-  // get the whole list of devices and update _numPlayDevices
-  paOperation =
-      LATE(pa_context_get_sink_info_list)(_paContext, PaSinkInfoCallback, this);
-
-  WaitForOperationCompletion(paOperation);
-
-  PaUnLock();
 
   return _numPlayDevices;
 }
@@ -705,8 +694,8 @@ int32_t AudioDeviceLinuxPulse::PlayoutDeviceName(
 
   // Check if default device
   if (index == 0) {
-    uint16_t deviceIndex = 0;
-    return GetDefaultDeviceInfo(false, name, deviceIndex);
+    //uint16_t deviceIndex = 0;
+    //return GetDefaultDeviceInfo(false, name, deviceIndex);
   }
 
   // Tell the callback that we want
@@ -743,8 +732,8 @@ int32_t AudioDeviceLinuxPulse::RecordingDeviceName(
 
   // Check if default device
   if (index == 0) {
-    uint16_t deviceIndex = 0;
-    return GetDefaultDeviceInfo(true, name, deviceIndex);
+    //uint16_t deviceIndex = 0;
+    //return GetDefaultDeviceInfo(true, name, deviceIndex);
   }
 
   // Tell the callback that we want
@@ -753,7 +742,7 @@ int32_t AudioDeviceLinuxPulse::RecordingDeviceName(
   _deviceIndex = index;
 
   // Get recording devices
-  RecordingDevices();
+  //RecordingDevices();
 
   // Clear device name and index
   _recDisplayDeviceName = NULL;
@@ -763,18 +752,9 @@ int32_t AudioDeviceLinuxPulse::RecordingDeviceName(
 }
 
 int16_t AudioDeviceLinuxPulse::RecordingDevices() {
-  PaLock();
 
-  pa_operation* paOperation = NULL;
   _numRecDevices = 1;  // Init to 1 to account for "default"
 
-  // Get the whole list of devices and update _numRecDevices
-  paOperation = LATE(pa_context_get_source_info_list)(
-      _paContext, PaSourceInfoCallback, this);
-
-  WaitForOperationCompletion(paOperation);
-
-  PaUnLock();
 
   return _numRecDevices;
 }
@@ -949,13 +929,11 @@ int32_t AudioDeviceLinuxPulse::StopRecording() {
   RTC_LOG(LS_VERBOSE) << "stopping recording";
 
   // Stop Recording
-  PaLock();
 
   //DisableReadCallback();
 
   _recStream = NULL;
 
-  PaUnLock();
 
   if (_recBuffer) {
     delete[] _recBuffer;
@@ -1044,35 +1022,6 @@ int32_t AudioDeviceLinuxPulse::StopPlayout() {
   _sndCardRecDelay = 0;
 
   RTC_LOG(LS_VERBOSE) << "stopping playback";
-
-  // Stop Playout
-  PaLock();
-
-  DisableWriteCallback();
-  LATE(pa_stream_set_underflow_callback)(_playStream, NULL, NULL);
-
-  // Unset this here so that we don't get a TERMINATED callback
-  LATE(pa_stream_set_state_callback)(_playStream, NULL, NULL);
-
-  if (LATE(pa_stream_get_state)(_playStream) != PA_STREAM_UNCONNECTED) {
-    // Disconnect the stream
-    if (LATE(pa_stream_disconnect)(_playStream) != PA_OK) {
-      RTC_LOG(LS_ERROR) << "failed to disconnect play stream, err="
-                        << LATE(pa_context_errno)(_paContext);
-      PaUnLock();
-      return -1;
-    }
-
-    RTC_LOG(LS_VERBOSE) << "disconnected playback";
-  }
-
-  LATE(pa_stream_unref)(_playStream);
-  _playStream = NULL;
-
-  PaUnLock();
-
-  // Provide the playStream to the mixer
-  _mixerManager.SetPlayStream(_playStream);
 
   if (_playBuffer) {
     delete[] _playBuffer;
@@ -1772,7 +1721,7 @@ bool AudioDeviceLinuxPulse::RecThreadProcess() {
       RecordingDevices();
     }
 
-    PaLock();
+    //PaLock();
 
     RTC_LOG(LS_ERROR) << "connecting stream";
 
@@ -1787,7 +1736,7 @@ bool AudioDeviceLinuxPulse::RecThreadProcess() {
     // We can now handle read callbacks
     //EnableReadCallback();
 
-    PaUnLock();
+    //PaUnLock();
 
     // Clear device name
     if (_recDeviceName) {
@@ -1807,21 +1756,21 @@ bool AudioDeviceLinuxPulse::RecThreadProcess() {
     _tempSampleData = NULL;
     _tempSampleDataSize = 0;
 
-    PaLock();
+    //PaLock();
     while (keepRecording) {
       //RTC_LOG(LS_ERROR) << "LYS keeprecording";
-      PaUnLock();
+      //PaUnLock();
       // Read data and provide it to VoiceEngine
       if (ReadRecordedData(_tempSampleData, _tempSampleDataSize) == -1) {
         return true;
       }
-      PaLock();
-      usleep(30*1000);
+      //PaLock();
+      usleep(20*1000);
       // Return to top of loop for the ack and the check for more data.
     }
 
     //EnableReadCallback();
-    PaUnLock();
+    //PaUnLock();
 
   }  // _recording
 

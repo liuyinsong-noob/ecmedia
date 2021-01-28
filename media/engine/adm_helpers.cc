@@ -36,13 +36,13 @@ namespace adm_helpers {
 void Init(AudioDeviceModule* adm) {
   RTC_DCHECK(adm);
 
-  RTC_CHECK_EQ(0, adm->Init()) << "Failed to initialize the ADM.";
+  adm->Init();//) << "Failed to initialize the ADM.";
 
   // Playout device.
   {
     if (adm->SetPlayoutDevice(AUDIO_DEVICE_ID) != 0) {
       RTC_LOG(LS_ERROR) << "Unable to set playout device.";
-      return;
+      //return;
     }
     if (adm->InitSpeaker() != 0) {
       RTC_LOG(LS_ERROR) << "Unable to access speaker.";
@@ -62,7 +62,7 @@ void Init(AudioDeviceModule* adm) {
   {
     if (adm->SetRecordingDevice(AUDIO_DEVICE_ID) != 0) {
       RTC_LOG(LS_ERROR) << "Unable to set recording device.";
-      return;
+      //return;
     }
     if (adm->InitMicrophone() != 0) {
       RTC_LOG(LS_ERROR) << "Unable to access microphone.";

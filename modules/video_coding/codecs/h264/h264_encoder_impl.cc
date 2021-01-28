@@ -448,7 +448,7 @@ int H264EncoderImpl::GetLen(int nPos, int nTotalSize, char* btData) {
     } else {
       nStart++;
     }
-  }
+  } 
   return nTotalSize - nPos;  //×îºóÒ»Ö¡¡£
 }
 #if !defined(WEBRTC_WIN)
