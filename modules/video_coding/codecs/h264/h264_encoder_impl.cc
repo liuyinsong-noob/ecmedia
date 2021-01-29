@@ -397,7 +397,11 @@ int32_t H264EncoderImpl::SetRateAllocation(
   return WEBRTC_VIDEO_CODEC_OK;
 }
 
-int32_t H264EncoderImpl::sendh264(char* j, int i, int nLen, int nFrameType) {
+int32_t H264EncoderImpl::sendh264(char* j,
+                                  int i,
+                                  int nLen,
+                                  int nFrameType,
+                                  int timestamp) {
   encoded_images_[0]._encodedWidth = 720;    // configurations_[0].width;
   encoded_images_[0]._encodedHeight = 1280;  // configurations_[0].height;
   // encoded_images_[0].SetTimestamp(input_frame.timestamp());
@@ -411,6 +415,7 @@ int32_t H264EncoderImpl::sendh264(char* j, int i, int nLen, int nFrameType) {
   encoded_images_[0]._frameType = nType == 5 ? VideoFrameType::kVideoFrameKey
                                              : VideoFrameType::kVideoFrameDelta;
   encoded_images_[0].SetSpatialIndex(0);
+  encoded_images_[0].SetTimestamp(timestamp);
 
   RTPFragmentationHeader frag_header;
   if (encoded_images_[0].capacity() < (size_t)nLen) {
@@ -469,6 +474,7 @@ int32_t H264EncoderImpl::Encode(
     const std::vector<VideoFrameType>* frame_types) {
   char* btData = NULL;
   int dwFileSize = 0;
+  int timestamp = input_frame.timestamp();
 #if defined(WEBRTC_WIN)
   HANDLE hFile = CreateFile(L"./test.h264", GENERIC_READ, 0, NULL,
                             OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
@@ -499,14 +505,16 @@ int32_t H264EncoderImpl::Encode(
   while (i < dwFileSize - 4) {
     if (btData[i] == 0x00 && btData[i + 1] == 0x00 && btData[i + 2] == 0x01) {
       int nLen = GetLen(i + 3, dwFileSize, btData);
-      sendh264(&btData[i + 3], i, nLen, btData[i + 3]);
+      sendh264(&btData[i + 3], i, nLen, btData[i + 3], timestamp);
+      timestamp += 90 * 75;
       j++;
       i += 3;
       Sleep(75);
     } else if (btData[i] == 0x00 && btData[i + 1] == 0x00 &&
                btData[i + 2] == 0x00 && btData[i + 3] == 0x01) {
       int nLen = GetLen(i + 4, dwFileSize, btData);
-      sendh264(&btData[i + 4], i, nLen, btData[i + 4]);
+      sendh264(&btData[i + 4], i, nLen, btData[i + 4], timestamp);
+      timestamp += 90 * 75;
       j++;
       i += 4;
       Sleep(75);

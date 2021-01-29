@@ -73,7 +73,7 @@ class H264EncoderImpl : public H264Encoder {
   int32_t SetRateAllocation(const VideoBitrateAllocation& bitrate_allocation,
                             uint32_t framerate) override;
 
-  int32_t sendh264(char* j, int i, int nLen, int nFrameType);
+  int32_t sendh264(char* j, int i, int nLen, int nFrameType,int timestamp);
 
   int GetLen(int nPos, int nTotalSize, char* btData);
   // The result of encoding - an EncodedImage and RTPFragmentationHeader - are
