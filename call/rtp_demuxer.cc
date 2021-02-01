@@ -152,11 +152,12 @@ bool RtpDemuxer::RemoveSink(const RtpPacketSinkInterface* sink) {
 }
 
 bool RtpDemuxer::OnRtpPacket(const RtpPacketReceived& packet) {
-  //RtpPacketSinkInterface* sink = ResolveSink(packet);
-  //if (sink != nullptr) {
-  //  sink->OnRtpPacket(packet);
-  //  return true;
-  //}
+  RtpPacketSinkInterface* sink = ResolveSink(packet);
+  if (sink != nullptr) {
+    //RTC_LOG(LS_ERROR) << "LYS OnRtpPacket";
+    sink->OnRtpPacket(packet);
+    return true;
+  }
   return false;
 }
 
@@ -174,7 +175,7 @@ RtpPacketSinkInterface* RtpDemuxer::ResolveSink(
     has_rsid = packet.GetExtension<RtpStreamId>(&packet_rsid);
   }
   uint32_t ssrc = packet.Ssrc();
-
+  //RTC_LOG(LS_ERROR) << "LYS ResolveSink ,ssrc:"<<ssrc;
   // The BUNDLE spec says to drop any packets with unknown MIDs, even if the
   // SSRC is known/latched.
   if (has_mid && known_mids_.find(packet_mid) == known_mids_.end()) {
@@ -222,6 +223,7 @@ RtpPacketSinkInterface* RtpDemuxer::ResolveSink(
   if (mid != nullptr) {
     RtpPacketSinkInterface* sink_by_mid = ResolveSinkByMid(*mid, ssrc);
     if (sink_by_mid != nullptr) {
+      //RTC_LOG(LS_ERROR) << "LYS ResolveSink ,return sink by mid,ssrc:" << ssrc;
       return sink_by_mid;
     }
 
@@ -230,6 +232,7 @@ RtpPacketSinkInterface* RtpDemuxer::ResolveSink(
       RtpPacketSinkInterface* sink_by_mid_rsid =
           ResolveSinkByMidRsid(*mid, *rsid, ssrc);
       if (sink_by_mid_rsid != nullptr) {
+        //RTC_LOG(LS_ERROR) << "LYS ResolveSink ,return sink by mid rsid,ssrc:"<< ssrc;
         return sink_by_mid_rsid;
       }
     }
@@ -244,6 +247,7 @@ RtpPacketSinkInterface* RtpDemuxer::ResolveSink(
   if (rsid != nullptr) {
     RtpPacketSinkInterface* sink_by_rsid = ResolveSinkByRsid(*rsid, ssrc);
     if (sink_by_rsid != nullptr) {
+      //RTC_LOG(LS_ERROR) << "LYS ResolveSink ,return sink by rsid,ssrc:" << ssrc;
       return sink_by_rsid;
     }
   }
@@ -252,6 +256,7 @@ RtpPacketSinkInterface* RtpDemuxer::ResolveSink(
   // between streams.
   const auto ssrc_sink_it = sink_by_ssrc_.find(ssrc);
   if (ssrc_sink_it != sink_by_ssrc_.end()) {
+    //RTC_LOG(LS_ERROR) << "LYS ResolveSink ,return sink by ssrc,ssrc:" << ssrc;
     return ssrc_sink_it->second;
   }
   //ytx_add
@@ -264,10 +269,13 @@ RtpPacketSinkInterface* RtpDemuxer::ResolveSink(
   uint32_t tepSsrc = buf[0] + buf[1] * 256 + buf[2] * 256 * 256 + buf[3] * 256 * 256 * 256;
   const auto tepSsrc_sink_it = sink_by_ssrc_.find(tepSsrc);
   if (tepSsrc_sink_it != sink_by_ssrc_.end()) {
+    //RTC_LOG(LS_ERROR) << "LYS ResolveSink ,return sink by temp ssrc,ssrc:" << ssrc;
     return tepSsrc_sink_it->second;
   }
   //ytx_end
   // Legacy senders will only signal payload type, support that as last resort.
+  //RTC_LOG(LS_ERROR) << "LYS ResolveSink ,return sink by payload,ssrc:"
+                   //<< ssrc;
   return ResolveSinkByPayloadType(packet.PayloadType(), ssrc);
 }
 

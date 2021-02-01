@@ -456,19 +456,6 @@ int H264EncoderImpl::GetLen(int nPos, int nTotalSize, char* btData) {
   } 
   return nTotalSize - nPos;  //×îºóÒ»Ö¡¡£
 }
-#if !defined(WEBRTC_WIN)
-int get_file_size(const char* path) {
-  int filesize = -1;
-  FILE* fp;
-  fp = fopen(path, "r");
-  if (fp == NULL)
-    return filesize;
-  fseek(fp, 0L, SEEK_END);
-  filesize = ftell(fp);
-  fclose(fp);
-  return filesize;
-}
-#endif
 int32_t H264EncoderImpl::Encode(
     const VideoFrame& input_frame,
     const std::vector<VideoFrameType>* frame_types) {

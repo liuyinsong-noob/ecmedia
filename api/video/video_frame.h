@@ -97,7 +97,7 @@ class RTC_EXPORT VideoFrame {
   int height() const;
   // Get frame size in pixels.
   uint32_t size() const;
-
+  
   // Get frame ID. Returns 0 if ID is not set. Not guarantee to be transferred
   // from the sender to the receiver, but preserved on single side. The id
   // should be propagated between all frame modifications during its lifetime

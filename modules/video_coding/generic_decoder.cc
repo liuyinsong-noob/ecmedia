@@ -229,8 +229,9 @@ int32_t VCMGenericDecoder::Decode(const VCMEncodedFrame& frame, int64_t nowMs) {
   _callback->Map(frame.Timestamp(), &_frameInfos[_nextFrameInfoIdx]);
 
   _nextFrameInfoIdx = (_nextFrameInfoIdx + 1) % kDecoderFrameMemoryLength;
-  int32_t ret = decoder_->Decode(frame.EncodedImage(), frame.MissingFrame(),
-                                 frame.RenderTimeMs());
+  RTC_LOG(LS_ERROR) << "LYS close this video frame to decoder";
+  int32_t ret = WEBRTC_VIDEO_CODEC_OK;
+  //ret = decoder_->Decode(frame.EncodedImage(), frame.MissingFrame(),frame.RenderTimeMs());
 
   _callback->OnDecoderImplementationName(decoder_->ImplementationName());
   if (ret < WEBRTC_VIDEO_CODEC_OK) {

@@ -1437,7 +1437,7 @@ PacketReceiver::DeliveryStatus Call::DeliverRtp(MediaType media_type,
     packetSsrc =
         buf[0] + buf[1] * 256 + buf[2] * 256 * 256 + buf[3] * 256 * 256 * 256;
   } else {
-    parsed_packet.Ssrc();
+    packetSsrc = parsed_packet.Ssrc();
   }
   auto it = receive_rtp_config_.find(packetSsrc);
   // auto it = receive_rtp_config_.find(parsed_packet.Ssrc());
@@ -1462,7 +1462,9 @@ PacketReceiver::DeliveryStatus Call::DeliverRtp(MediaType media_type,
   // instead of converting each time it is passed to RateCounter::Add below.
   int length = static_cast<int>(parsed_packet.size());
   if (media_type == MediaType::AUDIO) {
-    if (audio_receiver_controller_.OnRtpPacket(parsed_packet)) {
+    //RTC_LOG(LS_ERROR) << "LYS OnRtpPacket audio";
+    if (audio_receiver_controller_.OnRtpPacket(parsed_packet)) 
+	{
       received_bytes_per_second_counter_.Add(length);
       received_audio_bytes_per_second_counter_.Add(length);
       event_log_->Log(
@@ -1475,8 +1477,10 @@ PacketReceiver::DeliveryStatus Call::DeliverRtp(MediaType media_type,
       return DELIVERY_OK;
     }
   } else if (media_type == MediaType::VIDEO) {
+    //RTC_LOG(LS_ERROR) << "LYS OnRtpPacket video";
     parsed_packet.set_payload_type_frequency(kVideoPayloadTypeFrequency);
-    if (video_receiver_controller_.OnRtpPacket(parsed_packet)) {
+    if (video_receiver_controller_.OnRtpPacket(parsed_packet)) 
+	{
       received_bytes_per_second_counter_.Add(length);
       received_video_bytes_per_second_counter_.Add(length);
       event_log_->Log(

@@ -253,6 +253,7 @@ namespace webrtc {
 			ReportError();
 			return WEBRTC_VIDEO_CODEC_ERR_PARAMETER;
 		}
+         //RTC_LOG(LS_ERROR) << "LYS decode a frame";
 		//ytx_begin
 #ifdef SAVE_DECODING_FILE
 		if (input_file_)

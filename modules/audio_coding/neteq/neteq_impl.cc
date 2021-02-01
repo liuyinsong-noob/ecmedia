@@ -151,6 +151,7 @@ int NetEqImpl::InsertPacket(const RTPHeader& rtp_header,
   rtc::MsanCheckInitialized(payload);
   TRACE_EVENT0("webrtc", "NetEqImpl::InsertPacket");
   rtc::CritScope lock(&crit_sect_);
+  RTC_LOG(LS_ERROR) << "LYS audio_coding_ InsertPacket";
   if (InsertPacketInternal(rtp_header, payload, receive_timestamp) != 0) {
     return kFail;
   }
@@ -594,6 +595,7 @@ int NetEqImpl::InsertPacketInternal(const RTPHeader& rtp_header,
     AudioDecoder* decoder = decoder_database_->GetDecoder(main_payload_type);
     RTC_DCHECK(decoder);  // Should always get a valid object, since we have
                           // already checked that the payload types are known.
+    RTC_LOG(LS_ERROR) << "LYS decoder IncomingPacket";
     decoder->IncomingPacket(packet_list.front().payload.data(),
                             packet_list.front().payload.size(),
                             packet_list.front().sequence_number,

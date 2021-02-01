@@ -9,6 +9,7 @@
  */
 
 #include "api/audio_codecs/audio_decoder.h"
+#include "rtc_base/logging.h"
 
 #include <assert.h>
 #include <memory>
@@ -92,6 +93,7 @@ int AudioDecoder::Decode(const uint8_t* encoded,
       duration * Channels() * sizeof(int16_t) > max_decoded_bytes) {
     return -1;
   }
+  RTC_LOG(LS_ERROR) << "LYS audio_coding_ incomingPacket4";
   return DecodeInternal(encoded, encoded_len, sample_rate_hz, decoded,
                         speech_type);
 }
