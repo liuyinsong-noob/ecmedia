@@ -1,6 +1,6 @@
 #ifndef ECMEDIA_H
 #define ECMEDIA_H
-
+//lys
 #ifdef WEBRTC_ANDROID
 #include "jni.h"
 #define ECMEDIA_API __attribute__((visibility("default")))
