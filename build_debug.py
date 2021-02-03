@@ -16,7 +16,7 @@ def download_file(url, save_path, chunk_size=128):
             fd.write(chunk)
     return True           
 
-#dos_path æœ€é•¿260å­—èŠ‚ï¼Œ
+#dos_path ×î³¤260×Ö½Ú£¬
 def winapi_path(dos_path):
     if platform.system() <> "Windows":
         return dos_path
@@ -82,7 +82,7 @@ def download_extract(url,target_path):
        unzip_file(filename,target_path)
 
 def download_deps(target_os):
-    #ä¸‹è½½webrtcçš„ç¬¬ä¸‰æ–¹ä¾èµ–åº“
+    #ÏÂÔØwebrtcµÄµÚÈı·½ÒÀÀµ¿â
     download_root_url = "http://192.168.182.122/chfs/shared/webrtc/"
     webrtc_dep_url = download_root_url + "webrtc_deps.zip"
     webrtc_dep_android_url = download_root_url + "webrtc_deps_android.tar.gz"
@@ -98,7 +98,7 @@ def download_deps(target_os):
 def gn_project(target_os,target_cpu):
     download_deps(target_os)
     gn_param = []
-    gn_param.append('is_debug=false')
+    gn_param.append('is_debug=true')
     gn_param.append('rtc_include_tests=false')
     gn_param.append('target_cpu=\\\"'+target_cpu+'\\\"')
     gn_param.append('target_os=\\\"'+target_os+'\\\"')
@@ -110,7 +110,7 @@ def gn_project(target_os,target_cpu):
         gn_param.append('ios_enable_code_signing=false')
         
     if  platform.system() == "Windows":
-        gn_cmd = 'buildtools\win\gn gen out/release --ide=vs2017 --args="' +" ".join(gn_param)+'"'
+        gn_cmd = 'buildtools\win\gn gen out/debug --ide=vs2017 --args="' +" ".join(gn_param)+'"'
     elif platform.system() == "Darwin":
         gn_cmd = 'buildtools/mac/gn gen out/default --args="' +" ".join(gn_param)+'"'
     else: 
@@ -121,9 +121,9 @@ def gn_project(target_os,target_cpu):
            
 
 def build_project():
-   #gn ç”Ÿæˆå¯ç¼–è¯‘çš„å·¥ç¨‹
-    #ninja ç¼–è¯‘å·¥ç¨‹
-    ninja_cmd = os.path.normpath('third_party/depot_tools/ninja') +' -C out/release ECMedia'
+   #gn Éú³É¿É±àÒëµÄ¹¤³Ì
+    #ninja ±àÒë¹¤³Ì
+    ninja_cmd = os.path.normpath('third_party/depot_tools/ninja') +' -C out/debug ECMedia'
     print "Excute ninjia command: ",ninja_cmd
     if os.system(ninja_cmd) <> 0:
       sys.exit(-1)
